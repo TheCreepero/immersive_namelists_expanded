@@ -1612,6 +1612,83 @@ GER_FORT_01 =
 		105 = { "Festung-Division 'Dalvik'" }
     }
 }
+GER_KAMPFGRUPPE_01 =
+{
+    name = "Kampfgruppe"
+
+    for_countries = { GER }
+
+    can_use = { always = yes }
+
+    division_types = { "infantry" "motorized" "mechanized" "light_armor" "medium_armor" "heavy_armor" }
+
+    fallback_name = "Kampfgruppe"
+
+    unordered =
+    {
+        1 = { "Kampfgruppe Guderian" }
+        2 = { "Kampfgruppe Rommel" }
+        3 = { "Kampfgruppe Manstein" }
+        4 = { "Kampfgruppe Model" }
+        5 = { "Kampfgruppe Hoth" }
+        6 = { "Kampfgruppe Rundstedt" }
+        7 = { "Kampfgruppe Dietl" }
+        8 = { "Kampfgruppe Manteuffel" }
+        9 = { "Kampfgruppe Balck" }
+        10 = { "Kampfgruppe Peiper" }
+        11 = { "Kampfgruppe Kesselring" }
+        12 = { "Kampfgruppe Kluge" }
+        13 = { "Kampfgruppe Bock" }
+        14 = { "Kampfgruppe Student" }
+        15 = { "Kampfgruppe Paulus" }
+        16 = { "Kampfgruppe Schörner" }
+        17 = { "Kampfgruppe Wittmann" }
+        18 = { "Kampfgruppe Zangen" }
+        19 = { "Kampfgruppe Steiner" }
+        20 = { "Kampfgruppe Lüttwitz" }
+		21 = { "Kampfgruppe Hausser" }
+		22 = { "Kampfgruppe Krüger" }
+		23 = { "Kampfgruppe Nehring" }
+		24 = { "Kampfgruppe Kleist" }
+		25 = { "Kampfgruppe Knobelsdorf" }
+		26 = { "Kampfgruppe Bäke" }
+		27 = { "Kampfgruppe Kühne" }
+		28 = { "Kampfgruppe Reinhardt" }
+		29 = { "Kampfgruppe Wöhler" }
+		30 = { "Kampfgruppe Obstfelder" }
+		31 = { "Kampfgruppe Eberbach" }
+		32 = { "Kampfgruppe Jürgen" }
+		33 = { "Kampfgruppe Strecker" }
+		34 = { "Kampfgruppe Hube" }
+		35 = { "Kampfgruppe Gräser" }
+		36 = { "Kampfgruppe Kübler" }
+		37 = { "Kampfgruppe Demelhuber" }
+		38 = { "Kampfgruppe Lanz" }
+		39 = { "Kampfgruppe Fretter-Pico" }
+		40 = { "Kampfgruppe Prüfke" }
+		41 = { "Kampfgruppe Model" }
+		42 = { "Kampfgruppe Rendulic" }
+		43 = { "Kampfgruppe Dietrich" }
+		44 = { "Kampfgruppe Gille" }
+		45 = { "Kampfgruppe Kleffel" }
+		46 = { "Kampfgruppe Manteuffel" }
+		47 = { "Kampfgruppe Korten" }
+		48 = { "Kampfgruppe Schörner" }
+		49 = { "Kampfgruppe Balck" }
+		50 = { "Kampfgruppe Blumentritt" }
+		51 = { "Kampfgruppe Harpe" }
+		52 = { "Kampfgruppe Raus" }
+		53 = { "Kampfgruppe Beyer" }
+		54 = { "Kampfgruppe Raapke" }
+		55 = { "Kampfgruppe Brandenberger" }
+		56 = { "Kampfgruppe Heim" }
+		57 = { "Kampfgruppe Lehr" }
+		58 = { "Kampfgruppe Geyr von Schweppenburg" }
+		59 = { "Kampfgruppe Ziegler" }
+		60 = { "Kampfgruppe Freiherr von Gersdorff" }
+		
+    }
+}
 
 
 

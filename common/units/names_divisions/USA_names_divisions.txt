@@ -1167,14 +1167,31 @@ USA_PARAMILITARY_01 = {
         20 = { "%dth 'Founding Fathers' Division" }
     }
 }
-USA_DETACHED_BRIGADES_01 = {
-    name = "Detached Army Unit"
+USA_COMPOSITE_UNITS_01 = {
+    name = "Composite Units"
     for_countries = { USA }
     can_use = { always = yes }
     division_types = { "infantry" }
-    fallback_name = "%D Detached Army Unit"
-    ordered = { }
+    fallback_name = "%d Composite Unit"
+    ordered = {
+        1 = { "Johnson's Raiders" }
+        2 = { "Thompson's Scouts" }
+        3 = { "Bennett's Bushwhackers" }
+        4 = { "Murphy's Vanguards" }
+        5 = { "Carter's Prowlers" }
+        6 = { "Harrison's Strikers" }
+        7 = { "Stanley's Skirmishers" }
+        8 = { "Cooper's Stalwarts" }
+        9 = { "Peterson's Pathfinders" }
+        10 = { "Collins's Chasers" }
+        11 = { "Merrill's Marauders" }
+        12 = { "Ross's Rangers" }
+        13 = { "Hughes's Heralds" }
+        14 = { "Foster's Flankers" }
+        15 = { "Patterson's Pursuers" }
+    }
 }
+
 USA_ARMORED_DETACHMENTS_01 = {
     name = "Armored Detachment"
     for_countries = { USA }
