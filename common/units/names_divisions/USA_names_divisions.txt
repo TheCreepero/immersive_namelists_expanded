@@ -1074,7 +1074,7 @@ USA_COM_GUARD_01 = {
     name = "Communist Guard Division"
     for_countries = { USA }
     can_use = { always = yes }
-    division_types = { "communist_guard" }
+    division_types = { "infantry" "militia" }
     fallback_name = "%d Guard Division"
     ordered = {
         1 = { "%dst 'Red Hammer' Division" }
@@ -1204,3 +1204,4 @@ USA_ARMORED_DETACHMENTS_01 = {
         20 = { "%dth 'Fort Lewis' Armored Detachment" }
     }
 }
+
