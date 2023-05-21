@@ -1749,7 +1749,7 @@ GER_GAR_02 =
     }
 }
 
-GER_SSINF_01 = 
+GER_SS_02 = 
 {
 	name = "SS Infantry Divisions"
 
@@ -1812,7 +1812,7 @@ GER_SSINF_01 =
 	}
 }
 
-GER_SSMOT_01 = 
+GER_SS_03 = 
 {
 	name = "SS Motorized Divisions"
 
@@ -1854,7 +1854,7 @@ GER_SSMOT_01 =
 	}
 }
 
-GER_SSMECH_01 = 
+GER_SS_04 = 
 {
 	name = "SS Mechanized Divisions"
 
@@ -1896,7 +1896,7 @@ GER_SSMECH_01 =
 	}
 }
 
-GER_SSARM_01 = 
+GER_SS_05 = 
 {
 	name = "SS Armoured Divisions"
 
