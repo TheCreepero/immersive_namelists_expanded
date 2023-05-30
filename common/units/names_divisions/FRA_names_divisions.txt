@@ -1080,3 +1080,49 @@ FRA_COL_01 =
 		30 = { "%dème Div. d'Infanterie Coloniale" }
 	}
 }
+
+FRA_DEF_01 = 
+{
+	name = "Division de la Défense Nationale"
+
+	for_countries = { FRA }
+
+	can_use = { always = yes }
+
+	division_types = { "militia" }
+
+	fallback_name = "Division de la Défense Nationale"
+
+	ordered = {
+		1 = { "Division de la Défense Nationale (Paris)" }
+		2 = { "Division de la Défense Nationale (Marseille)" }
+		3 = { "Division de la Défense Nationale (Lyon)" }
+		4 = { "Division de la Défense Nationale (Toulouse)" }
+		5 = { "Division de la Défense Nationale (Nice)" }
+		6 = { "Division de la Défense Nationale (Nantes)" }
+		7 = { "Division de la Défense Nationale (Strasbourg)" }
+		8 = { "Division de la Défense Nationale (Montpellier)" }
+		9 = { "Division de la Défense Nationale (Bordeaux)" }
+		10 = { "Division de la Défense Nationale (Lille)" }
+		11 = { "Division de la Défense Nationale (Rennes)" }
+		12 = { "Division de la Défense Nationale (Reims)" }
+		13 = { "Division de la Défense Nationale (Le Havre)" }
+		14 = { "Division de la Défense Nationale (Cannes)" }
+		15 = { "Division de la Défense Nationale (Brest)" }
+		16 = { "Division de la Défense Nationale (Nîmes)" }
+		17 = { "Division de la Défense Nationale (Le Mans)" }
+		18 = { "Division de la Défense Nationale (Aix-en-Provence)" }
+		19 = { "Division de la Défense Nationale (Saint-Étienne)" }
+		20 = { "Division de la Défense Nationale (Troyes)" }
+		21 = { "Division de la Défense Nationale (Biarritz)" }
+		22 = { "Division de la Défense Nationale (La Rochelle)" }
+		23 = { "Division de la Défense Nationale (Caen)" }
+		24 = { "Division de la Défense Nationale (Amiens)" }
+		25 = { "Division de la Défense Nationale (Perpignan)" }
+		26 = { "Division de la Défense Nationale (Orléans)" }
+		27 = { "Division de la Défense Nationale (Dijon)" }
+		28 = { "Division de la Défense Nationale (Angers)" }
+		29 = { "Division de la Défense Nationale (Rouen)" }
+		30 = { "Division de la Défense Nationale (Metz)" }
+	}
+}

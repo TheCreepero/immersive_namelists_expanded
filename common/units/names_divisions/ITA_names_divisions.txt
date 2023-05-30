@@ -1056,3 +1056,49 @@ ITA_GAR_01 = {
 		# These were actually Coastal Defense units, many of which joined the insurgents from southern Italy.
 	} 
 } 
+
+ITA_ROM_01 = 
+{
+	name = "Legione Romana"
+
+	for_countries = { ITA }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Legio"
+
+	ordered = {
+		1 = { "Legio I 'Italica'" }
+		2 = { "Legio II 'Augusta'" }
+		3 = { "Legio III 'Cyrenaica'" }
+		4 = { "Legio IV 'Flavia Felix'" }
+		5 = { "Legio V 'Alaudae'" }
+		6 = { "Legio VI 'Ferrata'" }
+		7 = { "Legio VII 'Claudia'" }
+		8 = { "Legio VIII 'Augusta'" }
+		9 = { "Legio IX 'Hispana'" }
+		10 = { "Legio X 'Gemina'" }
+		11 = { "Legio XI 'Claudia'" }
+		12 = { "Legio XII 'Fulminata'" }
+		13 = { "Legio XIII 'Gemina'" }
+		14 = { "Legio XIV 'Gemina'" }
+		15 = { "Legio XV 'Apollinaris'" }
+		16 = { "Legio XVI 'Gallica'" }
+		17 = { "Legio XVII" }
+		18 = { "Legio XVIII" }
+		19 = { "Legio XIX" }
+		20 = { "Legio XX 'Valeria Victrix'" }
+		21 = { "Legio XXI 'Rapax'" }
+		22 = { "Legio XXII 'Deiotariana'" }
+		23 = { "Legio XXIII" }
+		24 = { "Legio XXIV" }
+		25 = { "Legio XXV" }
+		26 = { "Legio XXVI" }
+		27 = { "Legio XXVII" }
+		28 = { "Legio XXVIII" }
+		29 = { "Legio XXIX" }
+		30 = { "Legio XXX 'Ulpia Victrix'" }
+	}
+}

@@ -1,6 +1,6 @@
 GER_SS_01 = 
 {
-	name = "SS Divisions Expanded"
+	name = "SS Divisions Vanilla"
 
 	for_countries = { GER }
 

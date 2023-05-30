@@ -1224,3 +1224,66 @@ USA_ARMORED_DETACHMENTS_01 = {
     }
 }
 
+USA_DEF_01 = 
+{
+	name = "Division of National Defense"
+	for_countries = { USA }
+	can_use = { always = yes }
+	division_types = { "militia" }
+	fallback_name = "Division of National Defense"
+	ordered = {
+		1 = { "Division of National Defense (New York)" }
+		2 = { "Division of National Defense (Los Angeles)" }
+		3 = { "Division of National Defense (Chicago)" }
+		4 = { "Division of National Defense (Houston)" }
+		5 = { "Division of National Defense (Philadelphia)" }
+		6 = { "Division of National Defense (Phoenix)" }
+		7 = { "Division of National Defense (San Antonio)" }
+		8 = { "Division of National Defense (San Diego)" }
+		9 = { "Division of National Defense (Dallas)" }
+		10 = { "Division of National Defense (San Jose)" }
+		11 = { "Division of National Defense (Austin)" }
+		12 = { "Division of National Defense (Jacksonville)" }
+		13 = { "Division of National Defense (San Francisco)" }
+		14 = { "Division of National Defense (Columbus)" }
+		15 = { "Division of National Defense (Fort Worth)" }
+		16 = { "Division of National Defense (Indianapolis)" }
+		17 = { "Division of National Defense (Charlotte)" }
+		18 = { "Division of National Defense (Seattle)" }
+		19 = { "Division of National Defense (Denver)" }
+		20 = { "Division of National Defense (Boston)" }
+		21 = { "Division of National Defense (Lexington)" }
+		22 = { "Division of National Defense (Gettysburg)" }
+		23 = { "Division of National Defense (Detroit)" }
+		24 = { "Division of National Defense (El Paso)" }
+		25 = { "Division of National Defense (Memphis)" }
+		26 = { "Division of National Defense (Baltimore)" }
+		27 = { "Division of National Defense (Boston)" }
+		28 = { "Division of National Defense (Nashville)" }
+		29 = { "Division of National Defense (Louisville)" }
+		30 = { "Division of National Defense (Milwaukee)" }
+		31 = { "Division of National Defense (Albuquerque)" }
+		32 = { "Division of National Defense (Tucson)" }
+		33 = { "Division of National Defense (Fresno)" }
+		34 = { "Division of National Defense (Sacramento)" }
+		35 = { "Division of National Defense (Kansas City)" }
+		36 = { "Division of National Defense (Long Beach)" }
+		37 = { "Division of National Defense (Mesa)" }
+		38 = { "Division of National Defense (Atlanta)" }
+		39 = { "Division of National Defense (Omaha)" }
+		40 = { "Division of National Defense (Raleigh)" }
+		41 = { "Division of National Defense (Miami)" }
+		42 = { "Division of National Defense (Oakland)" }
+		43 = { "Division of National Defense (Minneapolis)" }
+		44 = { "Division of National Defense (Tulsa)" }
+		45 = { "Division of National Defense (Wichita)" }
+		46 = { "Division of National Defense (New Orleans)" }
+		47 = { "Division of National Defense (Arlington)" }
+		48 = { "Division of National Defense (Cleveland)" }
+		49 = { "Division of National Defense (Tampa)" }
+		50 = { "Division of National Defense (Honolulu)" }
+		51 = { "Division of National Defense (Pittsburgh)" }
+		52 = { "Division of National Defense (Anchorage)" }
+	}
+}
+
