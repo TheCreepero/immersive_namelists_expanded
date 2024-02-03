@@ -18,3 +18,74 @@ GER_SCHWERE_PANZERABTEILUNG_01 = {
     }
   }
   
+  GER_RESERVE_DIVISION_01 = { 
+    name = "Reserve-Division"
+    for_countries = { GER }
+    can_use = { always = yes }
+    division_types = { "infantry" }
+    fallback_name = "%d. Reserve-Division"
+    link_numbering_with = { GER_Inf_01 }
+    ordered = {
+      1 = { "%d. Reserve-Division" }
+      2 = { "%d. Reserve-Division" }
+      3 = { "%d. Reserve-Division" }
+      4 = { "%d. Reserve-Division" }
+      5 = { "%d. Reserve-Division" }
+      6 = { "%d. Reserve-Division" }
+      7 = { "%d. Reserve-Division" }
+      8 = { "%d. Reserve-Division" }
+      9 = { "%d. Reserve-Division" }
+      10 = { "%d. Reserve-Division" }
+      11 = { "%d. Reserve-Division" }
+      12 = { "%d. Reserve-Division" }
+      13 = { "%d. Reserve-Division" }
+      14 = { "%d. Reserve-Division" }
+      15 = { "%d. Reserve-Division" }
+      16 = { "%d. Reserve-Division" }
+      17 = { "%d. Reserve-Division" }
+      18 = { "%d. Reserve-Division" }
+      19 = { "%d. Reserve-Division" }
+      20 = { "%d. Reserve-Division" }
+      21 = { "%d. Reserve-Division" }
+      22 = { "%d. Reserve-Division" }
+      23 = { "%d. Reserve-Division" }
+      24 = { "%d. Reserve-Division" }
+      25 = { "%d. Reserve-Division" }
+      26 = { "%d. Reserve-Division" }
+      27 = { "%d. Reserve-Division" }
+      28 = { "%d. Reserve-Division" }
+      29 = { "%d. Reserve-Division" }
+      30 = { "%d. Reserve-Division" }
+      31 = { "%d. Reserve-Division" }
+      32 = { "%d. Reserve-Division" }
+      33 = { "%d. Reserve-Division" }
+      34 = { "%d. Reserve-Division" }
+      35 = { "%d. Reserve-Division" }
+      36 = { "%d. Reserve-Division" }
+      37 = { "%d. Reserve-Division" }
+      38 = { "%d. Reserve-Division" }
+      39 = { "%d. Reserve-Division" }
+      40 = { "%d. Reserve-Division" }
+      41 = { "%d. Reserve-Division" }
+      42 = { "%d. Reserve-Division" }
+      43 = { "%d. Reserve-Division" }
+      44 = { "%d. Reserve-Division" }
+      45 = { "%d. Reserve-Division" }
+      46 = { "%d. Reserve-Division" }
+      47 = { "%d. Reserve-Division" }
+      48 = { "%d. Reserve-Division" }
+      49 = { "%d. Reserve-Division" }
+      50 = { "%d. Reserve-Division" }
+      51 = { "%d. Reserve-Division" }
+      52 = { "%d. Reserve-Division" }
+      53 = { "%d. Reserve-Division" }
+      54 = { "%d. Reserve-Division" }
+      55 = { "%d. Reserve-Division" }
+      56 = { "%d. Reserve-Division" }
+      57 = { "%d. Reserve-Division" }
+      58 = { "%d. Reserve-Division" }
+      59 = { "%d. Reserve-Division" }
+      60 = { "%d. Reserve-Division" }
+    }
+  }
+  
