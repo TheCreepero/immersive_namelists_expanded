@@ -1481,7 +1481,7 @@ GER_FORT_01 =
 }
 GER_KAMPFGRUPPE_01 =
 {
-    name = "Kampfgruppe"
+    name = "Kampfgruppes"
 
     for_countries = { GER }
 

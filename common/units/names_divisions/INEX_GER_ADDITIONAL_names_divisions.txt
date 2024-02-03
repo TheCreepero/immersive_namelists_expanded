@@ -19,7 +19,7 @@ GER_SCHWERE_PANZERABTEILUNG_01 = {
   }
   
   GER_RESERVE_DIVISION_01 = { 
-    name = "Reserve Division"
+    name = "Reserve Divisions"
     for_countries = { GER }
     can_use = { always = yes }
     division_types = { "infantry" }
@@ -90,7 +90,7 @@ GER_SCHWERE_PANZERABTEILUNG_01 = {
   }
   
   GER_LUFTWAFFEN_FELD_DIVISION_01 = { 
-    name = "Luftwaffen-Feld-Division"
+    name = "Luftwaffe Divisions"
     for_countries = { GER }
     can_use = { always = yes }
     division_types = { "infantry" }
@@ -130,7 +130,7 @@ GER_SCHWERE_PANZERABTEILUNG_01 = {
     }
   }
   GER_VOLKSGRENADIER_01 = { 
-    name = "Volks-Grenadier Divisions"
+    name = "Volksgrenadier Divisions"
     for_countries = { GER }
     can_use = { always = yes }
     division_types = { "infantry" }
@@ -182,7 +182,7 @@ GER_SCHWERE_PANZERABTEILUNG_01 = {
 
 GER_GRENADIER_DIVISION_01 = 
 { 
-      name = "Grenadier-Division"
+      name = "Grenadier Divisions"
       for_countries = { GER }
       can_use = { always = yes }
       division_types = { "infantry" }
@@ -234,7 +234,7 @@ GER_GRENADIER_DIVISION_01 =
     
 GER_GAR_02 = 
 {
-    name = "Garrison Command (City)"
+    name = "Garrison Commands (City)"
 
     for_countries = { GER }
 
