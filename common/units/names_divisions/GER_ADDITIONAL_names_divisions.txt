@@ -1,0 +1,20 @@
+GER_SCHWERE_PANZERABTEILUNG_01 = { 
+    name = "schwere Panzerabteilung"
+    for_countries = { GER }
+    can_use = { always = yes }
+    division_types = { "armor" }
+    fallback_name = "schwere Panzerabteilung %d"
+    ordered = {
+      501 = { "schwere Panzerabteilung %d" }
+      502 = { "schwere Panzerabteilung %d" }
+      503 = { "schwere Panzerabteilung %d" }
+      504 = { "schwere Panzerabteilung %d" }
+      505 = { "schwere Panzerabteilung %d" }
+      506 = { "schwere Panzerabteilung %d" }
+      507 = { "schwere Panzerabteilung %d" }
+      508 = { "schwere Panzerabteilung %d" }
+      509 = { "schwere Panzerabteilung %d" }
+      510 = { "schwere Panzerabteilung %d" }
+    }
+  }
+  
