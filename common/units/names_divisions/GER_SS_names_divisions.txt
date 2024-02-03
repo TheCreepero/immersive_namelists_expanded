@@ -262,3 +262,34 @@ GER_SS_05 =
 		40 = { "%d. SS-Panzer-Division 'Stahlkrieger'" }
 	}
 }
+
+GER_SS_STANDARTE_01 = { 
+	name = "SS-Standarte"
+	for_countries = { GER }
+	can_use = { always = yes }
+	division_types = { "infantry" }
+	fallback_name = "%d. SS-Standarte"
+	ordered = {
+	  1 = { "%d. SS-Standarte" }
+	  2 = { "%d. SS-Standarte" }
+	  3 = { "%d. SS-Standarte" }
+	  4 = { "%d. SS-Standarte" }
+	  5 = { "%d. SS-Standarte" }
+	  6 = { "%d. SS-Standarte" }
+	  7 = { "%d. SS-Standarte" }
+	  8 = { "%d. SS-Standarte" }
+	  9 = { "%d. SS-Standarte" }
+	  10 = { "%d. SS-Standarte" }
+	  11 = { "%d. SS-Standarte" }
+	  12 = { "%d. SS-Standarte" }
+	  13 = { "%d. SS-Standarte" }
+	  14 = { "%d. SS-Standarte" }
+	  15 = { "%d. SS-Standarte" }
+	  16 = { "%d. SS-Standarte" }
+	  17 = { "%d. SS-Standarte" }
+	  18 = { "%d. SS-Standarte" }
+	  19 = { "%d. SS-Standarte" }
+	  20 = { "%d. SS-Standarte" }
+	}
+  }
+  
