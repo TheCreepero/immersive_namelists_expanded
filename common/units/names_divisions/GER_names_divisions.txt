@@ -182,7 +182,6 @@ GER_Inf_01 =
 		123 = { "%d. Infanterie-Division" }
 		122 = { "%d. Infanterie-Division" }
 		137 = { "%d. Infanterie-Division" }
-		100 = { "%d. leichte Infanterie-Division" }
 		126 = { "%d. Infanterie-Division" }
 		125 = { "%d. Infanterie-Division" }
 		129 = { "%d. Infanterie-Division" }
@@ -196,13 +195,10 @@ GER_Inf_01 =
 		333 = { "%d. Infanterie-Division" }
 		340 = { "%d. Infanterie-Division" }
 		337 = { "%d. Infanterie-Division" }
-		99 = { "%d. leichte Infanterie-Division" }
 		342 = { "%d. Infanterie-Division" }
 		335 = { "%d. Infanterie-Division" }
 		106 = { "%d. Infanterie-Division" }
 		320 = { "%d. Infanterie-Division" }
-		97 = { "%d. leichte Infanterie-Division" }
-		101 = { "%d. leichte Infanterie-Division" }
 		110 = { "%d. Infanterie-Division" }
 		112 = { "%d. Infanterie-Division" }
 		113 = { "%d. Infanterie-Division" }
@@ -247,33 +243,12 @@ GER_Inf_01 =
 		346 = { "%d. Infanterie-Division" }
 		344 = { "%d. Infanterie-Division" }
 		343 = { "%d. Infanterie-Division" }
-		909 = { "Luftwaffen-Feld-Division 1" }
-		910 = { "Luftwaffen-Feld-Division 2" }
-		911 = { "Luftwaffen-Feld-Division 3" }
-		912 = { "Luftwaffen-Feld-Division 4" }
-		914 = { "Luftwaffen-Feld-Division 6" }
-		913 = { "Luftwaffen-Feld-Division 5" }
-		915 = { "Luftwaffen-Feld-Division 7" }
-		917 = { "Luftwaffen-Feld-Division 9" }
-		919 = { "Luftwaffen-Feld-Division 11" }
-		920 = { "Luftwaffen-Feld-Division 12" }
-		923 = { "Luftwaffen-Feld-Division 15" }
 		347 = { "%d. Infanterie-Division" }
-		916 = { "Luftwaffen-Feld-Division 8" }
 		326 = { "%d. Infanterie-Division" }
 		338 = { "%d. Infanterie-Division" }
-		921 = { "Luftwaffen-Feld-Division 13" }
-		922 = { "Luftwaffen-Feld-Division 14" }
 		334 = { "%d. Infanterie-Division" }
-		918 = { "Luftwaffen-Feld-Division 10" }
-		924 = { "Luftwaffen-Feld-Division 16" }
-		925 = { "Luftwaffen-Feld-Division 17" }
-		926 = { "Luftwaffen-Feld-Division 18" }
-		929 = { "Luftwaffen-Feld-Division 21" }
 		282 = { "%d. Infanterie-Division" }
 		355 = { "%d. Infanterie-Division" }
-		927 = { "Luftwaffen-Feld-Division 19" }
-		928 = { "Luftwaffen-Feld-Division 20" }
 		356 = { "%d. Infanterie-Division" }
 		264 = { "%d. Infanterie-Division" }
 		265 = { "%d. Infanterie-Division" }
@@ -312,21 +287,8 @@ GER_Inf_01 =
 		64 = { "%d. Infanterie-Division" }
 		226 = { "%d. Infanterie-Division" }
 		232 = { "%d. Infanterie-Division" }
-		541 = { "%d. Grenadier-Division" }
-		544 = { "%d. Grenadier-Division" }
-		545 = { "%d. Grenadier-Division" }
-		547 = { "%d. Grenadier-Division" }
-		548 = { "%d. Grenadier-Division" }
-		549 = { "%d. Grenadier-Division" }
-		551 = { "%d. Grenadier-Division" }
-		553 = { "%d. Grenadier-Division" }
-		558 = { "%d. Grenadier-Division" }
-		559 = { "%d. Grenadier-Division" }
-		561 = { "%d. Grenadier-Division" }
-		562 = { "%d. Grenadier-Division" }
 		70 = { "%d. Infanterie-Division" }
 		542 = { "%d. Infanterie-Division" }
-		563 = { "%d. Grenadier-Division" }
 		148 = { "%d. Infanterie-Division" }
 		189 = { "%d. Infanterie-Division" }
 		159 = { "%d. Infanterie-Division" }
@@ -337,27 +299,11 @@ GER_Inf_01 =
 		203 = { "%d. Infanterie-Division" }
 		41 = { "%d. Infanterie-Division" }
 		281 = { "%d. Infanterie-Division" }
-		303 = { "Infanterie-Division 'Döberitz'" }
-		309 = { "Infanterie-Division 'Berlin'" }
-		947 = { "1. Marine-Infanterie-Division" }
-		153 = { "%d. Grenadier-Division" }
 		154 = { "%d. Infanterie-Division" }
 		155 = { "%d. Infanterie-Division" }
-		948 = { "2. Marine-Infanterie-Division" }
-		324 = { "Infanterie-Division 'Hamburg'" }
 		160	= { "%d. Infanterie-Division" }
 		166 = { "%d. Infanterie-Division" }
-		949 = { "3. Marine-Infanterie-Division" }
 		156 = { "%d. Infanterie-Division" }
-		903 = { "Infanterie-Division 'Potsdam'" }
-		904 = { "Infanterie-Division 'Scharnhorst'" }
-		905 = { "Infanterie-Division 'Ulrich von Hutten'" }
-		901 = { "Infanterie-Division 'Friedrich Ludwig Jahn'" }
-		907 = { "Infanterie-Division 'Theodor Körner'" }
-		906 = { "Infanterie-Division 'Schlageter'" }
-		930 = { "1. Luftwaffen-Ausbildungs-Division" }
-		900 = { "Infanterie-Division 'Ferdinand von Schill'" }
-		902 = { "Infanterie-Division 'Güstrow'" }
 		
 		# divisions are put in the order they were raised, which was NOT consecutive historically due to the vagaries of the German mobilization system
 		# leaving out 250. Infanterie-Division (Azul) as the existence of this division depends upon a not guaranteed Francoist victory in Spain, plus can be simulated by expeditionary forces
@@ -458,59 +404,6 @@ GER_ALTINF_01 =
 	}
 }
 
-GER_VOLKSGRENADIER_01 = { 
-	name = "Volks-Grenadier Divisions"
-	for_countries = { GER }
-	can_use = { always = yes }
-	division_types = { "infantry" }
-	fallback_name = "%d. Volks-Grenadier-Division"
-	link_numbering_with = { GER_Inf_01 }
-	ordered = {
-	  1 = { "%d. Volks-Grenadier-Division" }
-	  2 = { "%d. Volks-Grenadier-Division" }
-	  3 = { "%d. Volks-Grenadier-Division" }
-	  4 = { "%d. Volks-Grenadier-Division" }
-	  5 = { "%d. Volks-Grenadier-Division" }
-	  6 = { "%d. Volks-Grenadier-Division" }
-	  7 = { "%d. Volks-Grenadier-Division" }
-	  8 = { "%d. Volks-Grenadier-Division" }
-	  9 = { "%d. Volks-Grenadier-Division" }
-	  10 = { "%d. Volks-Grenadier-Division" }
-	  11 = { "%d. Volks-Grenadier-Division" }
-	  12 = { "%d. Volks-Grenadier-Division" }
-	  13 = { "%d. Volks-Grenadier-Division" }
-	  14 = { "%d. Volks-Grenadier-Division" }
-	  15 = { "%d. Volks-Grenadier-Division" }
-	  16 = { "%d. Volks-Grenadier-Division" }
-	  17 = { "%d. Volks-Grenadier-Division" }
-	  18 = { "%d. Volks-Grenadier-Division" }
-	  19 = { "%d. Volks-Grenadier-Division" }
-	  20 = { "%d. Volks-Grenadier-Division" }
-	  21 = { "%d. Volks-Grenadier-Division" }
-	  22 = { "%d. Volks-Grenadier-Division" }
-	  23 = { "%d. Volks-Grenadier-Division" }
-	  24 = { "%d. Volks-Grenadier-Division" }
-	  25 = { "%d. Volks-Grenadier-Division" }
-	  26 = { "%d. Volks-Grenadier-Division" }
-	  27 = { "%d. Volks-Grenadier-Division" }
-	  28 = { "%d. Volks-Grenadier-Division" }
-	  29 = { "%d. Volks-Grenadier-Division" }
-	  30 = { "%d. Volks-Grenadier-Division" }
-	  31 = { "%d. Volks-Grenadier-Division" }
-	  32 = { "%d. Volks-Grenadier-Division" }
-	  33 = { "%d. Volks-Grenadier-Division" }
-	  34 = { "%d. Volks-Grenadier-Division" }
-	  35 = { "%d. Volks-Grenadier-Division" }
-	  36 = { "%d. Volks-Grenadier-Division" }
-	  37 = { "%d. Volks-Grenadier-Division" }
-	  38 = { "%d. Volks-Grenadier-Division" }
-	  39 = { "%d. Volks-Grenadier-Division" }
-	  40 = { "%d. Volks-Grenadier-Division" }
-	}
-  }
-  
-
-
 GER_LTINF_01 = 
 {
 	name = "Light Infantry Divisions"
@@ -609,7 +502,7 @@ GER_MOT_02 =
 	# Names with numbers (only one number per entry)
 	ordered =
 	{
-		1 = { "SS-Verfügungstruppe" }
+		1 = { "%d. Infanterie-Division (mot.)" }
 		2 = { "%d. Infanterie-Division (mot.)" }
 		13 = { "%d. Infanterie-Division (mot.)" }
 		20 = { "%d. Infanterie-Division (mot.)" }
@@ -1663,64 +1556,7 @@ GER_KAMPFGRUPPE_01 =
     }
 }
 
-GER_GAR_02 = 
-{
-    name = "Occupation HQ (City)"
 
-    for_countries = { GER }
-
-    can_use = { always = yes }
-
-    division_types = { "infantry" }
-
-    fallback_name = "Garnisonkommando"
-
-    unordered =
-    {
-        1 = { "Garnisonkommando Berlin" }
-        2 = { "Garnisonkommando Paris" }
-        3 = { "Garnisonkommando Brüssel" }
-        4 = { "Garnisonkommando Kopenhagen" }
-        5 = { "Garnisonkommando Prag" }
-        6 = { "Garnisonkommando Warschau" }
-        7 = { "Garnisonkommando Oslo" }
-        8 = { "Garnisonkommando Wien" }
-        9 = { "Garnisonkommando Budapest" }
-        10 = { "Garnisonkommando Athen" }
-        11 = { "Garnisonkommando Riga" }
-        12 = { "Garnisonkommando Belgrad" }
-        13 = { "Garnisonkommando Rom" }
-        14 = { "Garnisonkommando Amsterdam" }
-        15 = { "Garnisonkommando Luxemburg" }
-        16 = { "Garnisonkommando Sofia" }
-        17 = { "Garnisonkommando Helsinki" }
-        18 = { "Garnisonkommando Zagreb" }
-        19 = { "Garnisonkommando Tallinn" }
-        20 = { "Garnisonkommando Vilnius" }
-		21 = { "Garnisonkommando Ljubljana" }
-		22 = { "Garnisonkommando Tirana" }
-		23 = { "Garnisonkommando Madrid" }
-		24 = { "Garnisonkommando Lissabon" }
-		25 = { "Garnisonkommando Dublin" }
-		26 = { "Garnisonkommando Reykjavik" }
-		27 = { "Garnisonkommando Stockholm" }
-		28 = { "Garnisonkommando Bern" }
-		29 = { "Garnisonkommando Ankara" }
-		30 = { "Garnisonkommando Kairo" }
-		31 = { "Garnisonkommando Teheran" }
-		32 = { "Garnisonkommando Bagdad" }
-		33 = { "Garnisonkommando Kabul" }
-		34 = { "Garnisonkommando Moskau" }
-		35 = { "Garnisonkommando Kiew" }
-		36 = { "Garnisonkommando Minsk" }
-		37 = { "Garnisonkommando Algier" }
-		38 = { "Garnisonkommando Tunis" }
-		39 = { "Garnisonkommando Rabat" }
-		40 = { "Garnisonkommando Dakar" }
-		
-		
-    }
-}
 
 
 
