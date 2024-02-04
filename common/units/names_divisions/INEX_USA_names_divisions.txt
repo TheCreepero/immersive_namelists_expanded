@@ -1287,3 +1287,23 @@ USA_DEF_01 =
 	}
 }
 
+USA_RANGER_FORCE_01 = { 
+	name = "Ranger Force"
+	for_countries = { USA }
+	can_use = { always = yes }
+	division_types = { "mountaineers" "paratrooper" "infantry" }
+	fallback_name = "%dth Ranger Force"
+	ordered = {
+	  1 = { "%dst Ranger Force" }
+	  2 = { "%dnd Ranger Force" }
+	  3 = { "%drd Ranger Force" }
+	  4 = { "%dth Ranger Force" }
+	  5 = { "%dth Ranger Force" }
+	  6 = { "%dth Ranger Force" }
+	  7 = { "%dth Ranger Force" }
+	  8 = { "%dth Ranger Force" }
+	  9 = { "%dth Ranger Force" }
+	  10 = { "%dth Ranger Force" }
+	}
+  }
+  

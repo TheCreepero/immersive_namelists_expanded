@@ -1521,3 +1521,23 @@ ENG_INDEPENDENT_BRIGADES_01 = {
     }
 }
 
+UK_SPECIAL_SERVICE_BRIGADE_01 = { 
+	name = "Special Service Brigade"
+	for_countries = { ENG }
+	can_use = { always = yes }
+	division_types = { "infantry" "paratrooper" "mountaineers" }
+	fallback_name = "%dth Special Service Brigade"
+	ordered = {
+	  1 = { "%dst Special Service Brigade" }
+	  2 = { "%dnd Special Service Brigade" }
+	  3 = { "%drd Special Service Brigade" }
+	  4 = { "%dth Special Service Brigade" }
+	  5 = { "%dth Special Service Brigade" }
+	  6 = { "%dth Special Service Brigade" }
+	  7 = { "%dth Special Service Brigade" }
+	  8 = { "%dth Special Service Brigade" }
+	  9 = { "%dth Special Service Brigade" }
+	  10 = { "%dth Special Service Brigade" }
+	}
+  }
+  
