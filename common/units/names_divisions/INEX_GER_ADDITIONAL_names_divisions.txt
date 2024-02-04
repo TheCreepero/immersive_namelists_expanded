@@ -535,3 +535,33 @@ GER_VOLKSSTURM_BATAILLONS_01 = {
     40 = { "%d. Volkssturm-Bataillon" }
   }
 }
+
+GER_FLAK_DIVISION_01 = { 
+  name = "Flak Divisions"
+  for_countries = { GER }
+  can_use = { always = yes }
+  division_types = { "infantry" }
+  fallback_name = "%d. Flak-Division"
+  ordered = {
+    1 = { "%d. Flak-Division" }
+    2 = { "%d. Flak-Division" }
+    3 = { "%d. Flak-Division" }
+    4 = { "%d. Flak-Division" }
+    5 = { "%d. Flak-Division" }
+    6 = { "%d. Flak-Division" }
+    7 = { "%d. Flak-Division" }
+    8 = { "%d. Flak-Division" }
+    9 = { "%d. Flak-Division 'Stalingrad'" }
+    10 = { "%d. Flak-Division" }
+    11 = { "%d. Flak-Division" }
+    12 = { "%d. Flak-Division" }
+    13 = { "%d. Flak-Division" }
+    14 = { "%d. Flak-Division" }
+    15 = { "%d. Flak-Division" }
+    16 = { "%d. Flak-Division" }
+    17 = { "%d. Flak-Division" }
+    18 = { "%d. Flak-Division" }
+    19 = { "%d. Flak-Division" }
+    20 = { "%d. Flak-Division" }
+  }
+}
