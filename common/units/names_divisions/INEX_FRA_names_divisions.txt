@@ -1126,3 +1126,104 @@ FRA_DEF_01 =
 		30 = { "Division de la Défense Nationale (Metz)" }
 	}
 }
+
+FRA_INF_METRO_01 = { 
+	name = "Post-Liberation Infantry Divisions"
+	for_countries = { FRA }
+	can_use = { always = yes }
+	division_types = { "infantry" }
+	fallback_name = "%dème Divisions d'Infanterie Métropolitaine"
+	ordered = {
+	  1 = { "1ère Divisions d'Infanterie Métropolitaine" }
+	  2 = { "2ème Divisions d'Infanterie Métropolitaine" }
+	  3 = { "3ème Divisions d'Infanterie Métropolitaine" }
+	  4 = { "4ème Divisions d'Infanterie Métropolitaine" }
+	  5 = { "5ème Divisions d'Infanterie Métropolitaine" }
+	  6 = { "6ème Divisions d'Infanterie Métropolitaine" }
+	  7 = { "7ème Divisions d'Infanterie Métropolitaine" }
+	  8 = { "8ème Divisions d'Infanterie Métropolitaine" }
+	  9 = { "9ème Divisions d'Infanterie Métropolitaine" }
+	  10 = { "10ème Divisions d'Infanterie Métropolitaine" }
+	  11 = { "11ème Divisions d'Infanterie Métropolitaine" }
+	  12 = { "12ème Divisions d'Infanterie Métropolitaine" }
+	  13 = { "13ème Divisions d'Infanterie Métropolitaine" }
+	  14 = { "14ème Divisions d'Infanterie Métropolitaine" }
+	  15 = { "15ème Divisions d'Infanterie Métropolitaine" }
+	  16 = { "16ème Divisions d'Infanterie Métropolitaine" }
+	  17 = { "17ème Divisions d'Infanterie Métropolitaine" }
+	  18 = { "18ème Divisions d'Infanterie Métropolitaine" }
+	  19 = { "19ème Divisions d'Infanterie Métropolitaine" }
+	  20 = { "20ème Divisions d'Infanterie Métropolitaine" }
+	  21 = { "21ème Divisions d'Infanterie Métropolitaine" }
+	  22 = { "22ème Divisions d'Infanterie Métropolitaine" }
+	  23 = { "23ème Divisions d'Infanterie Métropolitaine" }
+	  24 = { "24ème Divisions d'Infanterie Métropolitaine" }
+	  25 = { "25ème Divisions d'Infanterie Métropolitaine" }
+	  26 = { "26ème Divisions d'Infanterie Métropolitaine" }
+	  27 = { "27ème Divisions d'Infanterie Métropolitaine" }
+	  28 = { "28ème Divisions d'Infanterie Métropolitaine" }
+	  29 = { "29ème Divisions d'Infanterie Métropolitaine" }
+	  30 = { "30ème Divisions d'Infanterie Métropolitaine" }
+	  31 = { "31ème Divisions d'Infanterie Métropolitaine" }
+	  32 = { "32ème Divisions d'Infanterie Métropolitaine" }
+	  33 = { "33ème Divisions d'Infanterie Métropolitaine" }
+	  34 = { "34ème Divisions d'Infanterie Métropolitaine" }
+	  35 = { "35ème Divisions d'Infanterie Métropolitaine" }
+	  36 = { "36ème Divisions d'Infanterie Métropolitaine" }
+	  37 = { "37ème Divisions d'Infanterie Métropolitaine" }
+	  38 = { "38ème Divisions d'Infanterie Métropolitaine" }
+	  39 = { "39ème Divisions d'Infanterie Métropolitaine" }
+	  40 = { "40ème Divisions d'Infanterie Métropolitaine" }
+	}
+  }
+
+  FRA_INF_DECISION_01 = { 
+	name = "Divisions d'Infanterie de Décision"
+	for_countries = { FRA }
+	can_use = { always = yes }
+	division_types = { "infantry" }
+	fallback_name = "%dème Divisions d'Infanterie de Décision"
+	ordered = {
+	  1 = { "1ère Divisions d'Infanterie de Décision" }
+	  2 = { "%dème Divisions d'Infanterie de Décision" }
+	  3 = { "%dème Divisions d'Infanterie de Décision" }
+	  4 = { "%dème Divisions d'Infanterie de Décision" }
+	  5 = { "%dème Divisions d'Infanterie de Décision" }
+	  6 = { "%dème Divisions d'Infanterie de Décision" }
+	  7 = { "%dème Divisions d'Infanterie de Décision" }
+	  8 = { "%dème Divisions d'Infanterie de Décision" }
+	  9 = { "%dème Divisions d'Infanterie de Décision" }
+	  10 = { "%dème Divisions d'Infanterie de Décision" }
+	  11 = { "%dème Divisions d'Infanterie de Décision" }
+	  12 = { "%dème Divisions d'Infanterie de Décision" }
+	  13 = { "%dème Divisions d'Infanterie de Décision" }
+	  14 = { "%dème Divisions d'Infanterie de Décision" }
+	  15 = { "%dème Divisions d'Infanterie de Décision" }
+	  16 = { "%dème Divisions d'Infanterie de Décision" }
+	  17 = { "%dème Divisions d'Infanterie de Décision" }
+	  18 = { "%dème Divisions d'Infanterie de Décision" }
+	  19 = { "%dème Divisions d'Infanterie de Décision" }
+	  20 = { "%dème Divisions d'Infanterie de Décision" }
+	  21 = { "%dème Divisions d'Infanterie de Décision" }
+	  22 = { "%dème Divisions d'Infanterie de Décision" }
+	  23 = { "%dème Divisions d'Infanterie de Décision" }
+	  24 = { "%dème Divisions d'Infanterie de Décision" }
+	  25 = { "%dème Divisions d'Infanterie de Décision" }
+	  26 = { "%dème Divisions d'Infanterie de Décision" }
+	  27 = { "%dème Divisions d'Infanterie de Décision" }
+	  28 = { "%dème Divisions d'Infanterie de Décision" }
+	  29 = { "%dème Divisions d'Infanterie de Décision" }
+	  30 = { "%dème Divisions d'Infanterie de Décision" }
+	  31 = { "%dème Divisions d'Infanterie de Décision" }
+	  32 = { "%dème Divisions d'Infanterie de Décision" }
+	  33 = { "%dème Divisions d'Infanterie de Décision" }
+	  34 = { "%dème Divisions d'Infanterie de Décision" }
+	  35 = { "%dème Divisions d'Infanterie de Décision" }
+	  36 = { "%dème Divisions d'Infanterie de Décision" }
+	  37 = { "%dème Divisions d'Infanterie de Décision" }
+	  38 = { "%dème Divisions d'Infanterie de Décision" }
+	  39 = { "%dème Divisions d'Infanterie de Décision" }
+	  40 = { "%dème Divisions d'Infanterie de Décision" }
+	}
+  }
+  
