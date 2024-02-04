@@ -649,3 +649,35 @@ FIN_PAR_01 =
 		# FIN didn't have any Airborne divisions.  Have independent sequence.
 	}
 }
+FIN_SVFK_01 = {
+    name = "SFK Companies"
+    for_countries = { FIN }
+    can_use = { always = yes }
+    division_types = { "infantry" }
+    fallback_name = "%d. Skyttekompaniet"
+    ordered = {
+        1 = { "%d. Skyttekompaniet" }
+        2 = { "%d. Skyttekompaniet" }
+        3 = { "%d. Skyttekompaniet" }
+        4 = { "%d. Jägarkompaniet" }
+        5 = { "%d. Tunga Kompaniet" }
+        6 = { "%d. Skyttekompaniet" }
+        7 = { "%d. Skyttekompaniet" }
+        8 = { "%d. Skyttekompaniet" }
+        9 = { "%d. Skyttekompaniet" }
+    }
+}
+FIN_SVFK_02 = {
+    name = "SFK Battle Groups"
+    for_countries = { FIN }
+    can_use = { always = yes }
+    division_types = { "infantry" }
+    fallback_name = "%s Stridsgruppen"
+    ordered = {
+        1 = { "%s Stridsgruppen" }
+        2 = { "%s Stridsgruppen" }
+        3 = { "%s Stridsgruppen" }
+        4 = { "%s Stridsgruppen" }
+        5 = { "%s Stridsgruppen" }
+    }
+}
