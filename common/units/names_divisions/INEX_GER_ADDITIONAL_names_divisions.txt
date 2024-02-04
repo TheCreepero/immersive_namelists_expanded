@@ -234,7 +234,7 @@ GER_GRENADIER_DIVISION_01 =
     
 GER_GAR_02 = 
 {
-    name = "Garrison Commands (City)"
+    name = "City Garrisons"
 
     for_countries = { GER }
 
@@ -484,4 +484,54 @@ GER_KAMPFGRUPPE_01 =
         59 = { "Kampfgruppe Engelbrecht" }
         60 = { "Kampfgruppe Erdmannsdorff" }
     }
+}
+
+GER_VOLKSSTURM_BATAILLONS_01 = { 
+  name = "Volkssturm Battalions"
+  for_countries = { GER }
+  can_use = { always = yes }
+  division_types = { "militia" }
+  fallback_name = "%d. Volkssturm-Bataillon"
+  ordered = {
+    1 = { "%d. Volkssturm-Bataillon" }
+    2 = { "%d. Volkssturm-Bataillon" }
+    3 = { "%d. Volkssturm-Bataillon" }
+    4 = { "%d. Volkssturm-Bataillon" }
+    5 = { "%d. Volkssturm-Bataillon" }
+    6 = { "%d. Volkssturm-Bataillon" }
+    7 = { "%d. Volkssturm-Bataillon" }
+    8 = { "%d. Volkssturm-Bataillon" }
+    9 = { "%d. Volkssturm-Bataillon" }
+    10 = { "%d. Volkssturm-Bataillon" }
+    11 = { "%d. Volkssturm-Bataillon" }
+    12 = { "%d. Volkssturm-Bataillon" }
+    13 = { "%d. Volkssturm-Bataillon" }
+    14 = { "%d. Volkssturm-Bataillon" }
+    15 = { "%d. Volkssturm-Bataillon" }
+    16 = { "%d. Volkssturm-Bataillon" }
+    17 = { "%d. Volkssturm-Bataillon" }
+    18 = { "%d. Volkssturm-Bataillon" }
+    19 = { "%d. Volkssturm-Bataillon" }
+    20 = { "%d. Volkssturm-Bataillon" }
+    21 = { "%d. Volkssturm-Bataillon" }
+    22 = { "%d. Volkssturm-Bataillon" }
+    23 = { "%d. Volkssturm-Bataillon" }
+    24 = { "%d. Volkssturm-Bataillon" }
+    25 = { "%d. Volkssturm-Bataillon" }
+    26 = { "%d. Volkssturm-Bataillon" }
+    27 = { "%d. Volkssturm-Bataillon" }
+    28 = { "%d. Volkssturm-Bataillon" }
+    29 = { "%d. Volkssturm-Bataillon" }
+    30 = { "%d. Volkssturm-Bataillon" }
+    31 = { "%d. Volkssturm-Bataillon" }
+    32 = { "%d. Volkssturm-Bataillon" }
+    33 = { "%d. Volkssturm-Bataillon" }
+    34 = { "%d. Volkssturm-Bataillon" }
+    35 = { "%d. Volkssturm-Bataillon" }
+    36 = { "%d. Volkssturm-Bataillon" }
+    37 = { "%d. Volkssturm-Bataillon" }
+    38 = { "%d. Volkssturm-Bataillon" }
+    39 = { "%d. Volkssturm-Bataillon" }
+    40 = { "%d. Volkssturm-Bataillon" }
+  }
 }
