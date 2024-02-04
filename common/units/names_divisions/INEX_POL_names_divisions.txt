@@ -1181,7 +1181,7 @@ POL_GAR_02 =
 
 POL_GAR_03 = 
 {
-	name = "Border Guard Regiment"
+	name = "Border Guard Regiment 2"
 
 	for_countries = { POL }
 
@@ -1200,5 +1200,26 @@ POL_GAR_03 =
 	{
 		1 = { "1 Pułk Kawalerii KOP" }
 
+	}
+}
+POL_BSKRZ = {
+	name = "Świętokrzyska Brigade"
+
+	for_countries = { POL }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" "militia" }
+
+	# Number reservation system will tie to another group.
+	# link_numbering_with = { POL_ARTY_002 }
+
+	fallback_name = "%d Brygada 'NSZ'"
+
+	# Names with numbers (only one number per entry). 
+	# It's okay to have gaps in numbering.
+	ordered =
+	{
+		1 = { "Brygada Świętokrzyska" }
 	}
 }
