@@ -5,5 +5,5 @@ tags={
 	"Historical"
 }
 name="Immersive Namelists Expanded"
-supported_version="1.13.6"
+supported_version="1.14.5"
 remote_file_id="2967389401"
