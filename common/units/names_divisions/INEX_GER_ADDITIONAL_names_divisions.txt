@@ -17,6 +17,56 @@ GER_SCHWERE_PANZERABTEILUNG_01 = {
       510 = { "schwere Panzerabteilung %d" }
     }
   }
+
+  GER_SCHWERE_PANZERABTEILUNG_02 = { 
+    name = "Schwere Panzerabteilung (Short)"
+    for_countries = { GER }
+    can_use = { always = yes }
+    division_types = { "armor" }
+    fallback_name = "sPz Abt %d"
+    ordered = {
+      501 = { "sPz Abt %d" }
+      502 = { "sPz Abt %d" }
+      503 = { "sPz Abt %d" }
+      504 = { "sPz Abt %d" }
+      505 = { "sPz Abt %d" }
+      506 = { "sPz Abt %d" }
+      507 = { "sPz Abt %d" }
+      508 = { "sPz Abt %d" }
+      509 = { "sPz Abt %d" }
+      510 = { "sPz Abt %d" }
+    }
+  }
+
+  GER_PANZERARTILLERIE_DIVISION_01 = { 
+    name = "Panzerartillerie Division"
+    for_countries = { GER }
+    can_use = { always = yes }
+    division_types = { "armor" }
+    fallback_name = "%d. Panzerartillerie-Division"
+    ordered = {
+      1 = { "%d. Panzerartillerie-Division" }
+      2 = { "%d. Panzerartillerie-Division" }
+      3 = { "%d. Panzerartillerie-Division" }
+      4 = { "%d. Panzerartillerie-Division" }
+      5 = { "%d. Panzerartillerie-Division" }
+      6 = { "%d. Panzerartillerie-Division" }
+      7 = { "%d. Panzerartillerie-Division" }
+      8 = { "%d. Panzerartillerie-Division" }
+      9 = { "%d. Panzerartillerie-Division" }
+      10 = { "%d. Panzerartillerie-Division" }
+      11 = { "%d. Panzerartillerie-Division" }
+      12 = { "%d. Panzerartillerie-Division" }
+      13 = { "%d. Panzerartillerie-Division" }
+      14 = { "%d. Panzerartillerie-Division" }
+      15 = { "%d. Panzerartillerie-Division" }
+      16 = { "%d. Panzerartillerie-Division" }
+      17 = { "%d. Panzerartillerie-Division" }
+      18 = { "%d. Panzerartillerie-Division" }
+      19 = { "%d. Panzerartillerie-Division" }
+      20 = { "%d. Panzerartillerie-Division" }
+    }
+  }
   
   GER_RESERVE_DIVISION_01 = { 
     name = "Reserve Divisions"
@@ -409,6 +459,7 @@ GER_FORT_01 =
         105 = { "Festungs-Division 'Dalvik'" }
     }
 }
+
 GER_KAMPFGRUPPE_01 =
 {
     name = "Kampfgruppes"

@@ -131,7 +131,16 @@ GER_SS_02 =
 		38 = { "%d. SS-Infanterie-Division 'Eisenzahn'" }
 		39 = { "%d. SS-Infanterie-Division 'Wildeiche'" }
 		40 = { "%d. SS-Infanterie-Division 'Harz'" }
-	
+		41 = { "%d. SS-Infanterie-Division 'Bayern'" }
+		42 = { "%d. SS-Infanterie-Division 'Schwarze Adler'" }
+		43 = { "%d. SS-Infanterie-Division 'Eisenschwert'" }
+		44 = { "%d. SS-Infanterie-Division 'Donner'" }
+		45 = { "%d. SS-Infanterie-Division 'Blitz'" }
+		46 = { "%d. SS-Infanterie-Division 'Sturmvogel'" }
+		47 = { "%d. SS-Infanterie-Division 'Adler'" }
+		48 = { "%d. SS-Infanterie-Division 'Löwe'" }
+		49 = { "%d. SS-Infanterie-Division 'Greif'" }
+		50 = { "%d. SS-Infanterie-Division 'Drache'" }
 	}
 }
 
