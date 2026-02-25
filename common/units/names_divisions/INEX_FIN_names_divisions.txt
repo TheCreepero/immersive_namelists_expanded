@@ -306,45 +306,45 @@ FIN_MEC_01 =
 	# Number reservation system will tie to another group.
 	link_numbering_with = { FIN_MOT_01 }
 
-	fallback_name = "%d. PsJääkäridivisioona"
+	fallback_name = "%d. Panssarijääkäridivisioona"
 
 	# Names with numbers (only one number per entry). 
 	# It's okay to have gaps in numbering.
 	ordered =
 	{
-		1 = { "PsJääkäridivisioona" }
-		2 = { "%d. PsJääkäridivisioona" }
-		3 = { "%d. PsJääkäridivisioona" }
-		4 = { "%d. PsJääkäridivisioona" }
-		5 = { "%d. PsJääkäridivisioona" }
-		6 = { "%d. PsJääkäridivisioona" }
-		7 = { "%d. PsJääkäridivisioona" }
-		8 = { "%d. PsJääkäridivisioona" }
-		9 = { "%d. PsJääkäridivisioona" }
-		10 = { "%d. PsJääkäridivisioona" }
-		11 = { "%d. PsJääkäridivisioona" }
-		12 = { "%d. PsJääkäridivisioona" }
-		13 = { "%d. PsJääkäridivisioona" }
-		14 = { "%d. PsJääkäridivisioona" }
-		15 = { "%d. PsJääkäridivisioona" }
-		16 = { "%d. PsJääkäridivisioona" }
-		17 = { "%d. PsJääkäridivisioona" }
-		18 = { "%d. PsJääkäridivisioona" }
-		19 = { "%d. PsJääkäridivisioona" }
-		20 = { "%d. PsJääkäridivisioona" }
-		21 = { "%d. PsJääkäridivisioona" }
-		22 = { "%d. PsJääkäridivisioona" }
-		23 = { "%d. PsJääkäridivisioona" }
-		24 = { "%d. PsJääkäridivisioona" }
-		25 = { "%d. PsJääkäridivisioona" }
-		26 = { "%d. PsJääkäridivisioona" }
-		27 = { "%d. PsJääkäridivisioona" }
-		28 = { "%d. PsJääkäridivisioona" }
-		29 = { "%d. PsJääkäridivisioona" }
-		30 = { "%d. PsJääkäridivisioona" }
-		31 = { "%d. PsJääkäridivisioona" }
-		32 = { "%d. PsJääkäridivisioona" }
-		33 = { "%d. PsJääkäridivisioona" }
+		1 = { "Panssarijääkäridivisioona" }
+		2 = { "%d. Panssarijääkäridivisioona" }
+		3 = { "%d. Panssarijääkäridivisioona" }
+		4 = { "%d. Panssarijääkäridivisioona" }
+		5 = { "%d. Panssarijääkäridivisioona" }
+		6 = { "%d. Panssarijääkäridivisioona" }
+		7 = { "%d. Panssarijääkäridivisioona" }
+		8 = { "%d. Panssarijääkäridivisioona" }
+		9 = { "%d. Panssarijääkäridivisioona" }
+		10 = { "%d. Panssarijääkäridivisioona" }
+		11 = { "%d. Panssarijääkäridivisioona" }
+		12 = { "%d. Panssarijääkäridivisioona" }
+		13 = { "%d. Panssarijääkäridivisioona" }
+		14 = { "%d. Panssarijääkäridivisioona" }
+		15 = { "%d. Panssarijääkäridivisioona" }
+		16 = { "%d. Panssarijääkäridivisioona" }
+		17 = { "%d. Panssarijääkäridivisioona" }
+		18 = { "%d. Panssarijääkäridivisioona" }
+		19 = { "%d. Panssarijääkäridivisioona" }
+		20 = { "%d. Panssarijääkäridivisioona" }
+		21 = { "%d. Panssarijääkäridivisioona" }
+		22 = { "%d. Panssarijääkäridivisioona" }
+		23 = { "%d. Panssarijääkäridivisioona" }
+		24 = { "%d. Panssarijääkäridivisioona" }
+		25 = { "%d. Panssarijääkäridivisioona" }
+		26 = { "%d. Panssarijääkäridivisioona" }
+		27 = { "%d. Panssarijääkäridivisioona" }
+		28 = { "%d. Panssarijääkäridivisioona" }
+		29 = { "%d. Panssarijääkäridivisioona" }
+		30 = { "%d. Panssarijääkäridivisioona" }
+		31 = { "%d. Panssarijääkäridivisioona" }
+		32 = { "%d. Panssarijääkäridivisioona" }
+		33 = { "%d. Panssarijääkäridivisioona" }
 
 		# None historically.
 	}
@@ -400,7 +400,8 @@ FIN_GAR_01 =
         29 = { "%d. Pirkanmaan Paikallisjoukot" }
         30 = { "%d. Etelä-Savon Paikallisjoukot" }
 
-		# FIN converted some of its groups or similar into divisions for the continuation war, but they fought as garrison units or therabouts for the winter war.  Thus, the INF and GAR lists are linked, with the idea that converting one of the starting "Ryhmä's" into a div will give it a sensible div number (although these groups have not been matched to their division numbers, and this approach may or may not be appropriate).
+		# FIN converted some of its groups or similar into divisions for the continuation war, but they fought as garrison units or therabouts for the winter war.  
+		# Thus, the INF and GAR lists are linked, with the idea that converting one of the starting "Ryhmä's" into a div will give it a sensible div number (although these groups have not been matched to their division numbers, and this approach may or may not be appropriate).
 	}
 }
 

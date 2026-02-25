@@ -902,6 +902,29 @@ ITA_MAR_01 = {
 	} 
 } 
 
+ITA_MAR_02 = {
+    name = "Marine Division"
+    
+    for_countries = { ITA }
+
+    can_use = { always = yes }
+
+    division_types = { "marines" }
+
+    fallback_name = "%do Divisione Marina"
+
+    link_numbering_with = { ITA_MAR_01 } 
+
+    ordered = {
+        1 = { "1a Divisione Marina 'San Marco'" }
+        2 = { "2a Divisione Marina 'Venezia'" }
+        3 = { "3a Divisione Marina 'Napoli'" }
+        4 = { "4a Divisione Marina 'Genova'" }
+        5 = { "5a Divisione Marina 'Palermo'" }
+    }
+}
+
+
 ITA_MNT_01 = { 
 	name = "Mountain Division" 
 
@@ -1065,40 +1088,40 @@ ITA_ROM_01 =
 
 	can_use = { always = yes }
 
-	division_types = { "infantry" }
+	division_types = { "infantry" "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
 
-	fallback_name = "Legio"
+	fallback_name = "Legio %sa"
 
-	ordered = {
-		1 = { "Legio I 'Italica'" }
-		2 = { "Legio II 'Augusta'" }
-		3 = { "Legio III 'Cyrenaica'" }
-		4 = { "Legio IV 'Flavia Felix'" }
-		5 = { "Legio V 'Alaudae'" }
-		6 = { "Legio VI 'Ferrata'" }
-		7 = { "Legio VII 'Claudia'" }
-		8 = { "Legio VIII 'Augusta'" }
-		9 = { "Legio IX 'Hispana'" }
-		10 = { "Legio X 'Gemina'" }
-		11 = { "Legio XI 'Claudia'" }
-		12 = { "Legio XII 'Fulminata'" }
-		13 = { "Legio XIII 'Gemina'" }
-		14 = { "Legio XIV 'Gemina'" }
-		15 = { "Legio XV 'Apollinaris'" }
-		16 = { "Legio XVI 'Gallica'" }
-		17 = { "Legio XVII" }
-		18 = { "Legio XVIII" }
-		19 = { "Legio XIX" }
-		20 = { "Legio XX 'Valeria Victrix'" }
-		21 = { "Legio XXI 'Rapax'" }
-		22 = { "Legio XXII 'Deiotariana'" }
-		23 = { "Legio XXIII" }
-		24 = { "Legio XXIV" }
-		25 = { "Legio XXV" }
-		26 = { "Legio XXVI" }
-		27 = { "Legio XXVII" }
-		28 = { "Legio XXVIII" }
-		29 = { "Legio XXIX" }
-		30 = { "Legio XXX 'Ulpia Victrix'" }
-	}
+    ordered = {
+        1 = { "Legio %s Germanica" }
+        2 = { "Legio %s Augusta" }
+        3 = { "Legio %s Gallica" }
+        4 = { "Legio %s Macedonica" }
+        5 = { "Legio %s Alaudae" }
+        6 = { "Legio %s Ferrata" }
+        7 = { "Legio %s Claudia" }
+        8 = { "Legio %s Augusta" }
+        9 = { "Legio %s Hispana" }
+        10 = { "Legio %s Equestris" }
+        11 = { "Legio %s Claudia" }
+        12 = { "Legio %s Fulminata" }
+        13 = { "Legio %s Gemina" }
+        14 = { "Legio %s Gemina Martia Victrix" }
+        15 = { "Legio %s Apollinaris" }
+        16 = { "Legio %s Gallica" }
+        17 = { "Legio %s" } 
+        18 = { "Legio %s" }
+        19 = { "Legio %s" }
+        20 = { "Legio %s Valeria Victrix" }
+        21 = { "Legio %s Rapax" }
+        22 = { "Legio %s Primigenia" }
+        23 = { "Legio %s" }
+        24 = { "Legio %s" }
+        25 = { "Legio %s" }
+        26 = { "Legio %s" }
+        27 = { "Legio %s" }
+        28 = { "Legio %s" }
+        29 = { "Legio %s" }
+        30 = { "Legio %s Ulpia Victrix" }
+    }
 }

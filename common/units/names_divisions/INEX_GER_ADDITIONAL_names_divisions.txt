@@ -4,6 +4,7 @@ GER_SCHWERE_PANZERABTEILUNG_01 = {
     can_use = { always = yes }
     division_types = { "armor" }
     fallback_name = "schwere Panzerabteilung %d"
+    link_numbering_with = { GER_SCHWERE_PANZERABTEILUNG_02 }
     ordered = {
       501 = { "schwere Panzerabteilung %d" }
       502 = { "schwere Panzerabteilung %d" }
@@ -24,6 +25,7 @@ GER_SCHWERE_PANZERABTEILUNG_01 = {
     can_use = { always = yes }
     division_types = { "armor" }
     fallback_name = "sPz Abt %d"
+    link_numbering_with = { GER_SCHWERE_PANZERABTEILUNG_01 }
     ordered = {
       501 = { "sPz Abt %d" }
       502 = { "sPz Abt %d" }
