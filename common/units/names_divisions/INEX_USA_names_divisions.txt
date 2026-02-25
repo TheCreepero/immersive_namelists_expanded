@@ -751,11 +751,11 @@ USA_MNT_01 =
 	# It's okay to have gaps in numbering.
 	ordered =
 	{
-		10 = { "%dth Mountain Division" }
-		14 = { "%dth Mountain Division" }
-		22 = { "%dnd Mountain Division" }
-		50 = { "%dth Mountain Division" }
-		55 = { "%dth Mountain Division" }
+		10 = { "%dth 'Cascade' Division" }
+		14 = { "%dth 'Absaroka' Division" }
+		22 = { "%dnd 'Shenandoah' Division" }
+		50 = { "%dth 'Bighorn' Division" }
+		55 = { "%dth 'Black Hills' Division" }
 		12 = { "%dth 'Rocky Mountain' Division" }
 		15 = { "%dth 'Appalachia' Division" }
 		16 = { "%dth 'Smoky Mountains' Division" }
@@ -763,25 +763,25 @@ USA_MNT_01 =
 		20 = { "%dth 'Sierra Nevada' Division" }
 		48 = { "%dth 'Stone Mountain' Division" }
 		49 = { "%dth 'Granite' Division" }
-		51 = { "%dst Mountain Division" }
+		51 = { "%dst 'Shasta' Division" }
 		52 = { "%dnd 'Catskills' Division" }
-		53 = { "%drd Mountain Division" }
+		53 = { "%drd 'Adirondack' Division" }
 		54 = { "%dth 'Wasatch Mountains' Division" }
 		56 = { "%dth 'Yellowstone' Division" }
-		57 = { "%dth Mountain Division" }
+		57 = { "%dth 'Laramie' Division" }
 		58 = { "%dth 'Yosemite' Division" }
-		59 = { "%dth Mountain Division" }
+		59 = { "%dth 'Bitterroot' Division" }
 		204 = { "%dth 'Mountain Lions' Division" }
-		279 = { "%dth Mountain Division" }
-		280 = { "%dth Mountain Division" }
-		281 = { "%dst Mountain Division" }
-		282 = { "%dnd Mountain Division" }
-		283 = { "%drd Mountain Division" }
-		284 = { "%dth Mountain Division" }
-		285 = { "%dth Mountain Division" }
-		286 = { "%dth Mountain Division" }
-		287 = { "%dth Mountain Division" }
-		288 = { "%dth Mountain Division" }
+		279 = { "%dth 'Ozark' Division" }
+		280 = { "%dth 'Ouachita' Division" }
+		281 = { "%dst 'Allegheny' Division" }
+		282 = { "%dnd 'Berkshire' Division" }
+		283 = { "%drd 'Sangre de Cristo' Division" }
+		284 = { "%dth 'Beartooth' Division" }
+		285 = { "%dth 'Madison' Division" }
+		286 = { "%dth 'Gallatin' Division" }
+		287 = { "%dth 'Mission' Division" }
+		288 = { "%dth 'Teton' Division" }
 	}
 }
 
@@ -1033,6 +1033,16 @@ USA_MIL_01 = {
         8 = { "%dth 'Liberty' Division" }
         9 = { "%dth 'Freedom' Division" }
         10 = { "%dth 'Citizen' Division" }
+        11 = { "%dth 'Reserve' Division" }
+        12 = { "%dth 'Colonial' Division" }
+        13 = { "%dth 'Guard' Division" }
+        14 = { "%dth 'Frontier' Division" }
+        15 = { "%dth 'Volunteer' Division" }
+        16 = { "%dth 'Sentinel' Division" }
+        17 = { "%dth 'Defenders' Division" }
+        18 = { "%dth 'Rangers' Division" }
+        19 = { "%dth 'Protectors' Division" }
+        20 = { "%dth 'Vigilant' Division" }
     }
 }
 USA_SHOCK_01 = { 
