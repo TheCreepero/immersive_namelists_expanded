@@ -135,7 +135,7 @@ This is not a complete list of included namelists! Just some examples.
 
 [b]Estonia[/b]
 - Historical Regiments: 1.–10. Jalaväerügement and elite battalions ([i]Kuperjanovi[/i], [i]Sakala[/i], [i]Kalevlaste Maleva[/i], [i]Scoutsrügement[/i], [i]Vahirügement[/i])
-- Kaitseliit Malevad: Territorial Defence League formations covering all Estonian counties and cities (e.g. [i]Tallinna malev[/i], [i]Tartu malev[/i], [i]Narva malev[/i])
+- Defense Formations: Territorial Defence League formations covering all Estonian counties and cities (e.g. [i]Tallinna malev[/i], [i]Tartu malev[/i], [i]Narva malev[/i])
 - Armored Trains & Armor: Renowned armored trains ([i]Kapten Irv[/i], broad & narrow gauge) and legendary armored cars ([i]Suur Tõll[/i], [i]Tasuja[/i], [i]Kalevipoeg[/i])
 - Coastal Defense & Marines: Naval Fortresses ([i]Aegna Merekindlus[/i], [i]Naissaare Merekindlus[/i], [i]Suuropi Merekindlus[/i]) and marine landing formations
 
