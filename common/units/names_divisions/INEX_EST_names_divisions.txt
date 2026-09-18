@@ -1,0 +1,247 @@
+# Division template historical names system for Estonia (EST).
+# Immersive Namelists Expanded (INEX)
+#
+# Covers:
+# 1. EST_REG_01: Historical Infantry Regiments & Elite Battalions (1.–10. Jalaväerügement, Kuperjanovi, Sakala, Kalevlaste Maleva, Scoutsrügement, Vahirügement)
+# 2. EST_KL_01: Kaitseliit Territorial Malevad (All 15 county and city Defence League formations, plus specialized urban malevkonnad)
+# 3. EST_ARM_02: Armored & Mechanized Formations (Armored trains "Kapten Irv" & LRSR 1–6, legendary armored cars "Suur Tõll", "Tasuja", "Kalevipoeg", Auto-tankirügement)
+# 4. EST_MAR_02: Coastal Defense & Marines (Naval Fortresses Aegna, Naissaare, Suuropi, and Eesti Meredessantpataljon)
+
+EST_REG_01 = 
+{
+	name = "Infantry Regiment"
+
+	for_countries = { EST }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	# Number reservation system will tie to another group.
+	link_numbering_with = { EST_REG_01 }
+
+	fallback_name = "%d. Jalaväerügement"
+
+	# Names with numbers (only one number per entry). 
+	# It's okay to have gaps in numbering.
+	ordered =
+	{
+		1 = { "1. Jalaväerügement" }
+		2 = { "2. Jalaväerügement" }
+		3 = { "3. Jalaväerügement" }
+		4 = { "4. Jalaväerügement" }
+		5 = { "5. Jalaväerügement" }
+		6 = { "6. Jalaväerügement" }
+		7 = { "7. Jalaväerügement" }
+		8 = { "8. Jalaväerügement" }
+		9 = { "9. Jalaväerügement" }
+		10 = { "10. Jalaväerügement" }
+		11 = { "Kuperjanovi Partisanide Rügement" }
+		12 = { "Sakala Partisanide Rügement" }
+		13 = { "Kalevlaste Maleva Jalaväerügement" }
+		14 = { "Scoutsrügement" }
+		15 = { "Tallinna Vahirügement" }
+		16 = { "Ingeri Jalaväepolk" }
+		17 = { "Balti Pataljon" }
+		18 = { "Peipsi Rannakaitsepataljon" }
+		19 = { "Viljandi Kaitsepataljon" }
+		20 = { "Järvamaa Kaitsepataljon" }
+		21 = { "Tartu Kaitsepataljon" }
+		22 = { "Pärnu Kaitsepataljon" }
+		23 = { "Saaremaa Kaitsepataljon" }
+		24 = { "Narva Kaitsepataljon" }
+		25 = { "Võru Kaitsepataljon" }
+		26 = { "%d. Jalaväerügement" }
+		27 = { "%d. Jalaväerügement" }
+		28 = { "%d. Jalaväerügement" }
+		29 = { "%d. Jalaväerügement" }
+		30 = { "%d. Jalaväerügement" }
+		31 = { "%d. Jalaväerügement" }
+		32 = { "%d. Jalaväerügement" }
+		33 = { "%d. Jalaväerügement" }
+		34 = { "%d. Jalaväerügement" }
+		35 = { "%d. Jalaväerügement" }
+		36 = { "%d. Jalaväerügement" }
+		37 = { "%d. Jalaväerügement" }
+		38 = { "%d. Jalaväerügement" }
+		39 = { "%d. Jalaväerügement" }
+		40 = { "%d. Jalaväerügement" }
+		41 = { "%d. Jalaväerügement" }
+		42 = { "%d. Jalaväerügement" }
+		43 = { "%d. Jalaväerügement" }
+		44 = { "%d. Jalaväerügement" }
+		45 = { "%d. Jalaväerügement" }
+		46 = { "%d. Jalaväerügement" }
+		47 = { "%d. Jalaväerügement" }
+		48 = { "%d. Jalaväerügement" }
+		49 = { "%d. Jalaväerügement" }
+		50 = { "%d. Jalaväerügement" }
+	}
+}
+
+EST_KL_01 = 
+{
+	name = "Defense Formations"
+
+	for_countries = { EST }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	# Number reservation system will tie to another group.
+	link_numbering_with = { EST_KL_01 }
+
+	fallback_name = "%d. Kaitseliidu Malev"
+
+	# Names with numbers (only one number per entry). 
+	# It's okay to have gaps in numbering.
+	ordered =
+	{
+		1 = { "Kaitseliidu Tallinna malev" }
+		2 = { "Kaitseliidu Tartu malev" }
+		3 = { "Kaitseliidu Narva malev" }
+		4 = { "Kaitseliidu Pärnu malev" }
+		5 = { "Kaitseliidu Harju malev" }
+		6 = { "Kaitseliidu Järva malev" }
+		7 = { "Kaitseliidu Viru malev" }
+		8 = { "Kaitseliidu Lääne malev" }
+		9 = { "Kaitseliidu Saaremaa malev" }
+		10 = { "Kaitseliidu Sakalamaa malev" }
+		11 = { "Kaitseliidu Pärnumaa malev" }
+		12 = { "Kaitseliidu Tartumaa malev" }
+		13 = { "Kaitseliidu Valgamaa malev" }
+		14 = { "Kaitseliidu Võrumaa malev" }
+		15 = { "Kaitseliidu Petserimaa malev" }
+		16 = { "Kaitseliidu Toompea malevkond" }
+		17 = { "Kaitseliidu Raudtee malevkond" }
+		18 = { "Kaitseliidu Sadama malevkond" }
+		19 = { "Kaitseliidu Nõmme malevkond" }
+		20 = { "Kaitseliidu Põhja malevkond" }
+		21 = { "Kaitseliidu Lõuna malevkond" }
+		22 = { "Kaitseliidu Ida malevkond" }
+		23 = { "Kaitseliidu Tehniline malevkond" }
+		24 = { "Kaitseliidu Õppurmalevkond" }
+		25 = { "Kaitseliidu Alutaguse malev" }
+		26 = { "%d. Kaitseliidu Malev" }
+		27 = { "%d. Kaitseliidu Malev" }
+		28 = { "%d. Kaitseliidu Malev" }
+		29 = { "%d. Kaitseliidu Malev" }
+		30 = { "%d. Kaitseliidu Malev" }
+		31 = { "%d. Kaitseliidu Malev" }
+		32 = { "%d. Kaitseliidu Malev" }
+		33 = { "%d. Kaitseliidu Malev" }
+		34 = { "%d. Kaitseliidu Malev" }
+		35 = { "%d. Kaitseliidu Malev" }
+	}
+}
+
+EST_ARM_02 = 
+{
+	name = "Armored & Mobile Divisions"
+
+	for_countries = { EST }
+
+	can_use = { always = yes }
+
+	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" "motorized" "mechanized" }
+
+	# Number reservation system will tie to another group.
+	link_numbering_with = { EST_ARM_02 }
+
+	fallback_name = "%d. Soomusdiviis"
+
+	# Names with numbers (only one number per entry). 
+	# It's okay to have gaps in numbering.
+	ordered =
+	{
+		1 = { "Soomusdiviis 'Kapten Irv'" }
+		2 = { "Soomusbrigaad 'Suur Tõll'" }
+		3 = { "Soomusbrigaad 'Tasuja'" }
+		4 = { "Soomusbrigaad 'Kalevipoeg'" }
+		5 = { "Soomusbrigaad 'Estonia'" }
+		6 = { "Soomuskolonn 'Vanapagan'" }
+		7 = { "Soomuskolonn 'Wahur'" }
+		8 = { "Soomuskolonn 'Toonela'" }
+		9 = { "Soomuskolonn 'Pisuhänd'" }
+		10 = { "Soomuskolonn 'Wibulane'" }
+		11 = { "Auto-tankirügement" }
+		12 = { "Soomusrongirügement" }
+		13 = { "1. Laiarööpmeline Soomusrong 'Kapten Irv'" }
+		14 = { "2. Laiarööpmeline Soomusrong" }
+		15 = { "3. Laiarööpmeline Soomusrong" }
+		16 = { "4. Laiarööpmeline Soomusrong" }
+		17 = { "5. Laiarööpmeline Soomusrong" }
+		18 = { "6. Laiarööpmeline Soomusrong" }
+		19 = { "1. Kitsarööpmeline Soomusrong" }
+		20 = { "2. Kitsarööpmeline Soomusrong" }
+		21 = { "3. Kitsarööpmeline Soomusrong" }
+		22 = { "4. Kitsarööpmeline Soomusrong" }
+		23 = { "5. Kitsarööpmeline Soomusrong" }
+		24 = { "1. Tankipataljon" }
+		25 = { "2. Tankipataljon" }
+		26 = { "%d. Soomusdiviis" }
+		27 = { "%d. Soomusdiviis" }
+		28 = { "%d. Soomusdiviis" }
+		29 = { "%d. Soomusdiviis" }
+		30 = { "%d. Soomusdiviis" }
+		31 = { "%d. Soomusdiviis" }
+		32 = { "%d. Soomusdiviis" }
+		33 = { "%d. Soomusdiviis" }
+		34 = { "%d. Soomusdiviis" }
+		35 = { "%d. Soomusdiviis" }
+	}
+}
+
+EST_MAR_02 = 
+{
+	name = "Coastal Defense & Marines"
+
+	for_countries = { EST }
+
+	can_use = { always = yes }
+
+	division_types = { "marine" }
+
+	# Number reservation system will tie to another group.
+	link_numbering_with = { EST_MAR_02 }
+
+	fallback_name = "%d. Meredessantrügement"
+
+	# Names with numbers (only one number per entry). 
+	# It's okay to have gaps in numbering.
+	ordered =
+	{
+		1 = { "Aegna Merekindlus" }
+		2 = { "Naissaare Merekindlus" }
+		3 = { "Suuropi Merekindlus" }
+		4 = { "Eesti Meredessantpataljon" }
+		5 = { "1. Meredessantrügement" }
+		6 = { "2. Meredessantrügement" }
+		7 = { "Saaremaa Rannakaitsepataljon" }
+		8 = { "Hiiumaa Rannakaitsepataljon" }
+		9 = { "Peipsi Laevastiku Dessantpataljon" }
+		10 = { "Viimsi Rannakaitsepatarei" }
+		11 = { "Kakumäe Rannakaitsepatarei" }
+		12 = { "Sõrve Rannakaitsepatarei" }
+		13 = { "Tahkuna Rannakaitsepatarei" }
+		14 = { "Ruhnu Rannakaitsekomando" }
+		15 = { "Pakri Rannakaitsekomando" }
+		16 = { "3. Meredessantrügement" }
+		17 = { "4. Meredessantrügement" }
+		18 = { "5. Meredessantrügement" }
+		19 = { "6. Meredessantrügement" }
+		20 = { "7. Meredessantrügement" }
+		21 = { "%d. Meredessantrügement" }
+		22 = { "%d. Meredessantrügement" }
+		23 = { "%d. Meredessantrügement" }
+		24 = { "%d. Meredessantrügement" }
+		25 = { "%d. Meredessantrügement" }
+		26 = { "%d. Meredessantrügement" }
+		27 = { "%d. Meredessantrügement" }
+		28 = { "%d. Meredessantrügement" }
+		29 = { "%d. Meredessantrügement" }
+		30 = { "%d. Meredessantrügement" }
+	}
+}
+

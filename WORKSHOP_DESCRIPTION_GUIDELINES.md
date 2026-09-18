@@ -58,6 +58,7 @@ This document serves as an instruction and reference guide for maintaining and u
 | `INEX_GER_SS_names_divisions.txt` | Germany (SS) | `GER` | Included (Historical & ahistorical SS lists, SS-Standarte) |
 | `INEX_GER_ADDITIONAL_names_divisions.txt` | Germany (Extra) | `GER` | Included (Garrison, Kampfgruppen, Heavy tanks, Flak, Luftwaffe, Panzerartillerie) |
 | `INEX_SWE_names_divisions.txt` | Sweden | `SWE` | Included (Provincial brigades, Pansarbrigader, Ski/Arctic, Caroleans, Volunteers) |
+| `INEX_EST_names_divisions.txt` | Estonia | `EST` | Included (Historical & elite regiments, Kaitseliit malevad, Armored trains/cars, Coastal fortresses) |
 | `INEX_LIT_names_divisions.txt` | Lithuania | `LIT` | Included (Grand Duke/Royal regiments, Iron Wolf cavalry, AA/Armored teams) |
 | `INEX_FRA_names_divisions.txt` | France | `FRA` | Included (National Guard, Metropolitan, Heavy/Décision, Nicknames) |
 | `INEX_ENG_names_divisions.txt` | United Kingdom | `ENG` | Included (Home Guard, Royal Guard, Independent, Commandos, Alt-history) |
@@ -132,6 +133,12 @@ This is not a complete list of included namelists! Just some examples.
 - Artillery Regiments & Infantry Brigades
 - Territorial, District, and Border Garrisons
 
+[b]Estonia[/b]
+- Historical Regiments: 1.–10. Jalaväerügement and elite battalions ([i]Kuperjanovi[/i], [i]Sakala[/i], [i]Kalevlaste Maleva[/i], [i]Scoutsrügement[/i], [i]Vahirügement[/i])
+- Kaitseliit Malevad: Territorial Defence League formations covering all Estonian counties and cities (e.g. [i]Tallinna malev[/i], [i]Tartu malev[/i], [i]Narva malev[/i])
+- Armored Trains & Armor: Renowned armored trains ([i]Kapten Irv[/i], broad & narrow gauge) and legendary armored cars ([i]Suur Tõll[/i], [i]Tasuja[/i], [i]Kalevipoeg[/i])
+- Coastal Defense & Marines: Naval Fortresses ([i]Aegna Merekindlus[/i], [i]Naissaare Merekindlus[/i], [i]Suuropi Merekindlus[/i]) and marine landing formations
+
 [b]France[/b]
 - Named Infantry Divisions: Same as the regular infantry namelist, but with nicknames
 - National Guard Divisions: French cities as nicknames, e.g. "[i]1ère Division de la Garde Nationale 'Paris'[/i]"
@@ -185,6 +192,6 @@ This is not a complete list of included namelists! Just some examples.
 - Post-Austro-Hungarian countries!
 - More Poland!
 - Spain!
-- Remaining Baltic nations (Estonia & Latvia)!
+- Remaining Baltic nations (Latvia)!
 - More Italy!
 ```
