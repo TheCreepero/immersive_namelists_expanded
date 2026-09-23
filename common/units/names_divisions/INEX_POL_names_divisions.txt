@@ -1,4 +1,4 @@
-﻿# Division template historical names system. Is a new method of naming the divisions based on the names-group assigned to it's template.
+# Division template historical names system. Is a new method of naming the divisions based on the names-group assigned to it's template.
 # If we run out of all historical names, the names will be assigned in the old way.
 #
 # Each group has a made up tag. Use it if you want to append more, or replace existing names with the extra txt files (modding).
@@ -42,7 +42,7 @@ POL_GA_01 =
 	division_types = { "artillery" }
 
 	# Number reservation system will tie to another group.
-	link_numbering_with = { POL_GA_01 }
+	#link_numbering_with = { POL_GA_01 }
 
 	fallback_name = "%d Grupa Artyleryi"
 
@@ -75,7 +75,7 @@ POL_AA_01 =
 	division_types = { "anti_air" }
 
 	# Number reservation system will tie to another group.
-	link_numbering_with = { POL_AA_01 }
+	#link_numbering_with = { POL_AA_01 }
 
 	fallback_name = "%d Pułk Artyleryi Przeciwlotniczej"
 
@@ -107,7 +107,7 @@ POL_AA_02 =
 	division_types = { "anti_air" }
 
 	# Number reservation system will tie to another group.
-	link_numbering_with = { POL_AA_02 }
+	#link_numbering_with = { POL_AA_02 }
 
 	fallback_name = "%d Dywizjon Artyleryi Przeciwlotniczej"
 
@@ -135,16 +135,16 @@ POL_AA_02 =
 
 POL_POLIC_01 = 
 {
-	name = "Military Polce"
+	name = "Military Police"
 
 	for_countries = { POL }
 
 	can_use = { always = yes }
 
-	division_types = { "military_police" }
+	division_types = { "cavalry" "infantry" }
 
 	# Number reservation system will tie to another group.
-	link_numbering_with = { POL_GA_01 }
+	#link_numbering_with = { POL_GA_01 }
 
 	fallback_name = "%d Dywizjon Żandarmerii"
 
@@ -166,7 +166,7 @@ POL_POLIC_01 =
 	}
 }
 
-POL_MAR_01 = 
+POL_MOT_02 = 
 {
 	name = "Motorized Division"
 
@@ -341,7 +341,7 @@ POL_PSZ_01 =
 	division_types = { "infantry" }
 
 	# Number reservation system will tie to another group.
-	link_numbering_with = { POL_PSZ_01 }
+	#link_numbering_with = { POL_PSZ_01 }
 
 	fallback_name = "%d Dywizja Piechoty (PSZ)"
 
@@ -366,7 +366,7 @@ POL_PSZ_02 =
 	division_types = { "infantry" }
 
 	# Number reservation system will tie to another group.
-	link_numbering_with = { POL_PSZ_02 }
+	#link_numbering_with = { POL_PSZ_02 }
 
 	fallback_name = "%d Dywizja Piechoty (USSR)"
 
@@ -394,7 +394,7 @@ POL_PSZ_03 =
 	division_types = { "infantry" }
 
 	# Number reservation system will tie to another group.
-	link_numbering_with = { POL_PSZ_03 }
+	#link_numbering_with = { POL_PSZ_03 }
 
 	fallback_name = "%d Dywizja Piechoty (P2C)"
 
@@ -420,7 +420,7 @@ POL_LWP_01 =
 	division_types = { "infantry" }
 
 	# Number reservation system will tie to another group.
-	link_numbering_with = { POL_LWP_01 }
+	#link_numbering_with = { POL_LWP_01 }
 
 	fallback_name = "%d Dywizja Piechoty (LWP)"
 
@@ -456,7 +456,7 @@ POL_LWP_02 =
 	division_types = { "cavalry" }
 
 	# Number reservation system will tie to another group.
-	link_numbering_with = { POL_LWP_02 }
+	#link_numbering_with = { POL_LWP_02 }
 
 	fallback_name = "%d Dywizja Piechoty (LWP)"
 
@@ -478,7 +478,7 @@ POL_LWP_03 =
 	division_types = { "artillery" }
 
 	# Number reservation system will tie to another group.
-	link_numbering_with = { POL_LWP_03 }
+	#link_numbering_with = { POL_LWP_03 }
 
 	fallback_name = "%d Dywizja Piechoty (LWP)"
 
@@ -505,7 +505,7 @@ POL_AWL_03 =
 	division_types = { "artillery" }
 
 	# Number reservation system will tie to another group.
-	link_numbering_with = { POL_AWL_03 }
+	#link_numbering_with = { POL_AWL_03 }
 
 	fallback_name = "%d Dywizja Artylerii"
 
@@ -513,7 +513,7 @@ POL_AWL_03 =
 	# It's okay to have gaps in numbering.
 	ordered =
 	{	
-		1 = { "2 Łużycka Dywizja Artylerii" }
+		1 = { "1 Dywizja Artylerii" }
 		2 = { "2 Łużycka Dywizja Artylerii" }
 		3 = { "6 Dywizja Artylerii Przełamania" }
 		4 = { "8 Dywizja Artylerii Przełamania" }
@@ -558,7 +558,7 @@ POL_LWP_00 =
 		15 = { "14 Dywizja Piechoty" }
 		16 = { "15 Dywizja Piechoty" }
 		17 = { "16 Kaszubska Dywizja Piechoty" }
-		18 = { "16 Kaszubska Dywizja Piechoty" }
+		18 = { "18 Dywizja Piechoty" }
 		19 = { "21 Dywizja Piechoty" }
 		20 = { "22 Dywizja Piechoty" }
 		21 = { "23 Dywizja Piechoty" }
@@ -584,7 +584,7 @@ POL_LWZ_00 =
 	division_types = { "mechanized" }
 
 	# Number reservation system will tie to another group.
-	link_numbering_with = { POL_LWZ_00 }
+	#link_numbering_with = { POL_LWZ_00 }
 
 	fallback_name = "%d Ludowa Dywizja Zmechanizowana"
 
@@ -687,7 +687,7 @@ POL_AK_01 =
 	division_types = { "infantry" }
 
 	# Number reservation system will tie to another group.
-	link_numbering_with = { POL_AK_01 }
+	#link_numbering_with = { POL_AK_01 }
 
 	fallback_name = "%d Dywizja Piechoty AK"
 
@@ -1202,7 +1202,7 @@ POL_GAR_03 =
 
 	}
 }
-POL_BSKRZ = {
+POL_BSKRZ_01 = {
 	name = "Świętokrzyska Brigade"
 
 	for_countries = { POL }

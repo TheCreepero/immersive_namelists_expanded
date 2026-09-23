@@ -65,7 +65,7 @@ This document serves as an instruction and reference guide for maintaining and u
 | `INEX_FIN_names_divisions.txt` | Finland | `FIN` | Included (Local troops, groups, detachments, Swedish Volunteers SFK) |
 | `INEX_POL_names_divisions.txt` | Poland | `POL` | Included (Home Army, PSZ, LWP, KOP Border Guards, Brygada Świętokrzyska) |
 | `INEX_ITA_names_divisions.txt` | Italy | `ITA` | Included (Partisans, Nicknames, Defense Brigades, Colonial, Legione Romana) |
-| `INEX_SOV_names_divisions.txt` | USSR | `SOV` | Included (NKVD, Guards Para, Artillery, Penal units, Trotskyist militias) |
+| `INEX_SOV_names_divisions.txt` | USSR | `SOV` | Included (NKVD, Guards Para, Artillery, Penal units, Cossacks) |
 
 ---
 
@@ -74,7 +74,7 @@ This document serves as an instruction and reference guide for maintaining and u
 ```bbcode
 More namelists! Used GPT-4 to speed up the creation process and help with translations.
 
-[quote=author] A new update at long last! Added Sweden and Lithuania, along with new namelists and improvements across existing nations! [/quote]
+[quote=author] A new update at long last! Added Sweden, Lithuania, and Estonia, along with new namelists and improvements across existing nations! [/quote]
 If you have any ideas for namelists, please leave them in the discussion thread!
 
 [h1]Info:[/h1]
@@ -177,7 +177,6 @@ This is not a complete list of included namelists! Just some examples.
 - Guards Paratroopers & Guards Airborne
 - Artillery Divisions
 - Penal Units (Shtrafbat)
-- Trotskyist Revolutionary Militias
 - Cossack Cavalry Divisions
 
 [h1]Planned:[/h1]

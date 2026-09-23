@@ -39,11 +39,28 @@ This skill provides step-by-step guidance for researching, scoping, authoring, a
    - **Mobile & Armored Heritage**: Check for armored trains (*soomusrongid*), named armored cars (*soomusautod*), ski/bicycle troops, or independent tank companies.
    - **Coastal Defense & Fortresses**: Coastal artillery fortresses (*Merekindlused*, *Kustartilleri*), archipelago commands, and marine amphibious detachments (*Meredessant*).
 
-### Vanilla Comparison
-1. Locate the vanilla namelist file in the game installation:
-   `C:\Gaming\Steam\steamapps\common\Hearts of Iron IV\common\units\names_divisions\<TAG>_names_divisions.txt`
-2. Inspect what unit types vanilla currently covers (typically just generic `%s Infantry Division` placeholders).
-3. Identify grammatical errors in vanilla (e.g., wrong cases like genitive/partitive instead of nominative, missing diacritics, awkward translations).
+### Vanilla Comparison & Interaction Rules
+1. **Automated Vanilla Inspection (Token-Efficient)**:
+   Instead of loading large, raw vanilla files into context, use the build script's built-in inspector:
+   ```powershell
+   powershell -File .\build.ps1 -InspectVanilla <TAG>
+   ```
+   - Automatically parses vanilla namelist groups, subunit types, fallbacks, and entry counts.
+   - Automatically scans `common/national_focus/` and `common/scripted_effects/` for any `division_names_group = <TAG>_*` references.
+   - To inspect a single specific group without reading the full file:
+     ```powershell
+     powershell -File .\build.ps1 -InspectVanilla <TAG> -Group <GROUP_TAG>
+     ```
+2. **Inspect Existing Coverage & Errors**:
+   - Check what unit types vanilla covers (often generic `%s Infantry Division` placeholders).
+   - Identify grammatical errors in vanilla (e.g., wrong cases like genitive/partitive instead of nominative, missing diacritics, awkward translations).
+3. **Additive Loading & Tag Overrides**:
+   - Files in `common/units/names_divisions/` are loaded additively by the game. Because INEX files are prefixed (`INEX_<TAG>_names_divisions.txt`), vanilla files remain active.
+   - If an INEX group shares the same tag as vanilla (e.g. `<TAG>_INF_01`), INEX **overrides** that vanilla group.
+   - If a tag is omitted from INEX, the vanilla definition continues to exist untouched in game.
+4. **Scripted References in Focus Trees & Events**:
+   - Check if any vanilla namelist tag is referenced by national focus trees (`common/national_focus/`) or scripted effects (`common/scripted_effects/`) via `division_names_group = <TAG>_<TYPE>_<NUM>`.
+   - Never copy empty vanilla stubs into INEX. If an empty vanilla tag is referenced by scripts (e.g. `SOV_INF_02`), omitting it from INEX is completely safe because the engine falls back to the vanilla definition. Only define the tag in INEX if actively providing a fully authored, non-empty namelist for it.
 
 ---
 
@@ -99,8 +116,8 @@ File location: `common/units/names_divisions/INEX_<TAG>_names_divisions.txt`
 
 	division_types = { "<unit_token_1>" "<unit_token_2>" }
 
-	# Number reservation system will tie to another group if needed
-	link_numbering_with = { <TAG>_<CATEGORY>_<NUM> }
+	# Number reservation system: only link to a DIFFERENT group if shared numbering is desired (e.g. motorized linking with regular infantry). Omit or comment out if not linking to another group. NEVER link a group to itself.
+	# link_numbering_with = { <OTHER_TAG_CATEGORY_NUM> }
 
 	fallback_name = "%d. <Fallback Name>"
 
@@ -116,10 +133,13 @@ File location: `common/units/names_divisions/INEX_<TAG>_names_divisions.txt`
 ```
 
 ### Important Syntax Rules:
-- Arguments must be wrapped in quotes `""`.
-- Use `%d` for Arabic numbers (`1.`, `2.`) and `%s` for Roman numerals (`I.`, `II.`).
-- Brackets `{}` must be strictly balanced.
-- Ensure clean UTF-8 encoding (no BOM).
+- **Encoding**: Ensure clean UTF-8 encoding without BOM.
+- **Quotes**: Arguments must be wrapped in matching double quotes `""`.
+- **Number Formats**: Use `%d` for Arabic numbers (`1.`, `2.`) and `%s` for Roman numerals (`I.`, `II.`). Always ensure `fallback_name` includes a `%d` or `%s` token so overflow units do not share identical names.
+- **Bracket Balance**: Brackets `{}` must be strictly balanced.
+- **Division Subunit Tokens**: In `division_types = { ... }`, specify only valid line subunit tokens (e.g., `"infantry"`, `"cavalry"`, `"motorized"`, `"mechanized"`, `"light_armor"`, `"medium_armor"`, `"heavy_armor"`, `"modern_armor"`, `"marine"`, `"mountaineers"`, `"paratrooper"`). Do not use `"armor"` or `"marines"`, and avoid support-only tokens like `"military_police"`.
+- **Ordered Blocks & Keys**: Each integer index in `ordered = { ... }` must be unique. Duplicate keys silently overwrite previous entries. Avoid leaving empty `ordered = { }` blocks.
+- **Link Numbering**: `link_numbering_with` is strictly for cross-referencing *external* groups to prevent duplicate division numbers. Never set a group to link with itself (`link_numbering_with = { GROUP_NAME }`).
 
 ---
 

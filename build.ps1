@@ -39,6 +39,15 @@
 .PARAMETER Clean
     Clean deployed mod files from Paradox mod directory and delete temporary zip archives.
 
+.PARAMETER InspectVanilla
+    Inspect vanilla Hearts of Iron IV namelists and scripted references for a country tag (e.g. -InspectVanilla LAT).
+
+.PARAMETER Group
+    Optional specific namelist group tag to excerpt directly when using -InspectVanilla (e.g. -Group SOV_INF_02).
+
+.PARAMETER Hoi4InstallDir
+    Custom path to the Hearts of Iron IV installation folder if installed in a non-standard directory.
+
 .PARAMETER ModDir
     Custom path to the Paradox Hearts of Iron IV mod directory. Defaults to standard Documents path.
 
@@ -100,6 +109,15 @@ param(
 
     [Parameter(ParameterSetName = 'Clean')]
     [switch]$Clean,
+
+    [Parameter(ParameterSetName = 'InspectVanilla', Mandatory = $true)]
+    [string]$InspectVanilla,
+
+    [Parameter(ParameterSetName = 'InspectVanilla')]
+    [string]$Group,
+
+    [Parameter(ParameterSetName = 'InspectVanilla')]
+    [string]$Hoi4InstallDir,
 
     [switch]$Validate,
     [switch]$NoValidate,
@@ -252,15 +270,65 @@ function Invoke-Validation {
 
     $checkedCount = 0
     foreach ($file in $namelistFiles) {
+        $fileHasError = $false
+
+        # Check UTF-8 BOM (GEMINI.md Rule 1: UTF-8 without BOM)
+        $bytes = [System.IO.File]::ReadAllBytes($file.FullName)
+        if ($bytes.Length -ge 3 -and $bytes[0] -eq 0xEF -and $bytes[1] -eq 0xBB -and $bytes[2] -eq 0xBF) {
+            Write-Err "$($file.Name): UTF-8 BOM detected! Files must be saved as UTF-8 without BOM."
+            $fileHasError = $true
+        }
+
         $lines = Get-Content $file.FullName
         # Strip comments
-        $cleanText = ($lines | ForEach-Object { $_ -replace '#.*$', '' }) -join "`n"
+        $cleanLines = @($lines | ForEach-Object { $_ -replace '#.*$', '' })
+        $cleanText = $cleanLines -join "`n"
 
+        # Check bracket balance
         $openCount  = ([regex]::Matches($cleanText, '\{')).Count
         $closeCount = ([regex]::Matches($cleanText, '\}')).Count
-
         if ($openCount -ne $closeCount) {
             Write-Err "$($file.Name): Bracket mismatch (Open: $openCount, Close: $closeCount)"
+            $fileHasError = $true
+        }
+
+        # Check double-quote parity
+        $quoteCount = ([regex]::Matches($cleanText, '"')).Count
+        if ($quoteCount % 2 -ne 0) {
+            Write-Err "$($file.Name): Unbalanced double quotes ($quoteCount quotes found)"
+            $fileHasError = $true
+        }
+
+        # Check for invalid division types
+        if ($cleanText -match 'division_types\s*=\s*\{[^}]*"(marines|armor)"') {
+            Write-Err "$($file.Name): Invalid division type token '$($Matches[1])' found in division_types"
+            $fileHasError = $true
+        }
+
+        # Check for empty ordered blocks
+        if ($cleanText -match 'ordered\s*=\s*\{\s*\}') {
+            Write-Err "$($file.Name): Empty ordered block detected"
+            $fileHasError = $true
+        }
+
+        # Check for duplicate indices within each ordered block
+        $orderedMatches = [regex]::Matches($cleanText, 'ordered\s*=\s*\{(?<content>[^}]*)\}')
+        foreach ($m in $orderedMatches) {
+            $block = $m.Groups['content'].Value
+            $indexMatches = [regex]::Matches($block, '(\d+)\s*=\s*"')
+            $seen = @{}
+            foreach ($im in $indexMatches) {
+                $idx = $im.Groups[1].Value
+                if ($seen.ContainsKey($idx)) {
+                    Write-Err "$($file.Name): Duplicate index $idx found in ordered block"
+                    $fileHasError = $true
+                } else {
+                    $seen[$idx] = $true
+                }
+            }
+        }
+
+        if ($fileHasError) {
             $hasErrors = $true
         } else {
             $checkedCount++
@@ -268,7 +336,7 @@ function Invoke-Validation {
     }
 
     if (-not $hasErrors) {
-        Write-Ok "All $checkedCount division namelist files passed bracket syntax validation."
+        Write-Ok "All $checkedCount division namelist files passed comprehensive syntax and structure validation."
     }
 
     return (-not $hasErrors)
@@ -327,6 +395,199 @@ function Install-SteamCmd {
     }
 }
 
+# --- Helper: Find Hearts of Iron IV Game Installation ---
+function Find-Hoi4Install {
+    param([string]$CustomPath)
+
+    if ($CustomPath -and (Test-Path (Join-Path $CustomPath "common\units\names_divisions"))) {
+        return (Resolve-Path $CustomPath).Path
+    }
+
+    $candidates = [System.Collections.Generic.List[string]]::new()
+    $candidates.Add("C:\Gaming\Steam\steamapps\common\Hearts of Iron IV")
+    $candidates.Add("C:\Program Files (x86)\Steam\steamapps\common\Hearts of Iron IV")
+    $candidates.Add("C:\Program Files\Steam\steamapps\common\Hearts of Iron IV")
+
+    # Read registry for SteamPath
+    try {
+        $regSteam = (Get-ItemProperty -Path "HKCU:\Software\Valve\Steam" -Name "SteamPath" -ErrorAction SilentlyContinue).SteamPath
+        if ($regSteam) {
+            $candidates.Add((Join-Path $regSteam "steamapps\common\Hearts of Iron IV"))
+            $vdf = Join-Path $regSteam "steamapps\libraryfolders.vdf"
+            if (Test-Path $vdf) {
+                $vdfRaw = Get-Content $vdf -Raw -ErrorAction SilentlyContinue
+                $libMatches = [regex]::Matches($vdfRaw, '"path"\s*"([^"]+)"')
+                foreach ($m in $libMatches) {
+                    $p = $m.Groups[1].Value -replace '\\\\', '\'
+                    $candidates.Add((Join-Path $p "steamapps\common\Hearts of Iron IV"))
+                }
+            }
+        }
+    } catch {}
+
+    foreach ($cand in $candidates) {
+        if ($cand -and (Test-Path (Join-Path $cand "common\units\names_divisions"))) {
+            return (Resolve-Path $cand).Path
+        }
+    }
+
+    return $null
+}
+
+# --- Action: Inspect Vanilla Namelists & Script References ---
+function Invoke-InspectVanilla {
+    param(
+        [string]$Tag,
+        [string]$TargetGroup,
+        [string]$CustomHoi4Dir
+    )
+
+    $hoi4Dir = Find-Hoi4Install -CustomPath $CustomHoi4Dir
+    if (-not $hoi4Dir) {
+        Write-Err "Could not locate Hearts of Iron IV game installation directory."
+        Write-Info "Specify the path using -Hoi4InstallDir '<path>'."
+        exit 1
+    }
+
+    $Tag = $Tag.ToUpper().Trim()
+    $targetFile = Join-Path $hoi4Dir "common\units\names_divisions\${Tag}_names_divisions.txt"
+    if (-not (Test-Path $targetFile)) {
+        Write-Err "Vanilla namelist file not found: $targetFile"
+        exit 1
+    }
+
+    $raw = [System.IO.File]::ReadAllText($targetFile, [System.Text.Encoding]::UTF8)
+    $lines = $raw -split '\r?\n'
+
+    $groups = [System.Collections.Generic.List[psobject]]::new()
+    $i = 0
+    while ($i -lt $lines.Length) {
+        $line = $lines[$i] -replace '#.*$', ''
+        $match = [regex]::Match($line, '^\s*([A-Za-z][A-Za-z0-9_]*)\s*=\s*\{?')
+        if ($match.Success -and $line.Trim() -notmatch '^(ordered|division_types|for_countries|can_use|link_numbering_with)\b') {
+            $gtag = $match.Groups[1].Value
+            $blockLines = [System.Collections.Generic.List[string]]::new()
+            $blockLines.Add($lines[$i])
+            $openB = ([regex]::Matches($line, '\{')).Count
+            $closeB = ([regex]::Matches($line, '\}')).Count
+            $braceCount = $openB - $closeB
+
+            $j = $i + 1
+            if ($openB -eq 0) {
+                while ($j -lt $lines.Length -and ($lines[$j] -replace '#.*$', '') -notmatch '\{') {
+                    $blockLines.Add($lines[$j])
+                    $j++
+                }
+                if ($j -lt $lines.Length) {
+                    $cleanJ = $lines[$j] -replace '#.*$', ''
+                    $blockLines.Add($lines[$j])
+                    $braceCount += ([regex]::Matches($cleanJ, '\{')).Count - ([regex]::Matches($cleanJ, '\}')).Count
+                    $j++
+                }
+            }
+
+            while ($j -lt $lines.Length -and $braceCount -gt 0) {
+                $cleanJ = $lines[$j] -replace '#.*$', ''
+                $blockLines.Add($lines[$j])
+                $braceCount += ([regex]::Matches($cleanJ, '\{')).Count - ([regex]::Matches($cleanJ, '\}')).Count
+                $j++
+            }
+
+            $blockText = $blockLines -join "`r`n"
+            $cleanBlock = $blockText -replace '(?m)#.*$', ''
+
+            $nameM = [regex]::Match($cleanBlock, 'name\s*=\s*"([^"]+)"')
+            $typesM = [regex]::Match($cleanBlock, 'division_types\s*=\s*\{([^}]*)\}')
+            $fallbackM = [regex]::Match($cleanBlock, 'fallback_name\s*=\s*"([^"]+)"')
+            $orderedM = [regex]::Match($cleanBlock, 'ordered\s*=\s*\{([^}]*)\}')
+            $linkM = [regex]::Match($cleanBlock, 'link_numbering_with\s*=\s*\{([^}]*)\}')
+
+            $orderedCount = 0
+            $samples = @()
+            if ($orderedM.Success) {
+                $entries = [regex]::Matches($orderedM.Groups[1].Value, '(\d+)\s*=\s*(?:\{\s*)?"([^"]+)"')
+                $orderedCount = $entries.Count
+                $samples = @($entries | Select-Object -First 3 | ForEach-Object { "$($_.Groups[1].Value)=$($_.Groups[2].Value)" })
+            }
+
+            $groups.Add([PSCustomObject]@{
+                Tag          = $gtag
+                Name         = if ($nameM.Success) { $nameM.Groups[1].Value } else { "N/A" }
+                Types        = if ($typesM.Success) { ($typesM.Groups[1].Value -replace '\s+', ' ').Trim() } else { "N/A" }
+                Fallback     = if ($fallbackM.Success) { $fallbackM.Groups[1].Value } else { "N/A" }
+                Link         = if ($linkM.Success) { ($linkM.Groups[1].Value -replace '\s+', ' ').Trim() } else { $null }
+                OrderedCount = $orderedCount
+                Samples      = $samples
+                Raw          = $blockText
+            })
+            $i = $j
+        } else {
+            $i++
+        }
+    }
+
+    if ($TargetGroup) {
+        $targetFound = $groups | Where-Object { $_.Tag -ieq $TargetGroup }
+        if (-not $targetFound) {
+            Write-Err "Group '$TargetGroup' not found in vanilla $Tag namelists!"
+            exit 1
+        }
+        Write-Host "`n--- Vanilla Excerpt: $($targetFound.Tag) ---" -ForegroundColor Cyan
+        Write-Host $targetFound.Raw.Trim()
+        return
+    }
+
+    Write-Step "Vanilla Namelist Groups for $Tag ($($groups.Count) groups found):"
+    foreach ($g in $groups) {
+        $linkStr = if ($g.Link) { " [links: $($g.Link)]" } else { "" }
+        $sampleStr = if ($g.Samples.Count -gt 0) { " (sample: $($g.Samples -join ', '))" } else { "" }
+        Write-Host "[$($g.Tag)] `"$($g.Name)`"$linkStr" -ForegroundColor Yellow
+        Write-Host "  Types:    $($g.Types)" -ForegroundColor Gray
+        Write-Host "  Fallback: $($g.Fallback)" -ForegroundColor Gray
+        Write-Host "  Ordered:  $($g.OrderedCount) entries$sampleStr" -ForegroundColor Gray
+    }
+
+    Write-Step "Checking scripted references across vanilla focus trees and scripted effects..."
+    $refDirs = @(
+        (Join-Path $hoi4Dir "common\national_focus"),
+        (Join-Path $hoi4Dir "common\scripted_effects")
+    )
+    $refRegex = [regex]"division_names_group\s*=\s*($Tag[A-Z0-9_]*)"
+    $foundRefs = [System.Collections.Generic.List[string]]::new()
+
+    foreach ($rd in $refDirs) {
+        if (-not (Test-Path $rd)) { continue }
+        $files = Get-ChildItem -Path $rd -Filter *.txt -Recurse
+        foreach ($f in $files) {
+            $fLines = [System.IO.File]::ReadAllLines($f.FullName, [System.Text.Encoding]::UTF8)
+            for ($ln = 0; $ln -lt $fLines.Length; $ln++) {
+                $rm = $refRegex.Match($fLines[$ln])
+                if ($rm.Success) {
+                    $rel = $f.FullName.Substring($hoi4Dir.Length + 1)
+                    $foundRefs.Add("  $($rel):$($ln + 1) -> division_names_group = $($rm.Groups[1].Value)")
+                }
+            }
+        }
+    }
+
+    if ($foundRefs.Count -gt 0) {
+        Write-Host "`nScripted references for $Tag* found:" -ForegroundColor Green
+        foreach ($r in $foundRefs) {
+            Write-Host $r -ForegroundColor Cyan
+        }
+    } else {
+        Write-Info "No scripted references found in national_focus or scripted_effects for $Tag*."
+    }
+}
+
+# --- Action: InspectVanilla ---
+if ($InspectVanilla) {
+    Invoke-InspectVanilla -Tag $InspectVanilla -TargetGroup $Group -CustomHoi4Dir $Hoi4InstallDir
+    $stopwatch.Stop()
+    Write-Info "Completed in $($stopwatch.Elapsed.TotalSeconds.ToString('0.00'))s"
+    exit 0
+}
+
 # --- Action: InstallSteamCmd ---
 if ($InstallSteamCmd) {
     $installed = Install-SteamCmd
@@ -336,7 +597,7 @@ if ($InstallSteamCmd) {
 }
 
 # --- Determine Actions ---
-$shouldValidate = $Validate -or (-not $NoValidate -and -not $Clean)
+$shouldValidate = $Validate -or (-not $NoValidate -and -not $Clean -and -not $InspectVanilla)
 if ($ValidateOnly) {
     $ok = Invoke-Validation
     $stopwatch.Stop()
@@ -544,7 +805,7 @@ if ($PublishSteam) {
 
     try {
         # Copy only actual mod files to staging
-        $excludeDirs = @('.git', '.github', '.vscode')
+        $excludeDirs = @('.git', '.github', '.vscode', '.agents', '.agent')
         $excludeFiles = @('*.bat', '*.ps1', '*.zip', '*.md', '.gitignore', '.gitattributes', '.steam_username')
         & robocopy.exe $RepoDir $stageContent /MIR /XD $excludeDirs /XF $excludeFiles /R:1 /W:1 /NDL /NP /NFL | Out-Null
 

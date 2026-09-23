@@ -2,7 +2,7 @@ GER_SCHWERE_PANZERABTEILUNG_01 = {
     name = "Schwere Panzerabteilung"
     for_countries = { GER }
     can_use = { always = yes }
-    division_types = { "armor" }
+    division_types = { "heavy_armor" "medium_armor" "modern_armor" }
     fallback_name = "schwere Panzerabteilung %d"
     link_numbering_with = { GER_SCHWERE_PANZERABTEILUNG_02 }
     ordered = {
@@ -23,7 +23,7 @@ GER_SCHWERE_PANZERABTEILUNG_01 = {
     name = "Schwere Panzerabteilung (Short)"
     for_countries = { GER }
     can_use = { always = yes }
-    division_types = { "armor" }
+    division_types = { "heavy_armor" "medium_armor" "modern_armor" }
     fallback_name = "sPz Abt %d"
     link_numbering_with = { GER_SCHWERE_PANZERABTEILUNG_01 }
     ordered = {
@@ -44,7 +44,7 @@ GER_SCHWERE_PANZERABTEILUNG_01 = {
     name = "Panzerartillerie Division"
     for_countries = { GER }
     can_use = { always = yes }
-    division_types = { "armor" }
+    division_types = { "heavy_armor" "medium_armor" "light_armor" "modern_armor" }
     fallback_name = "%d. Panzerartillerie-Division"
     ordered = {
       1 = { "%d. Panzerartillerie-Division" }
@@ -294,9 +294,9 @@ GER_GAR_02 =
 
     division_types = { "infantry" }
 
-    fallback_name = "Garnisonkommando"
+    fallback_name = "%d. Garnisonkommando"
 
-    unordered =
+    ordered =
     {
         1 = { "Garnisonkommando Berlin" }
         2 = { "Garnisonkommando Paris" }
@@ -350,7 +350,7 @@ GER_FORT_01 =
 
     division_types = { "infantry" }
 
-    fallback_name = "Festungs-Division"
+    fallback_name = "%d. Festungs-Division"
 
     ordered =
     {
@@ -464,7 +464,7 @@ GER_FORT_01 =
 
 GER_KAMPFGRUPPE_01 =
 {
-    name = "Kampfgruppes"
+    name = "Kampfgruppen"
 
     for_countries = { GER }
 
@@ -474,7 +474,7 @@ GER_KAMPFGRUPPE_01 =
 
     fallback_name = "Kampfgruppe %d"
 
-    unordered =
+    ordered =
     {
         1 = { "Kampfgruppe Agricola" }
         2 = { "Kampfgruppe Ahlfen" }

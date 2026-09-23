@@ -1,4 +1,4 @@
-﻿# Division template historical names system. Is a new method of naming the divisions based on the names-group assigned to it's template.
+# Division template historical names system. Is a new method of naming the divisions based on the names-group assigned to it's template.
 # If we run out of all historical names, the names will be assigned in the old way.
 #
 # Each group has a made up tag. Use it if you want to append more, or replace existing names with the extra txt files (modding).
@@ -49,7 +49,7 @@ ITA_INF_01 = {
 	ordered = { 
 		1 = { "1a Divisione di Fanteria 'Superga'" }
 		2 = { "2a Divisione di Fanteria 'Sforzesca'" }
-		3 = { "3a Divisione di Fanteria Ravenna'" }
+		3 = { "3a Divisione di Fanteria 'Ravenna'" }
 		4 = { "4a Divisione di Fanteria 'Livorno'" }
 		5 = { "5a Divisione di Fanteria 'Cosseria'" }
 		6 = { "6a Divisione di Fanteria 'Cuneo'" }
@@ -68,7 +68,7 @@ ITA_INF_01 = {
 		19 = { "20a Divisione di Fanteria 'Friuli'" }
 		20 = { "21a Divisione di Fanteria 'Granatieri di Sardegna'" }
 		21 = { "22a Divisione di Fanteria 'Cacciatori delle Alpi'" }
-		22 = { "23a Divisione di Fanteria 'Ferrara'"" }
+		22 = { "23a Divisione di Fanteria 'Ferrara'" }
 		23 = { "24a Divisione di Fanteria 'Pinerolo'" }
 		24 = { "25a Divisione di Fanteria 'Bologna'" }
 		25 = { "26a Divisione di Fanteria 'Assietta'" }
@@ -97,7 +97,7 @@ ITA_INF_01 = {
 		48 = { "56a Divisione di Fanteria 'Casale'" }
 		49 = { "57a Divisione di Fanteria 'Lombardia'" }
 		50 = { "58a Divisione di Fanteria 'Legnano'" }
-		51 = { "59a Divisione di Fanteria 'Cagliari'"" }
+		51 = { "59a Divisione di Fanteria 'Cagliari'" }
 		52 = { "60a Divisione di Fanteria 'Sabratha'" }
 		53 = { "61a Divisione di Fanteria 'Sirte'" }
 		54 = { "62a Divisione di Fanteria 'Marmarica'" }
@@ -113,9 +113,9 @@ ITA_INF_01 = {
 		65 = { "153a Divisione di Fanteria 'Macerata'" }
 		66 = { "154a Divisione di Fanteria 'Murge'" }
 		67 = { "155a Divisione di Fanteria 'Emilia'" }
-		68 = { "156a Divisione di Fanteria "Vicenza"" }
+		68 = { "156a Divisione di Fanteria 'Vicenza'" }
 		69 = { "157a Divisione di Fanteria 'Novara'" }
-		60 = { "158a Divisione di Fanteria 'Zara'" }
+		70 = { "158a Divisione di Fanteria 'Zara'" }
 		71 = { "159a Divisione di Fanteria 'Veneto'" }
 
 		# renamed and replaced most of divisions
@@ -464,7 +464,7 @@ ITA_CAV_03 = {
 	# Names with numbers (only one number per entry).
 	# It's okay to have gaps in numbering.
 	ordered = { 
-		1 = { "1a Gruppo Cav. Coloniale 'Penne di Falco'" }
+		1 = { "1o Gruppo Cav. Coloniale 'Penne di Falco'" }
 	}
 }
 
@@ -586,21 +586,21 @@ ITA_GAL_01 = {
 		30 = { "Divisione Garibaldi Centocroci" }
 		31 = { "1a Divisione Garibaldi Reggiana" }
 		32 = { "Brigata Garibaldi (PD)" }
-		32 = { "5a Divisione Garibaldi Osoppo Friuli" }
-		33 = { "3a Divisione Garibaldi Osoppo Friuli" }
-		34 = { "1a Divisione Garibaldi Osoppo Friuli" }
-		35 = { "2a Divisione Garibaldi Osoppo Friuli" }
-		36 = { "4a Divisione Garibaldi Osoppo Friuli" }
-		37 = { "Divisione Garibaldi Sabatucci" }
-		38 = { "Divisione Garibaldi Belluno" }
-		39 = { "Divisione Garibaldi N. Nannetti" }
-		40 = { "Divisione Garibaldi 'Ateo Garemi'" }
-		41 = { "L 4a Brigata Garibaldi Belotti" }
-		42 = { "C 22a Brigata Garibaldi (BS)" }
-		43 = { "Divisione Garibaldi (BG)" }
-		44 = { "1a Divisione Garibaldi Lombardia" }
-		45 = { "2a Divisione Garibaldi Lombardia" }
-		46 = { "Divisione Garibaldi Mingo" }
+		33 = { "5a Divisione Garibaldi Osoppo Friuli" }
+		34 = { "3a Divisione Garibaldi Osoppo Friuli" }
+		35 = { "1a Divisione Garibaldi Osoppo Friuli" }
+		36 = { "2a Divisione Garibaldi Osoppo Friuli" }
+		37 = { "4a Divisione Garibaldi Osoppo Friuli" }
+		38 = { "Divisione Garibaldi Sabatucci" }
+		39 = { "Divisione Garibaldi Belluno" }
+		40 = { "Divisione Garibaldi N. Nannetti" }
+		41 = { "Divisione Garibaldi 'Ateo Garemi'" }
+		42 = { "L 4a Brigata Garibaldi Belotti" }
+		43 = { "C 22a Brigata Garibaldi (BS)" }
+		44 = { "Divisione Garibaldi (BG)" }
+		45 = { "1a Divisione Garibaldi Lombardia" }
+		46 = { "2a Divisione Garibaldi Lombardia" }
+		47 = { "Divisione Garibaldi Mingo" }
 	}
 }
 
@@ -909,9 +909,9 @@ ITA_MAR_02 = {
 
     can_use = { always = yes }
 
-    division_types = { "marines" }
+    division_types = { "marine" }
 
-    fallback_name = "%do Divisione Marina"
+    fallback_name = "%da Divisione Marina"
 
     link_numbering_with = { ITA_MAR_01 } 
 
@@ -1039,7 +1039,7 @@ ITA_GAR_01 = {
 	division_types = { "infantry" } 
 
 	# Number reservation system will tie to another group.
-	link_numbering_with = { ITA_INF_01 } 
+	#link_numbering_with = { ITA_INF_01 } 
 
 	fallback_name = "%da Divisione Costiera" 
 
@@ -1049,19 +1049,17 @@ ITA_GAR_01 = {
 		201 = { "201a Divisione Costiera" } 											# Created in '41
 		202 = { "202a Divisione Costiera" } 											# Created in '41
 		203 = { "203a Divisione Costiera" } 											# Created in '43
-		204 = { "203a Divisione Costiera" } 											# Created in '41
-		205 = { "204a Divisione Costiera" } 											# Created in '41
-		206 = { "205a Divisione Costiera" } 											# Created in '41
-		207 = { "206a Divisione Costiera" } 											# Created in '41
-		208 = { "207a Divisione Costiera" } 											# Created in '41
+		204 = { "204a Divisione Costiera" } 											# Created in '41
+		205 = { "205a Divisione Costiera" } 											# Created in '41
+		206 = { "206a Divisione Costiera" } 											# Created in '41
+		207 = { "207a Divisione Costiera" } 											# Created in '41
+		208 = { "208a Divisione Costiera" } 											# Created in '41
 		209 = { "209a Divisione Costiera" } 											# Created in '43
 		210 = { "210a Divisione Costiera" } 											# Created in '43
-		211 = { "208a Divisione Costiera" } 											# Created in '41
-		212 = { "209a Divisione Costiera" } 											# Created in '41
-		213 = { "210a Divisione Costiera" } 											# Created in '41
-		214 = { "211a Divisione Costiera" } 											# Created in '42
-
-		
+		211 = { "211a Divisione Costiera" } 											# Created in '42
+		212 = { "212a Divisione Costiera" } 											# Created in '42
+		213 = { "213a Divisione Costiera" } 											# Created in '42
+		214 = { "214a Divisione Costiera" } 											# Created in '42
 		215 = { "215a Divisione Costiera" } 											# Created in '43
 		216 = { "216a Divisione Costiera" } 											# Created in '42
 		220 = { "220a Divisione Costiera" } 											# Created in '42

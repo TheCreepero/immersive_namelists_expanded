@@ -4,6 +4,7 @@
 - All division namelist files must reside in `common/units/names_divisions/INEX_<TAG>_names_divisions.txt`.
 - Namelist group tags must follow the pattern `<TAG>_<CATEGORY>_<NUMBER>` (e.g., `EST_REG_01`, `EST_KL_01`, `SWE_ARM_01`).
 - All files must be saved using UTF-8 encoding (without BOM) and maintain strictly balanced curly brackets `{}`.
+- **German Namelist Convention**: Germany is intentionally split into three separate files for organization: `INEX_GER_names_divisions.txt` (Wehrmacht regular), `INEX_GER_SS_names_divisions.txt` (Waffen-SS), and `INEX_GER_ADDITIONAL_names_divisions.txt` (Kampfgruppen, Festung, Fallschirmjäger, Volkssturm, and specialized formations).
 
 ## 2. Historical & Linguistic Standards
 - **Linguistic Precision**: Always verify proper grammar, cases, and diacritics in the target language. Avoid vanilla Paradox errors (e.g., using genitive/partitive forms like *diviisi* instead of nominative *Jalaväediviis*).
@@ -25,3 +26,13 @@ Whenever a new country namelist is added or modified:
 - Use `build.ps1 -Package` to test clean staging and zip distribution (ensuring `.git`, scripts, and documentation are strictly excluded from mod releases).
 - Use `build.ps1 -DevLink` when zero-copy live editing in the Paradox launcher is required.
 
+## 5. Vanilla Tag Overrides & Scripted References
+- **Additive Loading**: Hearts of Iron IV loads all files in `common/units/names_divisions/` additively. Because INEX uses the `INEX_<TAG>` filename prefix, vanilla files (e.g. `SOV_names_divisions.txt`) remain active in the background.
+- **Tag Overriding**: Defining a group with an existing vanilla tag (e.g., `SOV_INF_01`) overrides that specific group in game. Defining a new tag (e.g., `EST_KL_01`) adds a new group.
+- **Pruning & Scripted Fallbacks**: If a vanilla tag is referenced by base game focus trees, scripted effects, or decisions (e.g., `division_names_group = SOV_INF_02`), omitting it from `INEX_<TAG>` is completely safe—the engine automatically falls back to the vanilla definition. Do not copy identical empty vanilla stubs into INEX unless actively authoring custom names for them.
+
+## 6. Engine Namelist Invariants
+- **Subunit Tokens**: In `division_types = { ... }`, only use valid line combat subunit tokens (e.g., `"marine"`, `"infantry"`, `"light_armor"`, `"medium_armor"`, `"heavy_armor"`, `"modern_armor"`). Never use `"armor"`, `"marines"`, or support-only tokens like `"military_police"`.
+- **Ordered Blocks**: Integer keys in `ordered = { ... }` must be strictly unique. Duplicate keys silently overwrite earlier entries. Never leave empty `ordered = { }` blocks.
+- **Fallback Formatting**: Every `fallback_name` must include an ordinal format string (`%d` for Arabic, `%s` for Roman numerals) to prevent overflow units from generating identical unnumbered names.
+- **Link Numbering**: `link_numbering_with` must only be used to link to *different* external groups (e.g., motorized linking to field infantry). Never define self-referential links (`link_numbering_with = { SELF }`).
