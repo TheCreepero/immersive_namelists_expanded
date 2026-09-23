@@ -431,7 +431,7 @@ if ($Package) {
 
     try {
         # Copy only actual mod files to staging
-        $excludeDirs = @('.git', '.github', '.vscode')
+        $excludeDirs = @('.git', '.github', '.vscode', '.agents', '.agent')
         $excludeFiles = @('*.bat', '*.ps1', '*.zip', '*.md', '.gitignore', '.gitattributes', '.steam_username')
         & robocopy.exe $RepoDir $stageModDir /MIR /XD $excludeDirs /XF $excludeFiles /R:1 /W:1 /NDL /NP /NFL | Out-Null
 
@@ -628,7 +628,7 @@ if (-not (Test-Path $targetDir)) {
 }
 
 # Robocopy mirror sync - fast, atomic, purges deleted files, strictly excludes .git & dev files
-$excludeDirs = @('.git', '.github', '.vscode')
+$excludeDirs = @('.git', '.github', '.vscode', '.agents', '.agent')
 $excludeFiles = @('*.bat', '*.ps1', '*.zip', '*.md', '.gitignore', '.gitattributes', '.steam_username')
 
 Write-Info "Synchronizing files using robocopy (purging stale files, excluding .git)..."
