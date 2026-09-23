@@ -145,18 +145,20 @@ File location: `common/units/names_divisions/INEX_<TAG>_names_divisions.txt`
 
 ## 6. Documentation & Guidelines Synchronization
 
-Whenever a country is added or updated, immediately update `WORKSHOP_DESCRIPTION_GUIDELINES.md`:
-1. **Repository Cross-Reference**:
+Whenever a country is added or updated, immediately update `WORKSHOP_DESCRIPTION_GUIDELINES.md` and `README.md`:
+1. **Repository Cross-Reference (`WORKSHOP_DESCRIPTION_GUIDELINES.md`)**:
    Add a row to the markdown table:
    `| INEX_<TAG>_names_divisions.txt | <Country> | <TAG> | Included (<Summary of highlights>) |`
-2. **Active Steam Workshop Description**:
+2. **Active Steam Workshop Description (`WORKSHOP_DESCRIPTION_GUIDELINES.md`)**:
    Add the nation under `[h1]Included nations:[/h1]` using standard BBCode format:
    ```bbcode
    [b]<Country>[/b]
    - <Category Name>: Brief description with italicized in-game examples ([i]Unit Name[/i])
    ```
-3. **Planned List**:
+3. **Planned List (`WORKSHOP_DESCRIPTION_GUIDELINES.md`)**:
    Remove the completed country from `[h1]Planned:[/h1]`.
+4. **README Summary Table (`README.md`)**:
+   Add newly added country tags, names, and file paths to the **Included Nations Summary** table.
 4. **Steam Description Invariants**:
    - Strictly no emojis anywhere in the description.
    - Maintain the author's concise, direct, bullet-focused voice.

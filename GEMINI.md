@@ -10,18 +10,20 @@
 - **Linguistic Precision**: Always verify proper grammar, cases, and diacritics in the target language. Avoid vanilla Paradox errors (e.g., using genitive/partitive forms like *diviisi* instead of nominative *Jalaväediviis*).
 - **Historical Plausibility over Rigid Accuracy**: The goal of INEX is historical plausibility, not rigid historical accuracy. Anchor unit designations in authentic peacetime cadre structures, mobilization schemes, regional conventions, and cultural heritage, but extrapolate plausibly to support full wartime campaigns, expanded forces, and alternate-history trajectories.
 
-## 3. Mandatory Workshop Description Synchronization
+## 3. Mandatory Workshop & Documentation Synchronization
 Whenever a new country namelist is added, expanded, or modified:
 1. **Update `WORKSHOP_DESCRIPTION_GUIDELINES.md`**:
    - Add/update the file and summary in the **Repository Cross-Reference** table.
    - Add/update the nation under `[h1]Included nations:[/h1]` using standard BBCode (`[b]Nation[/b]` with bulleted categories and italicized unit examples `[i]...[/i]`).
    - Remove completed nations from `[h1]Planned:[/h1]`.
-2. **Steam Description Standards**:
+2. **Update `README.md`**:
+   - Add any newly introduced country tags and source files to the **Included Nations Summary** table.
+3. **Steam Description Standards**:
    - **No Emojis**: Strictly avoid emojis anywhere in the description.
    - **Writing Style**: Keep the tone concise, direct, and informative, matching the author's original style.
    - **Grammar & Linguistic Corrections**: Fix any typos, broken English, or missing diacritics in historical names (e.g., `1ère`, `Ryhmä`, `Ziemi Łomżyńskiej`).
    - **Steam BBCode**: Strictly follow Steam's formatting rules (`[h1]`, `[b]`, `[i]`, `[quote=author]`, `[list]` or standard `- ` bullets).
-3. **In-Chat Description Generation**:
+4. **In-Chat Description Generation**:
    - Whenever the user requests an updated description in chat, output the complete, ready-to-copy Steam BBCode description block directly in the chat alongside a concise summary of additions and changes.
 
 ## 4. Build & Validation Protocol
