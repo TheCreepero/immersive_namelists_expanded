@@ -59,6 +59,7 @@ This document serves as an instruction and reference guide for maintaining and u
 | `INEX_GER_ADDITIONAL_names_divisions.txt` | Germany (Extra) | `GER` | Included (Garrison, Kampfgruppen, Heavy tanks, Flak, Luftwaffe, Panzerartillerie) |
 | `INEX_SWE_names_divisions.txt` | Sweden | `SWE` | Included (Provincial brigades, Pansarbrigader, Ski/Arctic, Caroleans, Volunteers) |
 | `INEX_EST_names_divisions.txt` | Estonia | `EST` | Included (Historical & elite regiments, Kaitseliit malevad, Armored trains/cars, Coastal fortresses) |
+| `INEX_LAT_names_divisions.txt` | Latvia | `LAT` | Included (Historical divisions & regiments, Aizsargu pulki, Armored cars/trains, Coastal fortresses, Cavalry) |
 | `INEX_LIT_names_divisions.txt` | Lithuania | `LIT` | Included (Grand Duke/Royal regiments, Iron Wolf cavalry, AA/Armored teams) |
 | `INEX_FRA_names_divisions.txt` | France | `FRA` | Included (National Guard, Metropolitan, Heavy/Décision, Nicknames) |
 | `INEX_ENG_names_divisions.txt` | United Kingdom | `ENG` | Included (Home Guard, Royal Guard, Independent, Commandos, Alt-history) |
@@ -74,7 +75,7 @@ This document serves as an instruction and reference guide for maintaining and u
 ```bbcode
 More namelists! Used GPT-4 to speed up the creation process and help with translations.
 
-[quote=author] A new update at long last! Added Sweden, Lithuania, and Estonia, along with new namelists and improvements across existing nations! [/quote]
+[quote=author] A new update at long last! Added Sweden, Lithuania, Estonia, and Latvia, along with new namelists and improvements across existing nations! [/quote]
 If you have any ideas for namelists, please leave them in the discussion thread!
 
 [h1]Info:[/h1]
@@ -139,6 +140,14 @@ This is not a complete list of included namelists! Just some examples.
 - Armored Trains & Armor: Renowned armored trains ([i]Kapten Irv[/i], broad & narrow gauge) and legendary armored cars ([i]Suur Tõll[/i], [i]Tasuja[/i], [i]Kalevipoeg[/i])
 - Coastal Defense & Marines: Naval Fortresses ([i]Aegna Merekindlus[/i], [i]Naissaare Merekindlus[/i], [i]Suuropi Merekindlus[/i]) and marine landing formations
 
+[b]Latvia[/b]
+- Historical Infantry Divisions: Full historical regional divisions and wartime mobilizations, e.g. [i]1. Kurzemes kājnieku divīzija[/i]
+- Infantry Regiments & Elite Battalions: Peacetime regiments, War of Independence formations, and historic riflemen, e.g. [i]1. Liepājas kājnieku pulks[/i], [i]Kalpaka bataljons[/i], [i]1. Daugavgrīvas latviešu strēlnieku pulks[/i]
+- Aizsargi Territorial Formations: All 19 county Home Guard regiments plus railway and aviation wings, e.g. [i]1. Talsu aizsargu pulks[/i], [i]Dzelzceļu aizsargu pulks[/i]
+- Armored & Mobile Divisions: Autotanku pulks, armored trains, and legendary armored cars, e.g. [i]Bruņudivīzija 'Lāčplēsis'[/i], [i]Bruņuvilciens 'Kalpaks'[/i]
+- Coastal Defense & Marines: Naval fortresses, batteries, and marine regiments, e.g. [i]Daugavgrīvas krasta cietoksnis[/i], [i]1. Jūras kājnieku pulks[/i]
+- Cavalry Formations: Historical regiment and independent partisan squadrons, e.g. [i]1. Jātnieku pulks[/i], [i]Ziemeļlatvijas jātnieku eskadrons[/i]
+
 [b]France[/b]
 - Named Infantry Divisions: Same as the regular infantry namelist, but with nicknames
 - National Guard Divisions: French cities as nicknames, e.g. "[i]1ère Division de la Garde Nationale 'Paris'[/i]"
@@ -191,6 +200,5 @@ This is not a complete list of included namelists! Just some examples.
 - Post-Austro-Hungarian countries!
 - More Poland!
 - Spain!
-- Remaining Baltic nations (Latvia)!
 - More Italy!
 ```

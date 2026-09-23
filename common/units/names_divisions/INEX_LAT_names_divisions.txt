@@ -1,0 +1,381 @@
+# Division template historical names system for Latvia (LAT).
+# Immersive Namelists Expanded (INEX)
+#
+# Covers:
+# 1. LAT_INF_01: Infantry Divisions (1.–4. Historical Regional Divisions, 5.–12. Mobilization Regional Divisions, 13.–30. Numbered Divisions)
+# 2. LAT_REG_01: Infantry Regiments & Elite Battalions (1.–12. Peacetime Regiments, Kalpaka, Studentu, Partisans, 1.–8. Latviešu strēlnieki, Border Guards)
+# 3. LAT_AIZ_01: Aizsargi Territorial Formations (All 19 County/City Aizsargu Regiments, Dzelzceļu, Aviācijas, Jūras detachments)
+# 4. LAT_ARM_02: Armored & Mobile Divisions (Armored cars "Lāčplēsis", "Imanta", etc., Autotanku pulks, Armored trains "Kalpaks", "Komandieris", Tank battalions)
+# 5. LAT_MAR_02: Coastal Defense & Marines (Naval Fortresses Daugavgrīva, Mangaļsala, Liepāja, Bolderāja, Jūras kājnieku pulki)
+# 6. LAT_CAV_01: Cavalry Regiments (1. Jātnieku pulks, Regional Cavalry Regiments)
+# 7. LAT_CAV_02: Cavalry Squadrons & Partisans (Historical independent squadrons, volunteer horse detachments, partisan cavalry)
+
+LAT_INF_01 = 
+{
+	name = "Infantry Division"
+
+	for_countries = { LAT }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	# Number reservation system will tie to another group.
+	#link_numbering_with = { LAT_INF_01 }
+
+	fallback_name = "%d. Kājnieku divīzija"
+
+	# Names with numbers (only one number per entry). 
+	# It's okay to have gaps in numbering.
+	ordered =
+	{
+		1 = { "1. Kurzemes kājnieku divīzija" }
+		2 = { "2. Vidzemes kājnieku divīzija" }
+		3 = { "3. Latgales kājnieku divīzija" }
+		4 = { "4. Zemgales kājnieku divīzija" }
+		5 = { "5. Rīgas kājnieku divīzija" }
+		6 = { "6. Sēlijas kājnieku divīzija" }
+		7 = { "7. Ziemeļlatvijas kājnieku divīzija" }
+		8 = { "8. Dienvidlatvijas kājnieku divīzija" }
+		9 = { "9. Malienas kājnieku divīzija" }
+		10 = { "10. Augškurzemes kājnieku divīzija" }
+		11 = { "11. Liepājas kājnieku divīzija" }
+		12 = { "12. Daugavpils kājnieku divīzija" }
+		13 = { "%d. Kājnieku divīzija" }
+		14 = { "%d. Kājnieku divīzija" }
+		15 = { "%d. Kājnieku divīzija" }
+		16 = { "%d. Kājnieku divīzija" }
+		17 = { "%d. Kājnieku divīzija" }
+		18 = { "%d. Kājnieku divīzija" }
+		19 = { "%d. Kājnieku divīzija" }
+		20 = { "%d. Kājnieku divīzija" }
+		21 = { "%d. Kājnieku divīzija" }
+		22 = { "%d. Kājnieku divīzija" }
+		23 = { "%d. Kājnieku divīzija" }
+		24 = { "%d. Kājnieku divīzija" }
+		25 = { "%d. Kājnieku divīzija" }
+		26 = { "%d. Kājnieku divīzija" }
+		27 = { "%d. Kājnieku divīzija" }
+		28 = { "%d. Kājnieku divīzija" }
+		29 = { "%d. Kājnieku divīzija" }
+		30 = { "%d. Kājnieku divīzija" }
+	}
+}
+
+LAT_REG_01 = 
+{
+	name = "Infantry Regiment"
+
+	for_countries = { LAT }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	# Number reservation system will tie to another group.
+	#link_numbering_with = { LAT_REG_01 }
+
+	fallback_name = "%d. Kājnieku pulks"
+
+	# Names with numbers (only one number per entry). 
+	# It's okay to have gaps in numbering.
+	ordered =
+	{
+		1 = { "1. Liepājas kājnieku pulks" }
+		2 = { "2. Ventspils kājnieku pulks" }
+		3 = { "3. Jelgavas kājnieku pulks" }
+		4 = { "4. Valmieras kājnieku pulks" }
+		5 = { "5. Cēsu kājnieku pulks" }
+		6 = { "6. Rīgas kājnieku pulks" }
+		7 = { "7. Siguldas kājnieku pulks" }
+		8 = { "8. Daugavpils kājnieku pulks" }
+		9 = { "9. Rēzeknes kājnieku pulks" }
+		10 = { "10. Aizputes kājnieku pulks" }
+		11 = { "11. Dobeles kājnieku pulks" }
+		12 = { "12. Bauskas kājnieku pulks" }
+		13 = { "Kalpaka bataljons" }
+		14 = { "Atsevišķais studentu bataljons" }
+		15 = { "Cēsu rotu pulks" }
+		16 = { "Neatkarības bataljons" }
+		17 = { "Ziemeļlatvijas partizānu pulks" }
+		18 = { "Latgales partizānu pulks" }
+		19 = { "Augškurzemes partizānu pulks" }
+		20 = { "Kara skolas kadetu bataljons" }
+		21 = { "1. Daugavgrīvas latviešu strēlnieku pulks" }
+		22 = { "2. Rīgas latviešu strēlnieku pulks" }
+		23 = { "3. Kurzemes latviešu strēlnieku pulks" }
+		24 = { "4. Vidzemes latviešu strēlnieku pulks" }
+		25 = { "5. Zemgales latviešu strēlnieku pulks" }
+		26 = { "6. Tukuma latviešu strēlnieku pulks" }
+		27 = { "7. Bauskas latviešu strēlnieku pulks" }
+		28 = { "8. Valmieras latviešu strēlnieku pulks" }
+		29 = { "1. Dagdas robežsargu pulks" }
+		30 = { "2. Zilupes robežsargu pulks" }
+		31 = { "3. Abrenes robežsargu pulks" }
+		32 = { "4. Krāslavas robežsargu pulks" }
+		33 = { "%d. Kājnieku pulks" }
+		34 = { "%d. Kājnieku pulks" }
+		35 = { "%d. Kājnieku pulks" }
+		36 = { "%d. Kājnieku pulks" }
+		37 = { "%d. Kājnieku pulks" }
+		38 = { "%d. Kājnieku pulks" }
+		39 = { "%d. Kājnieku pulks" }
+		40 = { "%d. Kājnieku pulks" }
+		41 = { "%d. Kājnieku pulks" }
+		42 = { "%d. Kājnieku pulks" }
+		43 = { "%d. Kājnieku pulks" }
+		44 = { "%d. Kājnieku pulks" }
+		45 = { "%d. Kājnieku pulks" }
+		46 = { "%d. Kājnieku pulks" }
+		47 = { "%d. Kājnieku pulks" }
+		48 = { "%d. Kājnieku pulks" }
+		49 = { "%d. Kājnieku pulks" }
+		50 = { "%d. Kājnieku pulks" }
+	}
+}
+
+LAT_AIZ_01 = 
+{
+	name = "Aizsargi Formations"
+
+	for_countries = { LAT }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	# Number reservation system will tie to another group.
+	#link_numbering_with = { LAT_AIZ_01 }
+
+	fallback_name = "%d. Aizsargu pulks"
+
+	# Names with numbers (only one number per entry). 
+	# It's okay to have gaps in numbering.
+	ordered =
+	{
+		1 = { "1. Talsu aizsargu pulks" }
+		2 = { "2. Ventspils aizsargu pulks" }
+		3 = { "3. Kuldīgas aizsargu pulks" }
+		4 = { "4. Liepājas aizsargu pulks" }
+		5 = { "5. Rīgas aizsargu pulks" }
+		6 = { "6. Jelgavas aizsargu pulks" }
+		7 = { "7. Bauskas aizsargu pulks" }
+		8 = { "8. Valmieras aizsargu pulks" }
+		9 = { "9. Cēsu aizsargu pulks" }
+		10 = { "10. Valkas aizsargu pulks" }
+		11 = { "11. Madonas aizsargu pulks" }
+		12 = { "12. Ilūkstes aizsargu pulks" }
+		13 = { "13. Jēkabpils aizsargu pulks" }
+		14 = { "14. Abrenes aizsargu pulks" }
+		15 = { "15. Ludzas aizsargu pulks" }
+		16 = { "16. Rēzeknes aizsargu pulks" }
+		17 = { "17. Daugavpils aizsargu pulks" }
+		18 = { "18. Tukuma aizsargu pulks" }
+		19 = { "19. Rīgas pilsētas aizsargu pulks" }
+		20 = { "Dzelzceļu aizsargu pulks" }
+		21 = { "Aizsargu aviācijas pulks" }
+		22 = { "Aizsargu motorizētais pulks" }
+		23 = { "Jūras aizsargu divizions" }
+		24 = { "Aizsargu sakaru bataljons" }
+		25 = { "%d. Aizsargu pulks" }
+		26 = { "%d. Aizsargu pulks" }
+		27 = { "%d. Aizsargu pulks" }
+		28 = { "%d. Aizsargu pulks" }
+		29 = { "%d. Aizsargu pulks" }
+		30 = { "%d. Aizsargu pulks" }
+		31 = { "%d. Aizsargu pulks" }
+		32 = { "%d. Aizsargu pulks" }
+		33 = { "%d. Aizsargu pulks" }
+		34 = { "%d. Aizsargu pulks" }
+		35 = { "%d. Aizsargu pulks" }
+	}
+}
+
+LAT_ARM_02 = 
+{
+	name = "Armored & Mobile Divisions"
+
+	for_countries = { LAT }
+
+	can_use = { always = yes }
+
+	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" "motorized" "mechanized" }
+
+	# Number reservation system will tie to another group.
+	#link_numbering_with = { LAT_ARM_02 }
+
+	fallback_name = "%d. Bruņudivīzija"
+
+	# Names with numbers (only one number per entry). 
+	# It's okay to have gaps in numbering.
+	ordered =
+	{
+		1 = { "Bruņudivīzija 'Lāčplēsis'" }
+		2 = { "Bruņubrigāde 'Imanta'" }
+		3 = { "Bruņubrigāde 'Kurzemnieks'" }
+		4 = { "Bruņubrigāde 'Viesturs'" }
+		5 = { "Bruņubrigāde 'Zemgalietis'" }
+		6 = { "Bruņubrigāde 'Tālivaldis'" }
+		7 = { "Bruņukolonna 'Sargs'" }
+		8 = { "Bruņukolonna 'Latvietis'" }
+		9 = { "Bruņukolonna 'Staburags'" }
+		10 = { "Bruņukolonna 'Pērkons'" }
+		11 = { "Autotanku pulks" }
+		12 = { "Bruņuvilcienu pulks" }
+		13 = { "Bruņuvilciens 'Kalpaks'" }
+		14 = { "Bruņuvilciens 'Komandieris'" }
+		15 = { "Bruņuvilciens 'Krišjānis Barons'" }
+		16 = { "Bruņuvilciens 'Pirmās'" }
+		17 = { "1. Tanku bataljons" }
+		18 = { "2. Tanku bataljons" }
+		19 = { "Motorizētais kājnieku pulks" }
+		20 = { "Mehanizētais izlūku bataljons" }
+		21 = { "%d. Bruņudivīzija" }
+		22 = { "%d. Bruņudivīzija" }
+		23 = { "%d. Bruņudivīzija" }
+		24 = { "%d. Bruņudivīzija" }
+		25 = { "%d. Bruņudivīzija" }
+		26 = { "%d. Bruņudivīzija" }
+		27 = { "%d. Bruņudivīzija" }
+		28 = { "%d. Bruņudivīzija" }
+		29 = { "%d. Bruņudivīzija" }
+		30 = { "%d. Bruņudivīzija" }
+		31 = { "%d. Bruņudivīzija" }
+		32 = { "%d. Bruņudivīzija" }
+		33 = { "%d. Bruņudivīzija" }
+		34 = { "%d. Bruņudivīzija" }
+		35 = { "%d. Bruņudivīzija" }
+	}
+}
+
+LAT_MAR_02 = 
+{
+	name = "Coastal Defense & Marines"
+
+	for_countries = { LAT }
+
+	can_use = { always = yes }
+
+	division_types = { "marine" }
+
+	# Number reservation system will tie to another group.
+	#link_numbering_with = { LAT_MAR_02 }
+
+	fallback_name = "%d. Jūras kājnieku pulks"
+
+	# Names with numbers (only one number per entry). 
+	# It's okay to have gaps in numbering.
+	ordered =
+	{
+		1 = { "Daugavgrīvas krasta cietoksnis" }
+		2 = { "Mangaļsalas krasta nocietinājumi" }
+		3 = { "Liepājas krasta cietoksnis" }
+		4 = { "Bolderājas jūras garnizons" }
+		5 = { "Ventspils krasta garnizons" }
+		6 = { "1. Jūras kājnieku pulks" }
+		7 = { "2. Jūras kājnieku pulks" }
+		8 = { "Kolkas krasta aizsardzības bataljons" }
+		9 = { "Ainažu krasta aizsardzības bataljons" }
+		10 = { "Jūras krastu apsardzības pulks" }
+		11 = { "%d. Jūras kājnieku pulks" }
+		12 = { "%d. Jūras kājnieku pulks" }
+		13 = { "%d. Jūras kājnieku pulks" }
+		14 = { "%d. Jūras kājnieku pulks" }
+		15 = { "%d. Jūras kājnieku pulks" }
+		16 = { "%d. Jūras kājnieku pulks" }
+		17 = { "%d. Jūras kājnieku pulks" }
+		18 = { "%d. Jūras kājnieku pulks" }
+		19 = { "%d. Jūras kājnieku pulks" }
+		20 = { "%d. Jūras kājnieku pulks" }
+		21 = { "%d. Jūras kājnieku pulks" }
+		22 = { "%d. Jūras kājnieku pulks" }
+		23 = { "%d. Jūras kājnieku pulks" }
+		24 = { "%d. Jūras kājnieku pulks" }
+		25 = { "%d. Jūras kājnieku pulks" }
+	}
+}
+
+LAT_CAV_01 = 
+{
+	name = "Cavalry Regiment"
+
+	for_countries = { LAT }
+
+	can_use = { always = yes }
+
+	division_types = { "cavalry" }
+
+	# Number reservation system will tie to another group.
+	#link_numbering_with = { LAT_CAV_01 }
+
+	fallback_name = "%d. Jātnieku pulks"
+
+	# Names with numbers (only one number per entry). 
+	# It's okay to have gaps in numbering.
+	ordered =
+	{
+		1 = { "1. Jātnieku pulks" }
+		2 = { "2. Latgales jātnieku pulks" }
+		3 = { "3. Kurzemes jātnieku pulks" }
+		4 = { "4. Vidzemes jātnieku pulks" }
+		5 = { "5. Zemgales jātnieku pulks" }
+		6 = { "6. Sēlijas jātnieku pulks" }
+		7 = { "%d. Jātnieku pulks" }
+		8 = { "%d. Jātnieku pulks" }
+		9 = { "%d. Jātnieku pulks" }
+		10 = { "%d. Jātnieku pulks" }
+		11 = { "%d. Jātnieku pulks" }
+		12 = { "%d. Jātnieku pulks" }
+		13 = { "%d. Jātnieku pulks" }
+		14 = { "%d. Jātnieku pulks" }
+		15 = { "%d. Jātnieku pulks" }
+		16 = { "%d. Jātnieku pulks" }
+		17 = { "%d. Jātnieku pulks" }
+		18 = { "%d. Jātnieku pulks" }
+		19 = { "%d. Jātnieku pulks" }
+		20 = { "%d. Jātnieku pulks" }
+	}
+}
+
+LAT_CAV_02 = 
+{
+	name = "Cavalry Squadrons & Partisans"
+
+	for_countries = { LAT }
+
+	can_use = { always = yes }
+
+	division_types = { "cavalry" }
+
+	# Number reservation system will tie to another group.
+	#link_numbering_with = { LAT_CAV_02 }
+
+	fallback_name = "%d. Atsevišķais jātnieku eskadrons"
+
+	# Names with numbers (only one number per entry). 
+	# It's okay to have gaps in numbering.
+	ordered =
+	{
+		1 = { "Atsevišķais jātnieku divizions" }
+		2 = { "Kalpaka jātnieku eskadrons" }
+		3 = { "Studentu jātnieku eskadrons" }
+		4 = { "Ziemeļlatvijas jātnieku eskadrons" }
+		5 = { "Latgales partizānu jātnieku eskadrons" }
+		6 = { "Augškurzemes partizānu jātnieku eskadrons" }
+		7 = { "Cēsu jātnieku eskadrons" }
+		8 = { "Rīgas garnizona jātnieku eskadrons" }
+		9 = { "Liepājas jātnieku eskadrons" }
+		10 = { "Daugavpils jātnieku eskadrons" }
+		11 = { "Jelgavas jātnieku eskadrons" }
+		12 = { "Valmieras jātnieku eskadrons" }
+		13 = { "Ventspils jātnieku eskadrons" }
+		14 = { "Aizsargu jātnieku eskadrons" }
+		15 = { "%d. Atsevišķais jātnieku eskadrons" }
+		16 = { "%d. Atsevišķais jātnieku eskadrons" }
+		17 = { "%d. Atsevišķais jātnieku eskadrons" }
+		18 = { "%d. Atsevišķais jātnieku eskadrons" }
+		19 = { "%d. Atsevišķais jātnieku eskadrons" }
+		20 = { "%d. Atsevišķais jātnieku eskadrons" }
+	}
+}
+
