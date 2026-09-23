@@ -169,6 +169,7 @@ Whenever a country is added or updated, immediately update `WORKSHOP_DESCRIPTION
    Add newly added country tags, names, and file paths to the **Included Nations Summary** table.
 4. **Steam Description Invariants**:
    - Strictly no emojis anywhere in the description.
+   - Respect Steam's ~17,000 character limit: keep bullets concise and omit author update quote blocks (`[quote=author]...[/quote]`).
    - Maintain the author's concise, direct, bullet-focused voice.
    - Ensure proper diacritics and grammar on historical unit titles.
    - If the user asks for the updated description in chat, present the complete BBCode in a single code block ready for copy-pasting.

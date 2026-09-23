@@ -7,23 +7,27 @@ This document serves as an instruction and reference guide for maintaining and u
 ## Core Rules & Constraints
 
 1. **No Emojis**: Strictly avoid adding any emojis or emoticons to the description.
-2. **Writing Style & Tone**:
+2. **Character & Length Limits**:
+   - Steam Workshop descriptions have a strict character limit (~17,000 characters raw BBCode).
+   - Keep bullet points concise and avoid lengthy narrative blocks.
+   - Do NOT include the old author quote block (`[quote=author]...[/quote]`), as it consumed too many characters and was stripped to keep the description under the limit.
+   - Monitor the overall character count of the BBCode text when adding new nations.
+3. **Writing Style & Tone**:
    - Keep the tone concise, informative, direct, and enthusiastic, matching the author's original voice.
    - Use straightforward bullet points and structured section headings.
    - Do not over-embellish or use marketing buzzwords.
-3. **Language & Grammar**:
+4. **Language & Grammar**:
    - Fix typos, misspellings, formatting anomalies, or broken English.
    - Known corrections applied:
      - "battallion" -> "battalion"
      - "finnish commanders" -> "Finnish commanders"
      - Proper diacritics/accents: `1ère Division de la Garde Nationale 'Paris'`, `Ryhmä Talvela`, `18 Dywizja Piechoty Ziemi Łomżyńskiej`.
      - Standardized names like *Festungsdivision* and *Volksgrenadier*.
-4. **Steam Formatting (BBCode)**:
+5. **Steam Formatting (BBCode)**:
    - Always format the description using Steam's supported BBCode tags:
      - Section headings: `[h1]Heading Text[/h1]`
      - Bold text: `[b]...[/b]`
      - Italics: `[i]...[/i]` (used for foreign language division names / examples)
-     - Quotes: `[quote=author]...[/quote]`
      - URLs: `[url=https://...]link text[/url]`
      - Lists: Standard hyphen bullets (`- Item`) matching the author's format.
    - Ensure clean line breaks between sections and blocks.
@@ -34,8 +38,8 @@ This document serves as an instruction and reference guide for maintaining and u
 
 1. **Header / Introduction**:
    - Short introductory pitch mentioning GPT-4 assistance for research/translations.
-   - Author update quote (`[quote=author]...[/quote]`).
    - Call to action pointing to the discussion thread for ideas/feedback.
+   - *(Note: Author quote block omitted to conserve character limit).*
 2. **[h1]Info:[/h1]**:
    - Compatibility notes (Ironman/Achievements, game version compatibility, mod compatibility).
    - Mod direction/focus statement (polishing existing lists and adding new nations).
@@ -75,7 +79,6 @@ This document serves as an instruction and reference guide for maintaining and u
 ```bbcode
 More namelists! Used GPT-4 to speed up the creation process and help with translations.
 
-[quote=author] A new update at long last! Added Sweden, Lithuania, Estonia, and Latvia, along with new namelists and improvements across existing nations! [/quote]
 If you have any ideas for namelists, please leave them in the discussion thread!
 
 [h1]Info:[/h1]

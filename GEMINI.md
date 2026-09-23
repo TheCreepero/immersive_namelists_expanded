@@ -20,9 +20,10 @@ Whenever a new country namelist is added, expanded, or modified:
    - Add any newly introduced country tags and source files to the **Included Nations Summary** table.
 3. **Steam Description Standards**:
    - **No Emojis**: Strictly avoid emojis anywhere in the description.
+   - **Character Limit**: Steam Workshop descriptions have a max character limit (~17,000 characters). Keep bullet points concise and do NOT include author update quote blocks (`[quote=author]...[/quote]`) to avoid hitting this limit.
    - **Writing Style**: Keep the tone concise, direct, and informative, matching the author's original style.
    - **Grammar & Linguistic Corrections**: Fix any typos, broken English, or missing diacritics in historical names (e.g., `1ère`, `Ryhmä`, `Ziemi Łomżyńskiej`).
-   - **Steam BBCode**: Strictly follow Steam's formatting rules (`[h1]`, `[b]`, `[i]`, `[quote=author]`, `[list]` or standard `- ` bullets).
+   - **Steam BBCode**: Strictly follow Steam's formatting rules (`[h1]`, `[b]`, `[i]`, `[url]`, or standard `- ` bullets).
 4. **In-Chat Description Generation**:
    - Whenever the user requests an updated description in chat, output the complete, ready-to-copy Steam BBCode description block directly in the chat alongside a concise summary of additions and changes.
 
