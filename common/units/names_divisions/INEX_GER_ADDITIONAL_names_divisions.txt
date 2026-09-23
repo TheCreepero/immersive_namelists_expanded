@@ -43,7 +43,9 @@ GER_SCHWERE_PANZERABTEILUNG_01 = {
   GER_PANZERARTILLERIE_DIVISION_01 = { 
     name = "Panzerartillerie Division"
     for_countries = { GER }
-    can_use = { always = yes }
+    can_use = {
+      is_ai = no
+    }
     division_types = { "heavy_armor" "medium_armor" "light_armor" "modern_armor" }
     fallback_name = "%d. Panzerartillerie-Division"
     ordered = {
