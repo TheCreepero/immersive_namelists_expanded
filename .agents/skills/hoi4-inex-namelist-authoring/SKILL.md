@@ -157,6 +157,11 @@ Whenever a country is added or updated, immediately update `WORKSHOP_DESCRIPTION
    ```
 3. **Planned List**:
    Remove the completed country from `[h1]Planned:[/h1]`.
+4. **Steam Description Invariants**:
+   - Strictly no emojis anywhere in the description.
+   - Maintain the author's concise, direct, bullet-focused voice.
+   - Ensure proper diacritics and grammar on historical unit titles.
+   - If the user asks for the updated description in chat, present the complete BBCode in a single code block ready for copy-pasting.
 
 ---
 
