@@ -66,11 +66,19 @@ This skill provides step-by-step guidance for researching, scoping, authoring, a
 
 ## 3. Namelist Scoping & Design
 
-When creating namelists for a new nation, target 3 to 5 high-impact, authentic categories:
-1. **Regimental / Frontline Infantry**: Historical numbered regiments and elite named battalions (`<TAG>_REG_01` or `<TAG>_INF_02`).
-2. **Territorial Militia / Garrisons**: Regional defense leagues, home guard units, or military district garrisons (`<TAG>_KL_01` or `<TAG>_GAR_02`).
-3. **Armored & Mobile**: Armored trains, named armored vehicles, tanks, and motorized/mechanized brigades (`<TAG>_ARM_02` or `<TAG>_MOT_02`).
-4. **Specialized / Coastal / Mountain / Marine**: Coastal fortresses, marine assault groups, or mountain/ski rangers (`<TAG>_MAR_02` or `<TAG>_MNT_02`).
+Tailor the namelist suite to the nation's genuine military organization, historical branches, mobilization doctrines, and gameplay opportunities. Avoid arbitrary limits on the number or types of groups—author as many or as few distinct namelists as make sense for that nation's depth.
+
+### Common Modular Archetypes (Inspiration & Reference):
+- **Frontline Divisions & Regiments**: Peacetime cadre regiments, wartime division mobilization schemes, or historical regional designations (e.g. `<TAG>_INF_01`, `<TAG>_REG_01`).
+- **Territorial Defense, Home Guard & Garrisons**: National defense leagues, county militias, border guards, or fortress garrisons (e.g. `<TAG>_KL_01`, `<TAG>_AIZ_01`, `<TAG>_GAR_02`).
+- **Armored, Motorized & Mechanized**: Tank battalions, armored car traditions, mechanized brigades, and armored trains (e.g. `<TAG>_ARM_02`, `<TAG>_MOT_02`).
+- **Cavalry & Mounted Troops**: Dedicated cavalry regiments, independent reconnaissance squadrons, or partisan horse detachments (e.g. `<TAG>_CAV_01`, `<TAG>_CAV_02`).
+- **Specialized / Amphibious / Mountain / Airborne**: Coastal artillery fortresses, marine assault groups, archipelago defense commands, ski rangers, or paratroopers (e.g. `<TAG>_MAR_02`, `<TAG>_MNT_02`, `<TAG>_PAR_02`).
+- **Elite, Guards & Volunteer Formations**: Historical volunteer legions, royal/presidential guards, resistance movements, or legendary independence battalions (e.g. `<TAG>_LEG_01`, `<TAG>_GUA_01`).
+
+### Grouping Flexibility:
+- **Split vs. Combine**: Separate specialized formations into distinct namelists when historical flavor or player template differentiation warrants it (e.g. splitting peacetime cavalry regiments from volunteer partisan squadrons, or separating field infantry from territorial defense).
+- **Template Compatibility**: Group unit tokens in `division_types = { ... }` logically to give players flexibility when assigning templates (e.g. combining motorized and mechanized with armor if mobile units share lineage).
 
 ---
 
