@@ -33,7 +33,7 @@ $ErrorActionPreference = "Stop"
 $RepoRoot   = Split-Path -Parent $PSScriptRoot
 $WikiSource = Join-Path $RepoRoot "wiki"
 $WikiRemote = "https://github.com/TheCreepero/immersive_namelists_expanded.wiki.git"
-$WikiClone  = Join-Path $env:TEMP "inex_wiki_push"
+$WikiClone = Join-Path ([System.IO.Path]::GetTempPath()) "inex_wiki_push"
 
 Write-Host "=== INEX Wiki Push Script ===" -ForegroundColor Cyan
 Write-Host "Source : $WikiSource"
@@ -43,17 +43,15 @@ if ($DryRun) { Write-Host "[DRY RUN — no changes will be pushed]" -ForegroundC
 Write-Host ""
 
 # --- Step 1: Clone or update the wiki repo ---
-if (Test-Path $WikiClone) {
+if (Test-Path -LiteralPath $WikiClone) {
     Write-Host "Updating existing wiki clone..." -ForegroundColor Yellow
-    Push-Location $WikiClone
-    git fetch origin
+    git -C $WikiClone fetch origin
     $global:LASTEXITCODE = 0
-    git reset --hard origin/master 2>$null
+    git -C $WikiClone reset --hard origin/master 2>$null
     if ($global:LASTEXITCODE -ne 0) {
         $global:LASTEXITCODE = 0
-        git reset --hard origin/main 2>$null
+        git -C $WikiClone reset --hard origin/main 2>$null
     }
-    Pop-Location
 } else {
     Write-Host "Cloning wiki repository..." -ForegroundColor Yellow
     $global:LASTEXITCODE = 0
@@ -71,28 +69,26 @@ foreach ($f in $mdFiles) {
     $dest = Join-Path $WikiClone $f.Name
     Write-Host "  -> $($f.Name)"
     if (-not $DryRun) {
-        Copy-Item -Path $f.FullName -Destination $dest -Force
+        Copy-Item -LiteralPath $f.FullName -Destination $dest -Force
     }
 }
 
 # --- Step 3: Commit and push ---
-Push-Location $WikiClone
-$status = git status --porcelain
+$status = git -C $WikiClone status --porcelain
 if (-not $status) {
     Write-Host ""
     Write-Host "Nothing to commit — wiki is already up to date." -ForegroundColor Green
-    Pop-Location
     exit 0
 }
 
 Write-Host ""
 Write-Host "Files changed:" -ForegroundColor Yellow
-git status --short
+git -C $WikiClone status --short
 
 if (-not $DryRun) {
-    git add -A
-    git commit -m $CommitMessage
-    git push origin HEAD
+    git -C $WikiClone add -A
+    git -C $WikiClone commit -m $CommitMessage
+    git -C $WikiClone push origin HEAD
     Write-Host ""
     Write-Host "Wiki pushed successfully!" -ForegroundColor Green
     Write-Host "View at: https://github.com/TheCreepero/immersive_namelists_expanded/wiki"
@@ -101,6 +97,4 @@ if (-not $DryRun) {
     Write-Host "[DRY RUN] Would commit: $CommitMessage" -ForegroundColor Yellow
     Write-Host "[DRY RUN] Would push to: $WikiRemote"
 }
-
-Pop-Location
 
