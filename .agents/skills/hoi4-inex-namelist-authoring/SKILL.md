@@ -153,7 +153,7 @@ File location: `common/units/names_divisions/INEX_<TAG>_names_divisions.txt`
 
 ## 6. Documentation & Guidelines Synchronization
 
-Whenever a country is added or updated, immediately update `WORKSHOP_DESCRIPTION_GUIDELINES.md` and `README.md`:
+Whenever a country is added or updated, immediately update `WORKSHOP_DESCRIPTION_GUIDELINES.md`, `README.md`, and `wiki/`:
 1. **Repository Cross-Reference (`WORKSHOP_DESCRIPTION_GUIDELINES.md`)**:
    Add a row to the markdown table:
    `| INEX_<TAG>_names_divisions.txt | <Country> | <TAG> | Included (<Summary of highlights>) |`
@@ -167,7 +167,14 @@ Whenever a country is added or updated, immediately update `WORKSHOP_DESCRIPTION
    Remove the completed country from `[h1]Planned:[/h1]`.
 4. **README Summary Table (`README.md`)**:
    Add newly added country tags, names, and file paths to the **Included Nations Summary** table.
-4. **Steam Description Invariants**:
+5. **Wiki Documentation (`wiki/`)**:
+   - Create or update the detailed documentation page for the country at `wiki/<Nation>.md`.
+   - If adding a new country, add links to `wiki/Home.md` and `wiki/_Sidebar.md`.
+   - Deploy updates to the remote GitHub wiki via:
+     ```powershell
+     powershell -File .\wiki\push-wiki.ps1 -CommitMessage "Document <TAG> division namelists"
+     ```
+6. **Steam Description Invariants**:
    - Strictly no emojis anywhere in the description.
    - Respect Steam's ~17,000 character limit: keep bullets concise and omit author update quote blocks (`[quote=author]...[/quote]`).
    - Maintain the author's concise, direct, bullet-focused voice.
@@ -181,12 +188,15 @@ Whenever a country is added or updated, immediately update `WORKSHOP_DESCRIPTION
 Always run the build automation scripts from the mod root:
 
 ```powershell
-# 1. Syntax and bracket validation
+# 1. Syntax, engine invariant, and bracket validation
 powershell -File .\build.ps1 -ValidateOnly
 
-# 2. Release packaging test (ensures clean ZIP excluding dev artifacts)
+# 2. Automated Pester unit test suite (engine rules, docs sync, build script)
+powershell -File .\build.ps1 -Test
+
+# 3. Release packaging test (ensures clean ZIP excluding dev artifacts)
 powershell -File .\build.ps1 -Package
 
-# 3. Live development link (optional: links Paradox launcher to git repo)
+# 4. Live development link (optional: links Paradox launcher to git repo)
 powershell -File .\build.ps1 -DevLink
 ```

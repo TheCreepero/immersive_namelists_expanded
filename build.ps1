@@ -30,6 +30,9 @@
 .PARAMETER ValidateOnly
     Run validation only and exit.
 
+.PARAMETER Test
+    Execute the comprehensive Pester unit test suites in tests/ and report results.
+
 .PARAMETER Validate
     Validate namelist syntax and bracket balance before proceeding (enabled by default).
 
@@ -79,6 +82,10 @@
     # Packages a clean inex.zip without .git or build artifacts.
 
 .EXAMPLE
+    .\build.ps1 -Test
+    # Executes automated Pester test suites covering namelists, documentation, and build automation.
+
+.EXAMPLE
     .\build.ps1 -PublishSteam -DryRun
     # Previews the Steam Workshop VDF and staged files without uploading.
 
@@ -106,6 +113,9 @@ param(
 
     [Parameter(ParameterSetName = 'ValidateOnly')]
     [switch]$ValidateOnly,
+
+    [Parameter(ParameterSetName = 'Test')]
+    [switch]$Test,
 
     [Parameter(ParameterSetName = 'Clean')]
     [switch]$Clean,
@@ -268,6 +278,15 @@ function Invoke-Validation {
         Write-Warn "No division namelist files found in $namelistDir"
     }
 
+    $validSubunits = @(
+        'infantry', 'cavalry', 'motorized', 'mechanized', 'marine', 'mountaineers', 'paratrooper',
+        'light_armor', 'medium_armor', 'heavy_armor', 'super_heavy_armor', 'modern_armor',
+        'amphibious_armor', 'amphibious_mechanized', 'artillery', 'anti_air', 'anti_tank',
+        'rocket_artillery', 'motorized_rocket_artillery', 'irregular_infantry', 'militia',
+        'camelry', 'ranger_battalion', 'penal_battalion'
+    )
+    $globalGroupTags = @{}
+
     $checkedCount = 0
     foreach ($file in $namelistFiles) {
         $fileHasError = $false
@@ -279,7 +298,7 @@ function Invoke-Validation {
             $fileHasError = $true
         }
 
-        $lines = Get-Content $file.FullName
+        $lines = [System.IO.File]::ReadAllLines($file.FullName, [System.Text.Encoding]::UTF8)
         # Strip comments
         $cleanLines = @($lines | ForEach-Object { $_ -replace '#.*$', '' })
         $cleanText = $cleanLines -join "`n"
@@ -299,10 +318,16 @@ function Invoke-Validation {
             $fileHasError = $true
         }
 
-        # Check for invalid division types
-        if ($cleanText -match 'division_types\s*=\s*\{[^}]*"(marines|armor)"') {
-            Write-Err "$($file.Name): Invalid division type token '$($Matches[1])' found in division_types"
-            $fileHasError = $true
+        # Check for invalid division types against approved subunit whitelist
+        $typeMatches = [regex]::Matches($cleanText, 'division_types\s*=\s*\{([^}]*)\}')
+        foreach ($tm in $typeMatches) {
+            $tokens = [regex]::Matches($tm.Groups[1].Value, '"([^"]+)"') | ForEach-Object { $_.Groups[1].Value }
+            foreach ($tok in $tokens) {
+                if ($validSubunits -notcontains $tok) {
+                    Write-Err "$($file.Name): Invalid division type token '$tok' found in division_types"
+                    $fileHasError = $true
+                }
+            }
         }
 
         # Check for empty ordered blocks
@@ -328,6 +353,50 @@ function Invoke-Validation {
             }
         }
 
+        # Check fallback_name format for ordinal placeholder (%d or %s)
+        $fallbackMatches = [regex]::Matches($cleanText, 'fallback_name\s*=\s*"([^"]+)"')
+        foreach ($fm in $fallbackMatches) {
+            $fb = $fm.Groups[1].Value
+            if ($fb -notmatch '(%d|%s)') {
+                Write-Err "$($file.Name): Fallback name '$fb' is missing an ordinal placeholder (%d or %s)"
+                $fileHasError = $true
+            }
+        }
+
+        # Check link_numbering_with self-reference and track global root group uniqueness
+        $depth = 0
+        $currentGroup = $null
+        for ($i = 0; $i -lt $lines.Length; $i++) {
+            $cleanLine = ($lines[$i] -replace '#.*$', '').Trim()
+            if ([string]::IsNullOrWhiteSpace($cleanLine)) { continue }
+
+            if ($depth -eq 0) {
+                $gm = [regex]::Match($cleanLine, '^([A-Za-z][A-Za-z0-9_]*)\s*=\s*\{?')
+                if ($gm.Success -and $cleanLine -notmatch '^(ordered|division_types|for_countries|can_use|link_numbering_with)\b') {
+                    $currentGroup = $gm.Groups[1].Value
+                    if ($globalGroupTags.ContainsKey($currentGroup)) {
+                        Write-Err "$($file.Name): Duplicate group tag '$currentGroup' (first defined in $($globalGroupTags[$currentGroup]))"
+                        $fileHasError = $true
+                    } else {
+                        $globalGroupTags[$currentGroup] = $file.Name
+                    }
+                }
+            }
+
+            $lm = [regex]::Match($cleanLine, 'link_numbering_with\s*=\s*\{([^}]*)\}')
+            if ($lm.Success -and $currentGroup) {
+                $targets = [regex]::Matches($lm.Groups[1].Value, '([A-Za-z0-9_]+)') | ForEach-Object { $_.Groups[1].Value }
+                foreach ($tgt in $targets) {
+                    if ($tgt -eq $currentGroup) {
+                        Write-Err "$($file.Name): Group '$currentGroup' has self-referential link_numbering_with"
+                        $fileHasError = $true
+                    }
+                }
+            }
+
+            $depth += (([regex]::Matches($cleanLine, '\{')).Count - ([regex]::Matches($cleanLine, '\}')).Count)
+        }
+
         if ($fileHasError) {
             $hasErrors = $true
         } else {
@@ -335,8 +404,26 @@ function Invoke-Validation {
         }
     }
 
+    # Verify documentation synchronization with README.md
+    $readmePath = Join-Path $RepoDir "README.md"
+    if (Test-Path $readmePath) {
+        $readmeText = [System.IO.File]::ReadAllText($readmePath, [System.Text.Encoding]::UTF8)
+        $implementedTags = [System.Collections.Generic.HashSet[string]]::new()
+        foreach ($f in $namelistFiles) {
+            if ($f.Name -match '^INEX_([A-Z0-9]{3})_') {
+                [void]$implementedTags.Add($matches[1])
+            }
+        }
+        foreach ($t in $implementedTags) {
+            if ($readmeText -notmatch ("\|\s*[`]?" + [regex]::Escape($t) + "[`]?\s*\|")) {
+                Write-Err "README.md: Missing documentation entry for nation tag '$t'"
+                $hasErrors = $true
+            }
+        }
+    }
+
     if (-not $hasErrors) {
-        Write-Ok "All $checkedCount division namelist files passed comprehensive syntax and structure validation."
+        Write-Ok "All $checkedCount division namelist files passed comprehensive syntax, engine, and structure validation."
     }
 
     return (-not $hasErrors)
@@ -597,7 +684,7 @@ if ($InstallSteamCmd) {
 }
 
 # --- Determine Actions ---
-$shouldValidate = $Validate -or (-not $NoValidate -and -not $Clean -and -not $InspectVanilla)
+$shouldValidate = $Validate -or (-not $NoValidate -and -not $Clean -and -not $InspectVanilla -and -not $Test)
 if ($ValidateOnly) {
     $ok = Invoke-Validation
     $stopwatch.Stop()
@@ -608,6 +695,19 @@ if ($ValidateOnly) {
         Write-Host "`nValidation failed!" -ForegroundColor Red
         exit 1
     }
+}
+
+# --- Action: Test ---
+if ($Test) {
+    $testRunner = Join-Path $RepoDir "tests\Run-Tests.ps1"
+    if (-not (Test-Path $testRunner)) {
+        Write-Err "Test runner not found at: $testRunner"
+        exit 1
+    }
+    & $testRunner
+    $rc = $LASTEXITCODE
+    $stopwatch.Stop()
+    exit $rc
 }
 
 # Validate first unless skipped
@@ -692,7 +792,7 @@ if ($Package) {
 
     try {
         # Copy only actual mod files to staging
-        $excludeDirs = @('.git', '.github', '.vscode', '.agents', '.agent')
+        $excludeDirs = @('.git', '.github', '.vscode', '.agents', '.agent', 'tests')
         $excludeFiles = @('*.bat', '*.ps1', '*.zip', '*.md', '.gitignore', '.gitattributes', '.steam_username')
         & robocopy.exe $RepoDir $stageModDir /MIR /XD $excludeDirs /XF $excludeFiles /R:1 /W:1 /NDL /NP /NFL | Out-Null
 
@@ -805,7 +905,7 @@ if ($PublishSteam) {
 
     try {
         # Copy only actual mod files to staging
-        $excludeDirs = @('.git', '.github', '.vscode', '.agents', '.agent')
+        $excludeDirs = @('.git', '.github', '.vscode', '.agents', '.agent', 'tests')
         $excludeFiles = @('*.bat', '*.ps1', '*.zip', '*.md', '.gitignore', '.gitattributes', '.steam_username')
         & robocopy.exe $RepoDir $stageContent /MIR /XD $excludeDirs /XF $excludeFiles /R:1 /W:1 /NDL /NP /NFL | Out-Null
 
@@ -889,7 +989,7 @@ if (-not (Test-Path $targetDir)) {
 }
 
 # Robocopy mirror sync - fast, atomic, purges deleted files, strictly excludes .git & dev files
-$excludeDirs = @('.git', '.github', '.vscode', '.agents', '.agent')
+$excludeDirs = @('.git', '.github', '.vscode', '.agents', '.agent', 'tests')
 $excludeFiles = @('*.bat', '*.ps1', '*.zip', '*.md', '.gitignore', '.gitattributes', '.steam_username')
 
 Write-Info "Synchronizing files using robocopy (purging stale files, excluding .git)..."

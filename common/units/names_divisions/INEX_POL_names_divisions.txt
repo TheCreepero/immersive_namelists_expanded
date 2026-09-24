@@ -947,48 +947,6 @@ POL_MEC_01 =
 	}
 }
 
-POL_ARM_01 = 
-{
-	name = "Armored Division"
-
-	for_countries = { POL }
-
-	can_use = { always = yes }
-
-	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
-
-	# Number reservation system will tie to another group.
-	#link_numbering_with = { POL_INF_01 }
-
-	fallback_name = "%d Dywizja Pancerna"
-
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
-	ordered =
-	{
-		1 = { "%d Dywizja Pancerna" }
-	}
-}
-
-POL_ARM_BRIGADE_01 = 
-{
-	name = "Armored Regiment"
-
-	for_countries = { POL }
-
-	can_use = { always = yes }
-
-	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
-
-	fallback_name = "%d Batalion Pancerny"
-
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
-	ordered =
-	{
-		1 = { "%d Batalion Pancerny" }
-	}
-}
 
 POL_PAR_01 = 
 {

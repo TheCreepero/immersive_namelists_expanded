@@ -50,6 +50,9 @@ The repository includes a PowerShell automation tool (`build.ps1`) for validatio
 # Validate syntax, bracket balance, double quotes, duplicate ordered keys, and subunit tokens
 powershell -File .\build.ps1 -ValidateOnly
 
+# Run full automated Pester unit test suites (namelists, documentation, build automation)
+powershell -File .\build.ps1 -Test
+
 # DevLink: Point Paradox Launcher directly to this dev folder (zero-copy live editing)
 powershell -File .\build.ps1 -DevLink
 
