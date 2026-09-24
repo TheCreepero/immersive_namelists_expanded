@@ -792,7 +792,7 @@ if ($Package) {
 
     try {
         # Copy only actual mod files to staging
-        $excludeDirs = @('.git', '.github', '.vscode', '.agents', '.agent', 'tests')
+        $excludeDirs = @('.git', '.github', '.vscode', '.agents', '.agent', 'tests', 'wiki')
         $excludeFiles = @('*.bat', '*.ps1', '*.zip', '*.md', '.gitignore', '.gitattributes', '.steam_username')
         & robocopy.exe $RepoDir $stageModDir /MIR /XD $excludeDirs /XF $excludeFiles /R:1 /W:1 /NDL /NP /NFL | Out-Null
 
@@ -813,7 +813,7 @@ if ($Package) {
         $zipItem = Get-Item $defaultZipName
         $sizeKb = [math]::Round($zipItem.Length / 1KB, 1)
         Write-Ok "Created package: $defaultZipName ($sizeKb KB)"
-        Write-Ok "Strictly excluded: .git, build scripts, markdown guidelines, and temp files."
+        Write-Ok "Strictly excluded: .git, build scripts, markdown guidelines, wiki, and temp files."
 
         Write-Host "`nSuccessfully packaged '$($meta.Name)' v$($meta.Version)!" -ForegroundColor Green
     }
@@ -905,7 +905,7 @@ if ($PublishSteam) {
 
     try {
         # Copy only actual mod files to staging
-        $excludeDirs = @('.git', '.github', '.vscode', '.agents', '.agent', 'tests')
+        $excludeDirs = @('.git', '.github', '.vscode', '.agents', '.agent', 'tests', 'wiki')
         $excludeFiles = @('*.bat', '*.ps1', '*.zip', '*.md', '.gitignore', '.gitattributes', '.steam_username')
         & robocopy.exe $RepoDir $stageContent /MIR /XD $excludeDirs /XF $excludeFiles /R:1 /W:1 /NDL /NP /NFL | Out-Null
 
@@ -989,10 +989,10 @@ if (-not (Test-Path $targetDir)) {
 }
 
 # Robocopy mirror sync - fast, atomic, purges deleted files, strictly excludes .git & dev files
-$excludeDirs = @('.git', '.github', '.vscode', '.agents', '.agent', 'tests')
+$excludeDirs = @('.git', '.github', '.vscode', '.agents', '.agent', 'tests', 'wiki')
 $excludeFiles = @('*.bat', '*.ps1', '*.zip', '*.md', '.gitignore', '.gitattributes', '.steam_username')
 
-Write-Info "Synchronizing files using robocopy (purging stale files, excluding .git)..."
+Write-Info "Synchronizing files using robocopy (purging stale files, excluding .git & dev folders)..."
 & robocopy.exe $RepoDir $targetDir /MIR /XD $excludeDirs /XF $excludeFiles /R:1 /W:1 /NDL /NP /NFL | Out-Null
 $rc = $LASTEXITCODE
 
@@ -1001,11 +1001,14 @@ if ($rc -ge 8) {
     exit $rc
 }
 
-# Clean any accidental .git folder in target from previous legacy scripts
-$staleGit = Join-Path $targetDir ".git"
-if (Test-Path $staleGit) {
-    Remove-Item -Recurse -Force $staleGit
-    Write-Info "Cleaned legacy .git folder from deployed destination."
+# Clean any accidental dev or documentation folders in target from previous deployments
+$staleDirs = @('.git', '.github', '.vscode', '.agents', '.agent', 'tests', 'wiki')
+foreach ($dir in $staleDirs) {
+    $stalePath = Join-Path $targetDir $dir
+    if (Test-Path $stalePath) {
+        Remove-Item -Recurse -Force $stalePath
+        Write-Info "Cleaned stale $dir folder from deployed destination."
+    }
 }
 
 # Clean any documentation or script files that shouldn't be in the game mod folder

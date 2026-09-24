@@ -97,8 +97,21 @@ Describe "build.ps1 Packaging & Staging Exclusions" {
         $script:BuildContent | Should -Match "excludeDirs\s*=\s*@\([^)]*['`"]tests['`"]" -Because "tests directory must be excluded from release staging"
     }
 
+    It "Build script must exclude wiki directory from packages and deployment" {
+        $script:BuildContent | Should -Match "excludeDirs\s*=\s*@\([^)]*['`"]wiki['`"]" -Because "wiki directory must be excluded from release staging"
+    }
+
     It "Build script must exclude .git and dev tools from packaging" {
         $script:BuildContent | Should -Match "excludeDirs\s*=\s*@\([^)]*['`"]\.git['`"]"
         $script:BuildContent | Should -Match "excludeDirs\s*=\s*@\([^)]*['`"]\.github['`"]"
+    }
+
+    It "All excludeDirs definitions in build.ps1 must include wiki and tests" {
+        $matches = [regex]::Matches($script:BuildContent, 'excludeDirs\s*=\s*@\([^)]+\)')
+        $matches.Count | Should -BeGreaterOrEqual 3
+        foreach ($m in $matches) {
+            $m.Value | Should -Match "['`"]wiki['`"]" -Because "Every staging and deployment step must exclude wiki"
+            $m.Value | Should -Match "['`"]tests['`"]" -Because "Every staging and deployment step must exclude tests"
+        }
     }
 }
