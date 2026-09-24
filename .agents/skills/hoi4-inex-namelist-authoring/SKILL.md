@@ -148,6 +148,7 @@ File location: `common/units/names_divisions/INEX_<TAG>_names_divisions.txt`
 - **Division Subunit Tokens**: In `division_types = { ... }`, specify only valid line subunit tokens (e.g., `"infantry"`, `"cavalry"`, `"motorized"`, `"mechanized"`, `"light_armor"`, `"medium_armor"`, `"heavy_armor"`, `"modern_armor"`, `"marine"`, `"mountaineers"`, `"paratrooper"`). Do not use `"armor"` or `"marines"`, and avoid support-only tokens like `"military_police"`.
 - **Ordered Blocks & Keys**: Each integer index in `ordered = { ... }` must be unique. Duplicate keys silently overwrite previous entries. Avoid leaving empty `ordered = { }` blocks.
 - **Link Numbering**: `link_numbering_with` is strictly for cross-referencing *external* groups to prevent duplicate division numbers. Never set a group to link with itself (`link_numbering_with = { GROUP_NAME }`).
+- **Global Group Tag Uniqueness**: Root-level group tags (e.g. `<TAG>_<CAT>_<NUM>`) must be strictly unique across the entire mod. Never duplicate a group tag within a file or across multiple files.
 
 ---
 

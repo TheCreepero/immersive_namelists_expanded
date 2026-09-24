@@ -53,3 +53,4 @@ Whenever a new country namelist is added, expanded, or modified:
 - **Ordered Blocks**: Integer keys in `ordered = { ... }` must be strictly unique. Duplicate keys silently overwrite earlier entries. Never leave empty `ordered = { }` blocks.
 - **Fallback Formatting**: Every `fallback_name` must include an ordinal format string (`%d` for Arabic, `%s` for Roman numerals) to prevent overflow units from generating identical unnumbered names.
 - **Link Numbering**: `link_numbering_with` must only be used to link to *different* external groups (e.g., motorized linking to field infantry). Never define self-referential links (`link_numbering_with = { SELF }`).
+- **Global Group Tag Uniqueness**: Root-level group tags (e.g., `POL_ARM_01`) must be strictly unique across the entire repository. Never define the same group tag multiple times within a file or across separate files.
