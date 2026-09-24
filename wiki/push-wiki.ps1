@@ -47,15 +47,18 @@ if (Test-Path $WikiClone) {
     Write-Host "Updating existing wiki clone..." -ForegroundColor Yellow
     Push-Location $WikiClone
     git fetch origin
+    $global:LASTEXITCODE = 0
     git reset --hard origin/master 2>$null
-    if ($LASTEXITCODE -ne 0) {
+    if ($global:LASTEXITCODE -ne 0) {
+        $global:LASTEXITCODE = 0
         git reset --hard origin/main 2>$null
     }
     Pop-Location
 } else {
     Write-Host "Cloning wiki repository..." -ForegroundColor Yellow
+    $global:LASTEXITCODE = 0
     git clone $WikiRemote $WikiClone
-    if ($LASTEXITCODE -ne 0) {
+    if ($global:LASTEXITCODE -ne 0) {
         Write-Error "Failed to clone wiki. Make sure the wiki has been initialized on GitHub (create at least one page via the web UI first)."
         exit 1
     }
