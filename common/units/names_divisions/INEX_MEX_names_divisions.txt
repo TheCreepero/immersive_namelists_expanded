@@ -7,7 +7,7 @@
 
 # Overrides vanilla MEX_INF_01 (referenced by focus MEX_focus_reform_the_cristero_guard)
 MEX_INF_01 = {
-	name = "Guardia Nacional Cristera"
+	name = "Cristero Guard"
 
 	for_countries = { MEX }
 
@@ -65,7 +65,7 @@ MEX_INF_01 = {
 }
 
 MEX_CRI_CAV_01 = {
-	name = "Cristero Cavalry & Charros"
+	name = "Cristero Cavalry"
 
 	for_countries = { MEX }
 
@@ -152,7 +152,7 @@ MEX_CRI_MNT_01 = {
 # ==============================================================================
 
 MEX_IMP_01 = {
-	name = "Imperial Mexican Guard & Line Infantry"
+	name = "Imperial Guard"
 
 	for_countries = { MEX }
 
@@ -200,7 +200,7 @@ MEX_IMP_01 = {
 }
 
 MEX_IMP_CAV_01 = {
-	name = "Imperial Cavalry & Hussars"
+	name = "Imperial Cavalry"
 
 	for_countries = { MEX }
 
@@ -238,7 +238,7 @@ MEX_IMP_CAV_01 = {
 }
 
 MEX_IMP_ARM_01 = {
-	name = "Imperial Armored Divisions"
+	name = "Imperial Armor"
 
 	for_countries = { MEX }
 
@@ -275,7 +275,7 @@ MEX_IMP_ARM_01 = {
 # ==============================================================================
 
 MEX_PNR_01 = {
-	name = "PNR Civic & Revolutionary Guards"
+	name = "PNR Civic Guards"
 
 	for_countries = { MEX }
 
@@ -321,7 +321,7 @@ MEX_PNR_01 = {
 # ==============================================================================
 
 MEX_SIN_01 = {
-	name = "Synarchist Legions & Tercios (UNS)"
+	name = "Synarchist Legions & Tercios"
 
 	for_countries = { MEX }
 
@@ -364,7 +364,7 @@ MEX_SIN_01 = {
 }
 
 MEX_CD_01 = {
-	name = "Golden Shirts Shock Cavalry (ARM)"
+	name = "Golden Shirts Cavalry"
 
 	for_countries = { MEX }
 
@@ -400,7 +400,7 @@ MEX_CD_01 = {
 }
 
 MEX_CED_01 = {
-	name = "Cedillista Traditionalist Militias"
+	name = "Cedillista Militias"
 
 	for_countries = { MEX }
 
@@ -435,7 +435,7 @@ MEX_CED_01 = {
 }
 
 MEX_HIS_01 = {
-	name = "Hispanist & New Spain Tercios"
+	name = "Hispanist Tercios"
 
 	for_countries = { MEX }
 
@@ -479,7 +479,7 @@ MEX_HIS_01 = {
 # ==============================================================================
 
 MEX_AZT_01 = {
-	name = "Army of Anáhuac (Aztec Legions)"
+	name = "Army of Anáhuac"
 
 	for_countries = { MEX }
 
@@ -564,7 +564,7 @@ MEX_AZT_MNT_01 = {
 # ==============================================================================
 
 MEX_REG_INF_01 = {
-	name = "Mexican Army Infantry Divisions"
+	name = "Infantry Divisions"
 
 	for_countries = { MEX }
 
@@ -610,7 +610,7 @@ MEX_REG_INF_01 = {
 }
 
 MEX_REG_CAV_01 = {
-	name = "Mexican Army Cavalry Regiments"
+	name = "Cavalry Regiments"
 
 	for_countries = { MEX }
 
@@ -656,7 +656,7 @@ MEX_REG_CAV_01 = {
 }
 
 MEX_REG_ARM_01 = {
-	name = "Mexican Armored & Motorized Divisions"
+	name = "Armored & Motorized Divisions"
 
 	for_countries = { MEX }
 
@@ -687,7 +687,7 @@ MEX_REG_ARM_01 = {
 }
 
 MEX_REG_MAR_01 = {
-	name = "Mexican Marine Battalions"
+	name = "Marine Battalions"
 
 	for_countries = { MEX }
 
@@ -716,3 +716,137 @@ MEX_REG_MAR_01 = {
 		16 = { "%dº Batallón de Infantería de Marina" }
 	}
 }
+
+MEX_GEN_INF_02 = {
+	name = "Named Divisions (Heroes)"
+
+	for_countries = { MEX }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" "motorized" "mechanized" }
+
+	fallback_name = "%da División \"Héroes de la Patria\""
+
+	ordered = {
+		1 = { "1ª División de Infantería \"General Ignacio Zaragoza\"" }
+		2 = { "2ª División de Infantería \"Padre de la Patria Miguel Hidalgo\"" }
+		3 = { "3ª División de Infantería \"Generalísimo José María Morelos\"" }
+		4 = { "4ª División de Infantería \"Benemérito Benito Juárez\"" }
+		5 = { "5ª División de Infantería \"General Vicente Guerrero\"" }
+		6 = { "6ª División de Infantería \"General Francisco Villa\"" }
+		7 = { "7ª División de Infantería \"General Emiliano Zapata\"" }
+		8 = { "8ª División de Infantería \"General Álvaro Obregón\"" }
+		9 = { "9ª División de Infantería \"Primer Jefe Venustiano Carranza\"" }
+		10 = { "10ª División de Infantería \"General Lázaro Cárdenas\"" }
+		11 = { "11ª División de Infantería \"General Mariano Escobedo\"" }
+		12 = { "12ª División de Infantería \"General Felipe Ángeles\"" }
+		13 = { "13ª División de Infantería \"General Nicolás Bravo\"" }
+		14 = { "14ª División de Infantería \"General Leandro Valle\"" }
+		15 = { "15ª División de Infantería \"General Ignacio Aldama\"" }
+		16 = { "16ª División de Infantería \"General Ignacio Allende\"" }
+		17 = { "17ª División de Infantería \"General Hermenegildo Galeana\"" }
+		18 = { "18ª División de Infantería \"General Francisco Javier Mina\"" }
+		19 = { "19ª División de Infantería \"General Guadalupe Victoria\"" }
+		20 = { "20ª División de Infantería \"General Melchor Ocampo\"" }
+		21 = { "%da División \"Héroes de la Patria\"" }
+	}
+}
+
+MEX_GEN_MNT_01 = {
+	name = "Mountain Divisions"
+
+	for_countries = { MEX }
+
+	can_use = { always = yes }
+
+	division_types = { "mountaineers" }
+
+	fallback_name = "%da División de Montaña"
+
+	ordered = {
+		1 = { "1ª División de Montaña \"Sierra Madre Occidental\"" }
+		2 = { "2ª División de Montaña \"Sierra Madre Oriental\"" }
+		3 = { "3ª División de Montaña \"Sierra Madre del Sur\"" }
+		4 = { "4ª División de Montaña \"Eje Neovolcánico\"" }
+		5 = { "5ª División de Montaña \"Sierra Gorda\"" }
+		6 = { "6ª División de Montaña \"Altos de Chiapas\"" }
+		7 = { "7ª División de Montaña \"Sierra de Juárez\"" }
+		8 = { "8ª División de Montaña \"Sierra de San Pedro Mártir\"" }
+		9 = { "9ª División de Montaña \"Sierra Tarahumara\"" }
+		10 = { "10ª División de Montaña \"Cumbres de Maltrata\"" }
+		11 = { "11ª División de Montaña \"Sierra de Puebla\"" }
+		12 = { "12ª División de Montaña \"Sierra de Lobos\"" }
+		13 = { "13ª División de Montaña \"Sierra de Tamaulipas\"" }
+		14 = { "14ª División de Montaña \"Montes Azules\"" }
+		15 = { "15ª División de Montaña \"Sierra de Nayarit\"" }
+		16 = { "%da División de Montaña" }
+	}
+}
+
+MEX_GEN_PAR_01 = {
+	name = "Airborne & Paratroopers"
+
+	for_countries = { MEX }
+
+	can_use = { always = yes }
+
+	division_types = { "paratrooper" }
+
+	fallback_name = "%da División Aerotransportada"
+
+	ordered = {
+		1 = { "1ª Brigada de Fusileros Paracaidistas" }
+		2 = { "2ª Brigada de Fusileros Paracaidistas" }
+		3 = { "3ª Brigada de Fusileros Paracaidistas" }
+		4 = { "4ª Brigada de Fusileros Paracaidistas" }
+		5 = { "1ª División Aerotransportada" }
+		6 = { "2ª División Aerotransportada" }
+		7 = { "3ª División Aerotransportada" }
+		8 = { "4ª División Aerotransportada" }
+		9 = { "5ª División Aerotransportada" }
+		10 = { "1er Batallón de Asalto Aéreo" }
+		11 = { "2º Batallón de Asalto Aéreo" }
+		12 = { "3er Batallón de Asalto Aéreo" }
+		13 = { "4º Batallón de Asalto Aéreo" }
+		14 = { "5º Batallón de Asalto Aéreo" }
+		15 = { "%da División Aerotransportada" }
+	}
+}
+
+MEX_GEN_GAR_01 = {
+	name = "Garrison & Homeland Defense"
+
+	for_countries = { MEX }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%da Brigada de Guarnición de Plaza"
+
+	ordered = {
+		1 = { "Guarnición de Plaza de Veracruz (San Juan de Ulúa)" }
+		2 = { "Guarnición de Plaza de Tampico" }
+		3 = { "Guarnición de Plaza de Ciudad Juárez" }
+		4 = { "Guarnición de Plaza de Matamoros" }
+		5 = { "Guarnición de Plaza de Tijuana" }
+		6 = { "Guarnición de Plaza de Acapulco" }
+		7 = { "Guarnición de Plaza de Mazatlán" }
+		8 = { "Guarnición de Plaza de Salina Cruz" }
+		9 = { "Guarnición de Plaza de Manzanillo" }
+		10 = { "Guarnición de Plaza de Ensenada" }
+		11 = { "Guarnición de Plaza de Guaymas" }
+		12 = { "Guarnición de Plaza de Progreso" }
+		13 = { "Guarnición de Plaza de Campeche" }
+		14 = { "Guarnición de Plaza de Coatzacoalcos" }
+		15 = { "Guarnición de Plaza de Nogales" }
+		16 = { "Guarnición de Plaza de Piedras Negras" }
+		17 = { "Guarnición de Plaza de Nuevo Laredo" }
+		18 = { "Guarnición de Plaza de Tapachula" }
+		19 = { "Guarnición de Plaza de Chetumal" }
+		20 = { "Guarnición de Plaza de La Paz" }
+		21 = { "%da Brigada de Guarnición de Plaza" }
+	}
+}
+

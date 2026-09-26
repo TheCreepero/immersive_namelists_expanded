@@ -205,6 +205,7 @@ This is not a complete list of included namelists! Just some examples.
 - Golden Shirts (ARM): Shock cavalry and motorized assault columns, e.g. "[i]1ª Brigada Dorada de Choque 'Nicolás Rodríguez'[/i]"
 - Army of Anáhuac: Revanchist Eagle and Jaguar warrior divisions, e.g. "[i]1ª División de Guerreros Águila[/i]"
 - Army & Marine Regiments: Baseline division namelists for regular infantry, cavalry, armor, and naval infantry
+- Generic & Specialized Units: Hero-named divisions ([i]General Ignacio Zaragoza[/i], [i]Padre Miguel Hidalgo[/i]), mountain rangers, paratroopers, and port garrisons
 
 If you enjoy the mod, please give it a thumbs up and favorite!
 

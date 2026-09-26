@@ -25,7 +25,7 @@
 | [Estonia](Estonia) | `EST` | 4 | `INEX_EST_names_divisions.txt` |
 | [Latvia](Latvia) | `LAT` | 7 | `INEX_LAT_names_divisions.txt` |
 | [Lithuania](Lithuania) | `LIT` | 13 | `INEX_LIT_names_divisions.txt` |
-| [Mexico](Mexico) | `MEX` | 17 | `INEX_MEX_names_divisions.txt` |
+| [Mexico](Mexico) | `MEX` | 21 | `INEX_MEX_names_divisions.txt` |
 
 ---
 
