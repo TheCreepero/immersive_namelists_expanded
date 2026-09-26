@@ -71,6 +71,7 @@ This document serves as an instruction and reference guide for maintaining and u
 | `INEX_POL_names_divisions.txt` | Poland | `POL` | Included (Home Army, PSZ, LWP, KOP Border Guards, Brygada Świętokrzyska) |
 | `INEX_ITA_names_divisions.txt` | Italy | `ITA` | Included (Partisans, Nicknames, Defense Brigades, Colonial, Legione Romana) |
 | `INEX_SOV_names_divisions.txt` | USSR | `SOV` | Included (NKVD, Guards Para, Artillery, Penal units, Cossacks) |
+| `INEX_MEX_names_divisions.txt` | Mexico | `MEX` | Included (Cristero, Imperial Guard, Sinarquistas, Gold Shirts, Anáhuac, Regular Army) |
 
 ---
 
@@ -79,11 +80,16 @@ This document serves as an instruction and reference guide for maintaining and u
 ```bbcode
 More namelists! Used GPT-4 to speed up the creation process and help with translations.
 
+Check out my other mods:
+- [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3807415216]Immersive Ship Names Expanded[/url]
+- [b]Immersive Air Wing Names Expanded[/b] (Coming soon!)
+
 If you have any ideas for namelists, please leave them in the discussion thread!
 
 [h1]Info:[/h1]
 - [b]Not Ironman/Achievement compatible[/b]
 - [b]Unless Paradox changes how namelists work, this mod will be compatible with any future game version![/b]
+- [b]Compatible with Road to 56 (RT56) and vanilla.[/b]
 - No hard incompatibilities. Namelists from other mods might override namelists from this mod in some cases.
 - In addition to polishing and expanding currently included nations, new nations are periodically added where they fit.
 - Feel free to use this mod however you wish.
@@ -190,6 +196,17 @@ This is not a complete list of included namelists! Just some examples.
 - Artillery Divisions
 - Penal Units (Shtrafbat)
 - Cossack Cavalry Divisions
+
+[b]Mexico[/b]
+- Cristero National Guard: Expanded historical brigade designations and devotions, e.g. "[i]1ª Brigada de la Guardia Nacional 'Los Altos'[/i]"
+- Cristero Cavalry & Charros: Mounted guerrilla squadrons and regional dragoon units, e.g. "[i]1er Regimiento de Caballería 'El Catorce'[/i]"
+- Imperial Guard & Third Empire: Imperial grenadiers, Carlota hussars, and armor, e.g. "[i]1ª División de la Guardia Imperial Mexicana[/i]"
+- Sinarquist Legions (UNS): Catholic corporatist falanges and regional tercios, e.g. "[i]1ª Legión Sinarquista 'León de la Fe'[/i]"
+- Golden Shirts (ARM): Shock cavalry and motorized assault columns, e.g. "[i]1ª Brigada Dorada de Choque 'Nicolás Rodríguez'[/i]"
+- Army of Anáhuac: Revanchist Eagle and Jaguar warrior divisions, e.g. "[i]1ª División de Guerreros Águila[/i]"
+- Army & Marine Regiments: Baseline division namelists for regular infantry, cavalry, armor, and naval infantry
+
+If you enjoy the mod, please give it a thumbs up and favorite!
 
 [h1]Planned:[/h1]
 - More USSR!

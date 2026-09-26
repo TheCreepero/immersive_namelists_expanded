@@ -1,0 +1,718 @@
+# Division template historical names system for Mexico (MEX).
+# Immersive Namelists Expanded (INEX)
+
+# ==============================================================================
+# 1. CRISITERO FORMATIONS (Ejército Cristero / Guardia Nacional)
+# ==============================================================================
+
+# Overrides vanilla MEX_INF_01 (referenced by focus MEX_focus_reform_the_cristero_guard)
+MEX_INF_01 = {
+	name = "Guardia Nacional Cristera"
+
+	for_countries = { MEX }
+
+	can_use = {
+		OR = {
+			has_completed_focus = MEX_focus_antidisestablishmentarianism
+			has_completed_focus = MEX_focus_reform_the_cristero_guard
+			has_government = fascism
+			has_government = neutrality
+			has_cosmetic_tag = MEX_cristero
+		}
+	}
+
+	division_types = { "infantry" }
+
+	fallback_name = "%da Guardia Cristera"
+
+	ordered = {
+		1 = { "1ª Brigada de la Guardia Nacional \"Los Altos\"" }
+		2 = { "2ª Brigada de la Guardia Nacional \"Quintanar\"" }
+		3 = { "3ª Brigada de la Guardia Nacional \"Colima\"" }
+		4 = { "4ª Brigada de la Guardia Nacional \"Michoacán\"" }
+		5 = { "5ª Brigada de la Guardia Nacional \"Guanajuato\"" }
+		6 = { "6ª Brigada de la Guardia Nacional \"Durango\"" }
+		7 = { "7ª Brigada de la Guardia Nacional \"Zaragoza de Puebla\"" }
+		8 = { "8ª Brigada de la Guardia Nacional \"General Gorostieta\"" }
+		9 = { "9ª Brigada de la Guardia Nacional \"Jesús Degollado\"" }
+		10 = { "10ª Brigada de la Guardia Nacional \"Lauro Rocha\"" }
+		11 = { "Regimiento Cristero de Cristo Rey" }
+		12 = { "Regimiento Cristero de Santa María de Guadalupe" }
+		13 = { "Regimiento Cristero de San Julián" }
+		14 = { "Regimiento Cristero de San Miguel Arcángel" }
+		15 = { "Regimiento Cristero del Sagrado Corazón" }
+		16 = { "Regimiento Cristero de Tepatitlán" }
+		17 = { "Regimiento Cristero de Arandas" }
+		18 = { "Regimiento Cristero de Coalcomán" }
+		19 = { "Regimiento Cristero de Cotija" }
+		20 = { "Regimiento Cristero de Sahuayo" }
+		21 = { "Regimiento Cristero de Valparaíso" }
+		22 = { "Regimiento Cristero de Sombrerete" }
+		23 = { "Regimiento Cristero de Jalostotitlán" }
+		24 = { "Regimiento Cristero de San Juan de los Lagos" }
+		25 = { "Regimiento Cristero de Yahualica" }
+		26 = { "Brigada Auxiliar Santa Juana de Arco" }
+		27 = { "Regimiento Cristero de Pénjamo" }
+		28 = { "Regimiento Cristero de Salvatierra" }
+		29 = { "Regimiento Cristero de Nochistlán" }
+		30 = { "Regimiento Cristero de Juchipila" }
+		31 = { "Regimiento Cristero del Volcán de Colima" }
+		32 = { "Regimiento Cristero de Tehuacán" }
+		33 = { "Regimiento Cristero del Nayar" }
+		34 = { "Regimiento Cristero de Querétaro" }
+		35 = { "%da Guardia Cristera" }
+	}
+}
+
+MEX_CRI_CAV_01 = {
+	name = "Cristero Cavalry & Charros"
+
+	for_countries = { MEX }
+
+	can_use = {
+		OR = {
+			has_completed_focus = MEX_focus_antidisestablishmentarianism
+			has_completed_focus = MEX_focus_reform_the_cristero_guard
+			has_government = fascism
+			has_government = neutrality
+			has_cosmetic_tag = MEX_cristero
+		}
+	}
+
+	division_types = { "cavalry" }
+
+	fallback_name = "%da División de Caballería Cristera"
+
+	ordered = {
+		1 = { "1er Regimiento de Caballería \"El Catorce\"" }
+		2 = { "2º Regimiento de Caballería \"Pedro Quintanar\"" }
+		3 = { "3er Regimiento de Caballería \"Dragones de San Julián\"" }
+		4 = { "4º Regimiento de Caballería \"Charros de Los Altos\"" }
+		5 = { "5º Regimiento de Caballería \"Lanceros de Cristo Rey\"" }
+		6 = { "6º Regimiento de Caballería \"Jinetes del Bajío\"" }
+		7 = { "7º Regimiento de Caballería \"Escuadrón Guadalupano\"" }
+		8 = { "8º Regimiento de Caballería \"Centauros de Zacatecas\"" }
+		9 = { "9º Regimiento de Caballería \"Carabineros de Michoacán\"" }
+		10 = { "10º Regimiento de Caballería \"Cabañuelas de Durango\"" }
+		11 = { "11º Regimiento de Caballería \"Montados de Colima\"" }
+		12 = { "12º Regimiento de Caballería \"Dragones de Tepatitlán\"" }
+		13 = { "13º Regimiento de Caballería \"Jinetes de Arandas\"" }
+		14 = { "14º Regimiento de Caballería \"Escuadrón Valparaíso\"" }
+		15 = { "15º Regimiento de Caballería \"Lanceros de San Miguel\"" }
+		16 = { "16º Regimiento de Caballería \"Dragones de Jalostotitlán\"" }
+		17 = { "17º Regimiento de Caballería \"Charros de Atotonilco\"" }
+		18 = { "18º Regimiento de Caballería \"Jinetes de Mezquital\"" }
+		19 = { "19º Regimiento de Caballería \"Carabineros de Sombrerete\"" }
+		20 = { "20º Regimiento de Caballería \"Escuadrón de la Santa Cruz\"" }
+		21 = { "%da División de Caballería Cristera" }
+	}
+}
+
+MEX_CRI_MNT_01 = {
+	name = "Cristero Mountain Rangers"
+
+	for_countries = { MEX }
+
+	can_use = {
+		OR = {
+			has_completed_focus = MEX_focus_antidisestablishmentarianism
+			has_completed_focus = MEX_focus_reform_the_cristero_guard
+			has_government = fascism
+			has_government = neutrality
+			has_cosmetic_tag = MEX_cristero
+		}
+	}
+
+	division_types = { "mountaineers" }
+
+	fallback_name = "%da División Serrana Cristera"
+
+	ordered = {
+		1 = { "1ª Brigada Serrana \"Cazadores de la Sierra de Jalisco\"" }
+		2 = { "2ª Brigada Serrana \"Tiradores de la Sierra Gorda\"" }
+		3 = { "3ª Brigada Serrana \"Montañeses de Durango\"" }
+		4 = { "4ª Brigada Serrana \"Cazadores de los Volcanes\"" }
+		5 = { "5ª Brigada Serrana \"Rangeros del Popocatépetl\"" }
+		6 = { "6ª Brigada Serrana \"Cazadores del Nevado de Colima\"" }
+		7 = { "7ª Brigada Serrana \"Guerrilleros de Coalcomán\"" }
+		8 = { "8ª Brigada Serrana \"Cazadores de la Huasteca\"" }
+		9 = { "9ª Brigada Serrana \"Rangeros de la Sierra de Lobos\"" }
+		10 = { "10ª Brigada Serrana \"Tiradores del Iztaccíhuatl\"" }
+		11 = { "11ª Brigada Serrana \"Cazadores de Zacatecas\"" }
+		12 = { "12ª Brigada Serrana \"Montañeses del Nayar\"" }
+		13 = { "13ª Brigada Serrana \"Tiradores de la Sierra Madre\"" }
+		14 = { "14ª Brigada Serrana \"Cazadores de Tapalpa\"" }
+		15 = { "15ª Brigada Serrana \"Rangeros de Mazamitla\"" }
+		16 = { "%da División Serrana Cristera" }
+	}
+}
+
+# ==============================================================================
+# 2. MONARCHIST & IMPERIAL FORMATIONS (Tercer Imperio Mexicano)
+# ==============================================================================
+
+MEX_IMP_01 = {
+	name = "Imperial Mexican Guard & Line Infantry"
+
+	for_countries = { MEX }
+
+	can_use = {
+		OR = {
+			has_government = neutrality
+			has_cosmetic_tag = MEX_cristero
+			has_cosmetic_tag = MEX_habsburg_empire
+			has_country_flag = HUN_created_mexican_habsburg_monarchy
+		}
+	}
+
+	division_types = { "infantry" }
+
+	fallback_name = "%da División Imperial Mexicana"
+
+	ordered = {
+		1 = { "1ª División de la Guardia Imperial Mexicana" }
+		2 = { "2ª División de Granaderos Imperiales" }
+		3 = { "3ª División de Cazadores del Imperio" }
+		4 = { "4ª División Imperial \"Emperador Agustín I\"" }
+		5 = { "5ª División Imperial \"Emperatriz Carlota\"" }
+		6 = { "6ª División Imperial \"General Miguel Miramón\"" }
+		7 = { "7ª División Imperial \"General Tomás Mejía\"" }
+		8 = { "8ª División Imperial \"Orden del Águila Mexicana\"" }
+		9 = { "9ª División Imperial \"Orden de Guadalupe\"" }
+		10 = { "10ª División Imperial \"Paladines de Chapultepec\"" }
+		11 = { "11ª División Imperial \"Tiradores de Querétaro\"" }
+		12 = { "12ª División Imperial \"Veteranos Trigarantes\"" }
+		13 = { "13ª División Imperial \"Granaderos de Morelos\"" }
+		14 = { "14ª División Imperial \"Legión del Ángel Custodio\"" }
+		15 = { "15ª División Imperial \"Cazadores de Puebla\"" }
+		16 = { "16ª División Imperial \"Regimiento San Carlos\"" }
+		17 = { "17ª División Imperial \"Guardias de Tacubaya\"" }
+		18 = { "18ª División Imperial \"Granaderos de Valladolid\"" }
+		19 = { "19ª División Imperial \"Fusileros del Anáhuac\"" }
+		20 = { "20ª División Imperial \"Guardias del Alcázar\"" }
+		21 = { "21ª División Imperial \"Tiradores de Orizaba\"" }
+		22 = { "22ª División Imperial \"Cazadores de Córdoba\"" }
+		23 = { "23ª División Imperial \"Granaderos de Jalapa\"" }
+		24 = { "24ª División Imperial \"Regimiento San Luis\"" }
+		25 = { "25ª División Imperial \"Guardias de Tlaxcala\"" }
+		26 = { "%da División Imperial Mexicana" }
+	}
+}
+
+MEX_IMP_CAV_01 = {
+	name = "Imperial Cavalry & Hussars"
+
+	for_countries = { MEX }
+
+	can_use = {
+		OR = {
+			has_government = neutrality
+			has_cosmetic_tag = MEX_cristero
+			has_cosmetic_tag = MEX_habsburg_empire
+			has_country_flag = HUN_created_mexican_habsburg_monarchy
+		}
+	}
+
+	division_types = { "cavalry" "motorized" }
+
+	fallback_name = "%da División de Caballería Imperial"
+
+	ordered = {
+		1 = { "1er Regimiento de Húsares de la Emperatriz Carlota" }
+		2 = { "2º Regimiento de Dragones de Iturbide" }
+		3 = { "3er Regimiento de Lanceros de Querétaro" }
+		4 = { "4º Regimiento de Cazadores a Caballo de México" }
+		5 = { "5º Regimiento de Coraceros Imperiales del Águila" }
+		6 = { "6º Regimiento de Dragones de San Luis" }
+		7 = { "7º Regimiento de Lanceros de San Miguel" }
+		8 = { "8º Regimiento de Húsares de Miramón" }
+		9 = { "9º Regimiento de Caballería Ligera Tomás Mejía" }
+		10 = { "10º Regimiento de Dragones de Chapultepec" }
+		11 = { "11º Regimiento de Lanceros de Puebla" }
+		12 = { "12º Regimiento de Cazadores a Caballo de Toluca" }
+		13 = { "13º Regimiento de Dragones de Guadalajara" }
+		14 = { "14º Regimiento de Coraceros de Tacubaya" }
+		15 = { "15º Regimiento de Húsares del Imperio" }
+		16 = { "%da División de Caballería Imperial" }
+	}
+}
+
+MEX_IMP_ARM_01 = {
+	name = "Imperial Armored Divisions"
+
+	for_countries = { MEX }
+
+	can_use = {
+		OR = {
+			has_government = neutrality
+			has_cosmetic_tag = MEX_cristero
+			has_cosmetic_tag = MEX_habsburg_empire
+			has_country_flag = HUN_created_mexican_habsburg_monarchy
+		}
+	}
+
+	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" "mechanized" }
+
+	fallback_name = "%da División Blindada Imperial"
+
+	ordered = {
+		1 = { "1ª División Blindada Imperial \"Águila Coronada\"" }
+		2 = { "2ª División Blindada Imperial \"Caballeros de Guadalupe\"" }
+		3 = { "3ª División Blindada Imperial \"General Miramón\"" }
+		4 = { "4ª División Blindada Imperial \"General Tomás Mejía\"" }
+		5 = { "5ª División Blindada Imperial \"Agustín de Iturbide\"" }
+		6 = { "6ª División Mecanizada Imperial \"Emperatriz Carlota\"" }
+		7 = { "7ª División Blindada Imperial \"Trigarante\"" }
+		8 = { "8ª División Mecanizada Imperial \"Querétaro\"" }
+		9 = { "9ª División Blindada Imperial \"Alcázar de Chapultepec\"" }
+		10 = { "10ª División Mecanizada Imperial \"San Carlos\"" }
+		11 = { "%da División Blindada Imperial" }
+	}
+}
+
+# ==============================================================================
+# 3. PNR & MAXIMATO POLITICAL FORMATIONS (Callismo)
+# ==============================================================================
+
+MEX_PNR_01 = {
+	name = "PNR Civic & Revolutionary Guards"
+
+	for_countries = { MEX }
+
+	can_use = {
+		OR = {
+			has_completed_focus = MEX_focus_jefe_maximo
+			has_completed_focus = MEX_focus_party_of_the_revolution
+			has_government = neutrality
+		}
+	}
+
+	division_types = { "infantry" }
+
+	fallback_name = "%da División Cívica del PNR"
+
+	ordered = {
+		1 = { "1ª División de Vanguardia del PNR" }
+		2 = { "2ª División Cívica \"Jefe Máximo\"" }
+		3 = { "3ª División de Defensas Rurales del PNR" }
+		4 = { "4ª Brigada de Defensas Sociales \"Grito de Guadalajara\"" }
+		5 = { "5ª Brigada Constitucionalista \"Plan de Agua Prieta\"" }
+		6 = { "6ª Brigada Cívica \"Convención de Querétaro\"" }
+		7 = { "7ª Brigada de Choque Cívico-Militar" }
+		8 = { "8ª Brigada de Defensas Sociales de Sonora" }
+		9 = { "9ª Brigada de Defensas Rurales de Veracruz" }
+		10 = { "10ª Brigada Cívica \"Álvaro Obregón\"" }
+		11 = { "11ª Brigada Cívica \"Venustiano Carranza\"" }
+		12 = { "12ª Columna Institucional de la Revolución" }
+		13 = { "13ª Brigada de Vanguardia Laica" }
+		14 = { "14ª Brigada de Defensas Sociales del Yaqui" }
+		15 = { "15ª Brigada Cívica \"Constitución de 1917\"" }
+		16 = { "16ª Brigada Cívica de Coahuila" }
+		17 = { "17ª Brigada de Defensas Rurales de Tamaulipas" }
+		18 = { "18ª Brigada de Defensas Sociales de Chihuahua" }
+		19 = { "19ª Brigada Cívica del Bajío" }
+		20 = { "20ª Columna de Vanguardia Revolucionaria" }
+		21 = { "%da División Cívica del PNR" }
+	}
+}
+
+# ==============================================================================
+# 4. SINARQUISTAS, CAMISAS DORADAS, CEDILLISTAS & TERCIOS
+# ==============================================================================
+
+MEX_SIN_01 = {
+	name = "Synarchist Legions & Tercios (UNS)"
+
+	for_countries = { MEX }
+
+	can_use = {
+		OR = {
+			has_completed_focus = MEX_focus_synarchist_communes
+			has_completed_focus = MEX_focus_synarchist_youth
+			has_completed_focus = MEX_focus_triumph_of_synarchism
+			has_government = fascism
+		}
+	}
+
+	division_types = { "infantry" }
+
+	fallback_name = "%da Legión Sinarquista"
+
+	ordered = {
+		1 = { "1ª Legión Sinarquista \"León de la Fe\"" }
+		2 = { "2ª Legión Sinarquista \"José Antonio Urquiza\"" }
+		3 = { "3ª Legión Sinarquista \"Salvador Abascal\"" }
+		4 = { "4ª Legión Sinarquista \"Patria y Orden\"" }
+		5 = { "5ª Legión Sinarquista \"El Bajío\"" }
+		6 = { "1er Tercio Sinarquista \"San Miguel de Allende\"" }
+		7 = { "2º Tercio Sinarquista \"Celaya\"" }
+		8 = { "3er Tercio Sinarquista \"Morelia\"" }
+		9 = { "4º Tercio Sinarquista \"Guadalajara\"" }
+		10 = { "5º Tercio Sinarquista \"Querétaro\"" }
+		11 = { "1ª Centuria Sinarquista \"Cristo Rey\"" }
+		12 = { "2ª Centuria Sinarquista \"Nuestra Señora de San Juan\"" }
+		13 = { "3ª Centuria Sinarquista \"Santa María de Guadalupe\"" }
+		14 = { "Legión Sinarquista de la Juventud Católica" }
+		15 = { "Legión Sinarquista de la Santa Cruz" }
+		16 = { "6º Tercio Sinarquista \"Irapuato\"" }
+		17 = { "7º Tercio Sinarquista \"Salamanca\"" }
+		18 = { "8º Tercio Sinarquista \"Zamora\"" }
+		19 = { "9º Tercio Sinarquista \"Aguascalientes\"" }
+		20 = { "10º Tercio Sinarquista \"Pátzcuaro\"" }
+		21 = { "%da Legión Sinarquista" }
+	}
+}
+
+MEX_CD_01 = {
+	name = "Golden Shirts Shock Cavalry (ARM)"
+
+	for_countries = { MEX }
+
+	can_use = {
+		OR = {
+			has_completed_focus = MEX_focus_the_gold_shirts
+			has_government = fascism
+		}
+	}
+
+	division_types = { "cavalry" "motorized" }
+
+	fallback_name = "%da Brigada Dorada de Caballería"
+
+	ordered = {
+		1 = { "1ª Brigada Dorada de Choque \"Nicolás Rodríguez\"" }
+		2 = { "2ª Brigada de Caballería Dorada \"Cuerpo de Choque del Zócalo\"" }
+		3 = { "3er Regimiento de Dragones Dorados" }
+		4 = { "4º Regimiento de Caballería \"Centauros Dorados\"" }
+		5 = { "5ª Brigada de Caballería de Choque ARM" }
+		6 = { "6º Regimiento de Charros Dorados del Norte" }
+		7 = { "7ª Columna de Asalto Mexicanista" }
+		8 = { "8º Escuadrón de Honor de los Camisas Doradas" }
+		9 = { "9ª Brigada de Caballería Dorada de Monterrey" }
+		10 = { "10ª Brigada de Caballería Dorada del Bravo" }
+		11 = { "11º Regimiento de Dragones Dorados de Sonora" }
+		12 = { "12ª Columna Motorizada de Asalto Dorada" }
+		13 = { "13er Escuadrón de Choque Fronterizo" }
+		14 = { "14ª Brigada de Caballería Dorada de Chihuahua" }
+		15 = { "15º Regimiento de Charros de Asalto Mexicanista" }
+		16 = { "%da Brigada Dorada de Caballería" }
+	}
+}
+
+MEX_CED_01 = {
+	name = "Cedillista Traditionalist Militias"
+
+	for_countries = { MEX }
+
+	can_use = {
+		OR = {
+			has_completed_focus = MEX_focus_support_general_cedillo
+			has_completed_focus = MEX_focus_caudillo_private_armies
+			has_government = fascism
+			has_government = neutrality
+		}
+	}
+
+	division_types = { "infantry" "cavalry" }
+
+	fallback_name = "%da Brigada Cedillista"
+
+	ordered = {
+		1 = { "1ª Brigada de San Luis Potosí \"Saturnino Cedillo\"" }
+		2 = { "2ª Brigada Montada \"Jinetes de las Palomas\"" }
+		3 = { "3ª Brigada Agraria Tradicionalista" }
+		4 = { "4ª Brigada de la Huasteca Potosina" }
+		5 = { "5ª Brigada Rural de Ciudad del Maíz" }
+		6 = { "6ª Brigada Serrana de Guadalcázar" }
+		7 = { "7º Regimiento de Caballería Cedillista" }
+		8 = { "8ª Brigada Agraria de Río Verde" }
+		9 = { "9ª Brigada de Defensas de Matehuala" }
+		10 = { "10ª Columna Rural de Cárdenas" }
+		11 = { "11ª Brigada de Rancheros de Cerritos" }
+		12 = { "12ª Brigada Montada de Charcas" }
+		13 = { "%da Brigada Cedillista" }
+	}
+}
+
+MEX_HIS_01 = {
+	name = "Hispanist & New Spain Tercios"
+
+	for_countries = { MEX }
+
+	can_use = {
+		OR = {
+			has_completed_focus = MEX_focus_hispanic_culture
+			has_completed_focus = MEX_focus_hispanic_alliance
+			has_completed_focus = MEX_focus_falangist_veterans
+			has_government = fascism
+			has_government = neutrality
+		}
+	}
+
+	division_types = { "infantry" }
+
+	fallback_name = "%dº Tercio Novohispano"
+
+	ordered = {
+		1 = { "1er Tercio Novohispano \"Santiago Apóstol\"" }
+		2 = { "2º Tercio Novohispano \"Nueva Galicia\"" }
+		3 = { "3er Tercio Novohispano \"Nueva Vizcaya\"" }
+		4 = { "4º Tercio Novohispano \"Santa Fe de Nuevo México\"" }
+		5 = { "5º Tercio Novohispano \"Capitanía de Yucatán\"" }
+		6 = { "6º Tercio Novohispano \"San Jerónimo\"" }
+		7 = { "7º Tercio Novohispano \"Hernán Cortés\"" }
+		8 = { "8ª Legión de la Hispanidad \"Raza Cósmica\"" }
+		9 = { "9º Tercio Novohispano \"Caballeros de Colón\"" }
+		10 = { "10º Tercio Novohispano \"Reino de Nuevo León\"" }
+		11 = { "11º Tercio Novohispano \"Nuevo Santander\"" }
+		12 = { "12º Tercio Novohispano \"Alta California\"" }
+		13 = { "13º Tercio Novohispano \"San Juan de Ulúa\"" }
+		14 = { "14º Tercio Novohispano \"Reino de México\"" }
+		15 = { "15º Tercio Novohispano \"Tejas Novohispana\"" }
+		16 = { "16ª Legión de Voluntarios Falangistas" }
+		17 = { "%dº Tercio Novohispano" }
+	}
+}
+
+# ==============================================================================
+# 5. INDIGENIST-NATIONALIST & NATIVIST FORMATIONS (Ejército de Anáhuac)
+# ==============================================================================
+
+MEX_AZT_01 = {
+	name = "Army of Anáhuac (Aztec Legions)"
+
+	for_countries = { MEX }
+
+	can_use = {
+		OR = {
+			has_completed_focus = MEX_focus_aztec_eagles
+			has_completed_focus = MEX_focus_redeem_aztlan
+			has_completed_focus = MEX_focus_rescind_the_mexican_cession
+			has_completed_focus = MEX_focus_revanchist_revolution
+		}
+	}
+
+	division_types = { "infantry" }
+
+	fallback_name = "%da División de Anáhuac"
+
+	ordered = {
+		1 = { "1ª División de Guerreros Águila" }
+		2 = { "2ª División de Guerreros Jaguar" }
+		3 = { "3ª División de Vanguardia Cuachicqueh" }
+		4 = { "4ª División de Anáhuac \"Cuauhtémoc\"" }
+		5 = { "5ª División de Anáhuac \"Cuitláhuac\"" }
+		6 = { "6ª División de Choque \"Tlacaélel\"" }
+		7 = { "7ª División de Anáhuac \"Moctezuma Ilhuicamina\"" }
+		8 = { "8ª División de Anáhuac \"Nezahualcóyotl\"" }
+		9 = { "9ª División Libertadora de Aztlán" }
+		10 = { "10ª División de Anáhuac \"Axayácatl\"" }
+		11 = { "11ª División de Asalto \"Ahuízotl\"" }
+		12 = { "12ª División de Anáhuac \"Xicoténcatl\"" }
+		13 = { "13ª Brigada de Vanguardia Tenochtitlan" }
+		14 = { "14ª Brigada del Calpulli Tlacopan" }
+		15 = { "15ª Brigada del Calpulli Texcoco" }
+		16 = { "16ª División de Tiradores Huitzilopochtli" }
+		17 = { "17ª División de Frontera Chichimeca" }
+		18 = { "18ª Brigada Imperial Tlatelolco" }
+		19 = { "19ª División de Anáhuac \"Quetzalcóatl\"" }
+		20 = { "20ª División Nativista \"Raza de Bronce\"" }
+		21 = { "21ª Brigada de Vanguardia Cholula" }
+		22 = { "22ª División de Asalto Tezcatlipoca" }
+		23 = { "23ª División de Anáhuac \"Tízoc\"" }
+		24 = { "24ª Brigada del Calpulli Coyoacán" }
+		25 = { "25ª Brigada del Calpulli Iztapalapa" }
+		26 = { "%da División de Anáhuac" }
+	}
+}
+
+MEX_AZT_MNT_01 = {
+	name = "Otontin Sierra Warriors"
+
+	for_countries = { MEX }
+
+	can_use = {
+		OR = {
+			has_completed_focus = MEX_focus_aztec_eagles
+			has_completed_focus = MEX_focus_redeem_aztlan
+			has_completed_focus = MEX_focus_rescind_the_mexican_cession
+			has_completed_focus = MEX_focus_revanchist_revolution
+		}
+	}
+
+	division_types = { "mountaineers" }
+
+	fallback_name = "%da Brigada Serrana Otontin"
+
+	ordered = {
+		1 = { "1ª Brigada de Asalto Otontin" }
+		2 = { "2ª Brigada Serrana \"Guerreros Zapotecas\"" }
+		3 = { "3ª Brigada Serrana \"Guerreros Mixtecas\"" }
+		4 = { "4ª Brigada Serrana \"Rangeros Tarahumaras\"" }
+		5 = { "5ª Brigada Serrana \"Flechadores Yaquis\"" }
+		6 = { "6ª Brigada Serrana \"Tiradores Purépechas\"" }
+		7 = { "7ª Brigada de Cazadores de la Sierra del Sur" }
+		8 = { "8ª Brigada de Asalto Ixtaccíhuatl" }
+		9 = { "9ª Brigada Serrana \"Guerreros Otomíes\"" }
+		10 = { "10ª Brigada Serrana \"Montañeses del Popocatépetl\"" }
+		11 = { "%da Brigada Serrana Otontin" }
+	}
+}
+
+# ==============================================================================
+# 6. REGULAR MEXICAN ARMED FORCES BASELINE (Standard Army & Navy)
+# ==============================================================================
+
+MEX_REG_INF_01 = {
+	name = "Mexican Army Infantry Divisions"
+
+	for_countries = { MEX }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%da División de Infantería"
+
+	ordered = {
+		1 = { "1ª División de Infantería (1ª Zona Militar - D.F.)" }
+		2 = { "2ª División de Infantería (2ª Zona Militar - Baja California)" }
+		3 = { "3ª División de Infantería (3ª Zona Militar - Sinaloa)" }
+		4 = { "4ª División de Infantería (4ª Zona Militar - Sonora)" }
+		5 = { "5ª División de Infantería (5ª Zona Militar - Chihuahua)" }
+		6 = { "6ª División de Infantería (6ª Zona Militar - Coahuila)" }
+		7 = { "7ª División de Infantería (7ª Zona Militar - Nuevo León)" }
+		8 = { "8ª División de Infantería (8ª Zona Militar - Tamaulipas)" }
+		9 = { "9ª División de Infantería (9ª Zona Militar - Durango)" }
+		10 = { "10ª División de Infantería (10ª Zona Militar - Zacatecas)" }
+		11 = { "11ª División de Infantería (11ª Zona Militar - San Luis Potosí)" }
+		12 = { "12ª División de Infantería (12ª Zona Militar - Aguascalientes)" }
+		13 = { "13ª División de Infantería (13ª Zona Militar - Nayarit)" }
+		14 = { "14ª División de Infantería (14ª Zona Militar - Jalisco)" }
+		15 = { "15ª División de Infantería (15ª Zona Militar - Colima)" }
+		16 = { "16ª División de Infantería (16ª Zona Militar - Michoacán)" }
+		17 = { "17ª División de Infantería (17ª Zona Militar - Guanajuato)" }
+		18 = { "18ª División de Infantería (18ª Zona Militar - Querétaro)" }
+		19 = { "19ª División de Infantería (19ª Zona Militar - Hidalgo)" }
+		20 = { "20ª División de Infantería (20ª Zona Militar - Estado de México)" }
+		21 = { "21ª División de Infantería (21ª Zona Militar - Puebla)" }
+		22 = { "22ª División de Infantería (22ª Zona Militar - Tlaxcala)" }
+		23 = { "23ª División de Infantería (23ª Zona Militar - Morelos)" }
+		24 = { "24ª División de Infantería (24ª Zona Militar - Guerrero)" }
+		25 = { "25ª División de Infantería (25ª Zona Militar - Oaxaca)" }
+		26 = { "26ª División de Infantería (26ª Zona Militar - Veracruz)" }
+		27 = { "27ª División de Infantería (27ª Zona Militar - Tabasco)" }
+		28 = { "28ª División de Infantería (28ª Zona Militar - Chiapas)" }
+		29 = { "29ª División de Infantería (29ª Zona Militar - Campeche)" }
+		30 = { "30ª División de Infantería (30ª Zona Militar - Yucatán)" }
+		31 = { "%da División de Infantería" }
+	}
+}
+
+MEX_REG_CAV_01 = {
+	name = "Mexican Army Cavalry Regiments"
+
+	for_countries = { MEX }
+
+	can_use = { always = yes }
+
+	division_types = { "cavalry" }
+
+	fallback_name = "%dº Regimiento de Caballería"
+
+	ordered = {
+		1 = { "1er Regimiento de Caballería" }
+		2 = { "2º Regimiento de Caballería" }
+		3 = { "3er Regimiento de Caballería" }
+		4 = { "4º Regimiento de Caballería" }
+		5 = { "5º Regimiento de Caballería" }
+		6 = { "6º Regimiento de Caballería" }
+		7 = { "7º Regimiento de Caballería" }
+		8 = { "8º Regimiento de Caballería" }
+		9 = { "9º Regimiento de Caballería" }
+		10 = { "10º Regimiento de Caballería" }
+		11 = { "11º Regimiento de Caballería" }
+		12 = { "12º Regimiento de Caballería" }
+		13 = { "13er Regimiento de Caballería" }
+		14 = { "14º Regimiento de Caballería" }
+		15 = { "15º Regimiento de Caballería" }
+		16 = { "16º Regimiento de Caballería" }
+		17 = { "17º Regimiento de Caballería" }
+		18 = { "18º Regimiento de Caballería" }
+		19 = { "19º Regimiento de Caballería" }
+		20 = { "20º Regimiento de Caballería" }
+		21 = { "21er Regimiento de Caballería" }
+		22 = { "22º Regimiento de Caballería" }
+		23 = { "23er Regimiento de Caballería" }
+		24 = { "24º Regimiento de Caballería" }
+		25 = { "25º Regimiento de Caballería" }
+		26 = { "26º Regimiento de Caballería" }
+		27 = { "27º Regimiento de Caballería" }
+		28 = { "28º Regimiento de Caballería" }
+		29 = { "29º Regimiento de Caballería" }
+		30 = { "30º Regimiento de Caballería" }
+		31 = { "%dº Regimiento de Caballería" }
+	}
+}
+
+MEX_REG_ARM_01 = {
+	name = "Mexican Armored & Motorized Divisions"
+
+	for_countries = { MEX }
+
+	can_use = { always = yes }
+
+	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" "motorized" "mechanized" }
+
+	fallback_name = "%da División Blindada"
+
+	ordered = {
+		1 = { "1ª División Blindada" }
+		2 = { "2ª División Blindada" }
+		3 = { "3ª División Motorizada" }
+		4 = { "4ª División Motorizada" }
+		5 = { "5ª División Blindada" }
+		6 = { "6ª División Mecanizada" }
+		7 = { "7ª División Motorizada" }
+		8 = { "8ª División Blindada" }
+		9 = { "9ª División Mecanizada" }
+		10 = { "10ª División Blindada" }
+		11 = { "11ª División Motorizada" }
+		12 = { "12ª División Blindada" }
+		13 = { "13ª División Mecanizada" }
+		14 = { "14ª División Motorizada" }
+		15 = { "15ª División Blindada" }
+		16 = { "%da División Blindada" }
+	}
+}
+
+MEX_REG_MAR_01 = {
+	name = "Mexican Marine Battalions"
+
+	for_countries = { MEX }
+
+	can_use = { always = yes }
+
+	division_types = { "marine" }
+
+	fallback_name = "%dº Batallón de Infantería de Marina"
+
+	ordered = {
+		1 = { "1er Batallón de Infantería de Marina (Golfo)" }
+		2 = { "2º Batallón de Infantería de Marina (Pacífico)" }
+		3 = { "3er Batallón de Infantería de Marina (Veracruz)" }
+		4 = { "4º Batallón de Infantería de Marina (Tampico)" }
+		5 = { "5º Batallón de Infantería de Marina (Acapulco)" }
+		6 = { "6º Batallón de Infantería de Marina (Manzanillo)" }
+		7 = { "7º Batallón de Infantería de Marina (Mazatlán)" }
+		8 = { "8º Batallón de Infantería de Marina (Salina Cruz)" }
+		9 = { "9º Batallón de Infantería de Marina (Cozumel)" }
+		10 = { "10º Batallón de Infantería de Marina (Guaymas)" }
+		11 = { "11er Batallón de Infantería de Marina (Ensenada)" }
+		12 = { "12º Batallón de Infantería de Marina (Puerto Vallarta)" }
+		13 = { "13er Batallón de Infantería de Marina (Progreso)" }
+		14 = { "14º Batallón de Infantería de Marina (Chetumal)" }
+		15 = { "15º Batallón de Infantería de Marina (La Paz)" }
+		16 = { "%dº Batallón de Infantería de Marina" }
+	}
+}

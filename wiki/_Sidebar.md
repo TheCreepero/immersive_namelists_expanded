@@ -17,6 +17,7 @@
 - [Estonia](Estonia)
 - [Latvia](Latvia)
 - [Lithuania](Lithuania)
+- [Mexico](Mexico)
 
 ---
 
