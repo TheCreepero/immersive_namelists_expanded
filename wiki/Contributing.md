@@ -111,7 +111,7 @@ Fix all reported errors before proceeding.
 Whenever a nation is added or significantly expanded, update:
 
 1. **`README.md`** — add the country tag, name, and source file to the **Included Nations Summary** table
-2. **`WORKSHOP_DESCRIPTION_GUIDELINES.md`** — add the nation to the `[h1]Included nations:[/h1]` section and remove it from `[h1]Planned:[/h1]`
+2. **`WORKSHOP_DESCRIPTION_GUIDELINES.md`** — add the nation under `[h1]Included nations:[/h1]` (2–3 concise bullets) and update the cross-reference table
 3. **This wiki** — add or update the nation's wiki page
 
 ---

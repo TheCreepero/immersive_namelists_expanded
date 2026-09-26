@@ -5,6 +5,7 @@
 - Namelist group tags must follow the pattern `<TAG>_<CATEGORY>_<NUMBER>` (e.g., `EST_REG_01`, `EST_KL_01`, `SWE_ARM_01`).
 - All files must be saved using UTF-8 encoding (without BOM) and maintain strictly balanced curly brackets `{}`.
 - **German Namelist Convention**: Germany is intentionally split into three separate files for organization: `INEX_GER_names_divisions.txt` (Wehrmacht regular), `INEX_GER_SS_names_divisions.txt` (Waffen-SS), and `INEX_GER_ADDITIONAL_names_divisions.txt` (Kampfgruppen, Festung, Fallschirmjäger, Volkssturm, and specialized formations).
+- **UI Selector Name Conciseness**: In namelist group definitions, `name = "<Selector>"` must be concise and omit redundant country names or demonym prefixes (e.g., use `"Infantry Divisions"` instead of `"Mexican Infantry Divisions"`). The in-game division designer dropdown has limited width and truncates long labels.
 
 ## 2. Historical & Linguistic Standards
 - **Linguistic Precision**: Always verify proper grammar, cases, and diacritics in the target language. Avoid vanilla Paradox errors (e.g., using genitive/partitive forms like *diviisi* instead of nominative *Jalaväediviis*).
@@ -14,8 +15,7 @@
 Whenever a new country namelist is added, expanded, or modified:
 1. **Update `WORKSHOP_DESCRIPTION_GUIDELINES.md`**:
    - Add/update the file and summary in the **Repository Cross-Reference** table.
-   - Add/update the nation under `[h1]Included nations:[/h1]` using standard BBCode (`[b]Nation[/b]` with bulleted categories and italicized unit examples `[i]...[/i]`).
-   - Remove completed nations from `[h1]Planned:[/h1]`.
+   - Add/update the nation under `[h1]Included nations:[/h1]` using standard BBCode (`[b]Nation[/b]` with 2-3 concise bulleted categories and italicized unit examples `[i]...[/i]`).
 2. **Update `README.md`**:
    - Add any newly introduced country tags and source files to the **Included Nations Summary** table.
 3. **Update Wiki Documentation (`wiki/`)**:
@@ -51,6 +51,6 @@ Whenever a new country namelist is added, expanded, or modified:
 ## 6. Engine Namelist Invariants
 - **Subunit Tokens**: In `division_types = { ... }`, only use valid line combat subunit tokens (e.g., `"marine"`, `"infantry"`, `"light_armor"`, `"medium_armor"`, `"heavy_armor"`, `"modern_armor"`). Never use `"armor"`, `"marines"`, or support-only tokens like `"military_police"`.
 - **Ordered Blocks**: Integer keys in `ordered = { ... }` must be strictly unique. Duplicate keys silently overwrite earlier entries. Never leave empty `ordered = { }` blocks.
-- **Fallback Formatting**: Every `fallback_name` must include an ordinal format string (`%d` for Arabic, `%s` for Roman numerals) to prevent overflow units from generating identical unnumbered names.
+- **Fallback Formatting**: Every `fallback_name` must include an ordinal format string (`%d` for Arabic, `%s` for Roman numerals) to prevent overflow units from generating identical unnumbered names. Language-specific abbreviations without `%d` or `%s` (e.g., `%er`) are invalid in fallback formatters and must only be used inside static `ordered = { ... }` definitions.
 - **Link Numbering**: `link_numbering_with` must only be used to link to *different* external groups (e.g., motorized linking to field infantry). Never define self-referential links (`link_numbering_with = { SELF }`).
 - **Global Group Tag Uniqueness**: Root-level group tags (e.g., `POL_ARM_01`) must be strictly unique across the entire repository. Never define the same group tag multiple times within a file or across separate files.

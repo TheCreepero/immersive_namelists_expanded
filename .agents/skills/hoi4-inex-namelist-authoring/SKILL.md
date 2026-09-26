@@ -143,7 +143,8 @@ File location: `common/units/names_divisions/INEX_<TAG>_names_divisions.txt`
 ### Important Syntax Rules:
 - **Encoding**: Ensure clean UTF-8 encoding without BOM.
 - **Quotes**: Arguments must be wrapped in matching double quotes `""`.
-- **Number Formats**: Use `%d` for Arabic numbers (`1.`, `2.`) and `%s` for Roman numerals (`I.`, `II.`). Always ensure `fallback_name` includes a `%d` or `%s` token so overflow units do not share identical names.
+- **UI Selector Names (`name = "..."`)**: Keep in-game selector names concise, functional, and devoid of national demonyms (e.g. `"Alpine Cazadores"` or `"Cavalry Regiments"`, not `"Mexican Alpine Cazadores"`). The in-game division template dropdown UI is narrow and truncates long names.
+- **Number Formats & Fallback Tokens**: Use `%d` for Arabic numbers (`1.`, `2.`) and `%s` for Roman numerals (`I.`, `II.`). Always ensure `fallback_name` includes a literal `%d` or `%s` token (e.g., `%d.`, `%dº`, `%da`, `%s.`) so overflow units do not share identical names. Do not use custom placeholders like `%er` in fallback names (reserve language-specific contractions for static entries in `ordered = { ... }`).
 - **Bracket Balance**: Brackets `{}` must be strictly balanced.
 - **Division Subunit Tokens**: In `division_types = { ... }`, specify only valid line subunit tokens (e.g., `"infantry"`, `"cavalry"`, `"motorized"`, `"mechanized"`, `"light_armor"`, `"medium_armor"`, `"heavy_armor"`, `"modern_armor"`, `"marine"`, `"mountaineers"`, `"paratrooper"`). Do not use `"armor"` or `"marines"`, and avoid support-only tokens like `"military_police"`.
 - **Ordered Blocks & Keys**: Each integer index in `ordered = { ... }` must be unique. Duplicate keys silently overwrite previous entries. Avoid leaving empty `ordered = { }` blocks.
@@ -159,23 +160,21 @@ Whenever a country is added or updated, immediately update `WORKSHOP_DESCRIPTION
    Add a row to the markdown table:
    `| INEX_<TAG>_names_divisions.txt | <Country> | <TAG> | Included (<Summary of highlights>) |`
 2. **Active Steam Workshop Description (`WORKSHOP_DESCRIPTION_GUIDELINES.md`)**:
-   Add the nation under `[h1]Included nations:[/h1]` using standard BBCode format:
+   Add the nation under `[h1]Included nations:[/h1]` using standard BBCode format (2–3 concise bullet points to respect the character limit):
    ```bbcode
    [b]<Country>[/b]
    - <Category Name>: Brief description with italicized in-game examples ([i]Unit Name[/i])
    ```
-3. **Planned List (`WORKSHOP_DESCRIPTION_GUIDELINES.md`)**:
-   Remove the completed country from `[h1]Planned:[/h1]`.
-4. **README Summary Table (`README.md`)**:
+3. **README Summary Table (`README.md`)**:
    Add newly added country tags, names, and file paths to the **Included Nations Summary** table.
-5. **Wiki Documentation (`wiki/`)**:
+4. **Wiki Documentation (`wiki/`)**:
    - Create or update the detailed documentation page for the country at `wiki/<Nation>.md`.
    - If adding a new country, add links to `wiki/Home.md` and `wiki/_Sidebar.md`.
    - Deploy updates to the remote GitHub wiki via:
      ```powershell
      powershell -File .\wiki\push-wiki.ps1 -CommitMessage "Document <TAG> division namelists"
      ```
-6. **Steam Description Invariants**:
+5. **Steam Description Invariants**:
    - Strictly no emojis anywhere in the description.
    - Respect Steam's ~17,000 character limit: keep bullets concise and omit author update quote blocks (`[quote=author]...[/quote]`).
    - Maintain the author's concise, direct, bullet-focused voice.

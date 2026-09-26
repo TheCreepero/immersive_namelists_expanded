@@ -47,9 +47,7 @@ This document serves as an instruction and reference guide for maintaining and u
 3. **[h1]Included nations:[/h1]**:
    - Disclaimer noting that this is not an exhaustive list, just highlights/examples.
    - Grouped by nation in bold (`[b]Nation[/b]`).
-   - Highlighted division categories with brief descriptions or in-game examples in italics.
-4. **[h1]Planned:[/h1]**:
-   - Bulleted list of nations planned for expansion or future addition.
+   - Highlighted division categories with brief descriptions or in-game examples in italics (maintain 2-3 concise bullets per nation to conserve character limit).
 
 ---
 
@@ -98,128 +96,58 @@ If you have any ideas for namelists, please leave them in the discussion thread!
 This is not a complete list of included namelists! Just some examples.
 
 [b]USA[/b]
-- Communist USA Guards Divisions
-- Fascist USA Fascist & National Legion Divisions
-- Shock Divisions
-- Composite Units: For example Merrill's Marauders
-- Armored Detachment: Named after various US forts
-- Ranger Force: Historic commando & ranger battalions
-- Division of National Defense: Emergency homeland defense units
+- Guards (Communist), Legion & Fascist divisions, and emergency National Defense units
+- Shock, Rangers, Merrill's Marauders, and fort-named armored detachments
 
 [b]Germany[/b]
-- Fortress (Festung) Divisions: Named after European cities
-- Garrison command namelist
-- Expanded SS namelist with a few dozen fictional named divisions
-- SS infantry, motorized, mechanized, and armored namelists with both historical and ahistorical entries (as well as the general purpose SS list)
-- SS-Standarte
-- Named Armored Divisions: Panzer divisions, but every division has a nickname
-- Marine & Paratrooper namelists have nicknames for divisions
-- Kampfgruppen
-- Grenadier & Volksgrenadier Divisions separated from the vanilla namelists
-- Heavy tank battalion namelists (Schwere Panzerabteilungen)
-- Panzerartillerie & Flak Divisions
-- Luftwaffe Field Divisions (Luftwaffe-Felddivisionen)
-- Reserve Divisions
-- Volkssturm
-- Monarchist / Imperial Divisions: Authentic naming conventions for the German Empire
+- Festung & Garrison divisions named after European cities; Volksgrenadier & Volkssturm
+- Nicknamed Panzer, Paratrooper & Marine divisions; Schwere Panzerabteilungen, Flak & Kampfgruppen
+- Expanded historical & ahistorical SS lists and Standarten; Imperial/Monarchist armies
 
 [b]Sweden[/b]
-- Infantry Brigades (Infanteribrigader): Named after Swedish provinces with regional nicknames (e.g. [i]Gula brigaden[/i], [i]Hallandsbrigaden[/i], [i]Livbrigaden[/i])
-- Armored Brigades (Pansarbrigader): Historic tank brigades (e.g. [i]Göta pansarbrigad[/i], [i]Skånska pansarbrigaden[/i], [i]Blå brigaden[/i])
-- Bicycle & Ranger Brigades (Cykelbrigader & Cykeljägarbrigader)
-- Cavalry Brigades (Kavalleribrigader): Dragoon and hussar formations (e.g. [i]Livgardets dragoner[/i], [i]Livregementets husarer[/i])
-- Ski & Arctic Ranger Brigades (Skid- & Jägarbrigader): Arctic, mountain, and frontier units (e.g. [i]Skidjägarbrigaden 'Jämtland'[/i], [i]Fjälljägarbrigaden 'Sarek'[/i], [i]Gränsjägarbrigaden 'Kalix'[/i])
-- Coastal Defense & Marine Brigades (Kustartilleri & Skärgårdsbrigader): Coastal artillery and archipelago defense (e.g. [i]Vaxholm[/i], [i]Gotland[/i], [i]Stockholms skärgård[/i])
-- Home Guard & Defense Areas (Hemvärnsområden & Försvarsområden)
-- Artillery & Anti-Air Brigades (Artilleri- & Luftvärnsbrigader)
-- Paratrooper Brigades (Fallskärmsjägarbrigader)
-- Royal Guards & Carolean Formations (Kungliga Livgardet): Imperial and historical guards including [i]Carolus Rex[/i], [i]Gustavus Adolphus[/i], and [i]Livdrabantkåren[/i]
-- Swedish Volunteer Units (Svenska Frivilligkåren & Skandinaviska Frivilliglegionen)
+- Provincial Infanteribrigader ([i]Gula brigaden[/i]), Pansarbrigader, and Cykel- & Kavalleribrigader
+- Ski & Arctic rangers, coastal artillery, Royal Guards (Caroleans), and Volunteers (SFK)
 
 [b]Lithuania[/b]
-- Historical Regiments: Infantry regiments honoring grand dukes and monarchs (e.g. [i]Lietuvos Didžiojo Kunigaikščio Gedimino[/i], [i]Vytauto[/i], [i]Algirdo[/i], [i]Karaliaus Mindaugo[/i])
-- Cavalry Regiments: Historic husar, uhlan, and dragoon regiments (e.g. [i]Geležinio Vilko[/i] / Iron Wolf, [i]Radvilos[/i], [i]Birutės[/i])
-- Armored & Anti-Air Teams (Šarvuočių Rinktinė & Priešlėktuvinės Apsaugos Rinktinė)
-- Artillery Regiments & Infantry Brigades
-- Territorial, District, and Border Garrisons
+- Grand Duke infantry regiments ([i]Gedimino[/i], [i]Vytauto[/i], [i]Algirdo[/i]) & [i]Geležinio Vilko[/i] cavalry
+- Armored & anti-air teams, artillery regiments, border garrisons, and territorial units
 
 [b]Estonia[/b]
-- Historical Regiments: 1.–10. Jalaväerügement and elite battalions ([i]Kuperjanovi[/i], [i]Sakala[/i], [i]Kalevlaste Maleva[/i], [i]Scoutsrügement[/i], [i]Vahirügement[/i])
-- Defense Formations: Territorial Defence League formations covering all Estonian counties and cities (e.g. [i]Tallinna malev[/i], [i]Tartu malev[/i], [i]Narva malev[/i])
-- Armored Trains & Armor: Renowned armored trains ([i]Kapten Irv[/i], broad & narrow gauge) and legendary armored cars ([i]Suur Tõll[/i], [i]Tasuja[/i], [i]Kalevipoeg[/i])
-- Coastal Defense & Marines: Naval Fortresses ([i]Aegna Merekindlus[/i], [i]Naissaare Merekindlus[/i], [i]Suuropi Merekindlus[/i]) and marine landing formations
+- Historic infantry regiments (1.–10.) and elite battalions ([i]Kuperjanovi[/i], [i]Scouts[/i])
+- Kaitseliit county malevad, armored trains/cars, and coastal naval fortresses
 
 [b]Latvia[/b]
-- Historical Infantry Divisions: Full historical regional divisions and wartime mobilizations, e.g. [i]1. Kurzemes kājnieku divīzija[/i]
-- Infantry Regiments & Elite Battalions: Peacetime regiments, War of Independence formations, and historic riflemen, e.g. [i]1. Liepājas kājnieku pulks[/i], [i]Kalpaka bataljons[/i], [i]1. Daugavgrīvas latviešu strēlnieku pulks[/i]
-- Aizsargi Territorial Formations: All 19 county Home Guard regiments plus railway and aviation wings, e.g. [i]1. Talsu aizsargu pulks[/i], [i]Dzelzceļu aizsargu pulks[/i]
-- Armored & Mobile Divisions: Autotanku pulks, armored trains, and legendary armored cars, e.g. [i]Bruņudivīzija 'Lāčplēsis'[/i], [i]Bruņuvilciens 'Kalpaks'[/i]
-- Coastal Defense & Marines: Naval fortresses, batteries, and marine regiments, e.g. [i]Daugavgrīvas krasta cietoksnis[/i], [i]1. Jūras kājnieku pulks[/i]
-- Cavalry Formations: Historical regiment and independent partisan squadrons, e.g. [i]1. Jātnieku pulks[/i], [i]Ziemeļlatvijas jātnieku eskadrons[/i]
+- Historical regional divisions, peacetime regiments, and Latviešu strēlnieki
+- Aizsargi county regiments, Autotanku pulks, armored trains, and coastal fortresses
 
 [b]France[/b]
-- Named Infantry Divisions: Same as the regular infantry namelist, but with nicknames
-- National Guard Divisions: French cities as nicknames, e.g. "[i]1ère Division de la Garde Nationale 'Paris'[/i]"
-- Metropolitan Divisions: Divisions formed after the liberation of France. Credit to Heorl1!
-- Heavy Infantry (Divisions d'Infanterie de Décision): Used as support for units tasked with piercing the front. Credit to Heorl1!
+- Nicknamed line infantry, National Guard ([i]Paris[/i]), and Metropolitan liberation divisions
+- Heavy assault infantry (Divisions d'Infanterie de Décision)
 
 [b]United Kingdom[/b]
-- Home Guard
-- Royal Guard
-- Independent Brigades
-- Special Service Brigades: Commando formations
-- Loyalist & Blackshirt Brigades: Alt-history ideological and civil war formations
+- Home Guard, Royal Guard, and Independent Brigades
+- Special Service commando formations, plus alt-history Loyalist & Blackshirt brigades
 
 [b]Finland[/b]
-- Garrisons are now called local troops (=Paikallisjoukot): Named after various towns and cities in Finland.
-- Independent Groups: Named after Finnish commanders, e.g. [i]Ryhmä Talvela[/i]
-- Command Detachments: Named after smaller municipalities of Eastern Finland, e.g. [i]Ilomantsin Komennuskunta[/i]
-- Swedish Volunteer Corps (Svenska Frivilligkåren): Historic volunteer companies and battle groups from the Winter War
+- Regional local troops (Paikallisjoukot) and Eastern border command detachments
+- Commander-named battle groups ([i]Ryhmä Talvela[/i]) and Swedish Volunteers (SFK)
 
 [b]Poland[/b]
-- Home Army and PSZ: Special names for units of the Polish Armed Forces and Home Army, available after capitulation.
-- People's Army: Ideological-related names and nicknames for units, e.g. "[i]40 Dywizja Piechoty czasu 'W'[/i]"
-- Expanded Names and Nicknames: Full names and historic nicknames, e.g. "[i]18 Dywizja Piechoty Ziemi Łomżyńskiej[/i]"
-- Border Protection Corps (KOP - Korpus Ochrony Pogranicza): Dedicated border guard brigades and regiments
-- Swietokrzyska Brigade (Brygada Świętokrzyska)
+- Home Army (AK) and Polish Armed Forces in the West (PSZ) post-capitulation lists
+- People's Army, KOP Border Protection Corps, and Brygada Świętokrzyska
 
 [b]Italy[/b]
-- Guerrilla & Partisan Formations: Insurgent units of all major Italian resistance factions (Garibaldi, Giustizia e Libertà, Matteotti, Fiamme Verdi)
-- Expanded Nicknames: Each unit now has the correct, historical nickname.
-- Defense Brigades: Units similar to the German Festungsdivision with names of Italian cities, e.g. "[i]Brigata Difesa 'Bologna'[/i]"
-- Colonial Units: Dubat bands, Savari & Spahis cavalry squadrons, and irregular bands
-- Roman Legion (Legione Romana): Alt-history imperial units
+- Partisan brigades (Garibaldi, GL, Matteotti), defense brigades, and colonial troops
+- Historically nicknamed divisions and imperial Roman legions (Legione Romana)
 
 [b]USSR[/b]
-- NKVD Security Divisions
-- Guards Paratroopers & Guards Airborne
-- Artillery Divisions
-- Penal Units (Shtrafbat)
-- Cossack Cavalry Divisions
+- NKVD security and penal (Shtrafbat) units
+- Guards paratroopers, artillery divisions, and Cossack cavalry
 
 [b]Mexico[/b]
-- Cristero National Guard: Expanded historical brigade designations and devotions, e.g. "[i]1ª Brigada de la Guardia Nacional 'Los Altos'[/i]"
-- Cristero Cavalry & Charros: Mounted guerrilla squadrons and regional dragoon units, e.g. "[i]1er Regimiento de Caballería 'El Catorce'[/i]"
-- Imperial Guard & Third Empire: Imperial grenadiers, Carlota hussars, and armor, e.g. "[i]1ª División de la Guardia Imperial Mexicana[/i]"
-- Sinarquist Legions (UNS): Catholic corporatist falanges and regional tercios, e.g. "[i]1ª Legión Sinarquista 'León de la Fe'[/i]"
-- Golden Shirts (ARM): Shock cavalry and motorized assault columns, e.g. "[i]1ª Brigada Dorada de Choque 'Nicolás Rodríguez'[/i]"
-- Army of Anáhuac: Revanchist Eagle and Jaguar warrior divisions, e.g. "[i]1ª División de Guerreros Águila[/i]"
-- Army & Marine Regiments: Baseline division namelists for regular infantry, cavalry, armor, and naval infantry
-- Generic & Specialized Units: Hero-named divisions ([i]General Ignacio Zaragoza[/i], [i]Padre Miguel Hidalgo[/i]), mountain rangers, paratroopers, and port garrisons
+- Cristero National Guard & cavalry ([i]Los Altos[/i], [i]El Catorce[/i])
+- Sinarquistas, Gold Shirts (ARM), Imperial Guard & Army of Anáhuac
+- Regular army, heroes ([i]Zaragoza[/i]), mountain rangers & naval infantry
 
 If you enjoy the mod, please give it a thumbs up and favorite!
-
-[h1]Planned:[/h1]
-- More USSR!
-- More USA!
-- More Germany!
-- More France!
-- More UK!
-- More Finland!
-- More Sweden!
-
-- Post-Austro-Hungarian countries!
-- More Poland!
-- Spain!
-- More Italy!
 ```

@@ -73,25 +73,8 @@ Describe "Documentation Synchronization: WORKSHOP_DESCRIPTION_GUIDELINES.md" {
         }
     }
 
-    It "No implemented nation should be listed in the Planned section" {
-        # Extract Planned section
-        $plannedMatch = [regex]::Match($script:GuideContent, '\[h1\]Planned:\[/h1\](?<content>[\s\S]*?)(?:```|$)')
-        $plannedMatch.Success | Should -BeTrue
-
-        $plannedText = $plannedMatch.Groups['content'].Value
-
-        # Mapping of nation names or tags that are strictly new additions (should not be in planned)
-        $nationNames = @{
-            'EST' = 'Estonia'
-            'LAT' = 'Latvia'
-            'LIT' = 'Lithuania'
-        }
-
-        foreach ($tag in $nationNames.Keys) {
-            if ($script:ImplementedTags.Contains($tag)) {
-                $name = $nationNames[$tag]
-                $plannedText | Should -Not -Match "- (?:More )?$name\b" -Because "Completed nation '$name' ($tag) must not appear in Planned list"
-            }
-        }
+    It "Planned section should not be present in the active workshop description" {
+        $script:GuideContent | Should -Not -Match '\[h1\]Planned:\[/h1\]' -Because "Planned section was removed to conserve character limit"
     }
 }
+
