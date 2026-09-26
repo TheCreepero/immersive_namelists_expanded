@@ -76,7 +76,7 @@ This document serves as an instruction and reference guide for maintaining and u
 ## Active Steam Workshop Description (BBCode Format)
 
 ```bbcode
-More namelists! Used GPT-4 to speed up the creation process and help with translations.
+More namelists! Used AI to speed up the creation process and help with translations.
 
 Check out my other mods:
 - [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3807415216]Immersive Ship Names Expanded[/url]
