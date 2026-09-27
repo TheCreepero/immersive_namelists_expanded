@@ -1,5 +1,10 @@
 # Immersive Namelists Expanded (INEX) Development Rules
 
+## Workspace Architecture & Single-Root Layout
+- **Unified Single-Root Repository**: The workspace root (`immersive-namelists-expanded/`) is the Git repository root directly hosting `.git/`, `descriptor.mod`, `thumbnail.png`, `build.ps1`, `common/`, `tests/`, `wiki/`, and `.github/`.
+- **No Two-Level Layout / Dual-Path Sync**: The legacy nested two-level layout (`immersive-namelists-expanded/immersive_namelists_expanded/`) is obsolete. No forwarding scripts or dual-path synchronizations exist.
+- **Build & Artifacts**: Release archives are packaged into `artifacts/` (e.g., `artifacts/inex.zip`). Temporary scratch files go into `scratch/`.
+
 ## 1. File Structure & Naming Conventions
 - All division namelist files must reside in `common/units/names_divisions/INEX_<TAG>_names_divisions.txt`.
 - Namelist group tags must follow the pattern `<TAG>_<CATEGORY>_<NUMBER>` (e.g., `EST_REG_01`, `EST_KL_01`, `SWE_ARM_01`).

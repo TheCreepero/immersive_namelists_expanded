@@ -2,6 +2,14 @@
 *.zip
 *.7z
 *.tar.gz
+artifacts/
+scratch/
+Files/
+
+# Launcher and Workshop files
+*.mod
+!descriptor.mod
+.steam_username
 
 # OS and Editor files
 .DS_Store
@@ -11,5 +19,3 @@ desktop.ini
 .idea/
 *.swp
 *.bak
-.steam_username
-
