@@ -26,6 +26,7 @@
 | [Latvia](Latvia) | `LAT` | 7 | `INEX_LAT_names_divisions.txt` |
 | [Lithuania](Lithuania) | `LIT` | 13 | `INEX_LIT_names_divisions.txt` |
 | [Mexico](Mexico) | `MEX` | 21 | `INEX_MEX_names_divisions.txt` |
+| [Iran](Iran) | `PER` | 13 | `INEX_PER_names_divisions.txt` |
 
 ---
 

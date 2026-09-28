@@ -70,6 +70,7 @@ This document serves as an instruction and reference guide for maintaining and u
 | `INEX_ITA_names_divisions.txt` | Italy | `ITA` | Included (Partisans, Nicknames, Defense Brigades, Colonial, Legione Romana) |
 | `INEX_SOV_names_divisions.txt` | USSR | `SOV` | Included (NKVD, Guards Para, Artillery, Penal units, Cossacks) |
 | `INEX_MEX_names_divisions.txt` | Mexico | `MEX` | Included (Cristero, Imperial Guard, Sinarquistas, Gold Shirts, Anáhuac, Regular Army) |
+| `INEX_PER_names_divisions.txt` | Iran / Persia | `PER` | Included (Garrison-city Lashkars, Imperial & Immortal Guard, Shahnameh armor, Cossack atriads, Tribal levies, Camel corps, Gendarmerie) |
 
 ---
 
@@ -148,6 +149,11 @@ This is not a complete list of included namelists! Just some examples.
 - Cristero National Guard & cavalry ([i]Los Altos[/i], [i]El Catorce[/i])
 - Sinarquistas, Gold Shirts (ARM), Imperial Guard & Army of Anáhuac
 - Regular army, heroes ([i]Zaragoza[/i]), mountain rangers & naval infantry
+
+[b]Iran[/b]
+- Garrison-city divisions ([i]Lashkar-e 15-e Piyadeh-ye Shiraz[/i]) and Shahnameh-named armor ([i]Rostam[/i], [i]Kaveh[/i])
+- Imperial & Immortal Guard ([i]Gard-e Javidan[/i]) and Persian Cossack atriads ([i]Hamadan[/i])
+- Tribal levies ([i]Bakhtiari[/i], [i]Qashqai[/i]), camel corps, gendarmerie, and Gulf marines
 
 If you enjoy the mod, please give it a thumbs up and favorite!
 ```

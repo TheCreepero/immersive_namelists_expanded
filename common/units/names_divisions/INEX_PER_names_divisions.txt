@@ -1,0 +1,582 @@
+# Division template historical names system for Iran / Persia (PER).
+# Immersive Namelists Expanded (INEX)
+#
+# Romanization: plain period transliteration of Persian (no macrons), with the
+# izafe linker written as "-e" after consonants and "-ye" after vowels,
+# e.g. "Lashkar-e 1-e Piyadeh-ye Tehran" (1st Infantry Division "Tehran").
+# Place names follow Pahlavi-era usage (Rezaiyeh, Bandar Shahpur, Bandar Pahlavi).
+#
+# No vanilla PER namelist group is referenced by focus trees or scripted effects,
+# so every vanilla stub below is safely overridden with a full list.
+
+# ==============================================================================
+# 1. REGULAR ARMY (Artesh-e Shahanshahi)
+# ==============================================================================
+
+# Overrides vanilla PER_INF_01 (single-entry stub)
+PER_INF_01 = {
+	name = "Infantry Divisions"
+
+	for_countries = { PER }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Lashkar-e %d-e Piyadeh"
+
+	ordered = {
+		1 = { "Lashkar-e 1-e Piyadeh-ye Tehran" }
+		2 = { "Lashkar-e 2-e Piyadeh-ye Qazvin" }
+		3 = { "Lashkar-e 3-e Piyadeh-ye Rasht" }
+		4 = { "Lashkar-e 4-e Piyadeh-ye Tabriz" }
+		5 = { "Lashkar-e 5-e Piyadeh-ye Rezaiyeh" }
+		6 = { "Lashkar-e 6-e Piyadeh-ye Ardabil" }
+		7 = { "Lashkar-e 7-e Piyadeh-ye Zanjan" }
+		8 = { "Lashkar-e 8-e Piyadeh-ye Hamadan" }
+		9 = { "Lashkar-e 9-e Piyadeh-ye Kermanshah" }
+		10 = { "Lashkar-e 10-e Piyadeh-ye Sanandaj" }
+		11 = { "Lashkar-e 11-e Piyadeh-ye Khorramabad" }
+		12 = { "Lashkar-e 12-e Piyadeh-ye Arak" }
+		13 = { "Lashkar-e 13-e Piyadeh-ye Isfahan" }
+		14 = { "Lashkar-e 14-e Piyadeh-ye Yazd" }
+		15 = { "Lashkar-e 15-e Piyadeh-ye Shiraz" }
+		16 = { "Lashkar-e 16-e Piyadeh-ye Kazerun" }
+		17 = { "Lashkar-e 17-e Piyadeh-ye Bushehr" }
+		18 = { "Lashkar-e 18-e Piyadeh-ye Bandar Abbas" }
+		19 = { "Lashkar-e 19-e Piyadeh-ye Kerman" }
+		20 = { "Lashkar-e 20-e Piyadeh-ye Zahedan" }
+		21 = { "Lashkar-e 21-e Piyadeh-ye Mashhad" }
+		22 = { "Lashkar-e 22-e Piyadeh-ye Sabzevar" }
+		23 = { "Lashkar-e 23-e Piyadeh-ye Birjand" }
+		24 = { "Lashkar-e 24-e Piyadeh-ye Bojnurd" }
+		25 = { "Lashkar-e 25-e Piyadeh-ye Gorgan" }
+		26 = { "Lashkar-e 26-e Piyadeh-ye Sari" }
+		27 = { "Lashkar-e 27-e Piyadeh-ye Ahvaz" }
+		28 = { "Lashkar-e 28-e Piyadeh-ye Khorramshahr" }
+		29 = { "Lashkar-e 29-e Piyadeh-ye Dezful" }
+		30 = { "Lashkar-e 30-e Piyadeh-ye Kashan" }
+		31 = { "Lashkar-e 31-e Piyadeh-ye Qom" }
+		32 = { "Lashkar-e 32-e Piyadeh-ye Semnan" }
+		33 = { "Lashkar-e 33-e Piyadeh-ye Neyshabur" }
+		34 = { "Lashkar-e 34-e Piyadeh-ye Torbat-e Heydariyeh" }
+		35 = { "Lashkar-e 35-e Piyadeh-ye Maragheh" }
+		36 = { "Lashkar-e 36-e Piyadeh-ye Khoy" }
+		37 = { "Lashkar-e 37-e Piyadeh-ye Mahabad" }
+		38 = { "Lashkar-e 38-e Piyadeh-ye Borujerd" }
+		39 = { "Lashkar-e 39-e Piyadeh-ye Malayer" }
+		40 = { "Lashkar-e 40-e Piyadeh-ye Bam" }
+		41 = { "Lashkar-e 41-e Piyadeh-ye Zabol" }
+		42 = { "Lashkar-e 42-e Piyadeh-ye Lar" }
+		43 = { "Lashkar-e 43-e Piyadeh-ye Qasr-e Shirin" }
+		44 = { "Lashkar-e 44-e Piyadeh-ye Fasa" }
+		45 = { "Lashkar-e 45-e Piyadeh-ye Shahrud" }
+		46 = { "Lashkar-e %d-e Piyadeh" }
+	}
+}
+
+# Overrides vanilla PER_MOT_01 (single-entry stub). Shares numbering with the
+# field infantry, so each number keeps the same garrison city as PER_INF_01.
+PER_MOT_01 = {
+	name = "Motorized Divisions"
+
+	for_countries = { PER }
+
+	can_use = { always = yes }
+
+	division_types = { "motorized" }
+
+	link_numbering_with = { PER_INF_01 }
+
+	fallback_name = "Lashkar-e %d-e Piyadeh-ye Motori"
+
+	ordered = {
+		1 = { "Lashkar-e 1-e Piyadeh-ye Motori-ye Tehran" }
+		2 = { "Lashkar-e 2-e Piyadeh-ye Motori-ye Qazvin" }
+		3 = { "Lashkar-e 3-e Piyadeh-ye Motori-ye Rasht" }
+		4 = { "Lashkar-e 4-e Piyadeh-ye Motori-ye Tabriz" }
+		5 = { "Lashkar-e 5-e Piyadeh-ye Motori-ye Rezaiyeh" }
+		6 = { "Lashkar-e 6-e Piyadeh-ye Motori-ye Ardabil" }
+		7 = { "Lashkar-e 7-e Piyadeh-ye Motori-ye Zanjan" }
+		8 = { "Lashkar-e 8-e Piyadeh-ye Motori-ye Hamadan" }
+		9 = { "Lashkar-e 9-e Piyadeh-ye Motori-ye Kermanshah" }
+		10 = { "Lashkar-e 10-e Piyadeh-ye Motori-ye Sanandaj" }
+		11 = { "Lashkar-e 11-e Piyadeh-ye Motori-ye Khorramabad" }
+		12 = { "Lashkar-e 12-e Piyadeh-ye Motori-ye Arak" }
+		13 = { "Lashkar-e 13-e Piyadeh-ye Motori-ye Isfahan" }
+		14 = { "Lashkar-e 14-e Piyadeh-ye Motori-ye Yazd" }
+		15 = { "Lashkar-e 15-e Piyadeh-ye Motori-ye Shiraz" }
+		16 = { "Lashkar-e 16-e Piyadeh-ye Motori-ye Kazerun" }
+		17 = { "Lashkar-e 17-e Piyadeh-ye Motori-ye Bushehr" }
+		18 = { "Lashkar-e 18-e Piyadeh-ye Motori-ye Bandar Abbas" }
+		19 = { "Lashkar-e 19-e Piyadeh-ye Motori-ye Kerman" }
+		20 = { "Lashkar-e 20-e Piyadeh-ye Motori-ye Zahedan" }
+		21 = { "Lashkar-e 21-e Piyadeh-ye Motori-ye Mashhad" }
+		22 = { "Lashkar-e 22-e Piyadeh-ye Motori-ye Sabzevar" }
+		23 = { "Lashkar-e 23-e Piyadeh-ye Motori-ye Birjand" }
+		24 = { "Lashkar-e 24-e Piyadeh-ye Motori-ye Bojnurd" }
+		25 = { "Lashkar-e 25-e Piyadeh-ye Motori-ye Gorgan" }
+		26 = { "Lashkar-e 26-e Piyadeh-ye Motori-ye Sari" }
+		27 = { "Lashkar-e 27-e Piyadeh-ye Motori-ye Ahvaz" }
+		28 = { "Lashkar-e 28-e Piyadeh-ye Motori-ye Khorramshahr" }
+		29 = { "Lashkar-e 29-e Piyadeh-ye Motori-ye Dezful" }
+		30 = { "Lashkar-e 30-e Piyadeh-ye Motori-ye Kashan" }
+		31 = { "Lashkar-e 31-e Piyadeh-ye Motori-ye Qom" }
+		32 = { "Lashkar-e 32-e Piyadeh-ye Motori-ye Semnan" }
+		33 = { "Lashkar-e 33-e Piyadeh-ye Motori-ye Neyshabur" }
+		34 = { "Lashkar-e 34-e Piyadeh-ye Motori-ye Torbat-e Heydariyeh" }
+		35 = { "Lashkar-e 35-e Piyadeh-ye Motori-ye Maragheh" }
+		36 = { "Lashkar-e %d-e Piyadeh-ye Motori" }
+	}
+}
+
+# Overrides vanilla PER_MEC_01 (single-entry stub). Shares numbering with PER_INF_01.
+PER_MEC_01 = {
+	name = "Mechanized Divisions"
+
+	for_countries = { PER }
+
+	can_use = { always = yes }
+
+	division_types = { "mechanized" }
+
+	link_numbering_with = { PER_INF_01 }
+
+	fallback_name = "Lashkar-e %d-e Piyadeh-ye Mekanizeh"
+
+	ordered = {
+		1 = { "Lashkar-e 1-e Piyadeh-ye Mekanizeh-ye Tehran" }
+		2 = { "Lashkar-e 2-e Piyadeh-ye Mekanizeh-ye Qazvin" }
+		3 = { "Lashkar-e 3-e Piyadeh-ye Mekanizeh-ye Rasht" }
+		4 = { "Lashkar-e 4-e Piyadeh-ye Mekanizeh-ye Tabriz" }
+		5 = { "Lashkar-e 5-e Piyadeh-ye Mekanizeh-ye Rezaiyeh" }
+		6 = { "Lashkar-e 6-e Piyadeh-ye Mekanizeh-ye Ardabil" }
+		7 = { "Lashkar-e 7-e Piyadeh-ye Mekanizeh-ye Zanjan" }
+		8 = { "Lashkar-e 8-e Piyadeh-ye Mekanizeh-ye Hamadan" }
+		9 = { "Lashkar-e 9-e Piyadeh-ye Mekanizeh-ye Kermanshah" }
+		10 = { "Lashkar-e 10-e Piyadeh-ye Mekanizeh-ye Sanandaj" }
+		11 = { "Lashkar-e 11-e Piyadeh-ye Mekanizeh-ye Khorramabad" }
+		12 = { "Lashkar-e 12-e Piyadeh-ye Mekanizeh-ye Arak" }
+		13 = { "Lashkar-e 13-e Piyadeh-ye Mekanizeh-ye Isfahan" }
+		14 = { "Lashkar-e 14-e Piyadeh-ye Mekanizeh-ye Yazd" }
+		15 = { "Lashkar-e 15-e Piyadeh-ye Mekanizeh-ye Shiraz" }
+		16 = { "Lashkar-e 16-e Piyadeh-ye Mekanizeh-ye Kazerun" }
+		17 = { "Lashkar-e 17-e Piyadeh-ye Mekanizeh-ye Bushehr" }
+		18 = { "Lashkar-e 18-e Piyadeh-ye Mekanizeh-ye Bandar Abbas" }
+		19 = { "Lashkar-e 19-e Piyadeh-ye Mekanizeh-ye Kerman" }
+		20 = { "Lashkar-e 20-e Piyadeh-ye Mekanizeh-ye Zahedan" }
+		21 = { "Lashkar-e 21-e Piyadeh-ye Mekanizeh-ye Mashhad" }
+		22 = { "Lashkar-e 22-e Piyadeh-ye Mekanizeh-ye Sabzevar" }
+		23 = { "Lashkar-e 23-e Piyadeh-ye Mekanizeh-ye Birjand" }
+		24 = { "Lashkar-e 24-e Piyadeh-ye Mekanizeh-ye Bojnurd" }
+		25 = { "Lashkar-e 25-e Piyadeh-ye Mekanizeh-ye Gorgan" }
+		26 = { "Lashkar-e 26-e Piyadeh-ye Mekanizeh-ye Sari" }
+		27 = { "Lashkar-e 27-e Piyadeh-ye Mekanizeh-ye Ahvaz" }
+		28 = { "Lashkar-e 28-e Piyadeh-ye Mekanizeh-ye Khorramshahr" }
+		29 = { "Lashkar-e 29-e Piyadeh-ye Mekanizeh-ye Dezful" }
+		30 = { "Lashkar-e 30-e Piyadeh-ye Mekanizeh-ye Kashan" }
+		31 = { "Lashkar-e %d-e Piyadeh-ye Mekanizeh" }
+	}
+}
+
+# Overrides vanilla PER_ARM_01 (single-entry stub). Grounded in the Tehran
+# armored brigade built around ČKD TNH and AH-IV vehicles bought from
+# Czechoslovakia, then named after heroes of the Shahnameh and Persian kings.
+PER_ARM_01 = {
+	name = "Armored Divisions"
+
+	for_countries = { PER }
+
+	can_use = { always = yes }
+
+	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
+
+	fallback_name = "Lashkar-e %d-e Zerehi"
+
+	ordered = {
+		1 = { "Lashkar-e 1-e Zerehi-ye Tehran" }
+		2 = { "Lashkar-e 2-e Zerehi-ye Qazvin" }
+		3 = { "Lashkar-e 3-e Zerehi-ye Khuzestan" }
+		4 = { "Lashkar-e 4-e Zerehi-ye Kermanshah" }
+		5 = { "Lashkar-e 5-e Zerehi-ye Azerbaijan" }
+		6 = { "Lashkar-e 6-e Zerehi-ye Khorasan" }
+		7 = { "Lashkar-e 7-e Zerehi-ye Fars" }
+		8 = { "Lashkar-e 8-e Zerehi-ye Isfahan" }
+		9 = { "Lashkar-e 9-e Zerehi \"Kaveh\"" }
+		10 = { "Lashkar-e 10-e Zerehi \"Rostam\"" }
+		11 = { "Lashkar-e 11-e Zerehi \"Esfandiyar-e Ruyintan\"" }
+		12 = { "Lashkar-e 12-e Zerehi \"Rakhsh\"" }
+		13 = { "Lashkar-e 13-e Zerehi \"Derafsh-e Kaviani\"" }
+		14 = { "Lashkar-e 14-e Zerehi \"Sohrab\"" }
+		15 = { "Lashkar-e 15-e Zerehi \"Garshasp\"" }
+		16 = { "Lashkar-e 16-e Zerehi \"Fereydun\"" }
+		17 = { "Lashkar-e 17-e Zerehi \"Arash\"" }
+		18 = { "Lashkar-e 18-e Zerehi \"Kourosh\"" }
+		19 = { "Lashkar-e 19-e Zerehi \"Dariush\"" }
+		20 = { "Lashkar-e 20-e Zerehi \"Nader\"" }
+		21 = { "Lashkar-e %d-e Zerehi" }
+	}
+}
+
+# Overrides vanilla PER_CAV_01 (single-entry stub). Provincial horse cavalry of
+# the unified army, drawn from the horse-breeding regions of the north and west.
+PER_CAV_01 = {
+	name = "Cavalry Divisions"
+
+	for_countries = { PER }
+
+	can_use = { always = yes }
+
+	division_types = { "cavalry" }
+
+	fallback_name = "Lashkar-e %d-e Savar"
+
+	ordered = {
+		1 = { "Lashkar-e 1-e Savar-e Tehran" }
+		2 = { "Lashkar-e 2-e Savar-e Qazvin" }
+		3 = { "Lashkar-e 3-e Savar-e Zanjan" }
+		4 = { "Lashkar-e 4-e Savar-e Hamadan" }
+		5 = { "Lashkar-e 5-e Savar-e Kermanshah" }
+		6 = { "Lashkar-e 6-e Savar-e Kurdistan" }
+		7 = { "Lashkar-e 7-e Savar-e Azerbaijan" }
+		8 = { "Lashkar-e 8-e Savar-e Khoy" }
+		9 = { "Lashkar-e 9-e Savar-e Maku" }
+		10 = { "Lashkar-e 10-e Savar-e Rezaiyeh" }
+		11 = { "Lashkar-e 11-e Savar-e Maragheh" }
+		12 = { "Lashkar-e 12-e Savar-e Moghan" }
+		13 = { "Lashkar-e 13-e Savar-e Turkaman Sahra" }
+		14 = { "Lashkar-e 14-e Savar-e Bojnurd" }
+		15 = { "Lashkar-e 15-e Savar-e Quchan" }
+		16 = { "Lashkar-e 16-e Savar-e Khorasan" }
+		17 = { "Lashkar-e 17-e Savar-e Isfahan" }
+		18 = { "Lashkar-e 18-e Savar-e Fars" }
+		19 = { "Lashkar-e 19-e Savar-e Kazerun" }
+		20 = { "Lashkar-e 20-e Savar-e Luristan" }
+		21 = { "Lashkar-e 21-e Savar-e Khuzestan" }
+		22 = { "Lashkar-e 22-e Savar-e Kerman" }
+		23 = { "Lashkar-e 23-e Savar-e Baluchistan" }
+		24 = { "Lashkar-e 24-e Savar-e Mazandaran" }
+		25 = { "Lashkar-e %d-e Savar" }
+	}
+}
+
+# ==============================================================================
+# 2. IMPERIAL GUARD (Gard-e Shahanshahi / Gard-e Javidan)
+# ==============================================================================
+
+# Extends the vanilla focus PER_expand_imperial_guard ("1st/2nd Imperial Guard")
+# and PER_expand_unique_unit ("Immortal Legion") into a full guard namelist.
+PER_GRD_01 = {
+	name = "Imperial Guard"
+
+	for_countries = { PER }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" "motorized" "mechanized" }
+
+	fallback_name = "Lashkar-e %d-e Gard-e Shahanshahi"
+
+	ordered = {
+		1 = { "Lashkar-e 1-e Gard-e Shahanshahi" }
+		2 = { "Lashkar-e 2-e Gard-e Shahanshahi" }
+		3 = { "Lashkar-e 3-e Gard-e Javidan" }
+		4 = { "Lashkar-e 4-e Gard-e Javidan" }
+		5 = { "Lashkar-e 5-e Gard-e Javidan" }
+		6 = { "Lashkar-e 6-e Gard-e Javidan" }
+		7 = { "Lashkar-e 7-e Gard \"Pahlavi\"" }
+		8 = { "Lashkar-e 8-e Gard \"Kourosh-e Bozorg\"" }
+		9 = { "Lashkar-e 9-e Gard \"Dariush-e Bozorg\"" }
+		10 = { "Lashkar-e 10-e Gard \"Ardashir-e Babakan\"" }
+		11 = { "Lashkar-e 11-e Gard \"Shapur\"" }
+		12 = { "Lashkar-e 12-e Gard \"Anushiravan\"" }
+		13 = { "Lashkar-e 13-e Gard \"Aryobarzan\"" }
+		14 = { "Lashkar-e 14-e Gard \"Yaqub-e Leys\"" }
+		15 = { "Lashkar-e 15-e Gard \"Babak-e Khorramdin\"" }
+		16 = { "Lashkar-e 16-e Gard \"Shah Esmail\"" }
+		17 = { "Lashkar-e 17-e Gard \"Shah Abbas-e Kabir\"" }
+		18 = { "Lashkar-e 18-e Gard \"Nader Shah\"" }
+		19 = { "Lashkar-e 19-e Gard \"Karim Khan\"" }
+		20 = { "Lashkar-e %d-e Gard-e Shahanshahi" }
+	}
+}
+
+# ==============================================================================
+# 3. PERSIAN COSSACKS (Qazzaq-khaneh, 1879-1921)
+# ==============================================================================
+
+# The Russian-officered Persian Cossack Brigade (later Division) was organized in
+# provincial "atriads" (detachments). Reza Khan's Hamadan atriad marched on
+# Tehran in the 1921 coup that began the Pahlavi era.
+PER_COS_01 = {
+	name = "Cossack Detachments"
+
+	for_countries = { PER }
+
+	can_use = { always = yes }
+
+	division_types = { "cavalry" "motorized" }
+
+	fallback_name = "Atriad-e %d-e Qazzaq"
+
+	ordered = {
+		1 = { "Atriad-e 1-e Qazzaq-e Tehran" }
+		2 = { "Atriad-e 2-e Qazzaq-e Hamadan" }
+		3 = { "Atriad-e 3-e Qazzaq-e Tabriz" }
+		4 = { "Atriad-e 4-e Qazzaq-e Qazvin" }
+		5 = { "Atriad-e 5-e Qazzaq-e Rasht" }
+		6 = { "Atriad-e 6-e Qazzaq-e Isfahan" }
+		7 = { "Atriad-e 7-e Qazzaq-e Mashhad" }
+		8 = { "Atriad-e 8-e Qazzaq-e Ardabil" }
+		9 = { "Atriad-e 9-e Qazzaq-e Zanjan" }
+		10 = { "Atriad-e 10-e Qazzaq-e Kermanshah" }
+		11 = { "Atriad-e 11-e Qazzaq-e Shiraz" }
+		12 = { "Atriad-e 12-e Qazzaq-e Astarabad" }
+		13 = { "Atriad-e 13-e Qazzaq-e Kashan" }
+		14 = { "Atriad-e 14-e Qazzaq-e Qom" }
+		15 = { "Atriad-e 15-e Qazzaq-e Soltanabad" }
+		16 = { "Atriad-e 16-e Qazzaq-e Urmia" }
+		17 = { "Atriad-e 17-e Qazzaq-e Kerman" }
+		18 = { "Atriad-e 18-e Qazzaq-e Yazd" }
+		19 = { "Atriad-e 19-e Qazzaq-e Semnan" }
+		20 = { "Atriad-e 20-e Qazzaq-e Khoy" }
+		21 = { "Atriad-e %d-e Qazzaq" }
+	}
+}
+
+# ==============================================================================
+# 4. GARRISON & GENDARMERIE (Amniyeh / Zhandarmeri)
+# ==============================================================================
+
+# Overrides vanilla PER_GAR_01 (single-entry stub). Provincial road-guard and
+# rural security commands of the Amniyeh, renamed Zhandarmeri in the 1940s.
+PER_GAR_01 = {
+	name = "Garrison & Gendarmerie"
+
+	for_countries = { PER }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Tip-e %d-e Amniyeh"
+
+	ordered = {
+		1 = { "Zhandarmeri-ye Tehran" }
+		2 = { "Zhandarmeri-ye Gilan" }
+		3 = { "Zhandarmeri-ye Mazandaran" }
+		4 = { "Zhandarmeri-ye Azerbaijan" }
+		5 = { "Zhandarmeri-ye Kurdistan" }
+		6 = { "Zhandarmeri-ye Kermanshah" }
+		7 = { "Zhandarmeri-ye Luristan" }
+		8 = { "Zhandarmeri-ye Pusht-e Kuh" }
+		9 = { "Zhandarmeri-ye Khuzestan" }
+		10 = { "Zhandarmeri-ye Fars" }
+		11 = { "Zhandarmeri-ye Kerman" }
+		12 = { "Zhandarmeri-ye Baluchistan va Sistan" }
+		13 = { "Zhandarmeri-ye Khorasan" }
+		14 = { "Zhandarmeri-ye Semnan" }
+		15 = { "Zhandarmeri-ye Yazd" }
+		16 = { "Zhandarmeri-ye Isfahan" }
+		17 = { "Zhandarmeri-ye Qazvin" }
+		18 = { "Zhandarmeri-ye Zanjan" }
+		19 = { "Zhandarmeri-ye Gorgan" }
+		20 = { "Zhandarmeri-ye Bushehr" }
+		21 = { "Zhandarmeri-ye Banader" }
+		22 = { "Zhandarmeri-ye Hamadan" }
+		23 = { "Zhandarmeri-ye Arak" }
+		24 = { "Zhandarmeri-ye Qom" }
+		25 = { "Tip-e %d-e Amniyeh" }
+	}
+}
+
+# ==============================================================================
+# 5. SPECIALIZED FORMATIONS
+# ==============================================================================
+
+# Overrides vanilla PER_MTN_01 (single-entry stub; vanilla "Kuhnabard" is not
+# valid Persian). The vanilla focus PER_recruit_bakhtiari ties the Bakhtiari
+# highlanders to mountain warfare.
+PER_MTN_01 = {
+	name = "Mountain Brigades"
+
+	for_countries = { PER }
+
+	can_use = { always = yes }
+
+	division_types = { "mountaineers" }
+
+	fallback_name = "Tip-e %d-e Kuhestani"
+
+	ordered = {
+		1 = { "Tip-e 1-e Kuhestani-ye Bakhtiari" }
+		2 = { "Tip-e 2-e Kuhestani-ye Zagros" }
+		3 = { "Tip-e 3-e Kuhestani-ye Alborz" }
+		4 = { "Tip-e 4-e Kuhestani-ye Damavand" }
+		5 = { "Tip-e 5-e Kuhestani-ye Kurdistan" }
+		6 = { "Tip-e 6-e Kuhestani-ye Luristan" }
+		7 = { "Tip-e 7-e Kuhestani-ye Sabalan" }
+		8 = { "Tip-e 8-e Kuhestani-ye Sahand" }
+		9 = { "Tip-e 9-e Kuhestani-ye Alvand" }
+		10 = { "Tip-e 10-e Kuhestani-ye Dena" }
+		11 = { "Tip-e 11-e Kuhestani-ye Zardkuh" }
+		12 = { "Tip-e 12-e Kuhestani-ye Oshtorankuh" }
+		13 = { "Tip-e 13-e Kuhestani-ye Bisotun" }
+		14 = { "Tip-e 14-e Kuhestani-ye Kuhgiluyeh" }
+		15 = { "Tip-e 15-e Kuhestani-ye Talesh" }
+		16 = { "Tip-e 16-e Kuhestani-ye Binalud" }
+		17 = { "Tip-e 17-e Kuhestani-ye Hezar Masjed" }
+		18 = { "Tip-e 18-e Kuhestani-ye Karkas" }
+		19 = { "Tip-e 19-e Kuhestani-ye Hazar" }
+		20 = { "Tip-e 20-e Kuhestani-ye Taftan" }
+		21 = { "Tip-e %d-e Kuhestani" }
+	}
+}
+
+# Overrides vanilla PER_MAR_01 (single-entry stub). Naval riflemen for the
+# Persian Gulf ports and the Caspian coast.
+PER_MAR_01 = {
+	name = "Marine Brigades"
+
+	for_countries = { PER }
+
+	can_use = { always = yes }
+
+	division_types = { "marine" }
+
+	fallback_name = "Tip-e %d-e Tofangdar-e Daryayi"
+
+	ordered = {
+		1 = { "Tip-e 1-e Tofangdar-e Daryayi-ye Khorramshahr" }
+		2 = { "Tip-e 2-e Tofangdar-e Daryayi-ye Bandar Shahpur" }
+		3 = { "Tip-e 3-e Tofangdar-e Daryayi-ye Abadan" }
+		4 = { "Tip-e 4-e Tofangdar-e Daryayi-ye Bushehr" }
+		5 = { "Tip-e 5-e Tofangdar-e Daryayi-ye Bandar Abbas" }
+		6 = { "Tip-e 6-e Tofangdar-e Daryayi-ye Bandar Lengeh" }
+		7 = { "Tip-e 7-e Tofangdar-e Daryayi-ye Jask" }
+		8 = { "Tip-e 8-e Tofangdar-e Daryayi-ye Chabahar" }
+		9 = { "Tip-e 9-e Tofangdar-e Daryayi-ye Bandar Pahlavi" }
+		10 = { "Tip-e 10-e Tofangdar-e Daryayi-ye Bandar Shah" }
+		11 = { "Tip-e 11-e Tofangdar-e Daryayi-ye Noshahr" }
+		12 = { "Tip-e 12-e Tofangdar-e Daryayi-ye Babolsar" }
+		13 = { "Tip-e 13-e Tofangdar-e Daryayi-ye Astara" }
+		14 = { "Tip-e 14-e Tofangdar-e Daryayi-ye Qeshm" }
+		15 = { "Tip-e 15-e Tofangdar-e Daryayi-ye Hormoz" }
+		16 = { "Tip-e 16-e Tofangdar-e Daryayi-ye Khark" }
+		17 = { "Tip-e 17-e Tofangdar-e Daryayi-ye Kish" }
+		18 = { "Tip-e 18-e Tofangdar-e Daryayi-ye Bandar Mashur" }
+		19 = { "Tip-e %d-e Tofangdar-e Daryayi" }
+	}
+}
+
+# Overrides vanilla PER_PAR_01 (single-entry stub). Airborne battalions named
+# after the birds of Persian myth and falconry.
+PER_PAR_01 = {
+	name = "Paratroopers"
+
+	for_countries = { PER }
+
+	can_use = { always = yes }
+
+	division_types = { "paratrooper" }
+
+	fallback_name = "Gordan-e %d-e Chatrbaz"
+
+	ordered = {
+		1 = { "Gordan-e 1-e Chatrbaz-e Shahanshahi" }
+		2 = { "Gordan-e 2-e Chatrbaz-e Javidan" }
+		3 = { "Gordan-e 3-e Chatrbaz \"Simorgh\"" }
+		4 = { "Gordan-e 4-e Chatrbaz \"Homa\"" }
+		5 = { "Gordan-e 5-e Chatrbaz \"Oqab\"" }
+		6 = { "Gordan-e 6-e Chatrbaz \"Shahin\"" }
+		7 = { "Gordan-e 7-e Chatrbaz \"Baz\"" }
+		8 = { "Gordan-e 8-e Chatrbaz-e Tehran" }
+		9 = { "Gordan-e 9-e Chatrbaz-e Isfahan" }
+		10 = { "Gordan-e 10-e Chatrbaz-e Shiraz" }
+		11 = { "Gordan-e 11-e Chatrbaz-e Tabriz" }
+		12 = { "Gordan-e 12-e Chatrbaz-e Mashhad" }
+		13 = { "Gordan-e 13-e Chatrbaz-e Kermanshah" }
+		14 = { "Gordan-e 14-e Chatrbaz-e Ahvaz" }
+		15 = { "Gordan-e %d-e Chatrbaz" }
+	}
+}
+
+# ==============================================================================
+# 6. TRIBAL LEVIES & FRONTIER FORCES (Cherik-e Ashayeri)
+# ==============================================================================
+
+# Irregular levies of the great tribal confederations, never fully disarmed by
+# Reza Shah's pacification campaigns and rearmed during the 1941 collapse.
+PER_TRL_01 = {
+	name = "Tribal Levies"
+
+	for_countries = { PER }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" "cavalry" }
+
+	fallback_name = "Tip-e %d-e Cherik-e Ashayeri"
+
+	ordered = {
+		1 = { "Tip-e 1-e Cherik-e Bakhtiari" }
+		2 = { "Tip-e 2-e Cherik-e Qashqai" }
+		3 = { "Tip-e 3-e Cherik-e Khamseh" }
+		4 = { "Tip-e 4-e Cherik-e Mamasani" }
+		5 = { "Tip-e 5-e Cherik-e Boir Ahmad" }
+		6 = { "Tip-e 6-e Cherik-e Kuhgiluyeh" }
+		7 = { "Tip-e 7-e Cherik-e Papi" }
+		8 = { "Tip-e 8-e Cherik-e Lak" }
+		9 = { "Tip-e 9-e Cherik-e Kalhor" }
+		10 = { "Tip-e 10-e Cherik-e Sanjabi" }
+		11 = { "Tip-e 11-e Cherik-e Guran" }
+		12 = { "Tip-e 12-e Cherik-e Jaf" }
+		13 = { "Tip-e 13-e Cherik-e Mokri" }
+		14 = { "Tip-e 14-e Cherik-e Shikak" }
+		15 = { "Tip-e 15-e Cherik-e Herki" }
+		16 = { "Tip-e 16-e Cherik-e Shahsevan" }
+		17 = { "Tip-e 17-e Cherik-e Afshar" }
+		18 = { "Tip-e 18-e Cherik-e Qaraei" }
+		19 = { "Tip-e 19-e Cherik-e Zafaranlu" }
+		20 = { "Tip-e 20-e Cherik-e Yomut" }
+		21 = { "Tip-e 21-e Cherik-e Goklan" }
+		22 = { "Tip-e 22-e Cherik-e Baluch" }
+		23 = { "Tip-e 23-e Cherik-e Bani Ka'b" }
+		24 = { "Tip-e 24-e Cherik-e Bani Torof" }
+		25 = { "Tip-e 25-e Cherik-e Hazara" }
+		26 = { "Tip-e %d-e Cherik-e Ashayeri" }
+	}
+}
+
+# Camel-mounted frontier battalions for the Baluchistan-Sistan border and the
+# Lut and Kavir deserts.
+PER_CAM_01 = {
+	name = "Camel Corps"
+
+	for_countries = { PER }
+
+	can_use = { always = yes }
+
+	division_types = { "camelry" }
+
+	fallback_name = "Gordan-e %d-e Shotorsavar"
+
+	ordered = {
+		1 = { "Gordan-e 1-e Shotorsavar-e Zahedan" }
+		2 = { "Gordan-e 2-e Shotorsavar-e Sistan" }
+		3 = { "Gordan-e 3-e Shotorsavar-e Zabol" }
+		4 = { "Gordan-e 4-e Shotorsavar-e Iranshahr" }
+		5 = { "Gordan-e 5-e Shotorsavar-e Khash" }
+		6 = { "Gordan-e 6-e Shotorsavar-e Saravan" }
+		7 = { "Gordan-e 7-e Shotorsavar-e Bam" }
+		8 = { "Gordan-e 8-e Shotorsavar-e Kerman" }
+		9 = { "Gordan-e 9-e Shotorsavar-e Tabas" }
+		10 = { "Gordan-e 10-e Shotorsavar-e Birjand" }
+		11 = { "Gordan-e 11-e Shotorsavar-e Jask" }
+		12 = { "Gordan-e 12-e Shotorsavar-e Chabahar" }
+		13 = { "Gordan-e 13-e Shotorsavar-e Dasht-e Lut" }
+		14 = { "Gordan-e 14-e Shotorsavar-e Dasht-e Kavir" }
+		15 = { "Gordan-e 15-e Shotorsavar-e Yazd" }
+		16 = { "Gordan-e %d-e Shotorsavar" }
+	}
+}
