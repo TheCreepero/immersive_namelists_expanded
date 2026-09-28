@@ -63,4 +63,4 @@ Whenever a new country namelist is added, expanded, or modified:
 - **Global Group Tag Uniqueness**: Root-level group tags (e.g., `POL_ARM_01`) must be strictly unique across the entire repository. Never define the same group tag multiple times within a file or across separate files.
 
 ## 7. Related Skill
-For step-by-step guidance on researching and authoring a new nation's namelists, use the `hoi4-inex-namelist-authoring` skill (`.claude/skills/hoi4-inex-namelist-authoring/SKILL.md`).
+For step-by-step guidance on researching and authoring a new nation's namelists, use the `hoi4-inex-namelist-authoring` skill (`.claude/skills/hoi4-inex-namelist-authoring/SKILL.md` or `.agents/skills/hoi4-inex-namelist-authoring/SKILL.md`), which incorporates a multi-agent workflow utilizing a "Historical Research" subagent and a "Code Reviewer" subagent.

@@ -1,14 +1,14 @@
 ---
 name: hoi4-inex-namelist-authoring
 description: >-
-  Runbook for researching historical Order of Battle (OOB) and authoring immersive division
-  namelists for Hearts of Iron IV in the Immersive Namelists Expanded (INEX) mod. Use when
-  adding a new nation or expanding existing national division namelists.
+  Use when adding a new nation or expanding existing national division namelists in Hearts of Iron IV
+  for the Immersive Namelists Expanded (INEX) mod, including historical Order of Battle (OOB) research,
+  multi-agent subagent delegation, file authoring, documentation, and verification.
 ---
 
 # Hearts of Iron IV Namelist Authoring Runbook
 
-This skill provides step-by-step guidance for researching, scoping, authoring, and validating division namelists for *Immersive Namelists Expanded* (INEX).
+This skill provides step-by-step guidance for researching, scoping, authoring, and validating division namelists for *Immersive Namelists Expanded* (INEX) using a multi-agent workflow.
 
 ---
 
@@ -27,7 +27,145 @@ This skill provides step-by-step guidance for researching, scoping, authoring, a
 
 ---
 
-## 2. Research Protocol
+## 2. Multi-Agent Authoring Workflow
+
+To maintain high quality, prevent context exhaustion from broad historical research, and guarantee strict compliance with engine and linguistic invariants, agents must follow a three-phase multi-agent workflow:
+
+```
+[Phase 1: Research]       Dispatch "Historical Research" Subagent
+                                  │
+                                  ▼
+[Phase 2: Authoring]      Primary Agent authors namelist, updates docs, runs test suite
+                                  │
+                                  ▼
+[Phase 3: Verification]   Dispatch "Code Reviewer" Subagent
+```
+
+### Phase 1: Dispatching the "Historical Research" Subagent
+
+The primary agent **must not** exhaust its main context window with extensive web searches, Wikipedia OOB exploration, or raw linguistic queries. Instead, dispatch a dedicated **"Historical Research"** subagent to conduct the historical and linguistic investigation.
+
+- **Subagent Role**: `"Historical Research"` (or `"Historical Researcher"`)
+- **Subagent Type**: `"research"` (or default agent with read and search capabilities)
+- **Workspace**: `"inherit"`
+
+#### Responsibilities of the "Historical Research" Subagent:
+1. **Order of Battle (OOB) Investigation (1918–1945)**:
+   - Identify peacetime standing units vs. mobilization cadres (e.g., cadre battalions designed to expand into full 3,000-man wartime regiments).
+   - Research territorial defense leagues, home guards, and volunteer militias (*Kaitseliit*, *Hemvärnet*, *Suojeluskunta*, *KOP*, *Home Guard*).
+   - Identify mobile, cavalry, armored car (*soomusautod*), and armored train (*soomusrongid*) traditions.
+   - Investigate coastal artillery fortresses (*Merekindlused*, *Kustartilleri*), marine amphibious detachments (*Meredessant*), ski/mountain troops, and paratroopers.
+   - Compile regional naming conventions, historical commanders, and national cultural/independence motifs.
+2. **Linguistic & Grammatical Precision**:
+   - Verify correct grammatical cases in the target language (nominative case rather than genitive/partitive, e.g., Estonian *Jalaväediviis* instead of vanilla's incorrect *diviisi*).
+   - Preserve native diacritics (*ä, ö, õ, ü, š, ž, ł, ś, etc.*).
+   - Determine standard ordinal numbering conventions (e.g., `%d.` with period or Roman `%s.`).
+3. **Vanilla Inspection via Build Tool**:
+   - Run `powershell -File .\build.ps1 -InspectVanilla <TAG>` to extract vanilla groups, fallbacks, and entry counts.
+   - Scan focus trees and scripted effects for existing `division_names_group` references.
+
+#### Sample Dispatch Prompt for "Historical Research" Subagent:
+```markdown
+You are a specialized Historical Research subagent for the Hearts of Iron IV mod "Immersive Namelists Expanded" (INEX).
+Target Country: <Country Name> (<TAG>)
+
+Your task is to conduct an in-depth Order of Battle (OOB), linguistic, and historical investigation for <Country Name> (<TAG>) and return a structured research brief.
+
+Directives:
+1. Investigate the 1918–1945 military structure, standing peacetime units, cadre battalions, territorial defense organizations (militias, home guards), armored/cavalry traditions, coastal fortresses, and specialized units.
+2. Run `powershell -File .\build.ps1 -InspectVanilla <TAG>` to inspect existing vanilla namelists and scripted references in focus trees.
+3. Verify target language grammar and orthography: ensure nominative case (avoid genitive/partitive bugs), verify native diacritics, and determine authentic numbering formats (%d. or %s.).
+4. Formulate authentic extrapolation for wartime gameplay scalability (e.g., 20–30+ division names per major category).
+
+Deliver a structured Research Brief containing:
+- Recommended namelist groups with tags (<TAG>_<CATEGORY>_<NUM>) and concise UI selector names (e.g., "Infantry Divisions", not "<Country> Infantry Divisions").
+- Valid line combat division tokens for `division_types = { ... }`.
+- Ordered lists of historical names with verified diacritics and numbering formats.
+- Fallback name patterns (`fallback_name = "%d. <Unit>"`).
+- Brief historical summaries and 2–3 in-game unit examples for the workshop description.
+```
+
+---
+
+### Phase 2: Implementation & Synchronization (Primary Agent)
+
+Upon receiving the Research Brief from the "Historical Research" subagent, the primary agent:
+1. **Authors the Namelist File**: Creates `common/units/names_divisions/INEX_<TAG>_names_divisions.txt` adhering to Section 6 syntax and engine invariants.
+2. **Synchronizes Documentation**: Updates `WORKSHOP_DESCRIPTION_GUIDELINES.md`, `README.md`, `wiki/<Nation>.md`, `wiki/Home.md`, and `wiki/_Sidebar.md` following Section 7.
+3. **Executes Build & Validation Suite**: Runs `powershell -File .\build.ps1 -ValidateOnly` and `powershell -File .\build.ps1 -Test` to verify syntax and test invariants locally.
+
+---
+
+### Phase 3: Dispatching the "Code Reviewer" Subagent
+
+After implementing the files and running local validation, the primary agent **must dispatch a dedicated "Code Reviewer" subagent** to independently audit and verify all changes before declaring the task complete.
+
+- **Subagent Role**: `"Code Reviewer"`
+- **Subagent Type**: `"self"` (or subagent equipped with read, git, and command execution tools)
+- **Workspace**: `"inherit"`
+
+#### Responsibilities of the "Code Reviewer" Subagent:
+The "Code Reviewer" subagent must independently inspect the git diff and run verification to confirm:
+1. **Engine Invariants & File Syntax**:
+   - File path is strictly `common/units/names_divisions/INEX_<TAG>_names_divisions.txt`.
+   - File is saved in UTF-8 without BOM; curly brackets `{}` are strictly balanced.
+   - Group tags strictly follow `<TAG>_<CATEGORY>_<NUM>` and are globally unique across the mod.
+   - `division_types = { ... }` contains only valid line combat subunit tokens (e.g., `"infantry"`, `"light_armor"`, `"marine"`; never `"armor"`, `"marines"`, or support tokens like `"military_police"`).
+   - Keys in `ordered = { ... }` are unique integers; no duplicate keys; no empty `ordered = { }` blocks.
+   - `fallback_name` includes a valid `%d` or `%s` format token.
+   - `link_numbering_with` only links to external groups, never self-referential.
+   - UI selector `name = "<Selector>"` is concise and omits redundant country names / demonym prefixes.
+2. **Linguistic & Historical Authenticity**:
+   - Grammar cases are correct (nominative, not genitive/partitive).
+   - Diacritics are accurate and properly encoded.
+   - Sufficient depth is provided for full wartime campaigns (20–30+ entries or robust fallbacks).
+3. **Documentation & Workshop Sync**:
+   - `WORKSHOP_DESCRIPTION_GUIDELINES.md`: Row added to Repository Cross-Reference table; country entry added to `[h1]Included nations:[/h1]` in standard BBCode format with 2–3 concise bullets and italicized examples (`[i]...[/i]`).
+   - Strictly **no emojis** in Steam workshop descriptions; character limit respected.
+   - `README.md`: Country added to Included Nations Summary table.
+   - `wiki/<Nation>.md`: Detailed wiki documentation created; links added in `wiki/Home.md` and `wiki/_Sidebar.md`.
+4. **Automated Test Validation**:
+   - Runs `powershell -File .\build.ps1 -ValidateOnly` and confirms zero syntax/invariant errors.
+   - Runs `powershell -File .\build.ps1 -Test` and confirms all Pester unit tests pass with zero failures.
+
+#### Sample Dispatch Prompt for "Code Reviewer" Subagent:
+```markdown
+You are a specialized Code Reviewer subagent for the Hearts of Iron IV mod "Immersive Namelists Expanded" (INEX).
+Target Country: <Country Name> (<TAG>)
+
+Your task is to independently audit all changes made for <TAG> across code, documentation, and tests.
+
+Review Checklist:
+1. Inspect `common/units/names_divisions/INEX_<TAG>_names_divisions.txt`:
+   - Valid group tags (<TAG>_<CAT>_<NUM>), globally unique.
+   - Clean UTF-8 without BOM, balanced braces `{}`.
+   - Valid line combat subunit tokens in `division_types` (no "armor", "marines", or support tokens).
+   - Integer keys in `ordered` strictly unique, no empty blocks.
+   - Valid `fallback_name` with `%d` or `%s`.
+   - No self-referential `link_numbering_with`.
+   - Concise UI selector names without country demonyms.
+   - Correct grammatical cases (nominative) and verified diacritics.
+2. Inspect Documentation Synchronization:
+   - `WORKSHOP_DESCRIPTION_GUIDELINES.md` table and BBCode bullets updated (no emojis, character limits observed).
+   - `README.md` table updated.
+   - `wiki/<Nation>.md`, `wiki/Home.md`, and `wiki/_Sidebar.md` created/updated.
+3. Run Validation Commands:
+   - Execute `powershell -File .\build.ps1 -ValidateOnly`
+   - Execute `powershell -File .\build.ps1 -Test`
+
+Deliver a structured Code Review Report:
+- Status: `APPROVED` or `CHANGES_REQUESTED`
+- Checklist of verified items
+- Detailed list of any issues (Critical, Important, Minor) with file paths and line numbers
+```
+
+If the Code Reviewer requests changes, the primary agent must address the findings and re-verify before finalizing.
+
+---
+
+## 3. Research Protocol & Historical Investigation
+
+(Detailed guidelines for the historical investigation conducted by the "Historical Research" subagent)
 
 ### Order of Battle (OOB) Investigation
 1. **Peacetime vs. Wartime Mobilization**:
@@ -64,7 +202,7 @@ This skill provides step-by-step guidance for researching, scoping, authoring, a
 
 ---
 
-## 3. Namelist Scoping & Design
+## 4. Namelist Scoping & Modular Design
 
 Tailor the namelist suite to the nation's genuine military organization, historical branches, mobilization doctrines, and gameplay opportunities. Avoid arbitrary limits on the number or types of groups—author as many or as few distinct namelists as make sense for that nation's depth.
 
@@ -82,9 +220,9 @@ Tailor the namelist suite to the nation's genuine military organization, histori
 
 ---
 
-## 4. Historical Plausibility Verification Protocol
+## 5. Historical & Linguistic Verification Protocol
 
-Before completing any namelist, agents **must verify** that the namelist satisfies each of the following criteria:
+Before completing any namelist, agents and reviewers **must verify** that the namelist satisfies each of the following criteria:
 
 - [ ] **1. Linguistic & Grammatical Plausibility**:
   - Are all names written in the grammatically appropriate case (usually nominative rather than genitive/partitive, e.g. Estonian *Jalaväediviis* instead of vanilla's incorrect *diviisi*)?
@@ -106,7 +244,7 @@ Before completing any namelist, agents **must verify** that the namelist satisfi
 
 ---
 
-## 5. Namelist File Syntax
+## 6. Namelist File Syntax & Engine Invariants
 
 File location: `common/units/names_divisions/INEX_<TAG>_names_divisions.txt`
 
@@ -140,7 +278,7 @@ File location: `common/units/names_divisions/INEX_<TAG>_names_divisions.txt`
 }
 ```
 
-### Important Syntax Rules:
+### Important Syntax Rules & Engine Invariants:
 - **Encoding**: Ensure clean UTF-8 encoding without BOM.
 - **Quotes**: Arguments must be wrapped in matching double quotes `""`.
 - **UI Selector Names (`name = "..."`)**: Keep in-game selector names concise, functional, and devoid of national demonyms (e.g. `"Alpine Cazadores"` or `"Cavalry Regiments"`, not `"Mexican Alpine Cazadores"`). The in-game division template dropdown UI is narrow and truncates long names.
@@ -153,7 +291,7 @@ File location: `common/units/names_divisions/INEX_<TAG>_names_divisions.txt`
 
 ---
 
-## 6. Documentation & Guidelines Synchronization
+## 7. Documentation & Workshop Synchronization
 
 Whenever a country is added or updated, immediately update `WORKSHOP_DESCRIPTION_GUIDELINES.md`, `README.md`, and `wiki/`:
 1. **Repository Cross-Reference (`WORKSHOP_DESCRIPTION_GUIDELINES.md`)**:
@@ -183,7 +321,7 @@ Whenever a country is added or updated, immediately update `WORKSHOP_DESCRIPTION
 
 ---
 
-## 7. Build & Validation Protocol
+## 8. Build, Validation & Test Protocol
 
 Always run the build automation scripts from the mod root:
 
