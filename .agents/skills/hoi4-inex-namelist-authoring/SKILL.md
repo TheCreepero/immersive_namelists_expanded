@@ -77,15 +77,23 @@ Directives:
 1. Investigate the 1918–1945 military structure, standing peacetime units, cadre battalions, territorial defense organizations (militias, home guards), armored/cavalry traditions, coastal fortresses, and specialized units.
 2. Run `powershell -File .\build.ps1 -InspectVanilla <TAG>` to inspect existing vanilla namelists and scripted references in focus trees.
 3. Verify target language grammar and orthography: ensure nominative case (avoid genitive/partitive bugs), verify native diacritics, and determine authentic numbering formats (%d. or %s.).
-4. Formulate authentic extrapolation for wartime gameplay scalability (e.g., 20–30+ division names per major category).
+4. Gather enough verified material (units, garrisons, regions, commanders, traditions) to support 20–30+ division names per major category; the primary agent writes the entries and any extrapolation.
 
-Deliver a structured Research Brief containing:
+Budget: WebSearch first; WebFetch only a specific page, with a targeted prompt; about 30 tool calls
+at most. Stop once every requested category has verified material.
+
+Deliver a compact Research Brief (tables, no prose, at most about 2,500 words):
 - Recommended namelist groups with tags (<TAG>_<CATEGORY>_<NUM>) and concise UI selector names (e.g., "Infantry Divisions", not "<Country> Infantry Divisions").
 - Valid line combat division tokens for `division_types = { ... }`.
-- Ordered lists of historical names with verified diacritics and numbering formats.
-- Fallback name patterns (`fallback_name = "%d. <Unit>"`).
+- Fact tables of historical units, garrisons, commanders and honorifics:
+  item | fact (native spelling, diacritics) | VERIFIED (URL) / CONTRADICTED (URL) / UNVERIFIED.
+  Do not write finished namelist entries or extrapolate; the primary agent does that.
+- Fallback name patterns (`fallback_name = "%d. <Unit>"`) and the target language's numbering convention.
 - Brief historical summaries and 2–3 in-game unit examples for the workshop description.
+Mark UNVERIFIED rather than guessing.
 ```
+
+Ask the user any naming-policy question (e.g. verified names only vs plausible extrapolation) **before** dispatching, so the brief is scoped once. For a follow-up question, dispatch a fresh subagent with the relevant facts pasted in instead of resuming the earlier one; a resumed subagent reloads its whole transcript.
 
 ---
 
@@ -132,38 +140,27 @@ The "Code Reviewer" subagent must independently inspect the git diff and run ver
    - Runs `powershell -File .\build.ps1 -Test` and confirms all Pester unit tests pass with zero failures.
 
 #### Sample Dispatch Prompt for "Code Reviewer" Subagent:
+The checklist above is enforced mostly by `-ValidateOnly`, `-Test` and `-Audit`, so the reviewer runs those and spends its effort on what tooling cannot judge.
+
 ```markdown
 You are a specialized Code Reviewer subagent for the Hearts of Iron IV mod "Immersive Namelists Expanded" (INEX).
-Target Country: <Country Name> (<TAG>)
+Target Country: <Country Name> (<TAG>). Review all uncommitted changes for <TAG>. Do not edit files.
 
-Your task is to independently audit all changes made for <TAG> across code, documentation, and tests.
+1. Run `powershell -File .\build.ps1 -ValidateOnly`, `-Test` and `-Audit <TAG> -Compare HEAD`.
+   Treat their output as authoritative for syntax, engine invariants, tag format and uniqueness,
+   links, selectors and encoding. Do not re-check those by hand or read the raw namelist diff.
+2. From the -Audit output: selectors concise and without demonyms; nicknamed infantry/motorized/
+   mechanized/armor groups have a plain variant sharing numbering (unless vanilla already
+   nicknames them); identities listed as shared across groups are intended.
+3. Linguistics of the "Added or changed names" list: nominative case, diacritics, no machine
+   translation. Web spot-check the 5-10 names you are least sure of; do not verify every name.
+4. Docs: `WORKSHOP_DESCRIPTION_GUIDELINES.md` row and BBCode (no emojis, concise), `README.md` table,
+   `wiki/<Nation>.md`, `wiki/Home.md`, `wiki/_Sidebar.md` match the file.
 
-Review Checklist:
-1. Inspect `common/units/names_divisions/INEX_<TAG>_names_divisions.txt`:
-   - Valid group tags (<TAG>_<CAT>_<NUM>), globally unique.
-   - Clean UTF-8 without BOM, balanced braces `{}`.
-   - Valid line combat subunit tokens in `division_types` (no "armor", "marines", or support tokens).
-   - Integer keys in `ordered` strictly unique, no empty blocks.
-   - Valid `fallback_name` with `%d` or `%s`.
-   - No self-referential `link_numbering_with`.
-   - Concise UI selector names without country demonyms.
-   - Plain (un-nicknamed) variant kept beside every nicknamed infantry/motorized/mechanized/armor group, sharing numbering (unless vanilla already nicknames them).
-   - Correct grammatical cases (nominative) and verified diacritics.
-2. Inspect Documentation Synchronization:
-   - `WORKSHOP_DESCRIPTION_GUIDELINES.md` table and BBCode bullets updated (no emojis, character limits observed).
-   - `README.md` table updated.
-   - `wiki/<Nation>.md`, `wiki/Home.md`, and `wiki/_Sidebar.md` created/updated.
-3. Run Validation Commands:
-   - Execute `powershell -File .\build.ps1 -ValidateOnly`
-   - Execute `powershell -File .\build.ps1 -Test`
-
-Deliver a structured Code Review Report:
-- Status: `APPROVED` or `CHANGES_REQUESTED`
-- Checklist of verified items
-- Detailed list of any issues (Critical, Important, Minor) with file paths and line numbers
+Report: Status APPROVED or CHANGES_REQUESTED, then issues as Critical / Important / Minor with file:line. Be concise.
 ```
 
-If the Code Reviewer requests changes, the primary agent must address the findings and re-verify before finalizing.
+If the Code Reviewer requests changes, the primary agent must address the findings and re-verify before finalizing. A data-only fix (names, docs) needs only the automated checks re-run. Re-dispatch a reviewer only when `build.ps1`, tests or rule text changed, and scope it to that diff.
 
 ---
 
@@ -292,6 +289,7 @@ File location: `common/units/names_divisions/INEX_<TAG>_names_divisions.txt`
 
 ### Important Syntax Rules & Engine Invariants:
 - **Encoding**: Ensure clean UTF-8 encoding without BOM.
+- **Editing tools (Windows)**: Edit namelists and docs with the Edit/Write tools, or `[IO.File]::WriteAllText($path, $text, (New-Object Text.UTF8Encoding $false))`. Never use Windows PowerShell 5.1 `Set-Content`/`Get-Content` (they read ANSI and write a BOM, corrupting diacritics) or Git Bash `sed -i` on UTF-8 files. Do not normalize line endings; git's `core.autocrlf` handles them on commit.
 - **Quotes**: Arguments must be wrapped in matching double quotes `""`.
 - **UI Selector Names (`name = "..."`)**: Keep in-game selector names concise, functional, and devoid of national demonyms (e.g. `"Alpine Cazadores"` or `"Cavalry Regiments"`, not `"Mexican Alpine Cazadores"`). The in-game division template dropdown UI is narrow and truncates long names.
 - **Number Formats & Fallback Tokens**: Use `%d` for Arabic numbers (`1.`, `2.`) and `%s` for Roman numerals (`I.`, `II.`). Always ensure `fallback_name` includes a literal `%d` or `%s` token (e.g., `%d.`, `%dº`, `%da`, `%s.`) so overflow units do not share identical names. Do not use custom placeholders like `%er` in fallback names (reserve language-specific contractions for static entries in `ordered = { ... }`).
@@ -343,6 +341,9 @@ powershell -File .\build.ps1 -ValidateOnly
 
 # 2. Automated Pester unit test suite (engine rules, docs sync, build script)
 powershell -File .\build.ps1 -Test
+
+# 2b. Quality scorecard plus review list (new/removed tags, changed names only)
+powershell -File .\build.ps1 -Audit <TAG> -Compare HEAD
 
 # 3. Release packaging test (ensures clean ZIP excluding dev artifacts)
 powershell -File .\build.ps1 -Package

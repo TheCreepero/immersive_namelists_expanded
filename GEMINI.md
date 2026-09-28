@@ -25,7 +25,7 @@ When adding, expanding, or modifying namelists:
 ## 5. Build & Validation Protocol
 - `powershell -File .\build.ps1 -ValidateOnly` : Syntax and bracket validation.
 - `powershell -File .\build.ps1 -Test`         : Full Pester unit test suite (engine invariants and documentation sync).
-- `powershell -File .\build.ps1 -Audit <TAG>`  : Heuristic quality scorecard (`-Audit ALL` for full report).
+- `powershell -File .\build.ps1 -Audit <TAG>`  : Heuristic quality scorecard (`-Audit ALL` for full report; add `-Compare HEAD` for a review list of tag and name changes).
 - `powershell -File .\build.ps1 -Package`      : Staged release zip in `artifacts/` (excludes dev/test/docs).
 - `powershell -File .\build.ps1 -DevLink`      : Zero-copy live editing symlink in Paradox launcher mod directory.
 

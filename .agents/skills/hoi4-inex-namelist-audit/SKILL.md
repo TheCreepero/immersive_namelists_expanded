@@ -46,6 +46,8 @@ A modernized file meets all of these (reference implementation: `INEX_PER_names_
 | R9 | Wiki page, README row, and workshop cross-reference/BBCode describe the file as it now is. | (manual) |
 | R10 | Nicknamed infantry, motorized, mechanized, and armor lists keep a plain (un-nicknamed) variant: the existing/vanilla tag becomes the fallback-only plain group, and the nicknames move to a new `"<Selector> (Named)"` tag that shares its numbering (authoring skill §4). Not needed if vanilla already nicknames those divisions (e.g. USA). | (manual; `-Audit` shows `Variant: plain` and exempts it from R4/R5) |
 
+Two more informational lints: `NAME_LONG` (an entry over 60 characters; only outliers, since long honorific names are common and intended) and the file-level `IDENTITY_REPEAT`, which lists quoted identities (e.g. `'Tali'`) reused across groups under different division numbers.
+
 Lint flags are **heuristics**. Treat them as leads, confirm by reading the group, and override with a stated reason where history justifies it.
 
 ---
@@ -65,27 +67,35 @@ Phase 4  Code Reviewer subagent   diff-scoped verification
 2. `powershell -File .\build.ps1 -Audit <KEY>`: per-group metrics and rubric flags.
 3. `powershell -File .\build.ps1 -InspectVanilla <TAG>`: vanilla overlap and scripted `division_names_group` references (skip if HOI4 is not installed; note it in the report).
 4. `git log --oneline -- common/units/names_divisions/INEX_<KEY>_names_divisions.txt` for history.
-5. Read the file **group by group** (large files exceed 1,000 lines; do not dump them whole). Note linguistic problems the lint cannot see: wrong case, missing diacritics, machine-translated words, copy-paste selectors.
+5. Read the file **group by group** (large files exceed 1,000 lines; do not dump them whole; filter out placeholder lines with Grep). Note linguistic problems the lint cannot see: wrong case, missing diacritics, machine-translated words, copy-paste selectors.
 6. Skim `wiki/<Nation>.md`, the README row, and the `WORKSHOP_DESCRIPTION_GUIDELINES.md` row and BBCode entry for drift.
+7. **Ask policy questions before research.** If a fix depends on a naming choice only the user can make (e.g. "verified names only, or plausible extrapolation?" for commander or honour names; whether to override a scripted vanilla group), ask it now, in one batch. Research is then scoped to the answer and does not need a second round.
 
 ### Phase 1: Targeted "Historical Research" Subagent
 Dispatch only if Phase 0 found items needing native-language or historical input (Claude Code: Agent tool, general-purpose/research type; Antigravity: a `"research"` subagent with workspace `"inherit"`). Send a **specific list**, not a country-wide OOB sweep.
 
+The researcher returns **verified facts, not finished namelist entries.** The primary agent composes the entries and does any extrapolation. Put every existing name the audit questions (e.g. all commander-named groups) into the same dispatch, so no separate verification round is needed.
+
 ```markdown
 You are a Historical Research subagent for the HOI4 mod "Immersive Namelists Expanded" (INEX),
 auditing an EXISTING namelist: common/units/names_divisions/INEX_<KEY>_names_divisions.txt (<Country>, <TAG>).
-INEX favors historical plausibility: anchor names in real 1918-1945 institutions, then extrapolate plausibly.
+Return verified facts only; do not propose namelist entries or extrapolate. Do not edit files.
 
-Research only these items:
+Items:
 <numbered list, e.g.
-1. LIT_MAR_01 fallback "%s. Juras Peizazas Divizija" looks machine-translated. Give the correct Lithuanian nominative form.
-2. LIT_INF_01 has 0 authored entries. Propose 25 names grounded in interwar Lithuanian infantry divisions/regiments (garrison towns, honorific names).
-3. Confirm diacritics/spelling of: "Fiame Verdi" ...>
+1. LIT_MAR_01 fallback "%s. Juras Peizazas Divizija" looks machine-translated. Correct Lithuanian nominative term for a marine division?
+2. LIT_INF_01: for each interwar Lithuanian infantry division 1-3, its garrison town and any honorific name.
+3. Verify each of these commander-named groups existed (commander, rank, unit, year): <names>.>
 
-For each item return: group tag, the problem, the corrected or proposed text (with diacritics), numbering
-format (%d/%s), and a one-line source or rationale. Flag anything you are unsure of rather than guessing.
-Do not edit files.
+Budget: WebSearch first; WebFetch only a specific page, with a targeted prompt; about 20 tool calls
+at most. Stop once every item has a status.
+
+Output: one compact table per item, no prose, at most about 1,500 words:
+item | fact (native spelling, diacritics) | VERIFIED (URL) / CONTRADICTED (URL) / UNVERIFIED
+Mark UNVERIFIED rather than guessing.
 ```
+
+For a follow-up question, dispatch a **fresh** subagent with the relevant facts pasted in. Resuming the earlier subagent reloads its whole transcript, so resume only when that context is really needed.
 
 ### Phase 2: Audit Report (checkpoint)
 Present this report and **stop for user approval**:
@@ -109,37 +119,40 @@ Scorecard: <groups> groups, <authored>/<ordered> authored entries, <n> lint flag
 The user may approve all items, a subset, or ask for changes. Apply only what they approve.
 
 ### Phase 3: Apply & Synchronize (primary agent)
-1. Edit the namelist file per the approved list. Keep UTF-8 without BOM and the file's existing brace style.
+1. Edit the namelist file per the approved list. Keep UTF-8 without BOM and the file's existing brace style (see the tool notes in hoi4-inex-namelist-authoring §6).
 2. Update `wiki/<Nation>.md` namelist tables and context; update the `WORKSHOP_DESCRIPTION_GUIDELINES.md` cross-reference row and the nation's BBCode bullets (no emojis, concise; mind the ~17,000-char limit); update `README.md` only if tags or files changed.
 3. Verify:
    ```powershell
    powershell -File .\build.ps1 -ValidateOnly
    powershell -File .\build.ps1 -Test
-   powershell -File .\build.ps1 -Audit <KEY>   # show the flag reduction vs. Phase 0
+   powershell -File .\build.ps1 -Audit <KEY> -Compare HEAD   # flag reduction vs. Phase 0, plus the review list
    ```
 
-### Phase 4: "Code Reviewer" Subagent (diff-scoped)
-Dispatch an independent reviewer (Claude Code: Agent tool; Antigravity: `"self"` subagent, workspace `"inherit"`):
+### Phase 4: "Code Reviewer" Subagent (scoped)
+Dispatch an independent reviewer (Claude Code: Agent tool; Antigravity: `"self"` subagent, workspace `"inherit"`). The build tooling is authoritative for mechanical checks, so the reviewer spends its effort on what tooling cannot judge.
 
 ```markdown
 You are a Code Reviewer subagent for the HOI4 mod "Immersive Namelists Expanded" (INEX).
-Review ONLY the uncommitted audit changes for INEX_<KEY>_names_divisions.txt and its docs (git diff).
+Review the uncommitted audit changes for INEX_<KEY>_names_divisions.txt and its docs. Do not edit files.
 
 Approved change list:
 <paste the approved items from the audit report>
 
-Verify:
-1. Tag preservation: every root group tag in `git show HEAD:<file>` still exists in the working copy. Nicknamed infantry/motorized/mechanized/armor lists keep a plain, fallback-only variant on the original tag that shares numbering with the new "(Named)" tag (R10).
-2. Every approved item was applied; nothing unapproved was changed.
-3. Engine invariants per hoi4-inex-namelist-authoring §6 (tokens, unique ordered keys, %d/%s fallbacks, no self-links, UTF-8 no BOM).
-4. Linguistic correctness of every changed name line (nominative case, diacritics, no machine-translation artifacts).
-5. Docs match the new file: wiki/<Nation>.md, WORKSHOP_DESCRIPTION_GUIDELINES.md (no emojis), README.md if applicable.
-6. Run `powershell -File .\build.ps1 -ValidateOnly` and `powershell -File .\build.ps1 -Test`.
+1. Run `powershell -File .\build.ps1 -ValidateOnly`, `-Test` and `-Audit <KEY> -Compare HEAD`.
+   Treat their output as authoritative for syntax, engine invariants, tags, links, selectors and
+   encoding. Do not re-check those by hand or read the raw namelist diff.
+2. From the -Compare output: no removed tags; every approved item applied; nothing unapproved changed.
+   Nicknamed infantry/motorized/mechanized/armor lists keep a plain, fallback-only variant sharing
+   numbering with the "(Named)" tag (R10). Check that any identities listed as shared across groups are intended.
+3. Linguistics of the "Added or changed names" list: nominative case, diacritics, no machine
+   translation. Web spot-check the 5-10 names you are least sure of; do not verify every name.
+4. Docs match the file: `git diff -- wiki/<Nation>.md WORKSHOP_DESCRIPTION_GUIDELINES.md README.md`
+   (no emojis in the workshop text).
 
-Report: Status APPROVED or CHANGES_REQUESTED, then issues as Critical / Important / Minor with file:line.
+Report: Status APPROVED or CHANGES_REQUESTED, then issues as Critical / Important / Minor with file:line. Be concise.
 ```
 
-Address any `CHANGES_REQUESTED` findings, re-run Phase 3 verification, then summarize for the user: what changed, the lint flags before and after, and anything left intentionally unchanged. Offer the wiki push and a commit; do neither without confirmation.
+Address any `CHANGES_REQUESTED` findings and re-run Phase 3 verification. A data-only fix (names, docs) needs only the automated checks. Re-dispatch a reviewer only when `build.ps1`, tests or rule text changed, and scope it to that diff. Then summarize for the user: what changed, the lint flags before and after, and anything left intentionally unchanged. Offer the wiki push and a commit; do neither without confirmation.
 
 ---
 
@@ -148,7 +161,8 @@ Address any `CHANGES_REQUESTED` findings, re-run Phase 3 verification, then summ
 ```powershell
 powershell -File .\build.ps1 -Audit ALL               # triage table, most flags first
 powershell -File .\build.ps1 -Audit <KEY>             # per-group scorecard for one file
-powershell -File .\build.ps1 -InspectVanilla <TAG>    # vanilla groups + scripted references
+powershell -File .\build.ps1 -Audit <KEY> -Compare HEAD   # + removed/added tags, field changes, changed names only
+powershell -File .\build.ps1 -InspectVanilla <TAG>    # vanilla groups (true entry counts, malformed entries) + scripted references
 powershell -File .\build.ps1 -ValidateOnly            # syntax & engine invariants
 powershell -File .\build.ps1 -Test                    # full Pester suite
 powershell -File .\wiki\push-wiki.ps1 -CommitMessage "Update <TAG> wiki after namelist audit"   # after user confirms

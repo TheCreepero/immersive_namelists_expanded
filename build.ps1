@@ -52,6 +52,10 @@
     Print a heuristic quality scorecard for an INEX namelist file (informational, never fails the build).
     Accepts the file key between 'INEX_' and '_names_divisions' (e.g. -Audit LIT, -Audit GER_SS), or ALL for a triage table.
 
+.PARAMETER Compare
+    With -Audit <KEY>: compare the working copy against a git ref (e.g. -Compare HEAD). Lists removed/added tags,
+    selector/type/fallback/link changes, and only the added or changed name strings, for review without a raw diff.
+
 .PARAMETER Hoi4InstallDir
     Custom path to the Hearts of Iron IV installation folder if installed in a non-standard directory.
 
@@ -92,6 +96,10 @@
 .EXAMPLE
     .\build.ps1 -Audit ALL
     # Ranks all INEX namelist files by quality flags to pick the next one to modernize.
+
+.EXAMPLE
+    .\build.ps1 -Audit FIN -Compare HEAD
+    # Scorecard for the Finnish file plus a review list of what changed since the last commit.
 
 .EXAMPLE
     .\build.ps1 -PublishSteam -DryRun
@@ -139,6 +147,9 @@ param(
 
     [Parameter(ParameterSetName = 'Audit', Mandatory = $true)]
     [string]$Audit,
+
+    [Parameter(ParameterSetName = 'Audit')]
+    [string]$Compare,
 
     [switch]$Validate,
     [switch]$NoValidate,
@@ -529,6 +540,37 @@ function Find-Hoi4Install {
     return $null
 }
 
+# --- Helper: Count ordered entries in a comment-stripped group block ---
+# Tolerates nested entry braces and reports malformed entries (e.g. a missing opening quote,
+# as in vanilla FIN_GAR_02) instead of silently skipping them.
+function Get-OrderedEntryStats {
+    param([string]$CleanBlock)
+
+    $stats = [PSCustomObject]@{ Count = 0; Malformed = 0; Samples = @() }
+    $orderedM = [regex]::Match($CleanBlock, 'ordered\s*=\s*\{(?<content>(?:[^{}]*|\{[^{}]*\})*)\}')
+    if (-not $orderedM.Success) { return $stats }
+
+    $content = $orderedM.Groups['content'].Value
+    $keyed = [regex]::Matches($content, '(\d+)\s*=\s*\{([^{}]*)\}')
+    $samples = [System.Collections.Generic.List[string]]::new()
+    foreach ($k in $keyed) {
+        $nameM = [regex]::Match($k.Groups[2].Value, '^\s*"((?:[^"\\]|\\.)*)"')
+        if ($nameM.Success) {
+            if ($samples.Count -lt 3) { $samples.Add("$($k.Groups[1].Value)=$($nameM.Groups[1].Value)") }
+        } else {
+            $stats.Malformed++
+        }
+    }
+    # Brace-less entries (1 = "Name") are also valid
+    $bare = [regex]::Matches(($content -replace '\{[^{}]*\}', ''), '(\d+)\s*=\s*"((?:[^"\\]|\\.)*)"')
+    foreach ($b in $bare) {
+        if ($samples.Count -lt 3) { $samples.Add("$($b.Groups[1].Value)=$($b.Groups[2].Value)") }
+    }
+    $stats.Count = $keyed.Count + $bare.Count
+    $stats.Samples = @($samples)
+    return $stats
+}
+
 # --- Action: Inspect Vanilla Namelists & Script References ---
 function Invoke-InspectVanilla {
     param(
@@ -594,16 +636,8 @@ function Invoke-InspectVanilla {
             $nameM = [regex]::Match($cleanBlock, 'name\s*=\s*"([^"]+)"')
             $typesM = [regex]::Match($cleanBlock, 'division_types\s*=\s*\{([^}]*)\}')
             $fallbackM = [regex]::Match($cleanBlock, 'fallback_name\s*=\s*"([^"]+)"')
-            $orderedM = [regex]::Match($cleanBlock, 'ordered\s*=\s*\{([^}]*)\}')
             $linkM = [regex]::Match($cleanBlock, 'link_numbering_with\s*=\s*\{([^}]*)\}')
-
-            $orderedCount = 0
-            $samples = @()
-            if ($orderedM.Success) {
-                $entries = [regex]::Matches($orderedM.Groups[1].Value, '(\d+)\s*=\s*(?:\{\s*)?"([^"]+)"')
-                $orderedCount = $entries.Count
-                $samples = @($entries | Select-Object -First 3 | ForEach-Object { "$($_.Groups[1].Value)=$($_.Groups[2].Value)" })
-            }
+            $orderedStats = Get-OrderedEntryStats -CleanBlock $cleanBlock
 
             $groups.Add([PSCustomObject]@{
                 Tag          = $gtag
@@ -611,8 +645,9 @@ function Invoke-InspectVanilla {
                 Types        = if ($typesM.Success) { ($typesM.Groups[1].Value -replace '\s+', ' ').Trim() } else { "N/A" }
                 Fallback     = if ($fallbackM.Success) { $fallbackM.Groups[1].Value } else { "N/A" }
                 Link         = if ($linkM.Success) { ($linkM.Groups[1].Value -replace '\s+', ' ').Trim() } else { $null }
-                OrderedCount = $orderedCount
-                Samples      = $samples
+                OrderedCount = $orderedStats.Count
+                Malformed    = $orderedStats.Malformed
+                Samples      = $orderedStats.Samples
                 Raw          = $blockText
             })
             $i = $j
@@ -640,6 +675,9 @@ function Invoke-InspectVanilla {
         Write-Host "  Types:    $($g.Types)" -ForegroundColor Gray
         Write-Host "  Fallback: $($g.Fallback)" -ForegroundColor Gray
         Write-Host "  Ordered:  $($g.OrderedCount) entries$sampleStr" -ForegroundColor Gray
+        if ($g.Malformed -gt 0) {
+            Write-Host "  Malformed: $($g.Malformed) entries (broken quoting; see -Group $($g.Tag))" -ForegroundColor Red
+        }
     }
 
     Write-Step "Checking scripted references across vanilla focus trees and scripted effects..."
@@ -777,6 +815,10 @@ function Get-NamelistAuditData {
             $flags.Add('DEAD_SELF_LINK_COMMENT')
         }
         if ($rawBlock -match $todoRegex) { $flags.Add('TODO_COMMENT') }
+        # Outliers only: long honorific names are common and intentional (e.g. GER cavalry)
+        if (@($entries | Where-Object { ($_ -replace '%[ds]', '10' -replace '\\"', '"').Length -gt 60 }).Count -gt 0) {
+            $flags.Add('NAME_LONG')
+        }
 
         $groups.Add([PSCustomObject]@{
             Tag           = $b.Tag
@@ -787,6 +829,7 @@ function Get-NamelistAuditData {
             OrderedCount  = $entries.Count
             AuthoredCount = $authoredCount
             PlainVariantOf = $null
+            Entries       = $entries
             Flags         = $flags
         })
     }
@@ -816,10 +859,38 @@ function Get-NamelistAuditData {
         if ($g.Selector -and @($selectorCounts | Where-Object { $_.Name -ceq $g.Selector -and $_.Count -gt 1 }).Count -gt 0) {
             $g.Flags.Add('SELECTOR_DUPLICATE')
         }
-        if ($hasInfAnchor -and $g.Tag -match '_(MOT|MEC)_' -and $g.LinkTargets.Count -eq 0) {
+        # A mobile group that other groups link to is a numbering anchor, not an orphan
+        $isAnchor = @($groups | Where-Object { $_.LinkTargets -contains $g.Tag }).Count -gt 0
+        if ($hasInfAnchor -and $g.Tag -match '_(MOT|MEC)_' -and $g.LinkTargets.Count -eq 0 -and -not $isAnchor) {
             $g.Flags.Add('UNLINKED_MOBILE')
         }
     }
+
+    # Quoted identities ('Tali' or \"Tali\") reused across groups under different division
+    # numbers. The same number carrying its nickname into another group (e.g. USA 1st Infantry
+    # and 1st Motorized 'Big Red One') is intended lineage and not reported. Region reuse is
+    # often intended too, so this is one file-level flag with the list, not per-group flags.
+    $identityUses = @{}
+    foreach ($g in $groups) {
+        foreach ($e in $g.Entries) {
+            $numM = [regex]::Match($e, '^\s*(\d+)')
+            $num = if ($numM.Success) { $numM.Groups[1].Value } else { '-' }
+            # Quotes must sit on word boundaries so apostrophes inside a nickname ('The King's Own') are kept
+            foreach ($m in [regex]::Matches($e, "(?<![\p{L}\p{N}])'(.+?)'(?![\p{L}\p{N}])|\\""([^""\\]+)\\""")) {
+                $id = if ($m.Groups[1].Success) { $m.Groups[1].Value } else { $m.Groups[2].Value }
+                if (-not $identityUses.ContainsKey($id)) { $identityUses[$id] = [System.Collections.Generic.List[psobject]]::new() }
+                $identityUses[$id].Add([PSCustomObject]@{ Tag = $g.Tag; Num = $num })
+            }
+        }
+    }
+    $sharedIdentities = @($identityUses.Keys | Sort-Object | ForEach-Object {
+        $uses = $identityUses[$_]
+        $tags = @($uses | ForEach-Object { $_.Tag } | Select-Object -Unique)
+        # Unnumbered or %d-numbered entries cannot be compared, so they do not count as a different number
+        $nums = @($uses | Where-Object { $_.Num -ne '-' } | ForEach-Object { $_.Num } | Select-Object -Unique)
+        if ($tags.Count -gt 1 -and $nums.Count -gt 1) { [PSCustomObject]@{ Identity = $_; Groups = $tags } }
+    })
+    if ($sharedIdentities.Count -gt 0) { $fileFlags.Add('IDENTITY_REPEAT') }
 
     # Comments outside any group block (file header, section banners)
     for ($i = 0; $i -lt $lines.Length; $i++) {
@@ -830,15 +901,81 @@ function Get-NamelistAuditData {
     }
 
     return [PSCustomObject]@{
-        Path      = $Path
-        FileFlags = $fileFlags
-        Groups    = $groups
+        Path             = $Path
+        FileFlags        = $fileFlags
+        Groups           = $groups
+        SharedIdentities = $sharedIdentities
     }
+}
+
+# --- Helper: Read a file's text at a git ref; $null if the ref or path does not exist ---
+function Get-GitFileText {
+    param([string]$RepoPath, [string]$Ref, [string]$RelPath)
+
+    # Under 'Stop', PowerShell 5.1 turns native stderr into a terminating error even with 2>$null.
+    # Native output is decoded with the console code page, so force UTF-8 to keep diacritics.
+    $prevEap = $ErrorActionPreference
+    $prevEncoding = [Console]::OutputEncoding
+    $ErrorActionPreference = 'Continue'
+    [Console]::OutputEncoding = New-Object System.Text.UTF8Encoding($false)
+    try {
+        $out = & git -C $RepoPath show "${Ref}:$RelPath" 2>$null
+        if ($LASTEXITCODE -ne 0) { return $null }
+        return (@($out) -join "`n")
+    } catch {
+        return $null
+    } finally {
+        [Console]::OutputEncoding = $prevEncoding
+        $ErrorActionPreference = $prevEap
+    }
+}
+
+# --- Helper: Compare two audit snapshots of the same namelist file ---
+# Gives reviewers tag/selector/link changes and only the added or changed name strings,
+# instead of a raw diff.
+function Compare-NamelistAuditData {
+    param($Old, $New)
+
+    $oldByTag = @{}
+    foreach ($g in $Old.Groups) { $oldByTag[$g.Tag] = $g }
+    $newTags = @($New.Groups | ForEach-Object { $_.Tag })
+
+    $result = [PSCustomObject]@{
+        RemovedTags  = @($Old.Groups | Where-Object { $newTags -notcontains $_.Tag } | ForEach-Object { $_.Tag })
+        AddedTags    = @($New.Groups | Where-Object { -not $oldByTag.ContainsKey($_.Tag) } | ForEach-Object { $_.Tag })
+        FieldChanges = [System.Collections.Generic.List[string]]::new()
+        NewNames     = [System.Collections.Generic.List[psobject]]::new()
+        RemovedNameCount = 0
+    }
+
+    foreach ($g in $New.Groups) {
+        $o = $oldByTag[$g.Tag]
+        $oldEntries = if ($o) { @($o.Entries) } else { @() }
+        if ($o) {
+            $fields = [ordered]@{
+                selector = @($o.Selector, $g.Selector)
+                types    = @(($o.DivisionTypes -join ' '), ($g.DivisionTypes -join ' '))
+                fallback = @($o.Fallback, $g.Fallback)
+                links    = @(($o.LinkTargets -join ' '), ($g.LinkTargets -join ' '))
+            }
+            foreach ($f in $fields.Keys) {
+                if ($fields[$f][0] -cne $fields[$f][1]) {
+                    $result.FieldChanges.Add("[$($g.Tag)] ${f}: '$($fields[$f][0])' -> '$($fields[$f][1])'")
+                }
+            }
+        }
+        foreach ($e in ($g.Entries | Select-Object -Unique)) {
+            if ($oldEntries -cnotcontains $e) { $result.NewNames.Add([PSCustomObject]@{ Tag = $g.Tag; Name = $e }) }
+        }
+        $result.RemovedNameCount += @($oldEntries | Where-Object { @($g.Entries) -cnotcontains $_ }).Count
+    }
+    foreach ($t in $result.RemovedTags) { $result.RemovedNameCount += @($oldByTag[$t].Entries).Count }
+    return $result
 }
 
 # --- Action: Audit namelist quality ---
 function Invoke-NamelistAudit {
-    param([string]$Key)
+    param([string]$Key, [string]$CompareRef)
 
     $namelistDir = Join-Path $RepoDir "common\units\names_divisions"
     $Key = $Key.ToUpper().Trim()
@@ -891,6 +1028,11 @@ function Invoke-NamelistAudit {
         }
     }
 
+    if ($data.SharedIdentities.Count -gt 0) {
+        Write-Step "Identities shared across groups (check that reuse is intended)"
+        foreach ($s in $data.SharedIdentities) { Write-Info "'$($s.Identity)': $($s.Groups -join ', ')" }
+    }
+
     $allFlags = @($data.FileFlags) + @($data.Groups | ForEach-Object { $_.Flags })
     if ($allFlags.Count -eq 0) {
         Write-Ok "No quality flags raised."
@@ -898,11 +1040,36 @@ function Invoke-NamelistAudit {
         Write-Step "Flag summary"
         $allFlags | Group-Object | Sort-Object Count -Descending | ForEach-Object { Write-Info "$($_.Name): $($_.Count)" }
     }
+
+    if ($CompareRef) {
+        $relPath = "common/units/names_divisions/INEX_${Key}_names_divisions.txt"
+        $oldText = Get-GitFileText -RepoPath $RepoDir -Ref $CompareRef -RelPath $relPath
+
+        $oldData = [PSCustomObject]@{ Groups = @() }
+        if ($null -ne $oldText) {
+            $tmp = [System.IO.Path]::GetTempFileName()
+            try {
+                [System.IO.File]::WriteAllText($tmp, $oldText, (New-Object System.Text.UTF8Encoding($false)))
+                $oldData = Get-NamelistAuditData -Path $tmp
+            } finally { Remove-Item -Force $tmp }
+        } else {
+            Write-Warn "$relPath does not exist at '$CompareRef'; treating every group as new."
+        }
+
+        $diff = Compare-NamelistAuditData -Old $oldData -New $data
+        Write-Step "Changes vs $CompareRef"
+        foreach ($t in $diff.RemovedTags) { Write-Err "Removed tag: $t (breaks saved templates and numbering links)" }
+        foreach ($t in $diff.AddedTags) { Write-Info "Added tag: $t" }
+        foreach ($c in $diff.FieldChanges) { Write-Info $c }
+        Write-Info "Names removed or replaced: $($diff.RemovedNameCount)"
+        Write-Host "`n  Added or changed names ($($diff.NewNames.Count)):" -ForegroundColor Cyan
+        foreach ($n in $diff.NewNames) { Write-Host "  $($n.Tag.PadRight(16)) $($n.Name)" }
+    }
 }
 
 # --- Action: Audit ---
 if ($Audit) {
-    Invoke-NamelistAudit -Key $Audit
+    Invoke-NamelistAudit -Key $Audit -CompareRef $Compare
     $stopwatch.Stop()
     Write-Info "Completed in $($stopwatch.Elapsed.TotalSeconds.ToString('0.00'))s"
     exit 0

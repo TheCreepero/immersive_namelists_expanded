@@ -21,9 +21,11 @@ BeforeAll {
         . ([ScriptBlock]::Create($launcherFuncMatch.Groups[1].Value))
     }
 
-    $auditFuncMatch = [regex]::Match($script:BuildContent, '(?s)(function Get-NamelistAuditData\s*\{.*?\n\})')
-    if ($auditFuncMatch.Success) {
-        . ([ScriptBlock]::Create($auditFuncMatch.Groups[1].Value))
+    foreach ($fn in 'Get-NamelistAuditData', 'Get-OrderedEntryStats', 'Compare-NamelistAuditData', 'Get-GitFileText') {
+        $fnMatch = [regex]::Match($script:BuildContent, "(?s)(function $fn\s*\{.*?\n\})")
+        if ($fnMatch.Success) {
+            . ([ScriptBlock]::Create($fnMatch.Groups[1].Value))
+        }
     }
 
     # Dot-source Write-* terminal helpers and Invoke-Validation (used together, so extract as a block)
@@ -279,6 +281,17 @@ TST_MOT_01 = {
 	}
 }
 
+TST_MOT_02 = {
+	name = "Motorized Brigades"
+	for_countries = { TST }
+	division_types = { "motorized" }
+	fallback_name = "%d. Moottoroitu Prikaati"
+	ordered = {
+		1 = { "1. Moottoroitu Prikaati 'Karjala'" }
+		2 = { "2. Moottoroitu Prikaati 'Kuninkaallinen Uudenmaan ja Hämeen Perinneosasto'" }
+	}
+}
+
 TST_ARM_01 = {
 	name = "Armored Divisions"
 	for_countries = { TST }
@@ -351,7 +364,7 @@ TST_MEC_03 = {
     }
 
     It "Parses every root group" {
-        @($script:AuditData.Groups | ForEach-Object { $_.Tag }) | Should -Be @('TST_INF_01', 'TST_GAR_01', 'TST_MOT_01', 'TST_ARM_01', 'TST_MEC_01', 'TST_MEC_02', 'TST_MEC_03')
+        @($script:AuditData.Groups | ForEach-Object { $_.Tag }) | Should -Be @('TST_INF_01', 'TST_GAR_01', 'TST_MOT_01', 'TST_MOT_02', 'TST_ARM_01', 'TST_MEC_01', 'TST_MEC_02', 'TST_MEC_03')
     }
 
     It "Flags the vanilla boilerplate header" {
@@ -376,7 +389,25 @@ TST_MEC_03 = {
     }
 
     It "Flags motorized groups that do not share numbering with field infantry" {
-        (& $script:AuditGroup 'TST_MOT_01').Flags | Should -Contain 'UNLINKED_MOBILE'
+        (& $script:AuditGroup 'TST_MOT_02').Flags | Should -Contain 'UNLINKED_MOBILE'
+    }
+
+    It "Does not flag a mobile numbering anchor that other groups link to" {
+        (& $script:AuditGroup 'TST_MOT_01').Flags | Should -Not -Contain 'UNLINKED_MOBILE'
+    }
+
+    It "Flags only outlier-length names (over 60 characters)" {
+        (& $script:AuditGroup 'TST_MOT_02').Flags | Should -Contain 'NAME_LONG'
+        (& $script:AuditGroup 'TST_ARM_01').Flags | Should -Not -Contain 'NAME_LONG'
+    }
+
+    It "Reports an identity reused under different division numbers once per file" {
+        $script:AuditData.FileFlags | Should -Contain 'IDENTITY_REPEAT'
+        $shared = @($script:AuditData.SharedIdentities | Where-Object { $_.Identity -eq 'Karjala' })
+        $shared.Count | Should -Be 1
+        $shared[0].Groups | Should -Be @('TST_MOT_02', 'TST_ARM_01')
+        # The escaped-quote form must not be counted as a separate identity
+        @($script:AuditData.SharedIdentities | Where-Object { $_.Identity -match '\\' }).Count | Should -Be 0
     }
 
     It "Raises no flags on a modern group with escaped nickname quotes" {
@@ -406,5 +437,139 @@ TST_MEC_03 = {
         $g.PlainVariantOf | Should -BeNullOrEmpty
         $g.Flags | Should -Contain 'PLACEHOLDER_ENTRIES'
         $g.Flags | Should -Contain 'LOW_DEPTH'
+    }
+}
+
+Describe "build.ps1 Helper: Get-OrderedEntryStats" {
+    It "Counts every entry in a multi-entry block and reports malformed ones" {
+        # Comment-stripped vanilla-style block, including a missing opening quote (as in vanilla FIN_GAR_02)
+        $block = @'
+TST_GAR_02 = {
+	name = "Suojeluskunta Divisions"
+	fallback_name = "%d. Suojeluskuntapiiri"
+	ordered = {
+		1 = { "Helsingin Suojeluskuntapiiri" }
+		2 = { "Turunmaan Suojeluskuntapiiri" "Tooltip text" }
+		3 = { Lahden suojeluskuntapiiri" }
+		4 = "Oulun Suojeluskuntapiiri"
+	}
+}
+'@
+        $stats = Get-OrderedEntryStats -CleanBlock $block
+        $stats.Count | Should -Be 4
+        $stats.Malformed | Should -Be 1
+        $stats.Samples[0] | Should -Be '1=Helsingin Suojeluskuntapiiri'
+    }
+
+    It "Returns zero counts for a fallback-only group" {
+        $stats = Get-OrderedEntryStats -CleanBlock 'TST_INF_02 = { name = "Legions" fallback_name = "%d. Legioona" }'
+        $stats.Count | Should -Be 0
+        $stats.Malformed | Should -Be 0
+    }
+}
+
+Describe "build.ps1 Helper: Get-GitFileText" {
+    It "Returns null instead of throwing for an unknown ref, even under ErrorActionPreference Stop" {
+        $ErrorActionPreference = 'Stop'
+        { Get-GitFileText -RepoPath $script:RepoRoot -Ref 'no-such-ref-inex' -RelPath 'build.ps1' } | Should -Not -Throw
+        Get-GitFileText -RepoPath $script:RepoRoot -Ref 'no-such-ref-inex' -RelPath 'build.ps1' | Should -BeNullOrEmpty
+    }
+
+    It "Returns null for a path that does not exist at the ref" {
+        Get-GitFileText -RepoPath $script:RepoRoot -Ref 'HEAD' -RelPath 'no/such/file.txt' | Should -BeNullOrEmpty
+    }
+
+    It "Returns the file text at a valid ref with diacritics intact" {
+        $text = Get-GitFileText -RepoPath $script:RepoRoot -Ref 'HEAD' -RelPath 'common/units/names_divisions/INEX_FIN_names_divisions.txt'
+        $text | Should -Match 'FIN_INF_01'
+        # Built from char codes: Windows PowerShell reads this BOM-less test file as ANSI
+        $a = [char]0x00E4
+        $text | Should -Match "J${a}${a}k${a}ridivisioona"
+    }
+}
+
+Describe "build.ps1 Helper: Get-NamelistAuditData identity parsing" {
+    BeforeAll {
+        $script:IdFixture = [System.IO.Path]::GetTempFileName()
+        $fixture = @'
+TST_GUA_01 = {
+	name = "Guards Divisions"
+	division_types = { "infantry" }
+	fallback_name = "%d. Guards Division"
+	ordered = {
+		1 = { "1st Royal Guard 'The King's Own'" }
+		2 = { "2nd Royal Guard 'Panssaridivisioona 'Lagus''" }
+	}
+}
+
+TST_GUA_02 = {
+	name = "Guards Brigades"
+	division_types = { "infantry" }
+	fallback_name = "%d. Guards Brigade"
+	ordered = {
+		3 = { "3rd Guards Brigade 'The King's Own'" }
+		4 = { "Guards Brigade 'Unnumbered'" }
+	}
+}
+
+TST_GUA_03 = {
+	name = "Guards Regiments"
+	division_types = { "infantry" }
+	fallback_name = "%d. Guards Regiment"
+	ordered = {
+		1 = { "Guards Regiment 'Unnumbered'" }
+	}
+}
+'@
+        [System.IO.File]::WriteAllText($script:IdFixture, $fixture, (New-Object System.Text.UTF8Encoding($false)))
+        $script:IdData = Get-NamelistAuditData -Path $script:IdFixture
+    }
+
+    AfterAll {
+        if (Test-Path $script:IdFixture) { Remove-Item -Force $script:IdFixture }
+    }
+
+    It "Keeps apostrophes inside a single-quoted nickname" {
+        $ids = @($script:IdData.SharedIdentities | ForEach-Object { $_.Identity })
+        $ids | Should -Contain "The King's Own"
+        $ids | Should -Not -Contain 'The King'
+    }
+
+    It "Does not report identities whose entries carry no comparable number" {
+        @($script:IdData.SharedIdentities | Where-Object { $_.Identity -eq 'Unnumbered' }).Count | Should -Be 0
+    }
+}
+
+Describe "build.ps1 Helper: Compare-NamelistAuditData" {
+    BeforeAll {
+        $mk = { param($tag, $sel, $fb, $links, $entries)
+            [PSCustomObject]@{ Tag = $tag; Selector = $sel; DivisionTypes = @('infantry'); Fallback = $fb; LinkTargets = @($links); Entries = @($entries) } }
+        $old = [PSCustomObject]@{ Groups = @(
+            (& $mk 'TST_INF_01' 'Infantry Divisions' '%d. Divisioona' @() @('%d. Divisioona', '%d. Divisioona')),
+            (& $mk 'TST_DET_02' 'Separate Groups' 'Ryhmä %s' @() @('Ryhmä Talvela', 'Ryhmä Airo')),
+            (& $mk 'TST_OLD_01' 'Old Groups' '%d. Vanha' @() @('Vanha 1'))
+        ) }
+        $new = [PSCustomObject]@{ Groups = @(
+            (& $mk 'TST_INF_01' 'Infantry Divisions' '%d. Divisioona' @() @()),
+            (& $mk 'TST_INF_05' 'Infantry Divisions (Named)' '%d. Divisioona' @('TST_INF_01') @("12. Divisioona 'Kollaa'")),
+            (& $mk 'TST_DET_02' 'Separate Groups' 'Ryhmä %s.' @() @('Ryhmä Talvela', 'Ryhmä Pajari'))
+        ) }
+        $script:Diff = Compare-NamelistAuditData -Old $old -New $new
+    }
+
+    It "Reports removed and added tags" {
+        $script:Diff.RemovedTags | Should -Be @('TST_OLD_01')
+        $script:Diff.AddedTags | Should -Be @('TST_INF_05')
+    }
+
+    It "Reports field changes on kept tags" {
+        $script:Diff.FieldChanges | Should -Contain "[TST_DET_02] fallback: 'Ryhmä %s' -> 'Ryhmä %s.'"
+        @($script:Diff.FieldChanges).Count | Should -Be 1
+    }
+
+    It "Lists only added or changed names and counts removed ones" {
+        @($script:Diff.NewNames | ForEach-Object { "$($_.Tag)|$($_.Name)" }) | Should -Be @("TST_INF_05|12. Divisioona 'Kollaa'", 'TST_DET_02|Ryhmä Pajari')
+        # 2 INF placeholders + Ryhmä Airo + the removed tag's 1 entry
+        $script:Diff.RemovedNameCount | Should -Be 4
     }
 }
