@@ -48,6 +48,10 @@
 .PARAMETER Group
     Optional specific namelist group tag to excerpt directly when using -InspectVanilla (e.g. -Group SOV_INF_02).
 
+.PARAMETER Audit
+    Print a heuristic quality scorecard for an INEX namelist file (informational, never fails the build).
+    Accepts the file key between 'INEX_' and '_names_divisions' (e.g. -Audit LIT, -Audit GER_SS), or ALL for a triage table.
+
 .PARAMETER Hoi4InstallDir
     Custom path to the Hearts of Iron IV installation folder if installed in a non-standard directory.
 
@@ -84,6 +88,10 @@
 .EXAMPLE
     .\build.ps1 -Test
     # Executes automated Pester test suites covering namelists, documentation, and build automation.
+
+.EXAMPLE
+    .\build.ps1 -Audit ALL
+    # Ranks all INEX namelist files by quality flags to pick the next one to modernize.
 
 .EXAMPLE
     .\build.ps1 -PublishSteam -DryRun
@@ -128,6 +136,9 @@ param(
 
     [Parameter(ParameterSetName = 'InspectVanilla')]
     [string]$Hoi4InstallDir,
+
+    [Parameter(ParameterSetName = 'Audit', Mandatory = $true)]
+    [string]$Audit,
 
     [switch]$Validate,
     [switch]$NoValidate,
@@ -661,6 +672,217 @@ function Invoke-InspectVanilla {
     }
 }
 
+# --- Helper: Heuristic quality audit of an INEX namelist file ---
+# Returns file-level flags plus per-group metrics and flags. Flags are hints for the
+# hoi4-inex-namelist-audit skill, not invariant errors (those live in Invoke-Validation).
+function Get-NamelistAuditData {
+    param([string]$Path)
+
+    $lines = [System.IO.File]::ReadAllLines($Path, [System.Text.Encoding]::UTF8)
+    $rawText = $lines -join "`n"
+
+    $fileFlags = [System.Collections.Generic.List[string]]::new()
+    if ($rawText -match 'Is a new method of naming the divisions') {
+        $fileFlags.Add('HEADER_BOILERPLATE')
+    }
+
+    $singularNouns = @('Division', 'Regiment', 'Brigade', 'Battalion', 'Squadron', 'Detachment', 'Band', 'Group')
+    $todoRegex = '(?i)#.*\b(todo|fixme|placeholder|barely any info|very little info)\b'
+    # Quoted string that tolerates escaped nickname quotes, e.g. "Lashkar-e 9-e Zerehi \"Kaveh\""
+    $str = '"((?:[^"\\]|\\.)*)"'
+
+    # Normalizes numbering so "1st Infantry Division", "%d Infantry Division" and "IV. Divizija" compare equal to their fallback pattern.
+    $normalize = {
+        param([string]$s)
+        $n = $s -replace '%[ds]', '#'
+        $n = $n -replace '\b\d+(st|nd|rd|th|e|er|re|a|o)?\b', '#'
+        $n = $n -replace '\b[IVXLC]+\b', '#'
+        return ($n -replace '\s+', ' ').Trim().ToLowerInvariant()
+    }
+
+    # Split the file into root-level group blocks (raw lines kept for comment checks)
+    $blocks = [System.Collections.Generic.List[psobject]]::new()
+    $inBlock = New-Object bool[] $lines.Length
+    $depth = 0
+    $current = $null
+    for ($i = 0; $i -lt $lines.Length; $i++) {
+        $clean = ($lines[$i] -replace '#.*$', '').Trim()
+        if ($depth -eq 0 -and -not $current) {
+            $gm = [regex]::Match($clean, '^([A-Za-z][A-Za-z0-9_]*)\s*=\s*\{?')
+            if ($gm.Success -and $clean -notmatch '^(ordered|division_types|for_countries|can_use|link_numbering_with)\b') {
+                $current = [PSCustomObject]@{ Tag = $gm.Groups[1].Value; Lines = [System.Collections.Generic.List[string]]::new(); Opened = $false }
+            }
+        }
+        if ($current) {
+            $current.Lines.Add($lines[$i])
+            $inBlock[$i] = $true
+        }
+        $opens = ([regex]::Matches($clean, '\{')).Count
+        $depth += ($opens - ([regex]::Matches($clean, '\}')).Count)
+        if ($current -and $opens -gt 0) { $current.Opened = $true }
+        if ($current -and $current.Opened -and $depth -le 0) {
+            $blocks.Add($current)
+            $current = $null
+            $depth = 0
+        }
+    }
+
+    $groups = [System.Collections.Generic.List[psobject]]::new()
+    foreach ($b in $blocks) {
+        $rawBlock = $b.Lines -join "`n"
+        $cleanBlock = $rawBlock -replace '(?m)#.*$', ''
+
+        $nameM = [regex]::Match($cleanBlock, ('(?m)^\s*name\s*=\s*' + $str))
+        $typesM = [regex]::Match($cleanBlock, 'division_types\s*=\s*\{([^}]*)\}')
+        $fallbackM = [regex]::Match($cleanBlock, ('fallback_name\s*=\s*' + $str))
+        $linkM = [regex]::Match($cleanBlock, 'link_numbering_with\s*=\s*\{([^}]*)\}')
+        $orderedM = [regex]::Match($cleanBlock, 'ordered\s*=\s*\{(?<content>(?:[^{}]*|\{[^{}]*\})*)\}')
+
+        $selector = if ($nameM.Success) { $nameM.Groups[1].Value } else { $null }
+        $fallback = if ($fallbackM.Success) { $fallbackM.Groups[1].Value } else { $null }
+        $types = if ($typesM.Success) { @([regex]::Matches($typesM.Groups[1].Value, '"([^"]+)"') | ForEach-Object { $_.Groups[1].Value }) } else { @() }
+        $links = if ($linkM.Success) { @([regex]::Matches($linkM.Groups[1].Value, '([A-Za-z0-9_]+)') | ForEach-Object { $_.Groups[1].Value }) } else { @() }
+
+        $entries = @()
+        if ($orderedM.Success) {
+            $entries = @([regex]::Matches($orderedM.Groups['content'].Value, ('(\d+)\s*=\s*\{?\s*' + $str)) | ForEach-Object { $_.Groups[2].Value })
+        }
+
+        # An entry is a placeholder when it adds nothing over fallback_name or repeats another entry's pattern
+        $fallbackNorm = if ($fallback) { & $normalize $fallback } else { $null }
+        $normCounts = @{}
+        foreach ($e in $entries) {
+            $k = & $normalize $e
+            if ($normCounts.ContainsKey($k)) { $normCounts[$k]++ } else { $normCounts[$k] = 1 }
+        }
+        $placeholderCount = 0
+        foreach ($e in $entries) {
+            $k = & $normalize $e
+            if ($k -eq $fallbackNorm -or $normCounts[$k] -gt 1) { $placeholderCount++ }
+        }
+        $authoredCount = $entries.Count - $placeholderCount
+
+        $flags = [System.Collections.Generic.List[string]]::new()
+        if ($entries.Count -gt 0 -and ($placeholderCount / $entries.Count) -gt 0.5) { $flags.Add('PLACEHOLDER_ENTRIES') }
+        if ($authoredCount -lt 10) { $flags.Add('LOW_DEPTH') }
+        if ($selector) {
+            $lastWord = ($selector.Trim() -split '\s+')[-1]
+            if ($singularNouns -ccontains $lastWord) { $flags.Add('SELECTOR_SINGULAR') }
+            if ($selector.Length -gt 28) { $flags.Add('SELECTOR_LONG') }
+        }
+        if ($rawBlock -match ('(?m)^\s*#\s*link_numbering_with\s*=\s*\{\s*' + [regex]::Escape($b.Tag) + '\s*\}')) {
+            $flags.Add('DEAD_SELF_LINK_COMMENT')
+        }
+        if ($rawBlock -match $todoRegex) { $flags.Add('TODO_COMMENT') }
+
+        $groups.Add([PSCustomObject]@{
+            Tag           = $b.Tag
+            Selector      = $selector
+            DivisionTypes = $types
+            Fallback      = $fallback
+            LinkTargets   = $links
+            OrderedCount  = $entries.Count
+            AuthoredCount = $authoredCount
+            Flags         = $flags
+        })
+    }
+
+    # Cross-group checks
+    $hasInfAnchor = @($groups | Where-Object { $_.Tag -match '_INF_01$' }).Count -gt 0
+    $selectorCounts = $groups | Where-Object { $_.Selector } | Group-Object -Property Selector
+    foreach ($g in $groups) {
+        if ($g.Selector -and @($selectorCounts | Where-Object { $_.Name -ceq $g.Selector -and $_.Count -gt 1 }).Count -gt 0) {
+            $g.Flags.Add('SELECTOR_DUPLICATE')
+        }
+        if ($hasInfAnchor -and $g.Tag -match '_(MOT|MEC)_' -and $g.LinkTargets.Count -eq 0) {
+            $g.Flags.Add('UNLINKED_MOBILE')
+        }
+    }
+
+    # Comments outside any group block (file header, section banners)
+    for ($i = 0; $i -lt $lines.Length; $i++) {
+        if (-not $inBlock[$i] -and $lines[$i] -match $todoRegex) {
+            $fileFlags.Add('TODO_COMMENT')
+            break
+        }
+    }
+
+    return [PSCustomObject]@{
+        Path      = $Path
+        FileFlags = $fileFlags
+        Groups    = $groups
+    }
+}
+
+# --- Action: Audit namelist quality ---
+function Invoke-NamelistAudit {
+    param([string]$Key)
+
+    $namelistDir = Join-Path $RepoDir "common\units\names_divisions"
+    $Key = $Key.ToUpper().Trim()
+
+    if ($Key -eq 'ALL') {
+        Write-Step "Namelist quality triage (most flags first)"
+        $rows = foreach ($f in (Get-ChildItem -Path $namelistDir -Filter "INEX_*_names_divisions.txt")) {
+            $data = Get-NamelistAuditData -Path $f.FullName
+            $ordered = ($data.Groups | Measure-Object -Property OrderedCount -Sum).Sum
+            $authored = ($data.Groups | Measure-Object -Property AuthoredCount -Sum).Sum
+            $flagCount = $data.FileFlags.Count + ($data.Groups | ForEach-Object { $_.Flags.Count } | Measure-Object -Sum).Sum
+            $lastCommit = (& git -C $RepoDir log -1 --format=%ad --date=short -- $f.FullName 2>$null)
+            [PSCustomObject]@{
+                Key        = ($f.Name -replace '^INEX_', '' -replace '_names_divisions\.txt$', '')
+                Groups     = $data.Groups.Count
+                Authored   = if ($ordered -gt 0) { "{0}/{1} ({2:P0})" -f $authored, $ordered, ($authored / $ordered) } else { "0/0" }
+                Flags      = $flagCount
+                LastCommit = if ($lastCommit) { $lastCommit } else { "n/a" }
+            }
+        }
+        $rows | Sort-Object -Property @{ Expression = 'Flags'; Descending = $true }, Key | Format-Table -AutoSize | Out-String | Write-Host
+        Write-Info "Run -Audit <KEY> for per-group details."
+        return
+    }
+
+    $target = Join-Path $namelistDir "INEX_${Key}_names_divisions.txt"
+    if (-not (Test-Path $target)) {
+        Write-Err "No namelist file for key '$Key' (expected $target)."
+        $keys = Get-ChildItem -Path $namelistDir -Filter "INEX_*_names_divisions.txt" | ForEach-Object { $_.Name -replace '^INEX_', '' -replace '_names_divisions\.txt$', '' }
+        Write-Info "Available keys: $($keys -join ', '), ALL"
+        exit 1
+    }
+
+    $data = Get-NamelistAuditData -Path $target
+    Write-Step "Quality audit: INEX_${Key}_names_divisions.txt ($($data.Groups.Count) groups)"
+    foreach ($ff in $data.FileFlags) { Write-Warn "File: $ff" }
+
+    foreach ($g in $data.Groups) {
+        $linkStr = if ($g.LinkTargets.Count -gt 0) { " [links: $($g.LinkTargets -join ' ')]" } else { "" }
+        $color = if ($g.Flags.Count -gt 0) { 'Yellow' } else { 'Green' }
+        Write-Host "[$($g.Tag)] `"$($g.Selector)`"$linkStr" -ForegroundColor $color
+        Write-Host "  Types:    $($g.DivisionTypes -join ' ')" -ForegroundColor Gray
+        Write-Host "  Fallback: $($g.Fallback)" -ForegroundColor Gray
+        Write-Host "  Ordered:  $($g.OrderedCount) entries, $($g.AuthoredCount) authored" -ForegroundColor Gray
+        if ($g.Flags.Count -gt 0) {
+            Write-Host "  Flags:    $($g.Flags -join ', ')" -ForegroundColor Yellow
+        }
+    }
+
+    $allFlags = @($data.FileFlags) + @($data.Groups | ForEach-Object { $_.Flags })
+    if ($allFlags.Count -eq 0) {
+        Write-Ok "No quality flags raised."
+    } else {
+        Write-Step "Flag summary"
+        $allFlags | Group-Object | Sort-Object Count -Descending | ForEach-Object { Write-Info "$($_.Name): $($_.Count)" }
+    }
+}
+
+# --- Action: Audit ---
+if ($Audit) {
+    Invoke-NamelistAudit -Key $Audit
+    $stopwatch.Stop()
+    Write-Info "Completed in $($stopwatch.Elapsed.TotalSeconds.ToString('0.00'))s"
+    exit 0
+}
+
 # --- Action: InspectVanilla ---
 if ($InspectVanilla) {
     Invoke-InspectVanilla -Tag $InspectVanilla -TargetGroup $Group -CustomHoi4Dir $Hoi4InstallDir
@@ -678,7 +900,7 @@ if ($InstallSteamCmd) {
 }
 
 # --- Determine Actions ---
-$shouldValidate = $Validate -or (-not $NoValidate -and -not $Clean -and -not $InspectVanilla -and -not $Test)
+$shouldValidate = $Validate -or (-not $NoValidate -and -not $Clean -and -not $InspectVanilla -and -not $Audit -and -not $Test)
 if ($ValidateOnly) {
     $ok = Invoke-Validation
     $stopwatch.Stop()
@@ -801,7 +1023,7 @@ if ($Package) {
 
     try {
         # Copy only actual mod files to staging
-        $excludeDirs = @('.git', '.github', '.vscode', '.agents', '.agent', 'tests', 'wiki', 'assets', 'artifacts', 'scratch', 'Files')
+        $excludeDirs = @('.git', '.github', '.vscode', '.claude', '.agents', '.agent', 'tests', 'wiki', 'assets', 'artifacts', 'scratch', 'Files')
         $excludeFiles = @('*.bat', '*.ps1', '*.zip', '*.md', '.gitignore', '.gitattributes', '.steam_username')
         & robocopy.exe $RepoDir $stageModDir /MIR /XD $excludeDirs /XF $excludeFiles /R:1 /W:1 /NDL /NP /NFL | Out-Null
 
@@ -914,7 +1136,7 @@ if ($PublishSteam) {
 
     try {
         # Copy only actual mod files to staging
-        $excludeDirs = @('.git', '.github', '.vscode', '.agents', '.agent', 'tests', 'wiki', 'assets', 'artifacts', 'scratch', 'Files')
+        $excludeDirs = @('.git', '.github', '.vscode', '.claude', '.agents', '.agent', 'tests', 'wiki', 'assets', 'artifacts', 'scratch', 'Files')
         $excludeFiles = @('*.bat', '*.ps1', '*.zip', '*.md', '.gitignore', '.gitattributes', '.steam_username')
         & robocopy.exe $RepoDir $stageContent /MIR /XD $excludeDirs /XF $excludeFiles /R:1 /W:1 /NDL /NP /NFL | Out-Null
 
@@ -998,7 +1220,7 @@ if (-not (Test-Path $targetDir)) {
 }
 
 # Robocopy mirror sync - fast, atomic, purges deleted files, strictly excludes .git & dev files
-$excludeDirs = @('.git', '.github', '.vscode', '.agents', '.agent', 'tests', 'wiki', 'assets', 'artifacts', 'scratch', 'Files')
+$excludeDirs = @('.git', '.github', '.vscode', '.claude', '.agents', '.agent', 'tests', 'wiki', 'assets', 'artifacts', 'scratch', 'Files')
 $excludeFiles = @('*.bat', '*.ps1', '*.zip', '*.md', '.gitignore', '.gitattributes', '.steam_username')
 
 Write-Info "Synchronizing files using robocopy (purging stale files, excluding .git & dev folders)..."
@@ -1011,7 +1233,7 @@ if ($rc -ge 8) {
 }
 
 # Clean any accidental dev or documentation folders in target from previous deployments
-$staleDirs = @('.git', '.github', '.vscode', '.agents', '.agent', 'tests', 'wiki', 'assets', 'artifacts', 'scratch', 'Files')
+$staleDirs = @('.git', '.github', '.vscode', '.claude', '.agents', '.agent', 'tests', 'wiki', 'assets', 'artifacts', 'scratch', 'Files')
 foreach ($dir in $staleDirs) {
     $stalePath = Join-Path $targetDir $dir
     if (Test-Path $stalePath) {

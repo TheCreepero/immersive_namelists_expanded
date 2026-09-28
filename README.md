@@ -66,6 +66,10 @@ powershell -File .\build.ps1 -Package
 powershell -File .\build.ps1 -InspectVanilla LAT
 powershell -File .\build.ps1 -InspectVanilla SOV -Group SOV_INF_02
 
+# Audit namelist quality heuristics (ALL = triage table, or a file key like LIT / GER_SS)
+powershell -File .\build.ps1 -Audit ALL
+powershell -File .\build.ps1 -Audit LIT
+
 # Publish update to Steam Workshop via SteamCMD (supports -DryRun)
 powershell -File .\build.ps1 -PublishSteam -DryRun
 powershell -File .\build.ps1 -PublishSteam -ChangeNote "Add new division namelists"

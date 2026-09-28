@@ -10,6 +10,8 @@ description: >-
 
 This skill provides step-by-step guidance for researching, scoping, authoring, and validating division namelists for *Immersive Namelists Expanded* (INEX) using a multi-agent workflow.
 
+> To modernize an **existing** nation's namelist file rather than author a new one, use the lighter `hoi4-inex-namelist-audit` skill.
+
 ---
 
 ## 1. Guiding Philosophy: Historical Plausibility Over Rigid Accuracy

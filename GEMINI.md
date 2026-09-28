@@ -1,64 +1,44 @@
 # Immersive Namelists Expanded (INEX) Development Rules
 
-## Workspace Architecture & Single-Root Layout
-- **Unified Single-Root Repository**: The workspace root (`immersive-namelists-expanded/`) is the Git repository root directly hosting `.git/`, `descriptor.mod`, `thumbnail.png`, `build.ps1`, `common/`, `tests/`, `wiki/`, and `.github/`.
-- **No Two-Level Layout / Dual-Path Sync**: The legacy nested two-level layout (`immersive-namelists-expanded/immersive_namelists_expanded/`) is obsolete. No forwarding scripts or dual-path synchronizations exist.
-- **Build & Artifacts**: Release archives are packaged into `artifacts/` (e.g., `artifacts/inex.zip`). Temporary scratch files go into `scratch/`.
+## 1. Workspace & Architecture
+- **Single-Root**: Root directly hosts `.git/`, `descriptor.mod`, `thumbnail.png`, `build.ps1`, `common/`, `tests/`, `wiki/`, `.github/` (no nested folders).
+- **Artifacts**: Releases -> `artifacts/` (`build.ps1 -Package`). Temp files -> `scratch/`.
 
-## 1. File Structure & Naming Conventions
-- All division namelist files must reside in `common/units/names_divisions/INEX_<TAG>_names_divisions.txt`.
-- Namelist group tags must follow the pattern `<TAG>_<CATEGORY>_<NUMBER>` (e.g., `EST_REG_01`, `EST_KL_01`, `SWE_ARM_01`).
-- All files must be saved using UTF-8 encoding (without BOM) and maintain strictly balanced curly brackets `{}`.
-- **German Namelist Convention**: Germany is intentionally split into three separate files for organization: `INEX_GER_names_divisions.txt` (Wehrmacht regular), `INEX_GER_SS_names_divisions.txt` (Waffen-SS), and `INEX_GER_ADDITIONAL_names_divisions.txt` (Kampfgruppen, Festung, Fallschirmjäger, Volkssturm, and specialized formations).
-- **UI Selector Name Conciseness**: In namelist group definitions, `name = "<Selector>"` must be concise and omit redundant country names or demonym prefixes (e.g., use `"Infantry Divisions"` instead of `"Mexican Infantry Divisions"`). The in-game division designer dropdown has limited width and truncates long labels.
+## 2. File & Group Conventions
+- **Files**: `common/units/names_divisions/INEX_<TAG>_names_divisions.txt`. UTF-8 without BOM, balanced `{}`.
+- **Group Tags**: `<TAG>_<CATEGORY>_<NUMBER>` (e.g., `EST_REG_01`, `SWE_ARM_01`). Globally unique across repo.
+- **German Split**: `INEX_GER_names_divisions.txt` (Wehrmacht regular), `INEX_GER_SS_names_divisions.txt` (Waffen-SS), `INEX_GER_ADDITIONAL_names_divisions.txt` (Kampfgruppen, Festung, Fallschirmjäger, Volkssturm, specialized).
+- **UI Selectors**: `name = "<Selector>"` must be concise; omit nation/demonym prefixes (e.g., `"Infantry Divisions"`, not `"Mexican Infantry Divisions"`) to prevent dropdown truncation.
 
-## 2. Historical & Linguistic Standards
-- **Linguistic Precision**: Always verify proper grammar, cases, and diacritics in the target language. Avoid vanilla Paradox errors (e.g., using genitive/partitive forms like *diviisi* instead of nominative *Jalaväediviis*).
-- **Historical Plausibility over Rigid Accuracy**: The goal of INEX is historical plausibility, not rigid historical accuracy. Anchor unit designations in authentic peacetime cadre structures, mobilization schemes, regional conventions, and cultural heritage, but extrapolate plausibly to support full wartime campaigns, expanded forces, and alternate-history trajectories.
+## 3. Historical & Linguistic Standards
+- **Linguistics**: Accurate grammar, nominative cases, and diacritics in target language (avoid vanilla errors like genitive/partitive *diviisi* vs. nominative *Jalaväediviis*).
+- **Plausibility over Rigidity**: Anchor in authentic peacetime cadres, mobilization schemes, regional conventions, and cultural heritage; extrapolate plausibly for full wartime/alt-history forces.
 
-## 3. Mandatory Workshop & Documentation Synchronization
-Whenever a new country namelist is added, expanded, or modified:
-1. **Update `WORKSHOP_DESCRIPTION_GUIDELINES.md`**:
-   - Add/update the file and summary in the **Repository Cross-Reference** table.
-   - Add/update the nation under `[h1]Included nations:[/h1]` using standard BBCode (`[b]Nation[/b]` with 2-3 concise bulleted categories and italicized unit examples `[i]...[/i]`).
-2. **Update `README.md`**:
-   - Add any newly introduced country tags and source files to the **Included Nations Summary** table.
-3. **Update Wiki Documentation (`wiki/`)**:
-   - Add or update the nation documentation page in `wiki/<Nation>.md`, ensuring full namelist tables and historical context are detailed.
-   - Update `wiki/Home.md` and `wiki/_Sidebar.md` when introducing a new nation.
-   - Synchronize updates to the live GitHub wiki using `powershell -File .\wiki\push-wiki.ps1`.
-4. **Steam Description Standards**:
-   - **No Emojis**: Strictly avoid emojis anywhere in the description.
-   - **Character Limit**: Steam Workshop descriptions have a max character limit (~17,000 characters). Keep bullet points concise and do NOT include author update quote blocks (`[quote=author]...[/quote]`) to avoid hitting this limit.
-   - **Writing Style**: Keep the tone concise, direct, and informative, matching the author's original style.
-   - **Grammar & Linguistic Corrections**: Fix any typos, broken English, or missing diacritics in historical names (e.g., `1ère`, `Ryhmä`, `Ziemi Łomżyńskiej`).
-   - **Steam BBCode**: Strictly follow Steam's formatting rules (`[h1]`, `[b]`, `[i]`, `[url]`, or standard `- ` bullets).
-5. **In-Chat Description Generation**:
-   - Whenever the user requests an updated description in chat, output the complete, ready-to-copy Steam BBCode description block directly in the chat alongside a concise summary of additions and changes.
+## 4. Mandatory Workshop & Docs Sync
+When adding, expanding, or modifying namelists:
+1. `WORKSHOP_DESCRIPTION_GUIDELINES.md`: Update Cross-Reference table and `[h1]Included nations:[/h1]` (`[b]Nation[/b]`, 2–3 bullets, italicized unit examples `[i]...[/i]`).
+2. `README.md`: Update Included Nations Summary table with tags and source files.
+3. `wiki/`: Add/update `wiki/<Nation>.md` (tables & context); update `wiki/Home.md` & `wiki/_Sidebar.md`; push via `powershell -File .\wiki\push-wiki.ps1`.
+4. **Steam Standards**: No emojis. Max ~17k chars (omit `[quote=author]` blocks). Concise tone. Correct diacritics/grammar (`1ère`, `Ryhmä`, `Ziemi Łomżyńskiej`). BBCode: `[h1]`, `[b]`, `[i]`, `[url]`, standard `- ` bullets.
+5. **In-Chat Description**: On request, output full ready-to-copy Steam BBCode description + summary of changes.
 
-## 4. Build & Validation Protocol
-- Always run syntax and bracket validation before completing any namelist task:
-  ```powershell
-  powershell -File .\build.ps1 -ValidateOnly
-  ```
-- Run the full Pester unit test suite to verify engine invariants and documentation synchronization:
-  ```powershell
-  powershell -File .\build.ps1 -Test
-  ```
-- Use `build.ps1 -Package` to test clean staging and zip distribution (ensuring `.git`, `.github`, `tests`, scripts, and documentation are strictly excluded from mod releases).
-- Use `build.ps1 -DevLink` when zero-copy live editing in the Paradox launcher is required.
+## 5. Build & Validation Protocol
+- `powershell -File .\build.ps1 -ValidateOnly` : Syntax and bracket validation.
+- `powershell -File .\build.ps1 -Test`         : Full Pester unit test suite (engine invariants and documentation sync).
+- `powershell -File .\build.ps1 -Audit <TAG>`  : Heuristic quality scorecard (`-Audit ALL` for full report).
+- `powershell -File .\build.ps1 -Package`      : Staged release zip in `artifacts/` (excludes dev/test/docs).
+- `powershell -File .\build.ps1 -DevLink`      : Zero-copy live editing symlink in Paradox launcher mod directory.
 
-## 5. Vanilla Tag Overrides & Scripted References
-- **Additive Loading**: Hearts of Iron IV loads all files in `common/units/names_divisions/` additively. Because INEX uses the `INEX_<TAG>` filename prefix, vanilla files (e.g. `SOV_names_divisions.txt`) remain active in the background.
-- **Tag Overriding**: Defining a group with an existing vanilla tag (e.g., `SOV_INF_01`) overrides that specific group in game. Defining a new tag (e.g., `EST_KL_01`) adds a new group.
-- **Pruning & Scripted Fallbacks**: If a vanilla tag is referenced by base game focus trees, scripted effects, or decisions (e.g., `division_names_group = SOV_INF_02`), omitting it from `INEX_<TAG>` is completely safe—the engine automatically falls back to the vanilla definition. Do not copy identical empty vanilla stubs into INEX unless actively authoring custom names for them.
+## 6. Engine Invariants & Vanilla Overrides
+- **Additive Loading**: Files load additively; vanilla stays active in background.
+- **Tag Overrides**: Reusing vanilla tag (e.g., `SOV_INF_01`) overrides it; new tag (e.g., `EST_KL_01`) adds a group.
+- **Scripted Fallbacks**: Omitted vanilla tags referenced by events/focuses fall back to vanilla automatically. Never copy identical empty vanilla stubs.
+- **Subunits**: `division_types = { ... }` allows only valid line combat tokens (`"infantry"`, `"marine"`, `"light_armor"`, `"medium_armor"`, `"heavy_armor"`, `"modern_armor"`, `"motorized"`). Never use invalid (`"armor"`, `"marines"`) or support-only tokens (`"military_police"`).
+- **Ordered Blocks**: Unique integer keys (duplicates overwrite). No empty `ordered = { }` blocks.
+- **Fallback Formatting**: `fallback_name` requires `%d` (Arabic) or `%s` (Roman). Language suffixes without `%d`/`%s` (e.g., `%er`) are invalid in fallbacks (static `ordered` only).
+- **Link Numbering**: `link_numbering_with` links only to *different* external groups (e.g., motorized to infantry). Never self-referential (`link_numbering_with = { SELF }`).
+- **Tag Uniqueness**: Group tags must be globally unique across all repo files.
 
-## 6. Engine Namelist Invariants
-- **Subunit Tokens**: In `division_types = { ... }`, only use valid line combat subunit tokens (e.g., `"marine"`, `"infantry"`, `"light_armor"`, `"medium_armor"`, `"heavy_armor"`, `"modern_armor"`). Never use `"armor"`, `"marines"`, or support-only tokens like `"military_police"`.
-- **Ordered Blocks**: Integer keys in `ordered = { ... }` must be strictly unique. Duplicate keys silently overwrite earlier entries. Never leave empty `ordered = { }` blocks.
-- **Fallback Formatting**: Every `fallback_name` must include an ordinal format string (`%d` for Arabic, `%s` for Roman numerals) to prevent overflow units from generating identical unnumbered names. Language-specific abbreviations without `%d` or `%s` (e.g., `%er`) are invalid in fallback formatters and must only be used inside static `ordered = { ... }` definitions.
-- **Link Numbering**: `link_numbering_with` must only be used to link to *different* external groups (e.g., motorized linking to field infantry). Never define self-referential links (`link_numbering_with = { SELF }`).
-- **Global Group Tag Uniqueness**: Root-level group tags (e.g., `POL_ARM_01`) must be strictly unique across the entire repository. Never define the same group tag multiple times within a file or across separate files.
-
-## 7. Related Skill
-For step-by-step guidance on researching and authoring a new nation's namelists, use the `hoi4-inex-namelist-authoring` skill (`.agents/skills/hoi4-inex-namelist-authoring/SKILL.md` or `.claude/skills/hoi4-inex-namelist-authoring/SKILL.md`), which incorporates a multi-agent workflow utilizing a "Historical Research" subagent and a "Code Reviewer" subagent.
+## 7. Related Skills
+- **Authoring**: `hoi4-inex-namelist-authoring` (`.claude/skills/` or `.agents/skills/`) for new/expanded namelists via Historical Research and Code Reviewer subagents.
+- **Audit**: `hoi4-inex-namelist-audit` (`.claude/skills/` or `.agents/skills/`) to audit and modernize existing namelists starting from `build.ps1 -Audit <TAG>`.

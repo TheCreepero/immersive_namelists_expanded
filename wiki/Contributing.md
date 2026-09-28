@@ -137,6 +137,10 @@ powershell -File .\build.ps1 -Package
 powershell -File .\build.ps1 -InspectVanilla <TAG>
 powershell -File .\build.ps1 -InspectVanilla <TAG> -Group <GROUP_TAG>
 
+# Audit namelist quality heuristics (ALL = triage table, or a file key like LIT / GER_SS)
+powershell -File .\build.ps1 -Audit ALL
+powershell -File .\build.ps1 -Audit <KEY>
+
 # Publish to Steam Workshop via SteamCMD
 powershell -File .\build.ps1 -PublishSteam -DryRun
 powershell -File .\build.ps1 -PublishSteam -ChangeNote "Add new division namelists"

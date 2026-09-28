@@ -20,6 +20,11 @@ BeforeAll {
     if ($launcherFuncMatch.Success) {
         . ([ScriptBlock]::Create($launcherFuncMatch.Groups[1].Value))
     }
+
+    $auditFuncMatch = [regex]::Match($script:BuildContent, '(?s)(function Get-NamelistAuditData\s*\{.*?\n\})')
+    if ($auditFuncMatch.Success) {
+        . ([ScriptBlock]::Create($auditFuncMatch.Groups[1].Value))
+    }
 }
 
 Describe "build.ps1 Helper: Get-ModMetadata" {
@@ -113,5 +118,125 @@ Describe "build.ps1 Packaging & Staging Exclusions" {
             $m.Value | Should -Match "['`"]wiki['`"]" -Because "Every staging and deployment step must exclude wiki"
             $m.Value | Should -Match "['`"]tests['`"]" -Because "Every staging and deployment step must exclude tests"
         }
+    }
+
+    It "All excludeDirs definitions in build.ps1 must exclude agent skill directories" {
+        $defs = [regex]::Matches($script:BuildContent, 'excludeDirs\s*=\s*@\([^)]+\)')
+        foreach ($d in $defs) {
+            $d.Value | Should -Match "['`"]\.claude['`"]" -Because "Claude Code skills and settings must not ship with the mod"
+            $d.Value | Should -Match "['`"]\.agents['`"]" -Because "Antigravity skills must not ship with the mod"
+        }
+    }
+}
+
+Describe "build.ps1 Helper: Get-NamelistAuditData" {
+    BeforeAll {
+        $script:AuditFixture = [System.IO.Path]::GetTempFileName()
+        $fixture = @'
+# Division template historical names system. Is a new method of naming the divisions based on the names-group assigned to it's template.
+
+TST_INF_01 =
+{
+	name = "Infantry Division"
+	for_countries = { TST }
+	division_types = { "infantry" }
+	#link_numbering_with = { TST_INF_01 }
+	fallback_name = "%d. Divisioona"
+	ordered =
+	{
+		1 = { "%d. Divisioona" }
+		2 = { "%d. Divisioona" }
+		3 = { "%d. Divisioona" }
+		4 = { "%d. Divisioona" }
+	}
+}
+
+TST_GAR_01 = {
+	name = "Infantry Division" # TODO find real names
+	for_countries = { TST }
+	division_types = { "infantry" }
+	fallback_name = "%d. Varuskunta"
+	ordered = {
+		1 = { "Helsingin Varuskunta" }
+		2 = { "Turun Varuskunta" }
+	}
+}
+
+TST_MOT_01 = {
+	name = "Motorized Divisions"
+	for_countries = { TST }
+	division_types = { "motorized" }
+	fallback_name = "%d. Moottoroitu Divisioona"
+	ordered = {
+		1 = { "1. Moottoroitu Divisioona" }
+	}
+}
+
+TST_ARM_01 = {
+	name = "Armored Divisions"
+	for_countries = { TST }
+	division_types = { "light_armor" "medium_armor" }
+	link_numbering_with = { TST_INF_01 }
+	fallback_name = "%d. Panssaridivisioona"
+	ordered = {
+		1 = { "1. Panssaridivisioona \"Hakkapeliitta\"" }
+		2 = { "2. Panssaridivisioona \"Karjala\"" }
+		3 = { "3. Panssaridivisioona \"Savo\"" }
+		4 = { "4. Panssaridivisioona \"Kymi\"" }
+		5 = { "5. Panssaridivisioona \"Uusimaa\"" }
+		6 = { "6. Panssaridivisioona \"Pohjanmaa\"" }
+		7 = { "7. Panssaridivisioona \"Lappi\"" }
+		8 = { "8. Panssaridivisioona \"Kainuu\"" }
+		9 = { "9. Panssaridivisioona \"Satakunta\"" }
+		10 = { "10. Panssaridivisioona \"Ahvenanmaa\"" }
+		11 = { "%d. Panssaridivisioona" }
+	}
+}
+'@
+        $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+        [System.IO.File]::WriteAllText($script:AuditFixture, $fixture, $utf8NoBom)
+        $script:AuditData = Get-NamelistAuditData -Path $script:AuditFixture
+        $script:AuditGroup = { param($tag) $script:AuditData.Groups | Where-Object { $_.Tag -eq $tag } }
+    }
+
+    AfterAll {
+        if (Test-Path $script:AuditFixture) { Remove-Item -Force $script:AuditFixture }
+    }
+
+    It "Parses every root group" {
+        @($script:AuditData.Groups | ForEach-Object { $_.Tag }) | Should -Be @('TST_INF_01', 'TST_GAR_01', 'TST_MOT_01', 'TST_ARM_01')
+    }
+
+    It "Flags the vanilla boilerplate header" {
+        $script:AuditData.FileFlags | Should -Contain 'HEADER_BOILERPLATE'
+    }
+
+    It "Flags a placeholder-only group with a singular selector and dead self-link comment" {
+        $g = & $script:AuditGroup 'TST_INF_01'
+        $g.OrderedCount | Should -Be 4
+        $g.AuthoredCount | Should -Be 0
+        $g.Flags | Should -Contain 'PLACEHOLDER_ENTRIES'
+        $g.Flags | Should -Contain 'LOW_DEPTH'
+        $g.Flags | Should -Contain 'SELECTOR_SINGULAR'
+        $g.Flags | Should -Contain 'DEAD_SELF_LINK_COMMENT'
+    }
+
+    It "Flags duplicate selectors and TODO comments" {
+        $g = & $script:AuditGroup 'TST_GAR_01'
+        $g.Flags | Should -Contain 'SELECTOR_DUPLICATE'
+        $g.Flags | Should -Contain 'TODO_COMMENT'
+        (& $script:AuditGroup 'TST_INF_01').Flags | Should -Contain 'SELECTOR_DUPLICATE'
+    }
+
+    It "Flags motorized groups that do not share numbering with field infantry" {
+        (& $script:AuditGroup 'TST_MOT_01').Flags | Should -Contain 'UNLINKED_MOBILE'
+    }
+
+    It "Raises no flags on a modern group with escaped nickname quotes" {
+        $g = & $script:AuditGroup 'TST_ARM_01'
+        $g.OrderedCount | Should -Be 11
+        $g.AuthoredCount | Should -Be 10
+        $g.LinkTargets | Should -Be @('TST_INF_01')
+        $g.Flags.Count | Should -Be 0
     }
 }

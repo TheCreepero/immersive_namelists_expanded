@@ -78,3 +78,39 @@ Describe "Documentation Synchronization: WORKSHOP_DESCRIPTION_GUIDELINES.md" {
     }
 }
 
+Describe "Agent Skill Mirrors: .claude/skills and .agents/skills" {
+    BeforeAll {
+        $script:ClaudeSkillsDir = Join-Path $script:RepoRoot ".claude\skills"
+        $script:AgentsSkillsDir = Join-Path $script:RepoRoot ".agents\skills"
+        $script:SkillNames = @(
+            @(Get-ChildItem -Path $script:ClaudeSkillsDir -Directory -ErrorAction SilentlyContinue) +
+            @(Get-ChildItem -Path $script:AgentsSkillsDir -Directory -ErrorAction SilentlyContinue) |
+                ForEach-Object { $_.Name } | Sort-Object -Unique
+        )
+    }
+
+    It "At least one skill must be defined" {
+        $script:SkillNames.Count | Should -BeGreaterThan 0
+    }
+
+    It "Every skill must have byte-identical SKILL.md copies for Claude Code and Antigravity" {
+        foreach ($name in $script:SkillNames) {
+            $claudeCopy = Join-Path $script:ClaudeSkillsDir "$name\SKILL.md"
+            $agentsCopy = Join-Path $script:AgentsSkillsDir "$name\SKILL.md"
+            (Test-Path $claudeCopy) | Should -BeTrue -Because "skill '$name' must exist under .claude/skills"
+            (Test-Path $agentsCopy) | Should -BeTrue -Because "skill '$name' must exist under .agents/skills"
+            (Get-FileHash $claudeCopy).Hash | Should -Be (Get-FileHash $agentsCopy).Hash -Because "skill '$name' copies must stay in sync"
+        }
+    }
+}
+
+Describe "Agent Rule Files: CLAUDE.md and GEMINI.md" {
+    It "CLAUDE.md and GEMINI.md must exist and be byte-identical" {
+        $claudePath = Join-Path $script:RepoRoot "CLAUDE.md"
+        $geminiPath = Join-Path $script:RepoRoot "GEMINI.md"
+        (Test-Path $claudePath) | Should -BeTrue -Because "CLAUDE.md must exist at repo root"
+        (Test-Path $geminiPath) | Should -BeTrue -Because "GEMINI.md must exist at repo root"
+        (Get-FileHash $claudePath).Hash | Should -Be (Get-FileHash $geminiPath).Hash -Because "CLAUDE.md and GEMINI.md must remain byte-identical"
+    }
+}
+
