@@ -51,7 +51,9 @@ Describe "Documentation Synchronization: README.md" {
 
     It "Every implemented nation tag must be listed in README.md" {
         foreach ($tag in $script:ImplementedTags) {
-            $pattern = "\|\s*[`]?" + [regex]::Escape($tag) + "[`]?\s*\|"
+            # Single-quoted so the backtick stays a literal "optional markdown-code backtick" in the
+            # regex, and [ \t]* (not \s*) so this can't bridge across a newline into an unrelated table row.
+            $pattern = '\|[ \t]*`?' + [regex]::Escape($tag) + '`?[ \t]*\|'
             $script:ReadmeContent | Should -Match $pattern -Because "Tag '$tag' must be documented in the README Included Nations table"
         }
     }
@@ -68,7 +70,7 @@ Describe "Documentation Synchronization: WORKSHOP_DESCRIPTION_GUIDELINES.md" {
 
     It "Every implemented nation tag must be listed in the repository cross-reference table" {
         foreach ($tag in $script:ImplementedTags) {
-            $pattern = "\|\s*[`]?" + [regex]::Escape($tag) + "[`]?\s*\|"
+            $pattern = '\|[ \t]*`?' + [regex]::Escape($tag) + '`?[ \t]*\|'
             $script:GuideContent | Should -Match $pattern -Because "Tag '$tag' must be present in the cross-reference table"
         }
     }

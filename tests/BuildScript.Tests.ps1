@@ -25,6 +25,16 @@ BeforeAll {
     if ($auditFuncMatch.Success) {
         . ([ScriptBlock]::Create($auditFuncMatch.Groups[1].Value))
     }
+
+    # Dot-source Write-* terminal helpers and Invoke-Validation (used together, so extract as a block)
+    $writeHelpersMatch = [regex]::Match($script:BuildContent, '(?s)(function Write-Step.*?function Write-Err\s*\{.*?\n\})')
+    if ($writeHelpersMatch.Success) {
+        . ([ScriptBlock]::Create($writeHelpersMatch.Groups[1].Value))
+    }
+    $validationFuncMatch = [regex]::Match($script:BuildContent, '(?s)(function Invoke-Validation\s*\{.*?\n\})\r?\n\r?\n# --- Helper: Find or Install SteamCMD')
+    if ($validationFuncMatch.Success) {
+        . ([ScriptBlock]::Create($validationFuncMatch.Groups[1].Value))
+    }
 }
 
 Describe "build.ps1 Helper: Get-ModMetadata" {
@@ -126,6 +136,103 @@ Describe "build.ps1 Packaging & Staging Exclusions" {
             $d.Value | Should -Match "['`"]\.claude['`"]" -Because "Claude Code skills and settings must not ship with the mod"
             $d.Value | Should -Match "['`"]\.agents['`"]" -Because "Antigravity skills must not ship with the mod"
         }
+    }
+}
+
+Describe "build.ps1 Helper: Invoke-Validation" {
+    BeforeAll {
+        # Invoke-Validation reads script-scoped $RepoDir / $DescriptorPath, so build a minimal
+        # standalone mod directory to run it against instead of touching the real repo.
+        $script:ValidationFixtureDir = Join-Path ([System.IO.Path]::GetTempPath()) ("inex_validate_" + [System.Guid]::NewGuid().ToString("N"))
+        $namelistFixtureDir = Join-Path $script:ValidationFixtureDir "common\units\names_divisions"
+        New-Item -ItemType Directory -Path $namelistFixtureDir -Force | Out-Null
+
+        $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+        [System.IO.File]::WriteAllText((Join-Path $script:ValidationFixtureDir "descriptor.mod"), @'
+version="1.0.0"
+name="Test Mod"
+supported_version="1.19.*"
+tags={
+	"Historical"
+}
+'@, $utf8NoBom)
+        [System.IO.File]::WriteAllBytes((Join-Path $script:ValidationFixtureDir "thumbnail.png"), [byte[]]@(0x89, 0x50, 0x4E, 0x47))
+
+        function Set-ValidationFixtureReadme {
+            param([string]$Content)
+            [System.IO.File]::WriteAllText((Join-Path $script:ValidationFixtureDir "README.md"), $Content, $utf8NoBom)
+        }
+        Set-ValidationFixtureReadme "| TST | Test Nation | INEX_TST_names_divisions.txt |`n"
+
+        function New-ValidationFixtureFile {
+            param([string]$OrderedBody)
+            $content = @"
+TST_INF_01 = {
+	name = "Infantry Divisions"
+	for_countries = { TST }
+	division_types = { "infantry" }
+	fallback_name = "%d. Test Division"
+	ordered = {
+$OrderedBody
+	}
+}
+"@
+            [System.IO.File]::WriteAllText((Join-Path $namelistFixtureDir "INEX_TST_names_divisions.txt"), $content, $utf8NoBom)
+        }
+
+        function Invoke-FixtureValidation {
+            $script:RepoDir = $script:ValidationFixtureDir
+            $script:DescriptorPath = Join-Path $script:ValidationFixtureDir "descriptor.mod"
+            Invoke-Validation
+        }
+    }
+
+    AfterAll {
+        if (Test-Path $script:ValidationFixtureDir) { Remove-Item -Recurse -Force $script:ValidationFixtureDir }
+    }
+
+    It "Passes a namelist file with unique brace-wrapped ordered entries (N = { `"...`" })" {
+        New-ValidationFixtureFile -OrderedBody @'
+		1 = { "First Division" }
+		2 = { "Second Division" }
+		3 = { "Third Division" }
+'@
+        Invoke-FixtureValidation | Should -BeTrue
+    }
+
+    It "Detects a duplicate ordered key even when entries use brace-wrapped 'N = { `"...`" }' syntax" {
+        # Regression test: the duplicate-index regex previously required 'N = "...' directly (no
+        # brace), and captured 'ordered' block content with [^}]*, which stops at the first nested
+        # '}' and never scans past the first entry. Both bugs meant real INEX-style files (which
+        # always wrap entries in braces) were never actually checked for duplicate keys.
+        New-ValidationFixtureFile -OrderedBody @'
+		1 = { "First Division" }
+		2 = { "Second Division" }
+		2 = { "Duplicate Second Division" }
+'@
+        Invoke-FixtureValidation | Should -BeFalse
+    }
+
+    It "Flags a nation tag implemented in namelists but missing from README.md" {
+        # Regression test: the README doc-sync regex previously used "[`]?" inside a double-quoted
+        # PowerShell string, where the backtick escapes the following ']' into a literal character
+        # instead of producing an optional-backtick pattern. The resulting character class combined
+        # with \s* (which matches newlines) let it match across two unrelated table rows using no
+        # actual tag text at all - so it silently reported EVERY tag as documented, even ones not in
+        # the file. Rebuild the fixture without a "| TST |" row anywhere and confirm it is now caught.
+        New-ValidationFixtureFile -OrderedBody @'
+		1 = { "First Division" }
+'@
+        Set-ValidationFixtureReadme "| Other Nation |`n| :--- |`n| Another Row |`n"
+        Invoke-FixtureValidation | Should -BeFalse
+    }
+
+    It "Accepts a nation tag documented in README.md with markdown code backticks" {
+        New-ValidationFixtureFile -OrderedBody @'
+		1 = { "First Division" }
+'@
+        Set-ValidationFixtureReadme "| ``TST`` | Test Nation | ``INEX_TST_names_divisions.txt`` |`n"
+        Invoke-FixtureValidation | Should -BeTrue
     }
 }
 

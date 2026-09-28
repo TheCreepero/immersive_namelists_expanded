@@ -342,10 +342,11 @@ function Invoke-Validation {
         }
 
         # Check for duplicate indices within each ordered block
-        $orderedMatches = [regex]::Matches($cleanText, 'ordered\s*=\s*\{(?<content>[^}]*)\}')
+        # (content pattern must tolerate the nested "N = { "..." }" braces around each entry)
+        $orderedMatches = [regex]::Matches($cleanText, 'ordered\s*=\s*\{(?<content>(?:[^{}]*|\{[^{}]*\})*)\}')
         foreach ($m in $orderedMatches) {
             $block = $m.Groups['content'].Value
-            $indexMatches = [regex]::Matches($block, '(\d+)\s*=\s*"')
+            $indexMatches = [regex]::Matches($block, '(?m)^\s*(\d+)\s*=')
             $seen = @{}
             foreach ($im in $indexMatches) {
                 $idx = $im.Groups[1].Value
@@ -420,7 +421,9 @@ function Invoke-Validation {
             }
         }
         foreach ($t in $implementedTags) {
-            if ($readmeText -notmatch ("\|\s*[`]?" + [regex]::Escape($t) + "[`]?\s*\|")) {
+            # Single-quoted so the backtick stays a literal "optional markdown-code backtick" in the
+            # regex, and [ \t]* (not \s*) so this can't bridge across a newline into an unrelated table row.
+            if ($readmeText -notmatch ('\|[ \t]*`?' + [regex]::Escape($t) + '`?[ \t]*\|')) {
                 Write-Err "README.md: Missing documentation entry for nation tag '$t'"
                 $hasErrors = $true
             }
