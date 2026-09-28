@@ -65,7 +65,7 @@ This document serves as an instruction and reference guide for maintaining and u
 | `INEX_LIT_names_divisions.txt` | Lithuania | `LIT` | Included (Grand Duke/Royal regiments, Iron Wolf cavalry, AA/Armored teams) |
 | `INEX_FRA_names_divisions.txt` | France | `FRA` | Included (National Guard, Metropolitan, Heavy/Décision, Nicknames) |
 | `INEX_ENG_names_divisions.txt` | United Kingdom | `ENG` | Included (Home Guard, Royal Guard, Independent, Commandos, Alt-history) |
-| `INEX_FIN_names_divisions.txt` | Finland | `FIN` | Included (Local troops, groups, detachments, Swedish Volunteers SFK) |
+| `INEX_FIN_names_divisions.txt` | Finland | `FIN` | Included (Battle-honour divisions, Suojeluskunta districts, Ryhmä groups, Panssaridivisioona, Sissi, Swedish Volunteers SFK) |
 | `INEX_POL_names_divisions.txt` | Poland | `POL` | Included (Home Army, PSZ, LWP, KOP Border Guards, Brygada Świętokrzyska) |
 | `INEX_ITA_names_divisions.txt` | Italy | `ITA` | Included (Partisans, Nicknames, Defense Brigades, Colonial, Legione Romana) |
 | `INEX_SOV_names_divisions.txt` | USSR | `SOV` | Included (NKVD, Guards Para, Artillery, Penal units, Cossacks) |
@@ -130,8 +130,8 @@ This is not a complete list of included namelists! Just some examples.
 - Special Service commando formations, plus alt-history Loyalist & Blackshirt brigades
 
 [b]Finland[/b]
-- Regional local troops (Paikallisjoukot) and Eastern border command detachments
-- Commander-named battle groups ([i]Ryhmä Talvela[/i]) and Swedish Volunteers (SFK)
+- Numbered divisions with battle honours ([i]12. Divisioona 'Kollaa'[/i]) and Suojeluskunta districts
+- Commander-named groups ([i]Ryhmä Talvela[/i]), [i]Panssaridivisioona 'Lagus'[/i], Sissi rangers, and Swedish Volunteers (SFK)
 
 [b]Poland[/b]
 - Home Army (AK) and Polish Armed Forces in the West (PSZ) post-capitulation lists

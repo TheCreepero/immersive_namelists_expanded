@@ -32,7 +32,8 @@ When adding, expanding, or modifying namelists:
 ## 6. Engine Invariants & Vanilla Overrides
 - **Additive Loading**: Files load additively; vanilla stays active in background.
 - **Tag Overrides**: Reusing vanilla tag (e.g., `SOV_INF_01`) overrides it; new tag (e.g., `EST_KL_01`) adds a group.
-- **Scripted Fallbacks**: Omitted vanilla tags referenced by events/focuses fall back to vanilla automatically. Never copy identical empty vanilla stubs.
+- **Scripted Fallbacks**: Omitted vanilla tags referenced by events/focuses fall back to vanilla automatically. Never copy identical empty vanilla stubs (exception: the plain variant below).
+- **Plain/Named Variants**: Nicknamed infantry, motorized, mechanized, and armor lists keep an un-nicknamed variant: the vanilla tag stays a fallback-only plain group (no `ordered`), and the nicknames go in a new `"<Selector> (Named)"` tag that shares its numbering. Skip this only if vanilla already nicknames those divisions (e.g. USA).
 - **Subunits**: `division_types = { ... }` allows only valid line combat tokens (`"infantry"`, `"marine"`, `"light_armor"`, `"medium_armor"`, `"heavy_armor"`, `"modern_armor"`, `"motorized"`). Never use invalid (`"armor"`, `"marines"`) or support-only tokens (`"military_police"`).
 - **Ordered Blocks**: Unique integer keys (duplicates overwrite). No empty `ordered = { }` blocks.
 - **Fallback Formatting**: `fallback_name` requires `%d` (Arabic) or `%s` (Roman). Language suffixes without `%d`/`%s` (e.g., `%er`) are invalid in fallbacks (static `ordered` only).

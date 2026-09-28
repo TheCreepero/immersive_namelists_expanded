@@ -299,6 +299,46 @@ TST_ARM_01 = {
 		11 = { "%d. Panssaridivisioona" }
 	}
 }
+
+TST_MEC_01 = {
+	name = "Mechanised Divisions"
+	for_countries = { TST }
+	division_types = { "mechanized" }
+	link_numbering_with = { TST_MOT_01 }
+	fallback_name = "%d. Panssarijääkäridivisioona"
+}
+
+TST_MEC_02 = {
+	name = "Mechanised Divisions (Named)"
+	for_countries = { TST }
+	division_types = { "mechanized" }
+	link_numbering_with = { TST_MOT_01 }
+	fallback_name = "%d. Panssarijääkäridivisioona"
+	ordered = {
+		1 = { "1. Panssarijääkäridivisioona 'Hamina'" }
+		2 = { "2. Panssarijääkäridivisioona 'Kouvola'" }
+		3 = { "3. Panssarijääkäridivisioona 'Mikkeli'" }
+		4 = { "4. Panssarijääkäridivisioona 'Kuopio'" }
+		5 = { "5. Panssarijääkäridivisioona 'Joensuu'" }
+		6 = { "6. Panssarijääkäridivisioona 'Kajaani'" }
+		7 = { "7. Panssarijääkäridivisioona 'Oulu'" }
+		8 = { "8. Panssarijääkäridivisioona 'Tampere'" }
+		9 = { "9. Panssarijääkäridivisioona 'Turku'" }
+		10 = { "10. Panssarijääkäridivisioona 'Lahti'" }
+	}
+}
+
+TST_MEC_03 = {
+	name = "Mechanised Brigades"
+	for_countries = { TST }
+	division_types = { "mechanized" }
+	link_numbering_with = { TST_MOT_01 }
+	fallback_name = "%d. Panssarijääkäriprikaati"
+	ordered = {
+		1 = { "%d. Panssarijääkäriprikaati" }
+		2 = { "%d. Panssarijääkäriprikaati" }
+	}
+}
 '@
         $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
         [System.IO.File]::WriteAllText($script:AuditFixture, $fixture, $utf8NoBom)
@@ -311,7 +351,7 @@ TST_ARM_01 = {
     }
 
     It "Parses every root group" {
-        @($script:AuditData.Groups | ForEach-Object { $_.Tag }) | Should -Be @('TST_INF_01', 'TST_GAR_01', 'TST_MOT_01', 'TST_ARM_01')
+        @($script:AuditData.Groups | ForEach-Object { $_.Tag }) | Should -Be @('TST_INF_01', 'TST_GAR_01', 'TST_MOT_01', 'TST_ARM_01', 'TST_MEC_01', 'TST_MEC_02', 'TST_MEC_03')
     }
 
     It "Flags the vanilla boilerplate header" {
@@ -345,5 +385,26 @@ TST_ARM_01 = {
         $g.AuthoredCount | Should -Be 10
         $g.LinkTargets | Should -Be @('TST_INF_01')
         $g.Flags.Count | Should -Be 0
+    }
+
+    It "Exempts a fallback-only plain variant that shares numbering with a named sibling" {
+        $plain = & $script:AuditGroup 'TST_MEC_01'
+        $plain.OrderedCount | Should -Be 0
+        $plain.PlainVariantOf | Should -Be 'TST_MEC_02'
+        $plain.Flags.Count | Should -Be 0
+        (& $script:AuditGroup 'TST_MEC_02').Flags.Count | Should -Be 0
+    }
+
+    It "Does not treat a placeholder group without a numbering-sharing sibling as a plain variant" {
+        $g = & $script:AuditGroup 'TST_INF_01'
+        $g.PlainVariantOf | Should -BeNullOrEmpty
+        $g.Flags | Should -Contain 'LOW_DEPTH'
+    }
+
+    It "Keeps placeholder flags on a group with ordered entries even when a named sibling shares its numbering" {
+        $g = & $script:AuditGroup 'TST_MEC_03'
+        $g.PlainVariantOf | Should -BeNullOrEmpty
+        $g.Flags | Should -Contain 'PLACEHOLDER_ENTRIES'
+        $g.Flags | Should -Contain 'LOW_DEPTH'
     }
 }

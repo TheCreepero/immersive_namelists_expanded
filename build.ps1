@@ -786,8 +786,27 @@ function Get-NamelistAuditData {
             LinkTargets   = $links
             OrderedCount  = $entries.Count
             AuthoredCount = $authoredCount
+            PlainVariantOf = $null
             Flags         = $flags
         })
+    }
+
+    # Plain variant: a fallback-only group kept beside a nicknamed sibling of the same
+    # division type that shares its numbering (directly or through a common anchor)
+    foreach ($g in $groups) {
+        if ($g.OrderedCount -gt 0) { continue }
+        $sibling = $groups | Where-Object {
+            $h = $_
+            $h.Tag -ne $g.Tag -and $h.AuthoredCount -gt 0 -and
+            @($h.DivisionTypes | Where-Object { $g.DivisionTypes -contains $_ }).Count -gt 0 -and
+            ($h.LinkTargets -contains $g.Tag -or $g.LinkTargets -contains $h.Tag -or
+             @($h.LinkTargets | Where-Object { $g.LinkTargets -contains $_ }).Count -gt 0)
+        } | Select-Object -First 1
+        if ($sibling) {
+            $g.PlainVariantOf = $sibling.Tag
+            [void]$g.Flags.Remove('PLACEHOLDER_ENTRIES')
+            [void]$g.Flags.Remove('LOW_DEPTH')
+        }
     }
 
     # Cross-group checks
@@ -864,6 +883,9 @@ function Invoke-NamelistAudit {
         Write-Host "  Types:    $($g.DivisionTypes -join ' ')" -ForegroundColor Gray
         Write-Host "  Fallback: $($g.Fallback)" -ForegroundColor Gray
         Write-Host "  Ordered:  $($g.OrderedCount) entries, $($g.AuthoredCount) authored" -ForegroundColor Gray
+        if ($g.PlainVariantOf) {
+            Write-Host "  Variant:  plain (un-nicknamed) counterpart of $($g.PlainVariantOf)" -ForegroundColor Gray
+        }
         if ($g.Flags.Count -gt 0) {
             Write-Host "  Flags:    $($g.Flags -join ', ')" -ForegroundColor Yellow
         }

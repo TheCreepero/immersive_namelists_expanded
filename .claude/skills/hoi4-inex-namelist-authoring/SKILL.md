@@ -117,6 +117,7 @@ The "Code Reviewer" subagent must independently inspect the git diff and run ver
    - `fallback_name` includes a valid `%d` or `%s` format token.
    - `link_numbering_with` only links to external groups, never self-referential.
    - UI selector `name = "<Selector>"` is concise and omits redundant country names / demonym prefixes.
+   - Nicknamed infantry, motorized, mechanized, and armor groups have a plain (un-nicknamed) variant on the vanilla tag that shares their numbering (Section 4), unless vanilla already nicknames them.
 2. **Linguistic & Historical Authenticity**:
    - Grammar cases are correct (nominative, not genitive/partitive).
    - Diacritics are accurate and properly encoded.
@@ -146,6 +147,7 @@ Review Checklist:
    - Valid `fallback_name` with `%d` or `%s`.
    - No self-referential `link_numbering_with`.
    - Concise UI selector names without country demonyms.
+   - Plain (un-nicknamed) variant kept beside every nicknamed infantry/motorized/mechanized/armor group, sharing numbering (unless vanilla already nicknames them).
    - Correct grammatical cases (nominative) and verified diacritics.
 2. Inspect Documentation Synchronization:
    - `WORKSHOP_DESCRIPTION_GUIDELINES.md` table and BBCode bullets updated (no emojis, character limits observed).
@@ -200,7 +202,7 @@ If the Code Reviewer requests changes, the primary agent must address the findin
    - If a tag is omitted from INEX, the vanilla definition continues to exist untouched in game.
 4. **Scripted References in Focus Trees & Events**:
    - Check if any vanilla namelist tag is referenced by national focus trees (`common/national_focus/`) or scripted effects (`common/scripted_effects/`) via `division_names_group = <TAG>_<TYPE>_<NUM>`.
-   - Never copy empty vanilla stubs into INEX. If an empty vanilla tag is referenced by scripts (e.g. `SOV_INF_02`), omitting it from INEX is completely safe because the engine falls back to the vanilla definition. Only define the tag in INEX if actively providing a fully authored, non-empty namelist for it.
+   - Never copy empty vanilla stubs into INEX. If an empty vanilla tag is referenced by scripts (e.g. `SOV_INF_02`), omitting it from INEX is completely safe because the engine falls back to the vanilla definition. Only define the tag in INEX if actively providing a fully authored, non-empty namelist for it. The one exception is the fallback-only plain variant of a plain/named pair (Section 4).
 
 ---
 
@@ -219,6 +221,14 @@ Tailor the namelist suite to the nation's genuine military organization, histori
 ### Grouping Flexibility:
 - **Split vs. Combine**: Separate specialized formations into distinct namelists when historical flavor or player template differentiation warrants it (e.g. splitting peacetime cavalry regiments from volunteer partisan squadrons, or separating field infantry from territorial defense).
 - **Template Compatibility**: Group unit tokens in `division_types = { ... }` logically to give players flexibility when assigning templates (e.g. combining motorized and mechanized with armor if mobile units share lineage).
+
+### Plain & Named Variants (Mandatory for Infantry, Motorized, Mechanized, Armor)
+When regular infantry, motorized, mechanized, or armored divisions get nicknamed or identity names (e.g. `12. Divisioona 'Kollaa'`), always keep an **un-nicknamed variant** beside them so players can choose plain numbering:
+- **Plain variant keeps the vanilla tag** (`<TAG>_INF_01`, `<TAG>_MOT_01`, `<TAG>_ARM_01`, `<TAG>_MEC_01`, or whatever vanilla uses) with the plain selector (`"Infantry Divisions"`), a plain `fallback_name` (`"%d. Divisioona"`), and **no `ordered` block** (fallback-only, like vanilla stubs). Define it explicitly in INEX so vanilla errors are fixed and the pairing is visible. Players' existing templates on that tag keep plain names.
+- **Named variant gets a new tag**: the next category number not used by vanilla (check `-InspectVanilla`), e.g. `FIN_INF_05`. Give it the selector `"<Plain Selector> (Named)"` (at most 28 characters) and the same `division_types` and `fallback_name`.
+- **Shared numbering**: the named variant uses `link_numbering_with` on its plain counterpart (`{ <TAG>_INF_01 }`). In a mobile family, link every plain and named mobile group to one anchor (e.g. `<TAG>_MOT_01`).
+- **Exception**: if the vanilla group already carries nicknames (e.g. USA's *1st Infantry Division "Big Red One"*), a single named group is enough.
+- `build.ps1 -Audit` reports such a fallback-only group as `Variant: plain (un-nicknamed) counterpart of <TAG>` and does not flag it `PLACEHOLDER_ENTRIES` or `LOW_DEPTH`.
 
 ---
 
@@ -287,7 +297,7 @@ File location: `common/units/names_divisions/INEX_<TAG>_names_divisions.txt`
 - **Number Formats & Fallback Tokens**: Use `%d` for Arabic numbers (`1.`, `2.`) and `%s` for Roman numerals (`I.`, `II.`). Always ensure `fallback_name` includes a literal `%d` or `%s` token (e.g., `%d.`, `%dº`, `%da`, `%s.`) so overflow units do not share identical names. Do not use custom placeholders like `%er` in fallback names (reserve language-specific contractions for static entries in `ordered = { ... }`).
 - **Bracket Balance**: Brackets `{}` must be strictly balanced.
 - **Division Subunit Tokens**: In `division_types = { ... }`, specify only valid line subunit tokens (e.g., `"infantry"`, `"cavalry"`, `"motorized"`, `"mechanized"`, `"light_armor"`, `"medium_armor"`, `"heavy_armor"`, `"modern_armor"`, `"marine"`, `"mountaineers"`, `"paratrooper"`). Do not use `"armor"` or `"marines"`, and avoid support-only tokens like `"military_police"`.
-- **Ordered Blocks & Keys**: Each integer index in `ordered = { ... }` must be unique. Duplicate keys silently overwrite previous entries. Avoid leaving empty `ordered = { }` blocks.
+- **Ordered Blocks & Keys**: Each integer index in `ordered = { ... }` must be unique. Duplicate keys silently overwrite previous entries. Avoid leaving empty `ordered = { }` blocks; a fallback-only group (such as a plain variant) omits `ordered` entirely.
 - **Link Numbering**: `link_numbering_with` is strictly for cross-referencing *external* groups to prevent duplicate division numbers. Never set a group to link with itself (`link_numbering_with = { GROUP_NAME }`).
 - **Global Group Tag Uniqueness**: Root-level group tags (e.g. `<TAG>_<CAT>_<NUM>`) must be strictly unique across the entire mod. Never duplicate a group tag within a file or across multiple files.
 

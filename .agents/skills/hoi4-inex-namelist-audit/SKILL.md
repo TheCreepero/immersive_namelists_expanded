@@ -21,7 +21,7 @@ This skill is deliberately lean. It **does not repeat** the authoring rules. It 
 
 ## 1. Non-Negotiables for Audits
 
-1. **Preserve every existing root group tag.** Players' division templates and other groups' `link_numbering_with` reference tags by name. Never rename or delete a tag. Fix it in place. Add a new tag only for a genuinely new category.
+1. **Preserve every existing root group tag.** Players' division templates and other groups' `link_numbering_with` reference tags by name. Never rename or delete a tag. Fix it in place. Add a new tag only for a genuinely new category, or for the named variant of a plain/named pair (R10).
 2. **Keep what is already good.** Modernize; do not rewrite authored, historically sound names for the sake of it.
 3. **Keep file-level conventions:** `for_countries`, the German three-file split, and any group referenced by vanilla scripts (see `-InspectVanilla`).
 4. **No edits before approval.** The audit report (Phase 2) is a checkpoint; apply only the items the user approves.
@@ -44,6 +44,7 @@ A modernized file meets all of these (reference implementation: `INEX_PER_names_
 | R7 | Motorized/mechanized groups `link_numbering_with` field infantry where the nation's doctrine plausibly shared numbering. | `UNLINKED_MOBILE` |
 | R8 | No dead commented self-links, TODO notes, or "barely any info" comments. | `DEAD_SELF_LINK_COMMENT`, `TODO_COMMENT` |
 | R9 | Wiki page, README row, and workshop cross-reference/BBCode describe the file as it now is. | (manual) |
+| R10 | Nicknamed infantry, motorized, mechanized, and armor lists keep a plain (un-nicknamed) variant: the existing/vanilla tag becomes the fallback-only plain group, and the nicknames move to a new `"<Selector> (Named)"` tag that shares its numbering (authoring skill §4). Not needed if vanilla already nicknames those divisions (e.g. USA). | (manual; `-Audit` shows `Variant: plain` and exempts it from R4/R5) |
 
 Lint flags are **heuristics**. Treat them as leads, confirm by reading the group, and override with a stated reason where history justifies it.
 
@@ -128,7 +129,7 @@ Approved change list:
 <paste the approved items from the audit report>
 
 Verify:
-1. Tag preservation: every root group tag in `git show HEAD:<file>` still exists in the working copy.
+1. Tag preservation: every root group tag in `git show HEAD:<file>` still exists in the working copy. Nicknamed infantry/motorized/mechanized/armor lists keep a plain, fallback-only variant on the original tag that shares numbering with the new "(Named)" tag (R10).
 2. Every approved item was applied; nothing unapproved was changed.
 3. Engine invariants per hoi4-inex-namelist-authoring §6 (tokens, unique ordered keys, %d/%s fallbacks, no self-links, UTF-8 no BOM).
 4. Linguistic correctness of every changed name line (nominative case, diacritics, no machine-translation artifacts).
