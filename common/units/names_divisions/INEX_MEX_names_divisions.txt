@@ -1,8 +1,9 @@
-# Division template historical names system for Mexico (MEX).
-# Immersive Namelists Expanded (INEX)
+# Mexico (MEX) - Immersive Namelists Expanded
+# Language: Mexican Spanish (es-MX) / Classical Nahuatl
+# Overrides vanilla MEX_INF_01 (Cristero Guard)
 
 # ==============================================================================
-# 1. CRISITERO FORMATIONS (Ejército Cristero / Guardia Nacional)
+# 1. CRISTERO FORMATIONS (Ejército Cristero / Guardia Nacional)
 # ==============================================================================
 
 # Overrides vanilla MEX_INF_01 (referenced by focus MEX_focus_reform_the_cristero_guard)
@@ -126,17 +127,17 @@ MEX_CRI_MNT_01 = {
 		2 = { "2ª Brigada Serrana \"Tiradores de la Sierra Gorda\"" }
 		3 = { "3ª Brigada Serrana \"Montañeses de Durango\"" }
 		4 = { "4ª Brigada Serrana \"Cazadores de los Volcanes\"" }
-		5 = { "5ª Brigada Serrana \"Rangeros del Popocatépetl\"" }
+		5 = { "5ª Brigada Serrana \"Cazadores del Popocatépetl\"" }
 		6 = { "6ª Brigada Serrana \"Cazadores del Nevado de Colima\"" }
 		7 = { "7ª Brigada Serrana \"Guerrilleros de Coalcomán\"" }
 		8 = { "8ª Brigada Serrana \"Cazadores de la Huasteca\"" }
-		9 = { "9ª Brigada Serrana \"Rangeros de la Sierra de Lobos\"" }
+		9 = { "9ª Brigada Serrana \"Cazadores de la Sierra de Lobos\"" }
 		10 = { "10ª Brigada Serrana \"Tiradores del Iztaccíhuatl\"" }
 		11 = { "11ª Brigada Serrana \"Cazadores de Zacatecas\"" }
 		12 = { "12ª Brigada Serrana \"Montañeses del Nayar\"" }
 		13 = { "13ª Brigada Serrana \"Tiradores de la Sierra Madre\"" }
 		14 = { "14ª Brigada Serrana \"Cazadores de Tapalpa\"" }
-		15 = { "15ª Brigada Serrana \"Rangeros de Mazamitla\"" }
+		15 = { "15ª Brigada Serrana \"Guerrilleros de Mazamitla\"" }
 		16 = { "%da División Serrana Cristera" }
 	}
 }
@@ -253,9 +254,9 @@ MEX_IMP_ARM_01 = {
 		1 = { "1ª División Blindada Imperial \"Águila Coronada\"" }
 		2 = { "2ª División Blindada Imperial \"Caballeros de Guadalupe\"" }
 		3 = { "3ª División Blindada Imperial \"General Miramón\"" }
-		4 = { "4ª División Blindada Imperial \"General Tomás Mejía\"" }
+		4 = { "4ª División Blindada Imperial \"General Leonardo Márquez\"" }
 		5 = { "5ª División Blindada Imperial \"Agustín de Iturbide\"" }
-		6 = { "6ª División Mecanizada Imperial \"Emperatriz Carlota\"" }
+		6 = { "6ª División Mecanizada Imperial \"Emperador Maximiliano I\"" }
 		7 = { "7ª División Blindada Imperial \"Trigarante\"" }
 		8 = { "8ª División Mecanizada Imperial \"Querétaro\"" }
 		9 = { "9ª División Blindada Imperial \"Alcázar de Chapultepec\"" }
@@ -363,7 +364,7 @@ MEX_CD_01 = {
 
 	ordered = {
 		1 = { "1ª Brigada Dorada de Choque \"Nicolás Rodríguez\"" }
-		2 = { "2ª Brigada de Caballería Dorada \"Cuerpo de Choque del Zócalo\"" }
+		2 = { "2ª Brigada Dorada \"Choque del Zócalo\"" }
 		3 = { "3er Regimiento de Dragones Dorados" }
 		4 = { "4º Regimiento de Caballería \"Centauros Dorados\"" }
 		5 = { "5ª Brigada de Caballería de Choque ARM" }
@@ -521,11 +522,11 @@ MEX_AZT_MNT_01 = {
 		1 = { "1ª Brigada de Asalto Otontin" }
 		2 = { "2ª Brigada Serrana \"Guerreros Zapotecas\"" }
 		3 = { "3ª Brigada Serrana \"Guerreros Mixtecas\"" }
-		4 = { "4ª Brigada Serrana \"Rangeros Tarahumaras\"" }
+		4 = { "4ª Brigada Serrana \"Cazadores Tarahumaras\"" }
 		5 = { "5ª Brigada Serrana \"Flechadores Yaquis\"" }
 		6 = { "6ª Brigada Serrana \"Tiradores Purépechas\"" }
 		7 = { "7ª Brigada de Cazadores de la Sierra del Sur" }
-		8 = { "8ª Brigada de Asalto Ixtaccíhuatl" }
+		8 = { "8ª Brigada de Asalto Iztaccíhuatl" }
 		9 = { "9ª Brigada Serrana \"Guerreros Otomíes\"" }
 		10 = { "10ª Brigada Serrana \"Montañeses del Popocatépetl\"" }
 		11 = { "%da Brigada Serrana Otontin" }
@@ -533,7 +534,90 @@ MEX_AZT_MNT_01 = {
 }
 
 # ==============================================================================
-# 6. REGULAR MEXICAN ARMED FORCES BASELINE (Standard Army & Navy)
+# 6. COMMUNIST & AGRARIAN WORKER MILITIAS (CTM & Ligas Campesinas)
+# ==============================================================================
+
+MEX_AGR_01 = {
+	name = "Agrarian Militias"
+
+	for_countries = { MEX }
+
+	can_use = {
+		OR = {
+			has_government = communism
+			has_government = neutrality
+		}
+	}
+
+	division_types = { "infantry" }
+
+	fallback_name = "%da Brigada Agrarista"
+
+	ordered = {
+		1 = { "1ª Brigada Agrarista \"Úrsulo Galván\"" }
+		2 = { "2ª Brigada Agrarista \"Primo Tapia\"" }
+		3 = { "3ª Brigada Agrarista \"Emiliano Zapata\"" }
+		4 = { "4ª Brigada Agrarista \"Tierra y Libertad\"" }
+		5 = { "5ª Brigada de Defensas Ejidales de La Laguna" }
+		6 = { "6ª Brigada Agrarista de Michoacán" }
+		7 = { "7ª Brigada Agrarista de Veracruz" }
+		8 = { "8ª Brigada Agrarista de Morelos" }
+		9 = { "9ª Brigada Agrarista de Yucatán \"Felipe Carrillo Puerto\"" }
+		10 = { "10ª Brigada de Defensas Ejidales del Yaqui" }
+		11 = { "11ª Brigada Agrarista de San Luis Potosí" }
+		12 = { "12ª Brigada Agrarista de Puebla" }
+		13 = { "13ª Brigada Agrarista de Tamaulipas" }
+		14 = { "14ª Brigada Agrarista \"José Guadalupe Rodríguez\"" }
+		15 = { "15ª Brigada de Defensas Ejidales del Mayo" }
+		16 = { "16ª Brigada Agrarista de Hidalgo" }
+		17 = { "17ª Brigada Agrarista de Oaxaca" }
+		18 = { "18ª Brigada Agrarista de Guerrero" }
+		19 = { "19ª Brigada Agrarista de Zacatecas" }
+		20 = { "20ª Brigada de Vanguardia Agraria" }
+		21 = { "%da Brigada Agrarista" }
+	}
+}
+
+MEX_RED_01 = {
+	name = "Red Worker Brigades"
+
+	for_countries = { MEX }
+
+	can_use = {
+		has_government = communism
+	}
+
+	division_types = { "infantry" }
+
+	fallback_name = "%da Brigada Roja"
+
+	ordered = {
+		1 = { "1ª Brigada Roja \"Vicente Lombardo Toledano\"" }
+		2 = { "2ª Brigada Obrera de la CTM \"Distrito Federal\"" }
+		3 = { "3ª Brigada Roja \"Batallón Rojo de Celaya\"" }
+		4 = { "4ª Brigada de Trabajadores Ferrocarrileros" }
+		5 = { "5ª Brigada de Obreros Petroleros" }
+		6 = { "6ª Brigada Roja \"Cananea y Río Blanco\"" }
+		7 = { "7ª Brigada de Mineros y Metalúrgicos" }
+		8 = { "8ª Brigada Roja \"Comuna de París\"" }
+		9 = { "9ª Brigada de Obreros Electricistas" }
+		10 = { "10ª Brigada de Obreros Textiles" }
+		11 = { "11ª Brigada de Vanguardia Proletaria" }
+		12 = { "12ª Brigada Roja \"Julio Antonio Mella\"" }
+		13 = { "13ª Brigada Roja \"Karl Marx\"" }
+		14 = { "14ª Brigada Obrera de Monterrey" }
+		15 = { "15ª Brigada Roja \"Rosa Luxemburgo\"" }
+		16 = { "16ª Brigada de Choque Proletario del Zócalo" }
+		17 = { "17ª Brigada Roja \"Lenin\"" }
+		18 = { "18ª Brigada Obrera de Tampico" }
+		19 = { "19ª Brigada Roja \"Guardia Roja Antifascista\"" }
+		20 = { "20ª Columna de Asalto Proletario" }
+		21 = { "%da Brigada Roja" }
+	}
+}
+
+# ==============================================================================
+# 7. REGULAR MEXICAN ARMED FORCES BASELINE (Standard Army & Navy)
 # ==============================================================================
 
 MEX_REG_INF_01 = {
@@ -548,36 +632,36 @@ MEX_REG_INF_01 = {
 	fallback_name = "%da División de Infantería"
 
 	ordered = {
-		1 = { "1ª División de Infantería (1ª Zona Militar - D.F.)" }
-		2 = { "2ª División de Infantería (2ª Zona Militar - Baja California)" }
-		3 = { "3ª División de Infantería (3ª Zona Militar - Sinaloa)" }
-		4 = { "4ª División de Infantería (4ª Zona Militar - Sonora)" }
-		5 = { "5ª División de Infantería (5ª Zona Militar - Chihuahua)" }
-		6 = { "6ª División de Infantería (6ª Zona Militar - Coahuila)" }
-		7 = { "7ª División de Infantería (7ª Zona Militar - Nuevo León)" }
-		8 = { "8ª División de Infantería (8ª Zona Militar - Tamaulipas)" }
-		9 = { "9ª División de Infantería (9ª Zona Militar - Durango)" }
-		10 = { "10ª División de Infantería (10ª Zona Militar - Zacatecas)" }
-		11 = { "11ª División de Infantería (11ª Zona Militar - San Luis Potosí)" }
-		12 = { "12ª División de Infantería (12ª Zona Militar - Aguascalientes)" }
-		13 = { "13ª División de Infantería (13ª Zona Militar - Nayarit)" }
-		14 = { "14ª División de Infantería (14ª Zona Militar - Jalisco)" }
-		15 = { "15ª División de Infantería (15ª Zona Militar - Colima)" }
-		16 = { "16ª División de Infantería (16ª Zona Militar - Michoacán)" }
-		17 = { "17ª División de Infantería (17ª Zona Militar - Guanajuato)" }
-		18 = { "18ª División de Infantería (18ª Zona Militar - Querétaro)" }
-		19 = { "19ª División de Infantería (19ª Zona Militar - Hidalgo)" }
-		20 = { "20ª División de Infantería (20ª Zona Militar - Estado de México)" }
-		21 = { "21ª División de Infantería (21ª Zona Militar - Puebla)" }
-		22 = { "22ª División de Infantería (22ª Zona Militar - Tlaxcala)" }
-		23 = { "23ª División de Infantería (23ª Zona Militar - Morelos)" }
-		24 = { "24ª División de Infantería (24ª Zona Militar - Guerrero)" }
-		25 = { "25ª División de Infantería (25ª Zona Militar - Oaxaca)" }
-		26 = { "26ª División de Infantería (26ª Zona Militar - Veracruz)" }
-		27 = { "27ª División de Infantería (27ª Zona Militar - Tabasco)" }
-		28 = { "28ª División de Infantería (28ª Zona Militar - Chiapas)" }
-		29 = { "29ª División de Infantería (29ª Zona Militar - Campeche)" }
-		30 = { "30ª División de Infantería (30ª Zona Militar - Yucatán)" }
+		1 = { "1ª División de Infantería (D.F.)" }
+		2 = { "2ª División de Infantería (Baja California)" }
+		3 = { "3ª División de Infantería (Sinaloa)" }
+		4 = { "4ª División de Infantería (Sonora)" }
+		5 = { "5ª División de Infantería (Chihuahua)" }
+		6 = { "6ª División de Infantería (Coahuila)" }
+		7 = { "7ª División de Infantería (Nuevo León)" }
+		8 = { "8ª División de Infantería (Tamaulipas)" }
+		9 = { "9ª División de Infantería (Durango)" }
+		10 = { "10ª División de Infantería (Zacatecas)" }
+		11 = { "11ª División de Infantería (San Luis Potosí)" }
+		12 = { "12ª División de Infantería (Aguascalientes)" }
+		13 = { "13ª División de Infantería (Nayarit)" }
+		14 = { "14ª División de Infantería (Jalisco)" }
+		15 = { "15ª División de Infantería (Colima)" }
+		16 = { "16ª División de Infantería (Michoacán)" }
+		17 = { "17ª División de Infantería (Guanajuato)" }
+		18 = { "18ª División de Infantería (Querétaro)" }
+		19 = { "19ª División de Infantería (Hidalgo)" }
+		20 = { "20ª División de Infantería (Estado de México)" }
+		21 = { "21ª División de Infantería (Puebla)" }
+		22 = { "22ª División de Infantería (Tlaxcala)" }
+		23 = { "23ª División de Infantería (Morelos)" }
+		24 = { "24ª División de Infantería (Guerrero)" }
+		25 = { "25ª División de Infantería (Oaxaca)" }
+		26 = { "26ª División de Infantería (Veracruz)" }
+		27 = { "27ª División de Infantería (Tabasco)" }
+		28 = { "28ª División de Infantería (Chiapas)" }
+		29 = { "29ª División de Infantería (Campeche)" }
+		30 = { "30ª División de Infantería (Yucatán)" }
 		31 = { "%da División de Infantería" }
 	}
 }
@@ -629,7 +713,7 @@ MEX_REG_CAV_01 = {
 }
 
 MEX_REG_ARM_01 = {
-	name = "Armored & Motorized Divisions"
+	name = "Armored & Mobile Divisions"
 
 	for_countries = { MEX }
 
@@ -681,7 +765,7 @@ MEX_REG_MAR_01 = {
 		8 = { "8º Batallón de Infantería de Marina (Salina Cruz)" }
 		9 = { "9º Batallón de Infantería de Marina (Cozumel)" }
 		10 = { "10º Batallón de Infantería de Marina (Guaymas)" }
-		11 = { "11er Batallón de Infantería de Marina (Ensenada)" }
+		11 = { "11º Batallón de Infantería de Marina (Ensenada)" }
 		12 = { "12º Batallón de Infantería de Marina (Puerto Vallarta)" }
 		13 = { "13er Batallón de Infantería de Marina (Progreso)" }
 		14 = { "14º Batallón de Infantería de Marina (Chetumal)" }
@@ -689,6 +773,10 @@ MEX_REG_MAR_01 = {
 		16 = { "%dº Batallón de Infantería de Marina" }
 	}
 }
+
+# ==============================================================================
+# 8. GENERIC & SPECIALIZED FORMATIONS (Universal Ideology)
+# ==============================================================================
 
 MEX_GEN_INF_02 = {
 	name = "Named Divisions (Heroes)"
@@ -703,14 +791,14 @@ MEX_GEN_INF_02 = {
 
 	ordered = {
 		1 = { "1ª División de Infantería \"General Ignacio Zaragoza\"" }
-		2 = { "2ª División de Infantería \"Padre de la Patria Miguel Hidalgo\"" }
-		3 = { "3ª División de Infantería \"Generalísimo José María Morelos\"" }
+		2 = { "2ª División de Infantería \"Padre Miguel Hidalgo\"" }
+		3 = { "3ª División de Infantería \"José María Morelos\"" }
 		4 = { "4ª División de Infantería \"Benemérito Benito Juárez\"" }
 		5 = { "5ª División de Infantería \"General Vicente Guerrero\"" }
 		6 = { "6ª División de Infantería \"General Francisco Villa\"" }
 		7 = { "7ª División de Infantería \"General Emiliano Zapata\"" }
 		8 = { "8ª División de Infantería \"General Álvaro Obregón\"" }
-		9 = { "9ª División de Infantería \"Primer Jefe Venustiano Carranza\"" }
+		9 = { "9ª División de Infantería \"Venustiano Carranza\"" }
 		10 = { "10ª División de Infantería \"General Lázaro Cárdenas\"" }
 		11 = { "11ª División de Infantería \"General Mariano Escobedo\"" }
 		12 = { "12ª División de Infantería \"General Felipe Ángeles\"" }
@@ -773,16 +861,16 @@ MEX_GEN_PAR_01 = {
 		2 = { "2ª Brigada de Fusileros Paracaidistas" }
 		3 = { "3ª Brigada de Fusileros Paracaidistas" }
 		4 = { "4ª Brigada de Fusileros Paracaidistas" }
-		5 = { "1ª División Aerotransportada" }
-		6 = { "2ª División Aerotransportada" }
-		7 = { "3ª División Aerotransportada" }
-		8 = { "4ª División Aerotransportada" }
-		9 = { "5ª División Aerotransportada" }
-		10 = { "1er Batallón de Asalto Aéreo" }
-		11 = { "2º Batallón de Asalto Aéreo" }
-		12 = { "3er Batallón de Asalto Aéreo" }
-		13 = { "4º Batallón de Asalto Aéreo" }
-		14 = { "5º Batallón de Asalto Aéreo" }
+		5 = { "5ª División Aerotransportada" }
+		6 = { "6ª División Aerotransportada" }
+		7 = { "7ª División Aerotransportada" }
+		8 = { "8ª División Aerotransportada" }
+		9 = { "9ª División Aerotransportada" }
+		10 = { "10ª División Aerotransportada" }
+		11 = { "11ª División Aerotransportada" }
+		12 = { "12ª División Aerotransportada" }
+		13 = { "13ª División Aerotransportada" }
+		14 = { "14ª División Aerotransportada" }
 		15 = { "%da División Aerotransportada" }
 	}
 }

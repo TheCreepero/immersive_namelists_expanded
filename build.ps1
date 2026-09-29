@@ -1389,10 +1389,10 @@ function Edit-NamelistGroupText {
         $lines = @($inner -split "`n")
         $found = $false
         for ($l = 0; $l -lt $lines.Count; $l++) {
-            $m = [regex]::Match($lines[$l], "^([ \t]*)$idx\s*=\s*(?:\{\s*`"[^`"]*`"\s*\}|`"[^`"]*`")(.*)$")
+            $m = [regex]::Match($lines[$l], "^([ \t]*)$idx\s*=\s*(?:\{\s*`"((?:[^`"\\]|\\.)*)`"\s*\}|`"((?:[^`"\\]|\\.)*)`")(.*)$")
             if ($m.Success) {
                 $indent = $m.Groups[1].Value
-                $trailing = $m.Groups[2].Value
+                $trailing = $m.Groups[4].Value
                 $lines[$l] = "$indent$idx = { `"$val`" }$trailing"
                 $found = $true
                 break

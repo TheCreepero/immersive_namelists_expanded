@@ -69,7 +69,7 @@ This document serves as an instruction and reference guide for maintaining and u
 | `INEX_POL_names_divisions.txt` | Poland | `POL` | Included (Home Army, PSZ, LWP, KOP Border Guards, Brygada Świętokrzyska) |
 | `INEX_ITA_names_divisions.txt` | Italy | `ITA` | Included (Partisans, Nicknames, Defense Brigades, Colonial, Legione Romana) |
 | `INEX_SOV_names_divisions.txt` | USSR | `SOV` | Included (NKVD, Guards Para, Artillery, Penal units, Cossacks) |
-| `INEX_MEX_names_divisions.txt` | Mexico | `MEX` | Included (Cristero, Imperial Guard, Sinarquistas, Gold Shirts, Anáhuac, Regular Army) |
+| `INEX_MEX_names_divisions.txt` | Mexico | `MEX` | Included (Cristero, Imperial Guard, Sinarquistas, Gold Shirts, CTM & Agrarian Militias, Anáhuac, Regular Army) |
 | `INEX_PER_names_divisions.txt` | Iran / Persia | `PER` | Included (Garrison-city Lashkars, Imperial & Immortal Guard, Shahnameh armor, Cossack atriads, Tribal levies, Camel corps, Gendarmerie) |
 
 ---
@@ -147,7 +147,7 @@ This is not a complete list of included namelists! Just some examples.
 
 [b]Mexico[/b]
 - Cristero National Guard & cavalry ([i]Los Altos[/i], [i]El Catorce[/i])
-- Sinarquistas, Gold Shirts (ARM), Imperial Guard & Army of Anáhuac
+- Sinarquistas, Gold Shirts, Imperial Guard, CTM & Agrarian worker militias
 - Regular army, heroes ([i]Zaragoza[/i]), mountain rangers & naval infantry
 
 [b]Iran[/b]
