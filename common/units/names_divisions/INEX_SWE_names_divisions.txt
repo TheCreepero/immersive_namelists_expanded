@@ -1,8 +1,19 @@
-# Immersive Namelists Expanded - Sweden (SWE)
-# Historical and alt-history division and brigade namelists for Sweden.
+# Division template historical names system for Sweden (SWE).
+# Immersive Namelists Expanded (INEX)
+#
+# Language & Orthography: Standard Swedish (svenska) with correct diacritics
+# (å, ä, ö). Division names use authentic military abbreviations and regional
+# designations (Brigad 49/58/66 schemes).
+#
+# Vanilla SWE groups (SWE_INF_01, SWE_CAV_01, etc.) remain as base-game division
+# fallbacks. INEX provides detailed historical brigade and specialist suites.
+
+# ==============================================================================
+# 1. FIELD ARMY BRIGADES (Fältförband)
+# ==============================================================================
 
 SWE_IB_01 = {
-	name = "Infantry Brigades (Infanteribrigader)"
+	name = "Infantry Brigades"
 
 	for_countries = { SWE }
 
@@ -53,13 +64,13 @@ SWE_IB_01 = {
 }
 
 SWE_PB_01 = {
-	name = "Armored Brigades (Pansarbrigader)"
+	name = "Armored Brigades"
 
 	for_countries = { SWE }
 
 	can_use = { always = yes }
 
-	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
+	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" "mechanized" }
 
 	fallback_name = "Pansarbrigad %d"
 
@@ -83,7 +94,7 @@ SWE_PB_01 = {
 }
 
 SWE_CYC_01 = {
-	name = "Bicycle Brigades (Cykelbrigader)"
+	name = "Bicycle Brigades"
 
 	for_countries = { SWE }
 
@@ -94,27 +105,27 @@ SWE_CYC_01 = {
 	fallback_name = "%d. Cykelbrigaden"
 
 	ordered = {
-		1 = { "%d. Cykelbrigaden" }
-		2 = { "%d. Cykelbrigaden" }
-		3 = { "%d. Cykelbrigaden" }
-		4 = { "%d. Cykelbrigaden" }
-		5 = { "%d. Cykelbrigaden" }
-		6 = { "%d. Cykelbrigaden" }
-		7 = { "%d. Cykelbrigaden" }
-		8 = { "%d. Cykelbrigaden" }
-		9 = { "%d. Cykelbrigaden" }
-		10 = { "%d. Cykelbrigaden" }
-		11 = { "%d. Cykelbrigaden" }
-		12 = { "%d. Cykelbrigaden" }
-		13 = { "%d. Cykeljägarbrigaden" }
-		14 = { "%d. Cykeljägarbrigaden" }
-		15 = { "%d. Cykeljägarbrigaden" }
-		16 = { "%d. Cykeljägarbrigaden" }
+		1 = { "%d. Cykelbrigaden 'Svea'" }
+		2 = { "%d. Cykelbrigaden 'Värmland'" }
+		3 = { "%d. Cykelbrigaden 'Norra Skåne'" }
+		4 = { "%d. Cykelbrigaden 'Halland'" }
+		5 = { "%d. Cykelbrigaden 'Gotland'" }
+		6 = { "%d. Cykelbrigaden 'Älvsborg'" }
+		7 = { "%d. Cykelbrigaden 'Livregementet'" }
+		8 = { "%d. Cykelbrigaden 'Bohuslän'" }
+		9 = { "%d. Cykelbrigaden 'Dalarna'" }
+		10 = { "%d. Cykelbrigaden 'Hälsingland'" }
+		11 = { "%d. Cykelbrigaden 'Kronoberg'" }
+		12 = { "%d. Cykelbrigaden 'Västerbotten'" }
+		13 = { "%d. Cykeljägarbrigaden 'Livregementet'" }
+		14 = { "%d. Cykeljägarbrigaden 'Norrland'" }
+		15 = { "%d. Cykeljägarbrigaden 'Karlsborg'" }
+		16 = { "%d. Cykeljägarbrigaden 'Jämtland'" }
 	}
 }
 
 SWE_CAV_02 = {
-	name = "Cavalry Brigades (Kavalleribrigader)"
+	name = "Cavalry Brigades"
 
 	for_countries = { SWE }
 
@@ -126,7 +137,7 @@ SWE_CAV_02 = {
 
 	ordered = {
 		1 = { "%d. Kavalleribrigaden 'Livgardets dragoner'" }
-		2 = { "%d. Kavalleribrigaden 'Skånska kavalleriet'" }
+		2 = { "%d. Kavalleribrigaden 'Skånska dragonerna'" }
 		3 = { "%d. Kavalleribrigaden 'Livregementets husarer'" }
 		4 = { "%d. Kavalleribrigaden 'Norrlands dragoner'" }
 		5 = { "%d. Kavalleribrigaden 'Smålands husarer'" }
@@ -138,8 +149,12 @@ SWE_CAV_02 = {
 	}
 }
 
+# ==============================================================================
+# 2. SPECIALIST & TERRITORIAL FORCES (Special- & Lokalförsvarsförband)
+# ==============================================================================
+
 SWE_MNT_02 = {
-	name = "Ski & Arctic Ranger Brigades (Skid- & Jägarbrigader)"
+	name = "Ski & Mountain Brigades"
 
 	for_countries = { SWE }
 
@@ -166,7 +181,7 @@ SWE_MNT_02 = {
 }
 
 SWE_KA_01 = {
-	name = "Coastal Defense & Marine Brigades (Kustförsvar)"
+	name = "Coastal Defense Brigades"
 
 	for_countries = { SWE }
 
@@ -195,7 +210,7 @@ SWE_KA_01 = {
 }
 
 SWE_HV_01 = {
-	name = "Home Guard & Local Defense (Hemvärnet)"
+	name = "Home Guard Districts"
 
 	for_countries = { SWE }
 
@@ -246,7 +261,7 @@ SWE_HV_01 = {
 }
 
 SWE_ART_01 = {
-	name = "Artillery Brigades (Artilleribrigader)"
+	name = "Artillery Brigades"
 
 	for_countries = { SWE }
 
@@ -266,16 +281,16 @@ SWE_ART_01 = {
 		7 = { "%d. Artilleribrigaden 'Gotlands'" }
 		8 = { "%d. Artilleribrigaden 'Bodens'" }
 		9 = { "%d. Artilleribrigaden 'Bergslagens'" }
-		10 = { "%d. Tunga Artilleribrigaden" }
-		11 = { "%d. Tunga Artilleribrigaden" }
+		10 = { "%d. Artilleribrigaden 'Karlsborg'" }
+		11 = { "%d. Tunga Artilleribrigaden 'Positionsartilleriet'" }
 		12 = { "%d. Kårartilleribrigaden" }
-		13 = { "%d. Fältartilleribrigaden" }
-		14 = { "%d. Fältartilleribrigaden" }
+		13 = { "%d. Fältartilleribrigaden 'Karlskrona'" }
+		14 = { "%d. Fältartilleribrigaden 'Vaxholm'" }
 	}
 }
 
 SWE_AA_01 = {
-	name = "Anti-Air Brigades (Luftvärnsbrigader)"
+	name = "Anti-Air Brigades"
 
 	for_countries = { SWE }
 
@@ -300,7 +315,7 @@ SWE_AA_01 = {
 }
 
 SWE_PAR_02 = {
-	name = "Paratrooper Brigades (Fallskärmsjägarbrigader)"
+	name = "Paratrooper Brigades"
 
 	for_countries = { SWE }
 
@@ -315,19 +330,29 @@ SWE_PAR_02 = {
 		2 = { "%d. Fallskärmsjägarbrigaden 'Kiruna'" }
 		3 = { "%d. Fallskärmsjägarbrigaden 'Vättern'" }
 		4 = { "%d. Fallskärmsjägarbrigaden 'Västergötland'" }
-		5 = { "%d. Luftburna Jägarbrigaden" }
-		6 = { "%d. Luftburna Jägarbrigaden" }
-		7 = { "%d. Luftburna Jägarbrigaden" }
-		8 = { "%d. Luftburna Jägarbrigaden" }
+		5 = { "%d. Fallskärmsjägarbrigaden 'Livregementet'" }
+		6 = { "%d. Luftburna Jägarbrigaden 'Såtenäs'" }
+		7 = { "%d. Luftburna Jägarbrigaden 'Arvidsjaur'" }
+		8 = { "%d. Fallskärmsjägarkåren" }
+		9 = { "%d. Luftburna Jägarbrigaden 'Svea'" }
+		10 = { "%d. Luftburna Jägarbrigaden 'Husarerna'" }
+		11 = { "%d. Fallskärmsjägarbrigaden 'Gotland'" }
+		12 = { "%d. Luftburna Jägarbrigaden 'Norrland'" }
 	}
 }
 
+# ==============================================================================
+# 3. PRESTIGE & VOLUNTEER FORMATIONS (Livgarde & Frivilliga)
+# ==============================================================================
+
 SWE_ROYAL_01 = {
-	name = "Royal Guards & Carolean Formations (Kungliga Livgardet)"
+	name = "Royal Guards"
 
 	for_countries = { SWE }
 
-	can_use = { always = yes }
+	can_use = {
+		NOT = { has_government = communism }
+	}
 
 	division_types = { "infantry" "cavalry" "motorized" "mechanized" "light_armor" "medium_armor" }
 
@@ -363,7 +388,7 @@ SWE_ROYAL_01 = {
 }
 
 SWE_VOL_01 = {
-	name = "Swedish Volunteer Units (Svenska Frivilliga)"
+	name = "Volunteer Formations"
 
 	for_countries = { SWE }
 
@@ -374,8 +399,8 @@ SWE_VOL_01 = {
 	fallback_name = "%d. Svenska Frivilligbrigaden"
 
 	ordered = {
-		1 = { "1. Svenska Frivilligbrigaden" }
-		2 = { "2. Svenska Frivilligbrigaden" }
+		1 = { "Svenska Frivilligkompaniet 'Kongsvinger'" }
+		2 = { "Svenska Bataljonen 'Georg Branting'" }
 		3 = { "Svenska Frivilligkåren 'I. Stridsgruppen'" }
 		4 = { "Svenska Frivilligkåren 'II. Stridsgruppen'" }
 		5 = { "Svenska Frivilligkåren 'III. Stridsgruppen'" }
@@ -384,6 +409,10 @@ SWE_VOL_01 = {
 		8 = { "Skandinaviska Frivilliglegionen" }
 		9 = { "Nordiska Frivilligbrigaden" }
 		10 = { "Svenska Frivilliga Jägarkåren" }
+		11 = { "Svenska Frivilligkåren i Norge" }
+		12 = { "Svenska Frivilligbataljonen 'Salla'" }
+		13 = { "Svenska Frivilligbataljonen 'Ernst Linder'" }
+		14 = { "Svenska Norgebataljonen" }
 	}
 }
 

@@ -1556,7 +1556,7 @@ function Get-TagNamelistDiff {
 
     $oldGroups = @()
     $label = $BaseRev
-    $oldText = Get-GitFileText -Rev $BaseRev -RelPath $rel
+    $oldText = Get-GitFileText -RepoPath $RepoDir -Ref $BaseRev -RelPath $rel
     if ($null -eq $oldText) {
         $label = "$BaseRev, file absent"
     } else {

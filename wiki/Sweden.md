@@ -14,25 +14,25 @@ Sweden maintained neutrality in WWII but kept a large mobilized armed forces (*F
 
 | Group Tag | UI Name | Division Types | Fallback Name |
 |:---|:---|:---|:---|
-| `SWE_IB_01` | Infantry Brigades (Infanteribrigader) | infantry, motorized | `Infanteribrigad %d` |
-| `SWE_PB_01` | Armored Brigades (Pansarbrigader) | light_armor, medium_armor, heavy_armor, modern_armor | `Pansarbrigad %d` |
-| `SWE_CYC_01` | Bicycle Brigades (Cykelbrigader) | infantry, motorized | `%d. Cykelbrigaden` |
-| `SWE_CAV_02` | Cavalry Brigades (Kavalleribrigader) | cavalry, motorized | `%d. Kavalleribrigaden` |
-| `SWE_MNT_02` | Ski & Arctic Ranger Brigades | mountaineers, ranger_battalion | `%d. Skidjägarbrigaden` |
-| `SWE_KA_01` | Coastal Defense & Marine Brigades | marine, infantry | `%d. Kustartilleribrigaden` |
-| `SWE_HV_01` | Home Guard & Local Defense (Hemvärnet) | militia, infantry | `Hemvärnsområde %d` |
-| `SWE_ART_01` | Artillery Brigades (Artilleribrigader) | artillery, infantry | `%d. Artilleribrigaden` |
-| `SWE_AA_01` | Anti-Air Brigades (Luftvärnsbrigader) | anti_air, infantry | `%d. Luftvärnsbrigaden` |
-| `SWE_PAR_02` | Paratrooper Brigades (Fallskärmsjägare) | paratrooper | `%d. Fallskärmsjägarbrigaden` |
-| `SWE_ROYAL_01` | Royal Guards & Carolean Formations | infantry, cavalry, motorized, mechanized, light_armor, medium_armor | `%d. Kungliga Gardet` |
-| `SWE_VOL_01` | Swedish Volunteer Units | infantry, motorized | `%d. Svenska Frivilligbrigaden` |
+| `SWE_IB_01` | Infantry Brigades | infantry, motorized | `Infanteribrigad %d` |
+| `SWE_PB_01` | Armored Brigades | light_armor, medium_armor, heavy_armor, modern_armor, mechanized | `Pansarbrigad %d` |
+| `SWE_CYC_01` | Bicycle Brigades | infantry, motorized | `%d. Cykelbrigaden` |
+| `SWE_CAV_02` | Cavalry Brigades | cavalry, motorized | `%d. Kavalleribrigaden` |
+| `SWE_MNT_02` | Ski & Mountain Brigades | mountaineers, ranger_battalion | `%d. Skidjägarbrigaden` |
+| `SWE_KA_01` | Coastal Defense Brigades | marine, infantry | `%d. Kustartilleribrigaden` |
+| `SWE_HV_01` | Home Guard Districts | militia, infantry | `Hemvärnsområde %d` |
+| `SWE_ART_01` | Artillery Brigades | artillery, infantry | `%d. Artilleribrigaden` |
+| `SWE_AA_01` | Anti-Air Brigades | anti_air, infantry | `%d. Luftvärnsbrigaden` |
+| `SWE_PAR_02` | Paratrooper Brigades | paratrooper | `%d. Fallskärmsjägarbrigaden` |
+| `SWE_ROYAL_01` | Royal Guards | infantry, cavalry, motorized, mechanized, light_armor, medium_armor | `%d. Kungliga Gardet` |
+| `SWE_VOL_01` | Volunteer Formations | infantry, motorized | `%d. Svenska Frivilligbrigaden` |
 
 ---
 
 ## Group Details
 
-### `SWE_IB_01` — Infantry Brigades (Infanteribrigader)
-Swedish infantry brigades with their historical regional nicknames. 30 named entries:
+### `SWE_IB_01` — Infantry Brigades
+Swedish infantry brigades with their historical regional nicknames. 36 named entries:
 
 | # | Name |
 |:--|:---|
@@ -73,39 +73,39 @@ Swedish infantry brigades with their historical regional nicknames. 30 named ent
 | 50 | *Lapplandsbrigaden* |
 | 51 | *Medelpadsbrigaden* |
 
-### `SWE_PB_01` — Armored Brigades (Pansarbrigader)
+### `SWE_PB_01` — Armored Brigades
 Swedish armor with regional identities. 15 named brigades:
 *Göta pansarbrigad*, *Skånska pansarbrigaden*, *Södermanlands pansarbrigad*, *Skaraborgs pansarbrigad*, *Göinge pansarbrigad*, *Blå brigaden* (Blue Brigade), *Malmö pansarbrigad*, *Götalands pansarbrigad*, *Svea pansarbrigad*, *Västgöta pansarbrigad*, *Smålands pansarbrigad*, *Wendes pansarbrigad*, *Gotlands pansarbrigad*, *Östergötlands pansarbrigad*, *Bergslagens pansarbrigad*.
 
-### `SWE_CYC_01` — Bicycle Brigades (Cykelbrigader)
-Swedish bicycle infantry — a distinctively Swedish formation type used for rapid inland movement. 12 *Cykelbrigaden* plus 4 *Cykeljägarbrigaden* (bicycle ranger brigades) for forest/rough terrain operations.
+### `SWE_CYC_01` — Bicycle Brigades
+Swedish bicycle infantry (*cykelinfanteri*) mobilized by peacetime regiments (I 1 *Svea*, I 2 *Värmland*, I 6 *Norra Skåne*, I 16 *Halland*, I 18 *Gotland*, I 15 *Älvsborg*, etc.) under the 1942 war organization, plus 4 *cykeljägarbrigader* (bicycle ranger/reconnaissance brigades) representing cavalry scout detachments (K 3, K 4).
 
-### `SWE_CAV_02` — Cavalry Brigades (Kavalleribrigader)
-Named after historic Swedish cavalry regiments: *Livgardets dragoner*, *Skånska kavalleriet*, *Livregementets husarer*, *Norrlands dragoner*, *Smålands husarer*, *Kronprinsens husarer*, *Jämtlands hästjägare*, *Östgöta ryttare*, *Västgöta ryttare*, *Bohus dragoner*.
+### `SWE_CAV_02` — Cavalry Brigades
+Named after historic Swedish cavalry regiments: *Livgardets dragoner*, *Skånska dragonerna*, *Livregementets husarer*, *Norrlands dragoner*, *Smålands husarer*, *Kronprinsens husarer*, *Jämtlands hästjägare*, *Östgöta ryttare*, *Västgöta ryttare*, *Bohus dragoner*.
 
-### `SWE_MNT_02` — Ski & Arctic Ranger Brigades
+### `SWE_MNT_02` — Ski & Mountain Brigades
 Northern frontier brigades for Arctic warfare. Named by geographic area:
 - *Skidjägarbrigaden*: Jämtland, Lappland, Norrbotten, Västerbotten, Härjedalen, Torneå, Kiruna, Gällivare
 - *Fjälljägarbrigaden*: Sarek, Kebnekaise, Abisko
 - *Gränsjägarbrigaden 'Kalix'*
 
-### `SWE_KA_01` — Coastal Defense Brigades (Kustartilleri)
+### `SWE_KA_01` — Coastal Defense Brigades
 Named coastal defense and marine brigades at key Swedish naval positions: *Vaxholm*, *Karlskrona*, *Gotland*, *Göteborg*, *Hemsö*, *Stockholms skärgård*, *Öresund*, *Fårösund*, *Slite*, *Marstrand*, plus *Skärgårdsbrigad* (archipelago brigades) and *Kustjägarbrigad* (coastal ranger brigades).
 
-### `SWE_HV_01` — Home Guard (Hemvärnet)
+### `SWE_HV_01` — Home Guard Districts
 The *Hemvärnet* — Sweden's Home Guard, organized by city and province. 36 named *hemvärnsområde* (Home Guard areas) and *försvarsområde* (defence areas) covering all of Sweden from Stockholm to Kiruna.
 
 ### `SWE_ART_01` — Artillery Brigades
-Named Swedish artillery brigades: *Svea*, *Göta*, *Wendes*, *Norrlands*, *Upplands*, *Smålands*, *Gotlands*, *Bodens*, *Bergslagens*, plus heavy artillery and field artillery brigades.
+Named Swedish artillery brigades: *Svea*, *Göta*, *Wendes*, *Norrlands*, *Upplands*, *Smålands*, *Gotlands*, *Bodens*, *Bergslagens*, *Karlsborg*, heavy siege/field artillery *Positionsartilleriet*, corps artillery, and fortress artillery brigades (*Karlskrona*, *Vaxholm*).
 
-### `SWE_AA_01` — Anti-Air Brigades (Luftvärn)
+### `SWE_AA_01` — Anti-Air Brigades
 Named anti-aircraft formations at major industrial and population centers: *Karlsborg*, *Östgöta*, *Stockholm*, *Skåne*, *Sundsvall*, *Göteborg*, *Luleå*, *Bofors*, *Malmö*, *Västerås*.
 
-### `SWE_PAR_02` — Paratroopers (Fallskärmsjägare)
-Swedish airborne formations: *Karlsborg*, *Kiruna*, *Vättern*, *Västergötland* brigades, plus generic *Luftburna Jägarbrigaden* for alt-history expansion.
+### `SWE_PAR_02` — Paratrooper Brigades
+Swedish airborne formations: *Karlsborg* (home of Fallskärmsjägarskolan), *Kiruna*, *Vättern*, *Västergötland*, *Livregementet*, *Såtenäs* (F 7 transport airlift wing), *Arvidsjaur*, and *Fallskärmsjägarkåren*.
 
-### `SWE_ROYAL_01` — Royal Guards & Carolean Formations
-A prestige list combining the modern Swedish Royal Guards with evocations of the Carolean era:
+### `SWE_ROYAL_01` — Royal Guards
+A prestige list combining the modern Swedish Royal Guards with evocations of the Carolean era (gated to non-communist governments):
 - *Kungliga Livgardesdivisionen* (1st & 2nd)
 - *Kungliga Majestäts Livgarde*
 - *Kungliga Livgardet till Häst* (Horse Guards)
@@ -115,13 +115,12 @@ A prestige list combining the modern Swedish Royal Guards with evocations of the
 - Carolean-era evocations: *Carolus Rex*, *Gustavus Adolphus*, Dalregementet, Hälsinge, Jämtlands Dragonkaroliner
 - Baltic and Pomeranian imperial-era regiments (*Estländska Adelsfanan*, *Livländska Dragonregementet*, *Pommerska Legionen*, *Narva Grenadjärkåren*)
 
-### `SWE_VOL_01` — Swedish Volunteer Units
-Swedish volunteers who fought in Finland (Winter War), Norway, and other conflicts:
-- 1.–2. *Svenska Frivilligbrigaden*
-- *Svenska Frivilligkåren* I–III *Stridsgruppen*
-- *Svenska Frivilligbataljonen 'Hangö'*
-- *Svenska Frivilligkompaniet 'Svir'*
-- *Skandinaviska Frivilliglegionen*
-- *Nordiska Frivilligbrigaden*
-- *Svenska Frivilliga Jägarkåren*
+### `SWE_VOL_01` — Volunteer Formations
+Swedish volunteers who fought in Finland (Winter War and Continuation War), Norway, and Spain:
+- *Svenska Frivilligkompaniet 'Kongsvinger'* (Norway 1940)
+- *Svenska Bataljonen 'Georg Branting'* (Spanish Civil War 1936–1939)
+- *Svenska Frivilligkåren* I–III *Stridsgruppen* (Winter War 1939–1940)
+- *Svenska Frivilligbataljonen 'Hangö'* and *Svenska Frivilligkompaniet 'Svir'* (Continuation War 1941–1944)
+- *Svenska Frivilligkåren i Norge*, *Salla*, *Ernst Linder*, and *Svenska Norgebataljonen*
+- Nordic volunteer concepts (*Skandinaviska Frivilliglegionen*, *Nordiska Frivilligbrigaden*, *Svenska Frivilliga Jägarkåren*)
 
