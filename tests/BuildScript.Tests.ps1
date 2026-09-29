@@ -21,7 +21,7 @@ BeforeAll {
         . ([ScriptBlock]::Create($launcherFuncMatch.Groups[1].Value))
     }
 
-    foreach ($fn in 'Get-NamelistAuditData', 'Get-OrderedEntryStats', 'Compare-NamelistAuditData', 'Get-GitFileText') {
+    foreach ($fn in 'Get-NamelistAuditData', 'Get-OrderedEntryStats', 'Compare-NamelistAuditData', 'Get-GitFileText', 'Get-NameVariantKey', 'Resolve-GroupTag', 'Get-GroupSections', 'Get-OrphanHeaderLines', 'Edit-NamelistGroupText', 'Compare-NamelistGroupSets', 'Format-NamelistDiff', 'Get-CountryName', 'Format-PlanChangeTable', 'Set-PlanChangeTable', 'New-AuditPlanText', 'Update-WikiGroupRows', 'Find-WikiProseMentions') {
         $fnMatch = [regex]::Match($script:BuildContent, "(?s)(function $fn\s*\{.*?\n\})")
         if ($fnMatch.Success) {
             . ([ScriptBlock]::Create($fnMatch.Groups[1].Value))
@@ -584,5 +584,247 @@ Describe "build.ps1 Helper: Compare-NamelistAuditData" {
         @($script:Diff.NewNames | ForEach-Object { "$($_.Tag)|$($_.Name)" }) | Should -Be @("TST_INF_05|12. Divisioona 'Kollaa'", 'TST_DET_02|Ryhmä Pajari')
         # 2 INF placeholders + Ryhmä Airo + the removed tag's 1 entry
         $script:Diff.RemovedNameCount | Should -Be 4
+    }
+}
+
+Describe "build.ps1 Helper: Get-NameVariantKey" {
+    It "Normalizes case, diacritics and whitespace" {
+        (Get-NameVariantKey "K$([char]0x0101)rlis") | Should -Be (Get-NameVariantKey 'Karlis')
+        (Get-NameVariantKey "J$([char]0x0101)nis   $([char]0x010C)akste") | Should -Be (Get-NameVariantKey 'Janis Cakste')
+    }
+
+    It "Maps roman numerals to digits" {
+        (Get-NameVariantKey 'Karl XII') | Should -Be (Get-NameVariantKey 'Karl 12')
+        (Get-NameVariantKey 'Division IV') | Should -Be (Get-NameVariantKey 'Division 4')
+    }
+
+    It "Keeps distinct numbers apart" {
+        (Get-NameVariantKey 'Division IV') | Should -Not -Be (Get-NameVariantKey 'Division V')
+        (Get-NameVariantKey '1. Divisioona') | Should -Not -Be (Get-NameVariantKey '2. Divisioona')
+    }
+}
+
+Describe "build.ps1 Helper: Resolve-GroupTag" {
+    BeforeAll {
+        $script:KnownTags = @('TST_INF_01', 'TST_INF_02', 'TST_MOT_01', 'TST_ARM_01')
+    }
+
+    It "Resolves exact tags" {
+        Resolve-GroupTag -Tag 'TST' -Name 'TST_INF_01' -Known $script:KnownTags | Should -Be 'TST_INF_01'
+    }
+
+    It "Resolves shorthand with or without prefix and index" {
+        Resolve-GroupTag -Tag 'TST' -Name 'INF_01' -Known $script:KnownTags | Should -Be 'TST_INF_01'
+        Resolve-GroupTag -Tag 'TST' -Name 'MOT' -Known $script:KnownTags | Should -Be 'TST_MOT_01'
+        Resolve-GroupTag -Tag 'TST' -Name 'ARM_01' -Known $script:KnownTags | Should -Be 'TST_ARM_01'
+    }
+
+    It "Returns null for unknown group names" {
+        Resolve-GroupTag -Tag 'TST' -Name 'XYZ' -Known $script:KnownTags | Should -BeNullOrEmpty
+    }
+}
+
+Describe "build.ps1 Helper: Get-GroupSections" {
+    It "Splits ordered entries into comment-headed sections" {
+        $block = @"
+TST_INF_01 = {
+	name = "Infantry Divisions"
+	division_types = { "infantry" }
+	fallback_name = "%d. Divisioona"
+	ordered = {
+		# Line Infantry
+		1 = { "1. Divisioona" }
+		2 = { "2. Divisioona" }
+		# Border Jaeger
+		10 = { "10. Rajajääkäripataljoona" }
+	}
+}
+"@
+        $sections = Get-GroupSections -RawBlock $block
+        $sections.Count | Should -Be 2
+        $sections[0].Header | Should -Be "Line Infantry"
+        $sections[0].Names | Should -Be @("1. Divisioona", "2. Divisioona")
+        $sections[1].Header | Should -Be "Border Jaeger"
+        $sections[1].Names | Should -Be @("10. Rajajääkäripataljoona")
+    }
+}
+
+Describe "build.ps1 Helper: Edit-NamelistGroupText" {
+    BeforeAll {
+        $script:SampleNamelist = @"
+TST_INF_01 = {
+	name = "Infantry Divisions"
+	division_types = { "infantry" }
+	fallback_name = "%d. Divisioona"
+	ordered = {
+		# Frontline
+		1 = { "1. Divisioona" }
+		2 = { "2. Divisioona" }
+		3 = { "3. Divisioona" }
+		# Reserve
+		4 = { "4. Divisioona" }
+	}
+}
+
+TST_CAV_01 = {
+	name = "Cavalry Divisions"
+	division_types = { "cavalry" }
+	fallback_name = "%d. Ratsuväkidivisioona"
+	ordered = {
+		1 = { "Hämeen Ratsurykmentti" }
+	}
+}
+"@
+    }
+
+    It "Renames an entry in place" {
+        $edited = Edit-NamelistGroupText -Text $script:SampleNamelist -GroupTag 'TST_INF_01' -Rename @('1. Divisioona=1. Jalkaväkidivisioona')
+        $edited | Should -Match '1 = \{ "1\. Jalkaväkidivisioona" \}'
+        $edited | Should -Not -Match '"1\. Divisioona"'
+    }
+
+    It "Removes an entry by name or index" {
+        $edited = Edit-NamelistGroupText -Text $script:SampleNamelist -GroupTag 'TST_INF_01' -Remove @('2. Divisioona')
+        $edited | Should -Not -Match '"2\. Divisioona"'
+        $edited2 = Edit-NamelistGroupText -Text $script:SampleNamelist -GroupTag 'TST_INF_01' -Remove @('2')
+        $edited2 | Should -Not -Match '2 = \{ "2\. Divisioona" \}'
+    }
+
+    It "Sets an entry by key=value" {
+        $edited = Edit-NamelistGroupText -Text $script:SampleNamelist -GroupTag 'TST_INF_01' -Set @('3=3. Karjalan Divisioona')
+        $edited | Should -Match '3 = \{ "3\. Karjalan Divisioona" \}'
+        $edited | Should -Not -Match '3 = \{ "3\. Divisioona" \}'
+    }
+
+    It "Adds entries under an existing or new section header" {
+        $edited = Edit-NamelistGroupText -Text $script:SampleNamelist -GroupTag 'TST_INF_01' -Add @('5. Divisioona') -Section 'Reserve'
+        $edited | Should -Match '(?s)# Reserve.*4 = \{ "4\. Divisioona" \}.*5 = \{ "5\. Divisioona" \}'
+
+        $editedNewSec = Edit-NamelistGroupText -Text $script:SampleNamelist -GroupTag 'TST_INF_01' -Add @('10. Prikaati') -Section 'Brigades'
+        $editedNewSec | Should -Match '# Brigades'
+        $editedNewSec | Should -Match '10 = \{ "10\. Prikaati" \}'
+    }
+
+    It "Drops an emptied section header when its entries are removed" {
+        $edited = Edit-NamelistGroupText -Text $script:SampleNamelist -GroupTag 'TST_INF_01' -Remove @('4. Divisioona')
+        $edited | Should -Not -Match '# Reserve'
+    }
+
+    It "Throws errors on invalid operations" {
+        { Edit-NamelistGroupText -Text $script:SampleNamelist -GroupTag 'TST_INF_01' -Remove @('NonExistent') } | Should -Throw
+        { Edit-NamelistGroupText -Text $script:SampleNamelist -GroupTag 'TST_INF_01' -Add @('1. Divisioona') } | Should -Throw
+        { Edit-NamelistGroupText -Text $script:SampleNamelist -GroupTag 'TST_CAV_01' -Remove @('Hämeen Ratsurykmentti') } | Should -Throw
+    }
+}
+
+Describe "build.ps1 Helper: Compare-NamelistGroupSets and Format-NamelistDiff" {
+    BeforeAll {
+        $mk = { param($tag, $sel, $types, $fb, $entries)
+            [PSCustomObject]@{ Tag = $tag; Selector = $sel; DivisionTypes = @($types); Fallback = $fb; LinkTargets = @(); Entries = @($entries) }
+        }
+        $script:OldGroups = @(
+            (& $mk 'TST_INF_01' 'Infantry' @('infantry') '%d. Div' @('1. Div', '2. Div', '3. Div')),
+            (& $mk 'TST_CAV_01' 'Cavalry' @('cavalry') '%d. Cav' @('1. Cav', '2. Cav')),
+            (& $mk 'TST_OLD_01' 'Old' @('infantry') '%d. Old' @('Old 1'))
+        )
+        $script:NewGroups = @(
+            (& $mk 'TST_INF_01' 'Infantry Divisions' @('infantry') '%d. Divisioona' @('1. Div', '3. Div', '2. Cav')),
+            (& $mk 'TST_CAV_01' 'Cavalry' @('cavalry') '%d. Cav' @('1. Cav')),
+            (& $mk 'TST_ARM_01' 'Armor' @('light_armor') '%d. Arm' @('1. Arm'))
+        )
+        $script:Diff = Compare-NamelistGroupSets -Old $script:OldGroups -New $script:NewGroups
+    }
+
+    It "Identifies added, removed, and modified groups" {
+        ($script:Diff | Where-Object GroupTag -eq 'TST_ARM_01').Status | Should -Be 'added'
+        ($script:Diff | Where-Object GroupTag -eq 'TST_OLD_01').Status | Should -Be 'removed'
+        ($script:Diff | Where-Object GroupTag -eq 'TST_INF_01').Status | Should -Be 'modified'
+        ($script:Diff | Where-Object GroupTag -eq 'TST_CAV_01').Status | Should -Be 'modified'
+    }
+
+    It "Formats diff lines with move tracking" {
+        $lines = Format-NamelistDiff -Diff $script:Diff -Tag 'TST' -BaseLabel 'HEAD'
+        $lines[0] | Should -Match 'Name diff TST \(HEAD -> working tree\): 4 changed, 0 unchanged'
+        $lines | Should -Contain 'Moved: 2. Cav (CAV_01->INF_01)'
+    }
+}
+
+Describe "build.ps1 Helper: Format-PlanChangeTable and Set-PlanChangeTable" {
+    It "Formats markdown change table with move annotations" {
+        $table = Format-PlanChangeTable -Diff $script:Diff -Tag 'TST'
+        $table[0] | Should -Be '| Group | Count | Added | Removed | Other |'
+        $table | Should -Contain '| CAV_01 | 2 -> 1 | - | 2. Cav (to INF_01) | - |'
+        $table | Should -Contain "| INF_01 | 3 -> 3 | 2. Cav (from CAV_01) | 2. Div | selector: 'Infantry' -> 'Infantry Divisions'; fallback: '%d. Div' -> '%d. Divisioona' |"
+        $table | Should -Contain '| ARM_01 | new, 1 | 1. Arm | - | - |'
+    }
+
+    It "Sets plan change table between markers" {
+        $plan = @"
+# Audit Plan
+<!-- BEGIN CHANGE TABLE: generated by build.ps1 -AuditPlan; rerun it to refresh, never edit by hand -->
+| old | table |
+<!-- END CHANGE TABLE -->
+## Next Section
+"@
+        $updated = Set-PlanChangeTable -PlanText $plan -TableLines @('| new | table |')
+        $updated | Should -Match '\| new \| table \|'
+        $updated | Should -Not -Match '\| old \| table \|'
+        $updated | Should -Match '## Next Section'
+    }
+}
+
+Describe "build.ps1 Helper: Update-WikiGroupRows and Find-WikiProseMentions" {
+    It "Updates wiki table rows with selector, types, and fallback changes" {
+        $wiki = @"
+# Testland
+| Tag | Name | Type | Fallback | Examples |
+|---|---|---|---|---|
+| ``TST_INF_01`` | Infantry | infantry | ``%d. Div`` | 1. Div, 2. Div |
+| ``TST_OLD_01`` | Old | infantry | ``%d. Old`` | Old 1 |
+"@
+        $groups = @(
+            [PSCustomObject]@{ Tag = 'TST_INF_01'; Selector = 'Infantry Divisions'; DivisionTypes = @('infantry'); Fallback = '%d. Divisioona'; Entries = @('1. Div') }
+        )
+        $res = Update-WikiGroupRows -WikiText $wiki -Groups $groups -Tag 'TST'
+        $res.Text | Should -Match '\| Infantry Divisions \|'
+        $res.Text | Should -Match '`%d\. Divisioona`'
+        $res.Stale | Should -Be @('TST_OLD_01')
+    }
+
+    It "Finds prose lines mentioning names" {
+        $wiki = @"
+# Testland
+The division was commanded by General Mannerheim.
+| ``TST_INF_01`` | Name | Type | Fallback | Mannerheim |
+Other notes.
+"@
+        $hits = Find-WikiProseMentions -WikiText $wiki -Names @('Mannerheim') -Tag 'TST'
+        $hits.Count | Should -Be 1
+        $hits[0] | Should -Be 'L2: Mannerheim'
+    }
+}
+
+Describe "build.ps1 -EditNames action and -Audit CLI flags" {
+    It "Audits an implemented nation with -NamesOnly" {
+        $output = & powershell -NoProfile -File $script:BuildScriptPath -Audit LAT -NamesOnly 2>&1 | Out-String
+        $LASTEXITCODE | Should -Be 0
+        $output | Should -Match 'LAT_INF_01 \(\d+/\d+\)'
+        $output | Should -Not -Match 'ordered = \{'
+    }
+
+    It "Audits a single group with -Group and -NamesOnly" {
+        $output = & powershell -NoProfile -File $script:BuildScriptPath -Audit LAT -Group INF_01 -NamesOnly 2>&1 | Out-String
+        $LASTEXITCODE | Should -Be 0
+        $output | Should -Match 'LAT_INF_01 \(\d+/\d+\)'
+        $output | Should -Not -Match 'LAT_CAV_01'
+    }
+
+    It "Fails with exit 1 and leaves file untouched when -EditNames misses" {
+        $path = Join-Path $script:RepoRoot 'common\units\names_divisions\INEX_LAT_names_divisions.txt'
+        $before = [System.IO.File]::ReadAllText($path)
+        $output = & powershell -NoProfile -File $script:BuildScriptPath -EditNames LAT -Group INF_01 -Remove 'NonExistentDivisionName' 2>&1 | Out-String
+        $LASTEXITCODE | Should -Be 1
+        $output | Should -Match 'NonExistentDivisionName'
+        [System.IO.File]::ReadAllText($path) | Should -Be $before
     }
 }

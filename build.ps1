@@ -46,7 +46,64 @@
     Inspect vanilla Hearts of Iron IV namelists and scripted references for a country tag (e.g. -InspectVanilla LAT).
 
 .PARAMETER Group
-    Optional specific namelist group tag to excerpt directly when using -InspectVanilla (e.g. -Group SOV_INF_02).
+    Optional specific namelist group tag to excerpt directly when using -InspectVanilla or -Audit (e.g. -Group SOV_INF_02).
+    With -Audit, accepts a comma-separated list, and the INEX_<TAG>_ prefix may be omitted (e.g. -Group INF_01,REG_01).
+    With -EditNames (required): the single group to edit; the prefix may be omitted.
+
+.PARAMETER NamesOnly
+    With -Audit: print one compact line per group (tag, count, selector, names separated by "; ") instead of raw blocks.
+    Combine with -Group to limit output to the listed groups.
+
+.PARAMETER Sections
+    With -Audit -NamesOnly: show each group's comment headers inline ("[Header] 1. Name; 2. Name"), so section
+    placement can be planned without opening the file.
+
+.PARAMETER EditNames
+    Edit one group of a mod namelist in place without opening the file (e.g. -EditNames LAT -Group INF_01 -Rename "Old=New").
+    Supports -Add, -Remove, -Rename, -Set, -After, -Section, -RenameSection, -Quiet.
+
+.PARAMETER Add
+    With -EditNames: names to add ("A; B" or "15=Name"). Appended at the end of the ordered block, or after -After or in -Section.
+
+.PARAMETER Remove
+    With -EditNames: names or index numbers to remove ("A; B" or "15; 16").
+
+.PARAMETER Rename
+    With -EditNames: in-place renames as "Old=New; Old2=New2" (preserves the entry's index).
+
+.PARAMETER Set
+    With -EditNames: set or update specific indexed entries as "15=New Name; 16=New Name 2".
+
+.PARAMETER After
+    With -EditNames -Add: insert the added names directly after this existing name instead of at the block end.
+
+.PARAMETER Section
+    With -EditNames -Add: add the names at the end of the section under this comment header (text after '#');
+    the header is created at the block end if missing. Headers an edit leaves empty are dropped automatically.
+
+.PARAMETER RenameSection
+    With -EditNames: rename comment headers in place ("Old header=New header; ...").
+
+.PARAMETER Quiet
+    With -EditNames: print only the summary line (count and dropped sections), not the group's names.
+
+.PARAMETER DiffNames
+    Name-level diff of a mod namelist against a git revision (e.g. -DiffNames LAT): one line per changed group with
+    added (+) and removed (-) names, selector / types / fallback / link changes, names moved between groups,
+    and the unchanged groups. Far smaller than a line diff; use it for plan change tables and reviews.
+
+.PARAMETER Base
+    With -DiffNames or -AuditPlan: git revision to compare the working-tree file against (default HEAD).
+
+.PARAMETER AuditPlan
+    Create docs/superpowers/plans/<today>-<country>-audit.md (e.g. -AuditPlan LAT): the initial -Audit report, TODO
+    sections to fill, and a per-group change table generated from -DiffNames between markers. Run again to refresh
+    the table; the rest of the plan is left untouched. -Audit reports unfilled TODOs as PlanTodo.
+
+.PARAMETER SyncWiki
+    Sync wiki/<Country>.md group rows with the namelist (literal display names, division types, fallback) and the TAG's
+    group count in wiki/Home.md (e.g. -SyncWiki LAT). Lists groups without a row, rows without a group, and prose
+    lines that mention names removed or moved since HEAD.
 
 .PARAMETER Audit
     Print a heuristic quality scorecard for an INEX namelist file (informational, never fails the build).
@@ -55,6 +112,7 @@
 .PARAMETER Compare
     With -Audit <KEY>: compare the working copy against a git ref (e.g. -Compare HEAD). Lists removed/added tags,
     selector/type/fallback/link changes, and only the added or changed name strings, for review without a raw diff.
+
 
 .PARAMETER Hoi4InstallDir
     Custom path to the Hearts of Iron IV installation folder if installed in a non-standard directory.
@@ -139,17 +197,65 @@ param(
     [Parameter(ParameterSetName = 'InspectVanilla', Mandatory = $true)]
     [string]$InspectVanilla,
 
-    [Parameter(ParameterSetName = 'InspectVanilla')]
-    [string]$Group,
-
-    [Parameter(ParameterSetName = 'InspectVanilla')]
-    [string]$Hoi4InstallDir,
-
     [Parameter(ParameterSetName = 'Audit', Mandatory = $true)]
     [string]$Audit,
 
     [Parameter(ParameterSetName = 'Audit')]
     [string]$Compare,
+
+    [Parameter(ParameterSetName = 'Audit')]
+    [switch]$NamesOnly,
+
+    [Parameter(ParameterSetName = 'Audit')]
+    [switch]$Sections,
+
+    [Parameter(ParameterSetName = 'InspectVanilla')]
+    [Parameter(ParameterSetName = 'Audit')]
+    [Parameter(ParameterSetName = 'EditNames', Mandatory = $true)]
+    [string]$Group,
+
+    [Parameter(ParameterSetName = 'EditNames', Mandatory = $true)]
+    [string]$EditNames,
+
+    [Parameter(ParameterSetName = 'EditNames')]
+    [string]$Add,
+
+    [Parameter(ParameterSetName = 'EditNames')]
+    [string]$Remove,
+
+    [Parameter(ParameterSetName = 'EditNames')]
+    [string]$Rename,
+
+    [Parameter(ParameterSetName = 'EditNames')]
+    [string]$Set,
+
+    [Parameter(ParameterSetName = 'EditNames')]
+    [string]$After,
+
+    [Parameter(ParameterSetName = 'EditNames')]
+    [string]$Section,
+
+    [Parameter(ParameterSetName = 'EditNames')]
+    [string]$RenameSection,
+
+    [Parameter(ParameterSetName = 'EditNames')]
+    [switch]$Quiet,
+
+    [Parameter(ParameterSetName = 'DiffNames', Mandatory = $true)]
+    [string]$DiffNames,
+
+    [Parameter(ParameterSetName = 'AuditPlan', Mandatory = $true)]
+    [string]$AuditPlan,
+
+    [Parameter(ParameterSetName = 'SyncWiki', Mandatory = $true)]
+    [string]$SyncWiki,
+
+    [Parameter(ParameterSetName = 'DiffNames')]
+    [Parameter(ParameterSetName = 'AuditPlan')]
+    [string]$Base = 'HEAD',
+
+    [Parameter(ParameterSetName = 'InspectVanilla')]
+    [string]$Hoi4InstallDir,
 
     [switch]$Validate,
     [switch]$NoValidate,
@@ -838,6 +944,7 @@ function Get-NamelistAuditData {
             PlainVariantOf = $null
             Entries       = $entries
             Flags         = $flags
+            RawBlock      = $rawBlock
         })
     }
 
@@ -980,12 +1087,807 @@ function Compare-NamelistAuditData {
     return $result
 }
 
+# --- Helper: Spelling-insensitive comparison key for a division or unit name ---
+# Folds case, diacritics, spacing/punctuation, doubled letters and common orthographic variants
+# (Gustav/Gustaf, Wasa/Vasa, Carl/Karl, Thor/Tor, y/i, ae/a).
+# Kept ASCII-only for Windows PowerShell 5.1.
+function Get-NameVariantKey {
+    param([string]$Name)
+    $s = $Name.ToLowerInvariant()
+    $map = @{ 0x00E6 = 'ae'; 0x00F8 = 'o'; 0x0153 = 'oe'; 0x00DF = 'ss'; 0x0142 = 'l'; 0x0111 = 'd'; 0x00F0 = 'd'; 0x00FE = 'th'; 0x0131 = 'i' }
+    foreach ($code in $map.Keys) { $s = $s.Replace([string][char]$code, $map[$code]) }
+    $s = [regex]::Replace($s.Normalize([System.Text.NormalizationForm]::FormD), '\p{Mn}', '')
+    $s = [regex]::Replace($s, '\b[ivx]+\b', [System.Text.RegularExpressions.MatchEvaluator] {
+        param($m)
+        if ($m.Value -notmatch '^x{0,3}(ix|iv|v?i{0,3})$') { return $m.Value }
+        $total = 0; $prev = 0
+        $vals = @{ [char]'i' = 1; [char]'v' = 5; [char]'x' = 10 }
+        $chars = $m.Value.ToCharArray()
+        for ($k = $chars.Count - 1; $k -ge 0; $k--) {
+            $v = $vals[$chars[$k]]
+            if ($v -lt $prev) { $total -= $v } else { $total += $v; $prev = $v }
+        }
+        return [string]$total
+    })
+    $s = $s -replace '[fv]\b', 'f'
+    $s = $s -replace '[^a-z0-9]', ''
+    $s = $s -replace 'ph', 'f' -replace 'th', 't' -replace 'w', 'v' -replace 'ck', 'k' -replace '[cq]', 'k' -replace 'z', 's' -replace 'y', 'i'
+    $s = $s -replace 'ae', 'a' -replace 'oe', 'o' -replace 'ue', 'u'
+    $s = $s -replace '([a-z])\1+', '$1'
+    return $s
+}
+
+# --- Helper: Resolve a group name given as full tag or shorthand ---
+function Resolve-GroupTag {
+    param(
+        [string]$Tag,
+        [string]$Name,
+        [string[]]$Known
+    )
+    $n = $Name.Trim().ToUpper()
+    $cleanTag = $Tag.ToUpper().Trim() -replace '^INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
+    foreach ($cand in @($n, "${cleanTag}_$n", "INEX_${cleanTag}_$n", "${cleanTag}_${n}_01")) {
+        if ($Known -contains $cand) { return $cand }
+    }
+    $suffixMatches = @($Known | Where-Object { $_ -match "_$([regex]::Escape($n))$" })
+    if ($suffixMatches.Count -eq 1) { return $suffixMatches[0] }
+    return $null
+}
+
+# --- Helper: Split a group's ordered block into comment-headed sections ---
+function Get-GroupSections {
+    param([string]$RawBlock)
+    $m = [regex]::Match($RawBlock, '(?s)ordered\s*=\s*\{(.*)\}\s*\}?\s*$')
+    if (-not $m.Success) {
+        $m = [regex]::Match($RawBlock, '(?s)ordered\s*=\s*\{(?<content>(?:[^{}]*|\{[^{}]*\})*)\}')
+    }
+    $sections = [System.Collections.Generic.List[psobject]]::new()
+    if (-not $m.Success) { return @() }
+    $content = if ($m.Groups['content'].Success) { $m.Groups['content'].Value } else { $m.Groups[1].Value }
+    $current = [PSCustomObject]@{ Header = ''; Names = [System.Collections.Generic.List[string]]::new() }
+    foreach ($line in ($content -split "`n")) {
+        $t = $line.Trim()
+        if ($t.StartsWith('#')) {
+            if ($current.Header -or $current.Names.Count) { $sections.Add($current) }
+            $current = [PSCustomObject]@{ Header = ($t -replace '^#+\s*', ''); Names = [System.Collections.Generic.List[string]]::new() }
+            continue
+        }
+        $entryM = [regex]::Match($t, '\d+\s*=\s*(?:\{\s*"((?:[^"\\]|\\.)*)"\s*\}|"((?:[^"\\]|\\.)*)")')
+        if ($entryM.Success) {
+            $val = if ($entryM.Groups[1].Success) { $entryM.Groups[1].Value } else { $entryM.Groups[2].Value }
+            $current.Names.Add($val)
+        }
+    }
+    if ($current.Header -or $current.Names.Count) { $sections.Add($current) }
+    return $sections.ToArray()
+}
+
+# --- Helper: Comment headers in an ordered block that no longer head any entry ---
+function Get-OrphanHeaderLines {
+    param([string[]]$Lines)
+    $orphans = @()
+    for ($i = 0; $i -lt $Lines.Count; $i++) {
+        if (-not $Lines[$i].Trim().StartsWith('#')) { continue }
+        $j = $i + 1
+        while ($j -lt $Lines.Count -and -not $Lines[$j].Trim()) { $j++ }
+        if ($j -ge $Lines.Count -or $Lines[$j].Trim().StartsWith('#')) { $orphans += $i }
+    }
+    return , $orphans
+}
+
+# --- Helper: Edit the ordered = { } block of one group in namelist text ---
+function Edit-NamelistGroupText {
+    param(
+        [string]$Text,
+        [string]$GroupTag,
+        [string[]]$Add = @(),
+        [string[]]$Remove = @(),
+        [string[]]$Rename = @(),
+        [string[]]$Set = @(),
+        [string]$After,
+        [string]$Section,
+        [string[]]$RenameSection = @()
+    )
+
+    if ($After -and $Section) { throw "Use -After or -Section, not both" }
+    $nl = if ($Text.Contains("`r`n")) { "`r`n" } else { "`n" }
+    $cr = if ($nl -eq "`r`n") { "`r" } else { '' }
+    $headerText = { param($line) $line.Trim() -replace '^#+\s*', '' }
+    $head = [regex]::Match($Text, "(?m)^[ \t]*$([regex]::Escape($GroupTag))[ \t]*=\s*\{")
+    if (-not $head.Success) { throw "Group $GroupTag not found" }
+
+    # Walk braces to find the ordered block
+    $depth = 0; $pos = $head.Index + $head.Length - 1; $blockEnd = -1
+    $uStart = -1; $uEnd = -1
+    for ($i = $pos; $i -lt $Text.Length; $i++) {
+        $ch = $Text[$i]
+        if ($ch -eq '#') { while ($i -lt $Text.Length -and $Text[$i] -ne "`n") { $i++ }; continue }
+        if ($ch -eq '"') { $i++; while ($i -lt $Text.Length -and $Text[$i] -ne '"') { if ($Text[$i] -eq '\') { $i++ }; $i++ }; continue }
+        if ($ch -eq '{') {
+            $depth++
+            if ($depth -eq 2 -and $uStart -lt 0 -and $Text.Substring($pos, $i - $pos) -match 'ordered\s*=\s*$') { $uStart = $i + 1 }
+        } elseif ($ch -eq '}') {
+            if ($depth -eq 2 -and $uStart -ge 0 -and $uEnd -lt 0) { $uEnd = $i }
+            $depth--
+            if ($depth -eq 0) { $blockEnd = $i; break }
+        }
+    }
+    if ($blockEnd -lt 0) { throw "Group $GroupTag has unbalanced braces" }
+    if ($uStart -lt 0 -or $uEnd -lt 0) { throw "Group $GroupTag has no ordered = { } block" }
+
+    $inner = $Text.Substring($uStart, $uEnd - $uStart)
+
+    function Get-CurrentEntries([string]$block) {
+        $clean = $block -replace '(?m)#.*$', ''
+        $entries = [System.Collections.Generic.List[psobject]]::new()
+        foreach ($m in [regex]::Matches($clean, '(\d+)\s*=\s*(?:\{\s*"((?:[^"\\]|\\.)*)"\s*\}|"((?:[^"\\]|\\.)*)")')) {
+            $nameVal = if ($m.Groups[2].Success) { $m.Groups[2].Value } else { $m.Groups[3].Value }
+            $entries.Add([PSCustomObject]@{ Index = [int]$m.Groups[1].Value; Name = $nameVal })
+        }
+        return $entries
+    }
+
+    $currentEntries = Get-CurrentEntries $inner
+    $countOf = { param($n) @($currentEntries | Where-Object { $_.Name -ceq $n }).Count }
+    $origLines = @($inner -split "`n")
+    $orphansBefore = @((Get-OrphanHeaderLines -Lines $origLines) | ForEach-Object { & $headerText $origLines[$_] })
+
+    # 1. RenameSection
+    foreach ($pair in $RenameSection) {
+        $parts = $pair -split '=', 2
+        if ($parts.Count -ne 2 -or -not $parts[0].Trim() -or -not $parts[1].Trim()) { throw "RenameSection '$pair' must be Old=New" }
+        $old = $parts[0].Trim(); $new = $parts[1].Trim()
+        $lines = @($inner -split "`n")
+        $hits = @(for ($l = 0; $l -lt $lines.Count; $l++) { if ($lines[$l].Trim().StartsWith('#') -and (& $headerText $lines[$l]) -ceq $old) { $l } })
+        if ($hits.Count -ne 1) { throw "RenameSection: header '$old' found $($hits.Count) times in $GroupTag (expected 1)" }
+        $indent = [regex]::Match($lines[$hits[0]], '^[ \t]*').Value
+        $lines[$hits[0]] = "$indent# $new$cr"
+        $inner = $lines -join "`n"
+    }
+
+    # 2. Rename
+    foreach ($pair in $Rename) {
+        $parts = $pair -split '=', 2
+        if ($parts.Count -ne 2 -or -not $parts[0].Trim() -or -not $parts[1].Trim()) { throw "Rename '$pair' must be Old=New" }
+        $old = $parts[0].Trim(); $new = $parts[1].Trim()
+        if ((& $countOf $old) -ne 1) { throw "Rename: '$old' found $(& $countOf $old) times in $GroupTag (expected 1)" }
+        if ((& $countOf $new) -gt 0) { throw "Rename: '$new' already exists in $GroupTag" }
+        $inner = $inner.Replace("`"$old`"", "`"$new`"")
+        $currentEntries = Get-CurrentEntries $inner
+    }
+
+    # 3. Set (Key=Value)
+    foreach ($pair in $Set) {
+        $parts = $pair -split '=', 2
+        if ($parts.Count -ne 2 -or -not $parts[0].Trim() -or -not $parts[1].Trim()) { throw "Set '$pair' must be Index=NewName" }
+        $idx = [int]$parts[0].Trim(); $val = $parts[1].Trim()
+        $lines = @($inner -split "`n")
+        $found = $false
+        for ($l = 0; $l -lt $lines.Count; $l++) {
+            $m = [regex]::Match($lines[$l], "^([ \t]*)$idx\s*=\s*(?:\{\s*`"[^`"]*`"\s*\}|`"[^`"]*`")(.*)$")
+            if ($m.Success) {
+                $indent = $m.Groups[1].Value
+                $trailing = $m.Groups[2].Value
+                $lines[$l] = "$indent$idx = { `"$val`" }$trailing"
+                $found = $true
+                break
+            }
+        }
+        if (-not $found) {
+            $indent = "`t`t"
+            $inserted = $false
+            for ($l = 0; $l -lt $lines.Count; $l++) {
+                $m = [regex]::Match($lines[$l], '^[ \t]*(\d+)\s*=')
+                if ($m.Success -and [int]$m.Groups[1].Value -gt $idx) {
+                    $lines = @($lines[0..($l - 1)]) + @("$indent$idx = { `"$val`" }$cr") + @($lines[$l..($lines.Count - 1)])
+                    $inserted = $true
+                    break
+                }
+            }
+            if (-not $inserted) {
+                $lines += "$indent$idx = { `"$val`" }$cr"
+            }
+        }
+        $inner = $lines -join "`n"
+        $currentEntries = Get-CurrentEntries $inner
+    }
+
+    # 4. Remove
+    foreach ($item in $Remove) {
+        $lines = @($inner -split "`n")
+        $drop = -1
+        if ($item -match '^\d+$') {
+            $targetIdx = [int]$item
+            for ($l = 0; $l -lt $lines.Count; $l++) {
+                if ($lines[$l] -match "^[ \t]*$targetIdx\s*=") { $drop = $l; break }
+            }
+            if ($drop -lt 0) { throw "Remove: index '$item' not found in $GroupTag" }
+        } else {
+            if ((& $countOf $item) -ne 1) { throw "Remove: '$item' found $(& $countOf $item) times in $GroupTag (expected 1)" }
+            $q = [regex]::Escape("`"$item`"")
+            for ($l = 0; $l -lt $lines.Count; $l++) {
+                if ($lines[$l] -match $q -and -not $lines[$l].TrimStart().StartsWith('#')) { $drop = $l; break }
+            }
+        }
+        if ($drop -ge 0) {
+            $inner = @(for ($l = 0; $l -lt $lines.Count; $l++) { if ($l -ne $drop) { $lines[$l] } }) -join "`n"
+            $currentEntries = Get-CurrentEntries $inner
+        }
+    }
+
+    # 5. Add
+    if ($Add.Count -gt 0) {
+        $currentNames = @($currentEntries | ForEach-Object { $_.Name })
+        $dupes = @($Add | Where-Object { $currentNames -contains $_ })
+        if ($dupes.Count -gt 0) { throw "Add: already in ${GroupTag}: $($dupes -join ', ')" }
+        $repeat = @($Add | Group-Object | Where-Object { $_.Count -gt 1 } | ForEach-Object { $_.Name })
+        if ($repeat.Count -gt 0) { throw "Add: listed twice: $($repeat -join ', ')" }
+
+        $entryLines = @($inner -split "`n" | Where-Object { $_ -match '^\s*\d+\s*=' })
+        $indent = if ($entryLines.Count -gt 0) { [regex]::Match($entryLines[-1], '^[ \t]*').Value } else { "`t`t" }
+        $existingIndices = @($currentEntries | ForEach-Object { $_.Index })
+        $nextIdx = if ($existingIndices.Count -gt 0) { ([Math]::Max(0, ($existingIndices | Measure-Object -Max).Maximum) + 1) } else { 1 }
+
+        $linesToAdd = [System.Collections.Generic.List[string]]::new()
+        foreach ($name in $Add) {
+            $idx = $nextIdx
+            $entryVal = $name
+            if ($name -match '^(\d+)\s*=\s*(.*)$') {
+                $idx = [int]$matches[1]
+                $entryVal = ($matches[2].Trim() -replace '^"(.*)"$', '$1')
+            } elseif ($name -match '^(\d+)\.\s+(.*)$' -and $existingIndices -notcontains [int]$matches[1]) {
+                $idx = [int]$matches[1]
+            }
+            if ($existingIndices -contains $idx) {
+                $idx = ([Math]::Max(0, ($existingIndices | Measure-Object -Max).Maximum) + 1)
+            }
+            $existingIndices += $idx
+            if ($idx -ge $nextIdx) { $nextIdx = $idx + 1 }
+            $linesToAdd.Add("$indent$idx = { `"$entryVal`" }$cr")
+        }
+
+        $lines = @($inner -split "`n")
+        $hits = if ($Section) { @(for ($l = 0; $l -lt $lines.Count; $l++) { if ($lines[$l].Trim().StartsWith('#') -and (& $headerText $lines[$l]) -ceq $Section.Trim()) { $l } }) } else { @() }
+
+        if ($After) {
+            $afterHit = -1
+            $qAfter = [regex]::Escape("`"$After`"")
+            for ($l = 0; $l -lt $lines.Count; $l++) {
+                if ($lines[$l] -match $qAfter -and -not $lines[$l].TrimStart().StartsWith('#')) { $afterHit = $l; break }
+            }
+            if ($afterHit -lt 0) { throw "After: '$After' not found in $GroupTag" }
+            $lines = @($lines[0..$afterHit]) + $linesToAdd.ToArray() + @(if ($afterHit + 1 -lt $lines.Count) { $lines[($afterHit + 1)..($lines.Count - 1)] })
+            $inner = $lines -join "`n"
+        } elseif ($hits.Count -gt 1) {
+            throw "Section: header '$Section' found $($hits.Count) times in $GroupTag (expected 1)"
+        } elseif ($hits.Count -eq 1) {
+            $at = $hits[0]
+            for ($l = $hits[0] + 1; $l -lt $lines.Count -and -not $lines[$l].Trim().StartsWith('#'); $l++) { if ($lines[$l].Trim()) { $at = $l } }
+            $lines = @($lines[0..$at]) + $linesToAdd.ToArray() + @(if ($at + 1 -lt $lines.Count) { $lines[($at + 1)..($lines.Count - 1)] })
+            $inner = $lines -join "`n"
+        } else {
+            $newSectionLines = if ($Section) { @("$indent# $($Section.Trim())$cr") + $linesToAdd.ToArray() } else { $linesToAdd.ToArray() }
+            $body = $inner.TrimEnd()
+            $inner = $body + $nl + ($newSectionLines -join "`n") + $nl + "`t"
+        }
+        $currentEntries = Get-CurrentEntries $inner
+    }
+
+    if ($currentEntries.Count -eq 0) { throw "Edit would leave $GroupTag with an empty ordered block" }
+
+    $lines = @($inner -split "`n")
+    $dropHeaders = @((Get-OrphanHeaderLines -Lines $lines) | Where-Object { $orphansBefore -cnotcontains (& $headerText $lines[$_]) })
+    if ($dropHeaders.Count -gt 0) {
+        $lines = @(for ($l = 0; $l -lt $lines.Count; $l++) { if ($dropHeaders -notcontains $l) { $lines[$l] } })
+        $inner = $lines -join "`n"
+    }
+
+    return $Text.Substring(0, $uStart) + $inner + $Text.Substring($uEnd)
+}
+
+# --- Action: Edit one group in a mod namelist in place ---
+function Invoke-NamelistEdit {
+    param(
+        [string]$Tag,
+        [string]$TargetGroup,
+        [string]$AddList,
+        [string]$RemoveList,
+        [string]$RenameList,
+        [string]$SetList,
+        [string]$AfterName,
+        [string]$SectionName,
+        [string]$RenameSectionList,
+        [switch]$Quiet
+    )
+    $Tag = $Tag.ToUpper().Trim() -replace '^INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
+    $modFile = Join-Path $RepoDir "common\units\names_divisions\INEX_${Tag}_names_divisions.txt"
+    if (-not (Test-Path $modFile)) { Write-Err "Mod namelist not found: $modFile"; return 1 }
+
+    $split = { param($s) @(if ($s) { $s -split ';' | ForEach-Object { $_.Trim() } | Where-Object { $_ } }) }
+    $adds = & $split $AddList
+    $removes = & $split $RemoveList
+    $renames = & $split $RenameList
+    $sets = & $split $SetList
+    $renameSections = & $split $RenameSectionList
+
+    if (($adds.Count + $removes.Count + $renames.Count + $sets.Count + $renameSections.Count) -eq 0) {
+        Write-Err "Nothing to do: pass -Add, -Remove, -Rename, -Set, and/or -RenameSection"
+        return 1
+    }
+
+    $groupsData = Get-NamelistAuditData -Path $modFile
+    $known = @($groupsData.Groups | ForEach-Object { $_.Tag })
+    $groupTag = Resolve-GroupTag -Tag $Tag -Name $TargetGroup -Known $known
+    if (-not $groupTag) {
+        Write-Err "Group '$TargetGroup' not found in $modFile. Available: $($known -join ', ')"
+        return 1
+    }
+
+    $text = [System.IO.File]::ReadAllText($modFile, [System.Text.Encoding]::UTF8)
+    try {
+        $newText = Edit-NamelistGroupText -Text $text -GroupTag $groupTag -Add $adds -Remove $removes -Rename $renames -Set $sets -After $AfterName -Section $SectionName -RenameSection $renameSections
+    } catch {
+        Write-Err $_.Exception.Message
+        return 1
+    }
+
+    [System.IO.File]::WriteAllText($modFile, $newText, (New-Object System.Text.UTF8Encoding $false))
+
+    $updatedData = Get-NamelistAuditData -Path $modFile
+    $g = $updatedData.Groups | Where-Object { $_.Tag -eq $groupTag }
+    Write-Host "Edited ${groupTag}: +$($adds.Count) -$($removes.Count) ~$($renames.Count + $sets.Count)" -ForegroundColor Green
+    if (-not $Quiet -and $g) {
+        $label = if ($g.Selector) { " `"$($g.Selector)`"" } else { '' }
+        Write-Host "$($g.Tag) ($($g.OrderedCount)/$($g.AuthoredCount))${label}: $($g.Entries -join '; ')"
+    }
+    return 0
+}
+
+# --- Helper: Compare two group sets ---
+function Compare-NamelistGroupSets {
+    param(
+        [object[]]$Old,
+        [object[]]$New
+    )
+
+    $oldByTag = @{}
+    foreach ($g in $Old) { $oldByTag[$g.Tag] = $g }
+    $newByTag = @{}
+    foreach ($g in $New) { $newByTag[$g.Tag] = $g }
+
+    $allTags = [System.Collections.Generic.List[string]]::new()
+    foreach ($g in $Old) { if (-not $allTags.Contains($g.Tag)) { $allTags.Add($g.Tag) } }
+    foreach ($g in $New) { if (-not $allTags.Contains($g.Tag)) { $allTags.Add($g.Tag) } }
+
+    $result = [System.Collections.Generic.List[psobject]]::new()
+    foreach ($t in $allTags) {
+        $hasOld = $oldByTag.ContainsKey($t)
+        $hasNew = $newByTag.ContainsKey($t)
+        $o = if ($hasOld) { $oldByTag[$t] } else { $null }
+        $n = if ($hasNew) { $newByTag[$t] } else { $null }
+        $oNames = if ($hasOld) { @($o.Entries) } else { @() }
+        $nNames = if ($hasNew) { @($n.Entries) } else { @() }
+
+        $status = if (-not $hasOld) { 'added' } elseif (-not $hasNew) { 'removed' } else { 'unchanged' }
+        $added = @($nNames | Where-Object { $oNames -cnotcontains $_ })
+        $removed = @($oNames | Where-Object { $nNames -cnotcontains $_ })
+        $attrs = [System.Collections.Generic.List[string]]::new()
+
+        if ($hasOld -and $hasNew) {
+            if ($o.Selector -cne $n.Selector) { $attrs.Add("selector: '$($o.Selector)' -> '$($n.Selector)'") }
+            $oTypes = ($o.DivisionTypes -join ' ')
+            $nTypes = ($n.DivisionTypes -join ' ')
+            if ($oTypes -cne $nTypes) { $attrs.Add("division_types: [$oTypes] -> [$nTypes]") }
+            if ($o.Fallback -cne $n.Fallback) { $attrs.Add("fallback: '$($o.Fallback)' -> '$($n.Fallback)'") }
+            $oLinks = ($o.LinkTargets -join ' ')
+            $nLinks = ($n.LinkTargets -join ' ')
+            if ($oLinks -cne $nLinks) { $attrs.Add("links: [$oLinks] -> [$nLinks]") }
+            if ($added.Count -or $removed.Count -or $attrs.Count -or ($oNames.Count -ne $nNames.Count)) { $status = 'modified' }
+        }
+
+        $result.Add([PSCustomObject]@{
+            GroupTag   = $t
+            Status     = $status
+            OldCount   = $oNames.Count
+            NewCount   = $nNames.Count
+            Added      = $added
+            Removed    = $removed
+            Attributes = $attrs
+        })
+    }
+    return , $result.ToArray()
+}
+
+# --- Helper: Render a group comparison as compact report lines ---
+function Format-NamelistDiff {
+    param(
+        [object[]]$Diff,
+        [string]$Tag,
+        [string]$BaseLabel
+    )
+    $cleanTag = $Tag.ToUpper().Trim() -replace '^INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
+    $short = { param($t) $t -replace "^$([regex]::Escape($cleanTag))_", '' }
+    $changed = @($Diff | Where-Object { $_.Status -ne 'unchanged' })
+    $same = @($Diff | Where-Object { $_.Status -eq 'unchanged' })
+    $lines = [System.Collections.Generic.List[string]]::new()
+    $lines.Add("Name diff $Tag ($BaseLabel -> working tree): $($changed.Count) changed, $($same.Count) unchanged")
+
+    foreach ($d in $changed) {
+        $name = & $short $d.GroupTag
+        switch ($d.Status) {
+            'added'   { $lines.Add("$name (new group, $($d.NewCount)): + $($d.Added -join '; ')") }
+            'removed' { $lines.Add("$name (group removed, had $($d.OldCount))") }
+            default {
+                $line = "$name $($d.OldCount)->$($d.NewCount):"
+                if ($d.Added.Count) { $line += " + $($d.Added -join '; ')" }
+                if ($d.Added.Count -and $d.Removed.Count) { $line += ' |' }
+                if ($d.Removed.Count) { $line += " - $($d.Removed -join '; ')" }
+                $lines.Add($line)
+            }
+        }
+        foreach ($a in $d.Attributes) { $lines.Add("  $a") }
+    }
+
+    $moves = @(foreach ($from in $Diff) {
+        foreach ($nm in $from.Removed) {
+            foreach ($to in $Diff) {
+                if ($to.GroupTag -ne $from.GroupTag -and $to.Added -ccontains $nm) { "$nm ($(& $short $from.GroupTag)->$(& $short $to.GroupTag))" }
+            }
+        }
+    })
+    if ($moves.Count) { $lines.Add("Moved: $($moves -join '; ')") }
+    if ($same.Count) { $lines.Add("Unchanged: $(($same | ForEach-Object { & $short $_.GroupTag }) -join ', ')") }
+    return , $lines.ToArray()
+}
+
+# --- Helper: Group comparison of a TAG's working-tree namelist against a git revision ---
+function Get-TagNamelistDiff {
+    param(
+        [string]$Tag,
+        [string]$BaseRev = 'HEAD'
+    )
+    $Tag = $Tag.ToUpper().Trim() -replace '^INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
+    $rel = "common/units/names_divisions/INEX_${Tag}_names_divisions.txt"
+    $modFile = Join-Path $RepoDir $rel
+    if (-not (Test-Path $modFile)) { throw "Mod namelist not found: $modFile" }
+
+    $null = & git -C $RepoDir rev-parse --verify --quiet "${BaseRev}^{commit}"
+    if ($LASTEXITCODE -ne 0) { throw "Unknown git revision: $BaseRev" }
+
+    $oldGroups = @()
+    $label = $BaseRev
+    $oldText = Get-GitFileText -Rev $BaseRev -RelPath $rel
+    if ($null -eq $oldText) {
+        $label = "$BaseRev, file absent"
+    } else {
+        $tempFile = [System.IO.Path]::GetTempFileName()
+        try {
+            [System.IO.File]::WriteAllText($tempFile, $oldText, (New-Object System.Text.UTF8Encoding $false))
+            $oldData = Get-NamelistAuditData -Path $tempFile
+            $oldGroups = $oldData.Groups
+        }
+        finally {
+            if (Test-Path $tempFile) { Remove-Item -Force $tempFile }
+        }
+    }
+    $newData = Get-NamelistAuditData -Path $modFile
+    return @{ Diff = (Compare-NamelistGroupSets -Old $oldGroups -New $newData.Groups); Label = $label; Groups = $newData.Groups }
+}
+
+# --- Action: Name-level diff of a mod namelist against a git revision ---
+function Invoke-NamelistDiff {
+    param(
+        [string]$Tag,
+        [string]$BaseRev = 'HEAD'
+    )
+    $Tag = $Tag.ToUpper().Trim()
+    try { $result = Get-TagNamelistDiff -Tag $Tag -BaseRev $BaseRev } catch { Write-Err $_.Exception.Message; return 1 }
+    foreach ($line in (Format-NamelistDiff -Diff $result.Diff -Tag $Tag -BaseLabel $result.Label)) { Write-Host $line }
+    return 0
+}
+
+# --- Helper: Country name of a TAG from its README row ---
+function Get-CountryName {
+    param([string]$Tag)
+    $readmePath = Join-Path $RepoDir 'README.md'
+    if (-not (Test-Path $readmePath)) { return $null }
+    $readme = [System.IO.File]::ReadAllText($readmePath, [System.Text.Encoding]::UTF8)
+    $cleanTag = $Tag.ToUpper().Trim() -replace '^INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
+    if ($cleanTag -eq 'GER_SS') { return 'Germany-Waffen-SS' }
+    if ($cleanTag -eq 'GER_ADDITIONAL') { return 'Germany-Additional' }
+    if ($cleanTag.StartsWith('GER')) { return 'Germany' }
+
+    $pattern = "\|\s*``?" + [regex]::Escape($cleanTag) + "``?\s*\|\s*([^|\r\n]+?)\s*\|"
+    $m = [regex]::Match($readme, $pattern)
+    if ($m.Success) {
+        $c = $m.Groups[1].Value.Trim()
+        if ($c -match '^([^/]+)') { return $matches[1].Trim() }
+        return $c
+    }
+    return $null
+}
+
+# --- Helper: Markdown change table (plan section) from a group comparison ---
+function Format-PlanChangeTable {
+    param(
+        [object[]]$Diff,
+        [string]$Tag
+    )
+    $cleanTag = $Tag.ToUpper().Trim() -replace '^INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
+    $short = { param($t) $t -replace "^$([regex]::Escape($cleanTag))_", '' }
+    $changed = @($Diff | Where-Object { $_.Status -ne 'unchanged' })
+    $same = @($Diff | Where-Object { $_.Status -eq 'unchanged' })
+    if ($changed.Count -eq 0) { return , @('No name changes versus the base revision.') }
+
+    $movedTo = @{}; $movedFrom = @{}
+    foreach ($from in $Diff) {
+        foreach ($nm in $from.Removed) {
+            foreach ($to in $Diff) {
+                if ($to.GroupTag -ne $from.GroupTag -and $to.Added -ccontains $nm) {
+                    $movedTo["$($from.GroupTag)|$nm"] = & $short $to.GroupTag
+                    $movedFrom["$($to.GroupTag)|$nm"] = & $short $from.GroupTag
+                }
+            }
+        }
+    }
+
+    $lines = [System.Collections.Generic.List[string]]::new()
+    $lines.Add('| Group | Count | Added | Removed | Other |')
+    $lines.Add('|---|---|---|---|---|')
+    foreach ($d in $changed) {
+        $count = switch ($d.Status) { 'added' { "new, $($d.NewCount)" } 'removed' { "removed, had $($d.OldCount)" } default { "$($d.OldCount) -> $($d.NewCount)" } }
+        $added = @($d.Added | ForEach-Object { $k = "$($d.GroupTag)|$_"; if ($movedFrom.ContainsKey($k)) { "$_ (from $($movedFrom[$k]))" } else { $_ } })
+        $removed = @($d.Removed | ForEach-Object { $k = "$($d.GroupTag)|$_"; if ($movedTo.ContainsKey($k)) { "$_ (to $($movedTo[$k]))" } else { $_ } })
+        $cell = { param($items) if ($items.Count) { $items -join ', ' } else { '-' } }
+        $other = if ($d.Attributes.Count) { $d.Attributes -join '; ' } else { '-' }
+        $lines.Add("| $(& $short $d.GroupTag) | $count | $(& $cell $added) | $(& $cell $removed) | $other |")
+    }
+    if ($same.Count) { $lines.Add(''); $lines.Add("Unchanged: $(($same | ForEach-Object { & $short $_.GroupTag }) -join ', ')") }
+    return , $lines.ToArray()
+}
+
+# --- Helper: Replace the generated change table between the plan's markers ---
+function Set-PlanChangeTable {
+    param(
+        [string]$PlanText,
+        [string[]]$TableLines
+    )
+    $nl = if ($PlanText.Contains("`r`n")) { "`r`n" } else { "`n" }
+    $begin = [regex]::Match($PlanText, '<!-- BEGIN CHANGE TABLE[^\r\n]*-->')
+    $end = [regex]::Match($PlanText, '<!-- END CHANGE TABLE -->')
+    if (-not $begin.Success -or -not $end.Success -or $end.Index -lt $begin.Index) { throw "Plan has no BEGIN/END CHANGE TABLE markers" }
+    $head = $PlanText.Substring(0, $begin.Index + $begin.Length)
+    return $head + $nl + ($TableLines -join $nl) + $nl + $PlanText.Substring($end.Index)
+}
+
+# --- Helper: Audit plan skeleton ---
+function New-AuditPlanText {
+    param(
+        [string]$Country,
+        [string]$Tag,
+        [string]$Date,
+        [string[]]$FindingLines,
+        [string]$Summary,
+        [string[]]$TableLines
+    )
+    $l = [System.Collections.Generic.List[string]]::new()
+    $l.Add("# $Country ($Tag) Namelist Audit - $Date"); $l.Add('')
+    $l.Add("File: ``common/units/names_divisions/INEX_${Tag}_names_divisions.txt``"); $l.Add('')
+    $l.Add("## Initial report (``-Audit $Tag``)")
+    $l.Add("- $Summary")
+    foreach ($f in $FindingLines) { $l.Add("- $f") }
+    $l.Add('- Found on manual review: <!-- TODO: issues the script cannot see, or "none" -->'); $l.Add('')
+    $l.Add('## User decisions'); $l.Add('<!-- TODO: checkpoint answers, or "None required" -->'); $l.Add('')
+    $l.Add('## Research'); $l.Add('<!-- TODO: dispatches (agent, web calls used) and main sources -->'); $l.Add('')
+    $l.Add('## Per-group changes')
+    $l.Add('<!-- BEGIN CHANGE TABLE: generated by build.ps1 -AuditPlan; rerun it to refresh, never edit by hand -->')
+    foreach ($t in $TableLines) { $l.Add($t) }
+    $l.Add('<!-- END CHANGE TABLE -->'); $l.Add('')
+    $l.Add('## Rationale'); $l.Add('<!-- TODO: organization applied, why names moved, respellings -->'); $l.Add('')
+    $l.Add('## Verified formations & commanders'); $l.Add('<!-- TODO: every formation and commander the file keeps, legacy included: source or "well documented" -->'); $l.Add('')
+    $l.Add('## Author confirmation'); $l.Add('<!-- TODO: unverified entries kept pending author confirmation, or "None" -->'); $l.Add('')
+    $l.Add('## Kept on judgment'); $l.Add('<!-- TODO: remaining flags kept, each with its reason, or "None" -->'); $l.Add('')
+    $l.Add('## Review'); $l.Add('<!-- TODO: reviewer verdict and how each Critical/Important finding was handled -->')
+    return ($l -join "`n") + "`n"
+}
+
+# --- Action: Create an audit plan skeleton, or refresh its generated change table ---
+function Invoke-AuditPlan {
+    param(
+        [string]$Tag,
+        [string]$BaseRev = 'HEAD'
+    )
+    $Tag = $Tag.ToUpper().Trim() -replace '^INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
+    $country = Get-CountryName -Tag $Tag
+    if (-not $country) { Write-Err "README.md has no row for $Tag"; return 1 }
+    try { $result = Get-TagNamelistDiff -Tag $Tag -BaseRev $BaseRev } catch { Write-Err $_.Exception.Message; return 1 }
+    $table = Format-PlanChangeTable -Diff $result.Diff -Tag $Tag
+    $changedCount = @($result.Diff | Where-Object { $_.Status -ne 'unchanged' }).Count
+
+    $plansDir = Join-Path $RepoDir 'docs\superpowers\plans'
+    if (-not (Test-Path $plansDir)) { New-Item -ItemType Directory -Force $plansDir | Out-Null }
+    $date = (Get-Date).ToString('yyyy-MM-dd')
+    $slug = $country.ToLower() -replace ' ', '-'
+    $path = Join-Path $plansDir "$date-$slug-audit.md"
+    $rel = "docs/superpowers/plans/$date-$slug-audit.md"
+    $utf8 = New-Object System.Text.UTF8Encoding $false
+
+    if (Test-Path $path) {
+        $text = [System.IO.File]::ReadAllText($path, [System.Text.Encoding]::UTF8)
+        try { $text = Set-PlanChangeTable -PlanText $text -TableLines $table } catch { Write-Err "${rel}: $($_.Exception.Message)"; return 1 }
+        [System.IO.File]::WriteAllText($path, $text, $utf8)
+        $verb = 'Refreshed change table in'
+    } else {
+        $target = Join-Path $RepoDir "common\units\names_divisions\INEX_${Tag}_names_divisions.txt"
+        $data = Get-NamelistAuditData -Path $target
+        $findingLines = @(foreach ($g in $data.Groups) {
+            if ($g.Flags.Count -gt 0) { "[$($g.Tag)] flags: $($g.Flags -join ', ')" }
+        })
+        $summary = "AUDIT SUMMARY ${Tag}: GROUPS=$($data.Groups.Count) AUTHORED=$((($data.Groups | Measure-Object -Property AuthoredCount -Sum).Sum))/((($data.Groups | Measure-Object -Property OrderedCount -Sum).Sum))"
+        $text = New-AuditPlanText -Country $country -Tag $Tag -Date $date -FindingLines $findingLines -Summary $summary -TableLines $table
+        [System.IO.File]::WriteAllText($path, $text, $utf8)
+        $verb = 'Created'
+    }
+    $todos = ([regex]::Matches($text, '<!-- TODO')).Count
+    Write-Host "$verb ${rel}: $changedCount changed group(s) vs $($result.Label); $todos TODO section(s) left"
+    return 0
+}
+
+# --- Helper: Refresh the group rows of a nation's wiki page ---
+function Update-WikiGroupRows {
+    param(
+        [string]$WikiText,
+        [object[]]$Groups,
+        [string]$Tag
+    )
+    $cleanTag = $Tag.ToUpper().Trim() -replace '^INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
+    $byTag = @{}; foreach ($g in $Groups) { $byTag[$g.Tag] = $g }
+    $changes = [System.Collections.Generic.List[string]]::new()
+    $stale = [System.Collections.Generic.List[string]]::new()
+    $seen = @{}
+    $lines = @($WikiText -split "`n")
+
+    for ($i = 0; $i -lt $lines.Count; $i++) {
+        $cr = if ($lines[$i].EndsWith("`r")) { "`r" } else { '' }
+        $raw = $lines[$i].TrimEnd("`r")
+        $m = [regex]::Match($raw, "^\|\s*``([A-Z0-9_]+)``\s*\|")
+        if (-not $m.Success) { continue }
+        $tagName = $m.Groups[1].Value
+        $seen[$tagName] = $true
+        $g = $byTag[$tagName]
+        if (-not $g) { $stale.Add($tagName); continue }
+
+        $cells = $raw.Split('|')
+        if ($cells.Count -lt 5) { continue }
+        $notes = @()
+
+        # Cell 2: UI Name / Selector
+        if ($g.Selector -and $cells[2].Trim() -cne $g.Selector) {
+            $notes += "name '$($cells[2].Trim())' -> '$($g.Selector)'"
+            $cells[2] = " $($g.Selector) "
+        }
+
+        # Cell 3: Division types
+        $typesStr = ($g.DivisionTypes -join ', ')
+        if ($typesStr -and $cells[3].Trim() -cne $typesStr) {
+            $notes += "types '$($cells[3].Trim())' -> '$typesStr'"
+            $cells[3] = " $typesStr "
+        }
+
+        # Cell 4: Fallback
+        if ($g.Fallback) {
+            $currentFb = $cells[4].Trim() -replace '^`([^`]+)`$', '$1'
+            if ($currentFb -cne $g.Fallback) {
+                $notes += "fallback '$currentFb' -> '$($g.Fallback)'"
+                $cells[4] = " ``$($g.Fallback)`` "
+            }
+        }
+
+        if ($notes.Count) {
+            $lines[$i] = ($cells -join '|') + $cr
+            $changes.Add("$tagName`: $($notes -join '; ')")
+        }
+    }
+    $missing = @($Groups | Where-Object { -not $seen.ContainsKey($_.Tag) } | ForEach-Object { $_.Tag })
+    return @{ Text = ($lines -join "`n"); Changes = $changes.ToArray(); Missing = $missing; Stale = $stale.ToArray() }
+}
+
+# --- Helper: Prose lines of a wiki page that mention changed names ---
+function Find-WikiProseMentions {
+    param(
+        [string]$WikiText,
+        [string[]]$Names,
+        [string]$Tag,
+        [hashtable]$Labels = @{}
+    )
+    $out = [System.Collections.Generic.List[string]]::new()
+    $patterns = @($Names | Select-Object -Unique | ForEach-Object { @{ Name = $_; Rx = '(?<![\p{L}\p{N}])' + [regex]::Escape($_) + '(?![\p{L}\p{N}])' } })
+    $lines = @($WikiText -split "`n")
+    for ($i = 0; $i -lt $lines.Count; $i++) {
+        $raw = $lines[$i].TrimEnd("`r")
+        if ($raw -match "^\|\s*``") { continue }
+        $hits = @($patterns | Where-Object { $raw -cmatch $_.Rx } | ForEach-Object { if ($Labels.ContainsKey($_.Name)) { "$($_.Name) ($($Labels[$_.Name]))" } else { $_.Name } })
+        if ($hits.Count) { $out.Add("L$($i + 1): $($hits -join ', ')") }
+    }
+    return , $out.ToArray()
+}
+
+# --- Action: Sync a nation's wiki page rows and its wiki/Home.md group count with the namelist ---
+function Invoke-SyncWiki {
+    param([string]$Tag)
+    $Tag = $Tag.ToUpper().Trim() -replace '^INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
+    $modFile = Join-Path $RepoDir "common\units\names_divisions\INEX_${Tag}_names_divisions.txt"
+    if (-not (Test-Path $modFile)) { Write-Err "Mod namelist not found: $modFile"; return 1 }
+    $country = Get-CountryName -Tag $Tag
+    if (-not $country) { Write-Err "README.md has no row for $Tag"; return 1 }
+
+    $wikiPath = Join-Path $RepoDir "wiki\$country.md"
+    if (-not (Test-Path $wikiPath)) {
+        $alt = $country -replace ' ', '-'
+        $wikiPath = Join-Path $RepoDir "wiki\$alt.md"
+    }
+    if (-not (Test-Path $wikiPath)) { Write-Err "wiki file not found for '$country'"; return 1 }
+
+    $groupsData = Get-NamelistAuditData -Path $modFile
+    $groups = $groupsData.Groups
+    $utf8 = New-Object System.Text.UTF8Encoding $false
+
+    $wiki = [System.IO.File]::ReadAllText($wikiPath, [System.Text.Encoding]::UTF8)
+    $r = Update-WikiGroupRows -WikiText $wiki -Groups $groups -Tag $Tag
+    if ($r.Text -cne $wiki) { [System.IO.File]::WriteAllText($wikiPath, $r.Text, $utf8) }
+    Write-Host "$([System.IO.Path]::GetFileName($wikiPath)): $($r.Changes.Count) row(s) updated"
+    foreach ($c in $r.Changes) { Write-Host "  $c" }
+    if ($r.Missing.Count) { Write-Host "  no row in wiki table (add by hand): $($r.Missing -join ', ')" }
+    if ($r.Stale.Count) { Write-Host "  stale row in wiki table (remove by hand): $($r.Stale -join ', ')" }
+
+    $diff = $null
+    try { $diff = Get-TagNamelistDiff -Tag $Tag -BaseRev 'HEAD' } catch { Write-Host "  prose check skipped: $($_.Exception.Message)" }
+    if ($diff) {
+        $short = { param($t) $t -replace "^$([regex]::Escape($Tag))_", '' }
+        $labels = @{}
+        foreach ($from in $diff.Diff) {
+            foreach ($nm in $from.Removed) {
+                $to = @($diff.Diff | Where-Object { $_.GroupTag -ne $from.GroupTag -and $_.Added -ccontains $nm } | ForEach-Object { & $short $_.GroupTag })
+                $labels[$nm] = if ($to.Count) { "moved $(& $short $from.GroupTag)->$($to -join '/')" } else { "removed from $(& $short $from.GroupTag)" }
+            }
+        }
+        $mentions = if ($labels.Count) { Find-WikiProseMentions -WikiText $r.Text -Names @($labels.Keys) -Tag $Tag -Labels $labels } else { @() }
+        if ($mentions.Count) {
+            Write-Host "  prose mentioning names removed or moved since HEAD (review only these lines):"
+            foreach ($m in $mentions) { Write-Host "    $m" }
+        }
+    }
+
+    $homePath = Join-Path $RepoDir 'wiki\Home.md'
+    if (Test-Path $homePath) {
+        $homeText = [System.IO.File]::ReadAllText($homePath, [System.Text.Encoding]::UTF8)
+        $pattern = "(\|\s*``?$([regex]::Escape($Tag))``?\s*\|\s*)(\d+)(\s*\|)"
+        $m = [regex]::Match($homeText, $pattern)
+        if (-not $m.Success) {
+            Write-Host "wiki/Home.md: no $Tag row"
+        } elseif ([int]$m.Groups[2].Value -ne $groups.Count) {
+            $homeText = $homeText.Substring(0, $m.Groups[2].Index) + $groups.Count + $homeText.Substring($m.Groups[2].Index + $m.Groups[2].Length)
+            [System.IO.File]::WriteAllText($homePath, $homeText, $utf8)
+            Write-Host "wiki/Home.md: $Tag group count $($m.Groups[2].Value) -> $($groups.Count)"
+        } else {
+            Write-Host "wiki/Home.md: $Tag group count $($groups.Count) (unchanged)"
+        }
+    }
+    return 0
+}
+
 # --- Action: Audit namelist quality ---
 function Invoke-NamelistAudit {
-    param([string]$Key, [string]$CompareRef)
+    param(
+        [string]$Key,
+        [string]$CompareRef,
+        [string]$TargetGroup,
+        [switch]$NamesOnly,
+        [switch]$Sections
+    )
 
     $namelistDir = Join-Path $RepoDir "common\units\names_divisions"
-    $Key = $Key.ToUpper().Trim()
+    $Key = $Key.ToUpper().Trim() -replace '^INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
 
     if ($Key -eq 'ALL') {
         Write-Step "Namelist quality triage (most flags first)"
@@ -1017,6 +1919,43 @@ function Invoke-NamelistAudit {
     }
 
     $data = Get-NamelistAuditData -Path $target
+
+    if ($TargetGroup -or $NamesOnly) {
+        $selected = $data.Groups
+        if ($TargetGroup) {
+            $known = @($data.Groups | ForEach-Object { $_.Tag })
+            $wanted = @($TargetGroup -split ',' | ForEach-Object { $_.Trim() } | Where-Object { $_ })
+            $resolved = @($wanted | ForEach-Object { Resolve-GroupTag -Tag $Key -Name $_ -Known $known })
+            $missing = @(for ($i = 0; $i -lt $wanted.Count; $i++) { if (-not $resolved[$i]) { $wanted[$i] } })
+            if ($missing.Count -gt 0) {
+                Write-Err "Group(s) not found: $($missing -join ', '). Available: $(($data.Groups | ForEach-Object { $_.Tag }) -join ', ')"
+            }
+            $selected = @($data.Groups | Where-Object { $resolved -contains $_.Tag })
+        }
+        foreach ($g in $selected) {
+            if ($NamesOnly) {
+                $label = if ($g.Selector) { " `"$($g.Selector)`"" } else { '' }
+                $body = if ($Sections -and $g.RawBlock) {
+                    (@(Get-GroupSections -RawBlock $g.RawBlock) | ForEach-Object {
+                        $names = if ($_.Names.Count) { $_.Names -join '; ' } else { '(empty)' }
+                        if ($_.Header) { "[$($_.Header)] $names" } else { $names }
+                    }) -join ' '
+                } else { $g.Entries -join '; ' }
+                Write-Host "$($g.Tag) ($($g.OrderedCount)/$($g.AuthoredCount))${label}: $body"
+            } else {
+                Write-Host "[$($g.Tag)] `"$($g.Selector)`"" -ForegroundColor Green
+                Write-Host "  Types:    $($g.DivisionTypes -join ' ')" -ForegroundColor Gray
+                Write-Host "  Fallback: $($g.Fallback)" -ForegroundColor Gray
+                Write-Host "  Ordered:  $($g.OrderedCount) entries, $($g.AuthoredCount) authored" -ForegroundColor Gray
+                if ($g.Flags.Count -gt 0) {
+                    Write-Host "  Flags:    $($g.Flags -join ', ')" -ForegroundColor Yellow
+                }
+                Write-Host "  Entries:  $($g.Entries -join '; ')"
+            }
+        }
+        return
+    }
+
     Write-Step "Quality audit: INEX_${Key}_names_divisions.txt ($($data.Groups.Count) groups)"
     foreach ($ff in $data.FileFlags) { Write-Warn "File: $ff" }
 
@@ -1048,6 +1987,24 @@ function Invoke-NamelistAudit {
         $allFlags | Group-Object | Sort-Object Count -Descending | ForEach-Object { Write-Info "$($_.Name): $($_.Count)" }
     }
 
+    # Check PlanTodo
+    $countryName = Get-CountryName -Tag $Key
+    if ($countryName) {
+        $slug = $countryName.ToLower() -replace ' ', '-'
+        $planFile = Get-ChildItem -Path (Join-Path $RepoDir 'docs\superpowers\plans') -Filter "*-$slug-audit.md" -ErrorAction SilentlyContinue | Select-Object -First 1
+        if ($planFile) {
+            $planContent = [System.IO.File]::ReadAllText($planFile.FullName, [System.Text.Encoding]::UTF8)
+            $todos = ([regex]::Matches($planContent, '<!-- TODO')).Count
+            if ($todos -gt 0) {
+                Write-Warn "PlanTodo: $($planFile.Name) has $todos unfilled TODO section(s)"
+            }
+        }
+    }
+
+    $totOrdered = ($data.Groups | Measure-Object -Property OrderedCount -Sum).Sum
+    $totAuthored = ($data.Groups | Measure-Object -Property AuthoredCount -Sum).Sum
+    Write-Host "`nAUDIT SUMMARY ${Key}: GROUPS=$($data.Groups.Count) AUTHORED=$totAuthored/$totOrdered FLAGS=$($allFlags.Count)" -ForegroundColor Cyan
+
     if ($CompareRef) {
         $relPath = "common/units/names_divisions/INEX_${Key}_names_divisions.txt"
         $oldText = Get-GitFileText -RepoPath $RepoDir -Ref $CompareRef -RelPath $relPath
@@ -1076,11 +2033,32 @@ function Invoke-NamelistAudit {
 
 # --- Action: Audit ---
 if ($Audit) {
-    Invoke-NamelistAudit -Key $Audit -CompareRef $Compare
+    Invoke-NamelistAudit -Key $Audit -CompareRef $Compare -TargetGroup $Group -NamesOnly:$NamesOnly -Sections:$Sections
     $stopwatch.Stop()
     Write-Info "Completed in $($stopwatch.Elapsed.TotalSeconds.ToString('0.00'))s"
     exit 0
 }
+
+# --- Action: EditNames ---
+if ($EditNames) {
+    exit (Invoke-NamelistEdit -Tag $EditNames -TargetGroup $Group -AddList $Add -RemoveList $Remove -RenameList $Rename -SetList $Set -AfterName $After -SectionName $Section -RenameSectionList $RenameSection -Quiet:$Quiet)
+}
+
+# --- Action: DiffNames ---
+if ($DiffNames) {
+    exit (Invoke-NamelistDiff -Tag $DiffNames -BaseRev $Base)
+}
+
+# --- Action: AuditPlan ---
+if ($AuditPlan) {
+    exit (Invoke-AuditPlan -Tag $AuditPlan -BaseRev $Base)
+}
+
+# --- Action: SyncWiki ---
+if ($SyncWiki) {
+    exit (Invoke-SyncWiki -Tag $SyncWiki)
+}
+
 
 # --- Action: InspectVanilla ---
 if ($InspectVanilla) {

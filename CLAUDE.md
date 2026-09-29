@@ -1,8 +1,9 @@
 # Immersive Namelists Expanded (INEX) Development Rules
 
 ## 1. Workspace & Architecture
-- **Single-Root**: Root directly hosts `.git/`, `descriptor.mod`, `thumbnail.png`, `build.ps1`, `common/`, `tests/`, `wiki/`, `.github/` (no nested folders).
+- **Single-Root**: Root directly hosts `.git/`, `descriptor.mod`, `thumbnail.png`, `build.ps1`, `common/`, `tests/`, `wiki/`, `.github/`, docs (`README.md`, `WORKSHOP_DESCRIPTION_GUIDELINES.md`), and agent configs (`CLAUDE.md`, `.claude/` for Claude Code; `GEMINI.md`, `.agents/` for Google Antigravity).
 - **Artifacts**: Releases -> `artifacts/` (`build.ps1 -Package`). Temp files -> `scratch/`.
+- **Per-Nation Plans**: `docs/superpowers/plans/YYYY-MM-DD-<country>-audit.md` (for audits) or `<country>-namelist.md` (for authoring).
 
 ## 2. File & Group Conventions
 - **Files**: `common/units/names_divisions/INEX_<TAG>_names_divisions.txt`. UTF-8 without BOM, balanced `{}`.
@@ -24,9 +25,14 @@ When adding, expanding, or modifying namelists:
 5. **In-Chat Description**: On request, output full ready-to-copy Steam BBCode description + summary of changes.
 
 ## 5. Build & Validation Protocol
-- `powershell -File .\build.ps1 -ValidateOnly` : Syntax and bracket validation.
+- `powershell -File .\build.ps1 -ValidateOnly` : Syntax and bracket validation. Required before completing any namelist task.
 - `powershell -File .\build.ps1 -Test`         : Full Pester unit test suite (engine invariants and documentation sync).
-- `powershell -File .\build.ps1 -Audit <TAG>`  : Heuristic quality scorecard (`-Audit ALL` for full report; add `-Compare HEAD` for a review list of tag and name changes).
+- `powershell -File .\build.ps1 -Audit <TAG>`  : Heuristic quality scorecard (`-Audit ALL` for full report; add `-Compare HEAD` for a review list of tag and name changes; add `-Group <A>,<B> -NamesOnly [-Sections]` to inspect compact name lines).
+- `powershell -File .\build.ps1 -EditNames <TAG> -Group <GROUP> [-Remove "A; B"] [-Rename "Old=New"] [-Add "C; D" [-Section <header>]] [-Set "Idx=Val"]` : Edit one group's names in place without opening the file; auto-handles numbering, indentation, and header cleanup.
+- `powershell -File .\build.ps1 -DiffNames <TAG> [-Base <rev>]` : Name-level diff against git (`HEAD` by default) with additions, removals, and moves.
+- `powershell -File .\build.ps1 -AuditPlan <TAG>` : Create `docs/superpowers/plans/YYYY-MM-DD-<country>-audit.md` or refresh its generated change table; reports unfilled TODO sections as `PlanTodo`.
+- `powershell -File .\build.ps1 -SyncWiki <TAG>`  : Sync `wiki/<Country>.md` display names, types, and fallbacks; reports stale/missing tags and prose mentions.
+- `powershell -File .\build.ps1 -InspectVanilla <TAG> [-Group <GROUP>]` : Vanilla groups, counts, fallbacks, and scripted focus/event references.
 - `powershell -File .\build.ps1 -Package`      : Staged release zip in `artifacts/` (excludes dev/test/docs).
 - `powershell -File .\build.ps1 -DevLink`      : Zero-copy live editing symlink in Paradox launcher mod directory.
 
@@ -46,3 +52,11 @@ When adding, expanding, or modifying namelists:
 ## 7. Related Skills
 - **Authoring**: `hoi4-inex-namelist-authoring` (`.claude/skills/` or `.agents/skills/`) for new/expanded namelists via Historical Research and Code Reviewer subagents.
 - **Audit**: `hoi4-inex-namelist-audit` (`.claude/skills/` or `.agents/skills/`) to audit and modernize existing namelists starting from `build.ps1 -Audit <TAG>`.
+
+## 8. Agent Config Mirrors
+Claude Code and Google Antigravity use mirrored configs:
+- `CLAUDE.md` ⇄ `GEMINI.md` (byte-identical).
+- `.claude/skills/<skill>/SKILL.md` ⇄ `.agents/skills/<skill>/SKILL.md`, for `hoi4-inex-namelist-authoring` and `hoi4-inex-namelist-audit` (byte-identical).
+- The subagent briefs exist once, in `.claude/agents/`: `inex-historical-researcher.md` (full OOB dossier for authoring), `inex-audit-researcher.md` (budgeted fact-check for audits: web-only tools, ≤25 web calls, `effort: medium`, `maxTurns: 30`) and `inex-code-reviewer.md`. Claude dispatches them as named agents; Antigravity passes their path to `invoke_subagent`.
+
+When a rule, standard or runbook step changes in one file, change its mirror in the same task. The project rules stay identical. Confirm with `git status` that both sides changed before reporting completion.

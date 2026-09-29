@@ -48,6 +48,7 @@ To maintain high quality, prevent context exhaustion from broad historical resea
 The primary agent **must not** exhaust its main context window with extensive web searches, Wikipedia OOB exploration, or raw linguistic queries. Instead, dispatch a dedicated **"Historical Research"** subagent to conduct the historical and linguistic investigation.
 
 - **Subagent Role**: `"Historical Research"` (or `"Historical Researcher"`)
+- **Subagent Configuration**: Follows the brief in `.claude/agents/inex-historical-researcher.md`
 - **Subagent Type**: `"research"` (or default agent with read and search capabilities)
 - **Workspace**: `"inherit"`
 
@@ -112,6 +113,7 @@ Upon receiving the Research Brief from the "Historical Research" subagent, the p
 After implementing the files and running local validation, the primary agent **must dispatch a dedicated "Code Reviewer" subagent** to independently audit and verify all changes before declaring the task complete.
 
 - **Subagent Role**: `"Code Reviewer"`
+- **Subagent Configuration**: Follows the brief in `.claude/agents/inex-code-reviewer.md`
 - **Subagent Type**: `"self"` (or subagent equipped with read, git, and command execution tools)
 - **Workspace**: `"inherit"`
 
@@ -141,23 +143,23 @@ The "Code Reviewer" subagent must independently inspect the git diff and run ver
    - Runs `powershell -File .\build.ps1 -Test` and confirms all Pester unit tests pass with zero failures.
 
 #### Sample Dispatch Prompt for "Code Reviewer" Subagent:
-The checklist above is enforced mostly by `-ValidateOnly`, `-Test` and `-Audit`, so the reviewer runs those and spends its effort on what tooling cannot judge.
+The checklist above is enforced mostly by `-ValidateOnly`, `-Test`, `-DiffNames`, and `-Audit`, so the reviewer runs those and spends its effort on what tooling cannot judge. Follow strict reading economy: do not open the full namelist file.
 
 ```markdown
 You are a specialized Code Reviewer subagent for the Hearts of Iron IV mod "Immersive Namelists Expanded" (INEX).
-Target Country: <Country Name> (<TAG>). Review all uncommitted changes for <TAG>. Do not edit files.
+Target Country: <Country Name> (<TAG>). Review all uncommitted changes for <TAG>. Follow reading economy: never open the full namelist file.
 
-1. Run `powershell -File .\build.ps1 -ValidateOnly`, `-Test` and `-Audit <TAG> -Compare HEAD`.
+1. Run `powershell -File .\build.ps1 -ValidateOnly`, `-Test`, `-DiffNames <TAG>` and `-Audit <TAG> -NamesOnly`.
    Treat their output as authoritative for syntax, engine invariants, tag format and uniqueness,
-   links, selectors and encoding. Do not re-check those by hand or read the raw namelist diff.
-2. From the -Audit output: selectors concise and without demonyms; nicknamed infantry/motorized/
+   links, selectors and encoding. Do not re-check those by hand or read the raw namelist file.
+2. From the -Audit and -DiffNames output: selectors concise and without demonyms; nicknamed infantry/motorized/
    mechanized/armor groups have a plain variant sharing numbering (unless vanilla already
    nicknames them); ideology groups use has_government and never use has_completed_focus;
    identities listed as shared across groups are intended.
-3. Linguistics of the "Added or changed names" list: nominative case, diacritics, no machine
+3. Linguistics of the added or changed names: nominative case, diacritics, no machine
    translation. Web spot-check the 5-10 names you are least sure of; do not verify every name.
 4. Docs: `WORKSHOP_DESCRIPTION_GUIDELINES.md` row and BBCode (no emojis, concise), `README.md` table,
-   `wiki/<Nation>.md`, `wiki/Home.md`, `wiki/_Sidebar.md` match the file.
+   `wiki/<Nation>.md`, `wiki/Home.md`, `wiki/_Sidebar.md` match the file (`git diff` for docs).
 
 Report: Status APPROVED or CHANGES_REQUESTED, then issues as Critical / Important / Minor with file:line. Be concise.
 ```
@@ -362,6 +364,13 @@ powershell -File .\build.ps1 -Test
 
 # 2b. Quality scorecard plus review list (new/removed tags, changed names only)
 powershell -File .\build.ps1 -Audit <TAG> -Compare HEAD
+
+# 2c. Name-level diff against git revision with move detection
+powershell -File .\build.ps1 -DiffNames <TAG>
+
+# 2d. Compact name list or group inspection
+powershell -File .\build.ps1 -Audit <TAG> -NamesOnly
+powershell -File .\build.ps1 -Audit <TAG> -Group <GROUP> -NamesOnly -Sections
 
 # 3. Release packaging test (ensures clean ZIP excluding dev artifacts)
 powershell -File .\build.ps1 -Package

@@ -116,3 +116,26 @@ Describe "Agent Rule Files: CLAUDE.md and GEMINI.md" {
     }
 }
 
+Describe "Subagent Config & Budgeting" {
+    It "Subagent briefs exist in .claude/agents" {
+        $requiredAgents = @('inex-audit-researcher.md', 'inex-historical-researcher.md', 'inex-code-reviewer.md')
+        foreach ($agent in $requiredAgents) {
+            $path = Join-Path $script:RepoRoot ".claude\agents\$agent"
+            (Test-Path $path) | Should -BeTrue -Because "subagent brief '$agent' must exist in .claude/agents/"
+        }
+    }
+
+    It "Audit researcher stays budgeted (effort, maxTurns, web-only tools, stated call budget)" {
+        $text = [System.IO.File]::ReadAllText((Join-Path $script:RepoRoot '.claude\agents\inex-audit-researcher.md'), [System.Text.Encoding]::UTF8)
+        $front = [regex]::Match($text, '(?s)^---\r?\n(.*?)\r?\n---').Groups[1].Value
+        $front | Should -Match '(?m)^effort:\s*(low|medium)\s*$' -Because "audit research is lookup work; high effort multiplies thinking tokens"
+        $turns = [regex]::Match($front, '(?m)^maxTurns:\s*(\d+)\s*$')
+        $turns.Success | Should -BeTrue -Because "a hard turn cap stops runaway research"
+        [int]$turns.Groups[1].Value | Should -BeLessOrEqual 40
+        $tools = [regex]::Match($front, '(?m)^tools:\s*(.+)$').Groups[1].Value
+        $tools | Should -Not -Match '\b(Read|Grep|Glob|Bash|PowerShell|Write|Edit)\b' -Because "group names are pasted into the prompt; the namelist is never opened"
+        $text | Should -Match 'at most \d+ web calls'
+    }
+}
+
+
