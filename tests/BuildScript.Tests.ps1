@@ -715,6 +715,31 @@ TST_CAV_01 = {
         { Edit-NamelistGroupText -Text $script:SampleNamelist -GroupTag 'TST_INF_01' -Add @('1. Divisioona') } | Should -Throw
         { Edit-NamelistGroupText -Text $script:SampleNamelist -GroupTag 'TST_CAV_01' -Remove @('Hämeen Ratsurykmentti') } | Should -Throw
     }
+
+    It "Updates selector name in place" {
+        $edited = Edit-NamelistGroupText -Text $script:SampleNamelist -GroupTag 'TST_INF_01' -Selector 'Rifle Divisions'
+        $edited | Should -Match 'name = "Rifle Divisions"'
+        $edited | Should -Not -Match 'name = "Infantry Divisions"'
+    }
+
+    It "Adds and removes division types in place" {
+        $edited = Edit-NamelistGroupText -Text $script:SampleNamelist -GroupTag 'TST_INF_01' -AddTypes @('motorized')
+        $edited | Should -Match 'division_types = \{ "infantry" "motorized" \}'
+
+        $edited2 = Edit-NamelistGroupText -Text $edited -GroupTag 'TST_INF_01' -RemoveTypes @('infantry')
+        $edited2 | Should -Match 'division_types = \{ "motorized" \}'
+    }
+
+    It "Throws on invalid division type tokens" {
+        { Edit-NamelistGroupText -Text $script:SampleNamelist -GroupTag 'TST_INF_01' -AddTypes @('invalid_armor') } | Should -Throw
+    }
+
+    It "Sets can_use condition and rejects focus locks" {
+        $edited = Edit-NamelistGroupText -Text $script:SampleNamelist -GroupTag 'TST_INF_01' -CanUse 'has_government = democratic'
+        $edited | Should -Match 'can_use = \{ has_government = democratic \}'
+
+        { Edit-NamelistGroupText -Text $script:SampleNamelist -GroupTag 'TST_INF_01' -CanUse 'has_completed_focus = my_focus' } | Should -Throw
+    }
 }
 
 Describe "build.ps1 Helper: Compare-NamelistGroupSets and Format-NamelistDiff" {
@@ -802,6 +827,25 @@ Other notes.
         $hits.Count | Should -Be 1
         $hits[0] | Should -Be 'L2: Mannerheim'
     }
+
+    It "Synchronizes wiki group headings with new selector while preserving native parenthetical" {
+        $dash = [char]0x2014
+        $wiki = @"
+# Testland
+## Group Details
+### ``TST_INF_01`` $dash Old Infantry (Jalkaväki)
+Description of infantry.
+### ``TST_CAV_01`` $dash Cavalry
+Description of cavalry.
+"@
+        $groups = @(
+            [PSCustomObject]@{ Tag = 'TST_INF_01'; Selector = 'Infantry Divisions'; DivisionTypes = @('infantry'); Fallback = '%d. Div'; Entries = @('1. Div') },
+            [PSCustomObject]@{ Tag = 'TST_CAV_01'; Selector = 'Cavalry Brigades'; DivisionTypes = @('cavalry'); Fallback = '%d. Cav'; Entries = @('1. Cav') }
+        )
+        $res = Update-WikiGroupRows -WikiText $wiki -Groups $groups -Tag 'TST'
+        $res.Text | Should -Match "### ``TST_INF_01`` $dash Infantry Divisions \(Jalkaväki\)"
+        $res.Text | Should -Match "### ``TST_CAV_01`` $dash Cavalry Brigades"
+    }
 }
 
 Describe "build.ps1 -EditNames action and -Audit CLI flags" {
@@ -817,6 +861,14 @@ Describe "build.ps1 -EditNames action and -Audit CLI flags" {
         $LASTEXITCODE | Should -Be 0
         $output | Should -Match 'LAT_INF_01 \(\d+/\d+\)'
         $output | Should -Not -Match 'LAT_CAV_01'
+    }
+
+    It "Audits multiple groups with comma-separated -Group" {
+        $output = & powershell -NoProfile -File $script:BuildScriptPath -Audit LAT -Group INF_01,CAV_01 -NamesOnly 2>&1 | Out-String
+        $LASTEXITCODE | Should -Be 0
+        $output | Should -Match 'LAT_INF_01'
+        $output | Should -Match 'LAT_CAV_01'
+        $output | Should -Not -Match 'LAT_REG_01'
     }
 
     It "Fails with exit 1 and leaves file untouched when -EditNames misses" {

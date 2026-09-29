@@ -119,8 +119,9 @@ Apply only what the user approves.
 ### Phase 3: Apply in Place via `-EditNames`
 Edit groups in place using `build.ps1 -EditNames`:
 ```powershell
-powershell -File .\build.ps1 -EditNames <TAG> -Group <GROUP> [-Remove "A; B"] [-Rename "Old=New"] [-Add "C; D" [-Section "Header"]] [-Set "Idx=NewName"]
+powershell -File .\build.ps1 -EditNames <TAG> -Group <GROUP> [-Remove "A; B"] [-Rename "Old=New"] [-Add "C; D" [-Section "Header"]] [-Set "Idx=NewName"] [-Selector "<Name>"] [-AddType "<type>"] [-RemoveType "<type>"] [-CanUse "<trigger>"]
 ```
+- Supports metadata edits (`-Selector`, `-AddType`, `-RemoveType`, `-CanUse`) and multi-group updates (`-Group G1,G2`).
 - Preserves indentation, numbering, and line endings automatically.
 - Drops section headers that removals leave empty.
 - Automatically reports duplicate names or invalid indices.

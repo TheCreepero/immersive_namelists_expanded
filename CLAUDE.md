@@ -28,7 +28,7 @@ When adding, expanding, or modifying namelists:
 - `powershell -File .\build.ps1 -ValidateOnly` : Syntax and bracket validation. Required before completing any namelist task.
 - `powershell -File .\build.ps1 -Test`         : Full Pester unit test suite (engine invariants and documentation sync).
 - `powershell -File .\build.ps1 -Audit <TAG>`  : Heuristic quality scorecard (`-Audit ALL` for full report; add `-Compare HEAD` for a review list of tag and name changes; add `-Group <A>,<B> -NamesOnly [-Sections]` to inspect compact name lines).
-- `powershell -File .\build.ps1 -EditNames <TAG> -Group <GROUP> [-Remove "A; B"] [-Rename "Old=New"] [-Add "C; D" [-Section <header>]] [-Set "Idx=Val"]` : Edit one group's names in place without opening the file; auto-handles numbering, indentation, and header cleanup.
+- `powershell -File .\build.ps1 -EditNames <TAG> -Group <A>,<B> [-Remove "A; B"] [-Rename "Old=New"] [-Add "C; D" [-Section <header>]] [-Set "Idx=Val"] [-Selector "<Name>"] [-AddType "<type>"] [-RemoveType "<type>"] [-CanUse "<trigger>"]` : Edit group names and metadata in place without opening the file; auto-handles numbering, indentation, header cleanup, and multi-group edits.
 - `powershell -File .\build.ps1 -DiffNames <TAG> [-Base <rev>]` : Name-level diff against git (`HEAD` by default) with additions, removals, and moves.
 - `powershell -File .\build.ps1 -AuditPlan <TAG>` : Create `docs/superpowers/plans/YYYY-MM-DD-<country>-audit.md` or refresh its generated change table; reports unfilled TODO sections as `PlanTodo`.
 - `powershell -File .\build.ps1 -SyncWiki <TAG>`  : Sync `wiki/<Country>.md` display names, types, and fallbacks; reports stale/missing tags and prose mentions.
