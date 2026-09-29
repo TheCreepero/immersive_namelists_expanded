@@ -57,6 +57,7 @@ The primary agent **must not** exhaust its main context window with extensive we
    - Research territorial defense leagues, home guards, and volunteer militias (*Kaitseliit*, *Hemvärnet*, *Suojeluskunta*, *KOP*, *Home Guard*).
    - Identify mobile, cavalry, armored car (*soomusautod*), and armored train (*soomusrongid*) traditions.
    - Investigate coastal artillery fortresses (*Merekindlused*, *Kustartilleri*), marine amphibious detachments (*Meredessant*), ski/mountain troops, and paratroopers.
+   - Investigate political wings, party militias, guard divisions, and ideological military formations (e.g., fascist militias/blackshirts, communist red guards/workers' brigades, royal/imperial guards, republican defense leagues).
    - Compile regional naming conventions, historical commanders, and national cultural/independence motifs.
 2. **Linguistic & Grammatical Precision**:
    - Verify correct grammatical cases in the target language (nominative case rather than genitive/partitive, e.g., Estonian *Jalaväediviis* instead of vanilla's incorrect *diviisi*).
@@ -74,7 +75,7 @@ Target Country: <Country Name> (<TAG>)
 Your task is to conduct an in-depth Order of Battle (OOB), linguistic, and historical investigation for <Country Name> (<TAG>) and return a structured research brief.
 
 Directives:
-1. Investigate the 1918–1945 military structure, standing peacetime units, cadre battalions, territorial defense organizations (militias, home guards), armored/cavalry traditions, coastal fortresses, and specialized units.
+1. Investigate the 1918–1945 military structure, standing peacetime units, cadre battalions, territorial defense organizations (militias, home guards), armored/cavalry traditions, coastal fortresses, specialized units, and political/ideological wings (party militias, red guards, royal guards).
 2. Run `powershell -File .\build.ps1 -InspectVanilla <TAG>` to inspect existing vanilla namelists and scripted references in focus trees.
 3. Verify target language grammar and orthography: ensure nominative case (avoid genitive/partitive bugs), verify native diacritics, and determine authentic numbering formats (%d. or %s.).
 4. Gather enough verified material (units, garrisons, regions, commanders, traditions) to support 20–30+ division names per major category; the primary agent writes the entries and any extrapolation.
@@ -151,7 +152,8 @@ Target Country: <Country Name> (<TAG>). Review all uncommitted changes for <TAG>
    links, selectors and encoding. Do not re-check those by hand or read the raw namelist diff.
 2. From the -Audit output: selectors concise and without demonyms; nicknamed infantry/motorized/
    mechanized/armor groups have a plain variant sharing numbering (unless vanilla already
-   nicknames them); identities listed as shared across groups are intended.
+   nicknames them); ideology groups use has_government and never use has_completed_focus;
+   identities listed as shared across groups are intended.
 3. Linguistics of the "Added or changed names" list: nominative case, diacritics, no machine
    translation. Web spot-check the 5-10 names you are least sure of; do not verify every name.
 4. Docs: `WORKSHOP_DESCRIPTION_GUIDELINES.md` row and BBCode (no emojis, concise), `README.md` table,
@@ -219,6 +221,14 @@ Tailor the namelist suite to the nation's genuine military organization, histori
 - **Split vs. Combine**: Separate specialized formations into distinct namelists when historical flavor or player template differentiation warrants it (e.g. splitting peacetime cavalry regiments from volunteer partisan squadrons, or separating field infantry from territorial defense).
 - **Template Compatibility**: Group unit tokens in `division_types = { ... }` logically to give players flexibility when assigning templates (e.g. combining motorized and mechanized with armor if mobile units share lineage).
 
+### Ideology-Gated Formations & Political Wings:
+When a nation's military history, party apparatus, or alternate-history paths feature distinct political or ideological wings (e.g., Waffen-SS, Fascist Blackshirts, Falange/Sinarquistas, Communist Red Guards/Workers' Brigades, Royal/Imperial Guards, Republican defense corps), author dedicated namelists for them:
+- **Gating via `can_use`**: Gate ideological groups strictly using `can_use = { has_government = <ideology> }` (`democratic`, `neutrality` [monarchist/unaligned/authoritarian], `fascism`, `communism`, with boolean operators `OR = { ... }` or `NOT = { ... }`).
+- **Strict Focus Prohibition**: **Never lock namelists behind national focuses (`has_completed_focus`)**, decisions, ideas, or event flags. Focus IDs break compatibility with overhaul mods (e.g. *Road to 56*, national focus overhauls) and fail on peaceful advisor flips, referendums, civil wars, and puppet regime changes. Always gate by government type instead.
+- **No Artificial Pool Cap**: Division namelists have no arbitrary cap per ideology. Nations may author full specialized suites where historically or plausibly justified (e.g. comprehensive Waffen-SS suites, Red Guard branches).
+- **No Mixing Opposing Ideologies**: Never mix opposing ideological traditions in one namelist (e.g. socialist workers' militias alongside royalist or fascist titles). Author separate distinct groups per ideology branch.
+- **UI Selectors**: Selectors must be concise (≤ 25–28 characters), plural, and omit country demonyms (e.g., `"Fascist Legions"`, `"Red Guards"`, `"Imperial Guards"`).
+
 ### Plain & Named Variants (Mandatory for Infantry, Motorized, Mechanized, Armor)
 When regular infantry, motorized, mechanized, or armored divisions get nicknamed or identity names (e.g. `12. Divisioona 'Kollaa'`), always keep an **un-nicknamed variant** beside them so players can choose plain numbering:
 - **Plain variant keeps the vanilla tag** (`<TAG>_INF_01`, `<TAG>_MOT_01`, `<TAG>_ARM_01`, `<TAG>_MEC_01`, or whatever vanilla uses) with the plain selector (`"Infantry Divisions"`), a plain `fallback_name` (`"%d. Divisioona"`), and **no `ordered` block** (fallback-only, like vanilla stubs). Define it explicitly in INEX so vanilla errors are fixed and the pairing is visible. Players' existing templates on that tag keep plain names.
@@ -251,6 +261,10 @@ Before completing any namelist, agents and reviewers **must verify** that the na
 - [ ] **5. Fallback Plausibility**:
   - Does `fallback_name` use an authentic pattern (`%d. <Unit Type>`) that remains natural even if the player produces units beyond the ordered list?
 
+- [ ] **6. Ideology Gating & Mod Compatibility**:
+  - Are ideology-dependent namelists gated strictly via `can_use = { has_government = <ideology> }`?
+  - Are all national focus locks (`has_completed_focus`), decisions, ideas, and event flags strictly avoided?
+
 ---
 
 ## 6. Namelist File Syntax & Engine Invariants
@@ -267,6 +281,8 @@ File location: `common/units/names_divisions/INEX_<TAG>_names_divisions.txt`
 
 	for_countries = { <TAG> }
 
+	# Standard gating: always = yes for universal groups; has_government = <ideology> for ideological wings.
+	# NEVER use has_completed_focus, decisions, ideas, or flags!
 	can_use = { always = yes }
 
 	division_types = { "<unit_token_1>" "<unit_token_2>" }
@@ -295,6 +311,8 @@ File location: `common/units/names_divisions/INEX_<TAG>_names_divisions.txt`
 - **Number Formats & Fallback Tokens**: Use `%d` for Arabic numbers (`1.`, `2.`) and `%s` for Roman numerals (`I.`, `II.`). Always ensure `fallback_name` includes a literal `%d` or `%s` token (e.g., `%d.`, `%dº`, `%da`, `%s.`) so overflow units do not share identical names. Do not use custom placeholders like `%er` in fallback names (reserve language-specific contractions for static entries in `ordered = { ... }`).
 - **Bracket Balance**: Brackets `{}` must be strictly balanced.
 - **Division Subunit Tokens**: In `division_types = { ... }`, specify only valid line subunit tokens (e.g., `"infantry"`, `"cavalry"`, `"motorized"`, `"mechanized"`, `"light_armor"`, `"medium_armor"`, `"heavy_armor"`, `"modern_armor"`, `"marine"`, `"mountaineers"`, `"paratrooper"`). Do not use `"armor"` or `"marines"`, and avoid support-only tokens like `"military_police"`.
+- **Ideology Gating (`can_use`)**: Optional group trigger evaluated in `Country` scope. Gate ideological namelists strictly via `can_use = { has_government = <ideology> }` (`democratic`, `neutrality`, `fascism`, `communism`, with boolean operators `OR = { ... }` or `NOT = { ... }`).
+  - **Strict Focus Ban**: **Never lock namelists behind national focuses (`has_completed_focus`)**, decisions, ideas, or event flags. Focus locks break compatibility with overhaul mods (e.g. *Road to 56*, national focus overhauls) and fail on peaceful advisor flips, referendums, civil wars, and puppet releases. Always gate by government type instead.
 - **Ordered Blocks & Keys**: Each integer index in `ordered = { ... }` must be unique. Duplicate keys silently overwrite previous entries. Avoid leaving empty `ordered = { }` blocks; a fallback-only group (such as a plain variant) omits `ordered` entirely.
 - **Link Numbering**: `link_numbering_with` is strictly for cross-referencing *external* groups to prevent duplicate division numbers. Never set a group to link with itself (`link_numbering_with = { GROUP_NAME }`).
 - **Global Group Tag Uniqueness**: Root-level group tags (e.g. `<TAG>_<CAT>_<NUM>`) must be strictly unique across the entire mod. Never duplicate a group tag within a file or across multiple files.

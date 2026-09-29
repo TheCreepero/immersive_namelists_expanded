@@ -26,6 +26,7 @@ This skill is deliberately lean. It **does not repeat** the authoring rules. It 
 3. **Keep file-level conventions:** `for_countries`, the German three-file split, and any group referenced by vanilla scripts (see `-InspectVanilla`).
 4. **No edits before approval.** The audit report (Phase 2) is a checkpoint; apply only the items the user approves.
 5. **Wiki push is outward-facing.** Run `wiki/push-wiki.ps1` only after the user confirms.
+6. **Never retain focus-locked namelists (`has_completed_focus`).** Namelists must never be locked behind national focuses. Convert any legacy focus locks to pure government type checks (`has_government = <ideology>`), war state triggers (`has_war = yes`), or country tags to maximize compatibility with mods like *Road to 56* and overhaul focus trees.
 
 ---
 
@@ -45,6 +46,7 @@ A modernized file meets all of these (reference implementation: `INEX_PER_names_
 | R8 | No dead commented self-links, TODO notes, or "barely any info" comments. | `DEAD_SELF_LINK_COMMENT`, `TODO_COMMENT` |
 | R9 | Wiki page, README row, and workshop cross-reference/BBCode describe the file as it now is. | (manual) |
 | R10 | Nicknamed infantry, motorized, mechanized, and armor lists keep a plain (un-nicknamed) variant: the existing/vanilla tag becomes the fallback-only plain group, and the nicknames move to a new `"<Selector> (Named)"` tag that shares its numbering (authoring skill §4). Not needed if vanilla already nicknames those divisions (e.g. USA). | (manual; `-Audit` shows `Variant: plain` and exempts it from R4/R5) |
+| R11 | Ideology-gated groups use `has_government` and never lock behind national focuses (`has_completed_focus`), decisions, or event flags. | `FOCUS_LOCKED` |
 
 Two more informational lints: `NAME_LONG` (an entry over 60 characters; only outliers, since long honorific names are common and intended) and the file-level `IDENTITY_REPEAT`, which lists quoted identities (e.g. `'Tali'`) reused across groups under different division numbers.
 
@@ -143,7 +145,8 @@ Approved change list:
    encoding. Do not re-check those by hand or read the raw namelist diff.
 2. From the -Compare output: no removed tags; every approved item applied; nothing unapproved changed.
    Nicknamed infantry/motorized/mechanized/armor lists keep a plain, fallback-only variant sharing
-   numbering with the "(Named)" tag (R10). Check that any identities listed as shared across groups are intended.
+   numbering with the "(Named)" tag (R10). Ideology-gated groups use has_government and never use
+   has_completed_focus (R11). Check that any identities listed as shared across groups are intended.
 3. Linguistics of the "Added or changed names" list: nominative case, diacritics, no machine
    translation. Web spot-check the 5-10 names you are least sure of; do not verify every name.
 4. Docs match the file: `git diff -- wiki/<Nation>.md WORKSHOP_DESCRIPTION_GUIDELINES.md README.md`

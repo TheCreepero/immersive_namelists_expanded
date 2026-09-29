@@ -380,6 +380,12 @@ function Invoke-Validation {
             }
         }
 
+        # Check for focus locks (forbidden for mod compatibility - must use has_government)
+        if ($cleanText -match '\bhas_completed_focus\b') {
+            Write-Err "$($file.Name): 'has_completed_focus' detected! Namelists must not be locked behind focuses (use 'has_government' for mod compatibility)."
+            $fileHasError = $true
+        }
+
         # Check link_numbering_with self-reference and track global root group uniqueness
         $depth = 0
         $currentGroup = $null
@@ -815,6 +821,7 @@ function Get-NamelistAuditData {
             $flags.Add('DEAD_SELF_LINK_COMMENT')
         }
         if ($rawBlock -match $todoRegex) { $flags.Add('TODO_COMMENT') }
+        if ($cleanBlock -match '\bhas_completed_focus\b') { $flags.Add('FOCUS_LOCKED') }
         # Outliers only: long honorific names are common and intentional (e.g. GER cavalry)
         if (@($entries | Where-Object { ($_ -replace '%[ds]', '10' -replace '\\"', '"').Length -gt 60 }).Count -gt 0) {
             $flags.Add('NAME_LONG')

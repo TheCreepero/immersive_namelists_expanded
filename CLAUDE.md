@@ -9,6 +9,7 @@
 - **Group Tags**: `<TAG>_<CATEGORY>_<NUMBER>` (e.g., `EST_REG_01`, `SWE_ARM_01`). Globally unique across repo.
 - **German Split**: `INEX_GER_names_divisions.txt` (Wehrmacht regular), `INEX_GER_SS_names_divisions.txt` (Waffen-SS), `INEX_GER_ADDITIONAL_names_divisions.txt` (Kampfgruppen, Festung, Fallschirmjäger, Volkssturm, specialized).
 - **UI Selectors**: `name = "<Selector>"` must be concise; omit nation/demonym prefixes (e.g., `"Infantry Divisions"`, not `"Mexican Infantry Divisions"`) to prevent dropdown truncation.
+- **Ideology-Dependent Groups**: Author distinct political, party wing, or guard groups per ideology (e.g. Fascist party militias, Communist Red Guards, Monarchist/Imperial guards, Democratic/Republican defense forces). Never mix opposing ideological traditions in one namelist. There is no artificial pool cap on ideology-gated division namelists—nations may author full specialized suites where historically or plausibly justified (e.g. Waffen-SS suites, Red Guard branches).
 
 ## 3. Historical & Linguistic Standards
 - **Linguistics**: Accurate grammar, nominative cases, and diacritics in target language (avoid vanilla errors like genitive/partitive *diviisi* vs. nominative *Jalaväediviis*).
@@ -35,6 +36,8 @@ When adding, expanding, or modifying namelists:
 - **Scripted Fallbacks**: Omitted vanilla tags referenced by events/focuses fall back to vanilla automatically. Never copy identical empty vanilla stubs (exception: the plain variant below).
 - **Plain/Named Variants**: Nicknamed infantry, motorized, mechanized, and armor lists keep an un-nicknamed variant: the vanilla tag stays a fallback-only plain group (no `ordered`), and the nicknames go in a new `"<Selector> (Named)"` tag that shares its numbering. Skip this only if vanilla already nicknames those divisions (e.g. USA).
 - **Subunits**: `division_types = { ... }` allows only valid line combat tokens (`"infantry"`, `"marine"`, `"light_armor"`, `"medium_armor"`, `"heavy_armor"`, `"modern_armor"`, `"motorized"`). Never use invalid (`"armor"`, `"marines"`) or support-only tokens (`"military_police"`).
+- **Ideology Gating (`can_use`)**: Optional group trigger evaluated in `Country` scope. Gate ideological namelists strictly via `can_use = { has_government = <ideology> }` (`democratic`, `neutrality`, `fascism`, `communism`, with boolean operators `OR = { ... }` or `NOT = { ... }`).
+  - **Strict Focus Ban**: **Never lock namelists behind national focuses (`has_completed_focus`)**, decisions, ideas, or event flags. Focus locks break compatibility with overhaul mods (e.g. *Road to 56*, national focus overhauls) and fail on peaceful advisor flips, referendums, civil wars, and puppet releases. Always gate by government type instead.
 - **Ordered Blocks**: Unique integer keys (duplicates overwrite). No empty `ordered = { }` blocks.
 - **Fallback Formatting**: `fallback_name` requires `%d` (Arabic) or `%s` (Roman). Language suffixes without `%d`/`%s` (e.g., `%er`) are invalid in fallbacks (static `ordered` only).
 - **Link Numbering**: `link_numbering_with` links only to *different* external groups (e.g., motorized to infantry). Never self-referential (`link_numbering_with = { SELF }`).

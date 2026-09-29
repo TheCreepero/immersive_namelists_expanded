@@ -1552,10 +1552,7 @@ SOV_CAV_02 =
 
 	can_use = {
 		OR = {
-			AND = {
-				tag = SOV
-				has_completed_focus = SOV_restore_cossack_units
-			}
+			tag = SOV
 			tag = UKR
 		}
 	}
@@ -1685,7 +1682,7 @@ SOV_PEN_01 =
 
 	for_countries = { SOV }
 
-	can_use = { has_completed_focus = SOV_penal_battalions }
+	can_use = { has_war = yes }
 
 	division_types = { "infantry" }
 

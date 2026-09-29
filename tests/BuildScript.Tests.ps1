@@ -236,6 +236,17 @@ $OrderedBody
         Set-ValidationFixtureReadme "| ``TST`` | Test Nation | ``INEX_TST_names_divisions.txt`` |`n"
         Invoke-FixtureValidation | Should -BeTrue
     }
+
+    It "Rejects a namelist file containing focus checks (has_completed_focus)" {
+        New-ValidationFixtureFile -OrderedBody @'
+		1 = { "First Division" }
+'@
+        $file = Join-Path $script:ValidationFixtureDir "common\units\names_divisions\INEX_TST_names_divisions.txt"
+        $raw = [System.IO.File]::ReadAllText($file, [System.Text.Encoding]::UTF8)
+        $rawWithFocus = $raw -replace 'for_countries = \{ TST \}', "for_countries = { TST }`r`n`tcan_use = { has_completed_focus = TST_my_focus }"
+        [System.IO.File]::WriteAllText($file, $rawWithFocus, [System.Text.Encoding]::UTF8)
+        Invoke-FixtureValidation | Should -BeFalse
+    }
 }
 
 Describe "build.ps1 Helper: Get-NamelistAuditData" {
@@ -263,6 +274,7 @@ TST_INF_01 =
 TST_GAR_01 = {
 	name = "Infantry Division" # TODO find real names
 	for_countries = { TST }
+	can_use = { has_completed_focus = TST_my_focus }
 	division_types = { "infantry" }
 	fallback_name = "%d. Varuskunta"
 	ordered = {
@@ -381,10 +393,11 @@ TST_MEC_03 = {
         $g.Flags | Should -Contain 'DEAD_SELF_LINK_COMMENT'
     }
 
-    It "Flags duplicate selectors and TODO comments" {
+    It "Flags duplicate selectors, TODO comments, and focus locks" {
         $g = & $script:AuditGroup 'TST_GAR_01'
         $g.Flags | Should -Contain 'SELECTOR_DUPLICATE'
         $g.Flags | Should -Contain 'TODO_COMMENT'
+        $g.Flags | Should -Contain 'FOCUS_LOCKED'
         (& $script:AuditGroup 'TST_INF_01').Flags | Should -Contain 'SELECTOR_DUPLICATE'
     }
 

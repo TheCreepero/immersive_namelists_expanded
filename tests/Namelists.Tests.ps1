@@ -108,6 +108,10 @@ Describe "Division Namelist Files: Per-File Invariants" {
             }
         }
 
+        It "Must not contain focus checks (has_completed_focus) in can_use blocks" {
+            $script:CleanText | Should -Not -Match '\bhas_completed_focus\b' -Because "namelists must use has_government instead of focus locks for mod compatibility"
+        }
+
         It "All tokens in division_types must be recognized line combat subunits" {
             $typeBlocks = [regex]::Matches($script:CleanText, 'division_types\s*=\s*\{([^}]*)\}')
             foreach ($tb in $typeBlocks) {

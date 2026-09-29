@@ -13,8 +13,6 @@ MEX_INF_01 = {
 
 	can_use = {
 		OR = {
-			has_completed_focus = MEX_focus_antidisestablishmentarianism
-			has_completed_focus = MEX_focus_reform_the_cristero_guard
 			has_government = fascism
 			has_government = neutrality
 			has_cosmetic_tag = MEX_cristero
@@ -71,8 +69,6 @@ MEX_CRI_CAV_01 = {
 
 	can_use = {
 		OR = {
-			has_completed_focus = MEX_focus_antidisestablishmentarianism
-			has_completed_focus = MEX_focus_reform_the_cristero_guard
 			has_government = fascism
 			has_government = neutrality
 			has_cosmetic_tag = MEX_cristero
@@ -115,8 +111,6 @@ MEX_CRI_MNT_01 = {
 
 	can_use = {
 		OR = {
-			has_completed_focus = MEX_focus_antidisestablishmentarianism
-			has_completed_focus = MEX_focus_reform_the_cristero_guard
 			has_government = fascism
 			has_government = neutrality
 			has_cosmetic_tag = MEX_cristero
@@ -280,11 +274,7 @@ MEX_PNR_01 = {
 	for_countries = { MEX }
 
 	can_use = {
-		OR = {
-			has_completed_focus = MEX_focus_jefe_maximo
-			has_completed_focus = MEX_focus_party_of_the_revolution
-			has_government = neutrality
-		}
+		has_government = neutrality
 	}
 
 	division_types = { "infantry" }
@@ -326,12 +316,7 @@ MEX_SIN_01 = {
 	for_countries = { MEX }
 
 	can_use = {
-		OR = {
-			has_completed_focus = MEX_focus_synarchist_communes
-			has_completed_focus = MEX_focus_synarchist_youth
-			has_completed_focus = MEX_focus_triumph_of_synarchism
-			has_government = fascism
-		}
+		has_government = fascism
 	}
 
 	division_types = { "infantry" }
@@ -369,10 +354,7 @@ MEX_CD_01 = {
 	for_countries = { MEX }
 
 	can_use = {
-		OR = {
-			has_completed_focus = MEX_focus_the_gold_shirts
-			has_government = fascism
-		}
+		has_government = fascism
 	}
 
 	division_types = { "cavalry" "motorized" }
@@ -406,8 +388,6 @@ MEX_CED_01 = {
 
 	can_use = {
 		OR = {
-			has_completed_focus = MEX_focus_support_general_cedillo
-			has_completed_focus = MEX_focus_caudillo_private_armies
 			has_government = fascism
 			has_government = neutrality
 		}
@@ -441,9 +421,6 @@ MEX_HIS_01 = {
 
 	can_use = {
 		OR = {
-			has_completed_focus = MEX_focus_hispanic_culture
-			has_completed_focus = MEX_focus_hispanic_alliance
-			has_completed_focus = MEX_focus_falangist_veterans
 			has_government = fascism
 			has_government = neutrality
 		}
@@ -485,10 +462,8 @@ MEX_AZT_01 = {
 
 	can_use = {
 		OR = {
-			has_completed_focus = MEX_focus_aztec_eagles
-			has_completed_focus = MEX_focus_redeem_aztlan
-			has_completed_focus = MEX_focus_rescind_the_mexican_cession
-			has_completed_focus = MEX_focus_revanchist_revolution
+			has_government = fascism
+			has_government = communism
 		}
 	}
 
@@ -533,10 +508,8 @@ MEX_AZT_MNT_01 = {
 
 	can_use = {
 		OR = {
-			has_completed_focus = MEX_focus_aztec_eagles
-			has_completed_focus = MEX_focus_redeem_aztlan
-			has_completed_focus = MEX_focus_rescind_the_mexican_cession
-			has_completed_focus = MEX_focus_revanchist_revolution
+			has_government = fascism
+			has_government = communism
 		}
 	}
 
