@@ -60,3 +60,6 @@ Claude Code and Google Antigravity use mirrored configs:
 - The subagent briefs exist once, in `.claude/agents/`: `inex-historical-researcher.md` (full OOB dossier for authoring), `inex-audit-researcher.md` (budgeted fact-check for audits: web-only tools, ≤25 web calls, `effort: medium`, `maxTurns: 30`) and `inex-code-reviewer.md`. Claude dispatches them as named agents; Antigravity passes their path to `invoke_subagent`.
 
 When a rule, standard or runbook step changes in one file, change its mirror in the same task. The project rules stay identical. Confirm with `git status` that both sides changed before reporting completion.
+
+## 9. Compact Instructions
+When compacting, keep: the active nation and TAG, the plan file path, group tags edited and their remaining TODOs, pending Section 4 doc-sync steps, and the latest `-ValidateOnly`/`-Test` result. Drop raw audit, test and research output once its findings are recorded in the plan file.

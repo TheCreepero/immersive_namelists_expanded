@@ -2,7 +2,8 @@
 name: inex-code-reviewer
 description: Independent code reviewer for the INEX Hearts of Iron IV mod. Use as the final review gate before completing any division namelist addition or update. Provide the country name, TAG, and plan file path; returns findings grouped by severity with an overall verdict.
 tools: Read, Grep, Glob, PowerShell, Bash
-model: opus
+model: sonnet
+effort: medium
 ---
 
 <!-- Single source for the Code Reviewer brief: Claude Code dispatches this agent by name; Antigravity passes this file to invoke_subagent (see CLAUDE.md / GEMINI.md §9). -->
