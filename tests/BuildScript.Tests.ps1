@@ -21,7 +21,7 @@ BeforeAll {
         . ([ScriptBlock]::Create($launcherFuncMatch.Groups[1].Value))
     }
 
-    foreach ($fn in 'Get-NamelistAuditData', 'Get-OrderedEntryStats', 'Compare-NamelistAuditData', 'Get-GitFileText', 'Get-NameVariantKey', 'Resolve-GroupTag', 'Get-GroupSections', 'Get-OrphanHeaderLines', 'Edit-NamelistGroupText', 'Compare-NamelistGroupSets', 'Format-NamelistDiff', 'Get-CountryName', 'Format-PlanChangeTable', 'Set-PlanChangeTable', 'New-AuditPlanText', 'Update-WikiGroupRows', 'Find-WikiProseMentions') {
+    foreach ($fn in 'Get-NamelistAuditData', 'Get-OrderedEntryStats', 'Compare-NamelistAuditData', 'Get-GitFileText', 'Get-NameVariantKey', 'Resolve-GroupTag', 'Get-GroupSections', 'Get-OrphanHeaderLines', 'Edit-NamelistGroupText', 'Compare-NamelistGroupSets', 'Format-NamelistDiff', 'Get-CountryName', 'Format-PlanChangeTable', 'Set-PlanChangeTable', 'New-AuditPlanText', 'Format-AuditSummaryLine', 'Update-WikiGroupRows', 'Find-WikiProseMentions') {
         $fnMatch = [regex]::Match($script:BuildContent, "(?s)(function $fn\s*\{.*?\n\})")
         if ($fnMatch.Success) {
             . ([ScriptBlock]::Create($fnMatch.Groups[1].Value))
@@ -246,6 +246,55 @@ $OrderedBody
         $rawWithFocus = $raw -replace 'for_countries = \{ TST \}', "for_countries = { TST }`r`n`tcan_use = { has_completed_focus = TST_my_focus }"
         [System.IO.File]::WriteAllText($file, $rawWithFocus, [System.Text.Encoding]::UTF8)
         Invoke-FixtureValidation | Should -BeFalse
+    }
+
+    It "Rejects a malformed ordered entry even when its double quotes balance" {
+        # Regression test: '7 = { 5a Divisione Alpina GL S.Tosa"" }' (name outside the quotes) has
+        # an even quote count, so the parity check passed it and the entry silently vanished.
+        New-ValidationFixtureFile -OrderedBody @'
+		1 = { "First Division" }
+		2 = { Second Division"" }
+'@
+        Invoke-FixtureValidation | Should -BeFalse
+    }
+
+    It "Rejects an ordered entry with text between two quoted strings" {
+        New-ValidationFixtureFile -OrderedBody @'
+		1 = { "First" Division" }
+'@
+        Invoke-FixtureValidation | Should -BeFalse
+    }
+
+    It "Accepts ordered entries with optional description/URL arguments, bare strings and trailing comments" {
+        New-ValidationFixtureFile -OrderedBody @'
+		# Section header
+		1 = { "First Division" "A tooltip description" }
+		2 = { "Second Division" "Tooltip" "https://example.org/wiki" }
+		3 = "Third Division"
+		4 = { "Fourth Division 'Nick'" }	# trailing comment
+		5 = { "Fifth Division \"Escaped\"" }
+'@
+        Invoke-FixtureValidation | Should -BeTrue
+    }
+}
+
+Describe "build.ps1 Helper: Format-AuditSummaryLine" {
+    It "Totals authored/ordered entries and file + group flags as evaluated numbers" {
+        # Regression test: -AuditPlan built this line inline with a missing '$' before the second
+        # subexpression, writing the object's type dump into the plan instead of the ordered total.
+        $data = [PSCustomObject]@{
+            FileFlags = @('HEADER_BOILERPLATE')
+            Groups    = @(
+                [PSCustomObject]@{ AuthoredCount = 5; OrderedCount = 8; Flags = @('LOW_DEPTH', 'SELECTOR_SINGULAR') },
+                [PSCustomObject]@{ AuthoredCount = 3; OrderedCount = 3; Flags = @() }
+            )
+        }
+        Format-AuditSummaryLine -Key 'TST' -Data $data | Should -Be 'AUDIT SUMMARY TST: GROUPS=2 AUTHORED=8/11 FLAGS=3'
+    }
+
+    It "Is used by both -Audit and -AuditPlan instead of an inline summary string" {
+        ([regex]::Matches($script:BuildContent, 'Format-AuditSummaryLine -Key')).Count | Should -BeGreaterOrEqual 2
+        ([regex]::Matches($script:BuildContent, 'AUDIT SUMMARY \$\{')).Count | Should -Be 1
     }
 }
 

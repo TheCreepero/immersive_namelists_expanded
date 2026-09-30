@@ -6,7 +6,9 @@
 
 ## Historical Overview
 
-The Regio Esercito (Royal Italian Army) is one of the most richly named in INEX, with distinct naming traditions for the Alpini mountain elite, Bersaglieri (light mobile infantry), cavalry (including camel-mounted *Meharisti*), colonial irregular forces (*Dubati*, *Savari*, *Zaptié*), and Italian partisan formations (*Garibaldini*, *Giustizia e Libertà*, *Fiame Verdi*, *Matteotti*). Post-armistice groups cover the RSI (Italian Social Republic — Fascist) and the Italian Co-Belligerent Army.
+The Regio Esercito named its divisions after cities, regions, rivers and battles, and INEX keeps those names on their real division numbers. Motorized, mechanized, armored and paratrooper lists share numbering with the infantry, so *9a Divisione 'Pasubio'* is either infantry or autotrasportabile, never both. Separate lists cover the colonial troops of Libya and East Africa, the cavalry, the Alpini, and the 1943–45 Resistance.
+
+Ideology-gated lists: the MVSN Blackshirt divisions (fascism), a Royal Army list built on the 1943–45 Co-Belligerent Army (neutrality/democratic), a Communist list, and the partisan formations gated by party tradition. Legione Romana is fascist-only and never picked by the AI.
 
 ---
 
@@ -14,97 +16,103 @@ The Regio Esercito (Royal Italian Army) is one of the most richly named in INEX,
 
 | Group Tag | UI Name | Division Types | Fallback Name |
 |:---|:---|:---|:---|
-| `ITA_INF_01` | Infantry Division | infantry | `%sª Divisione di Fanteria` |
-| `ITA_INF_02` | CC.NN. Infantry Division | militia | *(Blackshirt format)* |
-| `ITA_MONCH_01` | CC.NN. Div. (Monarchist) | infantry, mechanized, mountaineers, paratrooper, marine | *(Monarchist Blackshirt format)* |
-| `ITA_COM_01` | Communist Division | infantry, mechanized, mountaineers, paratrooper, marine | *(Communist format)* |
-| `ITA_COL_01` | Colonial Division | infantry | *(colonial format)* |
-| `ITA_COL_02` | Irregular Bands | irregular_infantry | *(irregular band format)* |
-| `ITA_COL_03` | Dubat Bands | irregular_infantry | *(Dubat format)* |
-| `ITA_CAV_01` | Cavalry Regiment | cavalry | `%sº Reggimento di Cavalleria` |
-| `ITA_CAV_02` | Cavalry Division | cavalry | *(cavalry division format)* |
-| `ITA_CAV_03` | Colonial Cavalry | cavalry | *(colonial cavalry format)* |
-| `ITA_CAV_04` | Savari Squadron Groups | cavalry | *(Savari format)* |
-| `ITA_CAV_05` | Spahis Squadron Groups | cavalry, camelry | *(Spahis format)* |
-| `ITA_CAV_06` | Mounted Irregular Bands | cavalry | *(mounted irregular format)* |
-| `ITA_GAL_01` | Garibaldi Division | militia | *(Garibaldini partisan format)* |
-| `ITA_GEL_01` | Giustizia e Libertà Formation | militia | *(GL partisan format)* |
-| `ITA_MAT_01` | Matteotti Division | militia | *(Matteotti partisan format)* |
-| `ITA_AUT_01` | Autonome Division | militia | *(Autonome partisan format)* |
-| `ITA_FAV_01` | Fiame Verdi Division | militia | *(Green Flames partisan format)* |
-| `ITA_ALT_01` | Other Partisan Formations | militia | *(other partisan format)* |
-| `ITA_MOT_01` | Motorized Division | motorized | *(Div. Motorizzata format)* |
-| `ITA_MEC_01` | Mechanized Division | mechanized | *(Div. Celere format)* |
-| `ITA_ARM_01` | Armored Division | light_armor, medium_armor, heavy_armor, modern_armor | `%sª Divisione Corazzata` |
-| `ITA_MAR_01` | Marine Regiment | marine | *(marine regiment format)* |
-| `ITA_MAR_02` | Marine Division | marine | *(San Marco format)* |
-| `ITA_MNT_01` | Mountain Division | mountaineers | `%sª Divisione Alpina` |
-| `ITA_PAR_01` | Paratrooper Division | paratrooper | *(paratrooper format)* |
-| `ITA_FES_01` | Defence Brigades | infantry | *(fortress format)* |
-| `ITA_GAR_01` | Garrison Division | infantry | *(garrison format)* |
-| `ITA_ROM_01` | Legione Romana | infantry, light_armor, medium_armor, heavy_armor, modern_armor | *(Roman Legion format)* |
+| `ITA_INF_01` | Infantry Divisions | infantry | `%da Divisione di Fanteria` |
+| `ITA_INF_02` | Blackshirt Divisions | militia | `%da Divisione CC.NN.` |
+| `ITA_MONCH_01` | Royal Army Divisions | infantry, mechanized, mountaineers, paratrooper, marine | `%da Divisione` |
+| `ITA_COM_01` | Communist Divisions | infantry, mechanized, mountaineers, paratrooper, marine | `%da Divisione Comunista` |
+| `ITA_COL_01` | Colonial Divisions | infantry | `%da Divisione Coloniale` |
+| `ITA_COL_02` | Irregular Bands | irregular_infantry | `%d° Gruppo Bande Irregolari` |
+| `ITA_COL_03` | Dubat Bands | irregular_infantry | `%da Banda di Confine dei Dubat` |
+| `ITA_CAV_01` | Cavalry Regiments | cavalry | `%d° Reggimento di Cavalleria` |
+| `ITA_CAV_02` | Cavalry Divisions | cavalry | `%da Divisione Celere` |
+| `ITA_CAV_03` | Colonial Cavalry | cavalry | `%d° Gruppo Cav. Coloniale` |
+| `ITA_CAV_04` | Savari Squadron Groups | cavalry | `%d° Gruppo Squadroni Savari` |
+| `ITA_CAV_05` | Spahis Squadron Groups | cavalry, camelry | `%d° Gruppo Squadroni Spahis` |
+| `ITA_CAV_06` | Mounted Irregular Bands | cavalry | `%d° Gruppo Bande a Cavallo` |
+| `ITA_GAL_01` | Garibaldi Divisions | militia | `%da Divisione Garibaldi` |
+| `ITA_GEL_01` | Giustizia e Libertà | militia | `%da Divisione GL` |
+| `ITA_MAT_01` | Matteotti Formations | militia | `%da Divisione Matteotti` |
+| `ITA_AUT_01` | Autonomous Formations | militia | `%da Divisione Autonoma` |
+| `ITA_FAV_01` | Fiamme Verdi Formations | militia | `%da Divisione Fiamme Verdi` |
+| `ITA_ALT_01` | Other Partisan Formations | militia | `%da Brigata Autonoma` |
+| `ITA_MOT_01` | Motorized Divisions | motorized | `%da Divisione Motorizzata` |
+| `ITA_MEC_01` | Mechanized Divisions | mechanized | `%da Divisione Meccanizzata` |
+| `ITA_MEC_02` | Mechanized Divisions (Named) | mechanized | `%da Divisione Meccanizzata` |
+| `ITA_ARM_01` | Armored Divisions | light_armor, medium_armor, heavy_armor, modern_armor | `%da Divisione Corazzata` |
+| `ITA_MAR_01` | Marine Regiments | marine | `%d° Reggimento da Sbarco` |
+| `ITA_MAR_02` | Marine Divisions | marine | `%da Divisione Fanteria di Marina` |
+| `ITA_MNT_01` | Mountain Divisions | mountaineers | `%da Divisione Alpina` |
+| `ITA_PAR_01` | Paratrooper Divisions | paratrooper | `%da Divisione Paracadutisti` |
+| `ITA_FES_01` | Defence Brigades | infantry | `%da Brigata Difesa` |
+| `ITA_GAR_01` | Coastal Divisions | infantry | `%da Divisione Costiera` |
+| `ITA_ROM_01` | Legione Romana | infantry, light_armor, medium_armor, heavy_armor, modern_armor | `Legio %s` |
 
 ---
 
 ## Group Details
 
 ### `ITA_INF_01` — Infantry Divisions
-Core Italian infantry divisions with Roman numeral ordinals as used by the Regio Esercito (e.g., *Iª Divisione di Fanteria "Superba"*, *IIª Divisione Ravenna*). Covers all numbered infantry divisions through the war plus the Series B reserve divisions.
+The 1935–43 infantry divisions on their real numbers, from *1a Divisione di Fanteria 'Superga'* to *65a 'Granatieri di Savoia'*, plus the 151–159 occupation divisions (*'Perugia'*, *'Zara'*, *'Veneto'*). Key 136 is *'Giovani Fascisti'*, which shares its number with the armored *'Centauro II'*.
 
-### `ITA_INF_02` / `ITA_MONCH_01` — CC.NN. Blackshirt Divisions
-The *Camicie Nere* (CCNN) — Blackshirt divisions of the MVSN (*Milizia Volontaria per la Sicurezza Nazionale*). `ITA_MONCH_01` uses `can_use` restricted to monarchist or fascist government types.
+### `ITA_INF_02` — Blackshirt Divisions
+MVSN *Camicie Nere* divisions, fascism only: the seven 1935–43 divisions (*'23 Marzo'*, *'28 Ottobre'*, *'Tevere'*, *'Cirene'*), the Spanish CTV divisions (*'Dio lo Vuole'*, *'Fiamme Nere'*, *'Penne Nere'*) and two extrapolations from MVSN legion names.
+
+### `ITA_MONCH_01` — Royal Army Divisions
+Neutrality or democratic. The Co-Belligerent Army's *Gruppi di Combattimento* (*'Cremona'*, *'Friuli'*, *'Folgore'*, *'Legnano'*, *'Mantova'*, *'Piceno'*), the *1° Raggruppamento Motorizzato* and *Divisione 'Utili'*, then House of Savoy names, Great War commanders (*'Cadorna'*, *'Diaz'*) and battle honours (*'Vittorio Veneto'*, *'Porta Pia'*).
 
 ### `ITA_COM_01` — Communist Divisions
-Italian Communist Party formations — available under communist government type.
+Communism only. Revolutionary titles plus Italian labour-movement traditions: *'Arditi del Popolo'*, *'Antonio Gramsci'*, *'Ordine Nuovo'*, *'Biennio Rosso'*, *'Guadalajara'*.
 
 ### `ITA_COL_01` — Colonial Divisions
-*Divisioni Coloniali* from Libya (1a–5a Libica), Italian East Africa (Eritrea, Somalia), and the *Camicie Nere* colonial formations in Africa.
+*1a Divisione Libica 'Sibille'* and *2a 'Pescatori'* (1940), the 1935–36 Eritrean divisions, and the *101a* and *102a Divisione Somala* (1940–41).
 
 ### `ITA_COL_02` / `ITA_COL_03` — Irregular Bands / Dubat Bands
-*Bande Irregolari* and *Dubati* — Somali and Eritrean irregular infantry auxiliary units recruited locally.
+East African *bande*: *'Uollo Ambassel'* and *'Kai Bandera'*. The Somali Dubat bands were numbered rather than named, so `ITA_COL_03` uses its fallback only.
 
 ### `ITA_CAV_01` — Cavalry Regiments
-Italian cavalry regiments with their historic names: *Nizza Cavalleria*, *Piemonte Reale Cavalleria*, *Savoia Cavalleria*, *Genova Cavalleria*, *Novara Lancieri*, *Vittorio Emanuele II*, *Milano*, *Montebello*, *Lodi*, *Guides*, *Alessandria*, *Saluzzo*, *Monferrato*, *Guide* (14 named regiments historically).
+The regiments in service in June 1940 on their own numbers: *1° 'Nizza Cavalleria'*, *2° 'Piemonte Reale Cavalleria'*, *5° 'Lancieri di Novara'*, *9° 'Lancieri di Firenze'*, *19° 'Cavalleggeri Guide'* and others.
 
 ### `ITA_CAV_02` — Cavalry Divisions
-*Divisione Celere* (fast cavalry divisions) — Italy's combined-arms mobile divisions.
+The three *Divisioni Celeri*: *'Eugenio di Savoia'*, *'Emanuele Filiberto Testa di Ferro'*, *'Principe Amedeo Duca d'Aosta'*.
 
-### `ITA_CAV_03` — Colonial Cavalry
-*Cavalleria Coloniale* — colonial cavalry regiments from Eritrea and Libya.
+### `ITA_CAV_03` / `ITA_CAV_04` / `ITA_CAV_05` / `ITA_CAV_06` — Colonial Cavalry
+*'Penne di Falco'* colonial cavalry; Libyan *Savari* (regular) and *Spahis* (irregular) squadron groups, which use their fallbacks only; and Amedeo Guillet's *Gruppo Bande a Cavallo 'Amhara'* with its bands *'Guillet'*, *'Togni'*, *'Cara'*, *'Lucarelli'* and *'Battizzocco'*.
 
-### `ITA_CAV_04` / `ITA_CAV_05` — Savari / Spahis
-*Savari* (North African cavalry) and *Spahis* (Libyan cavalry including camel-mounted formations — `camelry` type).
+### `ITA_GAL_01` — Garibaldi Divisions
+PCI-led *Brigate Garibaldi*, communism only, grouped by region: Piemonte (*2a 'Redi'*, *12a 'Nedo'*), Lombardia, Liguria (*'Pinan-Cichero'*, *'Cascione'*), Emilia-Romagna (*28a Brigata 'Mario Gordini'*), Veneto (*'Nino Nannetti'*, *'Ateo Garemi'*) and the *Divisione Italiana Partigiana 'Garibaldi'* in Montenegro.
 
-### `ITA_GAL_01` — Garibaldini Partisans
-The Communist *Brigata Garibaldi* partisan network — the largest Italian partisan organization, linked to the PCI (Italian Communist Party). 47 named partisan divisions.
+### `ITA_GEL_01` — Giustizia e Libertà
+Partito d'Azione formations (democratic or communist): the Piedmontese *Divisioni Alpine GL* (*5a 'Sergio Toja'*, *7a 'Pedro Ferreira'*), the *Gruppo Mobile Operativo*, *2a 'Massenzio Masia'*, Brescia's *'Monte Suello'* and the Genoese *Divisione GL 'Matteotti'*.
 
-### `ITA_GEL_01` — Giustizia e Libertà (GL) Formations
-The liberal-socialist *Giustizia e Libertà* partisan formations, second largest of the Italian partisan movement. 33 named formations.
+### `ITA_MAT_01` — Matteotti Formations
+PSIUP formations (democratic or communist) named after Giacomo Matteotti: *'Bruno Buozzi'*, *'Italo Rossi'*, *'Giorgio D'Avito'*, *'Renzo Cattaneo'*, *1a Brigata d'Assalto Matteotti*.
 
-### `ITA_MAT_01` — Matteotti Divisions
-*Brigate Matteotti* — socialist partisan formations named after Giacomo Matteotti, the socialist deputy murdered by the Fascists in 1924. 12 named divisions.
+### `ITA_AUT_01` — Autonomous Formations
+Military and non-party formations (neutrality or democratic), led by Mauri's *1° Gruppo Divisioni Alpine*: *1a* and *2a 'Langhe'*, *5a 'Monferrato'*, *12a 'Bra'*, *103a Brigata 'Amendola'*.
 
-### `ITA_AUT_01` — Autonome Divisions
-*Formazioni Autonome* — non-partisan, monarchist-leaning Italian partisan formations loyal to the Italian government in the south. 15 named.
-
-### `ITA_FAV_01` — Fiame Verdi (Green Flames)
-*Fiame Verdi* — Catholic partisan formations associated with the Christian Democratic resistance. 4 named.
+### `ITA_FAV_01` — Fiamme Verdi Formations (Green Flames)
+Catholic formations of Brescia (neutrality or democratic): *Divisione 'Tito Speri'*, *Divisione 'Astolfo Lunardi'* and their brigades (*'Dieci Giornate'*, *'Perlasca'*).
 
 ### `ITA_ALT_01` — Other Partisan Formations
-Mixed and unaffiliated Italian partisan formations. 8 named.
+Formations outside the party networks, available to any non-fascist government: *Brigata Maiella*, *Divisione Osoppo-Friuli*, *Fronte Militare Clandestino*.
+
+### `ITA_MOT_01` / `ITA_MEC_01` / `ITA_MEC_02` — Motorized and Mechanized Divisions
+Autotrasportabile and motorized divisions on their infantry numbers (*9a 'Pasubio'*, *101a Motorizzata 'Trieste'*); 106–108 are fictional. `ITA_MEC_01` is the plain mechanized list; `ITA_MEC_02` carries postwar names (*'Granatieri di Sardegna'*, *'Folgore'*, *'Goito'*).
 
 ### `ITA_ARM_01` — Armored Divisions (Divisioni Corazzate)
-Italian armored divisions: *Ariete*, *Centauro*, *Littorio*, *M* (Armored), and expanded numbered series.
+*131a 'Centauro'*, *132a 'Ariete'*, *133a 'Littorio'*, the abortive *134a 'Freccia'*, *135a 'Ariete II'*, *136a 'Centauro II'* and the CC.NN. *'M'* division; *'Pozzuolo del Friuli'* is fictional.
 
-### `ITA_MNT_01` — Alpine Divisions (Divisioni Alpine)
-The elite Alpini mountain troops — arguably the most celebrated branch of the Regio Esercito. Named entries: *Taurinense*, *Tridentina*, *Julia*, *Cuneense*, *Pusteria*, *Alpi Graie*, *Vicenza*. 8 named, with fallback `%sª Divisione Alpina`.
+### `ITA_MAR_01` / `ITA_MAR_02` — Marines
+The *'San Marco'* regiment and a postwar-style *Reggimento Lagunari 'Serenissima'*; fictional *Divisioni Fanteria di Marina*.
+
+### `ITA_MNT_01` — Mountain Divisions (Divisioni Alpine)
+*'Taurinense'*, *'Tridentina'*, *'Julia'*, *'Cuneense'*, *'Pusteria'*, *'Alpi Graie'*, plus the postwar *'Orobica'* and *'Cadore'*.
 
 ### `ITA_PAR_01` — Paratrooper Divisions (Paracadutisti)
-Italian paratroopers, including the famous *Folgore* division (59a), *Nembo* (185a), and *Ciclone* (184a).
+*80a Divisione Fanteria Aviotrasportabile 'La Spezia'* and the paratrooper divisions *183a 'Ciclone'*, *184a 'Nembo'*, *185a 'Folgore'*.
 
-### `ITA_FES_01` — Defence Brigades (Fortezza)
-Italian fortress brigades defending strategic positions in the Alps, Sicily, and Italian island garrisons.
+### `ITA_FES_01` / `ITA_GAR_01` — Defence Brigades and Coastal Divisions
+Fictional city defence brigades (*'Roma'*, *'Trieste'*, *'Zara'*) and the historical coastal divisions 201–231, which carried numbers only.
 
 ### `ITA_ROM_01` — Legione Romana
-Alternate-history Roman Legion-styled formations for fascist or neo-imperial Italy playthroughs.
-
+Imperial legions by number and cognomen (*Legio I Germanica*, *Legio XX Valeria Victrix*). Fascism only, and never picked by the AI.

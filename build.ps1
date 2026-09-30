@@ -487,6 +487,18 @@ function Invoke-Validation {
                     $seen[$idx] = $true
                 }
             }
+
+            # Each entry must be 'N = { "name" ["desc" ["url"]] }' or 'N = "name"'; quote parity alone
+            # misses a name outside its quotes such as '7 = { 5a Divisione S.Tosa"" }'
+            foreach ($entryLine in ($block -split "`n")) {
+                $entry = $entryLine.Trim()
+                if (-not $entry) { continue }
+                $str = '"(?:[^"\\]|\\.)*"'
+                if ($entry -notmatch "^\d+\s*=\s*(?:\{\s*$str(?:\s+$str){0,2}\s*\}|$str)$") {
+                    Write-Err "$($file.Name): Malformed ordered entry: $entry"
+                    $fileHasError = $true
+                }
+            }
         }
 
         # Check fallback_name format for ordinal placeholder (%d or %s)
@@ -1812,6 +1824,15 @@ function Set-PlanChangeTable {
     return $head + $nl + ($TableLines -join $nl) + $nl + $PlanText.Substring($end.Index)
 }
 
+# --- Helper: One-line audit totals shared by -Audit and -AuditPlan ---
+function Format-AuditSummaryLine {
+    param([string]$Key, $Data)
+    $totAuthored = [int]($Data.Groups | Measure-Object -Property AuthoredCount -Sum).Sum
+    $totOrdered = [int]($Data.Groups | Measure-Object -Property OrderedCount -Sum).Sum
+    $flagCount = @(@($Data.FileFlags) + @($Data.Groups | ForEach-Object { $_.Flags }) | Where-Object { $_ }).Count
+    return "AUDIT SUMMARY ${Key}: GROUPS=$(@($Data.Groups).Count) AUTHORED=$totAuthored/$totOrdered FLAGS=$flagCount"
+}
+
 # --- Helper: Audit plan skeleton ---
 function New-AuditPlanText {
     param(
@@ -1875,7 +1896,7 @@ function Invoke-AuditPlan {
         $findingLines = @(foreach ($g in $data.Groups) {
             if ($g.Flags.Count -gt 0) { "[$($g.Tag)] flags: $($g.Flags -join ', ')" }
         })
-        $summary = "AUDIT SUMMARY ${Tag}: GROUPS=$($data.Groups.Count) AUTHORED=$((($data.Groups | Measure-Object -Property AuthoredCount -Sum).Sum))/((($data.Groups | Measure-Object -Property OrderedCount -Sum).Sum))"
+        $summary = Format-AuditSummaryLine -Key $Tag -Data $data
         $text = New-AuditPlanText -Country $country -Tag $Tag -Date $date -FindingLines $findingLines -Summary $summary -TableLines $table
         [System.IO.File]::WriteAllText($path, $text, $utf8)
         $verb = 'Created'
@@ -2178,9 +2199,7 @@ function Invoke-NamelistAudit {
         }
     }
 
-    $totOrdered = ($data.Groups | Measure-Object -Property OrderedCount -Sum).Sum
-    $totAuthored = ($data.Groups | Measure-Object -Property AuthoredCount -Sum).Sum
-    Write-Host "`nAUDIT SUMMARY ${Key}: GROUPS=$($data.Groups.Count) AUTHORED=$totAuthored/$totOrdered FLAGS=$($allFlags.Count)" -ForegroundColor Cyan
+    Write-Host "`n$(Format-AuditSummaryLine -Key $Key -Data $data)" -ForegroundColor Cyan
 
     if ($CompareRef) {
         $relPath = "common/units/names_divisions/INEX_${Key}_names_divisions.txt"

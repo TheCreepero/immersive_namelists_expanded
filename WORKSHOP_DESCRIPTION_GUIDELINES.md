@@ -67,7 +67,7 @@ This document serves as an instruction and reference guide for maintaining and u
 | `INEX_ENG_names_divisions.txt` | United Kingdom | `ENG` | Included (Home Guard, Royal Guard, Independent, Commandos, Alt-history) |
 | `INEX_FIN_names_divisions.txt` | Finland | `FIN` | Included (Battle-honour divisions, Suojeluskunta districts, Ryhmä groups, Panssaridivisioona, Sissi, Swedish Volunteers SFK) |
 | `INEX_POL_names_divisions.txt` | Poland | `POL` | Included (Home Army, PSZ, LWP, KOP Border Guards, Brygada Świętokrzyska) |
-| `INEX_ITA_names_divisions.txt` | Italy | `ITA` | Included (Partisans, Nicknames, Defense Brigades, Colonial, Legione Romana) |
+| `INEX_ITA_names_divisions.txt` | Italy | `ITA` | Included (Historical numbering, Blackshirts, Royal Army, Party-gated Partisans, Colonial, Legione Romana) |
 | `INEX_SOV_names_divisions.txt` | USSR | `SOV` | Included (NKVD, Guards Para, Artillery, Penal units, Cossacks) |
 | `INEX_MEX_names_divisions.txt` | Mexico | `MEX` | Included (Cristero, Imperial Guard, Sinarquistas, Gold Shirts, CTM & Agrarian Militias, Anáhuac, Regular Army) |
 | `INEX_PER_names_divisions.txt` | Iran / Persia | `PER` | Included (Garrison-city Lashkars, Imperial & Immortal Guard, Shahnameh armor, Cossack atriads, Tribal levies, Camel corps, Gendarmerie) |
@@ -138,8 +138,9 @@ This is not a complete list of included namelists! Just some examples.
 - People's Army, KOP Border Protection Corps, and Brygada Świętokrzyska
 
 [b]Italy[/b]
-- Partisan brigades (Garibaldi, GL, Matteotti), defense brigades, and colonial troops
-- Historically nicknamed divisions and imperial Roman legions (Legione Romana)
+- Regio Esercito divisions on their real numbers, shared across infantry, motorized and armored lists ([i]9a Divisione 'Pasubio'[/i], [i]132a Divisione Corazzata 'Ariete'[/i])
+- Blackshirt, Royal Army ([i]Gruppo di Combattimento 'Cremona'[/i]) and Communist lists, plus Garibaldi, GL, Matteotti, Autonome and Fiamme Verdi partisans gated by government
+- Colonial troops ([i]Gruppo Bande a Cavallo 'Amhara'[/i]) and fascist-only imperial legions (Legione Romana)
 
 [b]USSR[/b]
 - NKVD security and penal (Shtrafbat) units
