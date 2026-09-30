@@ -1,622 +1,1116 @@
-GER_SCHWERE_PANZERABTEILUNG_01 = { 
-    name = "Schwere Panzerabteilung"
-    for_countries = { GER }
-    can_use = { always = yes }
-    division_types = { "heavy_armor" "medium_armor" "modern_armor" }
-    fallback_name = "schwere Panzerabteilung %d"
-    link_numbering_with = { GER_SCHWERE_PANZERABTEILUNG_02 }
-    ordered = {
-      501 = { "schwere Panzerabteilung %d" }
-      502 = { "schwere Panzerabteilung %d" }
-      503 = { "schwere Panzerabteilung %d" }
-      504 = { "schwere Panzerabteilung %d" }
-      505 = { "schwere Panzerabteilung %d" }
-      506 = { "schwere Panzerabteilung %d" }
-      507 = { "schwere Panzerabteilung %d" }
-      508 = { "schwere Panzerabteilung %d" }
-      509 = { "schwere Panzerabteilung %d" }
-      510 = { "schwere Panzerabteilung %d" }
-    }
-  }
+# Division template historical names system for Germany (GER): additional formations.
+# Immersive Namelists Expanded (INEX)
+#
+# Numbered series, specialised units, garrisons and fortresses, Kampfgruppen, militias and
+# foreign legions. Period German spelling and 1939-45 exonyms (Reval, Wilna, Kiew, Charkow);
+# identities appended to a designation go in single quotes, historical proper names do not.
+#
+# Numbering: Reserve, Volksgrenadier and Grenadier divisions link to GER_Inf_01 and sit on their
+# real numbers (one Heer number series). Luftwaffe field divisions, Flak divisions, battalions,
+# brigades, garrisons and militias run their own series.
+#
+# Ideology gating: Volkssturm, SA and foreign legions are fascist-only; Freikorps (neutrality),
+# Reichsbanner (democratic) and Red Front Fighters (communism) cover the other paths.
+# Overrides vanilla GER_MIL_01, GER_MIL_02 and GER_MIL_03 (all created by vanilla focuses).
 
-  GER_SCHWERE_PANZERABTEILUNG_02 = { 
-    name = "Schwere Panzerabteilung (Short)"
-    for_countries = { GER }
-    can_use = { always = yes }
-    division_types = { "heavy_armor" "medium_armor" "modern_armor" }
-    fallback_name = "sPz Abt %d"
-    link_numbering_with = { GER_SCHWERE_PANZERABTEILUNG_01 }
-    ordered = {
-      501 = { "sPz Abt %d" }
-      502 = { "sPz Abt %d" }
-      503 = { "sPz Abt %d" }
-      504 = { "sPz Abt %d" }
-      505 = { "sPz Abt %d" }
-      506 = { "sPz Abt %d" }
-      507 = { "sPz Abt %d" }
-      508 = { "sPz Abt %d" }
-      509 = { "sPz Abt %d" }
-      510 = { "sPz Abt %d" }
-    }
-  }
+# ==============================================================================
+# 1. HEAVY BATTALIONS, BRIGADES AND ARTILLERY
+# ==============================================================================
 
-  GER_PANZERARTILLERIE_DIVISION_01 = { 
-    name = "Panzerartillerie Division"
-    for_countries = { GER }
-    can_use = {
-      is_ai = no
-    }
-    division_types = { "heavy_armor" "medium_armor" "light_armor" "modern_armor" }
-    fallback_name = "%d. Panzerartillerie-Division"
-    ordered = {
-      1 = { "%d. Panzerartillerie-Division" }
-      2 = { "%d. Panzerartillerie-Division" }
-      3 = { "%d. Panzerartillerie-Division" }
-      4 = { "%d. Panzerartillerie-Division" }
-      5 = { "%d. Panzerartillerie-Division" }
-      6 = { "%d. Panzerartillerie-Division" }
-      7 = { "%d. Panzerartillerie-Division" }
-      8 = { "%d. Panzerartillerie-Division" }
-      9 = { "%d. Panzerartillerie-Division" }
-      10 = { "%d. Panzerartillerie-Division" }
-      11 = { "%d. Panzerartillerie-Division" }
-      12 = { "%d. Panzerartillerie-Division" }
-      13 = { "%d. Panzerartillerie-Division" }
-      14 = { "%d. Panzerartillerie-Division" }
-      15 = { "%d. Panzerartillerie-Division" }
-      16 = { "%d. Panzerartillerie-Division" }
-      17 = { "%d. Panzerartillerie-Division" }
-      18 = { "%d. Panzerartillerie-Division" }
-      19 = { "%d. Panzerartillerie-Division" }
-      20 = { "%d. Panzerartillerie-Division" }
-    }
-  }
-  
-  GER_RESERVE_DIVISION_01 = { 
-    name = "Reserve Divisions"
-    for_countries = { GER }
-    can_use = { always = yes }
-    division_types = { "infantry" }
-    fallback_name = "%d. Reserve-Division"
-    link_numbering_with = { GER_Inf_01 }
-    ordered = {
-      1 = { "%d. Reserve-Division" }
-      2 = { "%d. Reserve-Division" }
-      3 = { "%d. Reserve-Division" }
-      4 = { "%d. Reserve-Division" }
-      5 = { "%d. Reserve-Division" }
-      6 = { "%d. Reserve-Division" }
-      7 = { "%d. Reserve-Division" }
-      8 = { "%d. Reserve-Division" }
-      9 = { "%d. Reserve-Division" }
-      10 = { "%d. Reserve-Division" }
-      11 = { "%d. Reserve-Division" }
-      12 = { "%d. Reserve-Division" }
-      13 = { "%d. Reserve-Division" }
-      14 = { "%d. Reserve-Division" }
-      15 = { "%d. Reserve-Division" }
-      16 = { "%d. Reserve-Division" }
-      17 = { "%d. Reserve-Division" }
-      18 = { "%d. Reserve-Division" }
-      19 = { "%d. Reserve-Division" }
-      20 = { "%d. Reserve-Division" }
-      21 = { "%d. Reserve-Division" }
-      22 = { "%d. Reserve-Division" }
-      23 = { "%d. Reserve-Division" }
-      24 = { "%d. Reserve-Division" }
-      25 = { "%d. Reserve-Division" }
-      26 = { "%d. Reserve-Division" }
-      27 = { "%d. Reserve-Division" }
-      28 = { "%d. Reserve-Division" }
-      29 = { "%d. Reserve-Division" }
-      30 = { "%d. Reserve-Division" }
-      31 = { "%d. Reserve-Division" }
-      32 = { "%d. Reserve-Division" }
-      33 = { "%d. Reserve-Division" }
-      34 = { "%d. Reserve-Division" }
-      35 = { "%d. Reserve-Division" }
-      36 = { "%d. Reserve-Division" }
-      37 = { "%d. Reserve-Division" }
-      38 = { "%d. Reserve-Division" }
-      39 = { "%d. Reserve-Division" }
-      40 = { "%d. Reserve-Division" }
-      41 = { "%d. Reserve-Division" }
-      42 = { "%d. Reserve-Division" }
-      43 = { "%d. Reserve-Division" }
-      44 = { "%d. Reserve-Division" }
-      45 = { "%d. Reserve-Division" }
-      46 = { "%d. Reserve-Division" }
-      47 = { "%d. Reserve-Division" }
-      48 = { "%d. Reserve-Division" }
-      49 = { "%d. Reserve-Division" }
-      50 = { "%d. Reserve-Division" }
-      51 = { "%d. Reserve-Division" }
-      52 = { "%d. Reserve-Division" }
-      53 = { "%d. Reserve-Division" }
-      54 = { "%d. Reserve-Division" }
-      55 = { "%d. Reserve-Division" }
-      56 = { "%d. Reserve-Division" }
-      57 = { "%d. Reserve-Division" }
-      58 = { "%d. Reserve-Division" }
-      59 = { "%d. Reserve-Division" }
-      60 = { "%d. Reserve-Division" }
-    }
-  }
-  
-  GER_LUFTWAFFEN_FELD_DIVISION_01 = { 
-    name = "Luftwaffe Divisions"
-    for_countries = { GER }
-    can_use = { always = yes }
-    division_types = { "infantry" }
-    fallback_name = "Luftwaffen-Feld-Division %d"
-    link_numbering_with = { GER_Inf_01 }
-    ordered = {
-      1 = { "Luftwaffen-Feld-Division %d" }
-      2 = { "Luftwaffen-Feld-Division %d" }
-      3 = { "Luftwaffen-Feld-Division %d" }
-      4 = { "Luftwaffen-Feld-Division %d" }
-      5 = { "Luftwaffen-Feld-Division %d" }
-      6 = { "Luftwaffen-Feld-Division %d" }
-      7 = { "Luftwaffen-Feld-Division %d" }
-      8 = { "Luftwaffen-Feld-Division %d" }
-      9 = { "Luftwaffen-Feld-Division %d" }
-      10 = { "Luftwaffen-Feld-Division %d" }
-      11 = { "Luftwaffen-Feld-Division %d" }
-      12 = { "Luftwaffen-Feld-Division %d" }
-      13 = { "Luftwaffen-Feld-Division %d" }
-      14 = { "Luftwaffen-Feld-Division %d" }
-      15 = { "Luftwaffen-Feld-Division %d" }
-      16 = { "Luftwaffen-Feld-Division %d" }
-      17 = { "Luftwaffen-Feld-Division %d" }
-      18 = { "Luftwaffen-Feld-Division %d" }
-      19 = { "Luftwaffen-Feld-Division %d" }
-      20 = { "Luftwaffen-Feld-Division %d" }
-      21 = { "Luftwaffen-Feld-Division %d" }
-      22 = { "Luftwaffen-Feld-Division %d" }
-      23 = { "Luftwaffen-Feld-Division %d" }
-      24 = { "Luftwaffen-Feld-Division %d" }
-      25 = { "Luftwaffen-Feld-Division %d" }
-      26 = { "Luftwaffen-Feld-Division %d" }
-      27 = { "Luftwaffen-Feld-Division %d" }
-      28 = { "Luftwaffen-Feld-Division %d" }
-      29 = { "Luftwaffen-Feld-Division %d" }
-      30 = { "Luftwaffen-Feld-Division %d" }
-    }
-  }
-  GER_VOLKSGRENADIER_01 = { 
-    name = "Volksgrenadier Divisions"
-    for_countries = { GER }
-    can_use = { always = yes }
-    division_types = { "infantry" }
-    fallback_name = "%d. Volks-Grenadier-Division"
-    link_numbering_with = { GER_Inf_01 }
-    ordered = {
-      1 = { "%d. Volks-Grenadier-Division" }
-      2 = { "%d. Volks-Grenadier-Division" }
-      3 = { "%d. Volks-Grenadier-Division" }
-      4 = { "%d. Volks-Grenadier-Division" }
-      5 = { "%d. Volks-Grenadier-Division" }
-      6 = { "%d. Volks-Grenadier-Division" }
-      7 = { "%d. Volks-Grenadier-Division" }
-      8 = { "%d. Volks-Grenadier-Division" }
-      9 = { "%d. Volks-Grenadier-Division" }
-      10 = { "%d. Volks-Grenadier-Division" }
-      11 = { "%d. Volks-Grenadier-Division" }
-      12 = { "%d. Volks-Grenadier-Division" }
-      13 = { "%d. Volks-Grenadier-Division" }
-      14 = { "%d. Volks-Grenadier-Division" }
-      15 = { "%d. Volks-Grenadier-Division" }
-      16 = { "%d. Volks-Grenadier-Division" }
-      17 = { "%d. Volks-Grenadier-Division" }
-      18 = { "%d. Volks-Grenadier-Division" }
-      19 = { "%d. Volks-Grenadier-Division" }
-      20 = { "%d. Volks-Grenadier-Division" }
-      21 = { "%d. Volks-Grenadier-Division" }
-      22 = { "%d. Volks-Grenadier-Division" }
-      23 = { "%d. Volks-Grenadier-Division" }
-      24 = { "%d. Volks-Grenadier-Division" }
-      25 = { "%d. Volks-Grenadier-Division" }
-      26 = { "%d. Volks-Grenadier-Division" }
-      27 = { "%d. Volks-Grenadier-Division" }
-      28 = { "%d. Volks-Grenadier-Division" }
-      29 = { "%d. Volks-Grenadier-Division" }
-      30 = { "%d. Volks-Grenadier-Division" }
-      31 = { "%d. Volks-Grenadier-Division" }
-      32 = { "%d. Volks-Grenadier-Division" }
-      33 = { "%d. Volks-Grenadier-Division" }
-      34 = { "%d. Volks-Grenadier-Division" }
-      35 = { "%d. Volks-Grenadier-Division" }
-      36 = { "%d. Volks-Grenadier-Division" }
-      37 = { "%d. Volks-Grenadier-Division" }
-      38 = { "%d. Volks-Grenadier-Division" }
-      39 = { "%d. Volks-Grenadier-Division" }
-      40 = { "%d. Volks-Grenadier-Division" }
-    }
-    }
+# Full and abbreviated forms share one number series (501-510, then the 1945 renumberings).
+GER_SCHWERE_PANZERABTEILUNG_01 = {
+	name = "Heavy Panzer Battalions"
 
-GER_GRENADIER_DIVISION_01 = 
-{ 
-      name = "Grenadier Divisions"
-      for_countries = { GER }
-      can_use = { always = yes }
-      division_types = { "infantry" }
-      fallback_name = "%d. Grenadier-Division"
-      link_numbering_with = { GER_Inf_01 }
-      ordered = {
-        1 = { "%d. Grenadier-Division" }
-        2 = { "%d. Grenadier-Division" }
-        3 = { "%d. Grenadier-Division" }
-        4 = { "%d. Grenadier-Division" }
-        5 = { "%d. Grenadier-Division" }
-        6 = { "%d. Grenadier-Division" }
-        7 = { "%d. Grenadier-Division" }
-        8 = { "%d. Grenadier-Division" }
-        9 = { "%d. Grenadier-Division" }
-        10 = { "%d. Grenadier-Division" }
-        11 = { "%d. Grenadier-Division" }
-        12 = { "%d. Grenadier-Division" }
-        13 = { "%d. Grenadier-Division" }
-        14 = { "%d. Grenadier-Division" }
-        15 = { "%d. Grenadier-Division" }
-        16 = { "%d. Grenadier-Division" }
-        17 = { "%d. Grenadier-Division" }
-        18 = { "%d. Grenadier-Division" }
-        19 = { "%d. Grenadier-Division" }
-        20 = { "%d. Grenadier-Division" }
-        21 = { "%d. Grenadier-Division" }
-        22 = { "%d. Grenadier-Division" }
-        23 = { "%d. Grenadier-Division" }
-        24 = { "%d. Grenadier-Division" }
-        25 = { "%d. Grenadier-Division" }
-        26 = { "%d. Grenadier-Division" }
-        27 = { "%d. Grenadier-Division" }
-        28 = { "%d. Grenadier-Division" }
-        29 = { "%d. Grenadier-Division" }
-        30 = { "%d. Grenadier-Division" }
-        31 = { "%d. Grenadier-Division" }
-        32 = { "%d. Grenadier-Division" }
-        33 = { "%d. Grenadier-Division" }
-        34 = { "%d. Grenadier-Division" }
-        35 = { "%d. Grenadier-Division" }
-        36 = { "%d. Grenadier-Division" }
-        37 = { "%d. Grenadier-Division" }
-        38 = { "%d. Grenadier-Division" }
-        39 = { "%d. Grenadier-Division" }
-        40 = { "%d. Grenadier-Division" }
-      }
-    }
-    
-GER_GAR_02 = 
-{
-    name = "City Garrisons"
+	for_countries = { GER }
 
-    for_countries = { GER }
+	can_use = { always = yes }
 
-    can_use = { always = yes }
+	division_types = { "heavy_armor" "medium_armor" "modern_armor" }
 
-    division_types = { "infantry" }
+	link_numbering_with = { GER_SCHWERE_PANZERABTEILUNG_02 }
 
-    fallback_name = "%d. Garnisonkommando"
+	fallback_name = "schwere Panzer-Abteilung %d"
 
-    ordered =
-    {
-        1 = { "Garnisonkommando Berlin" }
-        2 = { "Garnisonkommando Paris" }
-        3 = { "Garnisonkommando Brüssel" }
-        4 = { "Garnisonkommando Kopenhagen" }
-        5 = { "Garnisonkommando Prag" }
-        6 = { "Garnisonkommando Warschau" }
-        7 = { "Garnisonkommando Oslo" }
-        8 = { "Garnisonkommando Wien" }
-        9 = { "Garnisonkommando Budapest" }
-        10 = { "Garnisonkommando Athen" }
-        11 = { "Garnisonkommando Riga" }
-        12 = { "Garnisonkommando Belgrad" }
-        13 = { "Garnisonkommando Rom" }
-        14 = { "Garnisonkommando Amsterdam" }
-        15 = { "Garnisonkommando Luxemburg" }
-        16 = { "Garnisonkommando Sofia" }
-        17 = { "Garnisonkommando Helsinki" }
-        18 = { "Garnisonkommando Zagreb" }
-        19 = { "Garnisonkommando Tallinn" }
-        20 = { "Garnisonkommando Vilnius" }
-        21 = { "Garnisonkommando Ljubljana" }
-        22 = { "Garnisonkommando Tirana" }
-        23 = { "Garnisonkommando Madrid" }
-        24 = { "Garnisonkommando Lissabon" }
-        25 = { "Garnisonkommando Dublin" }
-        26 = { "Garnisonkommando Reykjavik" }
-        27 = { "Garnisonkommando Stockholm" }
-        28 = { "Garnisonkommando Bern" }
-        29 = { "Garnisonkommando Ankara" }
-        30 = { "Garnisonkommando Kairo" }
-        31 = { "Garnisonkommando Teheran" }
-        32 = { "Garnisonkommando Bagdad" }
-        33 = { "Garnisonkommando Kabul" }
-        34 = { "Garnisonkommando Moskau" }
-        35 = { "Garnisonkommando Kiew" }
-        36 = { "Garnisonkommando Minsk" }
-        37 = { "Garnisonkommando Algier" }
-        38 = { "Garnisonkommando Tunis" }
-        39 = { "Garnisonkommando Rabat" }
-        40 = { "Garnisonkommando Dakar" }		
-    }
-}
-GER_FORT_01 =
-{
-    name = "Fortress Divisions"
-
-    for_countries = { GER }
-
-    can_use = { always = yes }
-
-    division_types = { "infantry" }
-
-    fallback_name = "%d. Festungs-Division"
-
-    ordered =
-    {
-        1 = { "Festungs-Division 'Warschau'" }
-        2 = { "Festungs-Division 'Berlin'" }
-        3 = { "Festungs-Division 'Breslau'" }
-        4 = { "Festungs-Division 'Königsberg'" }
-        5 = { "Festungs-Division 'Danzig'" }
-        6 = { "Festungs-Division 'Stettin'" }
-        7 = { "Festungs-Division 'Paris'" }
-        8 = { "Festungs-Division 'Leningrad'" }
-        9 = { "Festungs-Division 'Sevastopol'" }
-        10 = { "Festungs-Division 'Odessa'" }
-        11 = { "Festungs-Division 'Cherbourg'" }
-        12 = { "Festungs-Division 'Antwerpen'" }
-        13 = { "Festungs-Division 'Köln'" }
-        14 = { "Festungs-Division 'Rotterdam'" }
-        15 = { "Festungs-Division 'Amsterdam'" }
-        16 = { "Festungs-Division 'Brüssel'" }
-        17 = { "Festungs-Division 'Dresden'" }
-        18 = { "Festungs-Division 'Prag'" }
-        19 = { "Festungs-Division 'Hamburg'" }
-        20 = { "Festungs-Division 'München'" }
-        21 = { "Festungs-Division 'Frankfurt'" }
-        22 = { "Festungs-Division 'Stuttgart'" }
-        23 = { "Festungs-Division 'Nürnberg'" }
-        24 = { "Festungs-Division 'Hannover'" }
-        25 = { "Festungs-Division 'Leipzig'" }
-        26 = { "Festungs-Division 'Düsseldorf'" }
-        27 = { "Festungs-Division 'Essen'" }
-        28 = { "Festungs-Division 'Bremen'" }
-        29 = { "Festungs-Division 'Vilnius'" }
-        30 = { "Festungs-Division 'Kaunas'" }
-        31 = { "Festungs-Division 'Tallinn'" }
-        32 = { "Festungs-Division 'Riga'" }
-        33 = { "Festungs-Division 'Minsk'" }
-        34 = { "Festungs-Division 'Kiev'" }
-        35 = { "Festungs-Division 'Kharkov'" }
-        36 = { "Festungs-Division 'Rostov'" }
-        37 = { "Festungs-Division 'Stalingrad'" }
-        38 = { "Festungs-Division 'Moskau'" }
-        39 = { "Festungs-Division 'Smolensk'" }
-        40 = { "Festungs-Division 'Kursk'" }
-        41 = { "Festungs-Division 'Volgograd'" }
-        42 = { "Festungs-Division 'Voronezh'" }
-        43 = { "Festungs-Division 'Orel'" }
-        44 = { "Festungs-Division 'Bryansk'" }
-        45 = { "Festungs-Division 'Tula'" }
-        46 = { "Festungs-Division 'Gomel'" }
-        47 = { "Festungs-Division 'Vitebsk'" }
-        48 = { "Festungs-Division 'Kalinin'" }
-        49 = { "Festungs-Division 'Yaroslavl'" }
-        50 = { "Festungs-Division 'Ryazan'" }
-        51 = { "Festungs-Division 'Tver'" }
-        52 = { "Festungs-Division 'Pskov'" }
-        53 = { "Festungs-Division 'Novgorod'" }
-        54 = { "Festungs-Division 'Narva'" }
-        55 = { "Festungs-Division 'Petrozavodsk'" }
-        56 = { "Festungs-Division 'Murmansk'" }
-        57 = { "Festungs-Division 'Arkhangelsk'" }
-        58 = { "Festungs-Division 'Vologda'" }
-        59 = { "Festungs-Division 'Saratov'" }
-        60 = { "Festungs-Division 'Astrakhan'" }
-        61 = { "Festungs-Division 'Grozny'" }
-        62 = { "Festungs-Division 'Vladikavkaz'" }
-        63 = { "Festungs-Division 'Perm'" }
-        64 = { "Festungs-Division 'Samara'" }
-        65 = { "Festungs-Division 'Ufa'" }
-        66 = { "Festungs-Division 'Kazan'" }
-        67 = { "Festungs-Division 'Nizhny Novgorod'" }
-        68 = { "Festungs-Division 'Izhevsk'" }
-        69 = { "Festungs-Division 'Orenburg'" }
-        70 = { "Festungs-Division 'Chelyabinsk'" }
-        71 = { "Festungs-Division 'Yekaterinburg'" }
-        72 = { "Festungs-Division 'Tyumen'" }
-        73 = { "Festungs-Division 'Krasnoyarsk'" }
-        74 = { "Festungs-Division 'Novosibirsk'" }
-        75 = { "Festungs-Division 'Tomsk'" }
-        76 = { "Festungs-Division 'Omsk'" }
-        77 = { "Festungs-Division 'Barnaul'" }
-        78 = { "Festungs-Division 'Kemerovo'" }
-        79 = { "Festungs-Division 'Irkutsk'" }
-        80 = { "Festungs-Division 'Ulan-Ude'" }
-        81 = { "Festungs-Division 'Khabarovsk'" }
-        82 = { "Festungs-Division 'Vladivostok'" }
-        83 = { "Festungs-Division 'Magadan'" }
-        84 = { "Festungs-Division 'Yakutsk'" }
-        85 = { "Festungs-Division 'Chita'" }
-        86 = { "Festungs-Division 'Blagoveshchensk'" }
-        87 = { "Festungs-Division 'Komsomolsk-na-Amure'" }
-        88 = { "Festungs-Division 'Petropavlovsk-Kamchatsky'" }
-        89 = { "Festungs-Division 'Yuzhno-Sakhalinsk'" }
-        90 = { "Festungs-Division 'Anadyr'" }
-        91 = { "Festungs-Division 'Barentsburg'" }
-        92 = { "Festungs-Division 'Longyearbyen'" }
-        93 = { "Festungs-Division 'Nuuk'" }
-        94 = { "Festungs-Division 'Reykjavik'" }
-        95 = { "Festungs-Division 'Akureyri'" }
-        96 = { "Festungs-Division 'Isafjordur'" }
-        97 = { "Festungs-Division 'Keflavik'" }
-        98 = { "Festungs-Division 'Egilsstadir'" }
-        99 = { "Festungs-Division 'Husavik'" }
-        100 = { "Festungs-Division 'Seydisfjordur'" }
-        101 = { "Festungs-Division 'Vestmannaeyjar'" }
-        102 = { "Festungs-Division 'Olafsvik'" }
-        103 = { "Festungs-Division 'Grundarfjordur'" }
-        104 = { "Festungs-Division 'Hornafjordur'" }
-        105 = { "Festungs-Division 'Dalvik'" }
-    }
+	ordered = {
+		# Historical: Heer heavy tank battalions (Tiger)
+		501 = { "schwere Panzer-Abteilung %d" }
+		502 = { "schwere Panzer-Abteilung %d" }
+		503 = { "schwere Panzer-Abteilung %d" }
+		504 = { "schwere Panzer-Abteilung %d" }
+		505 = { "schwere Panzer-Abteilung %d" }
+		506 = { "schwere Panzer-Abteilung %d" }
+		507 = { "schwere Panzer-Abteilung %d" }
+		508 = { "schwere Panzer-Abteilung %d" }
+		509 = { "schwere Panzer-Abteilung %d" }
+		510 = { "schwere Panzer-Abteilung %d" }
+		# Historical: redesignations of 1945, the radio-control battalion and heavy tank destroyers
+		511 = { "schwere Panzer-Abteilung %d" }
+		424 = { "schwere Panzer-Abteilung %d" }
+		301 = { "schwere Panzer-Abteilung (Fkl) %d" }
+		653 = { "schwere Panzerjäger-Abteilung %d" }
+		654 = { "schwere Panzerjäger-Abteilung %d" }
+		512 = { "schwere Panzerjäger-Abteilung %d" }
+	}
 }
 
-GER_KAMPFGRUPPE_01 =
-{
-    name = "Kampfgruppen"
+GER_SCHWERE_PANZERABTEILUNG_02 = {
+	name = "Heavy Panzer Bns (Abbr.)"
 
-    for_countries = { GER }
+	for_countries = { GER }
 
-    can_use = { always = yes }
+	can_use = { always = yes }
 
-    division_types = { "infantry" "motorized" "mechanized" "light_armor" "medium_armor" "heavy_armor" }
+	division_types = { "heavy_armor" "medium_armor" "modern_armor" }
 
-    fallback_name = "Kampfgruppe %d"
+	link_numbering_with = { GER_SCHWERE_PANZERABTEILUNG_01 }
 
-    ordered =
-    {
-        1 = { "Kampfgruppe Agricola" }
-        2 = { "Kampfgruppe Ahlfen" }
-        3 = { "Kampfgruppe Allmendinger" }
-        4 = { "Kampfgruppe Angelis" }
-        5 = { "Kampfgruppe Arndt" }
-        6 = { "Kampfgruppe Bäßler" }
-        7 = { "Kampfgruppe Bayer" }
-        8 = { "Kampfgruppe Behlendorff" }
-        9 = { "Kampfgruppe Below" }
-        10 = { "Kampfgruppe Berlin" }
-        11 = { "Kampfgruppe Berthold" }
-        12 = { "Kampfgruppe Betzel" }
-        13 = { "Kampfgruppe Beyer" }
-        14 = { "Kampfgruppe Bieler" }
-        15 = { "Kampfgruppe Bismarck" }
-        16 = { "Kampfgruppe Blaskowitz" }
-        17 = { "Kampfgruppe Blaurock" }
-        18 = { "Kampfgruppe Block" }
-        19 = { "Kampfgruppe Blümke" }
-        20 = { "Kampfgruppe Bock" }
-        21 = { "Kampfgruppe Böckmann" }
-        22 = { "Kampfgruppe Boege" }
-        23 = { "Kampfgruppe Boetticher" }
-        24 = { "Kampfgruppe Böhlke" }
-        25 = { "Kampfgruppe Böhme" }
-        26 = { "Kampfgruppe Boineburg-Lengsfeld" }
-        27 = { "Kampfgruppe Borowietz" }
-        28 = { "Kampfgruppe Brennecke" }
-        29 = { "Kampfgruppe Briesen" }
-        30 = { "Kampfgruppe Britzelmayr" }
-        31 = { "Kampfgruppe Brockdorff-Ahlefeldt" }
-        32 = { "Kampfgruppe Brodowski" }
-        33 = { "Kampfgruppe Buhle" }
-        34 = { "Kampfgruppe Bünau" }
-        35 = { "Kampfgruppe Burgdorf" }
-        36 = { "Kampfgruppe Buschenhagen" }
-        37 = { "Kampfgruppe Busse" }
-        38 = { "Kampfgruppe Chappuis" }
-        39 = { "Kampfgruppe Chevallerie" }
-        40 = { "Kampfgruppe Choltitz" }
-        41 = { "Kampfgruppe Clößner" }
-        42 = { "Kampfgruppe Crasemann" }
-        43 = { "Kampfgruppe Crisolli" }
-        44 = { "Kampfgruppe Crüwell" }
-        45 = { "Kampfgruppe Dawans" }
-        46 = { "Kampfgruppe Degener" }
-        47 = { "Kampfgruppe Dehner" }
-        48 = { "Kampfgruppe Dietl" }
-        49 = { "Kampfgruppe Doering" }
-        50 = { "Kampfgruppe Dollmann" }
-        51 = { "Kampfgruppe Dostler" }
-        52 = { "Kampfgruppe Eberhard" }
-        53 = { "Kampfgruppe Edelsheim" }
-        54 = { "Kampfgruppe Eibl" }
-        55 = { "Kampfgruppe Eimannsberger" }
-        56 = { "Kampfgruppe Elfeldt" }
-        57 = { "Kampfgruppe Elverfeldt" }
-        58 = { "Kampfgruppe Endres" }
-        59 = { "Kampfgruppe Engelbrecht" }
-        60 = { "Kampfgruppe Erdmannsdorff" }
-    }
+	fallback_name = "s.Pz.Abt. %d"
+
+	ordered = {
+		# Historical: Heer heavy tank battalions (Tiger)
+		501 = { "s.Pz.Abt. %d" }
+		502 = { "s.Pz.Abt. %d" }
+		503 = { "s.Pz.Abt. %d" }
+		504 = { "s.Pz.Abt. %d" }
+		505 = { "s.Pz.Abt. %d" }
+		506 = { "s.Pz.Abt. %d" }
+		507 = { "s.Pz.Abt. %d" }
+		508 = { "s.Pz.Abt. %d" }
+		509 = { "s.Pz.Abt. %d" }
+		510 = { "s.Pz.Abt. %d" }
+		# Historical: redesignations of 1945, the radio-control battalion and heavy tank destroyers
+		511 = { "s.Pz.Abt. %d" }
+		424 = { "s.Pz.Abt. %d" }
+		301 = { "s.Pz.Abt. (Fkl) %d" }
+		653 = { "s.Pz.Jg.Abt. %d" }
+		654 = { "s.Pz.Jg.Abt. %d" }
+		512 = { "s.Pz.Jg.Abt. %d" }
+	}
 }
 
-GER_VOLKSSTURM_BATAILLONS_01 = { 
-  name = "Volkssturm Battalions"
-  for_countries = { GER }
-  can_use = { always = yes }
-  division_types = { "militia" }
-  fallback_name = "%d. Volkssturm-Bataillon"
-  ordered = {
-    1 = { "%d. Volkssturm-Bataillon" }
-    2 = { "%d. Volkssturm-Bataillon" }
-    3 = { "%d. Volkssturm-Bataillon" }
-    4 = { "%d. Volkssturm-Bataillon" }
-    5 = { "%d. Volkssturm-Bataillon" }
-    6 = { "%d. Volkssturm-Bataillon" }
-    7 = { "%d. Volkssturm-Bataillon" }
-    8 = { "%d. Volkssturm-Bataillon" }
-    9 = { "%d. Volkssturm-Bataillon" }
-    10 = { "%d. Volkssturm-Bataillon" }
-    11 = { "%d. Volkssturm-Bataillon" }
-    12 = { "%d. Volkssturm-Bataillon" }
-    13 = { "%d. Volkssturm-Bataillon" }
-    14 = { "%d. Volkssturm-Bataillon" }
-    15 = { "%d. Volkssturm-Bataillon" }
-    16 = { "%d. Volkssturm-Bataillon" }
-    17 = { "%d. Volkssturm-Bataillon" }
-    18 = { "%d. Volkssturm-Bataillon" }
-    19 = { "%d. Volkssturm-Bataillon" }
-    20 = { "%d. Volkssturm-Bataillon" }
-    21 = { "%d. Volkssturm-Bataillon" }
-    22 = { "%d. Volkssturm-Bataillon" }
-    23 = { "%d. Volkssturm-Bataillon" }
-    24 = { "%d. Volkssturm-Bataillon" }
-    25 = { "%d. Volkssturm-Bataillon" }
-    26 = { "%d. Volkssturm-Bataillon" }
-    27 = { "%d. Volkssturm-Bataillon" }
-    28 = { "%d. Volkssturm-Bataillon" }
-    29 = { "%d. Volkssturm-Bataillon" }
-    30 = { "%d. Volkssturm-Bataillon" }
-    31 = { "%d. Volkssturm-Bataillon" }
-    32 = { "%d. Volkssturm-Bataillon" }
-    33 = { "%d. Volkssturm-Bataillon" }
-    34 = { "%d. Volkssturm-Bataillon" }
-    35 = { "%d. Volkssturm-Bataillon" }
-    36 = { "%d. Volkssturm-Bataillon" }
-    37 = { "%d. Volkssturm-Bataillon" }
-    38 = { "%d. Volkssturm-Bataillon" }
-    39 = { "%d. Volkssturm-Bataillon" }
-    40 = { "%d. Volkssturm-Bataillon" }
-  }
+# Independent Panzer brigades for small armoured templates; own number series.
+GER_ARM_03 = {
+	name = "Panzer Brigades"
+
+	for_countries = { GER }
+
+	can_use = { always = yes }
+
+	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
+
+	fallback_name = "Panzer-Brigade %d"
+
+	ordered = {
+		# Historical: Panzer-Brigade 10 (Kursk, 1943) and the 1944 Panzer-Brigaden
+		10 = { "Panzer-Brigade %d" }
+		101 = { "Panzer-Brigade %d" }
+		102 = { "Panzer-Brigade %d" }
+		103 = { "Panzer-Brigade %d" }
+		104 = { "Panzer-Brigade %d" }
+		105 = { "Panzer-Brigade %d" }
+		106 = { "Panzer-Brigade %d" }
+		107 = { "Panzer-Brigade %d" }
+		108 = { "Panzer-Brigade %d" }
+		109 = { "Panzer-Brigade %d" }
+		110 = { "Panzer-Brigade %d" }
+		111 = { "Panzer-Brigade %d" }
+		112 = { "Panzer-Brigade %d" }
+		113 = { "Panzer-Brigade %d" }
+		150 = { "Panzer-Brigade %d" }
+		901 = { "Panzer-Brigade 'Norwegen'" }
+	}
 }
 
-GER_FLAK_DIVISION_01 = { 
-  name = "Flak Divisions"
-  for_countries = { GER }
-  can_use = { always = yes }
-  division_types = { "infantry" }
-  fallback_name = "%d. Flak-Division"
-  ordered = {
-    1 = { "%d. Flak-Division" }
-    2 = { "%d. Flak-Division" }
-    3 = { "%d. Flak-Division" }
-    4 = { "%d. Flak-Division" }
-    5 = { "%d. Flak-Division" }
-    6 = { "%d. Flak-Division" }
-    7 = { "%d. Flak-Division" }
-    8 = { "%d. Flak-Division" }
-    9 = { "%d. Flak-Division 'Stalingrad'" }
-    10 = { "%d. Flak-Division" }
-    11 = { "%d. Flak-Division" }
-    12 = { "%d. Flak-Division" }
-    13 = { "%d. Flak-Division" }
-    14 = { "%d. Flak-Division" }
-    15 = { "%d. Flak-Division" }
-    16 = { "%d. Flak-Division" }
-    17 = { "%d. Flak-Division" }
-    18 = { "%d. Flak-Division" }
-    19 = { "%d. Flak-Division" }
-    20 = { "%d. Flak-Division" }
-  }
+# Players only (is_ai = no): self-propelled artillery templates; own number series.
+GER_PANZERARTILLERIE_DIVISION_01 = {
+	name = "Panzer Artillery Divisions"
+
+	for_countries = { GER }
+
+	can_use = {
+		is_ai = no
+	}
+
+	division_types = { "heavy_armor" "medium_armor" "light_armor" "modern_armor" }
+
+	fallback_name = "%d. Panzer-Artillerie-Division"
+
+	ordered = {
+		# Historical: the Heer artillery divisions and the Volks-Artillerie-Korps of 1944-45
+		18 = { "%d. Artillerie-Division" }
+		309 = { "Artillerie-Division z.b.V. %d" }
+		310 = { "%d. Artillerie-Division" }
+		311 = { "%d. Artillerie-Division" }
+		312 = { "%d. Artillerie-Division" }
+		388 = { "Volks-Artillerie-Korps %d" }
+		401 = { "Volks-Artillerie-Korps %d" }
+		402 = { "Volks-Artillerie-Korps %d" }
+		403 = { "Volks-Artillerie-Korps %d" }
+		404 = { "Volks-Artillerie-Korps %d" }
+		405 = { "Volks-Artillerie-Korps %d" }
+		406 = { "Volks-Artillerie-Korps %d" }
+		407 = { "Volks-Artillerie-Korps %d" }
+		408 = { "Volks-Artillerie-Korps %d" }
+		409 = { "Volks-Artillerie-Korps %d" }
+		410 = { "Volks-Artillerie-Korps %d" }
+	}
+}
+
+# ==============================================================================
+# 2. NUMBERED INFANTRY SERIES (Heer and Luftwaffe)
+# ==============================================================================
+
+GER_RESERVE_DIVISION_01 = {
+	name = "Reserve Divisions"
+
+	for_countries = { GER }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	link_numbering_with = { GER_Inf_01 }
+
+	fallback_name = "%d. Reserve-Division"
+
+	ordered = {
+		# Historical Reserve-Divisionen (1942-44), real numbers
+		141 = { "%d. Reserve-Division" }
+		143 = { "%d. Reserve-Division" }
+		147 = { "%d. Reserve-Division" }
+		148 = { "%d. Reserve-Division" }
+		151 = { "%d. Reserve-Division" }
+		153 = { "%d. Reserve-Division" }
+		154 = { "%d. Reserve-Division" }
+		156 = { "%d. Reserve-Division" }
+		157 = { "%d. Reserve-Gebirgs-Division" }
+		158 = { "%d. Reserve-Division" }
+		159 = { "%d. Reserve-Division" }
+		160 = { "%d. Reserve-Division" }
+		165 = { "%d. Reserve-Division" }
+		166 = { "%d. Reserve-Division" }
+		171 = { "%d. Reserve-Division" }
+		173 = { "%d. Reserve-Division" }
+		174 = { "%d. Reserve-Division" }
+		182 = { "%d. Reserve-Division" }
+		187 = { "%d. Reserve-Division" }
+		188 = { "%d. Reserve-Gebirgs-Division" }
+		189 = { "%d. Reserve-Division" }
+		191 = { "%d. Reserve-Division" }
+	}
+}
+
+GER_VOLKSGRENADIER_01 = {
+	name = "Volksgrenadier Divisions"
+
+	for_countries = { GER }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	link_numbering_with = { GER_Inf_01 }
+
+	fallback_name = "%d. Volksgrenadier-Division"
+
+	ordered = {
+		# Historical Volksgrenadier-Divisionen (autumn 1944 onwards), in raising order
+		78 = { "%d. Volks-Sturm-Division" }
+		560 = { "%d. Volksgrenadier-Division" }
+		12 = { "%d. Volksgrenadier-Division" }
+		361 = { "%d. Volksgrenadier-Division" }
+		18 = { "%d. Volksgrenadier-Division" }
+		276 = { "%d. Volksgrenadier-Division" }
+		277 = { "%d. Volksgrenadier-Division" }
+		326 = { "%d. Volksgrenadier-Division" }
+		708 = { "%d. Volksgrenadier-Division" }
+		349 = { "%d. Volksgrenadier-Division" }
+		183 = { "%d. Volksgrenadier-Division" }
+		246 = { "%d. Volksgrenadier-Division" }
+		337 = { "%d. Volksgrenadier-Division" }
+		340 = { "%d. Volksgrenadier-Division" }
+		26 = { "%d. Volksgrenadier-Division" }
+		47 = { "%d. Volksgrenadier-Division" }
+		212 = { "%d. Volksgrenadier-Division" }
+		256 = { "%d. Volksgrenadier-Division" }
+		271 = { "%d. Volksgrenadier-Division" }
+		272 = { "%d. Volksgrenadier-Division" }
+		363 = { "%d. Volksgrenadier-Division" }
+		352 = { "%d. Volksgrenadier-Division" }
+		62 = { "%d. Volksgrenadier-Division" }
+		6 = { "%d. Volksgrenadier-Division" }
+		16 = { "%d. Volksgrenadier-Division" }
+		19 = { "%d. Volksgrenadier-Division" }
+		31 = { "%d. Volksgrenadier-Division" }
+		36 = { "%d. Volksgrenadier-Division" }
+		61 = { "%d. Volksgrenadier-Division" }
+		541 = { "%d. Volksgrenadier-Division" }
+		542 = { "%d. Volksgrenadier-Division" }
+		544 = { "%d. Volksgrenadier-Division" }
+		545 = { "%d. Volksgrenadier-Division" }
+		547 = { "%d. Volksgrenadier-Division" }
+		548 = { "%d. Volksgrenadier-Division" }
+		549 = { "%d. Volksgrenadier-Division" }
+		551 = { "%d. Volksgrenadier-Division" }
+		553 = { "%d. Volksgrenadier-Division" }
+		558 = { "%d. Volksgrenadier-Division" }
+		559 = { "%d. Volksgrenadier-Division" }
+		561 = { "%d. Volksgrenadier-Division" }
+		562 = { "%d. Volksgrenadier-Division" }
+		563 = { "%d. Volksgrenadier-Division" }
+		9 = { "%d. Volksgrenadier-Division" }
+		257 = { "%d. Volksgrenadier-Division" }
+		45 = { "%d. Volksgrenadier-Division" }
+		79 = { "%d. Volksgrenadier-Division" }
+		320 = { "%d. Volksgrenadier-Division" }
+		167 = { "%d. Volksgrenadier-Division" }
+		462 = { "%d. Volksgrenadier-Division" }
+		211 = { "%d. Volksgrenadier-Division" }
+		98 = { "%d. Volksgrenadier-Division" }
+		46 = { "%d. Volksgrenadier-Division" }
+		278 = { "%d. Volksgrenadier-Division" }
+		334 = { "%d. Volksgrenadier-Division" }
+		347 = { "%d. Volksgrenadier-Division" }
+		48 = { "%d. Volksgrenadier-Division" }
+	}
+}
+
+GER_GRENADIER_DIVISION_01 = {
+	name = "Grenadier Divisions"
+
+	for_countries = { GER }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	link_numbering_with = { GER_Inf_01 }
+
+	fallback_name = "%d. Grenadier-Division"
+
+	ordered = {
+		# Historical 29th/30th-wave Grenadier-Divisionen of 1944 (renamed Volksgrenadier after July 1944)
+		541 = { "%d. Grenadier-Division" }
+		542 = { "%d. Grenadier-Division" }
+		543 = { "%d. Grenadier-Division" }
+		544 = { "%d. Grenadier-Division" }
+		545 = { "%d. Grenadier-Division" }
+		546 = { "%d. Grenadier-Division" }
+		547 = { "%d. Grenadier-Division" }
+		548 = { "%d. Grenadier-Division" }
+		549 = { "%d. Grenadier-Division" }
+		550 = { "%d. Grenadier-Division" }
+		551 = { "%d. Grenadier-Division" }
+		552 = { "%d. Grenadier-Division" }
+		553 = { "%d. Grenadier-Division" }
+		558 = { "%d. Grenadier-Division" }
+		559 = { "%d. Grenadier-Division" }
+		560 = { "%d. Grenadier-Division" }
+		561 = { "%d. Grenadier-Division" }
+		562 = { "%d. Grenadier-Division" }
+	}
+}
+
+# Own number series (Luftwaffe usage before the Heer took them over in November 1943).
+GER_LUFTWAFFEN_FELD_DIVISION_01 = {
+	name = "Luftwaffe Field Divisions"
+
+	for_countries = { GER }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Luftwaffen-Feld-Division %d"
+
+	ordered = {
+		# Historical: Division Meindl (winter 1941/42), then Luftwaffen-Feld-Divisionen 1-21
+		901 = { "Luftwaffen-Division Meindl" }
+		1 = { "Luftwaffen-Feld-Division %d" }
+		2 = { "Luftwaffen-Feld-Division %d" }
+		3 = { "Luftwaffen-Feld-Division %d" }
+		4 = { "Luftwaffen-Feld-Division %d" }
+		5 = { "Luftwaffen-Feld-Division %d" }
+		6 = { "Luftwaffen-Feld-Division %d" }
+		7 = { "Luftwaffen-Feld-Division %d" }
+		8 = { "Luftwaffen-Feld-Division %d" }
+		9 = { "Luftwaffen-Feld-Division %d" }
+		10 = { "Luftwaffen-Feld-Division %d" }
+		11 = { "Luftwaffen-Feld-Division %d" }
+		12 = { "Luftwaffen-Feld-Division %d" }
+		13 = { "Luftwaffen-Feld-Division %d" }
+		14 = { "Luftwaffen-Feld-Division %d" }
+		15 = { "Luftwaffen-Feld-Division %d" }
+		16 = { "Luftwaffen-Feld-Division %d" }
+		17 = { "Luftwaffen-Feld-Division %d" }
+		18 = { "Luftwaffen-Feld-Division %d" }
+		19 = { "Luftwaffen-Feld-Division %d" }
+		20 = { "Luftwaffen-Feld-Division %d" }
+		21 = { "Luftwaffen-Feld-Division %d" }
+	}
+}
+
+GER_FLAK_DIVISION_01 = {
+	name = "Flak Divisions"
+
+	for_countries = { GER }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%d. Flak-Division"
+
+	ordered = {
+		# Historical Flak-Divisionen of the Luftwaffe; home noted where verified
+		1 = { "%d. Flak-Division 'Berlin'" }
+		2 = { "%d. Flak-Division" }
+		3 = { "%d. Flak-Division" }
+		4 = { "%d. Flak-Division" }
+		5 = { "%d. Flak-Division" }
+		6 = { "%d. Flak-Division" }
+		7 = { "%d. Flak-Division" }
+		8 = { "%d. Flak-Division" }
+		9 = { "%d. Flak-Division 'Stalingrad'" }
+		10 = { "%d. Flak-Division" }
+		11 = { "%d. Flak-Division" }
+		12 = { "%d. Flak-Division" }
+		13 = { "%d. Flak-Division" }
+		14 = { "%d. Flak-Division" }
+		15 = { "%d. Flak-Division" }
+		16 = { "%d. Flak-Division" }
+		17 = { "%d. Flak-Division" }
+		18 = { "%d. Flak-Division" }
+		19 = { "%d. Flak-Division" }
+		20 = { "%d. Flak-Division" }
+		21 = { "%d. Flak-Division" }
+		22 = { "%d. Flak-Division" }
+		23 = { "%d. Flak-Division" }
+		24 = { "%d. Flak-Division" }
+		25 = { "%d. Flak-Division" }
+		26 = { "%d. Flak-Division" }
+		27 = { "%d. Flak-Division" }
+		28 = { "%d. Flak-Division" }
+		29 = { "%d. Flak-Division 'Oslo'" }
+		30 = { "%d. Flak-Division" }
+		31 = { "%d. Flak-Division" }
+		901 = { "1. Flakscheinwerfer-Division" }
+		902 = { "2. Flakscheinwerfer-Division" }
+	}
+}
+
+# ==============================================================================
+# 3. GARRISONS, FORTRESSES AND KAMPFGRUPPEN
+# ==============================================================================
+
+# City commands (Stadtkommandantur); overflow uses the numbered Feldkommandantur.
+GER_GAR_02 = {
+	name = "City Garrisons"
+
+	for_countries = { GER }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Feldkommandantur %d"
+
+	ordered = {
+		# Historical forms
+		1 = { "Wehrmachtkommandantur Berlin" }
+		2 = { "Kommandant von Groß-Paris" }
+		# Stadtkommandanturen of occupied and allied capitals and major cities
+		3 = { "Stadtkommandantur Brüssel" }
+		4 = { "Stadtkommandantur Kopenhagen" }
+		5 = { "Stadtkommandantur Prag" }
+		6 = { "Stadtkommandantur Warschau" }
+		7 = { "Stadtkommandantur Oslo" }
+		8 = { "Stadtkommandantur Wien" }
+		9 = { "Stadtkommandantur Budapest" }
+		10 = { "Stadtkommandantur Athen" }
+		11 = { "Stadtkommandantur Riga" }
+		12 = { "Stadtkommandantur Belgrad" }
+		13 = { "Stadtkommandantur Rom" }
+		14 = { "Stadtkommandantur Den Haag" }
+		15 = { "Stadtkommandantur Luxemburg" }
+		16 = { "Stadtkommandantur Sofia" }
+		17 = { "Stadtkommandantur Helsingfors" }
+		18 = { "Stadtkommandantur Agram" }
+		19 = { "Stadtkommandantur Reval" }
+		20 = { "Stadtkommandantur Wilna" }
+		21 = { "Stadtkommandantur Laibach" }
+		22 = { "Stadtkommandantur Tirana" }
+		23 = { "Stadtkommandantur Krakau" }
+		24 = { "Stadtkommandantur Lemberg" }
+		25 = { "Stadtkommandantur Saloniki" }
+		26 = { "Stadtkommandantur Kauen" }
+		27 = { "Stadtkommandantur Minsk" }
+		28 = { "Stadtkommandantur Kiew" }
+		29 = { "Stadtkommandantur Charkow" }
+		30 = { "Stadtkommandantur Smolensk" }
+		31 = { "Stadtkommandantur Pleskau" }
+		32 = { "Stadtkommandantur Madrid" }
+		33 = { "Stadtkommandantur Lissabon" }
+		34 = { "Stadtkommandantur Dublin" }
+		35 = { "Stadtkommandantur Reykjavik" }
+		36 = { "Stadtkommandantur Stockholm" }
+		37 = { "Stadtkommandantur Bern" }
+		38 = { "Stadtkommandantur Ankara" }
+		39 = { "Stadtkommandantur Kairo" }
+		40 = { "Stadtkommandantur Teheran" }
+		41 = { "Stadtkommandantur Bagdad" }
+		42 = { "Stadtkommandantur Kabul" }
+		43 = { "Stadtkommandantur Moskau" }
+		44 = { "Stadtkommandantur Algier" }
+		45 = { "Stadtkommandantur Tunis" }
+		46 = { "Stadtkommandantur Rabat" }
+		47 = { "Stadtkommandantur Dakar" }
+	}
+}
+
+GER_FORT_01 = {
+	name = "Fortress Divisions"
+
+	for_countries = { GER }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%d. Festungs-Division"
+
+	ordered = {
+		# Historical Festungs-Divisionen (1944-45)
+		1 = { "Festungs-Division 'Danzig'" }
+		2 = { "Festungs-Division 'Gotenhafen'" }
+		3 = { "Festungs-Division 'Frankfurt/Oder'" }
+		4 = { "Festungs-Division 'Stettin'" }
+		5 = { "Festungs-Division 'Swinemünde'" }
+		6 = { "Festungs-Division 'Warschau'" }
+		41 = { "%d. Festungs-Division" }
+		133 = { "%d. Festungs-Division" }
+		900 = { "Festungs-Brigade 'Kreta'" }
+		901 = { "Festungs-Brigade 'Korfu'" }
+		# Feste Plätze and Festungen declared 1944-45
+		7 = { "Festungs-Division 'Königsberg'" }
+		8 = { "Festungs-Division 'Breslau'" }
+		9 = { "Festungs-Division 'Posen'" }
+		10 = { "Festungs-Division 'Glogau'" }
+		11 = { "Festungs-Division 'Kolberg'" }
+		12 = { "Festungs-Division 'Graudenz'" }
+		13 = { "Festungs-Division 'Thorn'" }
+		14 = { "Festungs-Division 'Schneidemühl'" }
+		15 = { "Festungs-Division 'Küstrin'" }
+		16 = { "Festungs-Division 'Elbing'" }
+		17 = { "Festungs-Division 'Görlitz'" }
+		18 = { "Festungs-Division 'Berlin'" }
+		19 = { "Festungs-Division 'Budapest'" }
+		20 = { "Festungs-Division 'Prag'" }
+		21 = { "Festungs-Division 'Tarnopol'" }
+		22 = { "Festungs-Division 'Kowel'" }
+		23 = { "Festungs-Division 'Witebsk'" }
+		24 = { "Festungs-Division 'Bobruisk'" }
+		25 = { "Festungs-Division 'Mogilew'" }
+		26 = { "Festungs-Division 'Orscha'" }
+		27 = { "Festungs-Division 'Wilna'" }
+		28 = { "Festungs-Division 'Reval'" }
+		29 = { "Festungs-Division 'Minsk'" }
+		30 = { "Festungs-Division 'Nikolajew'" }
+		31 = { "Festungs-Division 'Metz'" }
+		32 = { "Festungs-Division ''s-Hertogenbosch'" }
+		# Atlantikwall, Norway and Aegean fortresses
+		33 = { "Festungs-Division 'Dünkirchen'" }
+		34 = { "Festungs-Division 'Calais'" }
+		35 = { "Festungs-Division 'Boulogne'" }
+		36 = { "Festungs-Division 'Le Havre'" }
+		37 = { "Festungs-Division 'Cherbourg'" }
+		38 = { "Festungs-Division 'St. Malo'" }
+		39 = { "Festungs-Division 'Brest'" }
+		40 = { "Festungs-Division 'Lorient'" }
+		42 = { "Festungs-Division 'St. Nazaire'" }
+		43 = { "Festungs-Division 'La Rochelle'" }
+		44 = { "Festungs-Division 'Gironde'" }
+		45 = { "Festungs-Division 'Kanalinseln'" }
+		46 = { "Festungs-Division 'Narvik'" }
+		47 = { "Festungs-Division 'Kristiansand'" }
+		48 = { "Festungs-Division 'Kreta'" }
+		49 = { "Festungs-Division 'Rhodos'" }
+		# Plausible expansion: cities along the Ostwall, the A-A line, the Westwall and overseas
+		50 = { "Festungs-Division 'Memel'" }
+		51 = { "Festungs-Division 'Pillau'" }
+		52 = { "Festungs-Division 'Kauen'" }
+		53 = { "Festungs-Division 'Dünaburg'" }
+		54 = { "Festungs-Division 'Riga'" }
+		55 = { "Festungs-Division 'Pleskau'" }
+		56 = { "Festungs-Division 'Nowgorod'" }
+		57 = { "Festungs-Division 'Leningrad'" }
+		58 = { "Festungs-Division 'Narwa'" }
+		59 = { "Festungs-Division 'Smolensk'" }
+		60 = { "Festungs-Division 'Brjansk'" }
+		61 = { "Festungs-Division 'Orel'" }
+		62 = { "Festungs-Division 'Kursk'" }
+		63 = { "Festungs-Division 'Woronesch'" }
+		64 = { "Festungs-Division 'Charkow'" }
+		65 = { "Festungs-Division 'Kiew'" }
+		66 = { "Festungs-Division 'Odessa'" }
+		67 = { "Festungs-Division 'Sewastopol'" }
+		68 = { "Festungs-Division 'Rostow'" }
+		69 = { "Festungs-Division 'Stalingrad'" }
+		70 = { "Festungs-Division 'Moskau'" }
+		71 = { "Festungs-Division 'Tula'" }
+		72 = { "Festungs-Division 'Kalinin'" }
+		73 = { "Festungs-Division 'Jaroslawl'" }
+		74 = { "Festungs-Division 'Rjasan'" }
+		75 = { "Festungs-Division 'Gorki'" }
+		76 = { "Festungs-Division 'Wologda'" }
+		77 = { "Festungs-Division 'Petrosawodsk'" }
+		78 = { "Festungs-Division 'Murmansk'" }
+		79 = { "Festungs-Division 'Archangelsk'" }
+		80 = { "Festungs-Division 'Kasan'" }
+		81 = { "Festungs-Division 'Kuibyschew'" }
+		82 = { "Festungs-Division 'Saratow'" }
+		83 = { "Festungs-Division 'Astrachan'" }
+		84 = { "Festungs-Division 'Grosny'" }
+		85 = { "Festungs-Division 'Ordschonikidse'" }
+		86 = { "Festungs-Division 'Baku'" }
+		87 = { "Festungs-Division 'Molotow'" }
+		88 = { "Festungs-Division 'Ufa'" }
+		89 = { "Festungs-Division 'Tschkalow'" }
+		90 = { "Festungs-Division 'Swerdlowsk'" }
+		91 = { "Festungs-Division 'Tscheljabinsk'" }
+		92 = { "Festungs-Division 'Antwerpen'" }
+		93 = { "Festungs-Division 'Rotterdam'" }
+		94 = { "Festungs-Division 'Amsterdam'" }
+		95 = { "Festungs-Division 'Brüssel'" }
+		96 = { "Festungs-Division 'Köln'" }
+		97 = { "Festungs-Division 'Aachen'" }
+		98 = { "Festungs-Division 'Hamburg'" }
+		99 = { "Festungs-Division 'Bremen'" }
+		100 = { "Festungs-Division 'Kiel'" }
+		101 = { "Festungs-Division 'Wilhelmshaven'" }
+		102 = { "Festungs-Division 'Dresden'" }
+		103 = { "Festungs-Division 'Leipzig'" }
+		104 = { "Festungs-Division 'München'" }
+		105 = { "Festungs-Division 'Nürnberg'" }
+		106 = { "Festungs-Division 'Stuttgart'" }
+		107 = { "Festungs-Division 'Wien'" }
+		108 = { "Festungs-Division 'Gibraltar'" }
+		109 = { "Festungs-Division 'Malta'" }
+		110 = { "Festungs-Division 'Tobruk'" }
+		111 = { "Festungs-Division 'Suez'" }
+	}
+}
+
+# Heer commanders only; Waffen-SS Kampfgruppen are in the SS file.
+GER_KAMPFGRUPPE_01 = {
+	name = "Kampfgruppen"
+
+	for_countries = { GER }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" "motorized" "mechanized" "light_armor" "medium_armor" "heavy_armor" }
+
+	fallback_name = "Kampfgruppe %d"
+
+	ordered = {
+		# Kampfgruppen named after Heer commanders
+		1 = { "Kampfgruppe Agricola" }
+		2 = { "Kampfgruppe Ahlfen" }
+		3 = { "Kampfgruppe Allmendinger" }
+		4 = { "Kampfgruppe Angelis" }
+		5 = { "Kampfgruppe Arndt" }
+		6 = { "Kampfgruppe Bäßler" }
+		7 = { "Kampfgruppe Bayer" }
+		8 = { "Kampfgruppe Behlendorff" }
+		9 = { "Kampfgruppe Below" }
+		10 = { "Kampfgruppe Berlin" }
+		11 = { "Kampfgruppe Berthold" }
+		12 = { "Kampfgruppe Betzel" }
+		13 = { "Kampfgruppe Beyer" }
+		14 = { "Kampfgruppe Bieler" }
+		15 = { "Kampfgruppe Bismarck" }
+		16 = { "Kampfgruppe Blaskowitz" }
+		17 = { "Kampfgruppe Blaurock" }
+		18 = { "Kampfgruppe Block" }
+		19 = { "Kampfgruppe Blümke" }
+		20 = { "Kampfgruppe Bock" }
+		21 = { "Kampfgruppe Böckmann" }
+		22 = { "Kampfgruppe Boege" }
+		23 = { "Kampfgruppe Boetticher" }
+		24 = { "Kampfgruppe Böhlke" }
+		25 = { "Kampfgruppe Böhme" }
+		26 = { "Kampfgruppe Boineburg-Lengsfeld" }
+		27 = { "Kampfgruppe Borowietz" }
+		28 = { "Kampfgruppe Brennecke" }
+		29 = { "Kampfgruppe Briesen" }
+		30 = { "Kampfgruppe Britzelmayr" }
+		31 = { "Kampfgruppe Brockdorff-Ahlefeldt" }
+		32 = { "Kampfgruppe Brodowski" }
+		33 = { "Kampfgruppe Buhle" }
+		34 = { "Kampfgruppe Bünau" }
+		35 = { "Kampfgruppe Burgdorf" }
+		36 = { "Kampfgruppe Buschenhagen" }
+		37 = { "Kampfgruppe Busse" }
+		38 = { "Kampfgruppe Chappuis" }
+		39 = { "Kampfgruppe Chevallerie" }
+		40 = { "Kampfgruppe Choltitz" }
+		41 = { "Kampfgruppe Clößner" }
+		42 = { "Kampfgruppe Crasemann" }
+		43 = { "Kampfgruppe Crisolli" }
+		44 = { "Kampfgruppe Crüwell" }
+		45 = { "Kampfgruppe Dawans" }
+		46 = { "Kampfgruppe Degener" }
+		47 = { "Kampfgruppe Dehner" }
+		48 = { "Kampfgruppe Dietl" }
+		49 = { "Kampfgruppe Doering" }
+		50 = { "Kampfgruppe Dollmann" }
+		51 = { "Kampfgruppe Dostler" }
+		52 = { "Kampfgruppe Eberhard" }
+		53 = { "Kampfgruppe Edelsheim" }
+		54 = { "Kampfgruppe Eibl" }
+		55 = { "Kampfgruppe Eimannsberger" }
+		56 = { "Kampfgruppe Elfeldt" }
+		57 = { "Kampfgruppe Elverfeldt" }
+		58 = { "Kampfgruppe Endres" }
+		59 = { "Kampfgruppe Engelbrecht" }
+		60 = { "Kampfgruppe Erdmannsdorff" }
+		# Historical: well-known Kampfgruppen of 1941-44
+		61 = { "Kampfgruppe Chill" }
+		62 = { "Kampfgruppe Scherer" }
+		63 = { "Kampfgruppe Esebeck" }
+		64 = { "Kampfgruppe Kirchheim" }
+		65 = { "Kampfgruppe von der Heydte" }
+		66 = { "Kampfgruppe Ramcke" }
+		# Plausible expansion: Heer army, corps and division commanders
+		67 = { "Kampfgruppe Fehn" }
+		68 = { "Kampfgruppe Feldt" }
+		69 = { "Kampfgruppe Felber" }
+		70 = { "Kampfgruppe Förster" }
+		71 = { "Kampfgruppe Fretter-Pico" }
+		72 = { "Kampfgruppe Frießner" }
+		73 = { "Kampfgruppe Gablenz" }
+		74 = { "Kampfgruppe Gallenkamp" }
+		75 = { "Kampfgruppe Geyr von Schweppenburg" }
+		76 = { "Kampfgruppe Gollnick" }
+		77 = { "Kampfgruppe Gräser" }
+		78 = { "Kampfgruppe Greiffenberg" }
+		79 = { "Kampfgruppe Guderian" }
+		80 = { "Kampfgruppe Hahm" }
+		81 = { "Kampfgruppe Harpe" }
+		82 = { "Kampfgruppe Hasse" }
+		83 = { "Kampfgruppe Hauffe" }
+		84 = { "Kampfgruppe Heim" }
+		85 = { "Kampfgruppe Heinrici" }
+		86 = { "Kampfgruppe Hell" }
+		87 = { "Kampfgruppe Henrici" }
+		88 = { "Kampfgruppe Herr" }
+		89 = { "Kampfgruppe Hilpert" }
+		90 = { "Kampfgruppe Hitzfeld" }
+		91 = { "Kampfgruppe Hoepner" }
+		92 = { "Kampfgruppe Hollidt" }
+		93 = { "Kampfgruppe Hoßbach" }
+		94 = { "Kampfgruppe Hoth" }
+		95 = { "Kampfgruppe Hube" }
+		96 = { "Kampfgruppe Hünersdorff" }
+		97 = { "Kampfgruppe Jaenecke" }
+		98 = { "Kampfgruppe Jordan" }
+		99 = { "Kampfgruppe Kempf" }
+		100 = { "Kampfgruppe Kirchner" }
+		101 = { "Kampfgruppe Kleist" }
+		102 = { "Kampfgruppe Kluge" }
+		103 = { "Kampfgruppe Knobelsdorff" }
+		104 = { "Kampfgruppe Kniess" }
+		105 = { "Kampfgruppe Köchling" }
+		106 = { "Kampfgruppe Krebs" }
+		107 = { "Kampfgruppe Kreysing" }
+		108 = { "Kampfgruppe Kübler" }
+		109 = { "Kampfgruppe Küchler" }
+		110 = { "Kampfgruppe Lanz" }
+		111 = { "Kampfgruppe Lasch" }
+		112 = { "Kampfgruppe Leeb" }
+		113 = { "Kampfgruppe Lemelsen" }
+		114 = { "Kampfgruppe Lindemann" }
+		115 = { "Kampfgruppe List" }
+		116 = { "Kampfgruppe Loch" }
+		117 = { "Kampfgruppe Lüttwitz" }
+		118 = { "Kampfgruppe Mackensen" }
+		119 = { "Kampfgruppe Manstein" }
+		120 = { "Kampfgruppe Manteuffel" }
+		121 = { "Kampfgruppe Marcks" }
+		122 = { "Kampfgruppe Materna" }
+		123 = { "Kampfgruppe Mattenklott" }
+		124 = { "Kampfgruppe Mieth" }
+		125 = { "Kampfgruppe Model" }
+		126 = { "Kampfgruppe Nehring" }
+		127 = { "Kampfgruppe Obstfelder" }
+		128 = { "Kampfgruppe Oppeln-Bronikowski" }
+		129 = { "Kampfgruppe Postel" }
+		130 = { "Kampfgruppe Raus" }
+		131 = { "Kampfgruppe Recknagel" }
+		132 = { "Kampfgruppe Reinhardt" }
+		133 = { "Kampfgruppe Rendulic" }
+		134 = { "Kampfgruppe Ringel" }
+		135 = { "Kampfgruppe Rommel" }
+		136 = { "Kampfgruppe Rundstedt" }
+		137 = { "Kampfgruppe Ruoff" }
+		138 = { "Kampfgruppe Salmuth" }
+		139 = { "Kampfgruppe Saucken" }
+		140 = { "Kampfgruppe Schlemmer" }
+		141 = { "Kampfgruppe Schmidt" }
+		142 = { "Kampfgruppe Schörner" }
+		143 = { "Kampfgruppe Schulz" }
+		144 = { "Kampfgruppe Schwerin" }
+		145 = { "Kampfgruppe Seydlitz" }
+		146 = { "Kampfgruppe Sixt von Armin" }
+		147 = { "Kampfgruppe Sodenstern" }
+		148 = { "Kampfgruppe Sponheimer" }
+		149 = { "Kampfgruppe Stemmermann" }
+		150 = { "Kampfgruppe Strachwitz" }
+		151 = { "Kampfgruppe Strauß" }
+		152 = { "Kampfgruppe Stülpnagel" }
+		153 = { "Kampfgruppe Thoma" }
+		154 = { "Kampfgruppe Tippelskirch" }
+		155 = { "Kampfgruppe Unrein" }
+		156 = { "Kampfgruppe Vietinghoff" }
+		157 = { "Kampfgruppe Wäger" }
+		158 = { "Kampfgruppe Weichs" }
+		159 = { "Kampfgruppe Weidling" }
+		160 = { "Kampfgruppe Wenck" }
+		161 = { "Kampfgruppe Wiktorin" }
+		162 = { "Kampfgruppe Witzleben" }
+		163 = { "Kampfgruppe Wöhler" }
+		164 = { "Kampfgruppe Zangen" }
+		165 = { "Kampfgruppe Zeitzler" }
+		166 = { "Kampfgruppe Zorn" }
+	}
+}
+
+# ==============================================================================
+# 4. MILITIAS AND PARAMILITARY FORMATIONS (by ideology)
+# ==============================================================================
+
+GER_VOLKSSTURM_BATAILLONS_01 = {
+	name = "Volkssturm Battalions"
+
+	for_countries = { GER }
+
+	can_use = { has_government = fascism }
+
+	division_types = { "militia" }
+
+	fallback_name = "%d. Volkssturm-Bataillon"
+
+	ordered = {
+		# Historical named formation (March 1945)
+		901 = { "Freikorps 'Adolf Hitler'" }
+		902 = { "Standschützen-Bataillon 'Tirol-Vorarlberg'" }
+		# Battalions raised by NSDAP Gau (the Volkssturm was organised by Gau and Kreis), east to west
+		1 = { "%d. Volkssturm-Bataillon 'Ostpreußen'" }
+		2 = { "%d. Volkssturm-Bataillon 'Danzig-Westpreußen'" }
+		3 = { "%d. Volkssturm-Bataillon 'Wartheland'" }
+		4 = { "%d. Volkssturm-Bataillon 'Oberschlesien'" }
+		5 = { "%d. Volkssturm-Bataillon 'Niederschlesien'" }
+		6 = { "%d. Volkssturm-Bataillon 'Pommern'" }
+		7 = { "%d. Volkssturm-Bataillon 'Mark Brandenburg'" }
+		8 = { "%d. Volkssturm-Bataillon 'Berlin'" }
+		9 = { "%d. Volkssturm-Bataillon 'Mecklenburg'" }
+		10 = { "%d. Volkssturm-Bataillon 'Sachsen'" }
+		11 = { "%d. Volkssturm-Bataillon 'Halle-Merseburg'" }
+		12 = { "%d. Volkssturm-Bataillon 'Magdeburg-Anhalt'" }
+		13 = { "%d. Volkssturm-Bataillon 'Thüringen'" }
+		14 = { "%d. Volkssturm-Bataillon 'Sudetenland'" }
+		15 = { "%d. Volkssturm-Bataillon 'Wien'" }
+		16 = { "%d. Volkssturm-Bataillon 'Niederdonau'" }
+		17 = { "%d. Volkssturm-Bataillon 'Oberdonau'" }
+		18 = { "%d. Volkssturm-Bataillon 'Steiermark'" }
+		19 = { "%d. Volkssturm-Bataillon 'Kärnten'" }
+		20 = { "%d. Volkssturm-Bataillon 'Salzburg'" }
+		21 = { "%d. Volkssturm-Bataillon 'Bayreuth'" }
+		22 = { "%d. Volkssturm-Bataillon 'München-Oberbayern'" }
+		23 = { "%d. Volkssturm-Bataillon 'Schwaben'" }
+		24 = { "%d. Volkssturm-Bataillon 'Franken'" }
+		25 = { "%d. Volkssturm-Bataillon 'Mainfranken'" }
+		26 = { "%d. Volkssturm-Bataillon 'Württemberg-Hohenzollern'" }
+		27 = { "%d. Volkssturm-Bataillon 'Baden-Elsaß'" }
+		28 = { "%d. Volkssturm-Bataillon 'Westmark'" }
+		29 = { "%d. Volkssturm-Bataillon 'Moselland'" }
+		30 = { "%d. Volkssturm-Bataillon 'Köln-Aachen'" }
+		31 = { "%d. Volkssturm-Bataillon 'Düsseldorf'" }
+		32 = { "%d. Volkssturm-Bataillon 'Essen'" }
+		33 = { "%d. Volkssturm-Bataillon 'Westfalen-Nord'" }
+		34 = { "%d. Volkssturm-Bataillon 'Westfalen-Süd'" }
+		35 = { "%d. Volkssturm-Bataillon 'Kurhessen'" }
+		36 = { "%d. Volkssturm-Bataillon 'Hessen-Nassau'" }
+		37 = { "%d. Volkssturm-Bataillon 'Süd-Hannover-Braunschweig'" }
+		38 = { "%d. Volkssturm-Bataillon 'Osthannover'" }
+		39 = { "%d. Volkssturm-Bataillon 'Weser-Ems'" }
+		40 = { "%d. Volkssturm-Bataillon 'Hamburg'" }
+		41 = { "%d. Volkssturm-Bataillon 'Schleswig-Holstein'" }
+	}
+}
+
+GER_SA_01 = {
+	name = "SA Formations"
+
+	for_countries = { GER }
+
+	can_use = { has_government = fascism }
+
+	division_types = { "militia" }
+
+	fallback_name = "SA-Standarte %d"
+
+	ordered = {
+		# Historical SA-Standarten
+		901 = { "SA-Standarte 'Feldherrnhalle'" }
+		902 = { "SA-Standarte 'Horst Wessel'" }
+		# SA-Gruppen (regional SA commands)
+		911 = { "SA-Gruppe 'Berlin-Brandenburg'" }
+		912 = { "SA-Gruppe 'Hochland'" }
+		913 = { "SA-Gruppe 'Franken'" }
+		914 = { "SA-Gruppe 'Hansa'" }
+		915 = { "SA-Gruppe 'Westmark'" }
+		916 = { "SA-Gruppe 'Nordsee'" }
+		917 = { "SA-Gruppe 'Ostsee'" }
+		918 = { "SA-Gruppe 'Nordmark'" }
+		919 = { "SA-Gruppe 'Niedersachsen'" }
+		920 = { "SA-Gruppe 'Schlesien'" }
+		921 = { "SA-Gruppe 'Sachsen'" }
+		922 = { "SA-Gruppe 'Thüringen'" }
+		923 = { "SA-Gruppe 'Mitte'" }
+		924 = { "SA-Gruppe 'Hessen'" }
+		925 = { "SA-Gruppe 'Südwest'" }
+		926 = { "SA-Gruppe 'Kurpfalz'" }
+		927 = { "SA-Gruppe 'Westfalen'" }
+		928 = { "SA-Gruppe 'Niederrhein'" }
+		929 = { "SA-Gruppe 'Pommern'" }
+		930 = { "SA-Gruppe 'Ostland'" }
+		931 = { "SA-Gruppe 'Alpenland'" }
+		932 = { "SA-Gruppe 'Donau'" }
+		933 = { "SA-Gruppe 'Sudetenland'" }
+		934 = { "SA-Gruppe 'Danzig'" }
+		935 = { "SA-Gruppe 'Bayerische Ostmark'" }
+		936 = { "SA-Gruppe 'Weichsel'" }
+		937 = { "SA-Gruppe 'Warthe'" }
+	}
+}
+
+# Overrides vanilla GER_MIL_01 (created by a vanilla focus); vanilla gating kept.
+GER_MIL_01 = {
+	name = "Freikorps"
+
+	for_countries = { GER }
+
+	can_use = { has_government = neutrality }
+
+	division_types = { "militia" }
+
+	fallback_name = "%d. Freikorps-Division"
+
+	ordered = {
+		# Historical Freikorps and volunteer formations, 1918-23
+		1 = { "Freikorps Epp" }
+		2 = { "Freikorps Oberland" }
+		3 = { "Freikorps Werdenfels" }
+		4 = { "Marine-Brigade Ehrhardt" }
+		5 = { "Marine-Brigade von Loewenfeld" }
+		6 = { "Freikorps Lützow" }
+		7 = { "Freikorps Reinhard" }
+		8 = { "Freikorps Roßbach" }
+		9 = { "Freiwilliges Landesjägerkorps" }
+		10 = { "Garde-Kavallerie-Schützen-Division" }
+		11 = { "Eiserne Division" }
+		12 = { "Deutsche Legion" }
+		13 = { "Baltische Landeswehr" }
+		14 = { "Ostpreußisches Freiwilligenkorps" }
+		15 = { "Freikorps Hülsen" }
+		16 = { "Freikorps Roeder" }
+		17 = { "Freikorps Bahrenfeld" }
+		18 = { "Freikorps Hacketau" }
+		19 = { "Freikorps Lichtschlag" }
+		20 = { "Freikorps Haase" }
+		21 = { "Freikorps Potsdam" }
+		22 = { "Freikorps von Aulock" }
+		23 = { "Freikorps Pfeffer" }
+		24 = { "Freikorps Brandis" }
+		25 = { "Freiwilligen-Regiment von Oven" }
+		26 = { "Detachement von Randow" }
+		27 = { "Eiserne Schar Berthold" }
+		28 = { "Grenzschutz Ost" }
+		29 = { "Grenzschutz Nord" }
+		30 = { "Schlesischer Selbstschutz" }
+	}
+}
+
+# Overrides vanilla GER_MIL_02 (created by the vanilla colonial focuses); vanilla gating kept.
+GER_MIL_02 = {
+	name = "Schutztruppe"
+
+	for_countries = { GER }
+
+	can_use = {
+		OR = {
+			has_government = neutrality
+			has_government = democratic
+			has_government = fascism
+		}
+	}
+
+	division_types = { "militia" }
+
+	fallback_name = "%d. Schutztruppen-Division"
+
+	ordered = {
+		# Historical colonial forces
+		1 = { "Schutztruppe für Deutsch-Ostafrika" }
+		2 = { "Schutztruppe für Deutsch-Südwestafrika" }
+		3 = { "Schutztruppe für Kamerun" }
+		4 = { "Polizeitruppe Togo" }
+		5 = { "Polizeitruppe Deutsch-Neuguinea" }
+		6 = { "Polizeitruppe Deutsch-Samoa" }
+		7 = { "Wissmanntruppe" }
+		8 = { "Ostasiatisches Expeditionskorps" }
+		9 = { "Ostasiatische Besatzungsbrigade" }
+		10 = { "Kamelreiter-Abteilung" }
+		# Plausible expansion: Mittelafrika and the Schutztruppe commanders
+		11 = { "Schutztruppe für Mittelafrika" }
+		12 = { "Schutztruppe 'Lettow-Vorbeck'" }
+		13 = { "Schutztruppe 'von François'" }
+		14 = { "Schutztruppe 'Leutwein'" }
+		15 = { "Schutztruppe 'von Stetten'" }
+		16 = { "Schutztruppe 'Franke'" }
+		17 = { "Schutztruppe 'Tom von Prince'" }
+	}
+}
+
+# Republican defence league of the SPD, Zentrum and DDP.
+GER_MIL_04 = {
+	name = "Reichsbanner"
+
+	for_countries = { GER }
+
+	can_use = { has_government = democratic }
+
+	division_types = { "militia" }
+
+	fallback_name = "%d. Reichsbanner-Gau"
+
+	ordered = {
+		# Historical Reichsbanner Schwarz-Rot-Gold (1924-33)
+		901 = { "Reichsbanner-Schufo" }
+		902 = { "Eiserne Front" }
+		903 = { "Jungbanner" }
+		# Reichsbanner Gaue (Berlin-Brandenburg, Hessen-Nassau verified; the rest plausible)
+		1 = { "%d. Reichsbanner-Gau 'Berlin-Brandenburg'" }
+		2 = { "%d. Reichsbanner-Gau 'Magdeburg-Anhalt'" }
+		3 = { "%d. Reichsbanner-Gau 'Hessen-Nassau'" }
+		4 = { "%d. Reichsbanner-Gau 'Sachsen'" }
+		5 = { "%d. Reichsbanner-Gau 'Thüringen'" }
+		6 = { "%d. Reichsbanner-Gau 'Schlesien'" }
+		7 = { "%d. Reichsbanner-Gau 'Oberschlesien'" }
+		8 = { "%d. Reichsbanner-Gau 'Ostpreußen'" }
+		9 = { "%d. Reichsbanner-Gau 'Pommern'" }
+		10 = { "%d. Reichsbanner-Gau 'Hamburg'" }
+		11 = { "%d. Reichsbanner-Gau 'Hannover'" }
+		12 = { "%d. Reichsbanner-Gau 'Braunschweig'" }
+		13 = { "%d. Reichsbanner-Gau 'Westfalen'" }
+		14 = { "%d. Reichsbanner-Gau 'Rheinland'" }
+		15 = { "%d. Reichsbanner-Gau 'Baden'" }
+		16 = { "%d. Reichsbanner-Gau 'Württemberg'" }
+		17 = { "%d. Reichsbanner-Gau 'Franken'" }
+		18 = { "%d. Reichsbanner-Gau 'Oberbayern'" }
+		# Plausible expansion: the Reichsbanner leaders
+		911 = { "Reichsbanner-Schufo 'Otto Hörsing'" }
+		912 = { "Reichsbanner-Schufo 'Karl Höltermann'" }
+	}
+}
+
+# Overrides vanilla GER_MIL_03 (created by a vanilla focus); gated by government, no focus lock.
+GER_MIL_03 = {
+	name = "Red Front Fighters"
+
+	for_countries = { GER }
+
+	can_use = { has_government = communism }
+
+	division_types = { "militia" }
+
+	fallback_name = "%d. RFB-Gau"
+
+	ordered = {
+		# Historical revolutionary and RFB formations
+		901 = { "Roter Frontkämpferbund" }
+		902 = { "Rote Marine" }
+		903 = { "Rote Jungfront" }
+		904 = { "Proletarische Hundertschaften" }
+		905 = { "Rote Ruhrarmee" }
+		# Plausible expansion: RFB Gaue along the KPD districts
+		1 = { "%d. RFB-Gau 'Berlin-Brandenburg'" }
+		2 = { "%d. RFB-Gau 'Wasserkante'" }
+		3 = { "%d. RFB-Gau 'Ruhrgebiet'" }
+		4 = { "%d. RFB-Gau 'Niederrhein'" }
+		5 = { "%d. RFB-Gau 'Mittelrhein'" }
+		6 = { "%d. RFB-Gau 'Sachsen'" }
+		7 = { "%d. RFB-Gau 'Erzgebirge-Vogtland'" }
+		8 = { "%d. RFB-Gau 'Halle-Merseburg'" }
+		9 = { "%d. RFB-Gau 'Thüringen'" }
+		10 = { "%d. RFB-Gau 'Hessen-Frankfurt'" }
+		11 = { "%d. RFB-Gau 'Baden'" }
+		12 = { "%d. RFB-Gau 'Württemberg'" }
+		13 = { "%d. RFB-Gau 'Südbayern'" }
+		14 = { "%d. RFB-Gau 'Nordbayern'" }
+		15 = { "%d. RFB-Gau 'Schlesien'" }
+		16 = { "%d. RFB-Gau 'Oberschlesien'" }
+		17 = { "%d. RFB-Gau 'Ostpreußen'" }
+		18 = { "%d. RFB-Gau 'Pommern'" }
+		19 = { "%d. RFB-Gau 'Mecklenburg'" }
+		20 = { "%d. RFB-Gau 'Niedersachsen'" }
+		21 = { "%d. RFB-Gau 'Magdeburg-Anhalt'" }
+	}
+}
+
+# ==============================================================================
+# 5. FOREIGN LEGIONS (fascism)
+# ==============================================================================
+
+# Occupation-dependent formations that vanilla left out of the Heer lists.
+GER_LEG_01 = {
+	name = "Foreign Legions"
+
+	for_countries = { GER }
+
+	can_use = { has_government = fascism }
+
+	division_types = { "infantry" "cavalry" "mountaineers" }
+
+	fallback_name = "%d. Freiwilligen-Division"
+
+	ordered = {
+		# Historical foreign divisions in German service
+		250 = { "%d. Infanterie-Division (span.) 'Azul'" }
+		369 = { "%d. Infanterie-Division (kroat.) 'Teufels-Division'" }
+		373 = { "%d. Infanterie-Division (kroat.) 'Tiger-Division'" }
+		392 = { "%d. Infanterie-Division (kroat.) 'Blaue Division'" }
+		162 = { "%d. Infanterie-Division (turk.)" }
+		1 = { "%d. Kosaken-Kavallerie-Division" }
+		2 = { "%d. Kosaken-Kavallerie-Division" }
+		600 = { "%d. Infanterie-Division (russ.)" }
+		650 = { "%d. Infanterie-Division (russ.)" }
+		# Historical legions and volunteer regiments
+		901 = { "Legion Condor" }
+		902 = { "Legion Wallonie" }
+		638 = { "Infanterie-Regiment %d (franz.)" }
+		950 = { "Infanterie-Regiment %d (ind.)" }
+		903 = { "Legion Freies Arabien" }
+		287 = { "Sonderverband %d" }
+		904 = { "Armenische Legion" }
+		905 = { "Aserbaidschanische Legion" }
+		906 = { "Georgische Legion" }
+		907 = { "Nordkaukasische Legion" }
+		908 = { "Turkestanische Legion" }
+		909 = { "Wolgatatarische Legion" }
+		910 = { "Kalmücken-Kavallerie-Korps" }
+		911 = { "Russische Befreiungsarmee" }
+	}
 }

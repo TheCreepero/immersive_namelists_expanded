@@ -11,9 +11,9 @@
 
 | Nation | Tag | Groups | Source File(s) |
 |:---|:---|:---|:---|
-| [Germany (Wehrmacht)](Germany) | `GER` | 16 | `INEX_GER_names_divisions.txt` |
-| [Germany (Waffen-SS)](Germany-Waffen-SS) | `GER` | 6 | `INEX_GER_SS_names_divisions.txt` |
-| [Germany (Additional)](Germany-Additional) | `GER` | 10 | `INEX_GER_ADDITIONAL_names_divisions.txt` |
+| [Germany (Wehrmacht)](Germany) | `GER` | 22 | `INEX_GER_names_divisions.txt` |
+| [Germany (Waffen-SS)](Germany-Waffen-SS) | `GER` | 10 | `INEX_GER_SS_names_divisions.txt` |
+| [Germany (Additional)](Germany-Additional) | `GER` | 19 | `INEX_GER_ADDITIONAL_names_divisions.txt` |
 | [Soviet Union](Soviet-Union) | `SOV` | 20 | `INEX_SOV_names_divisions.txt` |
 | [United Kingdom](United-Kingdom) | `ENG` | 25 | `INEX_ENG_names_divisions.txt` |
 | [France](France) | `FRA` | 18 | `INEX_FRA_names_divisions.txt` |

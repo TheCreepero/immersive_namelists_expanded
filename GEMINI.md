@@ -8,7 +8,7 @@
 ## 2. File & Group Conventions
 - **Files**: `common/units/names_divisions/INEX_<TAG>_names_divisions.txt`. UTF-8 without BOM, balanced `{}`.
 - **Group Tags**: `<TAG>_<CATEGORY>_<NUMBER>` (e.g., `EST_REG_01`, `SWE_ARM_01`). Globally unique across repo.
-- **German Split**: `INEX_GER_names_divisions.txt` (Wehrmacht regular), `INEX_GER_SS_names_divisions.txt` (Waffen-SS), `INEX_GER_ADDITIONAL_names_divisions.txt` (Kampfgruppen, Festung, Fallschirmjäger, Volkssturm, specialized).
+- **German Split**: `INEX_GER_names_divisions.txt` (Heer plain/Named pairs, Jäger, mountain, airborne, marine, cavalry, garrison, and the ideology suites: Elite, Guard/Imperial, Republican, Red Army), `INEX_GER_SS_names_divisions.txt` (Waffen-SS, fascist-only), `INEX_GER_ADDITIONAL_names_divisions.txt` (numbered series, heavy battalions, Festung, Kampfgruppen, militias per ideology, Foreign Legions).
 - **UI Selectors**: `name = "<Selector>"` must be concise; omit nation/demonym prefixes (e.g., `"Infantry Divisions"`, not `"Mexican Infantry Divisions"`) to prevent dropdown truncation.
 - **Ideology-Dependent Groups**: Author distinct political, party wing, or guard groups per ideology (e.g. Fascist party militias, Communist Red Guards, Monarchist/Imperial guards, Democratic/Republican defense forces). Never mix opposing ideological traditions in one namelist. There is no artificial pool cap on ideology-gated division namelists—nations may author full specialized suites where historically or plausibly justified (e.g. Waffen-SS suites, Red Guard branches).
 

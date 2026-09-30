@@ -1,22 +1,42 @@
-GER_SS_01 = 
-{
-	name = "SS Divisions Vanilla"
+# Division template historical names system for Germany (GER): Waffen-SS.
+# Immersive Namelists Expanded (INEX)
+#
+# Every group in this file is fascist-only (has_government = fascism).
+# Designations follow the Waffen-SS forms of 1940-45 (SS-Division (mot.), SS-Panzergrenadier-Division,
+# Waffen-Grenadier-Division der SS ...); honour names go in single quotes, volunteer numbers in brackets.
+#
+# Numbering: GER_SS_02 to GER_SS_07 link to GER_SS_01, so every SS division keeps one number across
+# types (1. SS-Division (mot.) 'Leibstandarte SS Adolf Hitler' becomes 1. SS-Panzer-Division). Historical
+# divisions sit on their real numbers; numbers 23, 29, 30 and 33 were reassigned historically, so two
+# different divisions share them. From 42 upward every list carries the same honour name for the same
+# number, so whichever type claims a number gets its name.
+#
+# Overrides vanilla GER_SS_01 (referenced by vanilla focuses and SS_scripted_effects).
+
+# ==============================================================================
+# 1. WAFFEN-SS DIVISIONS
+# ==============================================================================
+
+# Overrides vanilla GER_SS_01 (vanilla scripted effects and focuses create divisions with it);
+# numbering anchor for the SS type lists. Type-neutral names, final honour titles.
+GER_SS_01 = {
+	name = "SS Divisions"
 
 	for_countries = { GER }
 
-	can_use = { always = yes }
+	can_use = { has_government = fascism }
 
 	division_types = { "infantry" "motorized" "medium_armor" "mechanized" }
 
 	fallback_name = "%d. SS-Division"
 
-	# Names with numbers (only one number per entry)
-	ordered =
-	{
-		1 = { "%d. SS-Division 'Leibstandarte Adolf Hitler'" }
+	ordered = {
+		# Historical
+		1 = { "%d. SS-Division 'Leibstandarte SS Adolf Hitler'" }
 		2 = { "%d. SS-Division 'Das Reich'" }
 		3 = { "%d. SS-Division 'Totenkopf'" }
-		4 = { "%d. SS-Division 'Polizei'" }
+		4 = { "%d. SS-Polizei-Division" }
+		5 = { "%d. SS-Division 'Wiking'" }
 		6 = { "%d. SS-Division 'Nord'" }
 		7 = { "%d. SS-Division 'Prinz Eugen'" }
 		8 = { "%d. SS-Division 'Florian Geyer'" }
@@ -24,223 +44,423 @@ GER_SS_01 =
 		10 = { "%d. SS-Division 'Frundsberg'" }
 		11 = { "%d. SS-Division 'Nordland'" }
 		12 = { "%d. SS-Division 'Hitlerjugend'" }
-		13 = { "%d. SS-Division 'Handschar'" }
-		14 = { "%d. SS-Division (ukrain. Nr. 1)" }
+		13 = { "%d. SS-Division 'Handschar' (kroatische Nr. 1)" }
+		14 = { "%d. SS-Division (galizische Nr. 1)" }
+		15 = { "%d. SS-Division (lettische Nr. 1)" }
 		16 = { "%d. SS-Division 'Reichsführer-SS'" }
 		17 = { "%d. SS-Division 'Götz von Berlichingen'" }
 		18 = { "%d. SS-Division 'Horst Wessel'" }
-		21 = { "%d. SS-Division 'Skanderbeg'" }
+		19 = { "%d. SS-Division (lettische Nr. 2)" }
+		20 = { "%d. SS-Division (estnische Nr. 1)" }
+		21 = { "%d. SS-Division 'Skanderbeg' (albanische Nr. 1)" }
 		22 = { "%d. SS-Division 'Maria Theresia'" }
+		23 = { "%d. SS-Division 'Nederland'" }
 		24 = { "%d. SS-Division 'Karstjäger'" }
 		25 = { "%d. SS-Division 'Hunyadi' (ungarische Nr. 1)" }
 		26 = { "%d. SS-Division (ungarische Nr. 2)" }
-		29 = { "%d. SS-Division RONA (russische Nr. 1)" }
-		30 = { "%d. SS-Division (russisch Nr. 2)" }
-		31 = { "%d. SS-Division" }
+		27 = { "%d. SS-Division 'Langemarck'" }
+		28 = { "%d. SS-Division 'Wallonien'" }
+		29 = { "%d. SS-Division (russische Nr. 1)" }
+		30 = { "%d. SS-Division (russische Nr. 2)" }
+		31 = { "%d. SS-Division (Batschka)" }
 		32 = { "%d. SS-Division '30. Januar'" }
+		33 = { "%d. SS-Division 'Charlemagne'" }
 		34 = { "%d. SS-Division 'Landstorm Nederland'" }
 		35 = { "%d. SS- und Polizei-Division" }
 		36 = { "%d. SS-Division 'Dirlewanger'" }
 		37 = { "%d. SS-Division 'Lützow'" }
 		38 = { "%d. SS-Division 'Nibelungen'" }
-		39 = { "%d. SS-Division 'Siegfried'" }
-		40 = { "%d. SS-Division 'Wotan'" }
-		41 = { "%d. SS-Division 'Odin'" }
-		42 = { "%d. SS-Division 'Walhalla'" }
-		43 = { "%d. SS-Division 'Donnerschlag'" }
-		44 = { "%d. SS-Division 'Sturmfalken'" }
-		45 = { "%d. SS-Division 'Eisenfaust'" }
-		46 = { "%d. SS-Division 'Sonnenaufgang'" }
-		47 = { "%d. SS-Division 'Eichenschild'" }
-		48 = { "%d. SS-Division 'Wildeiche'" }
-		49 = { "%d. SS-Division 'Sturmkrähe'" }
-		50 = { "%d. SS-Division 'Adlerschwinge'" }
-		51 = { "%d. SS-Division 'Kampfgeist'" }
-		52 = { "%d. SS-Division 'Todessturm'" }
-		53 = { "%d. SS-Division 'Wolfsrudel'" }
-		54 = { "%d. SS-Division 'Blitzkrieg'" }
-		55 = { "%d. SS-Division 'Schwarzer Panther'" }
-		56 = { "%d. SS-Division 'Feuerteufel'" }
-		57 = { "%d. SS-Division 'Eiserner Wille'" }
-		58 = { "%d. SS-Division 'Schattenkrieger'" }
-		59 = { "%d. SS-Division 'Nachtjäger'" }
-		60 = { "%d. SS-Division 'Stahlgewitter'" }
-		
-		# to avoid massively bloating the names list with alternate lists, the final/most representative divisional name was used. Das Reich held no less than 6 different names during the war and providing variant name lists for all of them was not feasible. The tools to rename/reconfigure divisions are in the hands of the player, however.
-		# left out divisional type names (Panzer, Gebirgs, etc) to allow the player to use the SS name list for any type of division they choose
-		# diverged from the ordering based on historical formation date as this to a large degree would depend on the divisional type, which is not fixed
-		# put in non-German formations contrary to the regular Heer lists
-
+		# Planned in 1945, never formed
+		39 = { "%d. SS-Division 'Andreas Hofer'" }
+		40 = { "%d. SS-Division 'Feldherrnhalle'" }
+		41 = { "%d. SS-Division 'Kalevala'" }
+		# Plausible expansion: SS regiment and Standarte honour names, same name per number in every SS list
+		42 = { "%d. SS-Division 'Deutschland'" }
+		43 = { "%d. SS-Division 'Germania'" }
+		44 = { "%d. SS-Division 'Der Führer'" }
+		45 = { "%d. SS-Division 'Westland'" }
+		46 = { "%d. SS-Division 'Norge'" }
+		47 = { "%d. SS-Division 'Danmark'" }
+		48 = { "%d. SS-Division 'Thule'" }
+		49 = { "%d. SS-Division 'Theodor Eicke'" }
+		50 = { "%d. SS-Division 'Reinhard Heydrich'" }
+		51 = { "%d. SS-Division 'Michael Gaißmair'" }
+		52 = { "%d. SS-Division 'De Ruyter'" }
+		53 = { "%d. SS-Division 'General Seyffardt'" }
+		54 = { "%d. SS-Division 'Hermann von Salza'" }
+		55 = { "%d. SS-Division 'Kurt Eggers'" }
+		56 = { "%d. SS-Division 'Hinrich Schuldt'" }
+		57 = { "%d. SS-Division 'Oberbayern'" }
+		58 = { "%d. SS-Division 'Thüringen'" }
+		59 = { "%d. SS-Division 'Ostmark'" }
+		60 = { "%d. SS-Division 'Dietrich Eckart'" }
+		61 = { "%d. SS-Division 'Julius Schreck'" }
+		62 = { "%d. SS-Division 'Nordwest'" }
+		63 = { "%d. SS-Division 'Schalburg'" }
+		# Plausible expansion: names kept from the earlier INEX lists
+		64 = { "%d. SS-Division 'Siegfried'" }
+		65 = { "%d. SS-Division 'Wotan'" }
+		66 = { "%d. SS-Division 'Walhalla'" }
+		67 = { "%d. SS-Division 'Waräger'" }
+		68 = { "%d. SS-Division 'Teutoburg'" }
+		69 = { "%d. SS-Division 'Arminius'" }
+		70 = { "%d. SS-Division 'Cherusker'" }
+		71 = { "%d. SS-Division 'Donnerschlag'" }
+		72 = { "%d. SS-Division 'Eichenschild'" }
+		73 = { "%d. SS-Division 'Wildeiche'" }
+		74 = { "%d. SS-Division 'Adlerschwinge'" }
+		75 = { "%d. SS-Division 'Kampfgeist'" }
+		76 = { "%d. SS-Division 'Wolfsrudel'" }
+		77 = { "%d. SS-Division 'Stahlgewitter'" }
+		78 = { "%d. SS-Division 'Nordwind'" }
+		79 = { "%d. SS-Division 'Eisenschwert'" }
+		80 = { "%d. SS-Division 'Sturmvogel'" }
+		81 = { "%d. SS-Division 'Drache'" }
+		82 = { "%d. SS-Division 'Adler'" }
+		83 = { "%d. SS-Division 'Löwe'" }
+		84 = { "%d. SS-Division 'Schwarzwald'" }
+		85 = { "%d. SS-Division 'Alpenrose'" }
+		86 = { "%d. SS-Division 'Harz'" }
+		87 = { "%d. SS-Division 'Sturmblitz'" }
+		88 = { "%d. SS-Division 'Sturmwolke'" }
+		89 = { "%d. SS-Division 'Vorhut'" }
+		90 = { "%d. SS-Division 'Kundschafter'" }
+		91 = { "%d. SS-Division 'Speerträger'" }
+		92 = { "%d. SS-Division 'Spähtrupp'" }
+		93 = { "%d. SS-Division 'Verfolger'" }
+		94 = { "%d. SS-Division 'Pfadfinder'" }
+		95 = { "%d. SS-Division 'Frontjäger'" }
+		96 = { "%d. SS-Division 'Durchbruch'" }
+		97 = { "%d. SS-Division 'Vormarsch'" }
+		98 = { "%d. SS-Division 'Wegbereiter'" }
+		99 = { "%d. SS-Division 'Eisenherz'" }
+		100 = { "%d. SS-Division 'Stahlwalze'" }
+		101 = { "%d. SS-Division 'Eisenwall'" }
+		102 = { "%d. SS-Division 'Sturmhammer'" }
+		103 = { "%d. SS-Division 'Stahlritter'" }
+		104 = { "%d. SS-Division 'Stahlkrieger'" }
+		105 = { "%d. SS-Division 'Eisenkoloss'" }
+		106 = { "%d. SS-Division 'Eisenlöwe'" }
+		107 = { "%d. SS-Division 'Stahlblitz'" }
+		108 = { "%d. SS-Division 'Stahlherz'" }
 	}
 }
 
-GER_SS_02 = 
-{
+GER_SS_02 = {
 	name = "SS Infantry Divisions"
 
 	for_countries = { GER }
 
-	can_use = { always = yes }
+	can_use = { has_government = fascism }
 
 	division_types = { "infantry" }
 
-	fallback_name = "%d. SS-Infanterie-Division"
-
 	link_numbering_with = { GER_SS_01 }
 
-	# Names with numbers (only one number per entry)
-	ordered =
-	{
-		1 = { "%d. SS-Infanterie-Division 'Leibstandarte Adolf Hitler'" }
-		2 = { "%d. SS-Infanterie-Division 'Das Reich'" }
-		3 = { "%d. SS-Infanterie-Division 'Totenkopf'" }
-		4 = { "%d. SS-Infanterie-Division 'Wachregiment Berlin'" }
-		5 = { "%d. SS-Infanterie-Division 'Brandenburg'" }
-		6 = { "%d. SS-Infanterie-Division 'Deutschland'" }
-		7 = { "%d. SS-Infanterie-Division 'Germania'" }
-		8 = { "%d. SS-Infanterie-Division 'Wiking'" }
-		9 = { "%d. SS-Infanterie-Division 'Waräger'" }
-		10 = { "%d. SS-Infanterie-Division 'Thule'" }
-		11 = { "%d. SS-Infanterie-Division 'Gothic'" }
-		12 = { "%d. SS-Infanterie-Division 'Normannia'" }
-		13 = { "%d. SS-Infanterie-Division 'Teutoburg'" }
-		14 = { "%d. SS-Infanterie-Division 'Alemanni'" }
-		15 = { "%d. SS-Infanterie-Division 'Arminius'" }
-		16 = { "%d. SS-Infanterie-Division 'Cherusker'" }
-		17 = { "%d. SS-Infanterie-Division 'Sachsen'" }
-		18 = { "%d. SS-Infanterie-Division 'Schwarzburg'" }
-		19 = { "%d. SS-Infanterie-Division 'Hesse'" }
-		20 = { "%d. SS-Infanterie-Division 'Holstein'" }
-		21 = { "%d. SS-Infanterie-Division 'Rheinland'" }
-		22 = { "%d. SS-Infanterie-Division 'Pommern'" }
-		23 = { "%d. SS-Infanterie-Division 'Westfalen'" }
-		24 = { "%d. SS-Infanterie-Division 'Hannover'" }
-		25 = { "%d. SS-Infanterie-Division 'Thüringen'" }
-		26 = { "%d. SS-Infanterie-Division 'Franken'" }
-		27 = { "%d. SS-Infanterie-Division 'Schleswig-Holstein'" }
-		28 = { "%d. SS-Infanterie-Division 'Sachsen-Anhalt'" }
-		29 = { "%d. SS-Infanterie-Division 'Mecklenburg'" }
-		30 = { "%d. SS-Infanterie-Division 'Brandenburger Tor'" }
-		31 = { "%d. SS-Infanterie-Division 'Teutonic'" }
-		32 = { "%d. SS-Infanterie-Division 'Hohenfriedberger'" }
-		33 = { "%d. SS-Infanterie-Division 'Viking'" }
-		34 = { "%d. SS-Infanterie-Division 'Nordwind'" }
-		35 = { "%d. SS-Infanterie-Division 'Ostmark'" }
-		36 = { "%d. SS-Infanterie-Division 'Schwarzwald'" }
-		37 = { "%d. SS-Infanterie-Division 'Alpenrose'" }
-		38 = { "%d. SS-Infanterie-Division 'Eisenzahn'" }
-		39 = { "%d. SS-Infanterie-Division 'Wildeiche'" }
-		40 = { "%d. SS-Infanterie-Division 'Harz'" }
-		41 = { "%d. SS-Infanterie-Division 'Bayern'" }
-		42 = { "%d. SS-Infanterie-Division 'Schwarze Adler'" }
-		43 = { "%d. SS-Infanterie-Division 'Eisenschwert'" }
-		44 = { "%d. SS-Infanterie-Division 'Donner'" }
-		45 = { "%d. SS-Infanterie-Division 'Blitz'" }
-		46 = { "%d. SS-Infanterie-Division 'Sturmvogel'" }
-		47 = { "%d. SS-Infanterie-Division 'Adler'" }
-		48 = { "%d. SS-Infanterie-Division 'Löwe'" }
-		49 = { "%d. SS-Infanterie-Division 'Greif'" }
-		50 = { "%d. SS-Infanterie-Division 'Drache'" }
+	fallback_name = "%d. SS-Grenadier-Division"
+
+	ordered = {
+		# Historical
+		4 = { "%d. SS-Polizei-Division" }
+		14 = { "%d. Waffen-Grenadier-Division der SS (galizische Nr. 1)" }
+		15 = { "%d. Waffen-Grenadier-Division der SS (lettische Nr. 1)" }
+		19 = { "%d. Waffen-Grenadier-Division der SS (lettische Nr. 2)" }
+		20 = { "%d. Waffen-Grenadier-Division der SS (estnische Nr. 1)" }
+		25 = { "%d. Waffen-Grenadier-Division der SS 'Hunyadi'" }
+		26 = { "%d. Waffen-Grenadier-Division der SS (ungarische Nr. 2)" }
+		27 = { "%d. SS-Freiwilligen-Grenadier-Division 'Langemarck'" }
+		28 = { "%d. SS-Freiwilligen-Grenadier-Division 'Wallonien'" }
+		29 = { "%d. Waffen-Grenadier-Division der SS (russische Nr. 1)" }
+		30 = { "%d. Waffen-Grenadier-Division der SS (russische Nr. 2)" }
+		31 = { "%d. SS-Freiwilligen-Grenadier-Division (Batschka)" }
+		32 = { "%d. SS-Freiwilligen-Grenadier-Division '30. Januar'" }
+		33 = { "%d. Waffen-Grenadier-Division der SS 'Charlemagne'" }
+		34 = { "%d. SS-Freiwilligen-Grenadier-Division 'Landstorm Nederland'" }
+		35 = { "%d. SS- und Polizei-Grenadier-Division" }
+		36 = { "%d. Waffen-Grenadier-Division der SS 'Dirlewanger'" }
+		38 = { "%d. SS-Grenadier-Division 'Nibelungen'" }
+		# Planned in 1945, never formed
+		41 = { "%d. Waffen-Grenadier-Division der SS 'Kalevala'" }
+		# Plausible expansion: SS regiment and Standarte honour names, same name per number in every SS list
+		42 = { "%d. SS-Grenadier-Division 'Deutschland'" }
+		43 = { "%d. SS-Grenadier-Division 'Germania'" }
+		44 = { "%d. SS-Grenadier-Division 'Der Führer'" }
+		45 = { "%d. SS-Grenadier-Division 'Westland'" }
+		46 = { "%d. SS-Grenadier-Division 'Norge'" }
+		47 = { "%d. SS-Grenadier-Division 'Danmark'" }
+		48 = { "%d. SS-Grenadier-Division 'Thule'" }
+		49 = { "%d. SS-Grenadier-Division 'Theodor Eicke'" }
+		50 = { "%d. SS-Grenadier-Division 'Reinhard Heydrich'" }
+		51 = { "%d. SS-Grenadier-Division 'Michael Gaißmair'" }
+		52 = { "%d. SS-Grenadier-Division 'De Ruyter'" }
+		53 = { "%d. SS-Grenadier-Division 'General Seyffardt'" }
+		54 = { "%d. SS-Grenadier-Division 'Hermann von Salza'" }
+		55 = { "%d. SS-Grenadier-Division 'Kurt Eggers'" }
+		56 = { "%d. SS-Grenadier-Division 'Hinrich Schuldt'" }
+		57 = { "%d. SS-Grenadier-Division 'Oberbayern'" }
+		58 = { "%d. SS-Grenadier-Division 'Thüringen'" }
+		59 = { "%d. SS-Grenadier-Division 'Ostmark'" }
+		60 = { "%d. SS-Grenadier-Division 'Dietrich Eckart'" }
+		61 = { "%d. SS-Grenadier-Division 'Julius Schreck'" }
+		62 = { "%d. SS-Grenadier-Division 'Nordwest'" }
+		63 = { "%d. SS-Grenadier-Division 'Schalburg'" }
+		# Plausible expansion: names kept from the earlier INEX lists
+		64 = { "%d. SS-Grenadier-Division 'Siegfried'" }
+		65 = { "%d. SS-Grenadier-Division 'Wotan'" }
+		66 = { "%d. SS-Grenadier-Division 'Walhalla'" }
+		67 = { "%d. SS-Grenadier-Division 'Waräger'" }
+		68 = { "%d. SS-Grenadier-Division 'Teutoburg'" }
+		69 = { "%d. SS-Grenadier-Division 'Arminius'" }
+		70 = { "%d. SS-Grenadier-Division 'Cherusker'" }
+		71 = { "%d. SS-Grenadier-Division 'Donnerschlag'" }
+		72 = { "%d. SS-Grenadier-Division 'Eichenschild'" }
+		73 = { "%d. SS-Grenadier-Division 'Wildeiche'" }
+		74 = { "%d. SS-Grenadier-Division 'Adlerschwinge'" }
+		75 = { "%d. SS-Grenadier-Division 'Kampfgeist'" }
+		76 = { "%d. SS-Grenadier-Division 'Wolfsrudel'" }
+		77 = { "%d. SS-Grenadier-Division 'Stahlgewitter'" }
+		78 = { "%d. SS-Grenadier-Division 'Nordwind'" }
+		79 = { "%d. SS-Grenadier-Division 'Eisenschwert'" }
+		80 = { "%d. SS-Grenadier-Division 'Sturmvogel'" }
+		81 = { "%d. SS-Grenadier-Division 'Drache'" }
+		82 = { "%d. SS-Grenadier-Division 'Adler'" }
+		83 = { "%d. SS-Grenadier-Division 'Löwe'" }
+		84 = { "%d. SS-Grenadier-Division 'Schwarzwald'" }
+		85 = { "%d. SS-Grenadier-Division 'Alpenrose'" }
+		86 = { "%d. SS-Grenadier-Division 'Harz'" }
+		87 = { "%d. SS-Grenadier-Division 'Sturmblitz'" }
+		88 = { "%d. SS-Grenadier-Division 'Sturmwolke'" }
+		89 = { "%d. SS-Grenadier-Division 'Vorhut'" }
+		90 = { "%d. SS-Grenadier-Division 'Kundschafter'" }
+		91 = { "%d. SS-Grenadier-Division 'Speerträger'" }
+		92 = { "%d. SS-Grenadier-Division 'Spähtrupp'" }
+		93 = { "%d. SS-Grenadier-Division 'Verfolger'" }
+		94 = { "%d. SS-Grenadier-Division 'Pfadfinder'" }
+		95 = { "%d. SS-Grenadier-Division 'Frontjäger'" }
+		96 = { "%d. SS-Grenadier-Division 'Durchbruch'" }
+		97 = { "%d. SS-Grenadier-Division 'Vormarsch'" }
+		98 = { "%d. SS-Grenadier-Division 'Wegbereiter'" }
+		99 = { "%d. SS-Grenadier-Division 'Eisenherz'" }
+		100 = { "%d. SS-Grenadier-Division 'Stahlwalze'" }
+		101 = { "%d. SS-Grenadier-Division 'Eisenwall'" }
+		102 = { "%d. SS-Grenadier-Division 'Sturmhammer'" }
+		103 = { "%d. SS-Grenadier-Division 'Stahlritter'" }
+		104 = { "%d. SS-Grenadier-Division 'Stahlkrieger'" }
+		105 = { "%d. SS-Grenadier-Division 'Eisenkoloss'" }
+		106 = { "%d. SS-Grenadier-Division 'Eisenlöwe'" }
+		107 = { "%d. SS-Grenadier-Division 'Stahlblitz'" }
+		108 = { "%d. SS-Grenadier-Division 'Stahlherz'" }
 	}
 }
 
-GER_SS_03 = 
-{
+GER_SS_03 = {
 	name = "SS Motorized Divisions"
 
 	for_countries = { GER }
 
-	can_use = { always = yes }
+	can_use = { has_government = fascism }
 
 	division_types = { "motorized" }
 
-	fallback_name = "%d. SS-Motorisierte-Division"
-
 	link_numbering_with = { GER_SS_01 }
 
-	# Names with numbers (only one number per entry)
-	ordered =
-	{
-		1 = { "%d. SS-Motorisierte-Division 'Sturmblitz'" }
-		2 = { "%d. SS-Motorisierte-Division 'Pfeilschnell'" }
-		3 = { "%d. SS-Motorisierte-Division 'Fließend'" }
-		4 = { "%d. SS-Motorisierte-Division 'Sturmwolke'" }
-		5 = { "%d. SS-Motorisierte-Division 'Vorhut'" }
-		6 = { "%d. SS-Motorisierte-Division 'Wachposten'" }
-		7 = { "%d. SS-Motorisierte-Division 'Aufklärer'" }
-		8 = { "%d. SS-Motorisierte-Division 'Windhund'" }
-		9 = { "%d. SS-Motorisierte-Division 'Kundschafter'" }
-		10 = { "%d. SS-Motorisierte-Division 'Speerträger'" }
-		11 = { "%d. SS-Motorisierte-Division 'Spähtrupp'" }
-		12 = { "%d. SS-Motorisierte-Division 'Patrouillen'" }
-		13 = { "%d. SS-Motorisierte-Division 'Verfolger'" }
-		14 = { "%d. SS-Motorisierte-Division 'Pfadfinder'" }
-		15 = { "%d. SS-Motorisierte-Division 'Schnellfuß'" }
-		16 = { "%d. SS-Motorisierte-Division 'Frontjäger'" }
-		17 = { "%d. SS-Motorisierte-Division 'Schleuder'" }
-		18 = { "%d. SS-Motorisierte-Division 'Durchbruch'" }
-		19 = { "%d. SS-Motorisierte-Division 'Vormarsch'" }
-		20 = { "%d. SS-Motorisierte-Division 'Wegbereiter'" }
+	fallback_name = "%d. SS-Division (mot.)"
+
+	ordered = {
+		# Historical (1940-42 motorized forms)
+		1 = { "%d. SS-Division (mot.) 'Leibstandarte SS Adolf Hitler'" }
+		2 = { "%d. SS-Division (mot.) 'Das Reich'" }
+		3 = { "%d. SS-Division (mot.) 'Totenkopf'" }
+		5 = { "%d. SS-Division (mot.) 'Wiking'" }
+		# Plausible expansion: SS regiment and Standarte honour names, same name per number in every SS list
+		42 = { "%d. SS-Division (mot.) 'Deutschland'" }
+		43 = { "%d. SS-Division (mot.) 'Germania'" }
+		44 = { "%d. SS-Division (mot.) 'Der Führer'" }
+		45 = { "%d. SS-Division (mot.) 'Westland'" }
+		46 = { "%d. SS-Division (mot.) 'Norge'" }
+		47 = { "%d. SS-Division (mot.) 'Danmark'" }
+		48 = { "%d. SS-Division (mot.) 'Thule'" }
+		49 = { "%d. SS-Division (mot.) 'Theodor Eicke'" }
+		50 = { "%d. SS-Division (mot.) 'Reinhard Heydrich'" }
+		51 = { "%d. SS-Division (mot.) 'Michael Gaißmair'" }
+		52 = { "%d. SS-Division (mot.) 'De Ruyter'" }
+		53 = { "%d. SS-Division (mot.) 'General Seyffardt'" }
+		54 = { "%d. SS-Division (mot.) 'Hermann von Salza'" }
+		55 = { "%d. SS-Division (mot.) 'Kurt Eggers'" }
+		56 = { "%d. SS-Division (mot.) 'Hinrich Schuldt'" }
+		57 = { "%d. SS-Division (mot.) 'Oberbayern'" }
+		58 = { "%d. SS-Division (mot.) 'Thüringen'" }
+		59 = { "%d. SS-Division (mot.) 'Ostmark'" }
+		60 = { "%d. SS-Division (mot.) 'Dietrich Eckart'" }
+		61 = { "%d. SS-Division (mot.) 'Julius Schreck'" }
+		62 = { "%d. SS-Division (mot.) 'Nordwest'" }
+		63 = { "%d. SS-Division (mot.) 'Schalburg'" }
+		# Plausible expansion: names kept from the earlier INEX lists
+		64 = { "%d. SS-Division (mot.) 'Siegfried'" }
+		65 = { "%d. SS-Division (mot.) 'Wotan'" }
+		66 = { "%d. SS-Division (mot.) 'Walhalla'" }
+		67 = { "%d. SS-Division (mot.) 'Waräger'" }
+		68 = { "%d. SS-Division (mot.) 'Teutoburg'" }
+		69 = { "%d. SS-Division (mot.) 'Arminius'" }
+		70 = { "%d. SS-Division (mot.) 'Cherusker'" }
+		71 = { "%d. SS-Division (mot.) 'Donnerschlag'" }
+		72 = { "%d. SS-Division (mot.) 'Eichenschild'" }
+		73 = { "%d. SS-Division (mot.) 'Wildeiche'" }
+		74 = { "%d. SS-Division (mot.) 'Adlerschwinge'" }
+		75 = { "%d. SS-Division (mot.) 'Kampfgeist'" }
+		76 = { "%d. SS-Division (mot.) 'Wolfsrudel'" }
+		77 = { "%d. SS-Division (mot.) 'Stahlgewitter'" }
+		78 = { "%d. SS-Division (mot.) 'Nordwind'" }
+		79 = { "%d. SS-Division (mot.) 'Eisenschwert'" }
+		80 = { "%d. SS-Division (mot.) 'Sturmvogel'" }
+		81 = { "%d. SS-Division (mot.) 'Drache'" }
+		82 = { "%d. SS-Division (mot.) 'Adler'" }
+		83 = { "%d. SS-Division (mot.) 'Löwe'" }
+		84 = { "%d. SS-Division (mot.) 'Schwarzwald'" }
+		85 = { "%d. SS-Division (mot.) 'Alpenrose'" }
+		86 = { "%d. SS-Division (mot.) 'Harz'" }
+		87 = { "%d. SS-Division (mot.) 'Sturmblitz'" }
+		88 = { "%d. SS-Division (mot.) 'Sturmwolke'" }
+		89 = { "%d. SS-Division (mot.) 'Vorhut'" }
+		90 = { "%d. SS-Division (mot.) 'Kundschafter'" }
+		91 = { "%d. SS-Division (mot.) 'Speerträger'" }
+		92 = { "%d. SS-Division (mot.) 'Spähtrupp'" }
+		93 = { "%d. SS-Division (mot.) 'Verfolger'" }
+		94 = { "%d. SS-Division (mot.) 'Pfadfinder'" }
+		95 = { "%d. SS-Division (mot.) 'Frontjäger'" }
+		96 = { "%d. SS-Division (mot.) 'Durchbruch'" }
+		97 = { "%d. SS-Division (mot.) 'Vormarsch'" }
+		98 = { "%d. SS-Division (mot.) 'Wegbereiter'" }
+		99 = { "%d. SS-Division (mot.) 'Eisenherz'" }
+		100 = { "%d. SS-Division (mot.) 'Stahlwalze'" }
+		101 = { "%d. SS-Division (mot.) 'Eisenwall'" }
+		102 = { "%d. SS-Division (mot.) 'Sturmhammer'" }
+		103 = { "%d. SS-Division (mot.) 'Stahlritter'" }
+		104 = { "%d. SS-Division (mot.) 'Stahlkrieger'" }
+		105 = { "%d. SS-Division (mot.) 'Eisenkoloss'" }
+		106 = { "%d. SS-Division (mot.) 'Eisenlöwe'" }
+		107 = { "%d. SS-Division (mot.) 'Stahlblitz'" }
+		108 = { "%d. SS-Division (mot.) 'Stahlherz'" }
 	}
 }
 
-GER_SS_04 = 
-{
-	name = "SS Mechanized Divisions"
+GER_SS_04 = {
+	name = "SS Panzergrenadier Divisions"
 
 	for_countries = { GER }
 
-	can_use = { always = yes }
+	can_use = { has_government = fascism }
 
 	division_types = { "mechanized" }
 
-	fallback_name = "%d. SS-Panzergrenadier-Division"
-
 	link_numbering_with = { GER_SS_01 }
 
-	# Names with numbers (only one number per entry)
-	ordered =
-	{
-		1 = { "%d. SS-Panzergrenadier-Division 'Eisenherz'" }
-		2 = { "%d. SS-Panzergrenadier-Division 'Stahlfaust'" }
-		3 = { "%d. SS-Panzergrenadier-Division 'Sturmpanzer'" }
-		4 = { "%d. SS-Panzergrenadier-Division 'Grollender Donner'" }
-		5 = { "%d. SS-Panzergrenadier-Division 'Kampfschmiede'" }
-		6 = { "%d. SS-Panzergrenadier-Division 'Stahlwalze'" }
-		7 = { "%d. SS-Panzergrenadier-Division 'Eisenwall'" }
-		8 = { "%d. SS-Panzergrenadier-Division 'Panzerfaust'" }
-		9 = { "%d. SS-Panzergrenadier-Division 'Sturmhammer'" }
-		10 = { "%d. SS-Panzergrenadier-Division 'Kettenblitz'" }
-		11 = { "%d. SS-Panzergrenadier-Division 'Stahlgewitter'" }
-		12 = { "%d. SS-Panzergrenadier-Division 'Eisenschild'" }
-		13 = { "%d. SS-Panzergrenadier-Division 'Eisensturm'" }
-		14 = { "%d. SS-Panzergrenadier-Division 'Stahlritter'" }
-		15 = { "%d. SS-Panzergrenadier-Division 'Panzersturm'" }
-		16 = { "%d. SS-Panzergrenadier-Division 'Kampfpanzer'" }
-		17 = { "%d. SS-Panzergrenadier-Division 'Eisenklaue'" }
-		18 = { "%d. SS-Panzergrenadier-Division 'Stahlkrieger'" }
-		19 = { "%d. SS-Panzergrenadier-Division 'Panzerdrache'" }
-		20 = { "%d. SS-Panzergrenadier-Division 'Eisenkoloss'" }		
+	fallback_name = "%d. SS-Panzergrenadier-Division"
+
+	ordered = {
+		# Historical
+		1 = { "%d. SS-Panzergrenadier-Division 'Leibstandarte SS Adolf Hitler'" }
+		2 = { "%d. SS-Panzergrenadier-Division 'Das Reich'" }
+		3 = { "%d. SS-Panzergrenadier-Division 'Totenkopf'" }
+		4 = { "%d. SS-Polizei-Panzergrenadier-Division" }
+		5 = { "%d. SS-Panzergrenadier-Division 'Wiking'" }
+		9 = { "%d. SS-Panzergrenadier-Division 'Hohenstaufen'" }
+		10 = { "%d. SS-Panzergrenadier-Division 'Frundsberg'" }
+		11 = { "%d. SS-Freiwilligen-Panzergrenadier-Division 'Nordland'" }
+		12 = { "%d. SS-Panzergrenadier-Division 'Hitlerjugend'" }
+		16 = { "%d. SS-Panzergrenadier-Division 'Reichsführer-SS'" }
+		17 = { "%d. SS-Panzergrenadier-Division 'Götz von Berlichingen'" }
+		18 = { "%d. SS-Freiwilligen-Panzergrenadier-Division 'Horst Wessel'" }
+		23 = { "%d. SS-Freiwilligen-Panzergrenadier-Division 'Nederland'" }
+		# Planned in 1945, never formed
+		40 = { "%d. SS-Panzergrenadier-Division 'Feldherrnhalle'" }
+		# Plausible expansion: SS regiment and Standarte honour names, same name per number in every SS list
+		42 = { "%d. SS-Panzergrenadier-Division 'Deutschland'" }
+		43 = { "%d. SS-Panzergrenadier-Division 'Germania'" }
+		44 = { "%d. SS-Panzergrenadier-Division 'Der Führer'" }
+		45 = { "%d. SS-Panzergrenadier-Division 'Westland'" }
+		46 = { "%d. SS-Panzergrenadier-Division 'Norge'" }
+		47 = { "%d. SS-Panzergrenadier-Division 'Danmark'" }
+		48 = { "%d. SS-Panzergrenadier-Division 'Thule'" }
+		49 = { "%d. SS-Panzergrenadier-Division 'Theodor Eicke'" }
+		50 = { "%d. SS-Panzergrenadier-Division 'Reinhard Heydrich'" }
+		51 = { "%d. SS-Panzergrenadier-Division 'Michael Gaißmair'" }
+		52 = { "%d. SS-Panzergrenadier-Division 'De Ruyter'" }
+		53 = { "%d. SS-Panzergrenadier-Division 'General Seyffardt'" }
+		54 = { "%d. SS-Panzergrenadier-Division 'Hermann von Salza'" }
+		55 = { "%d. SS-Panzergrenadier-Division 'Kurt Eggers'" }
+		56 = { "%d. SS-Panzergrenadier-Division 'Hinrich Schuldt'" }
+		57 = { "%d. SS-Panzergrenadier-Division 'Oberbayern'" }
+		58 = { "%d. SS-Panzergrenadier-Division 'Thüringen'" }
+		59 = { "%d. SS-Panzergrenadier-Division 'Ostmark'" }
+		60 = { "%d. SS-Panzergrenadier-Division 'Dietrich Eckart'" }
+		61 = { "%d. SS-Panzergrenadier-Division 'Julius Schreck'" }
+		62 = { "%d. SS-Panzergrenadier-Division 'Nordwest'" }
+		63 = { "%d. SS-Panzergrenadier-Division 'Schalburg'" }
+		# Plausible expansion: names kept from the earlier INEX lists
+		64 = { "%d. SS-Panzergrenadier-Division 'Siegfried'" }
+		65 = { "%d. SS-Panzergrenadier-Division 'Wotan'" }
+		66 = { "%d. SS-Panzergrenadier-Division 'Walhalla'" }
+		67 = { "%d. SS-Panzergrenadier-Division 'Waräger'" }
+		68 = { "%d. SS-Panzergrenadier-Division 'Teutoburg'" }
+		69 = { "%d. SS-Panzergrenadier-Division 'Arminius'" }
+		70 = { "%d. SS-Panzergrenadier-Division 'Cherusker'" }
+		71 = { "%d. SS-Panzergrenadier-Division 'Donnerschlag'" }
+		72 = { "%d. SS-Panzergrenadier-Division 'Eichenschild'" }
+		73 = { "%d. SS-Panzergrenadier-Division 'Wildeiche'" }
+		74 = { "%d. SS-Panzergrenadier-Division 'Adlerschwinge'" }
+		75 = { "%d. SS-Panzergrenadier-Division 'Kampfgeist'" }
+		76 = { "%d. SS-Panzergrenadier-Division 'Wolfsrudel'" }
+		77 = { "%d. SS-Panzergrenadier-Division 'Stahlgewitter'" }
+		78 = { "%d. SS-Panzergrenadier-Division 'Nordwind'" }
+		79 = { "%d. SS-Panzergrenadier-Division 'Eisenschwert'" }
+		80 = { "%d. SS-Panzergrenadier-Division 'Sturmvogel'" }
+		81 = { "%d. SS-Panzergrenadier-Division 'Drache'" }
+		82 = { "%d. SS-Panzergrenadier-Division 'Adler'" }
+		83 = { "%d. SS-Panzergrenadier-Division 'Löwe'" }
+		84 = { "%d. SS-Panzergrenadier-Division 'Schwarzwald'" }
+		85 = { "%d. SS-Panzergrenadier-Division 'Alpenrose'" }
+		86 = { "%d. SS-Panzergrenadier-Division 'Harz'" }
+		87 = { "%d. SS-Panzergrenadier-Division 'Sturmblitz'" }
+		88 = { "%d. SS-Panzergrenadier-Division 'Sturmwolke'" }
+		89 = { "%d. SS-Panzergrenadier-Division 'Vorhut'" }
+		90 = { "%d. SS-Panzergrenadier-Division 'Kundschafter'" }
+		91 = { "%d. SS-Panzergrenadier-Division 'Speerträger'" }
+		92 = { "%d. SS-Panzergrenadier-Division 'Spähtrupp'" }
+		93 = { "%d. SS-Panzergrenadier-Division 'Verfolger'" }
+		94 = { "%d. SS-Panzergrenadier-Division 'Pfadfinder'" }
+		95 = { "%d. SS-Panzergrenadier-Division 'Frontjäger'" }
+		96 = { "%d. SS-Panzergrenadier-Division 'Durchbruch'" }
+		97 = { "%d. SS-Panzergrenadier-Division 'Vormarsch'" }
+		98 = { "%d. SS-Panzergrenadier-Division 'Wegbereiter'" }
+		99 = { "%d. SS-Panzergrenadier-Division 'Eisenherz'" }
+		100 = { "%d. SS-Panzergrenadier-Division 'Stahlwalze'" }
+		101 = { "%d. SS-Panzergrenadier-Division 'Eisenwall'" }
+		102 = { "%d. SS-Panzergrenadier-Division 'Sturmhammer'" }
+		103 = { "%d. SS-Panzergrenadier-Division 'Stahlritter'" }
+		104 = { "%d. SS-Panzergrenadier-Division 'Stahlkrieger'" }
+		105 = { "%d. SS-Panzergrenadier-Division 'Eisenkoloss'" }
+		106 = { "%d. SS-Panzergrenadier-Division 'Eisenlöwe'" }
+		107 = { "%d. SS-Panzergrenadier-Division 'Stahlblitz'" }
+		108 = { "%d. SS-Panzergrenadier-Division 'Stahlherz'" }
 	}
 }
 
-GER_SS_05 = 
-{
-	name = "SS Armoured Divisions"
+GER_SS_05 = {
+	name = "SS Panzer Divisions"
 
 	for_countries = { GER }
 
-	can_use = { always = yes }
+	can_use = { has_government = fascism }
 
 	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
 
-	fallback_name = "%d. SS-Panzer-Division"
-
 	link_numbering_with = { GER_SS_01 }
 
-	# Names with numbers (only one number per entry)
-	ordered =
-	{
+	fallback_name = "%d. SS-Panzer-Division"
+
+	ordered = {
+		# Historical
 		1 = { "%d. SS-Panzer-Division 'Leibstandarte SS Adolf Hitler'" }
 		2 = { "%d. SS-Panzer-Division 'Das Reich'" }
 		3 = { "%d. SS-Panzer-Division 'Totenkopf'" }
@@ -248,57 +468,385 @@ GER_SS_05 =
 		9 = { "%d. SS-Panzer-Division 'Hohenstaufen'" }
 		10 = { "%d. SS-Panzer-Division 'Frundsberg'" }
 		12 = { "%d. SS-Panzer-Division 'Hitlerjugend'" }
-		17 = { "%d. SS-Panzer-Division 'Götz von Berlichingen'" }
-		21 = { "%d. SS-Panzer-Division 'Sturmbann'" }
-		22 = { "%d. SS-Panzer-Division 'Panzerwolf'" }
-		23 = { "%d. SS-Panzer-Division 'Stahlgewehr'" }
-		24 = { "%d. SS-Panzer-Division 'Sturmpanther'" }
-		25 = { "%d. SS-Panzer-Division 'Eisenlöwe'" }
-		26 = { "%d. SS-Panzer-Division 'Blitzkrieger'" }
-		27 = { "%d. SS-Panzer-Division 'Panzerschreck'" }
-		28 = { "%d. SS-Panzer-Division 'Stahlblitz'" }
-		29 = { "%d. SS-Panzer-Division 'Panzeradler'" }
-		30 = { "%d. SS-Panzer-Division 'Panzersturm'" }
-		31 = { "%d. SS-Panzer-Division 'Stahlherz'" }
-		32 = { "%d. SS-Panzer-Division 'Panzerfaust'" }
-		33 = { "%d. SS-Panzer-Division 'Eisenpanther'" }
-		34 = { "%d. SS-Panzer-Division 'Sturmtiger'" }
-		35 = { "%d. SS-Panzer-Division 'Panzerdrache'" }
-		36 = { "%d. SS-Panzer-Division 'Stahlfaust'" }
-		37 = { "%d. SS-Panzer-Division 'Blitzpanzer'" }
-		38 = { "%d. SS-Panzer-Division 'Panzerthunder'" }
-		39 = { "%d. SS-Panzer-Division 'Eisenklaue'" }
-		40 = { "%d. SS-Panzer-Division 'Stahlkrieger'" }
+		# Plausible expansion: SS regiment and Standarte honour names, same name per number in every SS list
+		42 = { "%d. SS-Panzer-Division 'Deutschland'" }
+		43 = { "%d. SS-Panzer-Division 'Germania'" }
+		44 = { "%d. SS-Panzer-Division 'Der Führer'" }
+		45 = { "%d. SS-Panzer-Division 'Westland'" }
+		46 = { "%d. SS-Panzer-Division 'Norge'" }
+		47 = { "%d. SS-Panzer-Division 'Danmark'" }
+		48 = { "%d. SS-Panzer-Division 'Thule'" }
+		49 = { "%d. SS-Panzer-Division 'Theodor Eicke'" }
+		50 = { "%d. SS-Panzer-Division 'Reinhard Heydrich'" }
+		51 = { "%d. SS-Panzer-Division 'Michael Gaißmair'" }
+		52 = { "%d. SS-Panzer-Division 'De Ruyter'" }
+		53 = { "%d. SS-Panzer-Division 'General Seyffardt'" }
+		54 = { "%d. SS-Panzer-Division 'Hermann von Salza'" }
+		55 = { "%d. SS-Panzer-Division 'Kurt Eggers'" }
+		56 = { "%d. SS-Panzer-Division 'Hinrich Schuldt'" }
+		57 = { "%d. SS-Panzer-Division 'Oberbayern'" }
+		58 = { "%d. SS-Panzer-Division 'Thüringen'" }
+		59 = { "%d. SS-Panzer-Division 'Ostmark'" }
+		60 = { "%d. SS-Panzer-Division 'Dietrich Eckart'" }
+		61 = { "%d. SS-Panzer-Division 'Julius Schreck'" }
+		62 = { "%d. SS-Panzer-Division 'Nordwest'" }
+		63 = { "%d. SS-Panzer-Division 'Schalburg'" }
+		# Plausible expansion: names kept from the earlier INEX lists
+		64 = { "%d. SS-Panzer-Division 'Siegfried'" }
+		65 = { "%d. SS-Panzer-Division 'Wotan'" }
+		66 = { "%d. SS-Panzer-Division 'Walhalla'" }
+		67 = { "%d. SS-Panzer-Division 'Waräger'" }
+		68 = { "%d. SS-Panzer-Division 'Teutoburg'" }
+		69 = { "%d. SS-Panzer-Division 'Arminius'" }
+		70 = { "%d. SS-Panzer-Division 'Cherusker'" }
+		71 = { "%d. SS-Panzer-Division 'Donnerschlag'" }
+		72 = { "%d. SS-Panzer-Division 'Eichenschild'" }
+		73 = { "%d. SS-Panzer-Division 'Wildeiche'" }
+		74 = { "%d. SS-Panzer-Division 'Adlerschwinge'" }
+		75 = { "%d. SS-Panzer-Division 'Kampfgeist'" }
+		76 = { "%d. SS-Panzer-Division 'Wolfsrudel'" }
+		77 = { "%d. SS-Panzer-Division 'Stahlgewitter'" }
+		78 = { "%d. SS-Panzer-Division 'Nordwind'" }
+		79 = { "%d. SS-Panzer-Division 'Eisenschwert'" }
+		80 = { "%d. SS-Panzer-Division 'Sturmvogel'" }
+		81 = { "%d. SS-Panzer-Division 'Drache'" }
+		82 = { "%d. SS-Panzer-Division 'Adler'" }
+		83 = { "%d. SS-Panzer-Division 'Löwe'" }
+		84 = { "%d. SS-Panzer-Division 'Schwarzwald'" }
+		85 = { "%d. SS-Panzer-Division 'Alpenrose'" }
+		86 = { "%d. SS-Panzer-Division 'Harz'" }
+		87 = { "%d. SS-Panzer-Division 'Sturmblitz'" }
+		88 = { "%d. SS-Panzer-Division 'Sturmwolke'" }
+		89 = { "%d. SS-Panzer-Division 'Vorhut'" }
+		90 = { "%d. SS-Panzer-Division 'Kundschafter'" }
+		91 = { "%d. SS-Panzer-Division 'Speerträger'" }
+		92 = { "%d. SS-Panzer-Division 'Spähtrupp'" }
+		93 = { "%d. SS-Panzer-Division 'Verfolger'" }
+		94 = { "%d. SS-Panzer-Division 'Pfadfinder'" }
+		95 = { "%d. SS-Panzer-Division 'Frontjäger'" }
+		96 = { "%d. SS-Panzer-Division 'Durchbruch'" }
+		97 = { "%d. SS-Panzer-Division 'Vormarsch'" }
+		98 = { "%d. SS-Panzer-Division 'Wegbereiter'" }
+		99 = { "%d. SS-Panzer-Division 'Eisenherz'" }
+		100 = { "%d. SS-Panzer-Division 'Stahlwalze'" }
+		101 = { "%d. SS-Panzer-Division 'Eisenwall'" }
+		102 = { "%d. SS-Panzer-Division 'Sturmhammer'" }
+		103 = { "%d. SS-Panzer-Division 'Stahlritter'" }
+		104 = { "%d. SS-Panzer-Division 'Stahlkrieger'" }
+		105 = { "%d. SS-Panzer-Division 'Eisenkoloss'" }
+		106 = { "%d. SS-Panzer-Division 'Eisenlöwe'" }
+		107 = { "%d. SS-Panzer-Division 'Stahlblitz'" }
+		108 = { "%d. SS-Panzer-Division 'Stahlherz'" }
 	}
 }
 
-GER_SS_STANDARTE_01 = { 
-	name = "SS-Standarte"
+GER_SS_06 = {
+	name = "SS Mountain Divisions"
+
 	for_countries = { GER }
-	can_use = { always = yes }
-	division_types = { "infantry" }
-	fallback_name = "%d. SS-Standarte"
+
+	can_use = { has_government = fascism }
+
+	division_types = { "mountaineers" }
+
+	link_numbering_with = { GER_SS_01 }
+
+	fallback_name = "%d. SS-Gebirgs-Division"
+
 	ordered = {
-	  1 = { "%d. SS-Standarte" }
-	  2 = { "%d. SS-Standarte" }
-	  3 = { "%d. SS-Standarte" }
-	  4 = { "%d. SS-Standarte" }
-	  5 = { "%d. SS-Standarte" }
-	  6 = { "%d. SS-Standarte" }
-	  7 = { "%d. SS-Standarte" }
-	  8 = { "%d. SS-Standarte" }
-	  9 = { "%d. SS-Standarte" }
-	  10 = { "%d. SS-Standarte" }
-	  11 = { "%d. SS-Standarte" }
-	  12 = { "%d. SS-Standarte" }
-	  13 = { "%d. SS-Standarte" }
-	  14 = { "%d. SS-Standarte" }
-	  15 = { "%d. SS-Standarte" }
-	  16 = { "%d. SS-Standarte" }
-	  17 = { "%d. SS-Standarte" }
-	  18 = { "%d. SS-Standarte" }
-	  19 = { "%d. SS-Standarte" }
-	  20 = { "%d. SS-Standarte" }
+		# Historical
+		6 = { "%d. SS-Gebirgs-Division 'Nord'" }
+		7 = { "%d. SS-Freiwilligen-Gebirgs-Division 'Prinz Eugen'" }
+		13 = { "%d. Waffen-Gebirgs-Division der SS 'Handschar'" }
+		21 = { "%d. Waffen-Gebirgs-Division der SS 'Skanderbeg'" }
+		23 = { "%d. Waffen-Gebirgs-Division der SS 'Kama'" }
+		24 = { "%d. Waffen-Gebirgs-(Karstjäger-)Division der SS" }
+		# Planned in 1945, never formed
+		39 = { "%d. SS-Gebirgs-Division 'Andreas Hofer'" }
+		# Plausible expansion: SS regiment and Standarte honour names, same name per number in every SS list
+		42 = { "%d. SS-Gebirgs-Division 'Deutschland'" }
+		43 = { "%d. SS-Gebirgs-Division 'Germania'" }
+		44 = { "%d. SS-Gebirgs-Division 'Der Führer'" }
+		45 = { "%d. SS-Gebirgs-Division 'Westland'" }
+		46 = { "%d. SS-Gebirgs-Division 'Norge'" }
+		47 = { "%d. SS-Gebirgs-Division 'Danmark'" }
+		48 = { "%d. SS-Gebirgs-Division 'Thule'" }
+		49 = { "%d. SS-Gebirgs-Division 'Theodor Eicke'" }
+		50 = { "%d. SS-Gebirgs-Division 'Reinhard Heydrich'" }
+		51 = { "%d. SS-Gebirgs-Division 'Michael Gaißmair'" }
+		52 = { "%d. SS-Gebirgs-Division 'De Ruyter'" }
+		53 = { "%d. SS-Gebirgs-Division 'General Seyffardt'" }
+		54 = { "%d. SS-Gebirgs-Division 'Hermann von Salza'" }
+		55 = { "%d. SS-Gebirgs-Division 'Kurt Eggers'" }
+		56 = { "%d. SS-Gebirgs-Division 'Hinrich Schuldt'" }
+		57 = { "%d. SS-Gebirgs-Division 'Oberbayern'" }
+		58 = { "%d. SS-Gebirgs-Division 'Thüringen'" }
+		59 = { "%d. SS-Gebirgs-Division 'Ostmark'" }
+		60 = { "%d. SS-Gebirgs-Division 'Dietrich Eckart'" }
+		61 = { "%d. SS-Gebirgs-Division 'Julius Schreck'" }
+		62 = { "%d. SS-Gebirgs-Division 'Nordwest'" }
+		63 = { "%d. SS-Gebirgs-Division 'Schalburg'" }
+		# Plausible expansion: names kept from the earlier INEX lists
+		64 = { "%d. SS-Gebirgs-Division 'Siegfried'" }
+		65 = { "%d. SS-Gebirgs-Division 'Wotan'" }
+		66 = { "%d. SS-Gebirgs-Division 'Walhalla'" }
+		67 = { "%d. SS-Gebirgs-Division 'Waräger'" }
+		68 = { "%d. SS-Gebirgs-Division 'Teutoburg'" }
+		69 = { "%d. SS-Gebirgs-Division 'Arminius'" }
+		70 = { "%d. SS-Gebirgs-Division 'Cherusker'" }
+		71 = { "%d. SS-Gebirgs-Division 'Donnerschlag'" }
+		72 = { "%d. SS-Gebirgs-Division 'Eichenschild'" }
+		73 = { "%d. SS-Gebirgs-Division 'Wildeiche'" }
+		74 = { "%d. SS-Gebirgs-Division 'Adlerschwinge'" }
+		75 = { "%d. SS-Gebirgs-Division 'Kampfgeist'" }
+		76 = { "%d. SS-Gebirgs-Division 'Wolfsrudel'" }
+		77 = { "%d. SS-Gebirgs-Division 'Stahlgewitter'" }
+		78 = { "%d. SS-Gebirgs-Division 'Nordwind'" }
+		79 = { "%d. SS-Gebirgs-Division 'Eisenschwert'" }
+		80 = { "%d. SS-Gebirgs-Division 'Sturmvogel'" }
+		81 = { "%d. SS-Gebirgs-Division 'Drache'" }
+		82 = { "%d. SS-Gebirgs-Division 'Adler'" }
+		83 = { "%d. SS-Gebirgs-Division 'Löwe'" }
+		84 = { "%d. SS-Gebirgs-Division 'Schwarzwald'" }
+		85 = { "%d. SS-Gebirgs-Division 'Alpenrose'" }
+		86 = { "%d. SS-Gebirgs-Division 'Harz'" }
+		87 = { "%d. SS-Gebirgs-Division 'Sturmblitz'" }
+		88 = { "%d. SS-Gebirgs-Division 'Sturmwolke'" }
+		89 = { "%d. SS-Gebirgs-Division 'Vorhut'" }
+		90 = { "%d. SS-Gebirgs-Division 'Kundschafter'" }
+		91 = { "%d. SS-Gebirgs-Division 'Speerträger'" }
+		92 = { "%d. SS-Gebirgs-Division 'Spähtrupp'" }
+		93 = { "%d. SS-Gebirgs-Division 'Verfolger'" }
+		94 = { "%d. SS-Gebirgs-Division 'Pfadfinder'" }
+		95 = { "%d. SS-Gebirgs-Division 'Frontjäger'" }
+		96 = { "%d. SS-Gebirgs-Division 'Durchbruch'" }
+		97 = { "%d. SS-Gebirgs-Division 'Vormarsch'" }
+		98 = { "%d. SS-Gebirgs-Division 'Wegbereiter'" }
+		99 = { "%d. SS-Gebirgs-Division 'Eisenherz'" }
+		100 = { "%d. SS-Gebirgs-Division 'Stahlwalze'" }
+		101 = { "%d. SS-Gebirgs-Division 'Eisenwall'" }
+		102 = { "%d. SS-Gebirgs-Division 'Sturmhammer'" }
+		103 = { "%d. SS-Gebirgs-Division 'Stahlritter'" }
+		104 = { "%d. SS-Gebirgs-Division 'Stahlkrieger'" }
+		105 = { "%d. SS-Gebirgs-Division 'Eisenkoloss'" }
+		106 = { "%d. SS-Gebirgs-Division 'Eisenlöwe'" }
+		107 = { "%d. SS-Gebirgs-Division 'Stahlblitz'" }
+		108 = { "%d. SS-Gebirgs-Division 'Stahlherz'" }
 	}
-  }
-  
+}
+
+GER_SS_07 = {
+	name = "SS Cavalry Divisions"
+
+	for_countries = { GER }
+
+	can_use = { has_government = fascism }
+
+	division_types = { "cavalry" }
+
+	link_numbering_with = { GER_SS_01 }
+
+	fallback_name = "%d. SS-Kavallerie-Division"
+
+	ordered = {
+		# Historical
+		8 = { "%d. SS-Kavallerie-Division 'Florian Geyer'" }
+		22 = { "%d. SS-Freiwilligen-Kavallerie-Division 'Maria Theresia'" }
+		33 = { "%d. Waffen-Kavallerie-Division der SS (ungarische Nr. 3)" }
+		37 = { "%d. SS-Freiwilligen-Kavallerie-Division 'Lützow'" }
+		# Plausible expansion: SS regiment and Standarte honour names, same name per number in every SS list
+		42 = { "%d. SS-Kavallerie-Division 'Deutschland'" }
+		43 = { "%d. SS-Kavallerie-Division 'Germania'" }
+		44 = { "%d. SS-Kavallerie-Division 'Der Führer'" }
+		45 = { "%d. SS-Kavallerie-Division 'Westland'" }
+		46 = { "%d. SS-Kavallerie-Division 'Norge'" }
+		47 = { "%d. SS-Kavallerie-Division 'Danmark'" }
+		48 = { "%d. SS-Kavallerie-Division 'Thule'" }
+		49 = { "%d. SS-Kavallerie-Division 'Theodor Eicke'" }
+		50 = { "%d. SS-Kavallerie-Division 'Reinhard Heydrich'" }
+		51 = { "%d. SS-Kavallerie-Division 'Michael Gaißmair'" }
+		52 = { "%d. SS-Kavallerie-Division 'De Ruyter'" }
+		53 = { "%d. SS-Kavallerie-Division 'General Seyffardt'" }
+		54 = { "%d. SS-Kavallerie-Division 'Hermann von Salza'" }
+		55 = { "%d. SS-Kavallerie-Division 'Kurt Eggers'" }
+		56 = { "%d. SS-Kavallerie-Division 'Hinrich Schuldt'" }
+		57 = { "%d. SS-Kavallerie-Division 'Oberbayern'" }
+		58 = { "%d. SS-Kavallerie-Division 'Thüringen'" }
+		59 = { "%d. SS-Kavallerie-Division 'Ostmark'" }
+		60 = { "%d. SS-Kavallerie-Division 'Dietrich Eckart'" }
+		61 = { "%d. SS-Kavallerie-Division 'Julius Schreck'" }
+		62 = { "%d. SS-Kavallerie-Division 'Nordwest'" }
+		63 = { "%d. SS-Kavallerie-Division 'Schalburg'" }
+		# Plausible expansion: names kept from the earlier INEX lists
+		64 = { "%d. SS-Kavallerie-Division 'Siegfried'" }
+		65 = { "%d. SS-Kavallerie-Division 'Wotan'" }
+		66 = { "%d. SS-Kavallerie-Division 'Walhalla'" }
+		67 = { "%d. SS-Kavallerie-Division 'Waräger'" }
+		68 = { "%d. SS-Kavallerie-Division 'Teutoburg'" }
+		69 = { "%d. SS-Kavallerie-Division 'Arminius'" }
+		70 = { "%d. SS-Kavallerie-Division 'Cherusker'" }
+		71 = { "%d. SS-Kavallerie-Division 'Donnerschlag'" }
+		72 = { "%d. SS-Kavallerie-Division 'Eichenschild'" }
+		73 = { "%d. SS-Kavallerie-Division 'Wildeiche'" }
+		74 = { "%d. SS-Kavallerie-Division 'Adlerschwinge'" }
+		75 = { "%d. SS-Kavallerie-Division 'Kampfgeist'" }
+		76 = { "%d. SS-Kavallerie-Division 'Wolfsrudel'" }
+		77 = { "%d. SS-Kavallerie-Division 'Stahlgewitter'" }
+		78 = { "%d. SS-Kavallerie-Division 'Nordwind'" }
+		79 = { "%d. SS-Kavallerie-Division 'Eisenschwert'" }
+		80 = { "%d. SS-Kavallerie-Division 'Sturmvogel'" }
+		81 = { "%d. SS-Kavallerie-Division 'Drache'" }
+		82 = { "%d. SS-Kavallerie-Division 'Adler'" }
+		83 = { "%d. SS-Kavallerie-Division 'Löwe'" }
+		84 = { "%d. SS-Kavallerie-Division 'Schwarzwald'" }
+		85 = { "%d. SS-Kavallerie-Division 'Alpenrose'" }
+		86 = { "%d. SS-Kavallerie-Division 'Harz'" }
+		87 = { "%d. SS-Kavallerie-Division 'Sturmblitz'" }
+		88 = { "%d. SS-Kavallerie-Division 'Sturmwolke'" }
+		89 = { "%d. SS-Kavallerie-Division 'Vorhut'" }
+		90 = { "%d. SS-Kavallerie-Division 'Kundschafter'" }
+		91 = { "%d. SS-Kavallerie-Division 'Speerträger'" }
+		92 = { "%d. SS-Kavallerie-Division 'Spähtrupp'" }
+		93 = { "%d. SS-Kavallerie-Division 'Verfolger'" }
+		94 = { "%d. SS-Kavallerie-Division 'Pfadfinder'" }
+		95 = { "%d. SS-Kavallerie-Division 'Frontjäger'" }
+		96 = { "%d. SS-Kavallerie-Division 'Durchbruch'" }
+		97 = { "%d. SS-Kavallerie-Division 'Vormarsch'" }
+		98 = { "%d. SS-Kavallerie-Division 'Wegbereiter'" }
+		99 = { "%d. SS-Kavallerie-Division 'Eisenherz'" }
+		100 = { "%d. SS-Kavallerie-Division 'Stahlwalze'" }
+		101 = { "%d. SS-Kavallerie-Division 'Eisenwall'" }
+		102 = { "%d. SS-Kavallerie-Division 'Sturmhammer'" }
+		103 = { "%d. SS-Kavallerie-Division 'Stahlritter'" }
+		104 = { "%d. SS-Kavallerie-Division 'Stahlkrieger'" }
+		105 = { "%d. SS-Kavallerie-Division 'Eisenkoloss'" }
+		106 = { "%d. SS-Kavallerie-Division 'Eisenlöwe'" }
+		107 = { "%d. SS-Kavallerie-Division 'Stahlblitz'" }
+		108 = { "%d. SS-Kavallerie-Division 'Stahlherz'" }
+	}
+}
+
+# ==============================================================================
+# 2. BATTALIONS, KAMPFGRUPPEN AND STANDARTEN
+# ==============================================================================
+
+GER_SS_08 = {
+	name = "SS Heavy Panzer Battalions"
+
+	for_countries = { GER }
+
+	can_use = { has_government = fascism }
+
+	division_types = { "heavy_armor" "medium_armor" "modern_armor" }
+
+	fallback_name = "schwere SS-Panzer-Abteilung %d"
+
+	ordered = {
+		# Historical (formed 1943-44 as 101-103, renumbered 501-503 in late 1944)
+		501 = { "schwere SS-Panzer-Abteilung %d (I. SS-Panzerkorps)" }
+		502 = { "schwere SS-Panzer-Abteilung %d (II. SS-Panzerkorps)" }
+		503 = { "schwere SS-Panzer-Abteilung %d (III. SS-Panzerkorps)" }
+		# Plausible expansion: the other SS Panzer corps
+		504 = { "schwere SS-Panzer-Abteilung %d (IV. SS-Panzerkorps)" }
+		511 = { "schwere SS-Panzer-Abteilung %d (XI. SS-Panzerkorps)" }
+	}
+}
+
+GER_SS_09 = {
+	name = "SS Kampfgruppen"
+
+	for_countries = { GER }
+
+	can_use = { has_government = fascism }
+
+	division_types = { "infantry" "motorized" "mechanized" "light_armor" "medium_armor" "heavy_armor" }
+
+	fallback_name = "SS-Kampfgruppe %d"
+
+	ordered = {
+		# Historical Kampfgruppen of the Waffen-SS
+		1 = { "Kampfgruppe Peiper" }
+		2 = { "Kampfgruppe Hansen" }
+		3 = { "Kampfgruppe Knittel" }
+		4 = { "Kampfgruppe Sandig" }
+		5 = { "Kampfgruppe Harzer" }
+		6 = { "Kampfgruppe Frey" }
+		7 = { "Kampfgruppe Kraemer" }
+		8 = { "Kampfgruppe Wünsche" }
+		9 = { "Kampfgruppe Meyer" }
+		10 = { "Kampfgruppe Fick" }
+		11 = { "Kampfgruppe Ostendorff" }
+		12 = { "Kampfgruppe Becker" }
+		13 = { "Kampfgruppe Krause" }
+		14 = { "Kampfgruppe Weidinger" }
+		15 = { "Kampfgruppe Lehmann" }
+		16 = { "Kampfgruppe Mohnke" }
+		17 = { "Kampfgruppe Kumm" }
+		18 = { "Kampfgruppe Mühlenkamp" }
+		19 = { "Kampfgruppe Steiner" }
+		20 = { "Kampfgruppe Fegelein" }
+		# Plausible expansion: Waffen-SS division commanders
+		21 = { "Kampfgruppe Dietrich" }
+		22 = { "Kampfgruppe Bittrich" }
+		23 = { "Kampfgruppe Wisch" }
+		24 = { "Kampfgruppe Witt" }
+		25 = { "Kampfgruppe Kraas" }
+		26 = { "Kampfgruppe Gille" }
+		27 = { "Kampfgruppe Harmel" }
+		28 = { "Kampfgruppe Stadler" }
+		29 = { "Kampfgruppe Lammerding" }
+		30 = { "Kampfgruppe Keppler" }
+		31 = { "Kampfgruppe Simon" }
+		32 = { "Kampfgruppe Priess" }
+		33 = { "Kampfgruppe Hausser" }
+		34 = { "Kampfgruppe Kleinheisterkamp" }
+		35 = { "Kampfgruppe Phleps" }
+		36 = { "Kampfgruppe Krüger" }
+		37 = { "Kampfgruppe Lombard" }
+		38 = { "Kampfgruppe Bochmann" }
+		39 = { "Kampfgruppe Baum" }
+		40 = { "Kampfgruppe Rumohr" }
+	}
+}
+
+GER_SS_STANDARTE_01 = {
+	name = "SS Standarten"
+
+	for_countries = { GER }
+
+	can_use = { has_government = fascism }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%d. SS-Standarte"
+
+	ordered = {
+		# SS-Verfügungstruppe Standarten
+		901 = { "SS-Standarte 'Leibstandarte SS Adolf Hitler'" }
+		902 = { "SS-Standarte 'Deutschland'" }
+		903 = { "SS-Standarte 'Germania'" }
+		904 = { "SS-Standarte 'Der Führer'" }
+		905 = { "SS-Standarte 'Westland'" }
+		906 = { "SS-Standarte 'Nordland'" }
+		907 = { "SS-Standarte 'Nordwest'" }
+		# SS-Totenkopfstandarten (VI-XVI: 'Verstärkte' Standarten of 1939-40, by station)
+		911 = { "SS-Totenkopfstandarte I 'Oberbayern'" }
+		912 = { "SS-Totenkopfstandarte II 'Brandenburg'" }
+		913 = { "SS-Totenkopfstandarte III 'Thüringen'" }
+		914 = { "SS-Totenkopfstandarte IV 'Ostmark'" }
+		915 = { "SS-Totenkopfstandarte V 'Dietrich Eckart'" }
+		916 = { "SS-Totenkopfstandarte VI (Prag)" }
+		917 = { "SS-Totenkopfstandarte VII (Brünn)" }
+		918 = { "SS-Totenkopfstandarte VIII (Krakau)" }
+		919 = { "SS-Totenkopfstandarte IX (Danzig)" }
+		920 = { "SS-Totenkopfstandarte X (Weimar)" }
+		921 = { "SS-Totenkopfstandarte XI (Radom)" }
+		922 = { "SS-Totenkopfstandarte XII (Posen)" }
+		923 = { "SS-Totenkopfstandarte XIII (Wien)" }
+		924 = { "SS-Totenkopfstandarte XIV (Weimar)" }
+		925 = { "SS-Totenkopfstandarte XV (Płock)" }
+		926 = { "SS-Totenkopfstandarte XVI (Dachau)" }
+		# Allgemeine SS
+		1 = { "%d. SS-Standarte 'Julius Schreck'" }
+	}
+}

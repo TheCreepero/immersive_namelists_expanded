@@ -56,9 +56,9 @@ This document serves as an instruction and reference guide for maintaining and u
 | File | Nation | Tag | Status in Description |
 | :--- | :--- | :--- | :--- |
 | `INEX_USA_names_divisions.txt` | USA | `USA` | Included (Guards, Fascist/Legion, Shock, Forts, Rangers, National Defense) |
-| `INEX_GER_names_divisions.txt` | Germany | `GER` | Included (Festung, Panzer nicknames, Marine, Para, Monarchist) |
-| `INEX_GER_SS_names_divisions.txt` | Germany (SS) | `GER` | Included (Historical & ahistorical SS lists, SS-Standarte) |
-| `INEX_GER_ADDITIONAL_names_divisions.txt` | Germany (Extra) | `GER` | Included (Garrison, Kampfgruppen, Heavy tanks, Flak, Luftwaffe, Panzerartillerie) |
+| `INEX_GER_names_divisions.txt` | Germany | `GER` | Included (Plain & Named infantry, motorized, Panzergrenadier and Panzer lists with garrison identities and nicknames, Jäger, Gebirgs, Fallschirmjäger, Marine, Cavalry, fascist Elite Formations, Imperial & Guard, Republican, Red Army) |
+| `INEX_GER_SS_names_divisions.txt` | Germany (SS) | `GER` | Included (Fascist-only Waffen-SS divisions 1-41 by type incl. mountain & cavalry, shared honour-name expansion, heavy battalions, SS Kampfgruppen, Standarten) |
+| `INEX_GER_ADDITIONAL_names_divisions.txt` | Germany (Extra) | `GER` | Included (Heavy battalions, Panzer brigades, Volksgrenadier/Reserve/Grenadier series, Luftwaffe field & Flak, Festungen, Kampfgruppen, Volkssturm, SA, Freikorps, Schutztruppe, Reichsbanner, Red Front, Foreign Legions) |
 | `INEX_SWE_names_divisions.txt` | Sweden | `SWE` | Included (Provincial brigades, Pansarbrigader, Ski/Arctic, Caroleans, Volunteers) |
 | `INEX_EST_names_divisions.txt` | Estonia | `EST` | Included (Historical & elite regiments, Kaitseliit malevad, Armored trains/cars, Coastal fortresses) |
 | `INEX_LAT_names_divisions.txt` | Latvia | `LAT` | Included (Historical divisions & regiments, Aizsargu pulki, Armored cars/trains, Coastal fortresses, Cavalry) |
@@ -101,9 +101,9 @@ This is not a complete list of included namelists! Just some examples.
 - Shock, Rangers, Merrill's Marauders, and fort-named armored detachments
 
 [b]Germany[/b]
-- Festung & Garrison divisions named after European cities; Volksgrenadier & Volkssturm
-- Nicknamed Panzer, Paratrooper & Marine divisions; Schwere Panzerabteilungen, Flak & Kampfgruppen
-- Expanded historical & ahistorical SS lists and Standarten; Imperial/Monarchist armies
+- Plain and Named Heer lists in historical raising order, with nicknames and home garrisons ([i]7. Panzer-Division 'Gespenster'[/i], [i]97. Jäger-Division 'Spielhahnjäger'[/i])
+- Festungen, Kampfgruppen, Volksgrenadier, Luftwaffe field & Flak divisions, heavy battalions, and Panzer brigades
+- Ideology suites: Waffen-SS, SA & Volkssturm (fascist), Imperial Guard & Freikorps, Reichsbanner, and Red Army & Red Front
 
 [b]Sweden[/b]
 - Provincial Infanteribrigader ([i]Gula brigaden[/i]), Pansarbrigader, and Cykel- & Kavalleribrigader

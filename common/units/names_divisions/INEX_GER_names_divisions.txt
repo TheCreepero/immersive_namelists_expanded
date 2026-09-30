@@ -1,38 +1,33 @@
-# Division template historical names system. Is a new method of naming the divisions based on the names-group assigned to it's template.
-# If we run out of all historical names, the names will be assigned in the old way.
+# Division template historical names system for Germany (GER): Heer.
+# Immersive Namelists Expanded (INEX)
 #
-# Each group has a made up tag. Use it if you want to append more, or replace existing names with the extra txt files (modding).
+# German nominative forms and period spelling: '%d. Infanterie-Division', '(mot.)', 'leichte Division',
+# 'Kgl. Bayer.'; identities appended to a designation go in single quotes, historical proper names
+# (Infanterie-Division Scharnhorst, Panzer-Division Holstein) do not.
 #
-# for_countries - lists all countries that can use it. If empty, or entire tag is missing, all countries in the world can use it.
+# Plain and Named pairs: infantry, motorized, Panzergrenadier and Panzer lists each keep the vanilla tag
+# as a plain list in historical raising order and add a '(Named)' list on the same numbers. One Heer
+# number series: every infantry-type list links to GER_Inf_01, so 29. Infanterie-Division (mot.) 'Falke'
+# and 29. Panzergrenadier-Division 'Falke' are the same division. Panzer lists link to GER_Arm_01.
+# A division keeps one identity in every list: its verified nickname or emblem, else its formation city.
 #
-# can_use - is a trigger that locks/unlocks the group under specific circumstances. The trigger is in a country scope.
+# Ideology: the basic lists are open to every government. Nazi honour formations (Großdeutschland,
+# Feldherrnhalle, Hermann Göring) are fascist-only; the Imperial lists and the Guard divisions cover the
+# monarchist path (neutrality/democratic), the Republican divisions the democratic path and the Red Army
+# divisions the communist path.
 #
-# division_types - is a list of tokens to corresponding unit types. A player can in fact use any group of names for a div.template
-#                  however this tag is a helper for an automated choice (for AI, or if the group must switch on it's own, because
-#                  for example the current one is no longer available due to the can_use trigger saying so).
-#                  In automated choice, the division template must have at least 1 of the following types for it to be chosen.
-#
-# fallback_name - Is going to be used if we run out of the scripted historical names. If you want to use the old division naming
-#                 mechanics to be used for fallbacks, then just skip this option.
-#
-# unordered - It's a list of historical division names that did not have a number. Regardless if such names happened in history or not
-#             this option is available here mainly for a mods.
-#
-# ordered - Is a list of all historical names. 
-#           Numbers must start from 1 and up. 
-#           Numbers can't repeat in one scope.
-#           If you script the name for this group, at the same number (for example in a mod in another file), the name will be override.
-#           All arguments between the brackets must be separated by spaces. Each argument is wrapped in "quotas".
-#           1st argument = The name. It must contain either: 
-#                          %d (for decimal number placement)
-#                          %s (for string number placement - ROMAN numbers like XIV).
-#           2nd argument is optional = A localizable text describing this historical division. The text will be visible in the tooltip
-#                                      where you choose the historical division name.
-#           3rd argument is optional = An URL preferably pointing to the WIKI. It's a future feature that is not currently working in
-#                                      the current game version.
+# Overrides vanilla GER_Inf_01, GER_ALTINF_01, GER_LTINF_01, GER_MOT_01, GER_MOT_02, GER_MEC_01,
+# GER_MEC_01_MONARNCHIST, GER_MEC_01_COMMUNIST, GER_Mnt_01, GER_MAR_01, GER_PAR_01, GER_GAR_01, GER_Arm_01,
+# GER_Arm_01_ANTIFASCIST, GER_LTARM_01, GER_Cav_01, GER_MONINF_01 and GER_MONMOB_01. Vanilla focuses
+# reference GER_INF_01 and GER_CAV_01 (kept here); GER_PEN_01 is left to vanilla.
 
-GER_Inf_01 = 
-{
+# ==============================================================================
+# 1. INFANTRY (Heer)
+# ==============================================================================
+
+# Plain variant (un-nicknamed). Overrides vanilla GER_Inf_01 (referenced by vanilla focuses);
+# numbering anchor for every Heer infantry-type list.
+GER_Inf_01 = {
 	name = "Infantry Divisions"
 
 	for_countries = { GER }
@@ -41,15 +36,10 @@ GER_Inf_01 =
 
 	division_types = { "infantry" }
 
-	# Number reservation system will tie to another group.
-	#link_numbering_with = { GER_Gar_01 }
-
 	fallback_name = "%d. Infanterie-Division"
 
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
-	ordered =
-	{
+	ordered = {
+		# Historical raising order (Aufstellungswellen 1-35)
 		1 = { "%d. Infanterie-Division" }
 		2 = { "%d. Infanterie-Division" }
 		3 = { "%d. Infanterie-Division" }
@@ -301,166 +291,280 @@ GER_Inf_01 =
 		281 = { "%d. Infanterie-Division" }
 		154 = { "%d. Infanterie-Division" }
 		155 = { "%d. Infanterie-Division" }
-		160	= { "%d. Infanterie-Division" }
+		160 = { "%d. Infanterie-Division" }
 		166 = { "%d. Infanterie-Division" }
 		156 = { "%d. Infanterie-Division" }
-		
-		# divisions are put in the order they were raised, which was NOT consecutive historically due to the vagaries of the German mobilization system
-		# leaving out 250. Infanterie-Division (Azul) as the existence of this division depends upon a not guaranteed Francoist victory in Spain, plus can be simulated by expeditionary forces
-		# deleted 369., 373., 392. Infanterie-Division (kroatische) for the same reasons as Division Azul.
-		# deleted 162. (Turk.) ID because its existence depends on German occupation of certain areas they may not go in game.
-		# omitted noncombat "shadow divisions" and holding units raised to fill up combat units
-		# ad hoc divisional sized Kampfgruppe such as "Division von Broich" deleted as their temporary existence was highly dependent on unique historical circumstances that are not guaranteed to be replicated in game
-		# deleted Landesschützen, training/holding divisions with a super short life and no combat record, "infantry divisions" that were ad hoc collections of fortress/coast defense units in Norway, etc
-		# deleted some 500-series Grenadier Divisions as they were almost immediately converted to Volksgrenadier
-		# deleted Sturm-Division Rhodos as it was made from a collection of Aegean island garrison troops not guaranteed to exist in game
-		# deleted 999. leichte Afrika-Division as Germany is not guaranteed to go to Africa
-		# deleted 99. leichte as it was soon converted in to 7. Gebirgs-Division
-		# added 1-3. Marine-Infanterie-Division to the infantry list, as they were ground combat units formed from surplus naval personnel at the end of the war, not "Marines" in the proper sense. 11. and 16. Divisions were deleted as they were most likely camouflage/deception units that never saw combat.
 	}
 }
 
-GER_ALTINF_01 = 
-{
-	name = "Late/Alternate Infantry Divisions"
+# Named variant; same numbers and raising order as GER_Inf_01.
+GER_INF_02 = {
+	name = "Infantry Divisions (Named)"
 
 	for_countries = { GER }
 
 	can_use = { always = yes }
 
-	division_types = { "infantry"  }
-
-	fallback_name = "%d. Volksgrenadier-Division"
+	division_types = { "infantry" }
 
 	link_numbering_with = { GER_Inf_01 }
 
-	# Names with numbers (only one number per entry)
-	ordered =
-	{
-		22 = { "%d.(Luftlande) Infanterie-Division" }
-		78 = { "%d. Sturm-Division" }
-		44 = { "(44.) Reichsgrenadier-Division Hoch- und Deutschmeister" }
-		91 = { "%d.(Luftlande) Infanterie-Division" }
-		944 = { "19. Luftwaffen-Sturm-Division" }
-		945 = { "20. Luftwaffen-Sturm-Division" }
-		560 = { "%d. Volks-Grenadier-Division" }
-		12 = { "%d. Volks-Grenadier-Division" }
-		361 = { "%d. Volks-Grenadier-Division" }
-		18 = { "%d. Volks-Grenadier-Division" }
-		276 = { "%d. Volks-Grenadier-Division" }
-		277 = { "%d. Volks-Grenadier-Division" }
-		326 = { "%d. Volks-Grenadier-Division" }
-		708 = { "%d. Volks-Grenadier-Division" }
-		349 = { "%d. Volks-Grenadier-Division" }
-		183 = { "%d. Volks-Grenadier-Division" }
-		246 = { "%d. Volks-Grenadier-Division" }
-		337 = { "%d. Volks-Grenadier-Division" }
-		340 = { "%d. Volks-Grenadier-Division" }
-		26 = { "%d. Volks-Grenadier-Division" }
-		47 = { "%d. Volks-Grenadier-Division" }
-		212 = { "%d. Volks-Grenadier-Division" }
-		256 = { "%d. Volks-Grenadier-Division" }
-		271 = { "%d. Volks-Grenadier-Division" }
-		272 = { "%d. Volks-Grenadier-Division" }
-		363 = { "%d. Volks-Grenadier-Division" }
-		352 = { "%d. Volks-Grenadier-Division" }
-		62 = { "%d. Volks-Grenadier-Division" }
-		6 = { "%d. Volks-Grenadier-Division" }
-		16 = { "%d. Volks-Grenadier-Division" }
-		19 = { "%d. Volks-Grenadier-Division" }
-		31 = { "%d. Volks-Grenadier-Division" }
-		36 = { "%d. Volks-Grenadier-Division" }
-		61 = { "%d. Volks-Grenadier-Division" }
-		541 = { "%d. Volks-Grenadier-Division" }
-		542 = { "%d. Volks-Grenadier-Division" }
-		544 = { "%d. Volks-Grenadier-Division" }
-		545 = { "%d. Volks-Grenadier-Division" }
-		547 = { "%d. Volks-Grenadier-Division" }
-		548 = { "%d. Volks-Grenadier-Division" }
-		549 = { "%d. Volks-Grenadier-Division" }
-		551 = { "%d. Volks-Grenadier-Division" }
-		553 = { "%d. Volks-Grenadier-Division" }
-		558 = { "%d. Volks-Grenadier-Division" }
-		559 = { "%d. Volks-Grenadier-Division" }
-		561 = { "%d. Volks-Grenadier-Division" }
-		562 = { "%d. Volks-Grenadier-Division" }
-		563 = { "%d. Volks-Grenadier-Division" }
-		9 = { "%d. Volks-Grenadier-Division" }
-		257 = { "%d. Volks-Grenadier-Division" }
-		45 = { "%d. Volks-Grenadier-Division" }
-		79 = { "%d. Volks-Grenadier-Division" }
-		320 = { "%d. Volks-Grenadier-Division" }
-		167 = { "%d. Volks-Grenadier-Division" }
-		462 = { "%d. Volks-Grenadier-Division" }
-		211 = { "%d. Volks-Grenadier-Division" }
-		98 = { "%d. Volks-Grenadier-Division" }
-		46 = { "%d. Volks-Grenadier-Division" }
-		278 = { "%d. Volks-Grenadier-Division" }
-		334 = { "%d. Volks-Grenadier-Division" }
-		347 = { "%d. Volks-Grenadier-Division" }
+	fallback_name = "%d. Infanterie-Division"
 
-		# deleted some 500-series Volks-Grenadier-Divisions because they were renumbered within a month of being formed to match the old numbers of decimated/destroyed infantry divisions they were earmarked to replace.
-		
+	ordered = {
+		# Historical: nickname or emblem where verified, else formation city or training ground
+		1 = { "%d. Infanterie-Division 'Königsberg'" }
+		2 = { "%d. Infanterie-Division 'Stettin'" }
+		3 = { "%d. Infanterie-Division 'Frankfurt (Oder)'" }
+		4 = { "%d. Infanterie-Division 'Dresden'" }
+		5 = { "%d. Infanterie-Division 'Ulm'" }
+		6 = { "%d. Infanterie-Division 'Bielefeld'" }
+		7 = { "%d. Infanterie-Division 'München'" }
+		8 = { "%d. Infanterie-Division 'Oppeln'" }
+		9 = { "%d. Infanterie-Division 'Gießen'" }
+		10 = { "%d. Infanterie-Division 'Regensburg'" }
+		11 = { "%d. Infanterie-Division 'Allenstein'" }
+		12 = { "%d. Infanterie-Division 'Wilder Stier'" }
+		13 = { "%d. Infanterie-Division 'Magdeburg'" }
+		14 = { "%d. Infanterie-Division 'Leipzig'" }
+		15 = { "%d. Infanterie-Division 'Frankfurt am Main'" }
+		16 = { "%d. Infanterie-Division 'Münster'" }
+		17 = { "%d. Infanterie-Division 'Nürnberg'" }
+		18 = { "%d. Infanterie-Division 'Liegnitz'" }
+		19 = { "%d. Infanterie-Division 'Hannover'" }
+		20 = { "%d. Infanterie-Division 'Hamburg'" }
+		21 = { "%d. Infanterie-Division 'Elbing'" }
+		22 = { "%d. Infanterie-Division 'Bremen'" }
+		23 = { "%d. Infanterie-Division 'Potsdam'" }
+		24 = { "%d. Infanterie-Division 'Eisbär'" }
+		25 = { "%d. Infanterie-Division 'Ludwigsburg'" }
+		26 = { "%d. Infanterie-Division 'Kölner Dom'" }
+		33 = { "%d. Infanterie-Division 'Darmstadt'" }
+		34 = { "%d. Infanterie-Division 'Koblenz'" }
+		27 = { "%d. Infanterie-Division 'Augsburg'" }
+		28 = { "%d. Infanterie-Division 'Breslau'" }
+		29 = { "%d. Infanterie-Division 'Falke'" }
+		30 = { "%d. Infanterie-Division 'Briesen'" }
+		31 = { "%d. Infanterie-Division 'Braunschweiger Löwe'" }
+		32 = { "%d. Infanterie-Division 'Köslin'" }
+		35 = { "%d. Infanterie-Division 'Karlsruhe'" }
+		36 = { "%d. Infanterie-Division 'Kaiserslautern'" }
+		44 = { "%d. Infanterie-Division 'Hoch- und Deutschmeister'" }
+		45 = { "%d. Infanterie-Division 'Linz'" }
+		46 = { "%d. Infanterie-Division 'Springender Hirsch'" }
+		61 = { "%d. Infanterie-Division 'Neidenburg'" }
+		50 = { "%d. Infanterie-Division 'Pfeil und Bogen'" }
+		52 = { "%d. Infanterie-Division 'Siegen'" }
+		56 = { "%d. Infanterie-Division 'Gekreuzte Säbel'" }
+		57 = { "%d. Infanterie-Division 'Landshut'" }
+		62 = { "%d. Infanterie-Division 'Mondschein'" }
+		68 = { "%d. Infanterie-Division 'Brauner Bär'" }
+		69 = { "%d. Infanterie-Division 'Westfalen'" }
+		71 = { "%d. Infanterie-Division 'Kleeblatt'" }
+		73 = { "%d. Infanterie-Division 'Kleist'" }
+		75 = { "%d. Infanterie-Division 'Schwerin'" }
+		87 = { "%d. Infanterie-Division 'Grünes Herz'" }
+		206 = { "%d. Infanterie-Division 'Pique As'" }
+		207 = { "%d. Infanterie-Division 'Stargard'" }
+		208 = { "%d. Infanterie-Division 'Lübben'" }
+		209 = { "%d. Infanterie-Division 'Chemnitz'" }
+		211 = { "%d. Infanterie-Division 'Köln'" }
+		212 = { "%d. Infanterie-Division 'Oberbayern'" }
+		213 = { "%d. Infanterie-Division 'Glogau'" }
+		214 = { "%d. Infanterie-Division 'Hanau'" }
+		215 = { "%d. Infanterie-Division 'Heilbronn'" }
+		216 = { "%d. Infanterie-Division 'Hameln'" }
+		218 = { "%d. Infanterie-Division 'Berlin'" }
+		227 = { "%d. Infanterie-Division 'Stern'" }
+		231 = { "%d. Infanterie-Division 'Franken'" }
+		251 = { "%d. Infanterie-Division 'Hersfeld'" }
+		252 = { "%d. Infanterie-Division 'Schlesisches Eichenlaub'" }
+		254 = { "%d. Infanterie-Division 'Detmold'" }
+		257 = { "%d. Infanterie-Division 'Karlshorst'" }
+		258 = { "%d. Infanterie-Division 'Pommern'" }
+		260 = { "%d. Infanterie-Division 'Hörnle'" }
+		263 = { "%d. Infanterie-Division 'Weintraube'" }
+		268 = { "%d. Infanterie-Division 'Füssen'" }
+		93 = { "%d. Infanterie-Division 'Jüterbog'" }
+		98 = { "%d. Infanterie-Division 'Sudetendeutscher Adler'" }
+		72 = { "%d. Infanterie-Division 'Gelbkreuz'" }
+		95 = { "%d. Infanterie-Division 'Wildflecken'" }
+		96 = { "%d. Infanterie-Division 'Lüneburger Heide'" }
+		60 = { "%d. Infanterie-Division 'Danzig'" }
+		163 = { "%d. Infanterie-Division 'Trabender Elch'" }
+		164 = { "%d. Infanterie-Division 'Königsbrück'" }
+		183 = { "%d. Infanterie-Division 'Münsingen'" }
+		81 = { "%d. Infanterie-Division 'Neuhammer'" }
+		82 = { "%d. Infanterie-Division 'Kassel'" }
+		83 = { "%d. Infanterie-Division 'Bergen'" }
+		88 = { "%d. Infanterie-Division 'Grafenwöhr'" }
+		162 = { "%d. Infanterie-Division 'Groß Born'" }
+		168 = { "%d. Infanterie-Division 'Görlitz'" }
+		170 = { "%d. Infanterie-Division 'Munster'" }
+		197 = { "%d. Infanterie-Division 'Posen'" }
+		198 = { "%d. Infanterie-Division 'Pilsen'" }
+		169 = { "%d. Infanterie-Division 'Offenbach'" }
+		161 = { "%d. Infanterie-Division 'Arys'" }
+		205 = { "%d. Infanterie-Division 'Fliegenpilz'" }
+		297 = { "%d. Infanterie-Division 'Bruck an der Leitha'" }
+		291 = { "%d. Infanterie-Division 'Elch'" }
+		294 = { "%d. Infanterie-Division 'Döbeln'" }
+		296 = { "%d. Infanterie-Division 'Passau'" }
+		123 = { "%d. Infanterie-Division 'Meseritz'" }
+		122 = { "%d. Infanterie-Division 'Greif'" }
+		126 = { "%d. Infanterie-Division 'Sennelager'" }
+		199 = { "%d. Infanterie-Division 'Narvik'" }
+		111 = { "%d. Infanterie-Division 'Fallingbostel'" }
+		302 = { "%d. Infanterie-Division 'Dieppe'" }
+		306 = { "%d. Infanterie-Division 'Hamm'" }
+		319 = { "%d. Infanterie-Division 'Kanalinseln'" }
+		332 = { "%d. Infanterie-Division 'Güstrow'" }
+		340 = { "%d. Infanterie-Division 'Schleswig'" }
+		337 = { "%d. Infanterie-Division 'Kempten'" }
+		342 = { "%d. Infanterie-Division 'Rhein-Mosel'" }
+		335 = { "%d. Infanterie-Division 'Aalen'" }
+		106 = { "%d. Infanterie-Division 'Wahn'" }
+		320 = { "%d. Infanterie-Division 'Grünherz'" }
+		110 = { "%d. Infanterie-Division 'Lüneburg'" }
+		112 = { "%d. Infanterie-Division 'Baumholder'" }
+		305 = { "%d. Infanterie-Division 'Bodensee'" }
+		336 = { "%d. Infanterie-Division 'Hundekopf'" }
+		339 = { "%d. Infanterie-Division 'Thüringen'" }
+		321 = { "%d. Infanterie-Division 'Braunschweig'" }
+		702 = { "%d. Infanterie-Division 'Wismar'" }
+		708 = { "%d. Infanterie-Division 'Kattowitz'" }
+		709 = { "%d. Infanterie-Division 'Butzbach'" }
+		710 = { "%d. Infanterie-Division 'Heide'" }
+		713 = { "%d. Infanterie-Division 'Karlsbad'" }
+		719 = { "%d. Infanterie-Division 'Sitzender Hase'" }
+		717 = { "%d. Infanterie-Division 'Bruckneudorf'" }
+		329 = { "%d. Infanterie-Division 'Hammer'" }
+		330 = { "%d. Infanterie-Division 'Wandern'" }
+		416 = { "%d. Infanterie-Division 'Schlagsahne'" }
+		389 = { "%d. Infanterie-Division 'Milowitz'" }
+		371 = { "%d. Infanterie-Division 'Ähre'" }
+		338 = { "%d. Infanterie-Division 'Warthelager'" }
+		334 = { "%d. Infanterie-Division 'Bamberg'" }
+		367 = { "%d. Infanterie-Division 'Agram'" }
+		92 = { "%d. Infanterie-Division 'Nikolsburg'" }
+		70 = { "%d. Infanterie-Division 'Weißbrot'" }
 	}
 }
 
-GER_LTINF_01 = 
-{
+# Air-landing, assault, naval and named divisions; Volksgrenadier divisions have their own list
+# in the ADDITIONAL file.
+GER_ALTINF_01 = {
+	name = "Special Infantry Divisions"
+
+	for_countries = { GER }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	link_numbering_with = { GER_Inf_01 }
+
+	fallback_name = "%d. Infanterie-Division"
+
+	ordered = {
+		# Historical special divisions
+		22 = { "%d. Infanterie-Division (Luftlande)" }
+		91 = { "%d. (Luftlande-)Infanterie-Division" }
+		78 = { "%d. Sturm-Division" }
+		44 = { "%d. Reichsgrenadier-Division 'Hoch- und Deutschmeister'" }
+		325 = { "%d. Infanterie-Division 'Jütland'" }
+		941 = { "1. Marine-Infanterie-Division" }
+		942 = { "2. Marine-Infanterie-Division" }
+		943 = { "3. Marine-Infanterie-Division" }
+		944 = { "19. Luftwaffen-Sturm-Division" }
+		945 = { "20. Luftwaffen-Sturm-Division" }
+		# Historical named divisions of 1944-45 (Schatten-Divisionen and the 35th wave)
+		961 = { "Infanterie-Division Scharnhorst" }
+		962 = { "Infanterie-Division Ulrich von Hutten" }
+		963 = { "Infanterie-Division Theodor Körner" }
+		964 = { "Infanterie-Division Friedrich Ludwig Jahn" }
+		965 = { "Infanterie-Division Ferdinand von Schill" }
+		966 = { "Infanterie-Division Potsdam" }
+		309 = { "Infanterie-Division Berlin" }
+		967 = { "Infanterie-Division Kurland" }
+		968 = { "Infanterie-Division Ostpreußen" }
+		969 = { "Infanterie-Division Schlesien" }
+		970 = { "Infanterie-Division Bärwalde" }
+		971 = { "Infanterie-Division Breslau" }
+		972 = { "Infanterie-Division Dresden" }
+	}
+}
+
+GER_LTINF_01 = {
 	name = "Light Infantry Divisions"
 
 	for_countries = { GER }
 
 	can_use = { always = yes }
 
-	division_types = { "infantry"  }
-
-	fallback_name = "%d. Jäger-Division"
+	division_types = { "infantry" }
 
 	link_numbering_with = { GER_Inf_01 }
 
-	# Names with numbers (only one number per entry)
-	ordered =
-	{
-	    8 = { "%d. Jäger-Division" }
-		5 = { "%d. Jäger-Division" }
-		28 = { "%d. Jäger-Division" }
-		97 = { "%d. Jäger-Division" }
-		100 = { "%d. Jäger-Division" }
+	fallback_name = "%d. Jäger-Division"
+
+	ordered = {
+		# Historical Jäger divisions (1940-45)
+		8 = { "%d. Jäger-Division 'Oppeln'" }
+		5 = { "%d. Jäger-Division 'Ulm'" }
+		28 = { "%d. Jäger-Division 'Breslau'" }
+		97 = { "%d. Jäger-Division 'Spielhahnjäger'" }
+		100 = { "%d. Jäger-Division 'Döllersheim'" }
 		101 = { "%d. Jäger-Division" }
 		104 = { "%d. Jäger-Division" }
 		114 = { "%d. Jäger-Division" }
 		117 = { "%d. Jäger-Division" }
 		118 = { "%d. Jäger-Division" }
 		42 = { "%d. Jäger-Division" }
-		
-		# this was a small series of divisions raised/converted with only two regiments, reduced and decentralized heavy weapons and services for operating in rough terrain with bad roads. Not full mountain troops.
-		# some of these were renamed from leichte-Infanterie, some raised from scratch
-		
+		# Plausible expansion: German forests and uplands
+		103 = { "%d. Jäger-Division 'Eifel'" }
+		105 = { "%d. Jäger-Division 'Hunsrück'" }
+		107 = { "%d. Jäger-Division 'Spessart'" }
+		108 = { "%d. Jäger-Division 'Rhön'" }
+		109 = { "%d. Jäger-Division 'Taunus'" }
+		115 = { "%d. Jäger-Division 'Westerwald'" }
+		119 = { "%d. Jäger-Division 'Odenwald'" }
+		120 = { "%d. Jäger-Division 'Solling'" }
+		124 = { "%d. Jäger-Division 'Thüringer Wald'" }
+		127 = { "%d. Jäger-Division 'Frankenwald'" }
+		128 = { "%d. Jäger-Division 'Fichtelgebirge'" }
+		135 = { "%d. Jäger-Division 'Erzgebirge'" }
+		136 = { "%d. Jäger-Division 'Riesengebirge'" }
+		138 = { "%d. Jäger-Division 'Böhmerwald'" }
+		139 = { "%d. Jäger-Division 'Bayerischer Wald'" }
+		140 = { "%d. Jäger-Division 'Teutoburger Wald'" }
+		142 = { "%d. Jäger-Division 'Schorfheide'" }
+		144 = { "%d. Jäger-Division 'Rominter Heide'" }
+		145 = { "%d. Jäger-Division 'Tucheler Heide'" }
+		146 = { "%d. Jäger-Division 'Johannisburger Heide'" }
 	}
 }
 
-GER_MOT_01 = 
-{
+# ==============================================================================
+# 2. MOTORIZED AND PANZERGRENADIER DIVISIONS
+# ==============================================================================
+
+# Plain variant (un-nicknamed). Overrides vanilla GER_MOT_01.
+GER_MOT_01 = {
 	name = "Motorized Divisions"
 
 	for_countries = { GER }
 
-	can_use = {
-		OR = {
-			has_government = neutrality 
-			has_government = democratic 
-		}
-	}
+	can_use = { always = yes }
 
-	division_types = { "motorized"  }
-
-	fallback_name = "%d. Infanterie-Division (mot)"
+	division_types = { "motorized" }
 
 	link_numbering_with = { GER_Inf_01 }
 
-	# Names with numbers (only one number per entry)
-	ordered =
-	{
+	fallback_name = "%d. Infanterie-Division (mot.)"
+
+	ordered = {
+		# Historical raising order
 		2 = { "%d. Infanterie-Division (mot.)" }
 		13 = { "%d. Infanterie-Division (mot.)" }
 		20 = { "%d. Infanterie-Division (mot.)" }
@@ -474,319 +578,169 @@ GER_MOT_01 =
 		10 = { "%d. Infanterie-Division (mot.)" }
 		25 = { "%d. Infanterie-Division (mot.)" }
 		90 = { "%d. Infanterie-Division (mot.)" }
-		932 = { "Infanterie-Division (mot.) Großdeutschland" }
 		164 = { "%d. Infanterie-Division (mot.)" }
-		
-		# GD existed before 16.5.42 as a strong regiment, but this list is divisional sized units only so it was put in the raising order after it was upgraded to a full division.
-		# removed 'leichte Afrika' from the names of 90., 164. Divisions as their existence depends on historical events that may not occur in game
-		# surviving units of this type renamed to Panzergrenadier-Divisions in 1943
 	}
 }
 
-#Nazi Motorized
-GER_MOT_02 = 
-{
-	name = "Motorized Divisions"
+# Named variant. Overrides vanilla GER_MOT_02 (its fascist-only plain duplicate).
+GER_MOT_02 = {
+	name = "Motorized Divisions (Named)"
 
 	for_countries = { GER }
 
-	can_use = { has_government = fascism }
+	can_use = { always = yes }
 
-	division_types = { "motorized"  }
-
-	fallback_name = "%d. Infanterie-Division (mot)"
+	division_types = { "motorized" }
 
 	link_numbering_with = { GER_Inf_01 }
 
-	# Names with numbers (only one number per entry)
-	ordered =
-	{
-		1 = { "%d. Infanterie-Division (mot.)" }
-		2 = { "%d. Infanterie-Division (mot.)" }
-		13 = { "%d. Infanterie-Division (mot.)" }
-		20 = { "%d. Infanterie-Division (mot.)" }
-		29 = { "%d. Infanterie-Division (mot.)" }
-		16 = { "%d. Infanterie-Division (mot.)" }
-		60 = { "%d. Infanterie-Division (mot.)" }
-		14 = { "%d. Infanterie-Division (mot.)" }
-		3 = { "%d. Infanterie-Division (mot.)" }
-		18 = { "%d. Infanterie-Division (mot.)" }
-		36 = { "%d. Infanterie-Division (mot.)" }
-		10 = { "%d. Infanterie-Division (mot.)" }
-		25 = { "%d. Infanterie-Division (mot.)" }
-		90 = { "%d. Infanterie-Division (mot.)" }
-		932 = { "Infanterie-Division (mot.) Großdeutschland" }
-		164 = { "%d. Infanterie-Division (mot.)" }
-		
-		# GD existed before 16.5.42 as a strong regiment, but this list is divisional sized units only so it was put in the raising order after it was upgraded to a full division.
-		# removed 'leichte Afrika' from the names of 90., 164. Divisions as their existence depends on historical events that may not occur in game
-		# surviving units of this type renamed to Panzergrenadier-Divisions in 1943
+	fallback_name = "%d. Infanterie-Division (mot.)"
+
+	ordered = {
+		# Historical motorized infantry divisions (1937-43)
+		2 = { "%d. Infanterie-Division (mot.) 'Stettin'" }
+		13 = { "%d. Infanterie-Division (mot.) 'Magdeburg'" }
+		20 = { "%d. Infanterie-Division (mot.) 'Hamburg'" }
+		29 = { "%d. Infanterie-Division (mot.) 'Falke'" }
+		16 = { "%d. Infanterie-Division (mot.) 'Windhund'" }
+		60 = { "%d. Infanterie-Division (mot.) 'Danzig'" }
+		14 = { "%d. Infanterie-Division (mot.) 'Leipzig'" }
+		3 = { "%d. Infanterie-Division (mot.) 'Frankfurt (Oder)'" }
+		18 = { "%d. Infanterie-Division (mot.) 'Liegnitz'" }
+		36 = { "%d. Infanterie-Division (mot.) 'Kaiserslautern'" }
+		10 = { "%d. Infanterie-Division (mot.) 'Regensburg'" }
+		25 = { "%d. Infanterie-Division (mot.) 'Ludwigsburg'" }
+		90 = { "%d. leichte Afrika-Division" }
+		164 = { "%d. leichte Afrika-Division" }
+		# Plausible expansion: the peacetime divisions of the first wave, motorized
+		1 = { "%d. Infanterie-Division (mot.) 'Königsberg'" }
+		4 = { "%d. Infanterie-Division (mot.) 'Dresden'" }
+		5 = { "%d. Infanterie-Division (mot.) 'Ulm'" }
+		6 = { "%d. Infanterie-Division (mot.) 'Bielefeld'" }
+		7 = { "%d. Infanterie-Division (mot.) 'München'" }
+		8 = { "%d. Infanterie-Division (mot.) 'Oppeln'" }
+		9 = { "%d. Infanterie-Division (mot.) 'Gießen'" }
+		11 = { "%d. Infanterie-Division (mot.) 'Allenstein'" }
+		12 = { "%d. Infanterie-Division (mot.) 'Wilder Stier'" }
+		15 = { "%d. Infanterie-Division (mot.) 'Frankfurt am Main'" }
+		17 = { "%d. Infanterie-Division (mot.) 'Nürnberg'" }
+		19 = { "%d. Infanterie-Division (mot.) 'Hannover'" }
+		21 = { "%d. Infanterie-Division (mot.) 'Elbing'" }
+		22 = { "%d. Infanterie-Division (mot.) 'Bremen'" }
+		23 = { "%d. Infanterie-Division (mot.) 'Potsdam'" }
+		24 = { "%d. Infanterie-Division (mot.) 'Eisbär'" }
+		26 = { "%d. Infanterie-Division (mot.) 'Kölner Dom'" }
+		27 = { "%d. Infanterie-Division (mot.) 'Augsburg'" }
+		28 = { "%d. Infanterie-Division (mot.) 'Breslau'" }
+		30 = { "%d. Infanterie-Division (mot.) 'Briesen'" }
+		31 = { "%d. Infanterie-Division (mot.) 'Braunschweiger Löwe'" }
+		32 = { "%d. Infanterie-Division (mot.) 'Köslin'" }
+		33 = { "%d. Infanterie-Division (mot.) 'Darmstadt'" }
+		34 = { "%d. Infanterie-Division (mot.) 'Koblenz'" }
+		35 = { "%d. Infanterie-Division (mot.) 'Karlsruhe'" }
+		44 = { "%d. Infanterie-Division (mot.) 'Hoch- und Deutschmeister'" }
+		45 = { "%d. Infanterie-Division (mot.) 'Linz'" }
+		46 = { "%d. Infanterie-Division (mot.) 'Springender Hirsch'" }
 	}
 }
 
-GER_MEC_01 = 
-{
+# Plain variant (un-nicknamed). Overrides vanilla GER_MEC_01.
+GER_MEC_01 = {
 	name = "Panzergrenadier Divisions"
 
 	for_countries = { GER }
 
 	can_use = { always = yes }
 
-	division_types = { "mechanized"  }
+	division_types = { "mechanized" }
+
+	link_numbering_with = { GER_Inf_01 }
 
 	fallback_name = "%d. Panzergrenadier-Division"
 
-	link_numbering_with = { GER_Inf_01 }
-
-	# Names with numbers (only one number per entry)
-	ordered =
-	{
-		932 = { "Panzer-Grenadier-Division Großdeutschland" }
-		10 = { "%d. Panzer-Grenadier-Division" }
-		60 = { "Panzer-Grenadier-Division Feldherrnhalle" }
-		3 = { "%d. Panzer-Grenadier-Division" }
-		16 = { "%d. Panzer-Grenadier-Division" }
-		18 = { "%d. Panzer-Grenadier-Division" }
-		25 = { "%d. Panzer-Grenadier-Division" }
-		29 = { "%d. Panzer-Grenadier-Division" }
-		90 = { "%d. Panzer-Grenadier-Division" }
-		15 = { "%d. Panzer-Grenadier-Division" }
-		20 = { "%d. Panzer-Grenadier-Division" }
-		931 = { "Panzer-Grenadier-Division Brandenburg" }
-		933 = { "Fallschirm-Panzergrenadier-Division 2 Hermann Göring" }
-		936 = { "Führer-Begleit-Division" }
-		935 = { "Führer-Grenadier-Division" }
-		934 = { "Panzer-Grenadier-Division Kurmark" }
-		
-		# put all divisions titled "Panzergrenadier" in this list to avoid confusion, even though some (GD, Brandenburg, etc) were full Panzer Divisions in organization.
-		
+	ordered = {
+		# Historical raising order (1943)
+		10 = { "%d. Panzergrenadier-Division" }
+		3 = { "%d. Panzergrenadier-Division" }
+		16 = { "%d. Panzergrenadier-Division" }
+		18 = { "%d. Panzergrenadier-Division" }
+		25 = { "%d. Panzergrenadier-Division" }
+		29 = { "%d. Panzergrenadier-Division" }
+		90 = { "%d. Panzergrenadier-Division" }
+		15 = { "%d. Panzergrenadier-Division" }
+		20 = { "%d. Panzergrenadier-Division" }
 	}
 }
 
-GER_Mnt_01 = 
-{
-	name = "Mountain Divisions"
+# Named variant; same numbers as GER_MEC_01.
+GER_MEC_02 = {
+	name = "Panzergrenadiers (Named)"
 
 	for_countries = { GER }
 
 	can_use = { always = yes }
 
-	division_types = { "mountaineers"  }
-
-	fallback_name = "%d. Gebirgs-Division"
-
-	# Names with numbers (only one number per entry)
-	ordered =
-	{
-		2 = { "%d. Gebirgs-Division" }
-		3 = { "%d. Gebirgs-Division" }
-		1 = { "%d. Gebirgs-Division" }
-		6 = { "%d. Gebirgs-Division" }
-		4 = { "%d. Gebirgs-Division" }
-		5 = { "%d. Gebirgs-Division" }
-		7 = { "%d. Gebirgs-Division" }
-		188 = { "%d. Gebirgs-Division" }
-		937 = { "1. Ski-Jäger-Division" }
-		8 = { "%d. Gebirgs-Division" }
-		
-		# deleted 9. Gebirgs-Division because it was an ad-hoc grouping built in Lapland around the reinforced GJR 139, and only officially a "division" from one day before the end of the war. There was, interestingly, another ad-hoc 9. GJD formed in the final stage of the war with similarly mixed components. 
-		# deleted 157. GJD which was quickly renamed 8. GJD
-		
-	}
-}
-
-GER_MAR_01 = 
-{
-	name = "Marine Divisions"
-
-	for_countries = { GER }
-
-	can_use = { always = yes }
-
-	division_types = { "marine"  }
-
-	fallback_name = "%d. Seelande-Division"
-
-	# Names with numbers (only one number per entry)
-	ordered =
-	{
-		1 = { "%d. Seelande-Division 'Meereswelle'" }
-		2 = { "%d. Seelande-Division 'Tiefsee'" }
-		3 = { "%d. Seelande-Division 'Küstenwacht'" }
-		4 = { "%d. Seelande-Division 'Seehund'" }
-		5 = { "%d. Seelande-Division 'Wasserschatten'" }
-		6 = { "%d. Sturm-Division Kiautschou" }
-		7 = { "%d. Seelande-Division 'Neptun'" }
-		8 = { "%d. Seelande-Division 'Korallenriff'" }
-		9 = { "%d. Seelande-Division 'Tidenwächter'" }
-		10 = { "%d. Seelande-Division 'Meerjäger'" }
-		11 = { "%d. Seelande-Division 'Seegigant'" }
-		12 = { "%d. Seelande-Division 'Ozeanhüter'" }
-		13 = { "%d. Seelande-Division 'Sturmwelle'" }
-		14 = { "%d. Seelande-Division 'Unterwasserdonner'" }
-		15 = { "%d. Seelande-Division 'Seeteufel'" }
-		16 = { "%d. Seelande-Division 'Wellenbrecher'" }
-		17 = { "%d. Seelande-Division 'Kaperfahrt'" }
-		18 = { "%d. Seelande-Division 'Seeschlange'" }
-		19 = { "%d. Seelande-Division 'Gezeitenkrieger'" }
-		20 = { "%d. Seelande-Division 'Atlantikwall'" }
-		21 = { "%d. Seelande-Division 'Tiefenrausch'" }
-
-		
-		# chose to remove the old name list entirely as it refers to late war improvised infantry units built from idle naval personnel, with little in the way of ground combat training. These in no way constitute a naval assault landing unit which is what Marines are, so in the ahistorical event that the player chooses to invest in a proper German Marine Corps, we gave them the name of "Sea Landing Division" to more correctly reflect the role. This frees up the KM infantry divisions for the normal infantry name list.
-	}
-}
-
-GER_PAR_01 = 
-{
-	name = "Paratrooper Divisions"
-
-	for_countries = { GER }
-
-	can_use = { always = yes }
-
-	division_types = { "paratrooper"  }
-
-	fallback_name = "%d. Fallschirmjäger-Division"
-
-	# Names with numbers (only one number per entry)
-	ordered =
-	{
-		1 = { "%d. Fallschirmjäger-Division 'Adlerkralle'" }
-		2 = { "%d. Fallschirmjäger-Division 'Sturmfalke'" }
-		3 = { "%d. Fallschirmjäger-Division 'Himmelsstürmer'" }
-		4 = { "%d. Fallschirmjäger-Division 'Wolkenbruch'" }
-		5 = { "%d. Fallschirmjäger-Division 'Schattenjäger'" }
-		6 = { "%d. Fallschirmjäger-Division 'Sturmwächter'" }
-		7 = { "%d. Fallschirmjäger-Division 'Silberfuchs'" }
-		8 = { "%d. Fallschirmjäger-Division 'Nebelkrieger'" }
-		9 = { "%d. Fallschirmjäger-Division 'Eisenfall'" }
-		10 = { "%d. Fallschirmjäger-Division 'Hochgebirge'" }
-		11 = { "%d. Fallschirmjäger-Division 'Windsturm'" }
-		20 = { "%d. Fallschirmjäger-Division 'Blitzschlag'" }
-
-		
-		# sadly had to leave out 7. Flieger-Division, the original name of 1. FJD, as it wouldn't be worth the interface clutter to have an alternate name list with one division in it. Put it first in the name list despite formally receiving the 1. FJD designation after 2. Fallschirm-Division was formed, so at least it gets built first. 
-		# considered making 5th Division and above actually part of the infantry list since historically they had almost no jump trained personnel, but since this would conflict with players who might invest in a larger than historical airborne arm, decided against this.
-		# deleted Fallschirm-Division Erdmann as it was an unusually large Kampfgruppe raised in response to an operational crisis (Market-Garden), and not a properly planned and raised division. It was soon renamed 7. FJD.
-	}
-}
-
-GER_GAR_01 = 
-{
-	name = "Garrison Divisions"
-
-	for_countries = { GER }
-
-	can_use = { always = yes }
-
-	division_types = { "infantry"  }
-
-	fallback_name = "%d. Sicherungs-Division"
+	division_types = { "mechanized" }
 
 	link_numbering_with = { GER_Inf_01 }
 
-	# Names with numbers (only one number per entry)
-	ordered =
-	{
-		539 = { "Divisionsstab z.b.V. 539" }
-		540 = { "Divisionsstab z.b.V. 540" }
-		442 = { "Divisionsstab z.b.V. 442" }
-		431 = { "Divisionsstab z.b.V. 431" }
-		429 = { "Divisionsstab z.b.V. 429" }
-		428 = { "Divisionsstab z.b.V. 428" }
-		430 = { "Divisionsstab z.b.V. 430" }
-		432 = { "Divisionsstab z.b.V. 432" }
-		207 = { "%d. Sicherungs-Division" }
-		213 = { "%d. Sicherungs-Division" }
-		221 = { "%d. Sicherungs-Division" }
-		281 = { "%d. Sicherungs-Division" }
-		285 = { "%d. Sicherungs-Division" }
-		286 = { "%d. Sicherungs-Division" }
-		403 = { "%d. Sicherungs-Division" }
-		444 = { "%d. Sicherungs-Division" }
-		454 = { "%d. Sicherungs-Division" }
-		230 = { "%d. Festungs-Infanterie-Division" } 
-		201 = { "%d. Sicherungs-Division" }
-		203 = { "%d. Sicherungs-Division" }
-		210 = { "%d. Festungs-Infanterie-Division" } 
-		325 = { "%d. Sicherungs-Division" }
-		391 = { "%d. Feldausbildungs-Division" }
-		390 = { "%d. Feldausbildungs-Division" }
-		381 = { "%d. Feldausbildungs-Division" }
-		382 = { "%d. Feldausbildungs-Division" }
-		388 = { "%d. Feldausbildungs-Division" }
-		154 = { "%d. Reserve-Division" }
-		26 = { "174. Reserve-Division" }
-		143 = { "%d. Reserve-Division" }
-		68 = { "141. Reserve-Division" }
-		151 = { "%d. Reserve-Division" }
-		189 = { "%d. Reserve-Division" }
-		363 = { "147. Reserve-Division" }
-		148 = { "%d. Reserve-Division" }
-		8 = { "157. Reserve-Division" }
-		16 = { "158. Reserve-Division" }
-		159 = { "%d. Reserve-Division" }
-		48 = { "171. Reserve-Division" }
-		42 = { "187. Reserve-Division" }
-		49 = { "191. Reserve-Division" }
-		70 = { "165. Reserve-Division" }
-		47 = { "156. Reserve-Division" }
-		182 = { "%d. Reserve-Division" }
-		153 = { "%d. Feldausbildungs-Division" }
-		173 = { "%d. Reserve-Division" }
-		188 = { "%d. Reserve-Gebirgs-Division" }
-		166 = { "%d. Reserve-Division" }
-		160 = { "%d. Reserve-Division" }
-		41 = { "%d. Festungs-Division" }
-		133 = { "%d. Festungs-Division" }
-		956 = { "Freiwilligen Stamm-Division" }
-		52 = { "%d. Sicherungs-Division" }
-		300 = { "Divisionsstab z.b.V. 300" }
-		331 = { "Divisionsstab z.b.V. 331" }
-		140 = { "Divisionsstab z.b.V. 140" }
-		604 = { "Division z.b.V. 604" }
-		601 = { "Division z.b.V. 601" }
-		602 = { "Division z.b.V. 602" }
-		603 = { "Division z.b.V. 603" }
-		155 = { "%d. Feldausbildungs-Division" }
-		605 = { "Division z.b.V. 605" }
-		606 = { "Division z.b.V. 606" }
-		607 = { "Division z.b.V. 607" }
-		608 = { "Division z.b.V. 608" }
-		950 = { "Festungs-Division Danzig" }
-		951 = { "Festungs-Division Frankfurt/Oder" }
-		952 = { "Festungs-Division Gotenhafen" }
-		954 = { "Festungs-Division Swinemünde" }
-		609 = { "Division z.b.V. 609" }
-		610 = { "Division z.b.V. 610" }
-		612 = { "Division z.b.V. 612" }
-		613 = { "Division z.b.V. 613" }
-		615 = { "Division z.b.V. 615" }
-		955 = { "Division z.b.V. (L)" }
-		616 = { "Division z.b.V. 616" }
-		617 = { "Division z.b.V. 617" }
-		618 = { "Division z.b.V. 618" }
-		402 = { "Ausbildungs-Division 402" }
-		404 = { "%d. Ersatz u. Ausbildungs-Division" }
-		464 = { "Ausbildungs-Division 464" }
-		158 = { "%d. Feldausbildungs-Division" }
-		953 = { "Festungs-Division Stettin" }
-		619 = { "Division z.b.V. 619" }
-		
-		# put in a large amount of assorted reserve, replacement, and training units if a meaningful history of antipartisan/frontline service could be attributed to them
-		# included some of the Division z.b.V. ("for special use") that have a recorded service history in occupied territory. Most of these were ad hoc grouping of training/Landesschützen units inside Germany.
-		# gave some reserve units a static name and linked them with a number in the infantry list as they were later upgraded to full infantry/Jäger divisions
-		# deleted some reserve and training units only used as holding depots for recruits, etc.
-		# 153. Reserve Division only went by this name for a few months while forming, so went with 153. Feldausbildungs-Division as this was the name it saw out the majority of its life as.
-		# removed Volksgrenadiers from this list as they were not static defense units, rather late war normal infantry divisions organized on a 'many weapons - few men' basis. Put them in the Alt Infantry list.
+	fallback_name = "%d. Panzergrenadier-Division"
+
+	ordered = {
+		# Historical Panzergrenadier divisions (1943-45)
+		10 = { "%d. Panzergrenadier-Division 'Regensburg'" }
+		3 = { "%d. Panzergrenadier-Division 'Frankfurt (Oder)'" }
+		16 = { "%d. Panzergrenadier-Division 'Windhund'" }
+		18 = { "%d. Panzergrenadier-Division 'Liegnitz'" }
+		25 = { "%d. Panzergrenadier-Division 'Ludwigsburg'" }
+		29 = { "%d. Panzergrenadier-Division 'Falke'" }
+		90 = { "%d. Panzergrenadier-Division 'Sardinien'" }
+		15 = { "%d. Panzergrenadier-Division 'Sizilien'" }
+		20 = { "%d. Panzergrenadier-Division 'Hamburg'" }
+		931 = { "Panzergrenadier-Division Brandenburg" }
+		934 = { "Panzergrenadier-Division Kurmark" }
+		# Plausible expansion: the other motorized and first-wave divisions, mechanized
+		2 = { "%d. Panzergrenadier-Division 'Stettin'" }
+		13 = { "%d. Panzergrenadier-Division 'Magdeburg'" }
+		14 = { "%d. Panzergrenadier-Division 'Leipzig'" }
+		36 = { "%d. Panzergrenadier-Division 'Kaiserslautern'" }
+		60 = { "%d. Panzergrenadier-Division 'Danzig'" }
+		1 = { "%d. Panzergrenadier-Division 'Königsberg'" }
+		4 = { "%d. Panzergrenadier-Division 'Dresden'" }
+		5 = { "%d. Panzergrenadier-Division 'Ulm'" }
+		6 = { "%d. Panzergrenadier-Division 'Bielefeld'" }
+		7 = { "%d. Panzergrenadier-Division 'München'" }
+		8 = { "%d. Panzergrenadier-Division 'Oppeln'" }
+		9 = { "%d. Panzergrenadier-Division 'Gießen'" }
+		11 = { "%d. Panzergrenadier-Division 'Allenstein'" }
+		12 = { "%d. Panzergrenadier-Division 'Wilder Stier'" }
+		17 = { "%d. Panzergrenadier-Division 'Nürnberg'" }
+		19 = { "%d. Panzergrenadier-Division 'Hannover'" }
+		21 = { "%d. Panzergrenadier-Division 'Elbing'" }
+		22 = { "%d. Panzergrenadier-Division 'Bremen'" }
+		23 = { "%d. Panzergrenadier-Division 'Potsdam'" }
+		24 = { "%d. Panzergrenadier-Division 'Eisbär'" }
+		26 = { "%d. Panzergrenadier-Division 'Kölner Dom'" }
+		27 = { "%d. Panzergrenadier-Division 'Augsburg'" }
+		28 = { "%d. Panzergrenadier-Division 'Breslau'" }
+		30 = { "%d. Panzergrenadier-Division 'Briesen'" }
+		31 = { "%d. Panzergrenadier-Division 'Braunschweiger Löwe'" }
+		32 = { "%d. Panzergrenadier-Division 'Köslin'" }
+		33 = { "%d. Panzergrenadier-Division 'Darmstadt'" }
+		34 = { "%d. Panzergrenadier-Division 'Koblenz'" }
+		35 = { "%d. Panzergrenadier-Division 'Karlsruhe'" }
+		44 = { "%d. Panzergrenadier-Division 'Hoch- und Deutschmeister'" }
+		45 = { "%d. Panzergrenadier-Division 'Linz'" }
+		46 = { "%d. Panzergrenadier-Division 'Springender Hirsch'" }
 	}
 }
 
+# ==============================================================================
+# 3. PANZER, LIGHT AND CAVALRY DIVISIONS
+# ==============================================================================
 
-
-GER_Arm_01 = 
-{
+# Plain variant (un-nicknamed). Overrides vanilla GER_Arm_01; numbering anchor for the Panzer lists.
+GER_Arm_01 = {
 	name = "Panzer Divisions"
 
 	for_countries = { GER }
@@ -797,9 +751,8 @@ GER_Arm_01 =
 
 	fallback_name = "%d. Panzer-Division"
 
-	# Names with numbers (only one number per entry)
-	ordered =
-	{
+	ordered = {
+		# Historical raising order
 		1 = { "%d. Panzer-Division" }
 		2 = { "%d. Panzer-Division" }
 		3 = { "%d. Panzer-Division" }
@@ -827,31 +780,14 @@ GER_Arm_01 =
 		25 = { "%d. Panzer-Division" }
 		26 = { "%d. Panzer-Division" }
 		27 = { "%d. Panzer-Division" }
-		693 = { "Fallschirm-Pz-Div. 'Hermann Göring'" }
-		130 = { "Panzer-Lehr-Division" }
 		116 = { "%d. Panzer-Division" }
-		60 = { "Panzer-Division 'Feldherrnhalle 1'" }
 		232 = { "%d. Panzer-Division" }
-		85 = { "Panzer-Division 'Holstein'" }
-		88 = { "Panzer-Division 'Müncheberg'" }
-		61 = { "Panzer-Division 'Feldherrnhalle 2'" }
-		233 = { "Panzer-Division 'Clausewitz'" }
-	
-		# deleted Panzer-Division 'Kurmark' because it is actually just an erroneous name for PzG Div Kurmark in some postwar literature
-		# deleted Panzer-Division 'Kempf' as it was a temporary adhoc grouping of army tanks and SS infantry for the Polish campaign, which was quickly broken up after and absorbed by 10. Panzer-Division
-		# deleted Panzer-Division Tatra as it was only used as a security/holding unit, and then renamed to 232. Panzer-Division which did in fact see active combat
-		# deleted Panzer-Divisions Jüterbog and Schlesien as they was used as a holding unit and disbanded a month after formation
-		# deleted Norwegen Panzer Division as Norway is not guaranteed to be occupied by Germany in every game, plus it was in reality no more than a brigade in size despite the title.
-		# had to settle on a single name for the HG Panzer Division despite several historical name changes over time
-		# no way to register things like 1. Kavallerie-Division becoming 24. Panzer, 13. Panzer becoming Feldherrnhalle 2, etc, without bloating the name list selection and causing obnoxious clutter. The ability to rename is there though, for those who are really devoted.
-		# deleted most of the Reserve-Panzer-Divisions because they were holding units for recruits, and quickly disbanded after being used to replenish field units
-
 	}
 }
 
-GER_Arm_02 = 
-{
-	name = "Named Panzer Divisions"
+# Named variant; same numbers as GER_Arm_01.
+GER_Arm_02 = {
+	name = "Panzer Divisions (Named)"
 
 	for_countries = { GER }
 
@@ -859,78 +795,103 @@ GER_Arm_02 =
 
 	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
 
+	link_numbering_with = { GER_Arm_01 }
+
 	fallback_name = "%d. Panzer-Division"
 
-	link_numbering_with = {GER_Arm_01}
-
-	# Names with numbers (only one number per entry)
-	ordered =
-	{
-		1 = { "%d. Panzer-Division 'Eisenkrieger'" }
-		2 = { "%d. Panzer-Division 'Stahlross'" }
-		3 = { "%d. Panzer-Division 'Panthersturm'" }
-		4 = { "%d. Panzer-Division 'Greif'" }
-		5 = { "%d. Panzer-Division 'Silberlöwe'" }
-		10 = { "%d. Panzer-Division 'Donnerkeil'" }
-		8 = { "%d. Panzer-Division 'Kampfschmiede'" }
-		6 = { "%d. Panzer-Division 'Feuerdrache'" }
-		7 = { "%d. Panzer-Division 'Berglöwe'" }
-		9 = { "%d. Panzer-Division 'Sturmtiger'" }
-		11 = { "%d. Panzer-Division 'Geisterpfeil'" }
-		14 = { "%d. Panzer-Division 'Eisengarde'" }
-		12 = { "%d. Panzer-Division 'Zorniges Schwert'" }
-		13 = { "%d. Panzer-Division 'Eisenwächter'" }
-		20 = { "%d. Panzer-Division 'Feuersturm'" }
+	ordered = {
+		# Historical: emblem or nickname, else formation city (predecessor division's city where it was converted)
+		1 = { "%d. Panzer-Division 'Weimar'" }
+		2 = { "%d. Panzer-Division 'Dreizack'" }
+		3 = { "%d. Panzer-Division 'Berliner Bär'" }
+		4 = { "%d. Panzer-Division 'Würzburg'" }
+		5 = { "%d. Panzer-Division 'Oberschlesien'" }
+		10 = { "%d. Panzer-Division 'Prag'" }
+		8 = { "%d. Panzer-Division 'Cottbus'" }
+		6 = { "%d. Panzer-Division 'Wuppertal'" }
+		7 = { "%d. Panzer-Division 'Gespenster'" }
+		9 = { "%d. Panzer-Division 'Wien'" }
+		11 = { "%d. Panzer-Division 'Eisenkrieger'" }
+		14 = { "%d. Panzer-Division 'Dresden'" }
+		12 = { "%d. Panzer-Division 'Stettin'" }
+		13 = { "%d. Panzer-Division 'Magdeburg'" }
+		20 = { "%d. Panzer-Division 'Erfurt'" }
 		18 = { "%d. Panzer-Division 'Stahlhagel'" }
-		15 = { "%d. Panzer-Division 'Schneller Adler'" }
-		16 = { "%d. Panzer-Division 'Wolfsbrüder'" }
-		17 = { "%d. Panzer-Division 'Morgenröte'" }
-		19 = { "%d. Panzer-Division 'Kampfwolf'" }
-		21 = { "%d. Panzer-Division 'Sturmflut'" }
-		23 = { "%d. Panzer-Division 'Blutdorn'" }
+		15 = { "%d. Panzer-Division 'Darmstadt'" }
+		16 = { "%d. Panzer-Division 'Münster'" }
+		17 = { "%d. Panzer-Division 'Augsburg'" }
+		19 = { "%d. Panzer-Division 'Hannover'" }
+		21 = { "%d. Panzer-Division 'Afrika'" }
+		23 = { "%d. Panzer-Division 'Eisenfaust'" }
 		22 = { "%d. Panzer-Division 'Eisenstern'" }
-		24 = { "%d. Panzer-Division 'Hammerschlag'" }
-		25 = { "%d. Panzer-Division 'Wilder Hirsch'" }
-		26 = { "%d. Panzer-Division 'Sturmbringer'" }
-		27 = { "%d. Panzer-Division 'Gewitterklaue'" }
-		130 = { "Panzer-Lehr-Division 'Lehrmeister'" }
-		116 = { "%d. Panzer-Division 'Schwarzer Adler'" }
-		28 = { "%d. Panzer-Division 'Stahlthron'" }
-		29 = { "%d. Panzer-Division 'Eisenfaust'" }
-		30 = { "%d. Panzer-Division 'Königssturm'" }
-		31 = { "%d. Panzer-Division 'Feuervogel'" }
-		32 = { "%d. Panzer-Division 'Blitzkrieger'" }
-		33 = { "%d. Panzer-Division 'Eisenpanther'" }
-		34 = { "%d. Panzer-Division 'Himmelsschatten'" }
-		35 = { "%d. Panzer-Division 'Blutfalken'" }
-		36 = { "%d. Panzer-Division 'Sturmpanzer'" }
-		37 = { "%d. Panzer-Division 'Wolkenjäger'" }
-		38 = { "%d. Panzer-Division 'Eisenschild'" }
-		39 = { "%d. Panzer-Division 'Feuerklaue'" }
-		40 = { "%d. Panzer-Division 'Eisenpfeil'" }
-		41 = { "%d. Panzer-Division 'Wüstenluchs'" }
-		42 = { "%d. Panzer-Division 'Eisensturm'" }
-		43 = { "%d. Panzer-Division 'Stahlfaust'" }
-		44 = { "%d. Panzer-Division 'Schattenwolf'" }
-		45 = { "%d. Panzer-Division 'Felsbrecher'" }
-		46 = { "%d. Panzer-Division 'Stahlgebirge'" }
-		47 = { "%d. Panzer-Division 'Feueradler'" }
-		48 = { "%d. Panzer-Division 'Sturmspitze'" }
-		49 = { "%d. Panzer-Division 'Wolkenpfeil'" }
-		50 = { "%d. Panzer-Division 'Eisentiger'" }
-		51 = { "%d. Panzer-Division 'Feuerlöwen'" }
-		52 = { "%d. Panzer-Division 'Stahlsturm'" }
-		53 = { "%d. Panzer-Division 'Eisenklaue'" }
-		54 = { "%d. Panzer-Division 'Falkensturm'" }
-		55 = { "%d. Panzer-Division 'Sturmgebirge'" }
-		56 = { "%d. Panzer-Division 'Stahlschatten'" }
-		57 = { "%d. Panzer-Division 'Eisenfeuer'" }
-
+		24 = { "%d. Panzer-Division 'Insterburg'" }
+		25 = { "%d. Panzer-Division 'Silberlöwe'" }
+		26 = { "%d. Panzer-Division 'Potsdam'" }
+		27 = { "%d. Panzer-Division 'Feuerdrache'" }
+		116 = { "%d. Panzer-Division 'Windhund'" }
+		232 = { "%d. Panzer-Division 'Tatra'" }
+		130 = { "%d. Panzer-Lehr-Division" }
+		# Historical: Panzer divisions named in 1945
+		901 = { "Panzer-Division Holstein" }
+		902 = { "Panzer-Division Müncheberg" }
+		903 = { "Panzer-Division Jüterbog" }
+		904 = { "Panzer-Division Schlesien" }
+		905 = { "Panzer-Division Clausewitz" }
+		906 = { "Panzer-Division Norwegen" }
+		907 = { "Panzer-Division Kempf" }
+		908 = { "Panzer-Division Bergen" }
+		# Plausible expansion: names kept from the earlier INEX list
+		28 = { "%d. Panzer-Division 'Donnerkeil'" }
+		29 = { "%d. Panzer-Division 'Stahlross'" }
+		30 = { "%d. Panzer-Division 'Panthersturm'" }
+		31 = { "%d. Panzer-Division 'Kampfschmiede'" }
+		32 = { "%d. Panzer-Division 'Berglöwe'" }
+		33 = { "%d. Panzer-Division 'Eisengarde'" }
+		34 = { "%d. Panzer-Division 'Eisenwächter'" }
+		35 = { "%d. Panzer-Division 'Feuersturm'" }
+		36 = { "%d. Panzer-Division 'Kampfwolf'" }
+		37 = { "%d. Panzer-Division 'Sturmflut'" }
+		38 = { "%d. Panzer-Division 'Hammerschlag'" }
+		39 = { "%d. Panzer-Division 'Stahlthron'" }
+		40 = { "%d. Panzer-Division 'Königssturm'" }
+		41 = { "%d. Panzer-Division 'Feuervogel'" }
+		42 = { "%d. Panzer-Division 'Eisenpanther'" }
+		43 = { "%d. Panzer-Division 'Eisenschild'" }
+		44 = { "%d. Panzer-Division 'Feuerklaue'" }
+		45 = { "%d. Panzer-Division 'Eisenpfeil'" }
+		46 = { "%d. Panzer-Division 'Wüstenluchs'" }
+		47 = { "%d. Panzer-Division 'Eisensturm'" }
+		48 = { "%d. Panzer-Division 'Stahlfaust'" }
+		49 = { "%d. Panzer-Division 'Schattenwolf'" }
+		50 = { "%d. Panzer-Division 'Felsbrecher'" }
+		51 = { "%d. Panzer-Division 'Feueradler'" }
+		52 = { "%d. Panzer-Division 'Sturmspitze'" }
+		53 = { "%d. Panzer-Division 'Eisentiger'" }
+		54 = { "%d. Panzer-Division 'Stahlsturm'" }
+		55 = { "%d. Panzer-Division 'Eisenklaue'" }
+		56 = { "%d. Panzer-Division 'Falkensturm'" }
+		57 = { "%d. Panzer-Division 'Stahlschatten'" }
+		58 = { "%d. Panzer-Division 'Eisenfeuer'" }
+		# Plausible expansion: training grounds, as in 1945
+		911 = { "Panzer-Division Döberitz" }
+		912 = { "Panzer-Division Wünsdorf" }
+		913 = { "Panzer-Division Altengrabow" }
+		914 = { "Panzer-Division Kummersdorf" }
+		915 = { "Panzer-Division Ohrdruf" }
+		916 = { "Panzer-Division Zeithain" }
+		917 = { "Panzer-Division Heuberg" }
+		918 = { "Panzer-Division Hohenfels" }
+		919 = { "Panzer-Division Elsenborn" }
+		920 = { "Panzer-Division Hammelburg" }
+		921 = { "Panzer-Division Lechfeld" }
+		922 = { "Panzer-Division Putlos" }
+		923 = { "Panzer-Division Stablack" }
+		924 = { "Panzer-Division Hammerstein" }
+		925 = { "Panzer-Division Lamsdorf" }
 	}
 }
 
-GER_LTARM_01 = 
-{
+GER_LTARM_01 = {
 	name = "Light Divisions"
 
 	for_countries = { GER }
@@ -939,60 +900,402 @@ GER_LTARM_01 =
 
 	division_types = { "light_armor" }
 
-	fallback_name = "%d. leichte-Division"
-	
 	link_numbering_with = { GER_Arm_01 }
 
-	# Names with numbers (only one number per entry)
-	ordered =
-	{
-	9 = { "4. leichte-Division" }
-	6 = { "1. leichte-Division" }
-	7 = { "2. leichte-Division" }
-	8 = { "3. leichte-Division" }
-	21 = { "5. leichte-Division" }
-	
-	# a small series of early war 'light' armoured divisions raised as an attempt by the cavalry branch to remain relevant in modern war. They were found to be too light to fight after Poland and converted in to full Panzer Divisions. X = number of the Panzer Division they were converted in to.
-	
+	fallback_name = "%d. leichte Division"
+
+	ordered = {
+		# Historical leichte Divisionen, keyed by the Panzer division each became
+		6 = { "1. leichte Division" }
+		7 = { "2. leichte Division" }
+		8 = { "3. leichte Division" }
+		9 = { "4. leichte Division" }
+		21 = { "5. leichte Division" }
 	}
 }
 
-GER_Cav_01 = 
-{
+# Overrides vanilla GER_Cav_01 (referenced by a vanilla focus).
+GER_Cav_01 = {
 	name = "Cavalry Divisions"
 
 	for_countries = { GER }
 
 	can_use = { always = yes }
 
-	division_types = { "cavalry"  }
+	division_types = { "cavalry" }
 
 	fallback_name = "%d. Kavallerie-Division"
 
-	# Names with numbers (only one number per entry)
-	ordered =
-	{
-		1 = { "%d. Kavallerie-Division" }
-		900 = { "Kavallerie-Division 'Nord'" }
-		3 = { "%d. Kavallerie-Division" }
+	ordered = {
+		# Historical cavalry divisions and the army group cavalry regiments of 1943-44
+		1 = { "%d. Kavallerie-Division 'Insterburg'" }
+		2 = { "%d. Kavallerie-Division 'Schlesien'" }
+		3 = { "%d. Kavallerie-Division 'Boeselager'" }
 		4 = { "%d. Kavallerie-Division" }
-		
-		# deleted Kosaken-Kavallerie-Divisions as they depend on a German occupation of Ukraine that may not occur
-
+		901 = { "Kavallerie-Regiment Nord" }
+		902 = { "Kavallerie-Regiment Mitte" }
+		903 = { "Kavallerie-Regiment Süd" }
+		# Plausible expansion: state studs and cavalry schools
+		5 = { "%d. Kavallerie-Division 'Trakehnen'" }
+		6 = { "%d. Kavallerie-Division 'Beberbeck'" }
+		7 = { "%d. Kavallerie-Division 'Graditz'" }
+		8 = { "%d. Kavallerie-Division 'Neustadt an der Dosse'" }
+		9 = { "%d. Kavallerie-Division 'Marbach'" }
+		10 = { "%d. Kavallerie-Division 'Celle'" }
+		11 = { "%d. Kavallerie-Division 'Warendorf'" }
+		12 = { "%d. Kavallerie-Division 'Krampnitz'" }
+		13 = { "%d. Kavallerie-Division 'Moritzburg'" }
+		14 = { "%d. Kavallerie-Division 'Zweibrücken'" }
+		15 = { "%d. Kavallerie-Division 'Dillenburg'" }
+		16 = { "%d. Kavallerie-Division 'Redefin'" }
+		17 = { "%d. Kavallerie-Division 'Georgenburg'" }
+		18 = { "%d. Kavallerie-Division 'Rastenburg'" }
+		19 = { "%d. Kavallerie-Division 'Wickrath'" }
+		20 = { "%d. Kavallerie-Division 'Schwaiganger'" }
 	}
-	
 }
 
-GER_MONINF_01 = 
-{
-	name = "Monarchist Infantry Divisions"
+# ==============================================================================
+# 4. MOUNTAIN, AIRBORNE AND NAVAL DIVISIONS
+# ==============================================================================
+
+GER_Mnt_01 = {
+	name = "Mountain Divisions"
 
 	for_countries = { GER }
 
-	can_use = { 
+	can_use = { always = yes }
+
+	division_types = { "mountaineers" }
+
+	fallback_name = "%d. Gebirgs-Division"
+
+	ordered = {
+		# Historical Gebirgs-Divisionen (vanilla raising order)
+		2 = { "%d. Gebirgs-Division 'Innsbruck'" }
+		3 = { "%d. Gebirgs-Division 'Graz'" }
+		1 = { "%d. Gebirgs-Division 'Edelweiß'" }
+		6 = { "%d. Gebirgs-Division" }
+		4 = { "%d. Gebirgs-Division 'Enzian'" }
+		5 = { "%d. Gebirgs-Division 'Gams'" }
+		7 = { "%d. Gebirgs-Division" }
+		188 = { "%d. Reserve-Gebirgs-Division" }
+		937 = { "1. Skijäger-Division" }
+		8 = { "%d. Gebirgs-Division" }
+		9 = { "%d. Gebirgs-Division (Nord)" }
+		938 = { "Gebirgs-Division Steiermark" }
+		939 = { "1. Volks-Gebirgs-Division" }
+		# Plausible expansion: Gebirgsjäger garrisons, peaks and Alpine regions
+		10 = { "%d. Gebirgs-Division 'Mittenwald'" }
+		11 = { "%d. Gebirgs-Division 'Garmisch'" }
+		12 = { "%d. Gebirgs-Division 'Bad Reichenhall'" }
+		13 = { "%d. Gebirgs-Division 'Berchtesgaden'" }
+		14 = { "%d. Gebirgs-Division 'Sonthofen'" }
+		15 = { "%d. Gebirgs-Division 'Oberstdorf'" }
+		16 = { "%d. Gebirgs-Division 'Lenggries'" }
+		17 = { "%d. Gebirgs-Division 'Zugspitze'" }
+		18 = { "%d. Gebirgs-Division 'Watzmann'" }
+		19 = { "%d. Gebirgs-Division 'Karwendel'" }
+		20 = { "%d. Gebirgs-Division 'Wetterstein'" }
+		21 = { "%d. Gebirgs-Division 'Großglockner'" }
+		22 = { "%d. Gebirgs-Division 'Dachstein'" }
+		23 = { "%d. Gebirgs-Division 'Hochkönig'" }
+		24 = { "%d. Gebirgs-Division 'Ortler'" }
+		25 = { "%d. Gebirgs-Division 'Allgäu'" }
+		26 = { "%d. Gebirgs-Division 'Tirol'" }
+		27 = { "%d. Gebirgs-Division 'Kärnten'" }
+		28 = { "%d. Gebirgs-Division 'Landeck'" }
+		29 = { "%d. Gebirgs-Division 'Villach'" }
+	}
+}
+
+GER_PAR_01 = {
+	name = "Paratrooper Divisions"
+
+	for_countries = { GER }
+
+	can_use = { always = yes }
+
+	division_types = { "paratrooper" }
+
+	fallback_name = "%d. Fallschirmjäger-Division"
+
+	ordered = {
+		# Historical: 7. Flieger-Division, then the Fallschirmjäger-Divisionen (commander or battle honour where verified)
+		900 = { "7. Flieger-Division" }
+		1 = { "%d. Fallschirmjäger-Division 'Kreta'" }
+		2 = { "%d. Fallschirmjäger-Division 'Ramcke'" }
+		3 = { "%d. Fallschirmjäger-Division 'Adlerkralle'" }
+		4 = { "%d. Fallschirmjäger-Division 'Sturmfalke'" }
+		5 = { "%d. Fallschirmjäger-Division 'Himmelsstürmer'" }
+		6 = { "%d. Fallschirmjäger-Division 'von Heyking'" }
+		7 = { "%d. Fallschirmjäger-Division 'Erdmann'" }
+		8 = { "%d. Fallschirmjäger-Division 'Wadehn'" }
+		9 = { "%d. Fallschirmjäger-Division 'Wolkenbruch'" }
+		10 = { "%d. Fallschirmjäger-Division 'Schattenjäger'" }
+		11 = { "%d. Fallschirmjäger-Division 'Sturmwächter'" }
+		20 = { "%d. Fallschirmjäger-Division 'Silberfuchs'" }
+		21 = { "%d. Fallschirmjäger-Division 'Windsturm'" }
+		# Plausible expansion: German airborne operations and battles 1940-44, the Eben-Emael assault leader, a kept name
+		12 = { "%d. Fallschirmjäger-Division 'Eben-Emael'" }
+		13 = { "%d. Fallschirmjäger-Division 'Moerdijk'" }
+		14 = { "%d. Fallschirmjäger-Division 'Dombås'" }
+		15 = { "%d. Fallschirmjäger-Division 'Korinth'" }
+		16 = { "%d. Fallschirmjäger-Division 'Maleme'" }
+		17 = { "%d. Fallschirmjäger-Division 'Rethymnon'" }
+		18 = { "%d. Fallschirmjäger-Division 'Heraklion'" }
+		19 = { "%d. Fallschirmjäger-Division 'Leros'" }
+		22 = { "%d. Fallschirmjäger-Division 'Monte Cassino'" }
+		23 = { "%d. Fallschirmjäger-Division 'Koch'" }
+		24 = { "%d. Fallschirmjäger-Division 'Blitzschlag'" }
+	}
+}
+
+# A proper German marine corps never existed; 'Seelande-Division' is the vanilla designation.
+GER_MAR_01 = {
+	name = "Marine Divisions"
+
+	for_countries = { GER }
+
+	can_use = { always = yes }
+
+	division_types = { "marine" }
+
+	fallback_name = "%d. Seelande-Division"
+
+	ordered = {
+		# Historical: the Marinekorps Flandern divisions of 1914-18
+		1 = { "%d. Marine-Division" }
+		2 = { "%d. Marine-Division" }
+		3 = { "%d. Marine-Division" }
+		# Plausible expansion: Seebataillon garrisons, naval battles and landings, navy tradition names
+		4 = { "%d. Seelande-Division 'Kiautschou'" }
+		5 = { "%d. Seelande-Division 'Flandern'" }
+		6 = { "%d. Seelande-Division 'Zeebrügge'" }
+		7 = { "%d. Seelande-Division 'Ösel'" }
+		8 = { "%d. Seelande-Division 'Dagö'" }
+		9 = { "%d. Seelande-Division 'Moon'" }
+		10 = { "%d. Seelande-Division 'Albion'" }
+		11 = { "%d. Seelande-Division 'Skagerrak'" }
+		12 = { "%d. Seelande-Division 'Doggerbank'" }
+		13 = { "%d. Seelande-Division 'Coronel'" }
+		14 = { "%d. Seelande-Division 'Helgoland'" }
+		15 = { "%d. Seelande-Division 'Brommy'" }
+		16 = { "%d. Seelande-Division 'Prinz Adalbert'" }
+		17 = { "%d. Seelande-Division 'Graf Spee'" }
+		18 = { "%d. Seelande-Division 'Scheer'" }
+		19 = { "%d. Seelande-Division 'Hipper'" }
+		20 = { "%d. Seelande-Division 'Tirpitz'" }
+		21 = { "%d. Seelande-Division 'Weddigen'" }
+		22 = { "%d. Seelande-Division 'Graf Luckner'" }
+		23 = { "%d. Seelande-Division 'von Müller'" }
+		24 = { "%d. Seelande-Division 'Emden'" }
+		25 = { "%d. Seelande-Division 'Seeadler'" }
+		26 = { "%d. Seelande-Division 'Möwe'" }
+		27 = { "%d. Seelande-Division 'Wolf'" }
+		# Plausible expansion: names kept from the earlier INEX list
+		28 = { "%d. Seelande-Division 'Seeteufel'" }
+		29 = { "%d. Seelande-Division 'Neptun'" }
+		30 = { "%d. Seelande-Division 'Wellenbrecher'" }
+		31 = { "%d. Seelande-Division 'Küstenwacht'" }
+		32 = { "%d. Seelande-Division 'Seehund'" }
+		33 = { "%d. Seelande-Division 'Meereswelle'" }
+		34 = { "%d. Seelande-Division 'Sturmwelle'" }
+		35 = { "%d. Seelande-Division 'Meerjäger'" }
+		36 = { "%d. Seelande-Division 'Kaperfahrt'" }
+		37 = { "%d. Seelande-Division 'Seeschlange'" }
+	}
+}
+
+# ==============================================================================
+# 5. GARRISON AND SECURITY DIVISIONS
+# ==============================================================================
+
+# Reserve and Festung divisions live in their own lists in the ADDITIONAL file.
+GER_GAR_01 = {
+	name = "Garrison Divisions"
+
+	for_countries = { GER }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	link_numbering_with = { GER_Inf_01 }
+
+	fallback_name = "%d. Sicherungs-Division"
+
+	ordered = {
+		# Historical Sicherungs-, Feldausbildungs-, Ausbildungs- and z.b.V. divisions
+		539 = { "Divisionsstab z.b.V. 539" }
+		540 = { "Divisionsstab z.b.V. 540" }
+		442 = { "Divisionsstab z.b.V. 442" }
+		431 = { "Divisionsstab z.b.V. 431" }
+		429 = { "Divisionsstab z.b.V. 429" }
+		428 = { "Divisionsstab z.b.V. 428" }
+		430 = { "Divisionsstab z.b.V. 430" }
+		432 = { "Divisionsstab z.b.V. 432" }
+		207 = { "%d. Sicherungs-Division" }
+		213 = { "%d. Sicherungs-Division" }
+		221 = { "%d. Sicherungs-Division" }
+		281 = { "%d. Sicherungs-Division" }
+		285 = { "%d. Sicherungs-Division" }
+		286 = { "%d. Sicherungs-Division" }
+		403 = { "%d. Sicherungs-Division" }
+		444 = { "%d. Sicherungs-Division" }
+		454 = { "%d. Sicherungs-Division" }
+		230 = { "%d. Festungs-Infanterie-Division" }
+		201 = { "%d. Sicherungs-Division" }
+		203 = { "%d. Sicherungs-Division" }
+		210 = { "%d. Festungs-Infanterie-Division" }
+		325 = { "%d. Sicherungs-Division" }
+		391 = { "%d. Feldausbildungs-Division" }
+		390 = { "%d. Feldausbildungs-Division" }
+		381 = { "%d. Feldausbildungs-Division" }
+		382 = { "%d. Feldausbildungs-Division" }
+		388 = { "%d. Feldausbildungs-Division" }
+		153 = { "%d. Feldausbildungs-Division" }
+		956 = { "Freiwilligen-Stamm-Division" }
+		52 = { "%d. Sicherungs-Division" }
+		300 = { "Divisionsstab z.b.V. 300" }
+		331 = { "Divisionsstab z.b.V. 331" }
+		140 = { "Divisionsstab z.b.V. 140" }
+		604 = { "Division z.b.V. 604" }
+		601 = { "Division z.b.V. 601" }
+		602 = { "Division z.b.V. 602" }
+		603 = { "Division z.b.V. 603" }
+		155 = { "%d. Feldausbildungs-Division" }
+		605 = { "Division z.b.V. 605" }
+		606 = { "Division z.b.V. 606" }
+		607 = { "Division z.b.V. 607" }
+		608 = { "Division z.b.V. 608" }
+		609 = { "Division z.b.V. 609" }
+		610 = { "Division z.b.V. 610" }
+		612 = { "Division z.b.V. 612" }
+		613 = { "Division z.b.V. 613" }
+		615 = { "Division z.b.V. 615" }
+		955 = { "Division z.b.V. (L)" }
+		616 = { "Division z.b.V. 616" }
+		617 = { "Division z.b.V. 617" }
+		618 = { "Division z.b.V. 618" }
+		402 = { "Ausbildungs-Division 402" }
+		404 = { "%d. Ersatz- und Ausbildungs-Division" }
+		464 = { "Ausbildungs-Division 464" }
+		158 = { "%d. Feldausbildungs-Division" }
+		619 = { "Division z.b.V. 619" }
+	}
+}
+
+# ==============================================================================
+# 6. ELITE FORMATIONS (fascism)
+# ==============================================================================
+
+# Party and Luftwaffe honour formations; overflow continues the numbered Feldherrnhalle series.
+GER_ELI_01 = {
+	name = "Elite Formations"
+
+	for_countries = { GER }
+
+	can_use = { has_government = fascism }
+
+	division_types = { "infantry" "motorized" "mechanized" "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
+
+	fallback_name = "Division 'Feldherrnhalle %d'"
+
+	ordered = {
+		# Historical honour formations of the Heer and Luftwaffe
+		931 = { "Infanterie-Division 'Großdeutschland' (mot.)" }
+		932 = { "Panzergrenadier-Division 'Großdeutschland'" }
+		933 = { "Panzergrenadier-Division 'Feldherrnhalle'" }
+		1 = { "Panzer-Division 'Feldherrnhalle %d'" }
+		2 = { "Panzer-Division 'Feldherrnhalle %d'" }
+		942 = { "Division 'Hermann Göring'" }
+		934 = { "Fallschirm-Panzer-Division 1 'Hermann Göring'" }
+		935 = { "Fallschirm-Panzergrenadier-Division 2 'Hermann Göring'" }
+		936 = { "Führer-Begleit-Division" }
+		937 = { "Führer-Grenadier-Division" }
+		938 = { "Infanterie-Division Schlageter" }
+		943 = { "Panzer-Brigade 106 'Feldherrnhalle'" }
+		944 = { "schwere Panzer-Abteilung 'Feldherrnhalle'" }
+		939 = { "Panzerkorps 'Großdeutschland'" }
+		940 = { "Panzerkorps 'Feldherrnhalle'" }
+		941 = { "Fallschirm-Panzerkorps 'Hermann Göring'" }
+	}
+}
+
+# ==============================================================================
+# 7. IMPERIAL AND GUARD DIVISIONS (neutrality / democratic)
+# ==============================================================================
+
+# Overrides vanilla GER_MEC_01_MONARNCHIST (a focus-locked duplicate of the Panzergrenadier list);
+# now the monarchist guard, gated by government only.
+GER_MEC_01_MONARNCHIST = {
+	name = "Guard Divisions"
+
+	for_countries = { GER }
+
+	can_use = {
 		OR = {
-			has_government = neutrality 
-			has_government = democratic 
+			has_government = neutrality
+			has_government = democratic
+		}
+	}
+
+	division_types = { "infantry" "motorized" "mechanized" "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
+
+	fallback_name = "%d. Garde-Division"
+
+	ordered = {
+		# Historical Prussian Garde-Korps divisions (1914-18)
+		1 = { "%d. Garde-Infanterie-Division" }
+		2 = { "%d. Garde-Infanterie-Division" }
+		3 = { "%d. Garde-Infanterie-Division" }
+		4 = { "%d. Garde-Infanterie-Division" }
+		5 = { "%d. Garde-Infanterie-Division" }
+		901 = { "1. Garde-Reserve-Division" }
+		902 = { "2. Garde-Reserve-Division" }
+		903 = { "Garde-Ersatz-Division" }
+		# Historical Garde regiments, raised to divisions
+		911 = { "1. Garde-Grenadier-Division 'Kaiser Alexander'" }
+		912 = { "2. Garde-Grenadier-Division 'Kaiser Franz'" }
+		913 = { "3. Garde-Grenadier-Division 'Königin Elisabeth'" }
+		914 = { "4. Garde-Grenadier-Division 'Königin Augusta'" }
+		915 = { "5. Garde-Grenadier-Division" }
+		916 = { "Garde-Füsilier-Division 'Maikäfer'" }
+		917 = { "Garde-Jäger-Division" }
+		918 = { "Garde-Schützen-Division" }
+		919 = { "Lehr-Infanterie-Division" }
+		# Historical Leib and guard regiments of the other German states, raised to divisions
+		931 = { "Kgl. Bayer. Infanterie-Leib-Division" }
+		932 = { "Kgl. Sächs. Leib-Grenadier-Division" }
+		933 = { "Grenadier-Division 'Königin Olga'" }
+		934 = { "Badische Leib-Grenadier-Division" }
+		935 = { "Großherzoglich Hessische Leibgarde-Division" }
+		936 = { "Leib-Infanterie-Division 'Großherzogin'" }
+		# Plausible expansion: Prussian residences, orders and guard traditions
+		6 = { "%d. Garde-Division 'Sanssouci'" }
+		7 = { "%d. Garde-Division 'Riesengarde'" }
+		8 = { "%d. Garde-Division 'Hohenzollern'" }
+		9 = { "%d. Garde-Division 'Lichterfelde'" }
+		10 = { "%d. Garde-Division 'Charlottenburg'" }
+		11 = { "%d. Garde-Division 'Tempelhofer Feld'" }
+		12 = { "%d. Garde-Division 'Schwarzer Adler'" }
+		13 = { "%d. Garde-Division 'Roter Adler'" }
+		14 = { "%d. Garde-Division 'Pour le Mérite'" }
+		15 = { "%d. Garde-Division 'Eisernes Kreuz'" }
+	}
+}
+
+# Overrides vanilla GER_MONINF_01 without its focus lock. Guard and Leib regiments moved to the Guard list.
+GER_MONINF_01 = {
+	name = "Imperial Infantry Divisions"
+
+	for_countries = { GER }
+
+	can_use = {
+		OR = {
+			has_government = neutrality
+			has_government = democratic
 		}
 	}
 
@@ -1000,23 +1303,19 @@ GER_MONINF_01 =
 
 	fallback_name = "%d. Division"
 
-	# Names with numbers (only one number per entry)
-	ordered =
-	{
-		901 = { "1. Garde-Division" }
-		902 = { "2. Garde-Division" }
-		903 = { "3. Garde-Division" }
+	ordered = {
+		# Historical Imperial infantry regiments (1914), raised to divisions (Prussian, then Bavarian, Saxon, Baden, Württemberg)
 		1 = { "%d. Division 'Kronprinz'" }
-		2 = { "%d. Division 'König Friedrich Wilhelm IV'" }
-		3 = { "%d. Division 'König Friedrich Wilhelm I'" }
-		4 = { "%d. Division 'König Friedrich der Grosse'" }
-		5 = { "%d. Division 'König Friedrich I'" }
+		2 = { "%d. Division 'König Friedrich Wilhelm IV.'" }
+		3 = { "%d. Division 'König Friedrich Wilhelm I.'" }
+		4 = { "%d. Division 'König Friedrich der Große'" }
+		5 = { "%d. Division 'König Friedrich I.'" }
 		6 = { "%d. Division 'Graf Kleist von Nollendorf'" }
-		7 = { "%d. Division 'König Wilhelm I'" }
-		8 = { "%d. Division 'König Friedrich Wilhelm III'" }
-		9 = { "%d. Colbergsche-Division 'Graf Gneisenau'" }
-		10 = { "%d. Division 'König Friedrich Wilhelm II'" }
-		11 = { "%d. Division 'König Friedrich III'" }
+		7 = { "%d. Division 'König Wilhelm I.'" }
+		8 = { "%d. Division 'König Friedrich Wilhelm III.'" }
+		9 = { "%d. Colbergsche Division 'Graf Gneisenau'" }
+		10 = { "%d. Division 'König Friedrich Wilhelm II.'" }
+		11 = { "%d. Division 'König Friedrich III.'" }
 		12 = { "%d. Division 'Prinz Karl von Preußen'" }
 		13 = { "%d. Division 'Herwarth von Bittenfeld'" }
 		14 = { "%d. Division 'Graf Schwerin'" }
@@ -1029,7 +1328,7 @@ GER_MONINF_01 =
 		21 = { "%d. Division 'von Borcke'" }
 		22 = { "%d. Division 'Keith'" }
 		23 = { "%d. Division 'von Winterfeldt'" }
-		24 = { "%d. Division 'Großherzog Friedrich Franz II von Mecklenburg-Schwerin'" }
+		24 = { "%d. Division 'Großherzog Friedrich Franz II.'" }
 		25 = { "%d. Division 'von Lützow'" }
 		26 = { "%d. Division 'Fürst Leopold von Anhalt-Dessau'" }
 		27 = { "%d. Division 'Prinz Louis Ferdinand von Preußen'" }
@@ -1037,218 +1336,208 @@ GER_MONINF_01 =
 		29 = { "%d. Division 'von Horn'" }
 		30 = { "%d. Division 'Graf Werder'" }
 		31 = { "%d. Division 'Graf Bose'" }
-		32 = { "%d. Thüringische-Division" }
+		32 = { "%d. Thüringische Division" }
 		33 = { "%d. Division 'Graf Roon'" }
 		34 = { "%d. Division 'Königin Viktoria von Schweden'" }
 		35 = { "%d. Division 'Prinz Heinrich von Preußen'" }
-		36 = { "%d. Division 'General-Feldmarschall Graf Blumenthal'" }
+		36 = { "%d. Division 'Graf Blumenthal'" }
 		37 = { "%d. Division 'von Steinmetz'" }
-		38 = { "%d. Division 'General-Feldmarschall Graf Moltke'" }
-		39 = { "%d. Division 'Regiment General Ludendorff' " }
+		38 = { "%d. Division 'Graf Moltke'" }
+		39 = { "%d. Division 'General Ludendorff'" }
 		40 = { "%d. Division 'Fürst Karl-Anton von Hohenzollern'" }
 		41 = { "%d. Division 'von Boyen'" }
 		42 = { "%d. Division 'Prinz Moritz von Anhalt-Dessau'" }
 		43 = { "%d. Division 'Herzog Karl von Mecklenburg-Strelitz'" }
 		44 = { "%d. Division 'Graf Dönhoff'" }
-		45 = { "%d. Ostpreußische-Division" }
+		45 = { "%d. Ostpreußische Division" }
 		46 = { "%d. Division 'Graf Kirchbach'" }
 		47 = { "%d. Division 'König Ludwig III. von Bayern'" }
 		48 = { "%d. Division 'von Stülpnagel'" }
-		49 = { "%d. Pommersche-Division" }
-		50 = { "%d. Niederschlesische-Division" }
-		51 = { "%d. Niederschlesische-Division" }
+		49 = { "%d. Pommersche Division" }
+		50 = { "%d. Niederschlesische Division" }
+		51 = { "%d. Niederschlesische Division" }
 		52 = { "%d. Division 'von Alvensleben'" }
-		53 = { "%d. Westfälische-Division" }
+		53 = { "%d. Westfälische Division" }
 		54 = { "%d. Division 'von der Goltz'" }
 		55 = { "%d. Division 'Graf Bülow von Dennewitz'" }
 		56 = { "%d. Division 'Vogel von Falckenstein'" }
 		57 = { "%d. Division 'Herzog Ferdinand von Braunschweig'" }
-		58 = { "%d. Posensche-Division" }
+		58 = { "%d. Posensche Division" }
 		59 = { "%d. Division 'Freiherr Hiller von Gaertringen'" }
 		60 = { "%d. Division 'Markgraf Carl'" }
 		61 = { "%d. Division 'von der Marwitz'" }
-		62 = { "%d. Oberschlesische-Division" }
-		63 = { "%d. Division 'Kaiser Karl von Österreich und König von Ungarn'" }
-		64 = { "%d. Division 'General-Feldmarschall Prinz Friedrich Karl von Preußen'" }
-		65 = { "%d. Rheinische-Division" }
-		66 = { "%d. Magdeburgische-Division" }
-		67 = { "%d. Magdeburgische-Division" }
-		68 = { "%d. Rheinische-Division" }
-		69 = { "%d. Rheinische-Division" }
-		70 = { "%d. Rheinische-Division" }
-		71 = { "%d. Thüringische-Division" }
-		72 = { "%d. Thüringische-Division" }
-		73 = { "%d. Division 'Feldmarschall Prinz Albrecht von Preußen'" }
-		74 = { "%d. Hannoversche-Division" }
-		75 = { "%d. Hanseatische-Division" }
-		76 = { "%d. Hanseatische-Division" }
-		77 = { "%d. Hannoversche-Division" }
+		62 = { "%d. Oberschlesische Division" }
+		63 = { "%d. Division 'Kaiser Karl von Österreich'" }
+		64 = { "%d. Division 'Prinz Friedrich Karl von Preußen'" }
+		65 = { "%d. Rheinische Division" }
+		66 = { "%d. Magdeburgische Division" }
+		67 = { "%d. Magdeburgische Division" }
+		68 = { "%d. Rheinische Division" }
+		69 = { "%d. Rheinische Division" }
+		70 = { "%d. Rheinische Division" }
+		71 = { "%d. Thüringische Division" }
+		72 = { "%d. Thüringische Division" }
+		73 = { "%d. Division 'Prinz Albrecht von Preußen'" }
+		74 = { "%d. Hannoversche Division" }
+		75 = { "%d. Hanseatische Division" }
+		76 = { "%d. Hanseatische Division" }
+		77 = { "%d. Hannoversche Division" }
 		78 = { "%d. Division 'Herzog Friedrich Wilhelm von Braunschweig'" }
 		79 = { "%d. Division 'von Voigts-Rhetz'" }
 		80 = { "%d. Division 'von Gersdorff'" }
 		81 = { "%d. Division 'Landgraf Friedrich I. von Hessen-Cassel'" }
-		82 = { "%d. Kurhessische-Division" }
+		82 = { "%d. Kurhessische Division" }
 		83 = { "%d. Division 'von Wittich'" }
 		84 = { "%d. Division 'von Manstein'" }
 		85 = { "%d. Division 'Herzog von Holstein'" }
 		86 = { "%d. Division 'Königin'" }
-		87 = { "%d. Nassauische-Division" }
-		88 = { "%d. Nassauische-Division" }
-		89 = { "%d. Großherzoglich Mecklenburgische-Division" }
-		90 = { "%d. Großherzoglich Mecklenburgische-Division 'Kaiser Wilhelm '" }
-		91 = { "%d. Oldenburgische-Division" }
-		92 = { "%d. Braunschweigische-Division" }
-		93 = { "%d. Anhaltische-Division" }
+		87 = { "%d. Nassauische Division" }
+		88 = { "%d. Nassauische Division" }
+		89 = { "%d. Großherzoglich Mecklenburgische Division" }
+		90 = { "%d. Großherzoglich Mecklenburgische Division 'Kaiser Wilhelm'" }
+		91 = { "%d. Oldenburgische Division" }
+		92 = { "%d. Braunschweigische Division" }
+		93 = { "%d. Anhaltische Division" }
 		94 = { "%d. Division 'Großherzog von Sachsen'" }
-		95 = { "%d. Thüringische-Division" }
-		96 = { "%d. Thüringische-Division" }
-		97 = { "%d. Oberrheinische-Division" }
-		98 = { "%d. Metzer-Division" }
-		99 = { "%d. Oberrheinische-Division" }
-		904 = { "Kgl. Bayer.-Leib-Division" }
-		905 = { "1. Kgl. Bayer.-Division 'König'" }
-		906 = { "2. Kgl. Bayer.-Division 'Kronprinz'" }
-		907 = { "3. Kgl. Bayer.-Division 'Prinz Karl von Bayern'" }
-		908 = { "4. Kgl. Bayer.-Division 'König Wilhelm von Württemberg'" }
-		909 = { "5. Kgl. Bayer.-Division 'Großherzog Ernst Ludwig von Hessen'" }
-		910 = { "6. Kgl. Bayer.-Division 'Kaiser Wilhelm, König von Preußen'" }
-		911 = { "7. Kgl. Bayer.-Division 'Prinz Leopold'" }
-		912 = { "8. Kgl. Bayer.-Division 'Großherzog Friedrich II. von Baden'" }
-		913 = { "9. Kgl. Bayer.-Division 'Wrede'" }
-		914 = { "10. Kgl. Bayer.-Division 'König'" }
-		915 = { "11. Kgl. Bayer.-Division 'von der Tann'" }
-		916 = { "12. Kgl. Bayer.-Division 'Prinz Arnulf'" }
-		917 = { "13. Kgl. Bayer.-Division 'Franz Josef I., Kaiser von Österreich und Apostolischer König von Ungarn'" }
-		918 = { "14. Kgl. Bayer.-Division 'Hartmann'" }
-		919 = { "15. Kgl. Bayer.-Division 'König Friedrich August von Sachsen'" }
-		920 = { "16. Kgl. Bayer.-Division 'Großherzog Ferdinand von Toskana'" }
-		921 = { "17. Kgl. Bayer.-Division 'Orff'" }
-		922 = { "18. Kgl. Bayer.-Division 'Prinz Ludwig Ferdinand'" }
-		923 = { "19. Kgl. Bayer.-Division 'König Viktor Emanuel III. von Italien'" }
-		924 = { "20. Kgl. Bayer.-Division 'Prinz Franz'" }
-		925 = { "21. Kgl. Bayer.-Division 'Großherzog Friedrich Franz IV. von Mecklenburg-Schwerin'" }
-		926 = { "22. Kgl. Bayer.-Division 'Fürst Wilhelm von Hohenzollern'" }
-		927 = { "23. Kgl. Bayer.-Division 'König Ferdinand der Bulgaren'" }
-		100 = { "%d. Kgl. Sächs. (Leib-)Division" }
-		101 = { "%d. Kgl. Sächs.-Division 'Kaiser Wilhelm, König von Preußen'" }
-		102 = { "%d. Kgl. Sächs.-Division 'König Ludwig III von Bayern'" }
-		103 = { "%d. Kgl. Sächs.-Division" }
-		104 = { "%d. Kgl. Sächs.-Division 'Kronprinz'" }
-		105 = { "%d. Kgl. Sächs.-Division 'König Wilhelm II. von Württemberg'" }
-		106 = { "%d. Kgl. Sächs.-Division 'König Georg'" }
-		107 = { "%d. Kgl. Sächs.-Division 'Prinz Johann Georg'" }
-		108 = { "%d. Kgl. Sächs.-Division 'Prinz Georg'" }
-		109 = { "%d. Badische Leib-Division" }
-		110 = { "%d. Badische-Division 'Kaiser Wilhelm I'" }
+		95 = { "%d. Thüringische Division" }
+		96 = { "%d. Thüringische Division" }
+		97 = { "%d. Oberrheinische Division" }
+		98 = { "%d. Metzer Division" }
+		99 = { "%d. Oberrheinische Division" }
+		905 = { "1. Kgl. Bayer. Division 'König'" }
+		906 = { "2. Kgl. Bayer. Division 'Kronprinz'" }
+		907 = { "3. Kgl. Bayer. Division 'Prinz Karl von Bayern'" }
+		908 = { "4. Kgl. Bayer. Division 'König Wilhelm von Württemberg'" }
+		909 = { "5. Kgl. Bayer. Division 'Großherzog Ernst Ludwig von Hessen'" }
+		910 = { "6. Kgl. Bayer. Division 'Kaiser Wilhelm, König von Preußen'" }
+		911 = { "7. Kgl. Bayer. Division 'Prinz Leopold'" }
+		912 = { "8. Kgl. Bayer. Division 'Großherzog Friedrich II. von Baden'" }
+		913 = { "9. Kgl. Bayer. Division 'Wrede'" }
+		914 = { "10. Kgl. Bayer. Division 'König'" }
+		915 = { "11. Kgl. Bayer. Division 'von der Tann'" }
+		916 = { "12. Kgl. Bayer. Division 'Prinz Arnulf'" }
+		917 = { "13. Kgl. Bayer. Division 'Kaiser Franz Joseph'" }
+		918 = { "14. Kgl. Bayer. Division 'Hartmann'" }
+		919 = { "15. Kgl. Bayer. Division 'König Friedrich August von Sachsen'" }
+		920 = { "16. Kgl. Bayer. Division 'Großherzog Ferdinand von Toskana'" }
+		921 = { "17. Kgl. Bayer. Division 'Orff'" }
+		922 = { "18. Kgl. Bayer. Division 'Prinz Ludwig Ferdinand'" }
+		923 = { "19. Kgl. Bayer. Division 'König Viktor Emanuel III. von Italien'" }
+		924 = { "20. Kgl. Bayer. Division 'Prinz Franz'" }
+		925 = { "21. Kgl. Bayer. Division 'Großherzog Friedrich Franz IV.'" }
+		926 = { "22. Kgl. Bayer. Division 'Fürst Wilhelm von Hohenzollern'" }
+		927 = { "23. Kgl. Bayer. Division 'König Ferdinand der Bulgaren'" }
+		101 = { "%d. Kgl. Sächs. Division 'Kaiser Wilhelm, König von Preußen'" }
+		102 = { "%d. Kgl. Sächs. Division 'König Ludwig III. von Bayern'" }
+		103 = { "%d. Kgl. Sächs. Division" }
+		104 = { "%d. Kgl. Sächs. Division 'Kronprinz'" }
+		105 = { "%d. Kgl. Sächs. Division 'König Wilhelm II. von Württemberg'" }
+		106 = { "%d. Kgl. Sächs. Division 'König Georg'" }
+		107 = { "%d. Kgl. Sächs. Division 'Prinz Johann Georg'" }
+		108 = { "%d. Kgl. Sächs. Division 'Prinz Georg'" }
+		110 = { "%d. Badische Division 'Kaiser Wilhelm I.'" }
 		111 = { "%d. Division 'Markgraf Ludwig Wilhelm'" }
 		112 = { "%d. Badische Division 'Prinz Wilhelm'" }
 		113 = { "%d. Badische Division" }
-		114 = { "%d. Badische Division 'Kaiser Friedrich III'" }
-		115 = { "%d. Leibgarde-Division" }
+		114 = { "%d. Badische Division 'Kaiser Friedrich III.'" }
 		116 = { "%d. Division 'Kaiser Wilhelm'" }
-		117 = { "%d. Division 'Großherzogin'" }
 		118 = { "%d. Division 'Prinz Carl'" }
-		119 = { "%d. Division 'Königin Olga'" }
 		120 = { "%d. Division 'Kaiser Wilhelm, König von Preußen'" }
 		121 = { "%d. Division 'Alt-Württemberg'" }
-		122 = { "%d. Division 'Kaiser Franz Josef von Österreich, König von Ungarn'" }
+		122 = { "%d. Division 'Kaiser Franz Joseph'" }
 		123 = { "%d. Division 'König Karl'" }
-		124 = { "%d. Division 'König Wilhelm I'" }
+		124 = { "%d. Division 'König Wilhelm I.'" }
 		125 = { "%d. Division 'Friedrich, König von Preußen'" }
 		126 = { "%d. Division 'Großherzog Friedrich von Baden'" }
-		127 = { "%d. Württembergische-Division" }
-		128 = { "%d. Danziger-Division" }
+		127 = { "%d. Württembergische Division" }
+		128 = { "%d. Danziger Division" }
 		129 = { "%d. Division 'General-Feldmarschall von Mackensen'" }
-		130 = { "%d. Lothringische-Division" }
-		131 = { "%d. Lothringische-Division" }
-		132 = { "%d. Unter-Elsässische-Division" }
-		133 = { "%d. Kgl. Sächs.-Division" }
-		134 = { "%d. Kgl. Sächs.-Division" }
-		135 = { "%d. Lothringische-Division" }
-		136 = { "%d. Lothringische-Division" }
-		137 = { "%d. Unter-Elsässische-Division" }
-		138 = { "%d. Unter-Elsässische-Division" }
-		139 = { "%d. Kgl. Sächs.-Division" }
-		140 = { "%d. Westpreußische-Division" }
-		141 = { "%d. Kulmer-Division" }
-		142 = { "%d. Badische-Division" }
-		143 = { "%d. Unter-Elsässische-Division" }
-		144 = { "%d. Lothringische-Division" }
+		130 = { "%d. Lothringische Division" }
+		131 = { "%d. Lothringische Division" }
+		132 = { "%d. Unterelsässische Division" }
+		133 = { "%d. Kgl. Sächs. Division" }
+		134 = { "%d. Kgl. Sächs. Division" }
+		135 = { "%d. Lothringische Division" }
+		136 = { "%d. Lothringische Division" }
+		137 = { "%d. Unterelsässische Division" }
+		138 = { "%d. Unterelsässische Division" }
+		139 = { "%d. Kgl. Sächs. Division" }
+		140 = { "%d. Westpreußische Division" }
+		141 = { "%d. Kulmer Division" }
+		142 = { "%d. Badische Division" }
+		143 = { "%d. Unterelsässische Division" }
+		144 = { "%d. Lothringische Division" }
 		145 = { "%d. Königs-Division" }
-		146 = { "%d. Masurische-Division" }
-		147 = { "%d. Masurische-Division" }
-		148 = { "%d. Westpreußische-Division" }
-		149 = { "%d. Westpreußische-Division" }
-		150 = { "%d. Ermländische-Division" }
-		151 = { "%d. Ermländische-Division" }
+		146 = { "%d. Masurische Division" }
+		147 = { "%d. Masurische Division" }
+		148 = { "%d. Westpreußische Division" }
+		149 = { "%d. Westpreußische Division" }
+		150 = { "%d. Ermländische Division" }
+		151 = { "%d. Ermländische Division" }
 		152 = { "%d. Deutsch Ordens-Division" }
-		153 = { "%d. Thüringische-Division" }
-		154 = { "%d. Niederschlesische-Division" }
-		155 = { "%d. Westpreußische-Division" }
-		156 = { "%d. Schlesische-Division" }
-		157 = { "%d. Schlesische-Division" }
-		158 = { "%d. Lothringische-Division" }
-		159 = { "%d. Lothringische-Division" }
-		160 = { "%d. Rheinische-Division" }
-		161 = { "%d. Rheinische-Division" }
-		162 = { "%d. Hanseatische-Division" }
-		163 = { "%d. Schleswig-Holsteinische-Division" }
-		164 = { "%d. Hannoversche-Division" }
-		165 = { "%d. Hannoversche-Division" }
+		153 = { "%d. Thüringische Division" }
+		154 = { "%d. Niederschlesische Division" }
+		155 = { "%d. Westpreußische Division" }
+		156 = { "%d. Schlesische Division" }
+		157 = { "%d. Schlesische Division" }
+		158 = { "%d. Lothringische Division" }
+		159 = { "%d. Lothringische Division" }
+		160 = { "%d. Rheinische Division" }
+		161 = { "%d. Rheinische Division" }
+		162 = { "%d. Hanseatische Division" }
+		163 = { "%d. Schleswig-Holsteinische Division" }
+		164 = { "%d. Hannoversche Division" }
+		165 = { "%d. Hannoversche Division" }
 		166 = { "%d. Hessen-Homburg-Division" }
-		167 = { "%d. Ober-Elsässische-Division" }
-		168 = { "%d. Großherzoglich-Hessische-Division" }
-		169 = { "%d. Badische-Division" }
-		170 = { "%d. Badische-Division" }
-		171 = { "%d. Ober-Elsässiche-Division" }
-		172 = { "%d. Ober-Elsässiche-Division" }
-		173 = { "%d. Lothringische-Division" }
-		174 = { "%d. Lothringische-Division" }
-		175 = { "%d. Westpreußische-Division" }
-		176 = { "%d. Westpreußische-Division" }
-		177 = { "%d. Kgl. Sächs.-Division 'König Ferdinand der Bulgaren'" }
-		178 = { "%d. Kgl. Sächs.-Division" }
-		179 = { "%d. Kgl. Sächs.-Division" }
-		180 = { "%d. Württembergische-Division" }
-		181 = { "%d. Kgl. Sächs.-Division" }
-		182 = { "%d. Kgl. Sächs.-Division" }
-		
-		# converted WWI era imperial infantry regiments to division sized units, preserving their numerical order
-		# put Bavarian divisions in earlier so they show up sooner, as it was the largest non-Prussian part of the empire, but they had their own numbering scheme not linked to the others.
-
+		167 = { "%d. Oberelsässische Division" }
+		168 = { "%d. Großherzoglich Hessische Division" }
+		169 = { "%d. Badische Division" }
+		170 = { "%d. Badische Division" }
+		171 = { "%d. Oberelsässische Division" }
+		172 = { "%d. Oberelsässische Division" }
+		173 = { "%d. Lothringische Division" }
+		174 = { "%d. Lothringische Division" }
+		175 = { "%d. Westpreußische Division" }
+		176 = { "%d. Westpreußische Division" }
+		177 = { "%d. Kgl. Sächs. Division 'König Ferdinand der Bulgaren'" }
+		178 = { "%d. Kgl. Sächs. Division" }
+		179 = { "%d. Kgl. Sächs. Division" }
+		180 = { "%d. Württembergische Division" }
+		181 = { "%d. Kgl. Sächs. Division" }
+		182 = { "%d. Kgl. Sächs. Division" }
 	}
 }
 
-GER_MONMOB_01 = 
-{
-	name = "Monarchist Mobile Divisions"
+# Overrides vanilla GER_MONMOB_01 without its focus lock.
+GER_MONMOB_01 = {
+	name = "Imperial Mobile Divisions"
 
 	for_countries = { GER }
 
-	can_use = { 
+	can_use = {
 		OR = {
-			has_government = neutrality 
-			has_government = democratic 
+			has_government = neutrality
+			has_government = democratic
 		}
 	}
 
-	division_types = {  "cavalry" "light_armor" "medium_armor" "heavy_armor" "modern_armor"  }
+	division_types = { "cavalry" "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
 
 	fallback_name = "%d. Schnell-Division"
 
-	# Names with numbers (only one number per entry)
-	ordered =
-	{
+	ordered = {
+		# Historical Imperial cavalry regiments (1914), raised to divisions (guard regiments first)
 		901 = { "Gardes du Corps-Division" }
 		902 = { "Garde-Kürassier-Division" }
-		903 = { "Garde-Dragoner-Division 'Königin Viktoria von Großbritannien u. Irland'" }
+		903 = { "Garde-Dragoner-Division 'Königin Viktoria von Großbritannien'" }
 		904 = { "Garde-Dragoner-Division 'Kaiserin Alexandra von Rußland'" }
 		905 = { "Leib-Garde-Husaren-Division" }
 		906 = { "1. Garde-Ulanen-Division" }
 		907 = { "2. Garde-Ulanen-Division" }
 		908 = { "3. Garde-Ulanen-Division" }
 		909 = { "1. Kgl. Bayer. schwere Reiter-Division 'Prinz Karl von Bayern'" }
-		910 = { "2. Kgl. Bayer. schwere Reiter-Division 'Erzherzog Franz Ferdinand von Österreich-Este'" }
+		910 = { "2. Kgl. Bayer. schwere Reiter-Division 'Erzherzog Franz Ferdinand'" }
+		921 = { "Garde-Kavallerie-Division" }
 		1 = { "%d. Leib-Kürassier-Division 'Großer Kurfürst'" }
 		2 = { "%d. Kürassier-Division 'Königin'" }
 		3 = { "%d. Kürassier-Division 'Graf Wrangel'" }
@@ -1257,17 +1546,17 @@ GER_MONMOB_01 =
 		6 = { "%d. Kürassier-Division 'Kaiser Nikolaus I. von Rußland'" }
 		7 = { "%d. Kürassier-Division 'von Seydlitz'" }
 		8 = { "%d. Kürassier-Division 'Graf Geßler'" }
-		9 = { "%d. Kgl.Sächs. Garde-Reiter-Division" }
+		9 = { "%d. Kgl. Sächs. Garde-Reiter-Division" }
 		10 = { "%d. Kgl. Sächs. Karabinier-Division" }
 		911 = { "1. Kgl. Bayer. Chevaulegers-Division 'Kaiser Nikolaus von Rußland'" }
 		912 = { "2. Kgl. Bayer. Chevaulegers-Division 'Taxis'" }
 		913 = { "3. Kgl. Bayer. Chevaulegers-Division 'Herzog Karl Theodor'" }
 		914 = { "4. Kgl. Bayer. Chevaulegers-Division 'König'" }
-		915 = { "5. Kgl. Bayer. Chevaulegers-Division 'Erzherzog Friedrich von Österreich'" }
+		915 = { "5. Kgl. Bayer. Chevaulegers-Division 'Erzherzog Friedrich'" }
 		916 = { "6. Kgl. Bayer. Chevaulegers-Division 'Prinz Albrecht von Preußen'" }
 		917 = { "7. Kgl. Bayer. Chevaulegers-Division 'Prinz Alfons'" }
 		918 = { "8. Kgl. Bayer. Chevaulegers-Division" }
-		919 = { "1. Kgl. Bayer. Ulanen-Division 'Kaiser Wilhelm II., König von Preußen'" }
+		919 = { "1. Kgl. Bayer. Ulanen-Division 'Kaiser Wilhelm II.'" }
 		920 = { "2. Kgl. Bayer. Ulanen-Division 'König'" }
 		11 = { "%d. Dragoner-Division 'Prinz Albrecht von Preußen'" }
 		12 = { "%d. Brandenburgische Dragoner-Division" }
@@ -1275,8 +1564,8 @@ GER_MONMOB_01 =
 		14 = { "%d. Dragoner-Division 'von Bredow'" }
 		15 = { "%d. Dragoner-Division 'Freiherr von Manteuffel'" }
 		16 = { "%d. Magdeburgische Dragoner-Division" }
-		17 = { "%d. Dragoner-Division 'General-Feldmarschall Prinz Leopold von Bayern'" }
-		18 = { "%d. Dragoner-Division 'König Friedrich III'" }
+		17 = { "%d. Dragoner-Division 'Prinz Leopold von Bayern'" }
+		18 = { "%d. Dragoner-Division 'König Friedrich III.'" }
 		19 = { "%d. Dragoner-Division 'König Karl I. von Rumänien'" }
 		20 = { "%d. Dragoner-Division 'König Albert von Sachsen'" }
 		21 = { "%d. Dragoner-Division 'von Wedel'" }
@@ -1290,7 +1579,7 @@ GER_MONMOB_01 =
 		29 = { "%d. Oldenburgische Dragoner-Division" }
 		30 = { "%d. Badische Leib-Dragoner-Division" }
 		31 = { "%d. Badische Dragoner-Division" }
-		32 = { "%d. Badische Dragoner-Division 'Prinz Karl '" }
+		32 = { "%d. Badische Dragoner-Division 'Prinz Karl'" }
 		33 = { "%d. Großherzoglich Hessische Garde-Dragoner-Division" }
 		34 = { "%d. Großherzoglich Hessische Leib-Dragoner-Division" }
 		35 = { "%d. Dragoner-Division 'Königin Olga'" }
@@ -1301,7 +1590,7 @@ GER_MONMOB_01 =
 		40 = { "%d. Husaren-Division 'von Schill'" }
 		41 = { "%d. Husaren-Division 'Fürst Blücher von Wahlstatt'" }
 		42 = { "%d. Husaren-Division 'Graf Goetzen'" }
-		43 = { "%d. Husaren-Division 'König Wilhelm I'" }
+		43 = { "%d. Husaren-Division 'König Wilhelm I.'" }
 		44 = { "%d. Husaren-Division 'Kaiser Nikolaus II. von Rußland'" }
 		45 = { "%d. Rheinische Husaren-Division" }
 		46 = { "%d. Magdeburgische Husaren-Division" }
@@ -1310,12 +1599,12 @@ GER_MONMOB_01 =
 		49 = { "%d. Husaren-Division 'König Humbert von Italien'" }
 		50 = { "%d. Husaren-Division 'Landgraf Friedrich II. von Hessen-Homburg'" }
 		51 = { "%d. Husaren-Division 'Königin Wilhelmina der Niederlande'" }
-		52 = { "%d. Husaren-Division 'Kaiser Franz Joseph von Österreich, König von Ungarn'" }
+		52 = { "%d. Husaren-Division 'Kaiser Franz Joseph'" }
 		53 = { "%d. Braunschweigische Husaren-Division" }
 		54 = { "%d. Kgl. Sächs. Husaren-Division 'König Albert'" }
 		55 = { "%d. Kgl. Sächs. Husaren-Division 'Kronprinz Wilhelm von Preußen'" }
 		56 = { "%d. Kgl. Sächs. Husaren-Division" }
-		57 = { "%d. Ulanen-Division 'Kaiser Alexander III von Rußland'" }
+		57 = { "%d. Ulanen-Division 'Kaiser Alexander III. von Rußland'" }
 		58 = { "%d. Ulanen-Division 'von Katzler'" }
 		59 = { "%d. Ulanen-Division 'Kaiser Alexander II. von Rußland'" }
 		60 = { "%d. Ulanen-Division 'von Schmidt'" }
@@ -1331,11 +1620,11 @@ GER_MONMOB_01 =
 		70 = { "%d. Hannoversche Ulanen-Division" }
 		71 = { "%d. Schleswig-Holsteinische Ulanen-Division" }
 		72 = { "%d. Ulanen-Division 'Hennigs von Treffenfeld'" }
-		73 = { "%d. Kgl. Sächs. Ulanen-Division 'Kaiser Franz Joseph von Österreich, König von Ungarn'" }
+		73 = { "%d. Kgl. Sächs. Ulanen-Division 'Kaiser Franz Joseph'" }
 		74 = { "%d. Kgl. Sächs. Ulanen-Division" }
 		75 = { "%d. Ulanen-Division 'König Karl'" }
-		76 = { "%d. Ulanen-Division 'König Wilhelm I'" }
-		77 = { "%d. Kgl. Sächs. Ulanen-Division 'Kaiser Wilhelm II, König von Preußen'" }
+		76 = { "%d. Ulanen-Division 'König Wilhelm I.'" }
+		77 = { "%d. Kgl. Sächs. Ulanen-Division 'Kaiser Wilhelm II.'" }
 		78 = { "%d. Königs-Jäger-Division zu Pferde" }
 		79 = { "%d. Jäger-Division zu Pferde" }
 		80 = { "%d. Jäger-Division zu Pferde" }
@@ -1349,15 +1638,107 @@ GER_MONMOB_01 =
 		88 = { "%d. Jäger-Division zu Pferde" }
 		89 = { "%d. Jäger-Division zu Pferde" }
 		90 = { "%d. Jäger-Division zu Pferde" }
-	
-		#took namelist for mobile divisions for imperial cavalry regiments, but did not preserve numbering to avoid a confusing mess of Curassier, Dragoon, Hussar, etc, Divisions all with the same number. Except for Bavaria, because they're weird.
-
-
 	}
 }
 
+# ==============================================================================
+# 8. REPUBLICAN DIVISIONS (democratic)
+# ==============================================================================
 
+# Overrides vanilla GER_Arm_01_ANTIFASCIST (a duplicate Panzer list); now the republican army.
+GER_Arm_01_ANTIFASCIST = {
+	name = "Republican Divisions"
 
+	for_countries = { GER }
 
+	can_use = { has_government = democratic }
 
+	division_types = { "infantry" "motorized" "mechanized" "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
 
+	fallback_name = "%d. Reichswehr-Division"
+
+	ordered = {
+		# Plausible expansion: honour names of 1813, 1848/49 and the Weimar Republic
+		1 = { "%d. Reichswehr-Division 'Schwarz-Rot-Gold'" }
+		2 = { "%d. Reichswehr-Division 'Paulskirche'" }
+		3 = { "%d. Reichswehr-Division 'Friedrich Ebert'" }
+		4 = { "%d. Reichswehr-Division 'Freiherr vom Stein'" }
+		5 = { "%d. Reichswehr-Division 'Hambach'" }
+		6 = { "%d. Reichswehr-Division 'Robert Blum'" }
+		7 = { "%d. Reichswehr-Division 'Walther Rathenau'" }
+		8 = { "%d. Reichswehr-Division 'Hardenberg'" }
+		9 = { "%d. Reichswehr-Division 'Matthias Erzberger'" }
+		10 = { "%d. Reichswehr-Division 'Friedrich Hecker'" }
+		11 = { "%d. Reichswehr-Division 'Gustav Stresemann'" }
+		12 = { "%d. Reichswehr-Division 'Scharnhorst'" }
+		13 = { "%d. Reichswehr-Division 'Hugo Preuß'" }
+		14 = { "%d. Reichswehr-Division 'Gustav Struve'" }
+		15 = { "%d. Reichswehr-Division 'Gneisenau'" }
+		16 = { "%d. Reichswehr-Division 'Philipp Scheidemann'" }
+		17 = { "%d. Reichswehr-Division 'Lützower Jäger'" }
+		18 = { "%d. Reichswehr-Division 'Carl Schurz'" }
+		19 = { "%d. Reichswehr-Division 'Boyen'" }
+		20 = { "%d. Reichswehr-Division 'Ludwig Uhland'" }
+		21 = { "%d. Reichswehr-Division 'Ernst Moritz Arndt'" }
+		22 = { "%d. Reichswehr-Division 'Wartburg'" }
+		23 = { "%d. Reichswehr-Division 'Paul Löbe'" }
+		24 = { "%d. Reichswehr-Division 'Otto Wels'" }
+		25 = { "%d. Reichswehr-Division 'Carl Severing'" }
+		26 = { "%d. Reichswehr-Division 'Clausewitz'" }
+		27 = { "%d. Reichswehr-Division 'Nationalversammlung'" }
+		28 = { "%d. Reichswehr-Division 'Verfassung'" }
+	}
+}
+
+# ==============================================================================
+# 9. RED ARMY DIVISIONS (communism)
+# ==============================================================================
+
+# Overrides vanilla GER_MEC_01_COMMUNIST (a duplicate Panzergrenadier list); now the communist army.
+GER_MEC_01_COMMUNIST = {
+	name = "Red Army Divisions"
+
+	for_countries = { GER }
+
+	can_use = { has_government = communism }
+
+	division_types = { "infantry" "motorized" "mechanized" "marine" "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
+
+	fallback_name = "%d. Rote Division"
+
+	ordered = {
+		# Historical revolutionary formations
+		901 = { "Volksmarinedivision" }
+		902 = { "Bayerische Rote Armee" }
+		# Plausible expansion: German revolutionary and communist honour names
+		1 = { "%d. Rote Division 'Spartakus'" }
+		2 = { "%d. Rote Division 'Karl Liebknecht'" }
+		3 = { "%d. Rote Division 'Rosa Luxemburg'" }
+		4 = { "%d. Rote Division 'Ernst Thälmann'" }
+		5 = { "%d. Rote Division 'Rote Fahne'" }
+		6 = { "%d. Rote Division 'Leo Jogiches'" }
+		7 = { "%d. Rote Division 'Clara Zetkin'" }
+		8 = { "%d. Rote Division 'Franz Mehring'" }
+		9 = { "%d. Rote Division 'Hans Beimler'" }
+		10 = { "%d. Rote Division 'Edgar André'" }
+		11 = { "%d. Rote Division 'Max Hoelz'" }
+		12 = { "%d. Rote Division 'John Schehr'" }
+		13 = { "%d. Rote Division 'Fiete Schulze'" }
+		14 = { "%d. Rote Division 'Thomas Müntzer'" }
+		15 = { "%d. Rote Division 'Friedrich Engels'" }
+		16 = { "%d. Rote Division 'Karl Marx'" }
+		17 = { "%d. Rote Division 'August Bebel'" }
+		18 = { "%d. Rote Division 'Wilhelm Liebknecht'" }
+		19 = { "%d. Rote Division 'Eugen Leviné'" }
+		20 = { "%d. Rote Division 'Rudolf Egelhofer'" }
+		21 = { "%d. Rote Division 'Kieler Matrosen'" }
+		22 = { "%d. Rote Division 'Ernst Schneller'" }
+		23 = { "%d. Rote Division 'Heinrich Dorrenbach'" }
+		24 = { "%d. Rote Division 'Willy Leow'" }
+		25 = { "%d. Rote Division 'Hans Kahle'" }
+		26 = { "%d. Rote Division 'Richard Staimer'" }
+		27 = { "%d. Rote Division 'Heinrich Rau'" }
+		28 = { "%d. Rote Division 'Wilhelm Pieck'" }
+		29 = { "%d. Rote Division 'Walter Ulbricht'" }
+	}
+}
