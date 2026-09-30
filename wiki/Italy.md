@@ -6,9 +6,9 @@
 
 ## Historical Overview
 
-The Regio Esercito named its divisions after cities, regions, rivers and battles, and INEX keeps those names on their real division numbers. Motorized, mechanized, armored and paratrooper lists share numbering with the infantry, so *9a Divisione 'Pasubio'* is either infantry or autotrasportabile, never both. Separate lists cover the colonial troops of Libya and East Africa, the cavalry, the Alpini, and the 1943–45 Resistance.
+The Regio Esercito named its divisions after cities, regions, rivers and battles, and INEX keeps those names on their real division numbers. Motorized, mechanized, armored and paratrooper lists share numbering with the infantry, so *9a Divisione 'Pasubio'* is either infantry or autotrasportabile, never both. Separate lists cover the colonial troops of Libya and East Africa, the cavalry, the Alpini, Bersaglieri and Arditi, the Frontier Guard and Carabinieri, and the 1943–45 Resistance.
 
-Ideology-gated lists: the MVSN Blackshirt divisions (fascism), a Royal Army list built on the 1943–45 Co-Belligerent Army (neutrality/democratic), a Communist list, and the partisan formations gated by party tradition. Legione Romana is fascist-only and never picked by the AI.
+Ideology-gated lists: the MVSN Blackshirt divisions and legions, the Social Republic's army and the Black Brigades (fascism), a Royal Army list built on the 1943–45 Co-Belligerent Army (neutrality/democratic), a Communist list, and the partisan formations gated by party tradition. Legione Romana is fascist-only and never picked by the AI.
 
 ---
 
@@ -18,6 +18,9 @@ Ideology-gated lists: the MVSN Blackshirt divisions (fascism), a Royal Army list
 |:---|:---|:---|:---|
 | `ITA_INF_01` | Infantry Divisions | infantry | `%da Divisione di Fanteria` |
 | `ITA_INF_02` | Blackshirt Divisions | militia | `%da Divisione CC.NN.` |
+| `ITA_LEG_01` | Blackshirt Legions | militia | `%da Legione CC.NN.` |
+| `ITA_RSI_01` | Republican Army Divisions | infantry, mountaineers, marine, paratrooper | `%da Divisione` |
+| `ITA_BRN_01` | Black Brigades | militia | `%da Brigata Nera` |
 | `ITA_MONCH_01` | Royal Army Divisions | infantry, mechanized, mountaineers, paratrooper, marine | `%da Divisione` |
 | `ITA_COM_01` | Communist Divisions | infantry, mechanized, mountaineers, paratrooper, marine | `%da Divisione Comunista` |
 | `ITA_COL_01` | Colonial Divisions | infantry | `%da Divisione Coloniale` |
@@ -43,8 +46,12 @@ Ideology-gated lists: the MVSN Blackshirt divisions (fascism), a Royal Army list
 | `ITA_MAR_02` | Marine Divisions | marine | `%da Divisione Fanteria di Marina` |
 | `ITA_MNT_01` | Mountain Divisions | mountaineers | `%da Divisione Alpina` |
 | `ITA_PAR_01` | Paratrooper Divisions | paratrooper | `%da Divisione Paracadutisti` |
+| `ITA_RGR_01` | Bersaglieri Divisions | ranger_battalion | `%da Divisione Bersaglieri` |
+| `ITA_ARD_01` | Arditi Assault Units | infantry | `%da Divisione d'Assalto` |
 | `ITA_FES_01` | Defence Brigades | infantry | `%da Brigata Difesa` |
 | `ITA_GAR_01` | Coastal Divisions | infantry | `%da Divisione Costiera` |
+| `ITA_GAF_01` | Frontier Guard Sectors | infantry | `%s Settore di Copertura` |
+| `ITA_CAR_01` | Carabinieri Formations | infantry | `%da Legione Carabinieri` |
 | `ITA_ROM_01` | Legione Romana | infantry, light_armor, medium_armor, heavy_armor, modern_armor | `Legio %s` |
 
 ---
@@ -56,6 +63,15 @@ The 1935–43 infantry divisions on their real numbers, from *1a Divisione di Fa
 
 ### `ITA_INF_02` — Blackshirt Divisions
 MVSN *Camicie Nere* divisions, fascism only: the seven 1935–43 divisions (*'23 Marzo'*, *'28 Ottobre'*, *'Tevere'*, *'Cirene'*), the Spanish CTV divisions (*'Dio lo Vuole'*, *'Fiamme Nere'*, *'Penne Nere'*) and two extrapolations from MVSN legion names.
+
+### `ITA_LEG_01` — Blackshirt Legions
+Fascism only. The MVSN's numbered *Legioni CC.NN.* on their real numbers, from *1a Legione CC.NN. 'Sabauda'* (Turin) through *63a 'Tagliamento'* and *112a 'Dell'Urbe'* (Rome) to *201a 'Conte Verde'* (Rhodes).
+
+### `ITA_RSI_01` — Republican Army Divisions
+Fascism only. The Italian Social Republic's four ENR divisions (*1a Bersaglieri 'Italia'*, *2a Granatieri 'Littorio'*, *3a Fanteria di Marina 'San Marco'*, *4a Alpina 'Monterosa'*), a plausible expansion named after RSI battalions (*'Barbarigo'*, *'Lupo'*, *'Scirè'*), and the Decima MAS, GNR and paratrooper formations (*Divisione 'Etna'*, *1° Reggimento Arditi Paracadutisti 'Folgore'*).
+
+### `ITA_BRN_01` — Black Brigades
+Fascism only. The 1944–45 *Brigate Nere* by number, each named after a fallen fascist (*8a Brigata Nera 'Aldo Resega'*, Milan), plus the mobile and autonomous brigades.
 
 ### `ITA_MONCH_01` — Royal Army Divisions
 Neutrality or democratic. The Co-Belligerent Army's *Gruppi di Combattimento* (*'Cremona'*, *'Friuli'*, *'Folgore'*, *'Legnano'*, *'Mantova'*, *'Piceno'*), the *1° Raggruppamento Motorizzato* and *Divisione 'Utili'*, then House of Savoy names, Great War commanders (*'Cadorna'*, *'Diaz'*) and battle honours (*'Vittorio Veneto'*, *'Porta Pia'*).
@@ -100,19 +116,31 @@ Formations outside the party networks, available to any non-fascist government: 
 Autotrasportabile and motorized divisions on their infantry numbers (*9a 'Pasubio'*, *101a Motorizzata 'Trieste'*); 106–108 are fictional. `ITA_MEC_01` is the plain mechanized list; `ITA_MEC_02` carries postwar names (*'Granatieri di Sardegna'*, *'Folgore'*, *'Goito'*).
 
 ### `ITA_ARM_01` — Armored Divisions (Divisioni Corazzate)
-*131a 'Centauro'*, *132a 'Ariete'*, *133a 'Littorio'*, the abortive *134a 'Freccia'*, *135a 'Ariete II'*, *136a 'Centauro II'* and the CC.NN. *'M'* division; *'Pozzuolo del Friuli'* is fictional.
+*131a 'Centauro'*, *132a 'Ariete'*, *133a 'Littorio'*, the abortive *134a 'Freccia'*, *135a 'Ariete II'*, *136a 'Centauro II'* and the CC.NN. *'M'* division; *'Pozzuolo del Friuli'*, *'Curtatone'*, *'Mameli'* (postwar brigade names) and *'Nizza'*, *'Genova'*, *'Novara'* (cavalry traditions) are plausible extrapolations.
 
 ### `ITA_MAR_01` / `ITA_MAR_02` — Marines
 The *'San Marco'* regiment and a postwar-style *Reggimento Lagunari 'Serenissima'*; fictional *Divisioni Fanteria di Marina*.
 
 ### `ITA_MNT_01` — Mountain Divisions (Divisioni Alpine)
-*'Taurinense'*, *'Tridentina'*, *'Julia'*, *'Cuneense'*, *'Pusteria'*, *'Alpi Graie'*, plus the postwar *'Orobica'* and *'Cadore'*.
+*'Taurinense'*, *'Tridentina'*, *'Julia'*, *'Cuneense'*, *'Pusteria'*, *'Alpi Graie'*, plus the postwar *'Orobica'* and *'Cadore'*. A plausible expansion names further divisions after famous Alpini battalions (*'Monte Cervino'*, *'Edolo'*, *'Mondovì'*).
 
 ### `ITA_PAR_01` — Paratrooper Divisions (Paracadutisti)
 *80a Divisione Fanteria Aviotrasportabile 'La Spezia'* and the paratrooper divisions *183a 'Ciclone'*, *184a 'Nembo'*, *185a 'Folgore'*.
 
+### `ITA_RGR_01` — Bersaglieri Divisions
+Overrides vanilla's placeholder list. Plausible Bersaglieri divisions named after the corps' founder, heroes and honours (*'Alessandro La Marmora'*, *'Enrico Toti'*, *'Cernaia'*, *'Porta Pia'*) and its *Fiamme Cremisi* tradition.
+
+### `ITA_ARD_01` — Arditi Assault Units
+The *10° Reggimento Arditi* and *1° Battaglione Speciale Arditi* (1942), plus plausible assault divisions named after Great War Arditi traditions (*'Col Moschin'*, *'Sdricca di Manzano'*, *'Giuseppe Bassi'*).
+
 ### `ITA_FES_01` / `ITA_GAR_01` — Defence Brigades and Coastal Divisions
 Fictional city defence brigades (*'Roma'*, *'Trieste'*, *'Zara'*) and the historical coastal divisions 201–231, which carried numbers only.
+
+### `ITA_GAF_01` — Frontier Guard Sectors
+The *Guardia alla Frontiera* covering sectors of the Vallo Alpino on their Roman numbers, from *I Settore di Copertura 'Bassa Roja'* on the French border to *XXVII 'Fiume'*.
+
+### `ITA_CAR_01` — Carabinieri Formations
+The Carabinieri Reali divisions *'Pastrengo'*, *'Podgora'* and *'Ogaden'*, the mobilised *1° Gruppo* of Culqualber and the *1° Battaglione Paracadutisti*, and the territorial legions (*Legione Carabinieri di Torino*).
 
 ### `ITA_ROM_01` — Legione Romana
 Imperial legions by number and cognomen (*Legio I Germanica*, *Legio XX Valeria Victrix*). Fascism only, and never picked by the AI.

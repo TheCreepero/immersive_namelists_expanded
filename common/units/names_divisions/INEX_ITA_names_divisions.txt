@@ -8,12 +8,13 @@
 # infantry parent (e.g. 9a 'Pasubio').
 #
 # Overrides vanilla ITA_INF_01, ITA_INF_02, ITA_COL_01-03, ITA_CAV_01-06, ITA_MOT_01,
-# ITA_MEC_01, ITA_ARM_01, ITA_MAR_01, ITA_MNT_01, ITA_PAR_01 and ITA_GAR_01. Focus trees and
+# ITA_MEC_01, ITA_ARM_01, ITA_MAR_01, ITA_MNT_01, ITA_PAR_01, ITA_GAR_01 and ITA_RGR_01. Focus trees and
 # scripted effects reference ITA_INF_01, ITA_INF_02, ITA_COL_01 and ITA_CAV_02/03/05 (kept
 # here) and ITA_CAM_01/02 (left to vanilla).
 #
-# Ideology-gated groups: Blackshirt (fascism), Royal Army (neutrality/democratic),
-# Communist, the partisan formations (by party) and Legione Romana (fascism, players only).
+# Ideology-gated groups: Blackshirt divisions and legions, Republican Army and Black Brigades
+# (fascism), Royal Army (neutrality/democratic), Communist, the partisan formations (by party)
+# and Legione Romana (fascism, players only).
 
 # ==============================================================================
 # 1. INFANTRY (Regio Esercito)
@@ -138,6 +139,271 @@ ITA_INF_02 = {
 		# Extrapolated from MVSN legion names
 		11 = { "%da Divisione CC.NN. 'Tagliamento'" }
 		12 = { "%da Divisione CC.NN. 'Leonessa'" }
+	}
+}
+
+# MVSN Legioni CC.NN. keyed by legion number, fascism only
+ITA_LEG_01 = {
+	name = "Blackshirt Legions"
+
+	for_countries = { ITA }
+
+	can_use = { has_government = fascism }
+
+	division_types = { "militia" }
+
+	fallback_name = "%da Legione CC.NN."
+
+	ordered = {
+		# Legions of the MVSN (1923-43)
+		1 = { "%da Legione CC.NN. 'Sabauda'" }
+		2 = { "%da Legione CC.NN. 'Alpina'" }
+		3 = { "%da Legione CC.NN. 'Monviso'" }
+		4 = { "%da Legione CC.NN. 'Santorre Santarosa'" }
+		5 = { "%da Legione CC.NN. 'Valle Scrivia'" }
+		6 = { "%da Legione CC.NN. 'Sforzesca'" }
+		7 = { "%da Legione CC.NN. 'Fratelli Cairoli'" }
+		8 = { "%da Legione CC.NN. 'Cacciatori delle Alpi'" }
+		9 = { "%da Legione CC.NN. 'Cacciatori della Valtellina'" }
+		10 = { "%da Legione CC.NN. 'Montebello'" }
+		11 = { "%da Legione CC.NN. 'Monferrato'" }
+		12 = { "%da Legione CC.NN. 'Monte Bianco'" }
+		14 = { "%da Legione CC.NN. 'Garibaldina'" }
+		15 = { "%da Legione CC.NN. 'Leonessa'" }
+		17 = { "%da Legione CC.NN. 'Cremona'" }
+		18 = { "%da Legione CC.NN. 'Costantissima'" }
+		19 = { "%da Legione CC.NN. 'Fedelissima'" }
+		20 = { "%da Legione CC.NN. 'Po'" }
+		23 = { "%da Legione CC.NN. 'Bersaglieri del Mincio'" }
+		24 = { "%da Legione CC.NN. 'Carroccio'" }
+		25 = { "%da Legione CC.NN. 'Ferrea'" }
+		26 = { "%da Legione CC.NN. 'Alberto da Giussano'" }
+		27 = { "%da Legione CC.NN. 'Fanfulla da Lodi'" }
+		28 = { "%da Legione CC.NN. 'Giovanni Randaccio'" }
+		29 = { "%da Legione CC.NN. 'Antonio Chinotto'" }
+		30 = { "%da Legione CC.NN. 'Roberto Forni'" }
+		33 = { "%da Legione CC.NN. 'Gandolfo'" }
+		34 = { "%da Legione CC.NN. 'Premuda'" }
+		35 = { "%da Legione CC.NN. 'Indomita'" }
+		36 = { "%da Legione CC.NN. 'Cristoforo Colombo'" }
+		38 = { "%da Legione CC.NN. 'Vittorio Alfieri'" }
+		40 = { "%da Legione CC.NN. 'Scaligera'" }
+		41 = { "%da Legione CC.NN. 'Cesare Battisti'" }
+		42 = { "%da Legione CC.NN. 'Berica'" }
+		43 = { "%da Legione CC.NN. 'Piave'" }
+		44 = { "%da Legione CC.NN. 'Pasubio'" }
+		45 = { "%da Legione CC.NN. 'Alto Adige'" }
+		49 = { "%da Legione CC.NN. 'San Marco'" }
+		50 = { "%da Legione CC.NN. 'Trevigiana'" }
+		52 = { "%da Legione CC.NN. 'Polesana'" }
+		53 = { "%da Legione CC.NN. 'Patavina'" }
+		54 = { "%da Legione CC.NN. 'Euganea'" }
+		55 = { "%da Legione CC.NN. 'Friuliana'" }
+		58 = { "%da Legione CC.NN. 'San Giusto'" }
+		59 = { "%da Legione CC.NN. 'Carso'" }
+		60 = { "%da Legione CC.NN. 'Istria'" }
+		61 = { "%da Legione CC.NN. 'Carnaro'" }
+		62 = { "%da Legione CC.NN. 'Isonzo'" }
+		63 = { "%da Legione CC.NN. 'Tagliamento'" }
+		67 = { "%da Legione CC.NN. 'Volontari del Reno'" }
+		68 = { "%da Legione CC.NN. 'Riario Sforza'" }
+		71 = { "%da Legione CC.NN. 'Manfreda'" }
+		72 = { "%da Legione CC.NN. 'Luigi Farini'" }
+		73 = { "%da Legione CC.NN. 'Matteo Boiardo'" }
+		74 = { "%da Legione CC.NN. 'Taro'" }
+		75 = { "%da Legione CC.NN. 'Italo Balbo'" }
+		76 = { "%da Legione CC.NN. 'Estense'" }
+		79 = { "%da Legione CC.NN. 'Cispadana'" }
+		80 = { "%da Legione CC.NN. 'Alessandro Farnese'" }
+		81 = { "%da Legione CC.NN. 'Alberico da Barbiano'" }
+		82 = { "%da Legione CC.NN. 'Benito Mussolini'" }
+		83 = { "%da Legione CC.NN. 'Sant'Antonio'" }
+		85 = { "%da Legione CC.NN. 'Apuana'" }
+		86 = { "%da Legione CC.NN. 'Intrepida'" }
+		88 = { "%da Legione CC.NN. 'Alfredo Cappellini'" }
+		89 = { "%da Legione CC.NN. 'Etrusca'" }
+		90 = { "%da Legione CC.NN. 'Pisa'" }
+		92 = { "%da Legione CC.NN. 'Francesco Ferrucci'" }
+		93 = { "%da Legione CC.NN. 'Giglio Rosso'" }
+		94 = { "%da Legione CC.NN. 'Fedele'" }
+		95 = { "%da Legione CC.NN. 'Sante Ceccherini'" }
+		96 = { "%da Legione CC.NN. 'Francesco Petrarca'" }
+		97 = { "%da Legione CC.NN. 'Senese'" }
+		98 = { "%da Legione CC.NN. 'Maremmana'" }
+		102 = { "%da Legione CC.NN. 'Cacciatori del Tevere'" }
+		103 = { "%da Legione CC.NN. 'Clitunno'" }
+		104 = { "%da Legione CC.NN. 'Trotti'" }
+		105 = { "%da Legione CC.NN. 'Benito Mogioni'" }
+		107 = { "%da Legione CC.NN. 'Francesco Rismondo'" }
+		108 = { "%da Legione CC.NN. 'Stamura'" }
+		109 = { "%da Legione CC.NN. 'Filippo Corridoni'" }
+		110 = { "%da Legione CC.NN. 'Picena'" }
+		111 = { "%da Legione CC.NN. 'Franco Michelini Tocci'" }
+		112 = { "%da Legione CC.NN. 'Dell'Urbe'" }
+		114 = { "%da Legione CC.NN. 'Veroli'" }
+		115 = { "%da Legione CC.NN. 'Del Cimino'" }
+		116 = { "%da Legione CC.NN. 'Sabina'" }
+		117 = { "%da Legione CC.NN. 'Del Mare'" }
+		118 = { "%da Legione CC.NN. 'Volsca'" }
+		119 = { "%da Legione CC.NN. 'Ricciotti'" }
+		120 = { "%da Legione CC.NN. 'Giulio Cesare'" }
+		121 = { "%da Legione CC.NN. 'Caio Marzio Coriolano'" }
+		129 = { "%da Legione CC.NN. 'Adriatica'" }
+		130 = { "%da Legione CC.NN. 'L'Aquila'" }
+		131 = { "%da Legione CC.NN. 'Paolini'" }
+		132 = { "%da Legione CC.NN. 'Monte Velino'" }
+		133 = { "%da Legione CC.NN. 'Lupi del Matese'" }
+		134 = { "%da Legione CC.NN. 'Monte Mauro'" }
+		135 = { "%da Legione CC.NN. 'Gran Sasso'" }
+		136 = { "%da Legione CC.NN. 'Tre Monti'" }
+		137 = { "%da Legione CC.NN. 'Monte Majella'" }
+		138 = { "%da Legione CC.NN. 'Padovani'" }
+		141 = { "%da Legione CC.NN. 'Volturno'" }
+		143 = { "%da Legione CC.NN. 'Ricci'" }
+		144 = { "%da Legione CC.NN. 'Irpina'" }
+		145 = { "%da Legione CC.NN. 'Carlo Pisacane'" }
+		146 = { "%da Legione CC.NN. 'Alburnina'" }
+		148 = { "%da Legione CC.NN. 'Tavoliere'" }
+		150 = { "%da Legione CC.NN. 'Giuseppe Carli'" }
+		151 = { "%da Legione CC.NN. 'Giuseppe Picca'" }
+		152 = { "%da Legione CC.NN. 'Acciaiata'" }
+		153 = { "%da Legione CC.NN. 'Salentina'" }
+		154 = { "%da Legione CC.NN. 'Mastronuzzi'" }
+		155 = { "%da Legione CC.NN. 'Val Bradano'" }
+		156 = { "%da Legione CC.NN. 'Lucana'" }
+		162 = { "%da Legione CC.NN. 'Settino'" }
+		163 = { "%da Legione CC.NN. 'Tommaso Gulli'" }
+		164 = { "%da Legione CC.NN. 'Ercole Scalfaro'" }
+		166 = { "%da Legione CC.NN. 'Peloro'" }
+		167 = { "%da Legione CC.NN. 'Etna'" }
+		168 = { "%da Legione CC.NN. 'Hyblae'" }
+		169 = { "%da Legione CC.NN. 'Syracusae'" }
+		170 = { "%da Legione CC.NN. 'Agrigentum'" }
+		171 = { "%da Legione CC.NN. 'Vespri'" }
+		172 = { "%da Legione CC.NN. 'Enna'" }
+		173 = { "%da Legione CC.NN. 'Salso'" }
+		174 = { "%da Legione CC.NN. 'Segesta'" }
+		176 = { "%da Legione CC.NN. 'Sant'Efisio'" }
+		177 = { "%da Legione CC.NN. 'Logudoro'" }
+		178 = { "%da Legione CC.NN. 'Gennargentu'" }
+		201 = { "%da Legione CC.NN. 'Conte Verde'" }
+	}
+}
+
+# Italian Social Republic (1943-45), fascism only
+ITA_RSI_01 = {
+	name = "Republican Army Divisions"
+
+	for_countries = { ITA }
+
+	can_use = { has_government = fascism }
+
+	division_types = { "infantry" "mountaineers" "marine" "paratrooper" }
+
+	fallback_name = "%da Divisione"
+
+	ordered = {
+		# Esercito Nazionale Repubblicano divisions
+		1 = { "%da Divisione Bersaglieri 'Italia'" }
+		2 = { "%da Divisione Granatieri 'Littorio'" }
+		3 = { "%da Divisione Fanteria di Marina 'San Marco'" }
+		4 = { "%da Divisione Alpina 'Monterosa'" }
+		# Plausible expansion (named after RSI battalions)
+		5 = { "%da Divisione 'Barbarigo'" }
+		6 = { "%da Divisione 'Lupo'" }
+		7 = { "%da Divisione 'Fulmine'" }
+		8 = { "%da Divisione 'Sagittario'" }
+		9 = { "%da Divisione 'Valanga'" }
+		10 = { "%da Divisione 'Scirè'" }
+		11 = { "%da Divisione 'Castagnacci'" }
+		12 = { "%da Divisione 'Risoluti'" }
+		13 = { "%da Divisione 'Nazario Sauro'" }
+		14 = { "%da Divisione 'San Giorgio'" }
+		15 = { "%da Divisione 'Pontida'" }
+		16 = { "%da Divisione 'Venezia Giulia'" }
+		17 = { "%da Divisione 'Mazzarini'" }
+		18 = { "%da Divisione 'Fiamme Bianche'" }
+		# Decima MAS, GNR and other RSI formations
+		21 = { "Divisione Fanteria di Marina 'Decima'" }
+		22 = { "Divisione 'Etna'" }
+		23 = { "1° Reggimento Arditi Paracadutisti 'Folgore'" }
+		24 = { "Reggimento Alpini 'Tagliamento'" }
+		25 = { "Raggruppamento 'Cacciatori degli Appennini'" }
+		26 = { "Gruppo Corazzato 'Leoncello'" }
+		27 = { "Gruppo Corazzato 'Leonessa'" }
+		28 = { "1° Battaglione Bersaglieri Volontari 'Benito Mussolini'" }
+		29 = { "Battaglione Nuotatori Paracadutisti" }
+		30 = { "Battaglione Volontari di Sardegna 'Giovanni Maria Angioy'" }
+	}
+}
+
+# Brigate Nere (1944-45) keyed by brigade number, fascism only
+ITA_BRN_01 = {
+	name = "Black Brigades"
+
+	for_countries = { ITA }
+
+	can_use = { has_government = fascism }
+
+	division_types = { "militia" }
+
+	fallback_name = "%da Brigata Nera"
+
+	ordered = {
+		# Territorial brigades
+		1 = { "%da Brigata Nera 'Ather Capelli'" }
+		2 = { "%da Brigata Nera 'Attilio Prato'" }
+		3 = { "%da Brigata Nera 'Emilio Picot'" }
+		4 = { "%da Brigata Nera 'Luigi Viale'" }
+		5 = { "%da Brigata Nera 'Carlo Lidonnici'" }
+		6 = { "%da Brigata Nera 'Augusto Cristina'" }
+		7 = { "%da Brigata Nera 'Bruno Ponzecchi'" }
+		8 = { "%da Brigata Nera 'Aldo Resega'" }
+		9 = { "%da Brigata Nera 'Giuseppe Cortesi'" }
+		10 = { "%da Brigata Nera 'Enrico Tognù'" }
+		11 = { "%da Brigata Nera 'Cesare Rodini'" }
+		12 = { "%da Brigata Nera 'Augusto Felisari'" }
+		13 = { "%da Brigata Nera 'Marcello Turchetti'" }
+		14 = { "%da Brigata Nera 'Alberto Alfieri'" }
+		15 = { "%da Brigata Nera 'Sergio Gatti'" }
+		16 = { "%da Brigata Nera 'Dante Gervasini'" }
+		17 = { "%da Brigata Nera 'Bartolomeo Asara'" }
+		18 = { "%da Brigata Nera 'Luigi Begon'" }
+		19 = { "%da Brigata Nera 'Romolo Gori'" }
+		20 = { "%da Brigata Nera 'Amerino Cavallin'" }
+		21 = { "%da Brigata Nera 'Stefano Rizzardi'" }
+		22 = { "%da Brigata Nera 'Antonio Faggion'" }
+		23 = { "%da Brigata Nera 'Eugenio Facchini'" }
+		24 = { "%da Brigata Nera 'Igino Ghisellini'" }
+		25 = { "%da Brigata Nera 'Arturo Capanni'" }
+		26 = { "%da Brigata Nera 'Mirko Pistoni'" }
+		27 = { "%da Brigata Nera 'Virginio Gavazzoli'" }
+		28 = { "%da Brigata Nera 'Pippo Astorri'" }
+		29 = { "%da Brigata Nera 'Ettore Muti'" }
+		30 = { "%da Brigata Nera 'Umberto Rosi'" }
+		31 = { "%da Brigata Nera 'Silvio Parodi'" }
+		32 = { "%da Brigata Nera 'Antonio Padoan'" }
+		33 = { "%da Brigata Nera 'Tullio Bertoni'" }
+		34 = { "%da Brigata Nera 'Francesco Briatore'" }
+		35 = { "%da Brigata Nera 'Emilio Spinelli'" }
+		36 = { "%da Brigata Nera 'Natale Piacentini'" }
+		37 = { "%da Brigata Nera 'Emilio Tacchi'" }
+		38 = { "%da Brigata Nera 'Ruy Blas Biagi'" }
+		40 = { "%da Brigata Nera 'Italo Barattini'" }
+		41 = { "%da Brigata Nera 'Raffaele Manganiello'" }
+		# Mobile brigades
+		52 = { "2a Brigata Nera Mobile 'Danilo Mercuri'" }
+		53 = { "3a Brigata Nera Mobile 'Attilio Pappalardo'" }
+		54 = { "4a Brigata Nera Mobile 'Achille Corrao'" }
+		55 = { "5a Brigata Nera Mobile 'Enrico Quagliata'" }
+		# Autonomous brigades
+		61 = { "Brigata Nera Autonoma 'Giovanni Gentile'" }
+		62 = { "Brigata Nera Autonoma 'Francesco Meattini'" }
+		63 = { "Brigata Nera Autonoma 'Tullio Cividino'" }
+		64 = { "Brigata Nera Autonoma 'Guido Gasparri'" }
+		65 = { "Brigata Nera Autonoma 'Venezia Giulia'" }
+		66 = { "Brigata Nera Autonoma 'Marche'" }
+		67 = { "Brigata Nera Autonoma 'Udine'" }
 	}
 }
 
@@ -743,7 +1009,13 @@ ITA_ARM_01 = {
 		136 = { "%da Divisione Corazzata 'Centauro II'" }
 		138 = { "1a Divisione Corazzata CC.NN. 'M'" }
 		# Fictional (postwar cavalry brigade)
-		137 = { "%da Divisione Corazzata 'Pozzuolo del Friuli'" }
+		137 = { "%da Divisione Corazzata 'Pozzuolo del Friuli'" }
+		# Plausible expansion (postwar brigades and cavalry traditions)
+		139 = { "%da Divisione Corazzata 'Curtatone'" }
+		140 = { "%da Divisione Corazzata 'Mameli'" }
+		141 = { "%da Divisione Corazzata 'Nizza'" }
+		142 = { "%da Divisione Corazzata 'Genova'" }
+		143 = { "%da Divisione Corazzata 'Novara'" }
 	}
 }
 
@@ -811,6 +1083,20 @@ ITA_MNT_01 = {
 
 		7 = { "7a Divisione Alpina 'Orobica'" }									# Postwar Alpine brigade names from here
 		8 = { "8a Divisione Alpina 'Cadore'" }
+		# Plausible expansion (Alpini battalion names)
+		9 = { "%da Divisione Alpina 'Monte Cervino'" }
+		10 = { "%da Divisione Alpina 'Mondovì'" }
+		11 = { "%da Divisione Alpina 'Ceva'" }
+		12 = { "%da Divisione Alpina 'Susa'" }
+		13 = { "%da Divisione Alpina 'Val Pellice'" }
+		14 = { "%da Divisione Alpina 'Saluzzo'" }
+		15 = { "%da Divisione Alpina 'Ivrea'" }
+		16 = { "%da Divisione Alpina 'Edolo'" }
+		17 = { "%da Divisione Alpina 'Vestone'" }
+		18 = { "%da Divisione Alpina 'Feltre'" }
+		19 = { "%da Divisione Alpina 'Tolmezzo'" }
+		20 = { "%da Divisione Alpina 'Gemona'" }
+		21 = { "%da Divisione Alpina 'Cividale'" }
 	}
 }
 
@@ -832,6 +1118,59 @@ ITA_PAR_01 = {
 		183 = { "%da Divisione Paracadutisti 'Ciclone'" }
 		184 = { "%da Divisione Paracadutisti 'Nembo'" }
 		185 = { "%da Divisione Paracadutisti 'Folgore'" }
+	}
+}
+
+# Overrides the vanilla placeholder ITA_RGR_01; plausible divisions named after Bersaglieri heritage
+ITA_RGR_01 = {
+	name = "Bersaglieri Divisions"
+
+	for_countries = { ITA }
+
+	can_use = { always = yes }
+
+	division_types = { "ranger_battalion" }
+
+	fallback_name = "%da Divisione Bersaglieri"
+
+	ordered = {
+		# Founder, heroes and battle honours
+		1 = { "%da Divisione Bersaglieri 'Alessandro La Marmora'" }
+		2 = { "%da Divisione Bersaglieri 'Goito'" }
+		3 = { "%da Divisione Bersaglieri 'Cernaia'" }
+		4 = { "%da Divisione Bersaglieri 'Porta Pia'" }
+		5 = { "%da Divisione Bersaglieri 'Luciano Manara'" }
+		6 = { "%da Divisione Bersaglieri 'Enrico Toti'" }
+		7 = { "%da Divisione Bersaglieri 'Sciara Sciat'" }
+		# Corps traditions
+		8 = { "%da Divisione Bersaglieri 'Fiamme Cremisi'" }
+		9 = { "%da Divisione Bersaglieri 'Piumetto'" }
+	}
+}
+
+# Arditi assault troops; historical units, then plausible divisions named after Great War assault traditions
+ITA_ARD_01 = {
+	name = "Arditi Assault Units"
+
+	for_countries = { ITA }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%da Divisione d'Assalto"
+
+	ordered = {
+		# Plausible expansion (Great War Arditi)
+		1 = { "%da Divisione d'Assalto 'Giuseppe Bassi'" }
+		2 = { "%da Divisione d'Assalto 'Sdricca di Manzano'" }
+		3 = { "%da Divisione d'Assalto 'Col Moschin'" }
+		4 = { "%da Divisione d'Assalto 'San Gabriele'" }
+		5 = { "%da Divisione d'Assalto 'Grave di Papadopoli'" }
+		# Historical units (1940-43)
+		21 = { "10° Reggimento Arditi" }
+		22 = { "1° Battaglione Speciale Arditi" }
+		23 = { "Battaglione Sciatori Arditi" }
 	}
 }
 
@@ -923,6 +1262,93 @@ ITA_GAR_01 = {
 		230 = { "230a Divisione Costiera" } 											# Created in '43
 		231 = { "231a Divisione Costiera" } 											# Created in '43
 
+	}
+}
+
+# Guardia alla Frontiera covering sectors of the Vallo Alpino (1937-43), keyed by sector number
+ITA_GAF_01 = {
+	name = "Frontier Guard Sectors"
+
+	for_countries = { ITA }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%s Settore di Copertura"
+
+	ordered = {
+		# Settori di copertura GaF
+		1 = { "%s Settore di Copertura 'Bassa Roja'" }
+		2 = { "%s Settore di Copertura 'Alta Roja-Gessi'" }
+		3 = { "%s Settore di Copertura 'Stura'" }
+		4 = { "%s Settore di Copertura 'Maira-Po'" }
+		5 = { "%s Settore di Copertura 'Media Roja'" }
+		6 = { "%s Settore di Copertura 'Pellice-Germanasca'" }
+		7 = { "%s Settore di Copertura 'Monginevro'" }
+		8 = { "%s Settore di Copertura 'Bardonecchia'" }
+		9 = { "%s Settore di Copertura 'Moncenisio'" }
+		10 = { "%s Settore di Copertura 'Baltea'" }
+		11 = { "%s Settore di Copertura 'Laghi'" }
+		12 = { "%s Settore di Copertura 'Valtellina'" }
+		13 = { "%s Settore di Copertura 'Venosta'" }
+		14 = { "%s Settore di Copertura 'Isarco'" }
+		15 = { "%s Settore di Copertura 'Pusteria'" }
+		16 = { "%s Settore di Copertura 'Cadore-Carnia'" }
+		17 = { "%s Settore di Copertura 'Tarvisio'" }
+		21 = { "%s Settore di Copertura 'Alto Isonzo'" }
+		22 = { "%s Settore di Copertura 'Idria'" }
+		23 = { "%s Settore di Copertura 'Postumia'" }
+		25 = { "%s Settore di Copertura 'Timavo'" }
+		26 = { "%s Settore di Copertura 'Carnaro'" }
+		27 = { "%s Settore di Copertura 'Fiume'" }
+		28 = { "Sottosettore Autonomo 'Levanna'" }
+	}
+}
+
+# Carabinieri Reali; divisions, mobilised units and territorial legions
+ITA_CAR_01 = {
+	name = "Carabinieri Formations"
+
+	for_countries = { ITA }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%da Legione Carabinieri"
+
+	ordered = {
+		# Divisions (1934-39)
+		1 = { "%da Divisione Carabinieri 'Pastrengo'" }
+		2 = { "%da Divisione Carabinieri 'Podgora'" }
+		3 = { "%da Divisione Carabinieri 'Ogaden'" }
+		# Plausible expansion
+		4 = { "%da Divisione Carabinieri 'Culqualber'" }
+		# Mobilised units (1939-43)
+		11 = { "1° Gruppo Carabinieri Mobilitato" }
+		12 = { "1° Battaglione Carabinieri Mobilitato" }
+		13 = { "1° Battaglione Carabinieri Paracadutisti" }
+		# Territorial legions
+		21 = { "Legione Carabinieri di Torino" }
+		22 = { "Legione Carabinieri di Alessandria" }
+		23 = { "Legione Carabinieri di Genova" }
+		24 = { "Legione Carabinieri di Milano" }
+		25 = { "Legione Carabinieri di Verona" }
+		26 = { "Legione Carabinieri di Bolzano" }
+		27 = { "Legione Carabinieri di Padova" }
+		28 = { "Legione Carabinieri di Trieste" }
+		29 = { "Legione Carabinieri di Firenze" }
+		30 = { "Legione Carabinieri di Livorno" }
+		31 = { "Legione Carabinieri di Bologna" }
+		32 = { "Legione Carabinieri di Ancona" }
+		33 = { "Legione Carabinieri di Roma" }
+		34 = { "Legione Carabinieri di Cagliari" }
+		35 = { "Legione Carabinieri di Napoli" }
+		36 = { "Legione Carabinieri di Bari" }
+		37 = { "Legione Carabinieri di Catanzaro" }
+		38 = { "Legione Carabinieri di Palermo" }
+		39 = { "Legione Carabinieri di Messina" }
 	}
 }
 
