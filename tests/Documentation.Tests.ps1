@@ -78,6 +78,20 @@ Describe "Documentation Synchronization: WORKSHOP_DESCRIPTION_GUIDELINES.md" {
     It "Planned section should not be present in the active workshop description" {
         $script:GuideContent | Should -Not -Match '\[h1\]Planned:\[/h1\]' -Because "Planned section was removed to conserve character limit"
     }
+
+    It "Active workshop description must stay within Steam's 17,000 character limit" {
+        $bbcode = [regex]::Match($script:GuideContent, '(?s)```bbcode\r?\n(.*?)\r?\n```')
+        $bbcode.Success | Should -BeTrue -Because "the guide holds the active description in a bbcode block"
+        ($bbcode.Groups[1].Value -replace "`r`n", "`n").Length | Should -BeLessOrEqual 17000
+    }
+
+    It "Active workshop description must not contain emojis" {
+        $bbcode = [regex]::Match($script:GuideContent, '(?s)```bbcode\r?\n(.*?)\r?\n```')
+        # Surrogate pairs plus the symbol, dingbat and variation-selector ranges (same pattern as build.ps1 -Audit)
+        $symbols = '[' + [char]0x2600 + '-' + [char]0x27BF + [char]0x2B50 + [char]0x2B55 + [char]0xFE0F + ']'
+        $found = @([regex]::Matches($bbcode.Groups[1].Value, '\p{Cs}\p{Cs}|' + $symbols) | ForEach-Object { $_.Value })
+        $found.Count | Should -Be 0 -Because "the workshop description must not contain emojis (found: $($found -join ' '))"
+    }
 }
 
 Describe "Agent Skill Mirrors: .claude/skills and .agents/skills" {
@@ -135,6 +149,43 @@ Describe "Subagent Config & Budgeting" {
         $tools = [regex]::Match($front, '(?m)^tools:\s*(.+)$').Groups[1].Value
         $tools | Should -Not -Match '\b(Read|Grep|Glob|Bash|PowerShell|Write|Edit)\b' -Because "group names are pasted into the prompt; the namelist is never opened"
         $text | Should -Match 'at most \d+ web calls'
+    }
+
+    It "Proofreader stays narrow (web-only tools, turn cap, no project rules, small call budget, problems-only output)" {
+        # inex-code-reviewer.md keeps its file name, but is a proofreader of pasted names: mechanical checks are lints
+        $text = [System.IO.File]::ReadAllText((Join-Path $script:RepoRoot '.claude\agents\inex-code-reviewer.md'), [System.Text.Encoding]::UTF8)
+        $front = [regex]::Match($text, '(?s)^---\r?\n(.*?)\r?\n---').Groups[1].Value
+        $front | Should -Match '(?m)^effort:\s*(low|medium)\s*$'
+        $turns = [regex]::Match($front, '(?m)^maxTurns:\s*(\d+)\s*$')
+        $turns.Success | Should -BeTrue -Because "a hard turn cap keeps the proofread to a few lookups"
+        [int]$turns.Groups[1].Value | Should -BeLessOrEqual 12
+        $tools = [regex]::Match($front, '(?m)^tools:\s*(.+)$').Groups[1].Value
+        $tools | Should -Not -Match '\b(Read|Grep|Glob|Bash|PowerShell|Write|Edit)\b' -Because "the added names are pasted into the prompt; the proofreader has no file access"
+        $front | Should -Match '(?m)^omitClaudeMd:\s*true\s*$' -Because "the brief carries everything the proofreader needs"
+        $calls = [regex]::Match($text, 'at most (\d+) web calls')
+        $calls.Success | Should -BeTrue
+        [int]$calls.Groups[1].Value | Should -BeLessOrEqual 10
+        $text | Should -Match 'No issues found' -Because "a clean proofread is one line, with no list of what was verified"
+    }
+
+    It "Historical researcher has a turn cap and a stated call budget" {
+        $text = [System.IO.File]::ReadAllText((Join-Path $script:RepoRoot '.claude\agents\inex-historical-researcher.md'), [System.Text.Encoding]::UTF8)
+        $front = [regex]::Match($text, '(?s)^---\r?\n(.*?)\r?\n---').Groups[1].Value
+        $turns = [regex]::Match($front, '(?m)^maxTurns:\s*(\d+)\s*$')
+        $turns.Success | Should -BeTrue -Because "dossier runs made 43-91 fetches before the brief had a cap"
+        [int]$turns.Groups[1].Value | Should -BeLessOrEqual 60
+        $front | Should -Match '(?m)^omitClaudeMd:\s*true\s*$'
+        $text | Should -Match 'about \d+ web calls'
+    }
+
+    It "Historical researcher writes its dossier to a file and returns a short summary" {
+        $text = [System.IO.File]::ReadAllText((Join-Path $script:RepoRoot '.claude\agents\inex-historical-researcher.md'), [System.Text.Encoding]::UTF8)
+        $front = [regex]::Match($text, '(?s)^---\r?\n(.*?)\r?\n---').Groups[1].Value
+        $tools = [regex]::Match($front, '(?m)^tools:\s*(.+)$').Groups[1].Value
+        $tools | Should -Not -Match '\b(Read|Grep|Glob|Bash|PowerShell|Edit)\b' -Because "the caller pastes the vanilla and current names; whole-file reads in a subagent cost tokens too"
+        $tools | Should -Match '\bWrite\b' -Because "the dossier goes to scratch/ so it survives /clear"
+        $text | Should -Match 'scratch/<tag>_dossier\.md'
+        $text | Should -Match 'at most 200 words'
     }
 }
 

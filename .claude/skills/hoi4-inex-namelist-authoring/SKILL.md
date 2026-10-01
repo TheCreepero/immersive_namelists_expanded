@@ -8,271 +8,99 @@ description: >-
 
 # Hearts of Iron IV Namelist Authoring Runbook
 
-This skill provides step-by-step guidance for researching, scoping, authoring, and validating division namelists for *Immersive Namelists Expanded* (INEX) using a multi-agent workflow.
+Researching, scoping, authoring and validating division namelists for *Immersive Namelists Expanded* (INEX).
 
-> To modernize an **existing** nation's namelist file rather than author a new one, use the lighter `hoi4-inex-namelist-audit` skill.
+The project rules are in `CLAUDE.md` (Antigravity: `GEMINI.md`) and are not repeated here: §2 files and tags, §3 language standards, §4 docs and workshop sync, §5 `build.ps1` commands, §6 engine invariants. This runbook adds the workflow and the design guidance.
 
----
+> To modernize an **existing** nation's file, use the lighter `hoi4-inex-namelist-audit` skill.
 
-## 1. Guiding Philosophy: Historical Plausibility Over Rigid Accuracy
+## Working rules
+- **One nation per session.** `/clear` before starting another task: everything left in context is paid for again on every turn.
+- **Tooling problems are worked around and noted in the plan; `build.ps1`, tests and skill text are not edited during authoring.** Fix them in a fresh session.
+- Do not read a whole namelist file. Inspect with `-Audit <TAG> -NamesOnly` (add `-Group <A>,<B> -Sections -Keys` for one group) and change it through `build.ps1`.
+- Subagents get context, not file access: paste what they must judge into the prompt.
+- Never read a plan or dossier whole: `Grep -n '^## '` for the headings, then `Read` the sections you need with a `limit`.
 
-> [!IMPORTANT]
-> The primary design philosophy of **Immersive Namelists Expanded** is **historical plausibility**, NOT strict historical accuracy.
+## 1. Philosophy: plausibility over rigid accuracy
 
-### What Historical Plausibility Means in INEX:
-- **Scalability for Gameplay**: Rigid historical accuracy artificially limits namelists only to what historically existed on a specific peacetime date (e.g., only 4 divisions for Estonia or only 1 armored division for Finland). When a player mobilizes, expands, or builds specialized forces (tanks, marines, paratroopers, motorized), rigid accuracy fails and runs out of names.
-- **Authentic Extrapolation**: Namelists must plausibly extrapolate how that nation's military would designate expanded formations, drawing on:
-  - Peacetime cadre battalions designed to mobilize into regiments (*üksikpataljonid*, *erilliset pataljoonat*).
-  - Territorial defense leagues and volunteer militias (*Kaitseliit*, *Hemvärnet*, *Suojeluskunta*, *KOP*, *Home Guard*).
-  - Authentic regional/provincial naming conventions, military heroes, or cultural motifs (e.g., Estonian armored units named after legendary armored cars like *Suur Tõll* and *Tasuja*, Swedish Carolean guards, Finnish *Ryhmä* and *Komennuskunta*).
-  - Doctrinal and alternative-history trajectories (e.g., royal/monarchist regiments, volunteer corps, resistance movements).
+INEX aims for **historical plausibility**, not a list frozen at one peacetime date: a list that stops at the four divisions a country fielded in 1936 runs out as soon as a player mobilizes. Extrapolate the way that army would have named its expanded forces, drawing on:
+- peacetime cadre battalions meant to mobilize into regiments (*üksikpataljonid*, *erilliset pataljoonat*);
+- territorial defense leagues and volunteer militias (*Kaitseliit*, *Hemvärnet*, *Suojeluskunta*, *KOP*, *Home Guard*);
+- regional and provincial naming, military heroes and cultural motifs (Estonian armored cars *Suur Tõll* and *Tasuja*, Swedish Caroleans, Finnish *Ryhmä* groups);
+- doctrinal and alternate-history paths (royal regiments, volunteer corps, resistance movements).
 
----
+A name is either verified or a plausible extension of a verified pattern. Never invent filler to reach a count.
 
-## 2. Multi-Agent Authoring Workflow
-
-To maintain high quality, prevent context exhaustion from broad historical research, and guarantee strict compliance with engine and linguistic invariants, agents must follow a three-phase multi-agent workflow:
+## 2. Workflow
 
 ```
-[Phase 1: Research]       Dispatch "Historical Research" Subagent
-                                  │
-                                  ▼
-[Phase 2: Authoring]      Primary Agent authors namelist, updates docs, runs test suite
-                                  │
-                                  ▼
-[Phase 3: Verification]   Dispatch "Code Reviewer" Subagent
+Phase 0  Policy questions, vanilla inspection   ask the user; -InspectVanilla <TAG>
+Phase 1  Research                                inex-historical-researcher, one dossier
+Phase 2  Author, sync docs, verify               primary agent; -Check <TAG>
+Phase 3  Proofread (conditional)                 inex-code-reviewer for 25+ added non-English names, else a self-check
 ```
 
-### Phase 1: Dispatching the "Historical Research" Subagent
+### Phase 0: Policy questions and vanilla inspection
+1. Ask the user every naming-policy question **before** research, so the dossier is scoped once: verified names only or plausible extrapolation, which ideology suites, which lists get a plain/named pair.
+2. `powershell -File .\build.ps1 -InspectVanilla <TAG>` lists the vanilla groups, fallbacks, entry counts and scripted `division_names_group` references; `-Group <GROUP>` excerpts one group. Note vanilla's grammar errors and which tags you will override (`CLAUDE.md` §6).
+3. Record scope and decisions in `docs/superpowers/plans/YYYY-MM-DD-<country>-namelist.md`.
 
-The primary agent **must not** exhaust its main context window with extensive web searches, Wikipedia OOB exploration, or raw linguistic queries. Instead, dispatch a dedicated **"Historical Research"** subagent to conduct the historical and linguistic investigation.
+### Phase 1: Research
+Dispatch `inex-historical-researcher` (`.claude/agents/inex-historical-researcher.md`; the brief sets its model, tools and call budget). Give it the country, the TAG, the Phase 0 findings, the user's policy answers and, when the nation already has a file, the `-Audit <TAG> -NamesOnly` lines (it cannot open files). It writes verified facts and candidate pools with sources to `scratch/<tag>_dossier.md`, one `##` section per directive, and returns only the path and a summary of at most 200 words. You write the entries and any extrapolation. Do not research broadly in the main context.
 
-- **Subagent Role**: `"Historical Research"` (or `"Historical Researcher"`)
-- **Subagent Configuration**: Follows the brief in `.claude/agents/inex-historical-researcher.md`
-- **Subagent Type**: `"research"` (or default agent with read and search capabilities)
-- **Workspace**: `"inherit"`
+**Clear point.** Research fills the context and authoring needs only its results. Once the dossier exists, make sure the plan holds the Phase 0 decisions, tell the user it is safe to `/clear` (or to pick the clear-context option if the client offers one), and continue with "author the <TAG> namelist". In the fresh session invoke this skill, read the plan, and read the dossier by section as each group is authored. If the user prefers to continue in the same session, do so; nothing is lost either way.
 
-#### Responsibilities of the "Historical Research" Subagent:
-1. **Order of Battle (OOB) Investigation (1918–1945)**:
-   - Identify peacetime standing units vs. mobilization cadres (e.g., cadre battalions designed to expand into full 3,000-man wartime regiments).
-   - Research territorial defense leagues, home guards, and volunteer militias (*Kaitseliit*, *Hemvärnet*, *Suojeluskunta*, *KOP*, *Home Guard*).
-   - Identify mobile, cavalry, armored car (*soomusautod*), and armored train (*soomusrongid*) traditions.
-   - Investigate coastal artillery fortresses (*Merekindlused*, *Kustartilleri*), marine amphibious detachments (*Meredessant*), ski/mountain troops, and paratroopers.
-   - Investigate political wings, party militias, guard divisions, and ideological military formations (e.g., fascist militias/blackshirts, communist red guards/workers' brigades, royal/imperial guards, republican defense leagues).
-   - Compile regional naming conventions, historical commanders, and national cultural/independence motifs.
-2. **Linguistic & Grammatical Precision**:
-   - Verify correct grammatical cases in the target language (nominative case rather than genitive/partitive, e.g., Estonian *Jalaväediviis* instead of vanilla's incorrect *diviisi*).
-   - Preserve native diacritics (*ä, ö, õ, ü, š, ž, ł, ś, etc.*).
-   - Determine standard ordinal numbering conventions (e.g., `%d.` with period or Roman `%s.`).
-3. **Vanilla Inspection via Build Tool**:
-   - Run `powershell -File .\build.ps1 -InspectVanilla <TAG>` to extract vanilla groups, fallbacks, and entry counts.
-   - Scan focus trees and scripted effects for existing `division_names_group` references.
+For a follow-up question, dispatch a fresh subagent with the relevant facts pasted in. A resumed subagent reloads its whole transcript.
 
-#### Sample Dispatch Prompt for "Historical Research" Subagent:
-```markdown
-You are a specialized Historical Research subagent for the Hearts of Iron IV mod "Immersive Namelists Expanded" (INEX).
-Target Country: <Country Name> (<TAG>)
+### Phase 2: Author, sync docs, verify
+0. After a `/clear`, the plan and `scratch/<tag>_dossier.md` are the inputs; do not repeat research.
+1. Create `common/units/names_divisions/INEX_<TAG>_names_divisions.txt` from the template in §4 with the Write tool. After that, change it only through `build.ps1`: `-EditNames <TAG> -Batch scratch\<tag>_edits.json` for more than two edits, `-EditNames <TAG> -AddGroup ...` for a new group, `-SetHeader` for the header (`CLAUDE.md` §5 has the parameters and the batch keys).
+2. Sync the docs listed in `CLAUDE.md` §4: workshop guide (cross-reference row and the `[b]<Country>[/b]` block with 2-3 bullets and italic examples), `README.md` table, `wiki/<Nation>.md`, `wiki/Home.md`, `wiki/_Sidebar.md`. `-SyncWiki <TAG>` keeps the wiki's group rows in step with the file.
+3. `powershell -File .\build.ps1 -Check <TAG>`: validation, the Pester suite, audit flags, `Docs:` warnings and diff counts in about ten lines. Fix what it reports. Lint flags are leads; keep one only with a reason written in the plan.
+4. Go through the checklist in §5.
+5. Push the wiki with `powershell -File .\wiki\push-wiki.ps1 -CommitMessage "Document <TAG> division namelists"` once the user has confirmed; it is outward-facing.
 
-Your task is to conduct an in-depth Order of Battle (OOB), linguistic, and historical investigation for <Country Name> (<TAG>) and return a structured research brief.
+### Phase 3: Proofread (conditional)
+There is no general review gate: lints cover the mechanical checks and `-Check` covers docs. What a script cannot judge is whether a new name is misspelled, in the wrong case, misattributed or invented.
 
-Directives:
-1. Investigate the 1918–1945 military structure, standing peacetime units, cadre battalions, territorial defense organizations (militias, home guards), armored/cavalry traditions, coastal fortresses, specialized units, and political/ideological wings (party militias, red guards, royal guards).
-2. Run `powershell -File .\build.ps1 -InspectVanilla <TAG>` to inspect existing vanilla namelists and scripted references in focus trees.
-3. Verify target language grammar and orthography: ensure nominative case (avoid genitive/partitive bugs), verify native diacritics, and determine authentic numbering formats (%d. or %s.).
-4. Gather enough verified material (units, garrisons, regions, commanders, traditions) to support 20–30+ division names per major category; the primary agent writes the entries and any extrapolation.
+**Dispatch the proofreader** (`.claude/agents/inex-code-reviewer.md`; the brief sets its model and budget) only when `-DiffNames <TAG>` shows 25 or more added authored names in a language other than English, or when the user asks for a review. Paste into the prompt:
+- the added and changed names per group (the `+` parts of the `-DiffNames` lines; numbered fallback patterns can be left out),
+- the language they are written in,
+- the plan's list of entries held for author confirmation.
 
-Budget: WebSearch first; WebFetch only a specific page, with a targeted prompt; about 30 tool calls
-at most. Stop once every requested category has verified material.
+It has web tools only and no file access. It answers with problems only (`GROUP: entry -> issue -> suggested fix -> source`) or the single line `No issues found`. Fix what it found with `-EditNames`, run `-Check` again, and record the findings and what you did with each in the plan. Do not dispatch it a second time for a data-only fix.
 
-Deliver a compact Research Brief (tables, no prose, at most about 2,500 words):
-- Recommended namelist groups with tags (<TAG>_<CATEGORY>_<NUM>) and concise UI selector names (e.g., "Infantry Divisions", not "<Country> Infantry Divisions").
-- Valid line combat division tokens for `division_types = { ... }`.
-- Fact tables of historical units, garrisons, commanders and honorifics:
-  item | fact (native spelling, diacritics) | VERIFIED (URL) / CONTRADICTED (URL) / UNVERIFIED.
-  Do not write finished namelist entries or extrapolate; the primary agent does that.
-- Fallback name patterns (`fallback_name = "%d. <Unit>"`) and the target language's numbering convention.
-- Brief historical summaries and 2–3 in-game unit examples for the workshop description.
-Mark UNVERIFIED rather than guessing.
-```
+**Otherwise run the self-check** on the `-DiffNames <TAG>` output and note the result in the plan:
+- every added name is in the dossier's verified facts or on the plan's author-confirmation list;
+- every extrapolated name (a plausible formation the army never fielded) is named as such in the plan;
+- no flag or `Docs:` warning from `-Check` is left unexplained.
 
-Ask the user any naming-policy question (e.g. verified names only vs plausible extrapolation) **before** dispatching, so the brief is scoped once. For a follow-up question, dispatch a fresh subagent with the relevant facts pasted in instead of resuming the earlier one; a resumed subagent reloads its whole transcript.
+## 3. Scoping and modular design
 
----
+Fit the suite to the nation's real military organization and to what a player can build. There is no fixed number of groups: author as many as the nation's depth supports.
 
-### Phase 2: Implementation & Synchronization (Primary Agent)
+**Common archetypes**: frontline divisions and regiments (`<TAG>_INF_01`, `<TAG>_REG_01`); territorial defense, home guard and garrisons (`<TAG>_KL_01`, `<TAG>_GAR_02`); armor, motorized and mechanized, with armored cars and trains (`<TAG>_ARM_02`, `<TAG>_MOT_02`); cavalry (`<TAG>_CAV_01`); marines, coastal fortresses, mountain and airborne troops (`<TAG>_MAR_02`, `<TAG>_MNT_02`, `<TAG>_PAR_02`); elite, guard and volunteer formations (`<TAG>_LEG_01`, `<TAG>_GUA_01`).
 
-Upon receiving the Research Brief from the "Historical Research" subagent, the primary agent:
-1. **Authors the Namelist File**: Creates `common/units/names_divisions/INEX_<TAG>_names_divisions.txt` adhering to Section 6 syntax and engine invariants.
-2. **Synchronizes Documentation**: Updates `WORKSHOP_DESCRIPTION_GUIDELINES.md`, `README.md`, `wiki/<Nation>.md`, `wiki/Home.md`, and `wiki/_Sidebar.md` following Section 7.
-3. **Executes Build & Validation Suite**: Runs `powershell -File .\build.ps1 -ValidateOnly` and `powershell -File .\build.ps1 -Test` to verify syntax and test invariants locally.
+**Grouping**
+- Split formations into separate lists when history or template choice warrants it (peacetime cavalry regiments apart from partisan squadrons; field infantry apart from territorial defense).
+- Combine `division_types` tokens where units share a lineage, so players can assign the list to more templates (motorized and mechanized with armor).
+- Selectors are plural, at most 28 characters, unique in the file and without a demonym (`"Red Guards"`, not `"Finnish Red Guard"`).
 
----
+**Ideology-gated formations**
+Where history or an alternate path gives a nation political wings (Waffen-SS, Blackshirts, Red Guards, royal or imperial guards, republican defense corps), give each ideology its own groups, gated with `can_use = { has_government = <ideology> }`. Never mix opposing traditions in one list, never gate by focus, decision, idea or flag, and do not cap the suite size (`CLAUDE.md` §2 and §6). `-Audit` flags a political group or entry that every government may use.
 
-### Phase 3: Dispatching the "Code Reviewer" Subagent
+**Plain and named variants (infantry, motorized, mechanized, armor)**
+When these lists get nicknames or identity names (`12. Divisioona 'Kollaa'`), keep an un-nicknamed variant beside them so players can choose plain numbering:
+- The **plain variant keeps the vanilla tag** (`<TAG>_INF_01`, or whatever vanilla uses) with the plain selector (`"Infantry Divisions"`), a plain `fallback_name` and **no `ordered` block**. Define it in INEX so vanilla's errors are fixed and the pairing is visible; templates already on that tag keep plain names.
+- The **named variant gets a new tag**: the next category number vanilla does not use (check `-InspectVanilla`), e.g. `FIN_INF_05`, with the selector `"<Plain Selector> (Named)"` and the same `division_types` and `fallback_name`. Create it with `-AddGroup ... -Link <plain tag>`.
+- **Shared numbering**: the named variant links to its plain counterpart with `link_numbering_with`. In a mobile family, link every plain and named mobile group to one anchor (e.g. `<TAG>_MOT_01`).
+- Exception: if vanilla already nicknames those divisions (USA's *1st Infantry Division "Big Red One"*), one named group is enough.
+- `-Audit` shows the fallback-only group as `Variant: plain (un-nicknamed) counterpart of <TAG>` and exempts it from `PLACEHOLDER_ENTRIES` and `LOW_DEPTH`. It pairs the two through the link; without the link the pairing is missed.
+- To turn an existing list into the plain variant: `-EditNames <TAG> -Group <GROUP> -ClearOrdered -Comment "<override note>"`, then add the nicknames to the named group.
 
-After implementing the files and running local validation, the primary agent **must dispatch a dedicated "Code Reviewer" subagent** to independently audit and verify all changes before declaring the task complete.
+## 4. File template
 
-- **Subagent Role**: `"Code Reviewer"`
-- **Subagent Configuration**: Follows the brief in `.claude/agents/inex-code-reviewer.md`
-- **Subagent Type**: `"self"` (or subagent equipped with read, git, and command execution tools)
-- **Workspace**: `"inherit"`
-
-#### Responsibilities of the "Code Reviewer" Subagent:
-The "Code Reviewer" subagent must independently inspect the git diff and run verification to confirm:
-1. **Engine Invariants & File Syntax**:
-   - File path is strictly `common/units/names_divisions/INEX_<TAG>_names_divisions.txt`.
-   - File is saved in UTF-8 without BOM; curly brackets `{}` are strictly balanced.
-   - Group tags strictly follow `<TAG>_<CATEGORY>_<NUM>` and are globally unique across the mod.
-   - `division_types = { ... }` contains only valid line combat subunit tokens (e.g., `"infantry"`, `"light_armor"`, `"marine"`; never `"armor"`, `"marines"`, or support tokens like `"military_police"`).
-   - Keys in `ordered = { ... }` are unique integers; no duplicate keys; no empty `ordered = { }` blocks.
-   - `fallback_name` includes a valid `%d` or `%s` format token.
-   - `link_numbering_with` only links to external groups, never self-referential.
-   - UI selector `name = "<Selector>"` is concise and omits redundant country names / demonym prefixes.
-   - Nicknamed infantry, motorized, mechanized, and armor groups have a plain (un-nicknamed) variant on the vanilla tag that shares their numbering (Section 4), unless vanilla already nicknames them.
-2. **Linguistic & Historical Authenticity**:
-   - Grammar cases are correct (nominative, not genitive/partitive).
-   - Diacritics are accurate and properly encoded.
-   - Sufficient depth is provided for full wartime campaigns (20–30+ entries or robust fallbacks).
-3. **Documentation & Workshop Sync**:
-   - `WORKSHOP_DESCRIPTION_GUIDELINES.md`: Row added to Repository Cross-Reference table; country entry added to `[h1]Included nations:[/h1]` in standard BBCode format with 2–3 concise bullets and italicized examples (`[i]...[/i]`).
-   - Strictly **no emojis** in Steam workshop descriptions; character limit respected.
-   - `README.md`: Country added to Included Nations Summary table.
-   - `wiki/<Nation>.md`: Detailed wiki documentation created; links added in `wiki/Home.md` and `wiki/_Sidebar.md`.
-4. **Automated Test Validation**:
-   - Runs `powershell -File .\build.ps1 -ValidateOnly` and confirms zero syntax/invariant errors.
-   - Runs `powershell -File .\build.ps1 -Test` and confirms all Pester unit tests pass with zero failures.
-
-#### Sample Dispatch Prompt for "Code Reviewer" Subagent:
-The checklist above is enforced mostly by `-ValidateOnly`, `-Test`, `-DiffNames`, and `-Audit`, so the reviewer runs those and spends its effort on what tooling cannot judge. Follow strict reading economy: do not open the full namelist file.
-
-```markdown
-You are a specialized Code Reviewer subagent for the Hearts of Iron IV mod "Immersive Namelists Expanded" (INEX).
-Target Country: <Country Name> (<TAG>). Review all uncommitted changes for <TAG>. Follow reading economy: never open the full namelist file.
-
-1. Run `powershell -File .\build.ps1 -ValidateOnly`, `-Test`, `-DiffNames <TAG>` and `-Audit <TAG> -NamesOnly`.
-   Treat their output as authoritative for syntax, engine invariants, tag format and uniqueness,
-   links, selectors and encoding. Do not re-check those by hand or read the raw namelist file.
-2. From the -Audit and -DiffNames output: selectors concise and without demonyms; nicknamed infantry/motorized/
-   mechanized/armor groups have a plain variant sharing numbering (unless vanilla already
-   nicknames them); ideology groups use has_government and never use has_completed_focus;
-   identities listed as shared across groups are intended.
-3. Linguistics of the added or changed names: nominative case, diacritics, no machine
-   translation. Web spot-check the 5-10 names you are least sure of; do not verify every name.
-4. Docs: `WORKSHOP_DESCRIPTION_GUIDELINES.md` row and BBCode (no emojis, concise), `README.md` table,
-   `wiki/<Nation>.md`, `wiki/Home.md`, `wiki/_Sidebar.md` match the file (`git diff` for docs).
-
-Report: Status APPROVED or CHANGES_REQUESTED, then issues as Critical / Important / Minor with file:line. Be concise.
-```
-
-If the Code Reviewer requests changes, the primary agent must address the findings and re-verify before finalizing. A data-only fix (names, docs) needs only the automated checks re-run. Re-dispatch a reviewer only when `build.ps1`, tests or rule text changed, and scope it to that diff.
-
----
-
-## 3. Research Protocol & Historical Investigation
-
-(Detailed guidelines for the historical investigation conducted by the "Historical Research" subagent)
-
-### Order of Battle (OOB) Investigation
-1. **Peacetime vs. Wartime Mobilization**:
-   - Investigate the target country's military structure between 1918 and 1945.
-   - Differentiate standing peacetime units from mobilization cadres. Many smaller powers used peacetime cadre battalions designed to expand into full 3,000-man wartime regiments.
-2. **Specialized & Paramilitary Wings**:
-   - **Territorial Defense & Militias**: Check for national volunteer defense organizations (*Kaitseliit*, *Hemvärnet*, *Suojeluskunta*, *KOP*, *Home Guard*).
-   - **Elite & Partisan Battalions**: Identify famous volunteer, partisan, or historic units from wars of independence or regional conflicts (e.g., *Kuperjanov*, *Sakala*, *Kalev*, *Scouts*).
-   - **Mobile & Armored Heritage**: Check for armored trains (*soomusrongid*), named armored cars (*soomusautod*), ski/bicycle troops, or independent tank companies.
-   - **Coastal Defense & Fortresses**: Coastal artillery fortresses (*Merekindlused*, *Kustartilleri*), archipelago commands, and marine amphibious detachments (*Meredessant*).
-
-### Vanilla Comparison & Interaction Rules
-1. **Automated Vanilla Inspection (Token-Efficient)**:
-   Instead of loading large, raw vanilla files into context, use the build script's built-in inspector:
-   ```powershell
-   powershell -File .\build.ps1 -InspectVanilla <TAG>
-   ```
-   - Automatically parses vanilla namelist groups, subunit types, fallbacks, and entry counts.
-   - Automatically scans `common/national_focus/` and `common/scripted_effects/` for any `division_names_group = <TAG>_*` references.
-   - To inspect a single specific group without reading the full file:
-     ```powershell
-     powershell -File .\build.ps1 -InspectVanilla <TAG> -Group <GROUP_TAG>
-     ```
-2. **Inspect Existing Coverage & Errors**:
-   - Check what unit types vanilla covers (often generic `%s Infantry Division` placeholders).
-   - Identify grammatical errors in vanilla (e.g., wrong cases like genitive/partitive instead of nominative, missing diacritics, awkward translations).
-3. **Additive Loading & Tag Overrides**:
-   - Files in `common/units/names_divisions/` are loaded additively by the game. Because INEX files are prefixed (`INEX_<TAG>_names_divisions.txt`), vanilla files remain active.
-   - If an INEX group shares the same tag as vanilla (e.g. `<TAG>_INF_01`), INEX **overrides** that vanilla group.
-   - If a tag is omitted from INEX, the vanilla definition continues to exist untouched in game.
-4. **Scripted References in Focus Trees & Events**:
-   - Check if any vanilla namelist tag is referenced by national focus trees (`common/national_focus/`) or scripted effects (`common/scripted_effects/`) via `division_names_group = <TAG>_<TYPE>_<NUM>`.
-   - Never copy empty vanilla stubs into INEX. If an empty vanilla tag is referenced by scripts (e.g. `SOV_INF_02`), omitting it from INEX is completely safe because the engine falls back to the vanilla definition. Only define the tag in INEX if actively providing a fully authored, non-empty namelist for it. The one exception is the fallback-only plain variant of a plain/named pair (Section 4).
-
----
-
-## 4. Namelist Scoping & Modular Design
-
-Tailor the namelist suite to the nation's genuine military organization, historical branches, mobilization doctrines, and gameplay opportunities. Avoid arbitrary limits on the number or types of groups—author as many or as few distinct namelists as make sense for that nation's depth.
-
-### Common Modular Archetypes (Inspiration & Reference):
-- **Frontline Divisions & Regiments**: Peacetime cadre regiments, wartime division mobilization schemes, or historical regional designations (e.g. `<TAG>_INF_01`, `<TAG>_REG_01`).
-- **Territorial Defense, Home Guard & Garrisons**: National defense leagues, county militias, border guards, or fortress garrisons (e.g. `<TAG>_KL_01`, `<TAG>_AIZ_01`, `<TAG>_GAR_02`).
-- **Armored, Motorized & Mechanized**: Tank battalions, armored car traditions, mechanized brigades, and armored trains (e.g. `<TAG>_ARM_02`, `<TAG>_MOT_02`).
-- **Cavalry & Mounted Troops**: Dedicated cavalry regiments, independent reconnaissance squadrons, or partisan horse detachments (e.g. `<TAG>_CAV_01`, `<TAG>_CAV_02`).
-- **Specialized / Amphibious / Mountain / Airborne**: Coastal artillery fortresses, marine assault groups, archipelago defense commands, ski rangers, or paratroopers (e.g. `<TAG>_MAR_02`, `<TAG>_MNT_02`, `<TAG>_PAR_02`).
-- **Elite, Guards & Volunteer Formations**: Historical volunteer legions, royal/presidential guards, resistance movements, or legendary independence battalions (e.g. `<TAG>_LEG_01`, `<TAG>_GUA_01`).
-
-### Grouping Flexibility:
-- **Split vs. Combine**: Separate specialized formations into distinct namelists when historical flavor or player template differentiation warrants it (e.g. splitting peacetime cavalry regiments from volunteer partisan squadrons, or separating field infantry from territorial defense).
-- **Template Compatibility**: Group unit tokens in `division_types = { ... }` logically to give players flexibility when assigning templates (e.g. combining motorized and mechanized with armor if mobile units share lineage).
-
-### Ideology-Gated Formations & Political Wings:
-When a nation's military history, party apparatus, or alternate-history paths feature distinct political or ideological wings (e.g., Waffen-SS, Fascist Blackshirts, Falange/Sinarquistas, Communist Red Guards/Workers' Brigades, Royal/Imperial Guards, Republican defense corps), author dedicated namelists for them:
-- **Gating via `can_use`**: Gate ideological groups strictly using `can_use = { has_government = <ideology> }` (`democratic`, `neutrality` [monarchist/unaligned/authoritarian], `fascism`, `communism`, with boolean operators `OR = { ... }` or `NOT = { ... }`).
-- **Strict Focus Prohibition**: **Never lock namelists behind national focuses (`has_completed_focus`)**, decisions, ideas, or event flags. Focus IDs break compatibility with overhaul mods (e.g. *Road to 56*, national focus overhauls) and fail on peaceful advisor flips, referendums, civil wars, and puppet regime changes. Always gate by government type instead.
-- **No Artificial Pool Cap**: Division namelists have no arbitrary cap per ideology. Nations may author full specialized suites where historically or plausibly justified (e.g. comprehensive Waffen-SS suites, Red Guard branches).
-- **No Mixing Opposing Ideologies**: Never mix opposing ideological traditions in one namelist (e.g. socialist workers' militias alongside royalist or fascist titles). Author separate distinct groups per ideology branch.
-- **UI Selectors**: Selectors must be concise (≤ 25–28 characters), plural, and omit country demonyms (e.g., `"Fascist Legions"`, `"Red Guards"`, `"Imperial Guards"`).
-
-### Plain & Named Variants (Mandatory for Infantry, Motorized, Mechanized, Armor)
-When regular infantry, motorized, mechanized, or armored divisions get nicknamed or identity names (e.g. `12. Divisioona 'Kollaa'`), always keep an **un-nicknamed variant** beside them so players can choose plain numbering:
-- **Plain variant keeps the vanilla tag** (`<TAG>_INF_01`, `<TAG>_MOT_01`, `<TAG>_ARM_01`, `<TAG>_MEC_01`, or whatever vanilla uses) with the plain selector (`"Infantry Divisions"`), a plain `fallback_name` (`"%d. Divisioona"`), and **no `ordered` block** (fallback-only, like vanilla stubs). Define it explicitly in INEX so vanilla errors are fixed and the pairing is visible. Players' existing templates on that tag keep plain names.
-- **Named variant gets a new tag**: the next category number not used by vanilla (check `-InspectVanilla`), e.g. `FIN_INF_05`. Give it the selector `"<Plain Selector> (Named)"` (at most 28 characters) and the same `division_types` and `fallback_name`.
-- **Shared numbering**: the named variant uses `link_numbering_with` on its plain counterpart (`{ <TAG>_INF_01 }`). In a mobile family, link every plain and named mobile group to one anchor (e.g. `<TAG>_MOT_01`).
-- **Exception**: if the vanilla group already carries nicknames (e.g. USA's *1st Infantry Division "Big Red One"*), a single named group is enough.
-- `build.ps1 -Audit` reports such a fallback-only group as `Variant: plain (un-nicknamed) counterpart of <TAG>` and does not flag it `PLACEHOLDER_ENTRIES` or `LOW_DEPTH`. It pairs the two through the `link_numbering_with`; without that link the pairing is missed.
-- To turn an existing list into the plain variant, run `-EditNames <TAG> -Group <GROUP> -ClearOrdered` (add `-Comment` for the override note), then move any authored nicknames to the Named group.
-
----
-
-## 5. Historical & Linguistic Verification Protocol
-
-Before completing any namelist, agents and reviewers **must verify** that the namelist satisfies each of the following criteria:
-
-- [ ] **1. Linguistic & Grammatical Plausibility**:
-  - Are all names written in the grammatically appropriate case (usually nominative rather than genitive/partitive, e.g. Estonian *Jalaväediviis* instead of vanilla's incorrect *diviisi*)?
-  - Are native diacritics (*ä, ö, õ, ü, š, ž, etc.*) and capitalization rules respected?
-  - Does numbering follow the target country's standard (e.g., `%d.` for period-suffixed ordinals like *1. Diviis* or Roman `%s.` where appropriate)?
-
-- [ ] **2. Doctrinal & Institutional Grounding**:
-  - Are names anchored in real-world institutions, peacetime cadres, mobilization plans, or historical traditions (e.g., peacetime single battalions expanding to regiments, territorial leagues, fortress commands)?
-
-- [ ] **3. Gameplay Scalability (Plausible Wartime Depth)**:
-  - Does the list provide sufficient depth for a full Hearts of Iron IV campaign? (A list should rarely stop at 3–4 entries; provide 20–30+ ordered entries or robust fallback names so a mobilizing player doesn't run out of immersive names).
-  - Are plausibly extrapolated units (e.g., higher division numbers, armored or marine formations) natural extensions of the nation's military naming traditions?
-
-- [ ] **4. Cultural & Historical Authenticity**:
-  - Are nicknames, honorary titles, and regional designations grounded in the nation's genuine geography, history, and military culture, avoiding anachronisms or modern fantasy tropes?
-
-- [ ] **5. Fallback Plausibility**:
-  - Does `fallback_name` use an authentic pattern (`%d. <Unit Type>`) that remains natural even if the player produces units beyond the ordered list?
-
-- [ ] **6. Ideology Gating & Mod Compatibility**:
-  - Are ideology-dependent namelists gated strictly via `can_use = { has_government = <ideology> }`?
-  - Are all national focus locks (`has_completed_focus`), decisions, ideas, and event flags strictly avoided?
-
----
-
-## 6. Namelist File Syntax & Engine Invariants
-
-File location: `common/units/names_divisions/INEX_<TAG>_names_divisions.txt`
+`common/units/names_divisions/INEX_<TAG>_names_divisions.txt`, UTF-8 without BOM. `-AddGroup` writes groups in this layout.
 
 ```txt
 # Division template historical names system for <Country> (<TAG>).
@@ -284,98 +112,35 @@ File location: `common/units/names_divisions/INEX_<TAG>_names_divisions.txt`
 
 	for_countries = { <TAG> }
 
-	# Standard gating: always = yes for universal groups; has_government = <ideology> for ideological wings.
-	# NEVER use has_completed_focus, decisions, ideas, or flags!
+	# always = yes for universal groups; has_government = <ideology> for ideological wings.
 	can_use = { always = yes }
 
 	division_types = { "<unit_token_1>" "<unit_token_2>" }
 
-	# Number reservation system: only link to a DIFFERENT group if shared numbering is desired (e.g. motorized linking with regular infantry). Omit or comment out if not linking to another group. NEVER link a group to itself.
-	# link_numbering_with = { <OTHER_TAG_CATEGORY_NUM> }
+	# Only to a DIFFERENT group, when shared numbering is wanted. Omit otherwise.
+	link_numbering_with = { <OTHER_GROUP_TAG> }
 
 	fallback_name = "%d. <Fallback Name>"
 
-	# Names with numbers (only one number per entry).
+	# One number per entry; gaps are fine. A fallback-only (plain) group has no ordered block.
 	ordered =
 	{
 		1 = { "<Historical Name 1>" }
 		2 = { "<Historical Name 2>" }
-		...
-		26 = { "%d. <Fallback Name>" }
 	}
 }
 ```
 
-### Important Syntax Rules & Engine Invariants:
-- **Encoding**: Ensure clean UTF-8 encoding without BOM.
-- **Editing tools (Windows)**: Edit namelists and docs with the Edit/Write tools, or `[IO.File]::WriteAllText($path, $text, (New-Object Text.UTF8Encoding $false))`. Never use Windows PowerShell 5.1 `Set-Content`/`Get-Content` (they read ANSI and write a BOM, corrupting diacritics) or Git Bash `sed -i` on UTF-8 files. Do not normalize line endings; git's `core.autocrlf` handles them on commit.
-- **Quotes**: Arguments must be wrapped in matching double quotes `""`.
-- **UI Selector Names (`name = "..."`)**: Keep in-game selector names concise, functional, and devoid of national demonyms (e.g. `"Alpine Cazadores"` or `"Cavalry Regiments"`, not `"Mexican Alpine Cazadores"`). The in-game division template dropdown UI is narrow and truncates long names.
-- **Number Formats & Fallback Tokens**: Use `%d` for Arabic numbers (`1.`, `2.`) and `%s` for Roman numerals (`I.`, `II.`). Always ensure `fallback_name` includes a literal `%d` or `%s` token (e.g., `%d.`, `%dº`, `%da`, `%s.`) so overflow units do not share identical names. Do not use custom placeholders like `%er` in fallback names (reserve language-specific contractions for static entries in `ordered = { ... }`).
-- **Bracket Balance**: Brackets `{}` must be strictly balanced.
-- **Division Subunit Tokens**: In `division_types = { ... }`, specify only valid line subunit tokens (e.g., `"infantry"`, `"cavalry"`, `"motorized"`, `"mechanized"`, `"light_armor"`, `"medium_armor"`, `"heavy_armor"`, `"modern_armor"`, `"marine"`, `"mountaineers"`, `"paratrooper"`). Do not use `"armor"` or `"marines"`, and avoid support-only tokens like `"military_police"`.
-- **Ideology Gating (`can_use`)**: Optional group trigger evaluated in `Country` scope. Gate ideological namelists strictly via `can_use = { has_government = <ideology> }` (`democratic`, `neutrality`, `fascism`, `communism`, with boolean operators `OR = { ... }` or `NOT = { ... }`).
-  - **Strict Focus Ban**: **Never lock namelists behind national focuses (`has_completed_focus`)**, decisions, ideas, or event flags. Focus locks break compatibility with overhaul mods (e.g. *Road to 56*, national focus overhauls) and fail on peaceful advisor flips, referendums, civil wars, and puppet releases. Always gate by government type instead.
-- **Ordered Blocks & Keys**: Each integer index in `ordered = { ... }` must be unique. Duplicate keys silently overwrite previous entries. Avoid leaving empty `ordered = { }` blocks; a fallback-only group (such as a plain variant) omits `ordered` entirely.
-- **Link Numbering**: `link_numbering_with` is strictly for cross-referencing *external* groups to prevent duplicate division numbers. Never set a group to link with itself (`link_numbering_with = { GROUP_NAME }`).
-- **Global Group Tag Uniqueness**: Root-level group tags (e.g. `<TAG>_<CAT>_<NUM>`) must be strictly unique across the entire mod. Never duplicate a group tag within a file or across multiple files.
+- Tokens, fallback formats, keys and links: `CLAUDE.md` §6; `-ValidateOnly` enforces them.
+- **Editing on Windows**: edit namelists and docs with `build.ps1`, the Edit/Write tools, or `[IO.File]::WriteAllText($path, $text, (New-Object Text.UTF8Encoding $false))`. Never use Windows PowerShell 5.1 `Set-Content`/`Get-Content` (they read ANSI and write a BOM, which corrupts diacritics) or Git Bash `sed -i` on UTF-8 files. Do not normalize line endings; git's `core.autocrlf` handles them on commit.
 
----
+## 5. Checklist before completion
 
-## 7. Documentation & Workshop Synchronization
-
-Whenever a country is added or updated, immediately update `WORKSHOP_DESCRIPTION_GUIDELINES.md`, `README.md`, and `wiki/`:
-1. **Repository Cross-Reference (`WORKSHOP_DESCRIPTION_GUIDELINES.md`)**:
-   Add a row to the markdown table:
-   `| INEX_<TAG>_names_divisions.txt | <Country> | <TAG> | Included (<Summary of highlights>) |`
-2. **Active Steam Workshop Description (`WORKSHOP_DESCRIPTION_GUIDELINES.md`)**:
-   Add the nation under `[h1]Included nations:[/h1]` using standard BBCode format (2–3 concise bullet points to respect the character limit):
-   ```bbcode
-   [b]<Country>[/b]
-   - <Category Name>: Brief description with italicized in-game examples ([i]Unit Name[/i])
-   ```
-3. **README Summary Table (`README.md`)**:
-   Add newly added country tags, names, and file paths to the **Included Nations Summary** table.
-4. **Wiki Documentation (`wiki/`)**:
-   - Create or update the detailed documentation page for the country at `wiki/<Nation>.md`.
-   - If adding a new country, add links to `wiki/Home.md` and `wiki/_Sidebar.md`.
-   - Deploy updates to the remote GitHub wiki via:
-     ```powershell
-     powershell -File .\wiki\push-wiki.ps1 -CommitMessage "Document <TAG> division namelists"
-     ```
-5. **Steam Description Invariants**:
-   - Strictly no emojis anywhere in the description.
-   - Respect Steam's ~17,000 character limit: keep bullets concise and omit author update quote blocks (`[quote=author]...[/quote]`).
-   - Maintain the author's concise, direct, bullet-focused voice.
-   - Ensure proper diacritics and grammar on historical unit titles.
-   - If the user asks for the updated description in chat, present the complete BBCode in a single code block ready for copy-pasting.
-
----
-
-## 8. Build, Validation & Test Protocol
-
-Always run the build automation scripts from the mod root:
-
-```powershell
-# 1. Syntax, engine invariant, and bracket validation
-powershell -File .\build.ps1 -ValidateOnly
-
-# 2. Automated Pester unit test suite (engine rules, docs sync, build script)
-powershell -File .\build.ps1 -Test
-
-# 2b. Quality scorecard plus review list (new/removed tags, changed names only)
-powershell -File .\build.ps1 -Audit <TAG> -Compare HEAD
-
-# 2c. Name-level diff against git revision with move detection
-powershell -File .\build.ps1 -DiffNames <TAG>
-
-# 2d. Compact name list or group inspection
-powershell -File .\build.ps1 -Audit <TAG> -NamesOnly
-powershell -File .\build.ps1 -Audit <TAG> -Group <GROUP> -NamesOnly -Sections [-Keys]
-
-# 3. Release packaging test (ensures clean ZIP excluding dev artifacts)
-powershell -File .\build.ps1 -Package
-
-# 4. Live development link (optional: links Paradox launcher to git repo)
-powershell -File .\build.ps1 -DevLink
-```
+- [ ] **Language**: names in the right grammatical case (usually nominative: Estonian *Jalaväediviis*, not vanilla's *diviisi*), native diacritics and capitalization, the nation's own ordinal format (`%d.`, Roman `%s.`).
+- [ ] **Grounding**: names rest on real institutions, peacetime cadres, mobilization plans or traditions.
+- [ ] **Depth**: main line lists carry 20-30+ authored entries, `fallback_name` reads naturally at any number past them, and extrapolated units follow the nation's own naming tradition.
+- [ ] **Authenticity**: nicknames, honorifics and regions come from the nation's geography, history and military culture, with no anachronisms or fantasy tropes.
+- [ ] **Gating**: ideology groups use `has_government`; no focus, decision, idea or flag locks; no opposing traditions in one list.
+- [ ] **Plain/named**: every nicknamed infantry, motorized, mechanized or armor list has its plain variant sharing numbering.
+- [ ] **Docs**: workshop row and block, README row, wiki page, Home and Sidebar are updated (`CLAUDE.md` §4).
+- [ ] **`-Check <TAG>` passes**, and every flag it still shows has a reason in the plan.

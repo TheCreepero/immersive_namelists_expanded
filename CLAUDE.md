@@ -2,7 +2,7 @@
 
 ## 1. Workspace & Architecture
 - **Single-Root**: Root directly hosts `.git/`, `descriptor.mod`, `thumbnail.png`, `build.ps1`, `common/`, `tests/`, `wiki/`, `.github/`, docs (`README.md`, `WORKSHOP_DESCRIPTION_GUIDELINES.md`), and agent configs (`CLAUDE.md`, `.claude/` for Claude Code; `GEMINI.md`, `.agents/` for Google Antigravity).
-- **Artifacts**: Releases -> `artifacts/` (`build.ps1 -Package`). Temp files -> `scratch/`.
+- **Artifacts**: Releases -> `artifacts/` (`build.ps1 -Package`). Temp files -> `scratch/` (research dossiers `<tag>_dossier.md` and edit batches `<tag>_edits.json` live there so a session can be cleared and resumed from disk).
 - **Per-Nation Plans**: `docs/superpowers/plans/YYYY-MM-DD-<country>-audit.md` (for audits) or `<country>-namelist.md` (for authoring).
 
 ## 2. File & Group Conventions
@@ -25,13 +25,16 @@ When adding, expanding, or modifying namelists:
 5. **In-Chat Description**: On request, output full ready-to-copy Steam BBCode description + summary of changes.
 
 ## 5. Build & Validation Protocol
-- `powershell -File .\build.ps1 -ValidateOnly` : Syntax and bracket validation. Required before completing any namelist task.
-- `powershell -File .\build.ps1 -Test`         : Full Pester unit test suite (engine invariants and documentation sync).
-- `powershell -File .\build.ps1 -Audit <TAG>`  : Heuristic quality scorecard (`-Audit ALL` for full report; add `-Compare HEAD` for a review list of tag and name changes; add `-Group <A>,<B> -NamesOnly [-Sections] [-Keys]` to inspect compact name lines: consecutive duplicates collapse to `name (xN)`, `-Keys` prefixes ordered keys, gated groups show `can_use`).
-- `powershell -File .\build.ps1 -EditNames <TAG> -Group <A>,<B> [-Remove "A; B"] [-RemoveAll] [-Rename "Old=New"] [-Add "C; D" [-Section <header>]] [-Set "Idx=Val"] [-Selector "<Name>"] [-AddType "<type>"] [-RemoveType "<type>"] [-CanUse "<trigger>"] [-ClearOrdered] [-Comment "<text>"] [-RemoveGroup]` : Edit group names and metadata in place without opening the file; auto-handles numbering, indentation, header cleanup, and multi-group edits. `-RemoveAll -Add "# Header; 1=A; 2=B"` rewrites a whole list, `-ClearOrdered` makes a fallback-only plain group, `-Comment` sets the comment above a group, `-RemoveGroup` deletes a group (refused while another group links to it).
+- `powershell -File .\build.ps1 -Check <TAG> [-Base <rev>]` : One compact pass (about ten lines; errors, failed tests and warnings in full): `-ValidateOnly`, `-Test`, the `-Audit` summary with flag and docs warnings, a refresh of the audit plan in progress, and `-DiffNames` counts. Required before completing any namelist task.
+- `powershell -File .\build.ps1 -ValidateOnly` : Syntax and bracket validation (part of `-Check`).
+- `powershell -File .\build.ps1 -Test`         : Full Pester unit test suite (engine invariants and documentation sync; part of `-Check`).
+- `powershell -File .\build.ps1 -Audit <TAG>`  : Heuristic quality scorecard (`-Audit ALL` for full report; add `-Compare HEAD` for a review list of tag and name changes; add `-Group <A>,<B> -NamesOnly [-Sections] [-Keys]` to inspect compact name lines: consecutive duplicates collapse to `name (xN)`, `-Keys` prefixes ordered keys, gated groups show `can_use`). Lists the entries behind `DUPLICATE_NAME`, `STALE_COMMENT` and `POLITICAL_ENTRY`, and checks the nation's workshop block (bullets, `[i]` examples) plus the description's emojis and length as `Docs:` warnings.
+- `powershell -File .\build.ps1 -EditNames <TAG> -Group <A>,<B> [-Remove "A; B"] [-RemoveAll] [-Rename "Old=New"] [-Add "C; D" [-Section <header> | -After <name>]] [-Set "Idx=Val"] [-RenameSection "Old=New"] [-Selector "<Name>"] [-Fallback "<pattern>"] [-AddType "<type>"] [-RemoveType "<type>"] [-CanUse "<trigger>"] [-ClearOrdered] [-Comment "<text>"] [-RemoveGroup] [-Verbose]` : Edit group names and metadata in place without opening the file; auto-handles numbering, indentation, header cleanup, and multi-group edits. `-RemoveAll -Add "# Header; 1=A; 2=B"` rewrites a whole list, `-After` inserts after an existing name, `-RenameSection` renames a comment header, `-ClearOrdered` makes a fallback-only plain group, `-Comment` sets the comment above a group, `-RemoveGroup` deletes a group (refused while another group links to it). Prints one summary line per group; `-Verbose` also lists the names (`-Quiet` is still accepted and no longer needed).
+- `powershell -File .\build.ps1 -EditNames <TAG> -Batch <file.json>` : Apply many edits in one run, all or nothing. The UTF-8 JSON file is an array of operations keyed by the `-EditNames` parameter names (`"group"`, `"add"`, `"remove"`, `"rename"`, `"set"`, `"after"`, `"section"`, `"renameSection"`, `"selector"`, `"fallback"`, `"addType"`, `"removeType"`, `"canUse"`, `"removeAll"`, `"clearOrdered"`, `"removeGroup"`, `"comment"`, `"addGroup"`, `"link"`); list values are JSON arrays. Use it for more than two edits and for names with apostrophes or quotes; keep the file in `scratch/`.
+- `powershell -File .\build.ps1 -EditNames <TAG> -AddGroup -Group <NEW> -Selector "<Name>" -AddType "<type>" -Fallback "<pattern>" [-CanUse "<trigger>"] [-Link <group>] [-Add "A; B"] [-Comment "<text>"] [-After <group>]` : Create a group block in the file template layout (end of file, or after `-After`). Refuses a tag that exists anywhere in the mod and invalid `division_types` tokens.
 - `powershell -File .\build.ps1 -SetHeader <TAG> -HeaderText "<text>"` : Replace a namelist file's header comment (section banners are kept).
-- `powershell -File .\build.ps1 -DiffNames <TAG> [-Base <rev>]` : Name-level diff against git (`HEAD` by default) with additions, removals, and moves.
-- `powershell -File .\build.ps1 -AuditPlan <TAG>` : Create `docs/superpowers/plans/YYYY-MM-DD-<country>-audit.md` or refresh its generated change table; reports unfilled TODO sections as `PlanTodo`.
+- `powershell -File .\build.ps1 -DiffNames <TAG> [-Base <rev>]` : Name-level diff against git (`HEAD` by default) with additions, removals, and moves; a repeated name prints once as `name (xN)`.
+- `powershell -File .\build.ps1 -AuditPlan <TAG>` : Create `docs/superpowers/plans/YYYY-MM-DD-<country>-audit.md` or refresh its generated change table (repeats collapse, more than three removed fallback stubs print as a count, and an empty diff keeps the recorded table); reports unfilled TODO sections as `PlanTodo`.
 - `powershell -File .\build.ps1 -SyncWiki <TAG>`  : Sync `wiki/<Country>.md` display names, types, and fallbacks; reports stale/missing tags and prose mentions.
 - `powershell -File .\build.ps1 -InspectVanilla <TAG> [-Group <GROUP>]` : Vanilla groups, counts, fallbacks, and scripted focus/event references.
 - `powershell -File .\build.ps1 -Package`      : Staged release zip in `artifacts/` (excludes dev/test/docs).
@@ -42,7 +45,7 @@ When adding, expanding, or modifying namelists:
 - **Tag Overrides**: Reusing vanilla tag (e.g., `SOV_INF_01`) overrides it; new tag (e.g., `EST_KL_01`) adds a group.
 - **Scripted Fallbacks**: Omitted vanilla tags referenced by events/focuses fall back to vanilla automatically. Never copy identical empty vanilla stubs (exception: the plain variant below).
 - **Plain/Named Variants**: Nicknamed infantry, motorized, mechanized, and armor lists keep an un-nicknamed variant: the vanilla tag stays a fallback-only plain group (no `ordered`), and the nicknames go in a new `"<Selector> (Named)"` tag that shares its numbering via `link_numbering_with = { <plain tag> }`. Skip this only if vanilla already nicknames those divisions (e.g. USA).
-- **Subunits**: `division_types = { ... }` allows only valid line combat tokens (`"infantry"`, `"marine"`, `"light_armor"`, `"medium_armor"`, `"heavy_armor"`, `"modern_armor"`, `"motorized"`). Never use invalid (`"armor"`, `"marines"`) or support-only tokens (`"military_police"`).
+- **Subunits**: `division_types = { ... }` allows any line combat token that `-ValidateOnly` accepts (the full list is `$ValidDivisionTypes` in `build.ps1`). Common ones: `"infantry"`, `"cavalry"`, `"motorized"`, `"mechanized"`, `"marine"`, `"mountaineers"`, `"paratrooper"`, `"militia"`, `"light_armor"`, `"medium_armor"`, `"heavy_armor"`, `"modern_armor"`. Never use invalid (`"armor"`, `"marines"`) or support-only tokens (`"military_police"`).
 - **Ideology Gating (`can_use`)**: Optional group trigger evaluated in `Country` scope. Gate ideological namelists strictly via `can_use = { has_government = <ideology> }` (`democratic`, `neutrality`, `fascism`, `communism`, with boolean operators `OR = { ... }` or `NOT = { ... }`).
   - **Strict Focus Ban**: **Never lock namelists behind national focuses (`has_completed_focus`)**, decisions, ideas, or event flags. Focus locks break compatibility with overhaul mods (e.g. *Road to 56*, national focus overhauls) and fail on peaceful advisor flips, referendums, civil wars, and puppet releases. Always gate by government type instead.
 - **Ordered Blocks**: Unique integer keys (duplicates overwrite). No empty `ordered = { }` blocks.
@@ -51,14 +54,14 @@ When adding, expanding, or modifying namelists:
 - **Tag Uniqueness**: Group tags must be globally unique across all repo files.
 
 ## 7. Related Skills
-- **Authoring**: `hoi4-inex-namelist-authoring` (`.claude/skills/` or `.agents/skills/`) for new/expanded namelists via Historical Research and Code Reviewer subagents.
+- **Authoring**: `hoi4-inex-namelist-authoring` (`.claude/skills/` or `.agents/skills/`) for new/expanded namelists via the Historical Research subagent and a conditional proofread.
 - **Audit**: `hoi4-inex-namelist-audit` (`.claude/skills/` or `.agents/skills/`) to audit and modernize existing namelists starting from `build.ps1 -Audit <TAG>`.
 
 ## 8. Agent Config Mirrors
 Claude Code and Google Antigravity use mirrored configs:
 - `CLAUDE.md` ⇄ `GEMINI.md` (byte-identical).
 - `.claude/skills/<skill>/SKILL.md` ⇄ `.agents/skills/<skill>/SKILL.md`, for `hoi4-inex-namelist-authoring` and `hoi4-inex-namelist-audit` (byte-identical).
-- The subagent briefs exist once, in `.claude/agents/`: `inex-historical-researcher.md` (full OOB dossier for authoring), `inex-audit-researcher.md` (budgeted fact-check for audits: web-only tools, ≤25 web calls, `effort: medium`, `maxTurns: 30`) and `inex-code-reviewer.md`. Claude dispatches them as named agents; Antigravity passes their path to `invoke_subagent`.
+- The subagent briefs exist once, in `.claude/agents/`: `inex-historical-researcher.md` (full OOB dossier for authoring, written to `scratch/<tag>_dossier.md` with a summary of at most 200 words returned: web tools plus Write, about 40 web calls, `maxTurns: 50`), `inex-audit-researcher.md` (budgeted fact-check for audits: web-only tools, ≤25 web calls, `effort: medium`, `maxTurns: 30`) and `inex-code-reviewer.md` (proofreader of added names, not a general review gate: web-only tools, ≤8 web calls, `maxTurns: 12`; dispatched only when a change adds 25+ authored non-English names or the user asks, with the names pasted in). Mechanical checks are lints in `build.ps1`, not reviewer work. Claude dispatches the briefs as named agents; Antigravity passes their path to `invoke_subagent`.
 
 When a rule, standard or runbook step changes in one file, change its mirror in the same task. The project rules stay identical. Confirm with `git status` that both sides changed before reporting completion.
 

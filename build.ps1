@@ -48,7 +48,7 @@
 .PARAMETER Group
     Optional specific namelist group tag to excerpt directly when using -InspectVanilla or -Audit (e.g. -Group SOV_INF_02).
     With -Audit, accepts a comma-separated list, and the INEX_<TAG>_ prefix may be omitted (e.g. -Group INF_01,REG_01).
-    With -EditNames (required): the single group to edit; the prefix may be omitted.
+    With -EditNames (required unless -Batch): the group(s) to edit, or the tag to create with -AddGroup; the prefix may be omitted.
 
 .PARAMETER NamesOnly
     With -Audit: print one compact line per group (tag, count, selector, names separated by "; ") instead of raw blocks.
@@ -65,7 +65,27 @@
 .PARAMETER EditNames
     Edit one group of a mod namelist in place without opening the file (e.g. -EditNames LAT -Group INF_01 -Rename "Old=New").
     Supports -Add, -Remove, -RemoveAll, -Rename, -Set, -After, -Section, -RenameSection, -ClearOrdered, -RemoveGroup,
-    -Comment, -Selector, -AddType, -RemoveType, -CanUse, -Quiet.
+    -Comment, -Selector, -Fallback, -AddType, -RemoveType, -CanUse, -AddGroup, -Link, -Batch.
+    Prints one summary line per group; add -Verbose to also list the group's names.
+
+.PARAMETER Batch
+    With -EditNames: a UTF-8 JSON file holding an array of operations, applied in order and written only if all succeed.
+    Each operation is an object with the -EditNames parameter names as keys: "group" plus any of "add", "remove",
+    "rename", "set", "after", "section", "renameSection", "selector", "fallback", "addType", "removeType", "canUse",
+    "removeAll", "clearOrdered", "removeGroup", "comment", "addGroup", "link". List values are a JSON array (items kept
+    whole) or one "A; B" string. Use it for more than two edits and for names with apostrophes or quotes.
+
+.PARAMETER AddGroup
+    With -EditNames: create the group named by -Group from -Selector, -AddType and -Fallback (all required), with
+    optional -CanUse (default always = yes), -Link, -Add, -Comment and -After <existing group> (default: end of file).
+    Refuses a tag that exists anywhere in the mod and invalid division type tokens.
+
+.PARAMETER Link
+    With -EditNames -AddGroup: existing group the new group shares numbering with (link_numbering_with).
+
+.PARAMETER Check
+    One compact pass for a TAG (e.g. -Check FIN): -ValidateOnly, -Test, the -Audit summary with flag and docs warnings,
+    a refresh of the audit plan in progress, and -DiffNames counts. About 10 lines; failures and warnings in full.
 
 .PARAMETER RemoveAll
     With -EditNames: empty the ordered block first, so -Add can rewrite the whole list in one call. Needs -Add.
@@ -103,6 +123,7 @@
 
 .PARAMETER After
     With -EditNames -Add: insert the added names directly after this existing name instead of at the block end.
+    With -EditNames -AddGroup: the existing group the new group is placed after.
 
 .PARAMETER Section
     With -EditNames -Add: add the names at the end of the section under this comment header (text after '#');
@@ -112,7 +133,7 @@
     With -EditNames: rename comment headers in place ("Old header=New header; ...").
 
 .PARAMETER Quiet
-    With -EditNames: print only the summary line (count and dropped sections), not the group's names.
+    With -EditNames: accepted for older command lines. The summary line alone is now the default; -Verbose adds the names.
 
 .PARAMETER DiffNames
     Name-level diff of a mod namelist against a git revision (e.g. -DiffNames LAT): one line per changed group with
@@ -120,12 +141,13 @@
     and the unchanged groups. Far smaller than a line diff; use it for plan change tables and reviews.
 
 .PARAMETER Base
-    With -DiffNames or -AuditPlan: git revision to compare the working-tree file against (default HEAD).
+    With -DiffNames, -AuditPlan or -Check: git revision to compare the working-tree file against (default HEAD).
 
 .PARAMETER AuditPlan
     Create docs/superpowers/plans/<today>-<country>-audit.md (e.g. -AuditPlan LAT): the initial -Audit report, TODO
     sections to fill, and a per-group change table generated from -DiffNames between markers. Run again to refresh
-    the table; the rest of the plan is left untouched. -Audit reports unfilled TODOs as PlanTodo.
+    the table (today's plan, or the one with uncommitted changes); the rest of the plan is left untouched.
+    -Audit reports unfilled TODOs as PlanTodo.
 
 .PARAMETER SyncWiki
     Sync wiki/<Country>.md group rows with the namelist (literal display names, division types, fallback) and the TAG's
@@ -241,11 +263,20 @@ param(
 
     [Parameter(ParameterSetName = 'InspectVanilla')]
     [Parameter(ParameterSetName = 'Audit')]
-    [Parameter(ParameterSetName = 'EditNames', Mandatory = $true)]
+    [Parameter(ParameterSetName = 'EditNames')]
     [string[]]$Group,
 
     [Parameter(ParameterSetName = 'EditNames', Mandatory = $true)]
     [string]$EditNames,
+
+    [Parameter(ParameterSetName = 'EditNames')]
+    [string]$Batch,
+
+    [Parameter(ParameterSetName = 'EditNames')]
+    [switch]$AddGroup,
+
+    [Parameter(ParameterSetName = 'EditNames')]
+    [string]$Link,
 
     [Parameter(ParameterSetName = 'EditNames')]
     [string]$Add,
@@ -313,12 +344,17 @@ param(
     [Parameter(ParameterSetName = 'SyncWiki', Mandatory = $true)]
     [string]$SyncWiki,
 
+    [Parameter(ParameterSetName = 'Check', Mandatory = $true)]
+    [string]$Check,
+
     [Parameter(ParameterSetName = 'DiffNames')]
     [Parameter(ParameterSetName = 'AuditPlan')]
+    [Parameter(ParameterSetName = 'Check')]
     [string]$Base = 'HEAD',
 
     [Parameter(ParameterSetName = 'InspectVanilla')]
     [Parameter(ParameterSetName = 'Audit')]
+    [Parameter(ParameterSetName = 'Check')]
     [string]$Hoi4InstallDir,
 
     [switch]$Validate,
@@ -343,6 +379,15 @@ function Write-Warn   { param([string]$msg) Write-Host "  [WARN] $msg" -Foregrou
 function Write-Err    { param([string]$msg) Write-Host "  [ERROR] $msg" -ForegroundColor Red }
 
 $stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
+
+# --- Valid division_types tokens (line combat subunits), shared by validation and -EditNames ---
+$ValidDivisionTypes = @(
+    'infantry', 'cavalry', 'motorized', 'mechanized', 'marine', 'mountaineers', 'paratrooper',
+    'light_armor', 'medium_armor', 'heavy_armor', 'super_heavy_armor', 'modern_armor',
+    'amphibious_armor', 'amphibious_mechanized', 'artillery', 'anti_air', 'anti_tank',
+    'rocket_artillery', 'motorized_rocket_artillery', 'irregular_infantry', 'militia',
+    'camelry', 'ranger_battalion', 'penal_battalion'
+)
 
 # --- Locate Directories ---
 $ScriptDir = $PSScriptRoot
@@ -465,13 +510,6 @@ function Invoke-Validation {
         Write-Warn "No division namelist files found in $namelistDir"
     }
 
-    $validSubunits = @(
-        'infantry', 'cavalry', 'motorized', 'mechanized', 'marine', 'mountaineers', 'paratrooper',
-        'light_armor', 'medium_armor', 'heavy_armor', 'super_heavy_armor', 'modern_armor',
-        'amphibious_armor', 'amphibious_mechanized', 'artillery', 'anti_air', 'anti_tank',
-        'rocket_artillery', 'motorized_rocket_artillery', 'irregular_infantry', 'militia',
-        'camelry', 'ranger_battalion', 'penal_battalion'
-    )
     $globalGroupTags = @{}
 
     $checkedCount = 0
@@ -510,7 +548,7 @@ function Invoke-Validation {
         foreach ($tm in $typeMatches) {
             $tokens = [regex]::Matches($tm.Groups[1].Value, '"([^"]+)"') | ForEach-Object { $_.Groups[1].Value }
             foreach ($tok in $tokens) {
-                if ($validSubunits -notcontains $tok) {
+                if ($ValidDivisionTypes -notcontains $tok) {
                     Write-Err "$($file.Name): Invalid division type token '$tok' found in division_types"
                     $fileHasError = $true
                 }
@@ -905,13 +943,34 @@ function Invoke-InspectVanilla {
     }
 }
 
+# --- Helper: Numbering-insensitive pattern of a name ---
+# "1st Infantry Division", "%d Infantry Division" and "IV. Divizija" compare equal to their fallback pattern.
+function Get-NamePatternKey {
+    param([string]$Name)
+    $n = $Name -replace '%[ds]', '#'
+    $n = $n -replace '\b\d+(st|nd|rd|th|e|er|re|a|o)?\b', '#'
+    $n = $n -replace '\b[IVXLC]+\b', '#'
+    return ($n -replace '\s+', ' ').Trim().ToLowerInvariant()
+}
+
+# --- Helper: Does a name only restate its group's fallback pattern (a numbered stub with no identity)? ---
+function Test-FallbackStub {
+    param([string]$Name, [string]$Fallback)
+    if (-not $Name -or -not $Fallback) { return $false }
+    if ((Get-NamePatternKey $Name) -eq (Get-NamePatternKey $Fallback)) { return $true }
+    # Ordinal suffixes glued to the number (French "12eme", "1st" against "%dth") escape the pattern key, so also match the fallback itself
+    $rx = '^' + ([regex]::Escape($Fallback) -replace '%d(st|nd|rd|th)\b', '\d+(st|nd|rd|th)' -replace '%d', '\d+' -replace '%s', '[IVXLCDM]+') + '$'
+    return ($Name -match $rx)
+}
+
 # --- Helper: Heuristic quality audit of an INEX namelist file ---
 # Returns file-level flags plus per-group metrics and flags. Flags are hints for the
 # hoi4-inex-namelist-audit skill, not invariant errors (those live in Invoke-Validation).
 function Get-NamelistAuditData {
-    param([string]$Path)
+    # -Text audits namelist text that is not on disk (an edit in progress) instead of the file at -Path
+    param([string]$Path, [string]$Text)
 
-    $lines = [System.IO.File]::ReadAllLines($Path, [System.Text.Encoding]::UTF8)
+    $lines = if ($Path) { [System.IO.File]::ReadAllLines($Path, [System.Text.Encoding]::UTF8) } else { @($Text -split '\r?\n') }
     $rawText = $lines -join "`n"
 
     $fileFlags = [System.Collections.Generic.List[string]]::new()
@@ -923,15 +982,7 @@ function Get-NamelistAuditData {
     $todoRegex = '(?i)#.*\b(todo|fixme|placeholder|barely any info|very little info)\b'
     # Quoted string that tolerates escaped nickname quotes, e.g. "Lashkar-e 9-e Zerehi \"Kaveh\""
     $str = '"((?:[^"\\]|\\.)*)"'
-
-    # Normalizes numbering so "1st Infantry Division", "%d Infantry Division" and "IV. Divizija" compare equal to their fallback pattern.
-    $normalize = {
-        param([string]$s)
-        $n = $s -replace '%[ds]', '#'
-        $n = $n -replace '\b\d+(st|nd|rd|th|e|er|re|a|o)?\b', '#'
-        $n = $n -replace '\b[IVXLC]+\b', '#'
-        return ($n -replace '\s+', ' ').Trim().ToLowerInvariant()
-    }
+    $staleRx = '(?i)\b(fictional|start here|post[- ]?WW(2|II)|placeholder)\b'
 
     # Split the file into root-level group blocks (raw lines kept for comment checks)
     $blocks = [System.Collections.Generic.List[psobject]]::new()
@@ -989,20 +1040,22 @@ function Get-NamelistAuditData {
         $canUse = if ($canUseM.Success) { ($canUseM.Groups['c'].Value -replace '\s+', ' ').Trim() } else { $null }
 
         # An entry is a placeholder when it adds nothing over fallback_name or repeats another entry's pattern
-        $fallbackNorm = if ($fallback) { & $normalize $fallback } else { $null }
+        $fallbackNorm = if ($fallback) { Get-NamePatternKey $fallback } else { $null }
         $normCounts = @{}
         foreach ($e in $entries) {
-            $k = & $normalize $e
+            $k = Get-NamePatternKey $e
             if ($normCounts.ContainsKey($k)) { $normCounts[$k]++ } else { $normCounts[$k] = 1 }
         }
         $placeholderCount = 0
         foreach ($e in $entries) {
-            $k = & $normalize $e
+            $k = Get-NamePatternKey $e
             if ($k -eq $fallbackNorm -or $normCounts[$k] -gt 1) { $placeholderCount++ }
         }
         $authoredCount = $entries.Count - $placeholderCount
 
         $flags = [System.Collections.Generic.List[string]]::new()
+        # Flag -> the entries or comments that raised it, for flags a reader cannot locate from the tag alone
+        $flagDetails = @{}
         if ($entries.Count -gt 0 -and ($placeholderCount / $entries.Count) -gt 0.5) { $flags.Add('PLACEHOLDER_ENTRIES') }
         if ($authoredCount -lt 10) { $flags.Add('LOW_DEPTH') }
         if ($selector) {
@@ -1017,14 +1070,26 @@ function Get-NamelistAuditData {
         if ($cleanBlock -match '\bhas_completed_focus\b') { $flags.Add('FOCUS_LOCKED') }
         # A political or militia group that any government may use: gate it with has_government (heuristic)
         $isUngated = (-not $canUse) -or ($canUse -match '^always\s*=\s*yes$')
-        $politicalRx = '(?i)(militia|milice|volkssturm|partisan|blackshirt|red guard|waffen|\bSS\b|fascist|communist|monarchist|imperial|national guard|home guard|party|francs-tireurs|resistance)'
-        if ($isUngated -and ($types -contains 'militia' -or "$selector $($b.Tag) $fallback" -match $politicalRx)) { $flags.Add('UNGATED_POLITICAL') }
+        $politicalRx = '(?i)(militia|milice|volks-?sturm|partisan|blackshirt|red guard|\bwaffen|\bSS\b|fascist|communist|monarchist|imperial|national guard|home guard|party|francs-tireurs|resistance)'
+        if ($isUngated -and ($types -contains 'militia' -or "$selector $($b.Tag) $fallback" -match $politicalRx)) {
+            $flags.Add('UNGATED_POLITICAL')
+        } elseif ($isUngated) {
+            # The same vocabulary on single entries of an otherwise neutral group
+            $politicalEntries = @($entries | Where-Object { $_ -match $politicalRx } | Select-Object -Unique)
+            if ($politicalEntries.Count -gt 0) { $flags.Add('POLITICAL_ENTRY'); $flagDetails['POLITICAL_ENTRY'] = $politicalEntries }
+        }
+        # The same literal name authored twice in one group (numbered patterns repeat by design)
+        $duplicateNames = @($entries | Where-Object { $_ -notmatch '%[ds]' } | Group-Object -CaseSensitive | Where-Object { $_.Count -gt 1 } | ForEach-Object { $_.Name })
+        if ($duplicateNames.Count -gt 0) { $flags.Add('DUPLICATE_NAME'); $flagDetails['DUPLICATE_NAME'] = $duplicateNames }
+        # Comments left over from vanilla or an earlier draft ("Fictional divisions start here")
+        $staleComments = @($b.Lines | ForEach-Object { [regex]::Match($_, '#+\s*(.*?)\s*$').Groups[1].Value } | Where-Object { $_ -match $staleRx })
+        if ($staleComments.Count -gt 0) { $flags.Add('STALE_COMMENT'); $flagDetails['STALE_COMMENT'] = $staleComments }
         # A fixed ordinal suffix after %d only reads right at one key: the French feminine first ("1ere", "1re") at key 1 only,
         # English "%dst"/"%dnd"/"%drd"/"%dth" at the key whose ordinal ends that way (else "1th", "2st")
         $badOrdinal = $false
         for ($ei = 0; $ei -lt $entries.Count; $ei++) {
             $k = [int]$entryKeys[$ei]
-            if ($entries[$ei] -cmatch '%d(ère|re)\b') {
+            if ($entries[$ei] -cmatch ('%d(' + [char]0x00E8 + 're|re)\b')) {
                 if ($k -ne 1) { $badOrdinal = $true; break }
             } elseif ($entries[$ei] -cmatch '%d(st|nd|rd|th)\b') {
                 $expected = if ($k % 100 -ge 11 -and $k % 100 -le 13) { 'th' } else { switch ($k % 10) { 1 { 'st' } 2 { 'nd' } 3 { 'rd' } default { 'th' } } }
@@ -1050,6 +1115,7 @@ function Get-NamelistAuditData {
             Entries       = $entries
             EntryKeys     = $entryKeys
             Flags         = $flags
+            FlagDetails   = $flagDetails
             RawBlock      = $rawBlock
         })
     }
@@ -1271,13 +1337,30 @@ function Get-GroupSections {
 
 # --- Helper: One-line listing of entry names; consecutive identical names collapse to "name (xN)" ---
 # With -ShowKeys each item is prefixed by its ordered key(s): "7=Name", "2-41=Name (x40)".
+# With -Distinct every repeat of a name is counted at its first position (diff output, where order carries no keys);
+# -Notes appends a per-name suffix such as " (to INF_01)".
 function Format-EntryList {
     param(
         [string[]]$Names = @(),
         [int[]]$Keys = @(),
-        [switch]$ShowKeys
+        [switch]$ShowKeys,
+        [switch]$Distinct,
+        [string]$Separator = '; ',
+        [hashtable]$Notes = @{}
     )
     $out = [System.Collections.Generic.List[string]]::new()
+    if ($Distinct) {
+        $counts = [System.Collections.Generic.Dictionary[string, int]]::new([System.StringComparer]::Ordinal)
+        $order = [System.Collections.Generic.List[string]]::new()
+        foreach ($name in $Names) {
+            if ($counts.ContainsKey($name)) { $counts[$name]++ } else { $counts[$name] = 1; $order.Add($name) }
+        }
+        foreach ($name in $order) {
+            $label = if ($counts[$name] -gt 1) { "$name (x$($counts[$name]))" } else { $name }
+            $out.Add($label + $Notes[$name])
+        }
+        return ($out -join $Separator)
+    }
     $i = 0
     while ($i -lt $Names.Count) {
         $j = $i
@@ -1294,7 +1377,7 @@ function Format-EntryList {
         $out.Add($label)
         $i = $j + 1
     }
-    return ($out -join '; ')
+    return ($out -join $Separator)
 }
 
 # --- Helper: Comment headers in an ordered block that no longer head any entry ---
@@ -1466,16 +1549,9 @@ function Edit-NamelistGroupText {
 
     # 2. Update division_types
     if ($AddTypes.Count -gt 0 -or $RemoveTypes.Count -gt 0) {
-        $validSubunits = @(
-            'infantry', 'cavalry', 'motorized', 'mechanized', 'marine', 'mountaineers', 'paratrooper',
-            'light_armor', 'medium_armor', 'heavy_armor', 'super_heavy_armor', 'modern_armor',
-            'amphibious_armor', 'amphibious_mechanized', 'artillery', 'anti_air', 'anti_tank',
-            'rocket_artillery', 'motorized_rocket_artillery', 'irregular_infantry', 'militia',
-            'camelry', 'ranger_battalion', 'penal_battalion'
-        )
         foreach ($t in $AddTypes) {
-            if ($validSubunits -notcontains $t) {
-                throw "Invalid division type token '$t'. Valid: $($validSubunits -join ', ')"
+            if ($ValidDivisionTypes -notcontains $t) {
+                throw "Invalid division type token '$t'. Valid: $($ValidDivisionTypes -join ', ')"
             }
         }
         $mTypes = [regex]::Match($preBlock, '(?m)^([ \t]*division_types\s*=\s*\{)([^}]*)(\})')
@@ -1540,7 +1616,7 @@ function Edit-NamelistGroupText {
             $preBlock = $preBlock.Substring(0, $cuStart) + $formattedCanUse + $preBlock.Substring($cuEnd + 1)
         } else {
             if ($preBlock -match '(?m)^[ \t]*for_countries\s*=\s*\{[^}]*\}') {
-                $preBlock = [regex]::Replace($preBlock, '(?m)(^[ \t]*for_countries\s*=\s*\{[^}]*\}[ \t]*`r?`n)', "`${1}$nl$formattedCanUse$nl")
+                $preBlock = [regex]::Replace($preBlock, '(?m)(^[ \t]*for_countries\s*=\s*\{[^}]*\}[ \t]*\r?\n)', "`${1}$nl$formattedCanUse$nl")
             } elseif ($preBlock -match '(?m)^[ \t]*division_types\s*=') {
                 $preBlock = [regex]::Replace($preBlock, '(?m)(^[ \t]*division_types\s*=)', "$formattedCanUse$nl$nl`$1")
             } else {
@@ -1751,108 +1827,298 @@ function Edit-NamelistGroupText {
     return Set-NamelistGroupComment -Text ($Text.Substring(0, $head.Index) + $preBlock + $inner + $Text.Substring($uEnd)) -GroupTag $GroupTag -Comment $Comment
 }
 
-# --- Action: Edit one or more groups in a mod namelist in place ---
+# --- Helper: Index of the closing brace of a root group in namelist text ---
+function Get-NamelistGroupEnd {
+    param(
+        [string]$Text,
+        [string]$GroupTag
+    )
+    $head = [regex]::Match($Text, "(?m)^[ \t]*$([regex]::Escape($GroupTag))[ \t]*=\s*\{")
+    if (-not $head.Success) { throw "Group $GroupTag not found" }
+    $depth = 0
+    for ($i = $head.Index + $head.Length - 1; $i -lt $Text.Length; $i++) {
+        $ch = $Text[$i]
+        if ($ch -eq '#') { while ($i -lt $Text.Length -and $Text[$i] -ne "`n") { $i++ }; continue }
+        if ($ch -eq '"') { $i++; while ($i -lt $Text.Length -and $Text[$i] -ne '"') { if ($Text[$i] -eq '\') { $i++ }; $i++ }; continue }
+        if ($ch -eq '{') { $depth++ }
+        elseif ($ch -eq '}') {
+            $depth--
+            if ($depth -eq 0) { return $i }
+        }
+    }
+    throw "Group $GroupTag has unbalanced braces"
+}
+
+# --- Helper: Create a new group block in namelist text (file template layout) ---
+# Placed after -AfterGroup, or at the end of the file. -TakenTags are the group tags of the mod's other files.
+function Add-NamelistGroupText {
+    param(
+        [string]$Text,
+        [string]$GroupTag,
+        [string]$Country,
+        [string]$Selector,
+        [string[]]$Types = @(),
+        [string]$Fallback,
+        [string]$CanUse,
+        [string]$Link,
+        [string[]]$Add = @(),
+        [string]$Comment,
+        [string]$AfterGroup,
+        [string[]]$TakenTags = @()
+    )
+
+    if ($GroupTag -cnotmatch '^[A-Z][A-Z0-9]*(_[A-Z0-9]+)+$') {
+        throw "Invalid group tag '$GroupTag' (expected <TAG>_<CATEGORY>_<NUMBER>, e.g. ${Country}_MIL_01)"
+    }
+    if (-not $Selector) { throw "New group $GroupTag needs -Selector" }
+    if ($Types.Count -eq 0) { throw "New group $GroupTag needs at least one division type (-AddType)" }
+    foreach ($t in $Types) {
+        if ($ValidDivisionTypes -notcontains $t) {
+            throw "Invalid division type token '$t'. Valid: $($ValidDivisionTypes -join ', ')"
+        }
+    }
+    if ($Fallback -notmatch '%d|%s') { throw "New group $GroupTag needs -Fallback containing %d or %s" }
+    if ($CanUse -match 'has_completed_focus|has_country_flag|has_idea') {
+        throw "Strict Focus Ban: Namelists must not be gated behind focuses, ideas, or flags. Gate by government type (has_government) instead."
+    }
+    $known = @((Get-NamelistAuditData -Text $Text).Groups | ForEach-Object { $_.Tag })
+    if ($known -contains $GroupTag) { throw "Group $GroupTag already exists in this file" }
+    if ($TakenTags -contains $GroupTag) { throw "Group tag $GroupTag is already used in another namelist file of the mod" }
+    if ($Link -and $known -notcontains $Link) { throw "Link target $Link not found in this file" }
+    if ($AfterGroup -and $known -notcontains $AfterGroup) { throw "-After group $AfterGroup not found in this file" }
+
+    $nl = if ($Text.Contains("`r`n")) { "`r`n" } else { "`n" }
+    $gate = if (-not $CanUse) { '{ always = yes }' } elseif ($CanUse.Contains("`n")) { "{$nl$CanUse$nl`t}" } else { "{ $CanUse }" }
+    $attributes = [System.Collections.Generic.List[string]]::new()
+    $attributes.Add("`tname = `"$Selector`"")
+    $attributes.Add("`tfor_countries = { $Country }")
+    $attributes.Add("`tcan_use = $gate")
+    $formattedTypes = ($Types | ForEach-Object { "`"$_`"" }) -join ' '
+    $attributes.Add("`tdivision_types = { $formattedTypes }")
+    if ($Link) { $attributes.Add("`tlink_numbering_with = { $Link }") }
+    $attributes.Add("`tfallback_name = `"$Fallback`"")
+    if ($Add.Count -gt 0) { $attributes.Add("`tordered =$nl`t{$nl`t}") }
+    $block = "$GroupTag = $nl{$nl" + ($attributes -join "$nl$nl") + "$nl}"
+
+    if ($AfterGroup) {
+        $eol = $Text.IndexOf("`n", (Get-NamelistGroupEnd -Text $Text -GroupTag $AfterGroup))
+        if ($eol -lt 0) {
+            $new = $Text + $nl + $nl + $block + $nl
+        } else {
+            $rest = $Text.Substring($eol + 1)
+            # Keep one blank line before whatever follows
+            $gap = if ($rest.Trim() -and $rest -notmatch '^[ \t]*\r?\n') { $nl } else { '' }
+            $new = $Text.Substring(0, $eol + 1) + $nl + $block + $nl + $gap + $rest
+        }
+    } else {
+        $new = $Text.TrimEnd() + $nl + $nl + $block + $nl
+    }
+
+    if ($Add.Count -gt 0 -or $Comment) {
+        $new = Edit-NamelistGroupText -Text $new -GroupTag $GroupTag -Add $Add -Comment $Comment
+    }
+    return $new
+}
+
+# --- Helper: Normalize one edit operation: -EditNames parameters or one object of a -Batch file ---
+# A string lists items separated by ';' (the command-line form); a JSON array keeps each item whole.
+function ConvertTo-NamelistEditOp {
+    param($Source)
+
+    $known = 'group', 'add', 'remove', 'rename', 'set', 'after', 'section', 'renameSection', 'selector', 'fallback',
+        'addType', 'removeType', 'canUse', 'removeAll', 'clearOrdered', 'removeGroup', 'comment', 'addGroup', 'link'
+    $values = @{}
+    if ($Source -is [System.Collections.IDictionary]) {
+        foreach ($key in $Source.Keys) { $values["$key"] = $Source[$key] }
+    } elseif ($Source -is [System.Management.Automation.PSCustomObject]) {
+        foreach ($p in $Source.PSObject.Properties) { $values[$p.Name] = $p.Value }
+    } else {
+        throw "An edit operation must be an object with a `"group`" key"
+    }
+    foreach ($key in $values.Keys) {
+        if ($known -notcontains $key) { throw "Unknown key '$key' in edit operation. Known keys: $($known -join ', ')" }
+    }
+
+    $list = {
+        param($value, [string]$separator = ';')
+        $items = if ($value -is [string]) { $value -split $separator } else { @($value) | ForEach-Object { "$_" } }
+        return , @($items | ForEach-Object { "$_".Trim() } | Where-Object { $_ })
+    }
+    $flag = { param($value) if ($value -is [string]) { $value -match '^(true|yes|1)$' } else { [bool]$value } }
+    $text = { param($value) if ($null -eq $value) { '' } else { (@($value) | ForEach-Object { "$_" }) -join "`n" } }
+
+    return [PSCustomObject]@{
+        Groups        = @(@($values['group']) | ForEach-Object { "$_" -split '[,;]' } | ForEach-Object { $_.Trim() } | Where-Object { $_ })
+        Add           = & $list $values['add']
+        Remove        = & $list $values['remove']
+        Rename        = & $list $values['rename']
+        Set           = & $list $values['set']
+        RenameSection = & $list $values['renameSection']
+        AddTypes      = @(@($values['addType']) | ForEach-Object { "$_" -split '[;,\s]+' } | Where-Object { $_ })
+        RemoveTypes   = @(@($values['removeType']) | ForEach-Object { "$_" -split '[;,\s]+' } | Where-Object { $_ })
+        After         = & $text $values['after']
+        Section       = & $text $values['section']
+        Selector      = & $text $values['selector']
+        Fallback      = & $text $values['fallback']
+        CanUse        = & $text $values['canUse']
+        Comment       = & $text $values['comment']
+        Link          = & $text $values['link']
+        RemoveAll     = & $flag $values['removeAll']
+        ClearOrdered  = & $flag $values['clearOrdered']
+        RemoveGroup   = & $flag $values['removeGroup']
+        AddGroup      = & $flag $values['addGroup']
+    }
+}
+
+# --- Helper: Apply edit operations to namelist text, in order ---
+# Returns the new text, one summary line per edited group, and the tags that remain to be listed.
+# Throws on the first operation that cannot be applied, so the caller writes nothing.
+function Invoke-NamelistEditOps {
+    param(
+        [string]$Text,
+        [string]$Tag,
+        [object[]]$Ops = @(),
+        [string[]]$TakenTags = @()
+    )
+
+    $country = ($Tag -split '_')[0]
+    $summaries = [System.Collections.Generic.List[string]]::new()
+    $edited = [System.Collections.Generic.List[string]]::new()
+
+    for ($n = 0; $n -lt $Ops.Count; $n++) {
+        $op = $Ops[$n]
+        $where = if ($Ops.Count -gt 1) { "op $($n + 1) " } else { '' }
+        try {
+            if ($op.Groups.Count -eq 0) { throw 'No -Group specified' }
+            $data = Get-NamelistAuditData -Text $Text
+            $known = @($data.Groups | ForEach-Object { $_.Tag })
+            $resolve = {
+                param($name)
+                $found = Resolve-GroupTag -Tag $Tag -Name $name -Known $known
+                if (-not $found) { throw "Group '$name' not found. Available: $($known -join ', ')" }
+                $found
+            }
+
+            if ($op.AddGroup) {
+                if ($op.Groups.Count -ne 1) { throw '-AddGroup takes one group tag' }
+                if ($op.Remove.Count -or $op.Rename.Count -or $op.Set.Count -or $op.RenameSection.Count -or $op.RemoveTypes.Count -or $op.Section -or $op.RemoveAll -or $op.ClearOrdered -or $op.RemoveGroup) {
+                    throw '-AddGroup takes only -Selector, -AddType, -Fallback, -CanUse, -Link, -Add, -Comment and -After'
+                }
+                $newTag = $op.Groups[0].ToUpper()
+                if ($newTag -notmatch "^$([regex]::Escape($country))_") { $newTag = "${country}_$newTag" }
+                $link = if ($op.Link) { & $resolve $op.Link } else { $null }
+                $afterGroup = if ($op.After) { & $resolve $op.After } else { $null }
+                $Text = Add-NamelistGroupText -Text $Text -GroupTag $newTag -Country $country -Selector $op.Selector -Types $op.AddTypes -Fallback $op.Fallback -CanUse $op.CanUse -Link $link -Add $op.Add -Comment $op.Comment -AfterGroup $afterGroup -TakenTags $TakenTags
+                $nameCount = @($op.Add | Where-Object { $_ -notmatch '^#' }).Count
+                $linkStr = if ($link) { ", links $link" } else { '' }
+                $summaries.Add("Added ${newTag}: `"$($op.Selector)`" [$($op.AddTypes -join ' ')], $nameCount name(s)$linkStr")
+                $edited.Add($newTag)
+                continue
+            }
+
+            $hasAction = ($op.Add.Count + $op.Remove.Count + $op.Rename.Count + $op.Set.Count + $op.RenameSection.Count + $op.AddTypes.Count + $op.RemoveTypes.Count) -gt 0 -or $op.Selector -or $op.Fallback -or $op.CanUse -or $op.RemoveAll -or $op.ClearOrdered -or $op.RemoveGroup -or $op.Comment
+            if (-not $hasAction) {
+                throw 'Nothing to do: pass -Add, -Remove, -RemoveAll, -Rename, -Set, -RenameSection, -ClearOrdered, -RemoveGroup, -Comment, -Selector, -Fallback, -AddType, -RemoveType, -CanUse and/or -AddGroup'
+            }
+            if ($op.Link) { throw '-Link applies only to -AddGroup' }
+
+            $resolved = [System.Collections.Generic.List[string]]::new()
+            foreach ($name in $op.Groups) {
+                $groupTag = & $resolve $name
+                if (-not $resolved.Contains($groupTag)) { $resolved.Add($groupTag) }
+            }
+
+            if ($op.RemoveGroup) {
+                # Removing a tag breaks saved division templates, and a group other groups link to would leave a dangling link
+                foreach ($groupTag in $resolved) {
+                    $linkedBy = @($data.Groups | Where-Object { $_.Tag -ne $groupTag -and $resolved -notcontains $_.Tag -and $_.LinkTargets -contains $groupTag } | ForEach-Object { $_.Tag })
+                    if ($linkedBy.Count -gt 0) { throw "${groupTag}: cannot remove; link_numbering_with from $($linkedBy -join ', ') points at it" }
+                }
+            }
+
+            foreach ($groupTag in $resolved) {
+                try {
+                    $Text = Edit-NamelistGroupText -Text $Text -GroupTag $groupTag -Add $op.Add -Remove $op.Remove -Rename $op.Rename -Set $op.Set -After $op.After -Section $op.Section -RenameSection $op.RenameSection -Selector $op.Selector -Fallback $op.Fallback -AddTypes $op.AddTypes -RemoveTypes $op.RemoveTypes -CanUse $op.CanUse -RemoveAll:$op.RemoveAll -ClearOrdered:$op.ClearOrdered -RemoveGroup:$op.RemoveGroup -Comment $op.Comment
+                } catch {
+                    throw "${groupTag}: $($_.Exception.Message)"
+                }
+                if ($op.RemoveGroup) {
+                    $summaries.Add("Removed $groupTag")
+                    [void]$edited.Remove($groupTag)
+                    continue
+                }
+                $metaChanges = @()
+                if ($op.Selector) { $metaChanges += "Selector='$($op.Selector)'" }
+                if ($op.Fallback) { $metaChanges += "Fallback='$($op.Fallback)'" }
+                if ($op.AddTypes.Count) { $metaChanges += "+Types: $($op.AddTypes -join ', ')" }
+                if ($op.RemoveTypes.Count) { $metaChanges += "-Types: $($op.RemoveTypes -join ', ')" }
+                if ($op.CanUse) { $metaChanges += "CanUse='$($op.CanUse)'" }
+                if ($op.RemoveAll) { $metaChanges += 'RemoveAll' }
+                if ($op.ClearOrdered) { $metaChanges += 'ClearOrdered (fallback-only)' }
+                if ($op.Comment) { $metaChanges += 'Comment' }
+                $metaStr = if ($metaChanges.Count) { " [" + ($metaChanges -join '; ') + "]" } else { '' }
+                $nameCount = @($op.Add | Where-Object { $_ -notmatch '^#' }).Count
+                $summaries.Add("Edited ${groupTag}: +$nameCount -$($op.Remove.Count) ~$($op.Rename.Count + $op.Set.Count)$metaStr")
+                if (-not $edited.Contains($groupTag)) { $edited.Add($groupTag) }
+            }
+        } catch {
+            throw "$where$($_.Exception.Message)"
+        }
+    }
+
+    return [PSCustomObject]@{ Text = $Text; Summaries = $summaries.ToArray(); Edited = $edited.ToArray() }
+}
+
+# --- Helper: Read the operations of an -EditNames -Batch file (UTF-8 JSON: one object or an array of them) ---
+function Read-NamelistEditBatch {
+    param([string]$Path)
+    if (-not (Test-Path -LiteralPath $Path)) { throw "Batch file not found: $Path" }
+    $json = [System.IO.File]::ReadAllText((Resolve-Path -LiteralPath $Path).Path, [System.Text.Encoding]::UTF8)
+    try { $parsed = ConvertFrom-Json -InputObject $json } catch { throw "Batch file is not valid JSON: $($_.Exception.Message)" }
+    $ops = @($parsed | ForEach-Object { $_ } | ForEach-Object { ConvertTo-NamelistEditOp $_ })
+    if ($ops.Count -eq 0) { throw "Batch file has no operations: $Path" }
+    return , $ops
+}
+
+# --- Action: Apply edit operations to a mod namelist in place (all or nothing) ---
 function Invoke-NamelistEdit {
     param(
         [string]$Tag,
-        [string[]]$TargetGroup,
-        [string]$AddList,
-        [string]$RemoveList,
-        [string]$RenameList,
-        [string]$SetList,
-        [string]$AfterName,
-        [string]$SectionName,
-        [string]$RenameSectionList,
-        [string]$Selector,
-        [string]$Fallback,
-        [string]$AddTypeList,
-        [string]$RemoveTypeList,
-        [string]$CanUse,
-        [switch]$RemoveAll,
-        [switch]$ClearOrdered,
-        [switch]$RemoveGroup,
-        [string]$Comment,
-        [switch]$Quiet
+        [object[]]$Ops = @(),
+        [switch]$ShowNames
     )
     $Tag = $Tag.ToUpper().Trim() -replace '^INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
     $modFile = Join-Path $RepoDir "common\units\names_divisions\INEX_${Tag}_names_divisions.txt"
     if (-not (Test-Path $modFile)) { Write-Err "Mod namelist not found: $modFile"; return 1 }
 
-    $split = { param($s) @(if ($s) { $s -split ';' | ForEach-Object { $_.Trim() } | Where-Object { $_ } }) }
-    $adds = & $split $AddList
-    $removes = & $split $RemoveList
-    $renames = & $split $RenameList
-    $sets = & $split $SetList
-    $renameSections = & $split $RenameSectionList
-    $addTypes = & $split $AddTypeList
-    $removeTypes = & $split $RemoveTypeList
-
-    $hasAction = ($adds.Count + $removes.Count + $renames.Count + $sets.Count + $renameSections.Count + $addTypes.Count + $removeTypes.Count) -gt 0 -or $Selector -or $Fallback -or $CanUse -or $RemoveAll -or $ClearOrdered -or $RemoveGroup -or $Comment
-    if (-not $hasAction) {
-        Write-Err "Nothing to do: pass -Add, -Remove, -RemoveAll, -Rename, -Set, -RenameSection, -ClearOrdered, -RemoveGroup, -Comment, -Selector, -Fallback, -AddType, -RemoveType, and/or -CanUse"
-        return 1
-    }
-
-    $wanted = @($TargetGroup | ForEach-Object { $_ -split ',' } | ForEach-Object { $_.Trim() } | Where-Object { $_ })
-    if ($wanted.Count -eq 0) {
-        Write-Err "No -Group specified"
-        return 1
-    }
-
-    $groupsData = Get-NamelistAuditData -Path $modFile
-    $known = @($groupsData.Groups | ForEach-Object { $_.Tag })
-    $resolvedGroups = [System.Collections.Generic.List[string]]::new()
-    foreach ($w in $wanted) {
-        $gt = Resolve-GroupTag -Tag $Tag -Name $w -Known $known
-        if (-not $gt) {
-            Write-Err "Group '$w' not found in $modFile. Available: $($known -join ', ')"
-            return 1
-        }
-        if (-not $resolvedGroups.Contains($gt)) { $resolvedGroups.Add($gt) }
-    }
-
-    if ($RemoveGroup) {
-        # Removing a tag breaks saved division templates, and a group other groups link to would leave a dangling link
-        foreach ($groupTag in $resolvedGroups) {
-            $linkedBy = @($groupsData.Groups | Where-Object { $_.Tag -ne $groupTag -and $resolvedGroups -notcontains $_.Tag -and $_.LinkTargets -contains $groupTag } | ForEach-Object { $_.Tag })
-            if ($linkedBy.Count -gt 0) {
-                Write-Err "${groupTag}: cannot remove; link_numbering_with from $($linkedBy -join ', ') points at it"
-                return 1
-            }
-        }
-        Write-Warn "Removing group tag(s) $($resolvedGroups -join ', '): saved templates that use them fall back to default names"
+    # A new tag must be unique across every namelist file of the mod
+    $takenTags = @()
+    if (@($Ops | Where-Object { $_.AddGroup }).Count -gt 0) {
+        $takenTags = @(Get-ChildItem -Path (Split-Path $modFile) -Filter '*.txt' | Where-Object { $_.FullName -ne $modFile } | ForEach-Object {
+            (Get-NamelistAuditData -Path $_.FullName).Groups | ForEach-Object { $_.Tag }
+        })
     }
 
     $text = [System.IO.File]::ReadAllText($modFile, [System.Text.Encoding]::UTF8)
-    foreach ($groupTag in $resolvedGroups) {
-        try {
-            $text = Edit-NamelistGroupText -Text $text -GroupTag $groupTag -Add $adds -Remove $removes -Rename $renames -Set $sets -After $AfterName -Section $SectionName -RenameSection $renameSections -Selector $Selector -Fallback $Fallback -AddTypes $addTypes -RemoveTypes $removeTypes -CanUse $CanUse -RemoveAll:$RemoveAll -ClearOrdered:$ClearOrdered -RemoveGroup:$RemoveGroup -Comment $Comment
-        } catch {
-            Write-Err "${groupTag}: $($_.Exception.Message)"
-            return 1
-        }
+    try {
+        $result = Invoke-NamelistEditOps -Text $text -Tag $Tag -Ops $Ops -TakenTags $takenTags
+    } catch {
+        Write-Err $_.Exception.Message
+        return 1
     }
+    [System.IO.File]::WriteAllText($modFile, $result.Text, (New-Object System.Text.UTF8Encoding $false))
 
-    [System.IO.File]::WriteAllText($modFile, $text, (New-Object System.Text.UTF8Encoding $false))
-
-    $updatedData = Get-NamelistAuditData -Path $modFile
-    foreach ($groupTag in $resolvedGroups) {
-        if ($RemoveGroup) { Write-Host "Removed ${groupTag}" -ForegroundColor Green; continue }
-        $g = $updatedData.Groups | Where-Object { $_.Tag -eq $groupTag }
-        $metaChanges = @()
-        if ($Selector) { $metaChanges += "Selector='$Selector'" }
-        if ($Fallback) { $metaChanges += "Fallback='$Fallback'" }
-        if ($addTypes.Count) { $metaChanges += "+Types: $($addTypes -join ', ')" }
-        if ($removeTypes.Count) { $metaChanges += "-Types: $($removeTypes -join ', ')" }
-        if ($CanUse) { $metaChanges += "CanUse='$CanUse'" }
-        if ($RemoveAll) { $metaChanges += 'RemoveAll' }
-        if ($ClearOrdered) { $metaChanges += 'ClearOrdered (fallback-only)' }
-        if ($Comment) { $metaChanges += 'Comment' }
-        $metaStr = if ($metaChanges.Count) { " [" + ($metaChanges -join '; ') + "]" } else { '' }
-        Write-Host "Edited ${groupTag}: +$($adds.Count) -$($removes.Count) ~$($renames.Count + $sets.Count)$metaStr" -ForegroundColor Green
-        if (-not $Quiet -and $g) {
+    foreach ($line in $result.Summaries) { Write-Host $line -ForegroundColor Green }
+    if (@($Ops | Where-Object { $_.RemoveGroup }).Count -gt 0) {
+        Write-Warn "Removed group tags: saved templates that used them fall back to default names"
+    }
+    if ($ShowNames -and $result.Edited.Count -gt 0) {
+        $updatedData = Get-NamelistAuditData -Path $modFile
+        foreach ($groupTag in $result.Edited) {
+            $g = $updatedData.Groups | Where-Object { $_.Tag -eq $groupTag }
+            if (-not $g) { continue }
             $label = if ($g.Selector) { " `"$($g.Selector)`"" } else { '' }
-            Write-Host "$($g.Tag) ($($g.OrderedCount)/$($g.AuthoredCount))${label}: $($g.Entries -join '; ')"
+            Write-Host "$($g.Tag) ($($g.OrderedCount)/$($g.AuthoredCount))${label}: $(Format-EntryList -Names $g.Entries)"
         }
     }
     return 0
@@ -1918,13 +2184,15 @@ function Compare-NamelistGroupSets {
         }
 
         $result.Add([PSCustomObject]@{
-            GroupTag   = $t
-            Status     = $status
-            OldCount   = $oNames.Count
-            NewCount   = $nNames.Count
-            Added      = $added
-            Removed    = $removed
-            Attributes = $attrs
+            GroupTag    = $t
+            Status      = $status
+            OldCount    = $oNames.Count
+            NewCount    = $nNames.Count
+            Added       = $added
+            Removed     = $removed
+            Attributes  = $attrs
+            OldFallback = if ($hasOld) { $o.Fallback } else { $null }
+            NewFallback = if ($hasNew) { $n.Fallback } else { $null }
         })
     }
     return , $result.ToArray()
@@ -1947,13 +2215,13 @@ function Format-NamelistDiff {
     foreach ($d in $changed) {
         $name = & $short $d.GroupTag
         switch ($d.Status) {
-            'added'   { $lines.Add("$name (new group, $($d.NewCount)): + $($d.Added -join '; ')") }
+            'added'   { $lines.Add("$name (new group, $($d.NewCount)): + $(Format-EntryList -Names $d.Added -Distinct)") }
             'removed' { $lines.Add("$name (group removed, had $($d.OldCount))") }
             default {
                 $line = "$name $($d.OldCount)->$($d.NewCount):"
-                if ($d.Added.Count) { $line += " + $($d.Added -join '; ')" }
+                if ($d.Added.Count) { $line += " + $(Format-EntryList -Names $d.Added -Distinct)" }
                 if ($d.Added.Count -and $d.Removed.Count) { $line += ' |' }
-                if ($d.Removed.Count) { $line += " - $($d.Removed -join '; ')" }
+                if ($d.Removed.Count) { $line += " - $(Format-EntryList -Names $d.Removed -Distinct)" }
                 $lines.Add($line)
             }
         }
@@ -1961,7 +2229,7 @@ function Format-NamelistDiff {
     }
 
     $moves = @(foreach ($from in $Diff) {
-        foreach ($nm in $from.Removed) {
+        foreach ($nm in ($from.Removed | Select-Object -Unique)) {
             foreach ($to in $Diff) {
                 if ($to.GroupTag -ne $from.GroupTag -and $to.Added -ccontains $nm) { "$nm ($(& $short $from.GroupTag)->$(& $short $to.GroupTag))" }
             }
@@ -2068,11 +2336,20 @@ function Format-PlanChangeTable {
     $lines.Add('|---|---|---|---|---|')
     foreach ($d in $changed) {
         $count = switch ($d.Status) { 'added' { "new, $($d.NewCount)" } 'removed' { "removed, had $($d.OldCount)" } default { "$($d.OldCount) -> $($d.NewCount)" } }
-        $added = @($d.Added | ForEach-Object { $k = "$($d.GroupTag)|$_"; if ($movedFrom.ContainsKey($k)) { "$_ (from $($movedFrom[$k]))" } else { $_ } })
-        $removed = @($d.Removed | ForEach-Object { $k = "$($d.GroupTag)|$_"; if ($movedTo.ContainsKey($k)) { "$_ (to $($movedTo[$k]))" } else { $_ } })
-        $cell = { param($items) if ($items.Count) { $items -join ', ' } else { '-' } }
+        $addNotes = @{}; $removeNotes = @{}
+        foreach ($nm in $d.Added) { $k = "$($d.GroupTag)|$nm"; if ($movedFrom.ContainsKey($k)) { $addNotes[$nm] = " (from $($movedFrom[$k]))" } }
+        foreach ($nm in $d.Removed) { $k = "$($d.GroupTag)|$nm"; if ($movedTo.ContainsKey($k)) { $removeNotes[$nm] = " (to $($movedTo[$k]))" } }
+        # Removed entries that only restate the fallback pattern carry no identity: more than three print as a count
+        $stubs = @($d.Removed | Where-Object { -not $removeNotes.ContainsKey($_) -and ((Test-FallbackStub -Name $_ -Fallback $d.OldFallback) -or (Test-FallbackStub -Name $_ -Fallback $d.NewFallback)) })
+        if ($stubs.Count -le 3) { $stubs = @() }
+        $removedNamed = @($d.Removed | Where-Object { $stubs -cnotcontains $_ })
+        $removedParts = @()
+        if ($removedNamed.Count) { $removedParts += Format-EntryList -Names $removedNamed -Distinct -Separator ', ' -Notes $removeNotes }
+        if ($stubs.Count) { $removedParts += "$($stubs.Count) fallback stubs" }
+        $addedCell = if ($d.Added.Count) { Format-EntryList -Names $d.Added -Distinct -Separator ', ' -Notes $addNotes } else { '-' }
+        $removedCell = if ($removedParts.Count) { $removedParts -join ', ' } else { '-' }
         $other = if ($d.Attributes.Count) { $d.Attributes -join '; ' } else { '-' }
-        $lines.Add("| $(& $short $d.GroupTag) | $count | $(& $cell $added) | $(& $cell $removed) | $other |")
+        $lines.Add("| $(& $short $d.GroupTag) | $count | $addedCell | $removedCell | $other |")
     }
     if ($same.Count) { $lines.Add(''); $lines.Add("Unchanged: $(($same | ForEach-Object { & $short $_.GroupTag }) -join ', ')") }
     return , $lines.ToArray()
@@ -2120,23 +2397,49 @@ function New-AuditPlanText {
     $l.Add('- Found on manual review: <!-- TODO: issues the script cannot see, or "none" -->'); $l.Add('')
     $l.Add('## User decisions'); $l.Add('<!-- TODO: checkpoint answers, or "None required" -->'); $l.Add('')
     $l.Add('## Research'); $l.Add('<!-- TODO: dispatches (agent, web calls used) and main sources -->'); $l.Add('')
-    $l.Add('## Per-group changes')
-    $l.Add('<!-- BEGIN CHANGE TABLE: generated by build.ps1 -AuditPlan; rerun it to refresh, never edit by hand -->')
-    foreach ($t in $TableLines) { $l.Add($t) }
-    $l.Add('<!-- END CHANGE TABLE -->'); $l.Add('')
     $l.Add('## Rationale'); $l.Add('<!-- TODO: organization applied, why names moved, respellings -->'); $l.Add('')
     $l.Add('## Verified formations & commanders'); $l.Add('<!-- TODO: every formation and commander the file keeps, legacy included: source or "well documented" -->'); $l.Add('')
     $l.Add('## Author confirmation'); $l.Add('<!-- TODO: unverified entries kept pending author confirmation, or "None" -->'); $l.Add('')
     $l.Add('## Kept on judgment'); $l.Add('<!-- TODO: remaining flags kept, each with its reason, or "None" -->'); $l.Add('')
-    $l.Add('## Review'); $l.Add('<!-- TODO: reviewer verdict and how each Critical/Important finding was handled -->')
+    $l.Add('## Review'); $l.Add('<!-- TODO: "Self-check" with its result, or the proofreader''s findings and how each was handled -->'); $l.Add('')
+    # Last on purpose: the table can run to tens of KB, and a resumed session reads the plan only up to this heading
+    $l.Add('## Per-group changes')
+    $l.Add('<!-- BEGIN CHANGE TABLE: generated by build.ps1 -AuditPlan; rerun it to refresh, never edit by hand -->')
+    foreach ($t in $TableLines) { $l.Add($t) }
+    $l.Add('<!-- END CHANGE TABLE -->')
     return ($l -join "`n") + "`n"
 }
 
+# --- Helper: The audit plan a refresh targets: today's, else the one with uncommitted changes (an audit that ran past midnight) ---
+function Get-ActiveAuditPlanPath {
+    param([string]$Slug)
+    $plansDir = Join-Path $RepoDir 'docs\superpowers\plans'
+    $today = Join-Path $plansDir "$((Get-Date).ToString('yyyy-MM-dd'))-$Slug-audit.md"
+    if (Test-Path $today) { return $today }
+    # Under 'Stop', PowerShell 5.1 turns native stderr into a terminating error (see Get-GitFileText)
+    $prevEap = $ErrorActionPreference
+    $ErrorActionPreference = 'Continue'
+    $dirty = @()
+    try {
+        $dirty = @(& git -C $RepoDir status --porcelain -uall -- 'docs/superpowers/plans' 2>$null | ForEach-Object {
+            if ("$_" -match "(\d{4}-\d{2}-\d{2}-$([regex]::Escape($Slug))-audit\.md)") { $matches[1] }
+        })
+    } catch {
+        $dirty = @()
+    } finally {
+        $ErrorActionPreference = $prevEap
+    }
+    if ($dirty.Count -eq 1) { return (Join-Path $plansDir $dirty[0]) }
+    return $null
+}
+
 # --- Action: Create an audit plan skeleton, or refresh its generated change table ---
+# -RefreshOnly (used by -Check) never creates a plan: authoring work has none.
 function Invoke-AuditPlan {
     param(
         [string]$Tag,
-        [string]$BaseRev = 'HEAD'
+        [string]$BaseRev = 'HEAD',
+        [switch]$RefreshOnly
     )
     $Tag = $Tag.ToUpper().Trim() -replace '^INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
     $country = Get-CountryName -Tag $Tag
@@ -2146,18 +2449,27 @@ function Invoke-AuditPlan {
     $changedCount = @($result.Diff | Where-Object { $_.Status -ne 'unchanged' }).Count
 
     $plansDir = Join-Path $RepoDir 'docs\superpowers\plans'
-    if (-not (Test-Path $plansDir)) { New-Item -ItemType Directory -Force $plansDir | Out-Null }
     $date = (Get-Date).ToString('yyyy-MM-dd')
     $slug = $country.ToLower() -replace ' ', '-'
-    $path = Join-Path $plansDir "$date-$slug-audit.md"
-    $rel = "docs/superpowers/plans/$date-$slug-audit.md"
+    $path = Get-ActiveAuditPlanPath -Slug $slug
+    if (-not $path) {
+        if ($RefreshOnly) { Write-Host "Plan: no audit plan in progress for $Tag"; return 0 }
+        $path = Join-Path $plansDir "$date-$slug-audit.md"
+    }
+    if (-not (Test-Path $plansDir)) { New-Item -ItemType Directory -Force $plansDir | Out-Null }
+    $rel = "docs/superpowers/plans/$(Split-Path $path -Leaf)"
     $utf8 = New-Object System.Text.UTF8Encoding $false
 
     if (Test-Path $path) {
         $text = [System.IO.File]::ReadAllText($path, [System.Text.Encoding]::UTF8)
-        try { $text = Set-PlanChangeTable -PlanText $text -TableLines $table } catch { Write-Err "${rel}: $($_.Exception.Message)"; return 1 }
-        [System.IO.File]::WriteAllText($path, $text, $utf8)
-        $verb = 'Refreshed change table in'
+        # Once an audit is committed its diff is empty: keep the recorded table instead of emptying it
+        if ($changedCount -eq 0 -and $text -match '<!-- BEGIN CHANGE TABLE[^\r\n]*-->\s*\| Group \|') {
+            $verb = 'Kept the change table in'
+        } else {
+            try { $text = Set-PlanChangeTable -PlanText $text -TableLines $table } catch { Write-Err "${rel}: $($_.Exception.Message)"; return 1 }
+            [System.IO.File]::WriteAllText($path, $text, $utf8)
+            $verb = 'Refreshed change table in'
+        }
     } else {
         $target = Join-Path $RepoDir "common\units\names_divisions\INEX_${Tag}_names_divisions.txt"
         $data = Get-NamelistAuditData -Path $target
@@ -2416,6 +2728,69 @@ function Get-VanillaOverlap {
     return $result
 }
 
+# --- Helper: Flag groups that merely repeat vanilla entries (needs a local HOI4 install; silently skipped otherwise) ---
+function Add-VanillaCopyFlags {
+    param($Data, [string]$Key, [string]$Hoi4Dir)
+    $overlap = Get-VanillaOverlap -Groups $Data.Groups -Key $Key -Hoi4Dir $Hoi4Dir
+    foreach ($g in $Data.Groups) {
+        $o = $overlap[$g.Tag]
+        if ($o -and $o.Total -ge 5 -and ($o.Matches / $o.Total) -ge 0.8) { $g.Flags.Add('VANILLA_COPY') }
+    }
+    return $overlap
+}
+
+# --- Helper: Workshop description conventions for a namelist file's nation block ---
+# Bullet and [i] example counts of the [b]<Nation>[/b] block, plus the description's emoji count and BBCode length.
+function Get-WorkshopDocStats {
+    param(
+        [string]$GuideText,
+        [string]$Key
+    )
+    $stats = [PSCustomObject]@{ Nation = $null; Bullets = 0; Examples = 0; Length = 0; Emojis = 0; Warnings = @() }
+    $warnings = [System.Collections.Generic.List[string]]::new()
+    $bbcode = [regex]::Match($GuideText, '(?s)```bbcode\r?\n(.*?)\r?\n```')
+    if (-not $bbcode.Success) {
+        $stats.Warnings = @('workshop guide has no bbcode description block')
+        return $stats
+    }
+    $description = $bbcode.Groups[1].Value -replace "`r`n", "`n"
+    $stats.Length = $description.Length
+    # Surrogate pairs (U+10000 and up) plus the symbol, dingbat and variation-selector ranges.
+    # Built from code points: this file has no BOM, so Windows PowerShell 5.1 would misread non-ASCII literals.
+    $symbols = '[' + [char]0x2600 + '-' + [char]0x27BF + [char]0x2B50 + [char]0x2B55 + [char]0xFE0F + ']'
+    $stats.Emojis = ([regex]::Matches($description, '\p{Cs}\p{Cs}|' + $symbols)).Count
+    if ($stats.Emojis -gt 0) { $warnings.Add("workshop description contains $($stats.Emojis) emoji(s)") }
+    if ($stats.Length -gt 17000) { $warnings.Add("workshop description is $($stats.Length) chars (limit 17000)") }
+
+    $row = [regex]::Match($GuideText, "(?m)^\|[ \t]*``?INEX_$([regex]::Escape($Key))_names_divisions\.txt``?[ \t]*\|[ \t]*([^|\r\n]+?)[ \t]*\|")
+    if (-not $row.Success) {
+        $warnings.Add("workshop cross-reference table has no row for INEX_${Key}_names_divisions.txt")
+    } else {
+        # "Germany (SS)" and "Iran / Persia" share the block of their first name
+        $nation = (($row.Groups[1].Value -replace '\s*\(.*\)\s*$', '') -split '/')[0].Trim()
+        $stats.Nation = $nation
+        $block = [regex]::Match($description, "(?m)^\[b\]$([regex]::Escape($nation))\[/b\][ \t]*\n((?:-[ \t].*(?:\n|\z))+)")
+        if (-not $block.Success) {
+            $warnings.Add("workshop description has no [b]${nation}[/b] block")
+        } else {
+            $stats.Bullets = ([regex]::Matches($block.Groups[1].Value, '(?m)^-[ \t]')).Count
+            $stats.Examples = ([regex]::Matches($block.Groups[1].Value, '\[i\]')).Count
+            if ($stats.Bullets -lt 2 -or $stats.Bullets -gt 3) { $warnings.Add("workshop block [b]${nation}[/b] has $($stats.Bullets) bullet(s) (2-3 expected)") }
+            if ($stats.Examples -lt 2) { $warnings.Add("workshop block [b]${nation}[/b] has $($stats.Examples) [i] example(s) (2 or more expected)") }
+        }
+    }
+    $stats.Warnings = $warnings.ToArray()
+    return $stats
+}
+
+# --- Helper: Workshop stats of a namelist file from the repository's guide; $null when the guide is missing ---
+function Get-RepoWorkshopDocStats {
+    param([string]$Key)
+    $guidePath = Join-Path $RepoDir 'WORKSHOP_DESCRIPTION_GUIDELINES.md'
+    if (-not (Test-Path $guidePath)) { return $null }
+    return Get-WorkshopDocStats -GuideText ([System.IO.File]::ReadAllText($guidePath, [System.Text.Encoding]::UTF8)) -Key $Key
+}
+
 function Invoke-NamelistAudit {
     param(
         [string]$Key,
@@ -2500,12 +2875,7 @@ function Invoke-NamelistAudit {
         return
     }
 
-    # Groups that merely repeat vanilla entries (needs a local HOI4 install; silently skipped otherwise)
-    $overlap = Get-VanillaOverlap -Groups $data.Groups -Key $Key -Hoi4Dir (Find-Hoi4Install -CustomPath $Hoi4Dir)
-    foreach ($g in $data.Groups) {
-        $o = $overlap[$g.Tag]
-        if ($o -and $o.Total -ge 5 -and ($o.Matches / $o.Total) -ge 0.8) { $g.Flags.Add('VANILLA_COPY') }
-    }
+    $overlap = Add-VanillaCopyFlags -Data $data -Key $Key -Hoi4Dir (Find-Hoi4Install -CustomPath $Hoi4Dir)
 
     Write-Step "Quality audit: INEX_${Key}_names_divisions.txt ($($data.Groups.Count) groups)"
     foreach ($ff in $data.FileFlags) { Write-Warn "File: $ff" }
@@ -2527,6 +2897,9 @@ function Invoke-NamelistAudit {
         }
         if ($g.Flags.Count -gt 0) {
             Write-Host "  Flags:    $($g.Flags -join ', ')" -ForegroundColor Yellow
+            foreach ($flag in ($g.FlagDetails.Keys | Sort-Object)) {
+                Write-Host "    ${flag}: $(@($g.FlagDetails[$flag]) -join '; ')" -ForegroundColor Yellow
+            }
         }
     }
 
@@ -2541,6 +2914,13 @@ function Invoke-NamelistAudit {
     } else {
         Write-Step "Flag summary"
         $allFlags | Group-Object | Sort-Object Count -Descending | ForEach-Object { Write-Info "$($_.Name): $($_.Count)" }
+    }
+
+    # Workshop description conventions for this nation's block
+    $doc = Get-RepoWorkshopDocStats -Key $Key
+    if ($doc) {
+        if ($doc.Nation) { Write-Info "Workshop: [b]$($doc.Nation)[/b] $($doc.Bullets) bullet(s), $($doc.Examples) [i] example(s); description $($doc.Length)/17000 chars" }
+        foreach ($w in $doc.Warnings) { Write-Warn "Docs: $w" }
     }
 
     # Check PlanTodo
@@ -2585,6 +2965,90 @@ function Invoke-NamelistAudit {
     }
 }
 
+# --- Action: One compact pass over validation, tests, audit summary, plan refresh and name diff ---
+# Prints about ten lines; errors, failed tests and warnings are printed in full.
+function Invoke-Check {
+    param(
+        [string]$Tag,
+        [string]$BaseRev = 'HEAD',
+        [string]$Hoi4Dir
+    )
+    $Tag = $Tag.ToUpper().Trim() -replace '^INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
+    $modFile = Join-Path $RepoDir "common\units\names_divisions\INEX_${Tag}_names_divisions.txt"
+    if (-not (Test-Path $modFile)) { Write-Err "Mod namelist not found: $modFile"; return 1 }
+    $failed = [System.Collections.Generic.List[string]]::new()
+
+    Write-Host "Check ${Tag}:"
+    # Write-Host output of the validation (information stream) is captured so only its errors and warnings are shown
+    $validation = @(Invoke-Validation 6>&1)
+    if ($validation | Where-Object { $_ -is [bool] } | Select-Object -Last 1) {
+        Write-Host '  Validate: OK' -ForegroundColor Green
+    } else {
+        $failed.Add('validate')
+        Write-Host '  Validate: FAILED' -ForegroundColor Red
+    }
+    $validation | ForEach-Object { "$_" } | Where-Object { $_ -match '\[(ERROR|WARN)\]' } | ForEach-Object { Write-Host $_ }
+
+    $runner = Join-Path $RepoDir 'tests\Run-Tests.ps1'
+    if (-not (Test-Path $runner)) {
+        Write-Host '  Tests: skipped (tests\Run-Tests.ps1 not found)'
+    } else {
+        # Child process, so Pester's console output can be filtered. Under 'Stop', PowerShell 5.1 turns native stderr into a terminating error.
+        $prevEap = $ErrorActionPreference
+        $ErrorActionPreference = 'Continue'
+        try {
+            $testLines = @(& (Get-Process -Id $PID).Path -NoProfile -ExecutionPolicy Bypass -File $runner 2>&1 | ForEach-Object { "$_" })
+            $testExit = $LASTEXITCODE
+        } finally {
+            $ErrorActionPreference = $prevEap
+        }
+        $summary = @($testLines | Where-Object { $_ -match 'Summary:' } | Select-Object -Last 1) -replace '^\s*Summary:\s*', ''
+        if ($testExit -eq 0) {
+            Write-Host "  Tests: $summary" -ForegroundColor Green
+        } else {
+            $failed.Add('tests')
+            Write-Host "  Tests: FAILED ($summary)" -ForegroundColor Red
+            $testLines | Where-Object { $_ -match '^\s*\[-\]' } | ForEach-Object { Write-Host "  $($_.Trim())" }
+            Write-Host '  Run -Test for the failure details.'
+        }
+    }
+
+    $data = Get-NamelistAuditData -Path $modFile
+    $null = Add-VanillaCopyFlags -Data $data -Key $Tag -Hoi4Dir (Find-Hoi4Install -CustomPath $Hoi4Dir)
+    Write-Host "  $(Format-AuditSummaryLine -Key $Tag -Data $data)"
+    $allFlags = @(@($data.FileFlags) + @($data.Groups | ForEach-Object { $_.Flags }) | Where-Object { $_ })
+    if ($allFlags.Count -gt 0) {
+        Write-Host "  Flags: $(($allFlags | Group-Object | Sort-Object Count -Descending | ForEach-Object { "$($_.Name) x$($_.Count)" }) -join ', ')"
+    }
+    $doc = Get-RepoWorkshopDocStats -Key $Tag
+    if ($doc) { foreach ($w in $doc.Warnings) { Write-Warn "Docs: $w" } }
+
+    if ((Invoke-AuditPlan -Tag $Tag -BaseRev $BaseRev -RefreshOnly) -ne 0) { $failed.Add('plan') }
+
+    try {
+        $diff = Get-TagNamelistDiff -Tag $Tag -BaseRev $BaseRev
+        $changed = @($diff.Diff | Where-Object { $_.Status -ne 'unchanged' })
+        $added = [int]($changed | ForEach-Object { $_.Added.Count } | Measure-Object -Sum).Sum
+        $removed = [int]($changed | ForEach-Object { $_.Removed.Count } | Measure-Object -Sum).Sum
+        Write-Host "  Diff vs $($diff.Label): $($changed.Count) group(s) changed, +$added -$removed name(s)"
+    } catch {
+        $failed.Add('diff')
+        Write-Err "Diff: $($_.Exception.Message)"
+    }
+
+    if ($failed.Count -gt 0) {
+        Write-Host "Check FAILED: $($failed -join ', ')" -ForegroundColor Red
+        return 1
+    }
+    Write-Host 'Check passed' -ForegroundColor Green
+    return 0
+}
+
+# --- Action: Check ---
+if ($Check) {
+    exit (Invoke-Check -Tag $Check -BaseRev $Base -Hoi4Dir $Hoi4InstallDir)
+}
+
 # --- Action: Audit ---
 if ($Audit) {
     Invoke-NamelistAudit -Key $Audit -CompareRef $Compare -TargetGroup $Group -NamesOnly:$NamesOnly -Sections:$Sections -Keys:$Keys -Hoi4Dir $Hoi4InstallDir
@@ -2595,7 +3059,22 @@ if ($Audit) {
 
 # --- Action: EditNames ---
 if ($EditNames) {
-    exit (Invoke-NamelistEdit -Tag $EditNames -TargetGroup $Group -AddList $Add -RemoveList $Remove -RenameList $Rename -SetList $Set -AfterName $After -SectionName $Section -RenameSectionList $RenameSection -Selector $Selector -Fallback $Fallback -AddTypeList $AddType -RemoveTypeList $RemoveType -CanUse $CanUse -RemoveAll:$RemoveAll -ClearOrdered:$ClearOrdered -RemoveGroup:$RemoveGroup -Comment $Comment -Quiet:$Quiet)
+    $editKeys = 'Group', 'Add', 'Remove', 'Rename', 'Set', 'After', 'Section', 'RenameSection', 'Selector', 'Fallback', 'AddType', 'RemoveType', 'CanUse', 'RemoveAll', 'ClearOrdered', 'RemoveGroup', 'Comment', 'AddGroup', 'Link'
+    $given = @($editKeys | Where-Object { $PSBoundParameters.ContainsKey($_) })
+    try {
+        if ($Batch) {
+            if ($given.Count -gt 0) { throw "-Batch cannot be combined with -$($given -join ', -'); put every edit in the batch file" }
+            $editOps = Read-NamelistEditBatch -Path $Batch
+        } else {
+            $source = @{}
+            foreach ($key in $given) { $source[$key] = $PSBoundParameters[$key] }
+            $editOps = @(ConvertTo-NamelistEditOp $source)
+        }
+    } catch {
+        Write-Err $_.Exception.Message
+        exit 1
+    }
+    exit (Invoke-NamelistEdit -Tag $EditNames -Ops $editOps -ShowNames:($VerbosePreference -ne 'SilentlyContinue'))
 }
 
 # --- Action: SetHeader ---
