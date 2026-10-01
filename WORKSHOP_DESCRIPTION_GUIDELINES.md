@@ -63,7 +63,7 @@ This document serves as an instruction and reference guide for maintaining and u
 | `INEX_EST_names_divisions.txt` | Estonia | `EST` | Included (Historical & elite regiments, Kaitseliit malevad, Armored trains/cars, Coastal fortresses) |
 | `INEX_LAT_names_divisions.txt` | Latvia | `LAT` | Included (Historical divisions & regiments, Aizsargu pulki, Armored cars/trains, Coastal fortresses, Cavalry) |
 | `INEX_LIT_names_divisions.txt` | Lithuania | `LIT` | Included (Grand Duke/Royal regiments, Iron Wolf cavalry, AA/Armored teams) |
-| `INEX_FRA_names_divisions.txt` | France | `FRA` | Included (National Guard, Metropolitan, Heavy/Décision, Nicknames) |
+| `INEX_FRA_names_divisions.txt` | France | `FRA` | Included (1940 order of battle, Nicknames, National Guard, Metropolitan, Milice, FTP, Armistice Army) |
 | `INEX_ENG_names_divisions.txt` | United Kingdom | `ENG` | Included (Home Guard, Royal Guard, Independent, Commandos, Alt-history) |
 | `INEX_FIN_names_divisions.txt` | Finland | `FIN` | Included (Battle-honour divisions, Suojeluskunta districts, Ryhmä groups, Panssaridivisioona, Sissi, Swedish Volunteers SFK) |
 | `INEX_POL_names_divisions.txt` | Poland | `POL` | Included (Home Army, PSZ, LWP, KOP Border Guards, Brygada Świętokrzyska) |
@@ -122,8 +122,8 @@ This is not a complete list of included namelists! Just some examples.
 - Aizsargi county regiments, Autotanku pulks, armored trains, and coastal fortresses
 
 [b]France[/b]
-- Nicknamed line infantry, National Guard ([i]Paris[/i]), and Metropolitan liberation divisions
-- Heavy assault infantry (Divisions d'Infanterie de Décision)
+- 1940 order of battle: [i]11ème Division d'Infanterie 'de Fer'[/i], DLM, DCR, Maginot fortress and Alpine divisions, plus colonial and North African formations
+- Government-gated National Guard and Metropolitan divisions, [i]Division de la Milice Française[/i], Francs-Tireurs et Partisans, and Armistice Army
 
 [b]United Kingdom[/b]
 - Home Guard, Royal Guard, and Independent Brigades
