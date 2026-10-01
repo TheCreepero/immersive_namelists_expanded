@@ -27,7 +27,7 @@ BeforeAll {
         . ([ScriptBlock]::Create($typesMatch.Value))
     }
 
-    foreach ($fn in 'Get-NamePatternKey', 'Test-FallbackStub', 'Get-NamelistAuditData', 'Get-OrderedEntryStats', 'Compare-NamelistAuditData', 'Get-GitFileText', 'Get-NameVariantKey', 'Resolve-GroupTag', 'Get-GroupSections', 'Format-EntryList', 'Get-OrphanHeaderLines', 'Set-NamelistGroupComment', 'Set-NamelistHeader', 'Edit-NamelistGroupText', 'Get-NamelistGroupEnd', 'Add-NamelistGroupText', 'ConvertTo-NamelistEditOp', 'Invoke-NamelistEditOps', 'Read-NamelistEditBatch', 'Get-WorkshopDocStats', 'Get-VanillaOverlap', 'Find-WikiLinkMismatches', 'Compare-NamelistGroupSets', 'Format-NamelistDiff', 'Get-CountryName', 'Format-PlanChangeTable', 'Set-PlanChangeTable', 'New-AuditPlanText', 'Format-AuditSummaryLine', 'Update-WikiGroupRows', 'Find-WikiProseMentions') {
+    foreach ($fn in 'Get-NamePatternKey', 'Test-FallbackStub', 'Get-NamelistAuditData', 'Get-OrderedEntryStats', 'Compare-NamelistAuditData', 'Get-GitFileText', 'Get-NameVariantKey', 'Resolve-GroupTag', 'Get-GroupSections', 'Format-EntryList', 'Get-OrphanHeaderLines', 'Set-NamelistGroupComment', 'Set-NamelistHeader', 'Edit-NamelistGroupText', 'Get-NamelistGroupEnd', 'Add-NamelistGroupText', 'ConvertTo-NamelistEditOp', 'Invoke-NamelistEditOps', 'Get-PlanBatchBlocks', 'Get-PlanReadinessWarnings', 'Read-NamelistEditBatch', 'Get-WorkshopDocStats', 'Get-VanillaOverlap', 'Find-WikiLinkMismatches', 'Compare-NamelistGroupSets', 'Format-NamelistDiff', 'Get-CountryName', 'Format-PlanChangeTable', 'Set-PlanChangeTable', 'New-AuditPlanText', 'Format-AuditSummaryLine', 'Update-WikiGroupRows', 'Find-WikiProseMentions') {
         $fnMatch = [regex]::Match($script:BuildContent, "(?s)(function $fn\s*\{.*?\n\})")
         if ($fnMatch.Success) {
             . ([ScriptBlock]::Create($fnMatch.Groups[1].Value))
@@ -858,6 +858,21 @@ Describe "build.ps1 Helper: Format-PlanChangeTable and Set-PlanChangeTable" {
         $headings[-1] | Should -Be 'Per-group changes'
         $text.TrimEnd() | Should -Match '<!-- END CHANGE TABLE -->$'
         { Set-PlanChangeTable -PlanText $text -TableLines @('| Group | Count |', '| B | 2 |') } | Should -Not -Throw
+    }
+
+    It "Gives a new plan skeleton the hand-off sections, with the edit batch after everything the implementer reads" {
+        $text = New-AuditPlanText -Country 'Testland' -Tag 'TST' -Date '2026-01-01' -FindingLines @() -Summary 's' -TableLines @('| Group | Count |')
+        $text | Should -Match '(?m)^Status: PLANNING$'
+        $headings = @([regex]::Matches($text, '(?m)^## (.+)$') | ForEach-Object { $_.Groups[1].Value })
+        foreach ($h in 'For the implementer', 'Implementation steps', 'Docs payload', 'Stop conditions', 'Edit batch') { $headings | Should -Contain $h }
+        $headings[-2] | Should -Be 'Edit batch'
+        $text | Should -Match '-EditNames TST -Batch'
+        # The skeleton describes the fence but holds no batch block yet, and what the implementer fills is not a planner TODO
+        (Get-PlanBatchBlocks -PlanText $text).Count | Should -Be 0
+        $text | Should -Match '## Outcome\n<!-- TODO\(implementer\):'
+        $warnings = Get-PlanReadinessWarnings -PlanText $text
+        ($warnings -join '; ') | Should -Match 'PLANNING'
+        ($warnings -join '; ') | Should -Match '\d+ planner TODO'
     }
 }
 
@@ -1966,5 +1981,111 @@ TST_CAV_01 =
         $script:CliOutput | Should -Match 'Validate: FAILED'
         $script:CliOutput | Should -Match '\[ERROR\] INEX_TST_names_divisions\.txt: Duplicate index 1'
         Reset-CliNamelist
+    }
+
+    It "Applies the json batch blocks of a plan file in document order and ignores other fences" {
+        Reset-CliNamelist
+        $fence = '```'
+        $plan = @"
+# Testland (TST) Namelist Audit
+
+Status: READY
+
+## Decisions
+Example of the format, not an operation:
+${fence}json
+{ "group": "CAV_01", "add": "Never applied" }
+${fence}
+
+## Edit batch
+${fence}json batch
+{ "group": "INF_01", "add": ["5. Divisioona 'Hirvi'"] }
+${fence}
+
+${fence}json batch
+[
+  { "addGroup": true, "group": "MOT_01", "selector": "Motorized Divisions", "addType": "motorized", "fallback": "%d. Moottoroitu Divisioona", "link": "INF_01",
+    "add": ["1. Moottoroitu Divisioona 'Salama'"] },
+  { "group": "MOT_01", "canUse": "has_government = neutrality" }
+]
+${fence}
+"@ -replace "`r`n", "`n" -replace "`n", "`r`n"
+        $planPath = Join-Path $script:CliDir 'plan.md'
+        [System.IO.File]::WriteAllText($planPath, $plan, $script:Utf8NoBom)
+
+        $ops = Read-NamelistEditBatch -Path $planPath
+        $ops.Count | Should -Be 3
+        $ops[0].Groups | Should -Be @('INF_01')
+        $ops[1].AddGroup | Should -BeTrue
+
+        Invoke-CliBuild -EditNames TST -Batch $planPath
+        $script:CliExit | Should -Be 0 -Because $script:CliOutput
+        $text = [System.IO.File]::ReadAllText($script:CliFile, [System.Text.Encoding]::UTF8)
+        $text | Should -Match 'Hirvi'
+        $text | Should -Match 'Salama'
+        $text | Should -Not -Match 'Never applied'
+    }
+
+    It "Rejects a plan without batch blocks and names the block that is not JSON" {
+        $fence = '```'
+        $empty = Join-Path $script:CliDir 'empty.md'
+        [System.IO.File]::WriteAllText($empty, "# Plan`n`n${fence}json`n{ `"group`": `"INF_01`", `"add`": `"A`" }`n${fence}`n", $script:Utf8NoBom)
+        { Read-NamelistEditBatch -Path $empty } | Should -Throw '*no*json batch*'
+        $broken = Join-Path $script:CliDir 'broken.md'
+        [System.IO.File]::WriteAllText($broken, "${fence}json batch`n{ `"group`": `"INF_01`", `"add`": `"A`" }`n${fence}`n`n${fence}json batch`n{ `"group`": `n${fence}`n", $script:Utf8NoBom)
+        { Read-NamelistEditBatch -Path $broken } | Should -Throw '*block 2*not valid JSON*'
+    }
+
+    It "Leaves the file untouched with -DryRun and warns about a plan that is not ready" {
+        Reset-CliNamelist
+        $before = [System.IO.File]::ReadAllBytes($script:CliFile)
+        $fence = '```'
+        $planPath = Join-Path $script:CliDir 'draft.md'
+        $plan = "# Plan`n`nStatus: PLANNING`n`n## Decisions`n<!-- TODO: fill -->`n`n## Review`n<!-- TODO(implementer): self-check -->`n`n## Edit batch`n${fence}json batch`n{ `"group`": `"CAV_01`", `"add`": [`"Karjalan Ratsuprikaati`"] }`n${fence}`n"
+        [System.IO.File]::WriteAllText($planPath, $plan, $script:Utf8NoBom)
+        Invoke-CliBuild -EditNames TST -Batch $planPath -DryRun
+        $script:CliExit | Should -Be 0 -Because $script:CliOutput
+        $script:CliOutput | Should -Match 'Edited TST_CAV_01: \+1'
+        $script:CliOutput | Should -Match 'Dry run OK: 1 operation\(s\); the file would hold 2 group\(s\), 6 name\(s\)\. Nothing written\.'
+        $script:CliOutput | Should -Match '\[WARN\] Plan: Status is still PLANNING'
+        $script:CliOutput | Should -Match '\[WARN\] Plan: 1 planner TODO section\(s\) left unfilled'
+        [System.IO.File]::ReadAllBytes($script:CliFile) | Should -Be $before
+
+        [System.IO.File]::WriteAllText($planPath, ($plan -replace 'Status: PLANNING', 'Status: READY' -replace '<!-- TODO: fill -->', 'Decided.'), $script:Utf8NoBom)
+        Invoke-CliBuild -EditNames TST -Batch $planPath -DryRun
+        $script:CliOutput | Should -Not -Match '\[WARN\]'
+    }
+
+    It "Creates a new nation's file from a newFile operation, and refuses it when the file exists or is not first" {
+        $newFile = Join-Path $script:CliNamelistDir 'INEX_NEW_names_divisions.txt'
+        $json = Join-Path $script:CliDir 'new.json'
+        [System.IO.File]::WriteAllText($json, '[ { "newFile": true, "header": "Division names for Newland (NEW).\nImmersive Namelists Expanded (INEX)" }, { "addGroup": true, "group": "INF_01", "selector": "Infantry Divisions", "addType": "infantry", "fallback": "%d. Division", "add": ["1. Division ''Alpha''"] } ]', $script:Utf8NoBom)
+
+        Invoke-CliBuild -EditNames NEW -Batch $json -DryRun
+        $script:CliExit | Should -Be 0 -Because $script:CliOutput
+        $script:CliOutput | Should -Match 'Dry run OK: 2 operation\(s\); the file would hold 1 group\(s\), 1 name\(s\)'
+        (Test-Path $newFile) | Should -BeFalse
+
+        Invoke-CliBuild -EditNames NEW -Batch $json
+        $script:CliExit | Should -Be 0 -Because $script:CliOutput
+        $script:CliOutput | Should -Match 'Created INEX_NEW_names_divisions\.txt'
+        $bytes = [System.IO.File]::ReadAllBytes($newFile)
+        $bytes[0] | Should -Not -Be 0xEF
+        $text = [System.Text.Encoding]::UTF8.GetString($bytes)
+        $text | Should -Match '(?s)^# Division names for Newland \(NEW\)\.\r?\n# Immersive Namelists Expanded \(INEX\)\r?\n\r?\nNEW_INF_01 = .*for_countries = \{ NEW \}.*Alpha'
+
+        $before = [System.IO.File]::ReadAllBytes($newFile)
+        Invoke-CliBuild -EditNames NEW -Batch $json
+        $script:CliExit | Should -Be 1
+        $script:CliOutput | Should -Match 'already exists'
+        [System.IO.File]::ReadAllBytes($newFile) | Should -Be $before
+        Remove-Item $newFile
+
+        $ops = @(
+            (ConvertTo-NamelistEditOp @{ group = 'INF_01'; add = 'A' }),
+            (ConvertTo-NamelistEditOp @{ newFile = $true; header = 'H' })
+        )
+        { Invoke-NamelistEditOps -Text $script:CliNamelist -Tag 'TST' -Ops $ops } | Should -Throw '*must be the first operation*'
+        { Invoke-NamelistEditOps -Text '' -Tag 'TST' -Ops @(ConvertTo-NamelistEditOp @{ newFile = $true }) } | Should -Throw '*needs "header"*'
     }
 }

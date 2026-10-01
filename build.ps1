@@ -74,6 +74,11 @@
     "rename", "set", "after", "section", "renameSection", "selector", "fallback", "addType", "removeType", "canUse",
     "removeAll", "clearOrdered", "removeGroup", "comment", "addGroup", "link". List values are a JSON array (items kept
     whole) or one "A; B" string. Use it for more than two edits and for names with apostrophes or quotes.
+    A .md file is read as a plan: the operations are its ```json batch fenced blocks, in document order.
+    A first operation { "newFile": true, "header": "<text>" } creates the namelist file of a new nation.
+    Add -DryRun to run the batch in memory and print the summary lines and totals without writing the file; with a
+    .md plan it also warns when the plan's Status is PLANNING or a "<!-- TODO:" section is unfilled. Syntax
+    validation still happens in -Check after the batch is applied.
 
 .PARAMETER AddGroup
     With -EditNames: create the group named by -Group from -Selector, -AddType and -Fallback (all required), with
@@ -183,6 +188,7 @@
 
 .PARAMETER DryRun
     Preview the generated Steam VDF, staged files, and upload command without executing SteamCMD.
+    With -EditNames: apply the edit in memory only (see -Batch).
 
 .EXAMPLE
     .\build.ps1
@@ -1926,7 +1932,8 @@ function ConvertTo-NamelistEditOp {
     param($Source)
 
     $known = 'group', 'add', 'remove', 'rename', 'set', 'after', 'section', 'renameSection', 'selector', 'fallback',
-        'addType', 'removeType', 'canUse', 'removeAll', 'clearOrdered', 'removeGroup', 'comment', 'addGroup', 'link'
+        'addType', 'removeType', 'canUse', 'removeAll', 'clearOrdered', 'removeGroup', 'comment', 'addGroup', 'link',
+        'newFile', 'header'
     $values = @{}
     if ($Source -is [System.Collections.IDictionary]) {
         foreach ($key in $Source.Keys) { $values["$key"] = $Source[$key] }
@@ -1967,6 +1974,8 @@ function ConvertTo-NamelistEditOp {
         ClearOrdered  = & $flag $values['clearOrdered']
         RemoveGroup   = & $flag $values['removeGroup']
         AddGroup      = & $flag $values['addGroup']
+        NewFile       = & $flag $values['newFile']
+        Header        = & $text $values['header']
     }
 }
 
@@ -1989,6 +1998,17 @@ function Invoke-NamelistEditOps {
         $op = $Ops[$n]
         $where = if ($Ops.Count -gt 1) { "op $($n + 1) " } else { '' }
         try {
+            if ($op.NewFile) {
+                # Batch only: the first operation of a new nation's plan creates the file from its header
+                if ($n -gt 0) { throw '"newFile" must be the first operation' }
+                if ($Text.Trim()) { throw "`"newFile`": INEX_${Tag}_names_divisions.txt already exists" }
+                if (-not $op.Header.Trim()) { throw '"newFile" needs "header"' }
+                if ($op.Groups.Count -gt 0) { throw '"newFile" takes only "header"' }
+                $Text = Set-NamelistHeader -Text '' -Header $op.Header
+                $summaries.Add("Created INEX_${Tag}_names_divisions.txt")
+                continue
+            }
+            if ($op.Header) { throw '"header" applies only to "newFile"; use -SetHeader for an existing file' }
             if ($op.Groups.Count -eq 0) { throw 'No -Group specified' }
             $data = Get-NamelistAuditData -Text $Text
             $known = @($data.Groups | ForEach-Object { $_.Tag })
@@ -2069,12 +2089,44 @@ function Invoke-NamelistEditOps {
     return [PSCustomObject]@{ Text = $Text; Summaries = $summaries.ToArray(); Edited = $edited.ToArray() }
 }
 
-# --- Helper: Read the operations of an -EditNames -Batch file (UTF-8 JSON: one object or an array of them) ---
+# --- Helper: The JSON of every ```json batch fenced block of a plan file, in document order ---
+function Get-PlanBatchBlocks {
+    param([string]$PlanText)
+    return , @([regex]::Matches($PlanText, '(?ms)^```json batch[ \t]*\r?\n(.*?)\r?\n```[ \t]*\r?$') | ForEach-Object { $_.Groups[1].Value })
+}
+
+# --- Helper: What keeps a plan file from being handed to an implementer (empty when it is ready) ---
+# Planner sections carry "<!-- TODO: ... -->"; the ones the implementer fills carry "<!-- TODO(implementer): ... -->".
+function Get-PlanReadinessWarnings {
+    param([string]$PlanText)
+    $warnings = [System.Collections.Generic.List[string]]::new()
+    $status = [regex]::Match($PlanText, '(?m)^Status:[ \t]*(.*?)[ \t]*\r?$')
+    if (-not $status.Success) {
+        $warnings.Add('plan has no "Status:" line')
+    } elseif ($status.Groups[1].Value -match '^PLANNING') {
+        $warnings.Add('Status is still PLANNING; set it to READY once the plan is complete')
+    }
+    $todos = ([regex]::Matches($PlanText, '<!-- TODO:')).Count
+    if ($todos -gt 0) { $warnings.Add("$todos planner TODO section(s) left unfilled") }
+    return , $warnings.ToArray()
+}
+
+# --- Helper: Read the operations of an -EditNames -Batch file ---
+# A .json file is one operation object or an array of them. A .md plan holds them in ```json batch fenced blocks.
 function Read-NamelistEditBatch {
     param([string]$Path)
     if (-not (Test-Path -LiteralPath $Path)) { throw "Batch file not found: $Path" }
-    $json = [System.IO.File]::ReadAllText((Resolve-Path -LiteralPath $Path).Path, [System.Text.Encoding]::UTF8)
-    try { $parsed = ConvertFrom-Json -InputObject $json } catch { throw "Batch file is not valid JSON: $($_.Exception.Message)" }
+    $content = [System.IO.File]::ReadAllText((Resolve-Path -LiteralPath $Path).Path, [System.Text.Encoding]::UTF8)
+    if ($Path -match '\.md$') {
+        $blocks = Get-PlanBatchBlocks -PlanText $content
+        if ($blocks.Count -eq 0) { throw "Plan has no ``````json batch blocks: $Path" }
+        $parsed = @(for ($b = 0; $b -lt $blocks.Count; $b++) {
+            try { $block = ConvertFrom-Json -InputObject $blocks[$b] } catch { throw "Batch block $($b + 1) is not valid JSON: $($_.Exception.Message)" }
+            $block | ForEach-Object { $_ }
+        })
+    } else {
+        try { $parsed = ConvertFrom-Json -InputObject $content } catch { throw "Batch file is not valid JSON: $($_.Exception.Message)" }
+    }
     $ops = @($parsed | ForEach-Object { $_ } | ForEach-Object { ConvertTo-NamelistEditOp $_ })
     if ($ops.Count -eq 0) { throw "Batch file has no operations: $Path" }
     return , $ops
@@ -2085,11 +2137,14 @@ function Invoke-NamelistEdit {
     param(
         [string]$Tag,
         [object[]]$Ops = @(),
-        [switch]$ShowNames
+        [switch]$ShowNames,
+        [switch]$DryRun
     )
     $Tag = $Tag.ToUpper().Trim() -replace '^INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
     $modFile = Join-Path $RepoDir "common\units\names_divisions\INEX_${Tag}_names_divisions.txt"
-    if (-not (Test-Path $modFile)) { Write-Err "Mod namelist not found: $modFile"; return 1 }
+    # A batch that starts with "newFile" creates the file
+    $creates = $Ops.Count -gt 0 -and $Ops[0].NewFile
+    if (-not (Test-Path $modFile) -and -not $creates) { Write-Err "Mod namelist not found: $modFile"; return 1 }
 
     # A new tag must be unique across every namelist file of the mod
     $takenTags = @()
@@ -2099,18 +2154,27 @@ function Invoke-NamelistEdit {
         })
     }
 
-    $text = [System.IO.File]::ReadAllText($modFile, [System.Text.Encoding]::UTF8)
+    $text = if (Test-Path $modFile) { [System.IO.File]::ReadAllText($modFile, [System.Text.Encoding]::UTF8) } else { '' }
     try {
+        if ($creates -and (Test-Path $modFile)) { throw "`"newFile`": INEX_${Tag}_names_divisions.txt already exists" }
         $result = Invoke-NamelistEditOps -Text $text -Tag $Tag -Ops $Ops -TakenTags $takenTags
     } catch {
         Write-Err $_.Exception.Message
         return 1
     }
-    [System.IO.File]::WriteAllText($modFile, $result.Text, (New-Object System.Text.UTF8Encoding $false))
+    if (-not $DryRun) {
+        [System.IO.File]::WriteAllText($modFile, $result.Text, (New-Object System.Text.UTF8Encoding $false))
+    }
 
     foreach ($line in $result.Summaries) { Write-Host $line -ForegroundColor Green }
     if (@($Ops | Where-Object { $_.RemoveGroup }).Count -gt 0) {
         Write-Warn "Removed group tags: saved templates that used them fall back to default names"
+    }
+    if ($DryRun) {
+        $after = Get-NamelistAuditData -Text $result.Text
+        $names = ($after.Groups | Measure-Object -Property OrderedCount -Sum).Sum
+        Write-Host "Dry run OK: $($Ops.Count) operation(s); the file would hold $(@($after.Groups).Count) group(s), $([int]$names) name(s). Nothing written." -ForegroundColor Green
+        return 0
     }
     if ($ShowNames -and $result.Edited.Count -gt 0) {
         $updatedData = Get-NamelistAuditData -Path $modFile
@@ -2390,7 +2454,10 @@ function New-AuditPlanText {
     )
     $l = [System.Collections.Generic.List[string]]::new()
     $l.Add("# $Country ($Tag) Namelist Audit - $Date"); $l.Add('')
+    $l.Add('Status: PLANNING'); $l.Add('')
     $l.Add("File: ``common/units/names_divisions/INEX_${Tag}_names_divisions.txt``"); $l.Add('')
+    $l.Add('## For the implementer')
+    $l.Add('Planning and research are finished once Status is READY. Run this plan with the `hoi4-inex-namelist-implement` skill: start at the first unticked box under "Implementation steps" and read no further than `## Edit batch`. Do not research, re-decide, dispatch a researcher or invoke the audit skill. When a stop condition applies, stop and report.'); $l.Add('')
     $l.Add("## Initial report (``-Audit $Tag``)")
     $l.Add("- $Summary")
     foreach ($f in $FindingLines) { $l.Add("- $f") }
@@ -2400,9 +2467,23 @@ function New-AuditPlanText {
     $l.Add('## Rationale'); $l.Add('<!-- TODO: organization applied, why names moved, respellings -->'); $l.Add('')
     $l.Add('## Verified formations & commanders'); $l.Add('<!-- TODO: every formation and commander the file keeps, legacy included: source or "well documented" -->'); $l.Add('')
     $l.Add('## Author confirmation'); $l.Add('<!-- TODO: unverified entries kept pending author confirmation, or "None" -->'); $l.Add('')
-    $l.Add('## Kept on judgment'); $l.Add('<!-- TODO: remaining flags kept, each with its reason, or "None" -->'); $l.Add('')
-    $l.Add('## Review'); $l.Add('<!-- TODO: "Self-check" with its result, or the proofreader''s findings and how each was handled -->'); $l.Add('')
-    # Last on purpose: the table can run to tens of KB, and a resumed session reads the plan only up to this heading
+    $l.Add('## Kept on judgment'); $l.Add('<!-- TODO: flags expected to remain after the batch, each with its reason, or "None" -->'); $l.Add('')
+    $l.Add('## Implementation steps')
+    $l.Add('<!-- TODO: adjust the steps to this audit -->')
+    $l.Add("- [ ] 1. Set ``Status: IN PROGRESS``, then apply the batch: ``powershell -File .\build.ps1 -EditNames $Tag -Batch <this file>``. Expect one green line per group and no ``[ERROR]``.")
+    $l.Add("- [ ] 2. ``powershell -File .\build.ps1 -SyncWiki $Tag``, then make the edits listed under `"Docs payload`".")
+    $l.Add("- [ ] 3. ``powershell -File .\build.ps1 -Check $Tag``. Expect ``Check passed``; remaining flags must match `"Kept on judgment`".")
+    $l.Add('- [ ] 4. Fill "Outcome", set `Status: DONE`, report the `-Check` result.')
+    $l.Add("- [ ] 5. After the user confirms: ``powershell -File .\wiki\push-wiki.ps1 -CommitMessage `"Audit $Tag division namelists`"``."); $l.Add('')
+    $l.Add('## Docs payload'); $l.Add('<!-- TODO: verbatim replacement text and where it goes (wiki prose lines, README row, workshop row and [b]Nation[/b] block), or "No docs change beyond -SyncWiki" -->'); $l.Add('')
+    $l.Add('## Stop conditions')
+    $l.Add('Stop and report to the user, without researching or improvising, when: the batch fails; `-Check` fails after one retry of a fix this plan describes; a step has no command for what it asks; a name in the output looks wrong; a flag appears that "Kept on judgment" does not list.'); $l.Add('')
+    $l.Add('## Review'); $l.Add('<!-- TODO: before hand-off: "Self-check" with its result, or the proofreader''s findings and how each was handled in the batch -->'); $l.Add('')
+    $l.Add('## Outcome'); $l.Add('<!-- TODO(implementer): date, the -Check summary, deviations from this plan with the reason -->'); $l.Add('')
+    # Last on purpose: the batch and the table can run to tens of KB, and the implementer reads the plan only up to "## Edit batch"
+    $l.Add('## Edit batch')
+    $l.Add(('Applied by `build.ps1 -EditNames {0} -Batch <this file>`: every fenced block whose opening line is `` ```json batch ``, in order. Never typed out again or read back.' -f $Tag))
+    $l.Add('<!-- TODO: one ```json batch block per group -->'); $l.Add('')
     $l.Add('## Per-group changes')
     $l.Add('<!-- BEGIN CHANGE TABLE: generated by build.ps1 -AuditPlan; rerun it to refresh, never edit by hand -->')
     foreach ($t in $TableLines) { $l.Add($t) }
@@ -3074,7 +3155,13 @@ if ($EditNames) {
         Write-Err $_.Exception.Message
         exit 1
     }
-    exit (Invoke-NamelistEdit -Tag $EditNames -Ops $editOps -ShowNames:($VerbosePreference -ne 'SilentlyContinue'))
+    $editExit = Invoke-NamelistEdit -Tag $EditNames -Ops $editOps -ShowNames:($VerbosePreference -ne 'SilentlyContinue') -DryRun:$DryRun
+    # The planner's hand-off gate: a plan that applies cleanly, with its status set and no planner TODO left
+    if ($DryRun -and $editExit -eq 0 -and $Batch -match '\.md$') {
+        $planText = [System.IO.File]::ReadAllText((Resolve-Path -LiteralPath $Batch).Path, [System.Text.Encoding]::UTF8)
+        foreach ($w in (Get-PlanReadinessWarnings -PlanText $planText)) { Write-Warn "Plan: $w" }
+    }
+    exit $editExit
 }
 
 # --- Action: SetHeader ---

@@ -63,6 +63,7 @@ This document serves as an instruction and reference guide for maintaining and u
 | `INEX_JAP_names_divisions.txt` | Japan | `JAP` | Included (Plain & Named Dai-N Shidan infantry, motorized, mechanized and Sensha armored lists with tsūshōgō, Cavalry, Teishin airborne, SNLF marines, Mountain, Garrison, Fortress, Border, Imperial Guard, Kenpeitai, militia, Rangers & Bicycle, fascist Kokutai & Yokusan, democratic Jieitai-style, communist Red Guards & People's Army) |
 | `INEX_BRA_names_divisions.txt` | Brazil | `BRA` | Included (Plain & Named infantry, motorized, mechanized and armored divisions with Army patrons, Cavalry, Paraquedista, Fuzileiros Navais, Mountain, coastal artillery, State Forças Públicas, Guarda Nacional, Presidential Guard, Frontier and Amazon jungle troops, FEB Expeditionary, Foreign Legions, fascist Integralist, communist Red Guards & People's Army, democratic Constitutionalist, Imperial Guard & Voluntários da Pátria) |
 | `INEX_GRE_names_divisions.txt` | Greece | `GRE` | Included (Plain & Named Merarchía infantry, motorized, mechanized and armored lists, Cavalry, Mountain divisions & brigades, Evzones, Raiders & Sacred Band, Paratrooper, Marine, garrison, island & Metaxas Line fortress commands, Gendarmerie, Asia Minor Army, Middle East & Korea expeditionary, royal Fourth of August Guard, fascist EON, communist ELAS & Democratic Army, democratic National Defence & Republican volunteers) |
+| `INEX_ROM_names_divisions.txt` | Romania | `ROM` | Included (Plain & Named Divizia infantry, motorized, mechanized and armored lists, Cavalry divisions, brigades & regiments, Mountain brigades & divisions, Marine, Paratrooper, garrison, fortified sectors, Border Guard, Gendarmerie, Royal Guard & Straja Țării, fascist Iron Guard, communist People's divisions & Patriotic Guards, democratic Volunteer & National Guard) |
 | `INEX_EST_names_divisions.txt` | Estonia | `EST` | Included (Historical & elite regiments, Kaitseliit malevad, Armored trains/cars, Coastal fortresses) |
 | `INEX_LAT_names_divisions.txt` | Latvia | `LAT` | Included (Historical divisions & regiments, Aizsargu pulki, Armored cars/trains, Coastal fortresses, Cavalry) |
 | `INEX_LIT_names_divisions.txt` | Lithuania | `LIT` | Included (Grand Duke/Royal regiments, Iron Wolf cavalry, AA/Armored teams) |
@@ -128,6 +129,11 @@ This is not a complete list of included namelists! Just some examples.
 - Plain and Named infantry, motorized, mechanized and armored Merarchíes with regional titles ([i]1i Merarchía Thessalías[/i], [i]8i Merarchía Ipeírou[/i]), plus Cavalry, Mountain, Evzone ([i]2/39 Evzonikó Sýntagma[/i]), Raider, Paratrooper and Marine lists
 - Island commands, Metaxas Line fortress sectors ([i]Tmíma Ochýrosis Roupel[/i]), Gendarmerie, Asia Minor Army divisions, and Middle East and Korea expeditionary brigades
 - Ideology suites: Royal Guard & Fourth of August (neutrality), EON youth (fascist), ELAS & Democratic Army (communist), and National Defence & Republican volunteers (democratic)
+
+[b]Romania[/b]
+- Plain and Named infantry, motorized, mechanized and armored divisions with regional and royal honorifics ([i]Divizia 6 Infanterie 'Mărășești'[/i], [i]Divizia 1 Blindată 'România Mare'[/i]), plus Cavalry, Mountain brigades and divisions, Marine and Paratrooper lists
+- Gendarmerie legions, Border Guard brigades, fortified sectors ([i]Sectorul Fortificat 3 'Galați'[/i]), and garrison, training and reserve divisions
+- Ideology suites: Royal Guard & Straja Țării (neutrality), Iron Guard (fascist), Tudor Vladimirescu & Patriotic Guards (communist), and Volunteer & National Guard (democratic)
 
 [b]Lithuania[/b]
 - Grand Duke infantry regiments ([i]Gedimino[/i], [i]Vytauto[/i], [i]Algirdo[/i]) & [i]Geležinio Vilko[/i] cavalry

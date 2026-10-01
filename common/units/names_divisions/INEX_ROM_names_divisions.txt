@@ -1,0 +1,894 @@
+# Division template historical names system for Romania (ROM).
+# Immersive Namelists Expanded (INEX)
+# Romanian titles follow the Army's own order: definite noun, Arabic number, arm (Divizia 6 Infanterie), with comma-below diacritics.
+# Overrides all nine vanilla ROM groups (INF, CAV, MOT, ARM, MEC, GAR, MAR, MTN, PAR), which were stubs without diacritics.
+
+# ===== Field divisions =====
+
+# Overrides vanilla ROM_INF_01 as the plain variant. The Army wrote the definite noun before the number (Divizia 6 Infanterie), unlike vanilla's Divizie %d Infanterie. Vanilla's Guard, fortification and border literals move to ROM_ROY_01, ROM_FOR_01 and ROM_BOR_01.
+ROM_INF_01 = 
+{
+	name = "Infantry Divisions"
+
+	for_countries = { ROM }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Divizia %d Infanterie"
+}
+
+# Named variant of ROM_INF_01; shares its numbering. Interwar Romanian divisions carried no honorifics, so the titles are extrapolated: garrison towns of the numbered divisions, regimental patrons, battles of 1916-17, rulers and provinces.
+ROM_INF_02 = 
+{
+	name = "Infantry Divisions (Named)"
+
+	for_countries = { ROM }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	link_numbering_with = { ROM_INF_01 }
+
+	fallback_name = "Divizia %d Infanterie"
+
+	ordered =
+	{
+		# Peacetime divisions 1-21
+		1 = { "Divizia %d Infanterie 'Mihai Viteazul'" }
+		2 = { "Divizia %d Infanterie 'Craiova'" }
+		3 = { "Divizia %d Infanterie 'Pitești'" }
+		4 = { "Divizia %d Infanterie 'București'" }
+		5 = { "Divizia %d Infanterie 'Ștefan cel Mare'" }
+		6 = { "Divizia %d Infanterie 'Mărășești'" }
+		7 = { "Divizia %d Infanterie 'Roman'" }
+		8 = { "Divizia %d Infanterie 'Mărăști'" }
+		9 = { "Divizia %d Infanterie 'Constanța'" }
+		10 = { "Divizia %d Infanterie 'Tulcea'" }
+		11 = { "Divizia %d Infanterie 'Slatina'" }
+		12 = { "Divizia %d Infanterie 'Banat'" }
+		13 = { "Divizia %d Infanterie 'Prahova'" }
+		14 = { "Divizia %d Infanterie 'Oituz'" }
+		15 = { "Divizia %d Infanterie 'Mircea cel Bătrân'" }
+		16 = { "Divizia %d Infanterie 'Cluj'" }
+		17 = { "Divizia %d Infanterie 'Matei Basarab'" }
+		18 = { "Divizia %d Infanterie 'Sibiu'" }
+		19 = { "Divizia %d Infanterie 'Burebista'" }
+		20 = { "Divizia %d Infanterie 'Alba Iulia'" }
+		21 = { "Divizia %d Infanterie 'Dimitrie Cantemir'" }
+		# Mobilization divisions
+		22 = { "Divizia %d Infanterie 'Alexandru cel Bun'" }
+		23 = { "Divizia %d Infanterie 'Vlad Țepeș'" }
+		24 = { "Divizia %d Infanterie 'Constantin Brâncoveanu'" }
+		25 = { "Divizia %d Infanterie 'Gorj'" }
+		26 = { "Divizia %d Infanterie 'Baia'" }
+		27 = { "Divizia %d Infanterie 'Regele Carol I'" }
+		28 = { "Divizia %d Infanterie 'Regina Maria'" }
+		29 = { "Divizia %d Infanterie 'Mareșal Averescu'" }
+		30 = { "Divizia %d Infanterie 'Mareșal Prezan'" }
+		31 = { "Divizia %d Infanterie 'General Dragalina'" }
+		32 = { "Divizia %d Infanterie 'Podu Înalt'" }
+		33 = { "Divizia %d Infanterie 'Jiu'" }
+		34 = { "Divizia %d Infanterie 'Moldova'" }
+		35 = { "Divizia %d Infanterie 'Dobrogea'" }
+		36 = { "Divizia %d Infanterie 'Bucovina'" }
+		37 = { "Divizia %d Infanterie 'Basarabia'" }
+		38 = { "Divizia %d Infanterie 'Transilvania'" }
+		39 = { "Divizia %d Infanterie 'Crișana'" }
+		40 = { "Divizia %d Infanterie 'Maramureș'" }
+	}
+}
+
+# Overrides vanilla ROM_MOT_01 as the plain variant (vanilla's masculine Motomecanizat on a feminine Divizie is replaced). Anchor of the mobile numbering family.
+ROM_MOT_01 = 
+{
+	name = "Motorized Divisions"
+
+	for_countries = { ROM }
+
+	can_use = { always = yes }
+
+	division_types = { "motorized" }
+
+	link_numbering_with = { ROM_INF_01 }
+
+	fallback_name = "Divizia %d Motorizată"
+}
+
+# Named variant of ROM_MOT_01; shares its numbering. Extrapolated: Romania fielded one motorized division before 1941. Rivers, towns and provinces of the plains.
+ROM_MOT_02 = 
+{
+	name = "Motorized Divisions (Named)"
+
+	for_countries = { ROM }
+
+	can_use = { always = yes }
+
+	division_types = { "motorized" }
+
+	link_numbering_with = { ROM_MOT_01 }
+
+	fallback_name = "Divizia %d Motorizată"
+
+	ordered =
+	{
+		1 = { "Divizia %d Motorizată 'Târgoviște'" }
+		2 = { "Divizia %d Motorizată 'Prahova'" }
+		3 = { "Divizia %d Motorizată 'Dunărea'" }
+		4 = { "Divizia %d Motorizată 'Olt'" }
+		5 = { "Divizia %d Motorizată 'Mihai Viteazul'" }
+		6 = { "Divizia %d Motorizată 'Brăila'" }
+		7 = { "Divizia %d Motorizată 'Ploiești'" }
+		8 = { "Divizia %d Motorizată 'Burebista'" }
+		9 = { "Divizia %d Motorizată 'Basarabia'" }
+		10 = { "Divizia %d Motorizată 'Tecuci'" }
+		11 = { "Divizia %d Motorizată 'Carpați'" }
+		12 = { "Divizia %d Motorizată 'Ialomița'" }
+		13 = { "Divizia %d Motorizată 'Teleorman'" }
+		14 = { "Divizia %d Motorizată 'Vedea'" }
+	}
+}
+
+# Overrides vanilla ROM_MEC_01 as the plain variant. Anchored on ROM_MOT_01 for shared numbering; vanilla linked ROM_INF_01.
+ROM_MEC_01 = 
+{
+	name = "Mechanized Divisions"
+
+	for_countries = { ROM }
+
+	can_use = { always = yes }
+
+	division_types = { "mechanized" }
+
+	link_numbering_with = { ROM_MOT_01 }
+
+	fallback_name = "Divizia %d Mecanizată"
+}
+
+# Named variant of ROM_MEC_01; shares the mobile numbering. Extrapolated: battles of 1917, frontier rivers and provinces.
+ROM_MEC_02 = 
+{
+	name = "Mechanized Divisions (Named)"
+
+	for_countries = { ROM }
+
+	can_use = { always = yes }
+
+	division_types = { "mechanized" }
+
+	link_numbering_with = { ROM_MOT_01 }
+
+	fallback_name = "Divizia %d Mecanizată"
+
+	ordered =
+	{
+		1 = { "Divizia %d Mecanizată 'Mărășești'" }
+		2 = { "Divizia %d Mecanizată 'Podu Înalt'" }
+		3 = { "Divizia %d Mecanizată 'Mărăști'" }
+		4 = { "Divizia %d Mecanizată 'Oituz'" }
+		5 = { "Divizia %d Mecanizată 'Jiu'" }
+		6 = { "Divizia %d Mecanizată 'Dobrogea'" }
+		7 = { "Divizia %d Mecanizată 'Moldova'" }
+		8 = { "Divizia %d Mecanizată 'Siret'" }
+		9 = { "Divizia %d Mecanizată 'Prut'" }
+		10 = { "Divizia %d Mecanizată 'Argeș'" }
+		11 = { "Divizia %d Mecanizată 'Banat'" }
+		12 = { "Divizia %d Mecanizată 'Dâmbovița'" }
+		13 = { "Divizia %d Mecanizată 'Mureș'" }
+		14 = { "Divizia %d Mecanizată 'Someș'" }
+	}
+}
+
+# Overrides vanilla ROM_ARM_01 as the plain variant (Armura becomes the Army's own Blindată).
+ROM_ARM_01 = 
+{
+	name = "Armored Divisions"
+
+	for_countries = { ROM }
+
+	can_use = { always = yes }
+
+	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
+
+	fallback_name = "Divizia %d Blindată"
+}
+
+# Named variant of ROM_ARM_01; shares its numbering. Key 1 is the real 1st Armoured Division 'România Mare' (1944); the rest is extrapolated, since no second armoured division existed.
+ROM_ARM_02 = 
+{
+	name = "Armored Divisions (Named)"
+
+	for_countries = { ROM }
+
+	can_use = { always = yes }
+
+	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
+
+	link_numbering_with = { ROM_ARM_01 }
+
+	fallback_name = "Divizia %d Blindată"
+
+	ordered =
+	{
+		1 = { "Divizia %d Blindată 'România Mare'" }
+		2 = { "Divizia %d Blindată 'Târgoviște'" }
+		3 = { "Divizia %d Blindată 'Mihai Viteazul'" }
+		4 = { "Divizia %d Blindată 'Ștefan cel Mare'" }
+		5 = { "Divizia %d Blindată 'Oituz'" }
+		6 = { "Divizia %d Blindată 'Mărășești'" }
+		7 = { "Divizia %d Blindată 'Vlad Țepeș'" }
+		8 = { "Divizia %d Blindată 'Mircea cel Bătrân'" }
+		9 = { "Divizia %d Blindată 'Dacia'" }
+		10 = { "Divizia %d Blindată 'Burebista'" }
+		11 = { "Divizia %d Blindată 'Decebal'" }
+		12 = { "Divizia %d Blindată 'Unirea Principatelor'" }
+		13 = { "Divizia %d Blindată 'Alexandru Ioan Cuza'" }
+		14 = { "Divizia %d Blindată 'Dimitrie Cantemir'" }
+	}
+}
+
+# ===== Cavalry =====
+
+# Overrides vanilla ROM_CAV_01. Cavalry brigades became numbered divisions on 15 March 1942 (real numbers 1, 5, 6, 7, 8, 9). Honorifics are extrapolated.
+ROM_CAV_01 = 
+{
+	name = "Cavalry Divisions"
+
+	for_countries = { ROM }
+
+	can_use = { always = yes }
+
+	division_types = { "cavalry" }
+
+	fallback_name = "Divizia %d Cavalerie"
+
+	ordered =
+	{
+		1 = { "Divizia %d Cavalerie 'Regele Ferdinand I'" }
+		2 = { "Divizia %d Cavalerie 'Muntenia'" }
+		3 = { "Divizia %d Cavalerie 'Oltenia'" }
+		4 = { "Divizia %d Cavalerie 'Banat'" }
+		5 = { "Divizia %d Cavalerie 'Botoșani'" }
+		6 = { "Divizia %d Cavalerie 'Mihai Viteazul'" }
+		7 = { "Divizia %d Cavalerie 'Dobrogea'" }
+		8 = { "Divizia %d Cavalerie 'Ștefan cel Mare'" }
+		9 = { "Divizia %d Cavalerie 'Basarabia'" }
+		10 = { "Divizia %d Cavalerie 'Transilvania'" }
+		11 = { "Divizia %d Cavalerie 'Bucovina'" }
+		12 = { "Divizia %d Cavalerie 'Crișana'" }
+	}
+}
+
+# Cavalry brigades of 1939-42 (real numbers 1, 5, 6, 7, 8, 9; Brigada 5 held Botoșani and Brigada 7 Bazargic). Shares numbering with ROM_CAV_01. Honorifics are extrapolated.
+ROM_CAV_02 = 
+{
+	name = "Cavalry Brigades"
+
+	for_countries = { ROM }
+
+	can_use = { always = yes }
+
+	division_types = { "cavalry" }
+
+	link_numbering_with = { ROM_CAV_01 }
+
+	fallback_name = "Brigada %d Cavalerie"
+
+	ordered =
+	{
+		1 = { "Brigada %d Cavalerie 'Regina Maria'" }
+		2 = { "Brigada %d Cavalerie 'Iași'" }
+		3 = { "Brigada %d Cavalerie 'Bârlad'" }
+		4 = { "Brigada %d Cavalerie 'Craiova'" }
+		5 = { "Brigada %d Cavalerie 'Botoșani'" }
+		6 = { "Brigada %d Cavalerie 'Caracal'" }
+		7 = { "Brigada %d Cavalerie 'Bazargic'" }
+		8 = { "Brigada %d Cavalerie 'Bacău'" }
+		9 = { "Brigada %d Cavalerie 'Dorohoi'" }
+		10 = { "Brigada %d Cavalerie 'Roman'" }
+	}
+}
+
+# The peacetime cavalry arm: Roșiori 1-12 and Călărași 1-13 (26 regiments with the Garda Regală Călare, which sits in ROM_ROY_02). Regimental numbers are real; Botoșani (8 Roșiori) and Bazargic (12 Roșiori) are attested garrisons and every other honorific is extrapolated. Keys 13-25 carry the Călărași numbers as literals and the interwar counties that raised them.
+ROM_CAV_03 = 
+{
+	name = "Cavalry Regiments"
+
+	for_countries = { ROM }
+
+	can_use = { always = yes }
+
+	division_types = { "cavalry" }
+
+	fallback_name = "Regimentul %d Călărași"
+
+	ordered =
+	{
+		1 = { "Regimentul %d Roșiori 'Regele Ferdinand I'" }
+		2 = { "Regimentul %d Roșiori 'Regina Maria'" }
+		3 = { "Regimentul %d Roșiori 'Principele Nicolae'" }
+		4 = { "Regimentul %d Roșiori 'Mihai Viteazul'" }
+		5 = { "Regimentul %d Roșiori 'Ștefan cel Mare'" }
+		6 = { "Regimentul %d Roșiori 'Iași'" }
+		7 = { "Regimentul %d Roșiori 'Craiova'" }
+		8 = { "Regimentul %d Roșiori 'Botoșani'" }
+		9 = { "Regimentul %d Roșiori 'Bârlad'" }
+		10 = { "Regimentul %d Roșiori 'Caracal'" }
+		11 = { "Regimentul %d Roșiori 'Regele Carol I'" }
+		12 = { "Regimentul %d Roșiori 'Bazargic'" }
+		13 = { "Regimentul 1 Călărași 'Ialomița'" }
+		14 = { "Regimentul 2 Călărași 'Teleorman'" }
+		15 = { "Regimentul 3 Călărași 'Vlașca'" }
+		16 = { "Regimentul 4 Călărași 'Dolj'" }
+		17 = { "Regimentul 5 Călărași 'Mehedinți'" }
+		18 = { "Regimentul 6 Călărași 'Gorj'" }
+		19 = { "Regimentul 7 Călărași 'Argeș'" }
+		20 = { "Regimentul 8 Călărași 'Olt'" }
+		21 = { "Regimentul 9 Călărași 'Romanați'" }
+		22 = { "Regimentul 10 Călărași 'Vaslui'" }
+		23 = { "Regimentul 11 Călărași 'Fălciu'" }
+		24 = { "Regimentul 12 Călărași 'Tutova'" }
+		25 = { "Regimentul 13 Călărași 'Putna'" }
+	}
+}
+
+# ===== Mountain troops =====
+
+# Overrides vanilla ROM_MTN_01 (word order was Munte Mixtă). Brigada 1-3 Mixtă Munte formed in 1937 and Brigada 4 on 20 June 1939 (HQ Aiud); 5-8 are extrapolated. Honorifics are Carpathian massifs and garrisons (Brașov, Aiud).
+ROM_MTN_01 = 
+{
+	name = "Mountain Brigades"
+
+	for_countries = { ROM }
+
+	can_use = { always = yes }
+
+	division_types = { "mountaineers" }
+
+	fallback_name = "Brigada %d Mixtă Munte"
+
+	ordered =
+	{
+		1 = { "Brigada %d Mixtă Munte 'Bucegi'" }
+		2 = { "Brigada %d Mixtă Munte 'Brașov'" }
+		3 = { "Brigada %d Mixtă Munte 'Făgăraș'" }
+		4 = { "Brigada %d Mixtă Munte 'Aiud'" }
+		5 = { "Brigada %d Mixtă Munte 'Rodna'" }
+		6 = { "Brigada %d Mixtă Munte 'Retezat'" }
+		7 = { "Brigada %d Mixtă Munte 'Parâng'" }
+		8 = { "Brigada %d Mixtă Munte 'Ceahlău'" }
+		9 = { "Brigada %d Mixtă Munte 'Cindrel'" }
+		10 = { "Brigada %d Mixtă Munte 'Vrancea'" }
+	}
+}
+
+# Divizia 4 Vânători de Munte is attested for 1942; the series is extrapolated from the Army's mountain-troop terms. Shares numbering with ROM_MTN_01.
+ROM_MTN_02 = 
+{
+	name = "Mountain Divisions"
+
+	for_countries = { ROM }
+
+	can_use = { always = yes }
+
+	division_types = { "mountaineers" }
+
+	link_numbering_with = { ROM_MTN_01 }
+
+	fallback_name = "Divizia %d Vânători de Munte"
+
+	ordered =
+	{
+		1 = { "Divizia %d Vânători de Munte 'Carpați'" }
+		2 = { "Divizia %d Vânători de Munte 'Sarmizegetusa'" }
+		3 = { "Divizia %d Vânători de Munte 'Piatra Craiului'" }
+		4 = { "Divizia %d Vânători de Munte 'Postăvarul'" }
+		5 = { "Divizia %d Vânători de Munte 'Semenic'" }
+		6 = { "Divizia %d Vânători de Munte 'Căliman'" }
+		7 = { "Divizia %d Vânători de Munte 'Hășmaș'" }
+		8 = { "Divizia %d Vânători de Munte 'Penteleu'" }
+		9 = { "Divizia %d Vânători de Munte 'Ciucaș'" }
+		10 = { "Divizia %d Vânători de Munte 'Apuseni'" }
+		11 = { "Divizia %d Vânători de Munte 'Vrancea'" }
+		12 = { "Divizia %d Vânători de Munte 'Cozia'" }
+	}
+}
+
+# ===== Marines and paratroopers =====
+
+# Overrides vanilla ROM_MAR_01 (Marinar means sailor; the corps was Infanterie Marină). The Batalionul de Infanterie Marină was raised on 1 April 1940 and became a regiment at Brăila.
+ROM_MAR_01 = 
+{
+	name = "Marine Divisions"
+
+	for_countries = { ROM }
+
+	can_use = { always = yes }
+
+	division_types = { "marine" }
+
+	fallback_name = "Regimentul %d Infanterie Marină"
+
+	ordered =
+	{
+		1 = { "Regimentul %d Infanterie Marină 'Brăila'" }
+		2 = { "Regimentul %d Infanterie Marină 'Dunărea'" }
+		3 = { "Regimentul %d Infanterie Marină 'Marea Neagră'" }
+		4 = { "Regimentul %d Infanterie Marină 'Constanța'" }
+		5 = { "Regimentul %d Infanterie Marină 'Mangalia'" }
+		6 = { "Regimentul %d Infanterie Marină 'Sulina'" }
+		7 = { "Regimentul %d Infanterie Marină 'Galați'" }
+		8 = { "Regimentul %d Infanterie Marină 'Tulcea'" }
+		9 = { "Regimentul %d Infanterie Marină 'Delta Dunării'" }
+		10 = { "Regimentul %d Infanterie Marină 'Mircea cel Bătrân'" }
+		11 = { "Batalionul 1 Infanterie Marină" }
+	}
+}
+
+# Overrides vanilla ROM_PAR_01 (Parasutisti lacked its diacritics). Romanian paratroopers were brevetted on 1 October 1941 and the first battalion formed in 1942. Honorifics are extrapolated.
+ROM_PAR_01 = 
+{
+	name = "Paratrooper Divisions"
+
+	for_countries = { ROM }
+
+	can_use = { always = yes }
+
+	division_types = { "paratrooper" }
+
+	fallback_name = "Batalionul %d Parașutiști"
+
+	ordered =
+	{
+		1 = { "Batalionul %d Parașutiști 'Aeronautica Regală'" }
+		2 = { "Batalionul %d Parașutiști 'Mihai Viteazul'" }
+		3 = { "Batalionul %d Parașutiști 'Burebista'" }
+		4 = { "Batalionul %d Parașutiști 'Decebal'" }
+		5 = { "Batalionul %d Parașutiști 'Dobrogea'" }
+		6 = { "Batalionul %d Parașutiști 'Carpați'" }
+		7 = { "Batalionul %d Parașutiști 'Ștefan cel Mare'" }
+		8 = { "Batalionul %d Parașutiști 'Regele Mihai I'" }
+		9 = { "Batalionul %d Parașutiști 'Moldova'" }
+		10 = { "Batalionul %d Parașutiști 'Transilvania'" }
+	}
+}
+
+# ===== Territorial and security =====
+
+# Overrides vanilla ROM_GAR_01 (Paza lacked its diacritic). Keys 1-12 are extrapolated garrison and rear-area titles of the cities and occupied provinces; keys 13 and 14 are attested wartime formations (Divizia 1 Instrucție, Divizia 35 Rezervă).
+ROM_GAR_01 = 
+{
+	name = "Garrison Divisions"
+
+	for_countries = { ROM }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Divizia %d Pază"
+
+	ordered =
+	{
+		1 = { "Divizia %d Pază 'București'" }
+		2 = { "Divizia %d Pază 'Ploiești'" }
+		3 = { "Divizia %d Pază 'Constanța'" }
+		4 = { "Divizia %d Pază 'Brăila'" }
+		5 = { "Divizia %d Pază 'Galați'" }
+		6 = { "Divizia %d Pază 'Iași'" }
+		7 = { "Divizia %d Pază 'Chișinău'" }
+		8 = { "Divizia %d Pază 'Cernăuți'" }
+		9 = { "Divizia %d Pază 'Cluj'" }
+		10 = { "Divizia %d Pază 'Timișoara'" }
+		11 = { "Divizia %d Pază 'Sibiu'" }
+		12 = { "Divizia %d Pază 'Craiova'" }
+		13 = { "Divizia 1 Instrucție" }
+		14 = { "Divizia 35 Rezervă" }
+	}
+}
+
+# Sectors of the Focșani-Nămoloasa-Galați line and the frontier works; sector numbering is extrapolated. Key 10 keeps vanilla's Divizia 1 Fortificații literal with its diacritics.
+ROM_FOR_01 = 
+{
+	name = "Fortified Sectors"
+
+	for_countries = { ROM }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Sectorul Fortificat %d"
+
+	ordered =
+	{
+		1 = { "Sectorul Fortificat %d 'Focșani'" }
+		2 = { "Sectorul Fortificat %d 'Nămoloasa'" }
+		3 = { "Sectorul Fortificat %d 'Galați'" }
+		4 = { "Sectorul Fortificat %d 'Siret'" }
+		5 = { "Sectorul Fortificat %d 'Prut'" }
+		6 = { "Sectorul Fortificat %d 'Dobrogea'" }
+		7 = { "Sectorul Fortificat %d 'Oltenia'" }
+		8 = { "Sectorul Fortificat %d 'Maramureș'" }
+		9 = { "Sectorul Fortificat %d 'Linia Carol al II-lea'" }
+		10 = { "Divizia 1 Fortificații" }
+		11 = { "Sectorul Fortificat %d 'Cernavodă'" }
+		12 = { "Sectorul Fortificat %d 'Turtucaia'" }
+		13 = { "Sectorul Fortificat %d 'Tisa'" }
+	}
+}
+
+# Border troops (Grăniceri) by frontier; the brigade titles are extrapolated, as the Army's exact border-guard wording was not confirmed. Key 13 keeps vanilla's Divizia 1 Grăniceri literal with its diacritic.
+ROM_BOR_01 = 
+{
+	name = "Border Guard Brigades"
+
+	for_countries = { ROM }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Brigada %d Grăniceri"
+
+	ordered =
+	{
+		1 = { "Brigada %d Grăniceri 'Nistru'" }
+		2 = { "Brigada %d Grăniceri 'Prut'" }
+		3 = { "Brigada %d Grăniceri 'Tisa'" }
+		4 = { "Brigada %d Grăniceri 'Dunărea'" }
+		5 = { "Brigada %d Grăniceri 'Carpați'" }
+		6 = { "Brigada %d Grăniceri 'Bucovina'" }
+		7 = { "Brigada %d Grăniceri 'Maramureș'" }
+		8 = { "Brigada %d Grăniceri 'Dobrogea'" }
+		9 = { "Brigada %d Grăniceri 'Bugeac'" }
+		10 = { "Brigada %d Grăniceri 'Banat'" }
+		11 = { "Brigada %d Grăniceri 'Oltenia'" }
+		12 = { "Brigada %d Grăniceri 'Cerna'" }
+		13 = { "Divizia 1 Grăniceri" }
+	}
+}
+
+# Gendarmerie (Jandarmeria): Brigada I-IV at Bucharest, Iași, Chișinău and Cluj, and county legions. The eleven legions of the 'Bucegi' regional inspectorate (1938) are verified; the other counties follow the pattern.
+ROM_JAN_01 = 
+{
+	name = "Gendarmerie Legions"
+
+	for_countries = { ROM }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Legiunea %d Jandarmi"
+
+	ordered =
+	{
+		1 = { "Brigada %d Jandarmi 'București'" }
+		2 = { "Brigada %d Jandarmi 'Iași'" }
+		3 = { "Brigada %d Jandarmi 'Chișinău'" }
+		4 = { "Brigada %d Jandarmi 'Cluj'" }
+		5 = { "Legiunea de Jandarmi Ilfov" }
+		6 = { "Legiunea de Jandarmi Teleorman" }
+		7 = { "Legiunea de Jandarmi Argeș" }
+		8 = { "Legiunea de Jandarmi Muscel" }
+		9 = { "Legiunea de Jandarmi Dâmbovița" }
+		10 = { "Legiunea de Jandarmi Prahova" }
+		11 = { "Legiunea de Jandarmi Vlașca" }
+		12 = { "Legiunea de Jandarmi Buzău" }
+		13 = { "Legiunea de Jandarmi Brașov" }
+		14 = { "Legiunea de Jandarmi Trei Scaune" }
+		15 = { "Legiunea de Jandarmi București" }
+		16 = { "Legiunea de Jandarmi Cluj" }
+		17 = { "Legiunea de Jandarmi Iași" }
+		18 = { "Legiunea de Jandarmi Sibiu" }
+		19 = { "Legiunea de Jandarmi Constanța" }
+		20 = { "Legiunea de Jandarmi Timiș-Torontal" }
+		21 = { "Legiunea de Jandarmi Mureș" }
+		22 = { "Legiunea de Jandarmi Bihor" }
+		23 = { "Legiunea de Jandarmi Dolj" }
+	}
+}
+
+# ===== Royal tradition (neutrality) =====
+
+# Royal dictatorship of Carol II and the Crown. Divizia 1 Gardă (1941-45) is real; the honorific series is extrapolated from royal patrons.
+ROM_ROY_01 = 
+{
+	name = "Royal Guard Divisions"
+
+	for_countries = { ROM }
+
+	can_use = { has_government = neutrality }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Divizia %d Gardă"
+
+	ordered =
+	{
+		1 = { "Divizia %d Gardă 'Regele Carol al II-lea'" }
+		2 = { "Divizia %d Gardă 'Regele Mihai I'" }
+		3 = { "Divizia %d Gardă 'Mihai Viteazul'" }
+		4 = { "Divizia %d Gardă 'Regele Ferdinand I Întregitorul'" }
+		5 = { "Divizia %d Gardă 'Regina Maria'" }
+		6 = { "Divizia %d Gardă 'Regele Carol I'" }
+		7 = { "Divizia %d Gardă 'Marele Voievod Mihai de Alba Iulia'" }
+		8 = { "Divizia %d Gardă 'Regina Elisabeta'" }
+		9 = { "Divizia %d Gardă 'Principele Nicolae'" }
+		10 = { "Divizia %d Gardă 'Ștefan cel Mare'" }
+		11 = { "Divizia %d Gardă 'Regina-Mamă Elena'" }
+		12 = { "Divizia %d Gardă 'Frontul Renașterii Naționale'" }
+	}
+}
+
+# Verified Guard regiments (keys 1-4) followed by extrapolated numbered Guard regiments with royal patrons (keys 7-12, so that Regimentul 6 Gardă stays the real one).
+ROM_ROY_02 = 
+{
+	name = "Royal Guard Regiments"
+
+	for_countries = { ROM }
+
+	can_use = { has_government = neutrality }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Regimentul %d Gardă"
+
+	ordered =
+	{
+		1 = { "Regimentul 6 Gardă 'Mihai Viteazul'" }
+		2 = { "Regimentul 1/2 Vânători de Gardă 'Regina Elisabeta a Greciei'" }
+		3 = { "Regimentul 2/9 Vânători de Gardă 'Regele Alexandru I al Iugoslaviei'" }
+		4 = { "Garda Regală Călare" }
+		7 = { "Regimentul %d Gardă 'Regina Maria'" }
+		8 = { "Regimentul %d Gardă 'Regele Carol al II-lea'" }
+		9 = { "Regimentul %d Gardă 'Regele Ferdinand I'" }
+		10 = { "Regimentul %d Gardă 'Principele Mihai'" }
+		11 = { "Regimentul %d Gardă 'Regele Mihai I'" }
+		12 = { "Regimentul %d Gardă 'Regele Carol I'" }
+	}
+}
+
+# Straja Țării, Carol II's national youth organization (1935; compulsory from 1938). A legion was the county level; the honorifics are the ten ținuturi created in 1938, and key 11 is the national falanga.
+ROM_STR_01 = 
+{
+	name = "Straja Țării Legions"
+
+	for_countries = { ROM }
+
+	can_use = { has_government = neutrality }
+
+	division_types = { "militia" }
+
+	fallback_name = "Legiunea %d Straja Țării"
+
+	ordered =
+	{
+		1 = { "Legiunea %d Straja Țării 'Bucegi'" }
+		2 = { "Legiunea %d Straja Țării 'Dunărea de Jos'" }
+		3 = { "Legiunea %d Straja Țării 'Mării'" }
+		4 = { "Legiunea %d Straja Țării 'Nistru'" }
+		5 = { "Legiunea %d Straja Țării 'Olt'" }
+		6 = { "Legiunea %d Straja Țării 'Prut'" }
+		7 = { "Legiunea %d Straja Țării 'Mureș'" }
+		8 = { "Legiunea %d Straja Țării 'Someș'" }
+		9 = { "Legiunea %d Straja Țării 'Suceava'" }
+		10 = { "Legiunea %d Straja Țării 'Timiș'" }
+		11 = { "Falanga Straja Țării" }
+	}
+}
+
+# ===== Iron Guard (fascism) =====
+
+# Legionary Movement (Garda de Fier). Titles after its martyrs, leaders and slogans; extrapolated, since the Legion fielded no divisions. The Antonescu regime used Royal Army titles and is not a separate suite.
+ROM_FAS_01 = 
+{
+	name = "Legionary Divisions"
+
+	for_countries = { ROM }
+
+	can_use = { has_government = fascism }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Divizia %d Legionară"
+
+	ordered =
+	{
+		1 = { "Divizia %d Legionară 'Corneliu Zelea Codreanu'" }
+		2 = { "Divizia %d Legionară 'Ion Moța'" }
+		3 = { "Divizia %d Legionară 'Vasile Marin'" }
+		4 = { "Divizia %d Legionară 'Arhanghelul Mihail'" }
+		5 = { "Divizia %d Legionară 'Horia Sima'" }
+		6 = { "Divizia %d Legionară 'Garda de Fier'" }
+		7 = { "Divizia %d Legionară 'Căpitanul'" }
+		8 = { "Divizia %d Legionară 'Totul pentru Țară'" }
+		9 = { "Divizia %d Legionară 'Frăția de Cruce'" }
+		10 = { "Divizia %d Legionară 'Ion Moța - Vasile Marin'" }
+		11 = { "Divizia %d Legionară 'Ștefan cel Mare'" }
+		12 = { "Divizia %d Legionară 'Mihai Viteazul'" }
+	}
+}
+
+# Legionary organizations (keys 1-4) and provincial Iron Guard legions (5-12, extrapolated).
+ROM_FAS_02 = 
+{
+	name = "Iron Guard Legions"
+
+	for_countries = { ROM }
+
+	can_use = { has_government = fascism }
+
+	division_types = { "infantry" "militia" }
+
+	fallback_name = "Legiunea %d Garda de Fier"
+
+	ordered =
+	{
+		1 = { "Corpul Muncitoresc Legionar" }
+		2 = { "Corpul Legionar 'Ion Moța - Vasile Marin'" }
+		3 = { "Legiunea Arhanghelul Mihail" }
+		4 = { "Garda Legionară" }
+		5 = { "Legiunea %d Garda de Fier 'Bucovina'" }
+		6 = { "Legiunea %d Garda de Fier 'Basarabia'" }
+		7 = { "Legiunea %d Garda de Fier 'Banat'" }
+		8 = { "Legiunea %d Garda de Fier 'Transilvania'" }
+		9 = { "Legiunea %d Garda de Fier 'Moldova'" }
+		10 = { "Legiunea %d Garda de Fier 'Oltenia'" }
+		11 = { "Legiunea %d Garda de Fier 'Muntenia'" }
+		12 = { "Legiunea %d Garda de Fier 'Dobrogea'" }
+	}
+}
+
+# ===== People's Army (communism) =====
+
+# Soviet-raised volunteer divisions: Divizia 1 Voluntari 'Tudor Vladimirescu' (1943) and Divizia 2 'Horia, Cloșca și Crișan' (1945) are real; the rest follow their naming (peasant-revolt leaders, 1848, the 1933 Grivița strike, 23 August 1944).
+ROM_RED_01 = 
+{
+	name = "People's Divisions"
+
+	for_countries = { ROM }
+
+	can_use = { has_government = communism }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Divizia %d Voluntari"
+
+	ordered =
+	{
+		1 = { "Divizia %d Voluntari 'Tudor Vladimirescu'" }
+		2 = { "Divizia %d Voluntari 'Horia, Cloșca și Crișan'" }
+		3 = { "Divizia %d Voluntari 'Gheorghe Doja'" }
+		4 = { "Divizia %d Voluntari 'Nicolae Bălcescu'" }
+		5 = { "Divizia %d Voluntari '23 August'" }
+		6 = { "Divizia %d Voluntari 'Grivița'" }
+		7 = { "Divizia %d Voluntari 'Debrețin'" }
+		8 = { "Divizia %d Voluntari 'Târgu Mureș'" }
+		9 = { "Divizia %d Voluntari 'Ilie Pintilie'" }
+		10 = { "Divizia %d Voluntari 'Vasile Roaită'" }
+		11 = { "Divizia %d Voluntari 'Avram Iancu'" }
+	}
+}
+
+# Tancuri is the People's Army word for armour. Divizia 6 Tancuri 'Horia, Cloșca și Crișan' (Târgu Mureș) and the 37th Mechanized Division (ex-'Tudor Vladimirescu') are real; the rest is extrapolated.
+ROM_RED_02 = 
+{
+	name = "People's Armored Divisions"
+
+	for_countries = { ROM }
+
+	can_use = { has_government = communism }
+
+	division_types = { "mechanized" "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
+
+	fallback_name = "Divizia %d Tancuri"
+
+	ordered =
+	{
+		1 = { "Divizia %d Tancuri 'Tudor Vladimirescu'" }
+		2 = { "Divizia %d Tancuri 'Grivița'" }
+		3 = { "Divizia %d Tancuri '23 August'" }
+		4 = { "Divizia %d Tancuri 'Debrețin'" }
+		5 = { "Divizia %d Tancuri 'Gheorghe Doja'" }
+		6 = { "Divizia %d Tancuri 'Horia, Cloșca și Crișan'" }
+		7 = { "Divizia %d Tancuri 'Nicolae Bălcescu'" }
+		8 = { "Divizia %d Tancuri 'Ilie Pintilie'" }
+		9 = { "Divizia %d Tancuri 'Târgu Mureș'" }
+		10 = { "Divizia %d Tancuri 'Vasile Roaită'" }
+		37 = { "Divizia %d Mecanizată 'Tudor Vladimirescu'" }
+	}
+}
+
+# Gărzile Patriotice, the armed worker detachments of summer 1944. Factory names are extrapolated from Bucharest and provincial works.
+ROM_RED_03 = 
+{
+	name = "Patriotic Guards"
+
+	for_countries = { ROM }
+
+	can_use = { has_government = communism }
+
+	division_types = { "militia" }
+
+	fallback_name = "Garda Patriotică %d"
+
+	ordered =
+	{
+		1 = { "Garda Patriotică %d 'Grivița'" }
+		2 = { "Garda Patriotică %d 'Malaxa'" }
+		3 = { "Garda Patriotică %d 'Vulcan'" }
+		4 = { "Garda Patriotică %d 'Lemaitre'" }
+		5 = { "Garda Patriotică %d 'IAR Brașov'" }
+		6 = { "Garda Patriotică %d 'Reșița'" }
+		7 = { "Garda Patriotică %d 'Hunedoara'" }
+		8 = { "Garda Patriotică %d 'Astra Română'" }
+		9 = { "Garda Patriotică %d 'Valea Jiului'" }
+		10 = { "Garda Patriotică %d 'Câmpina'" }
+	}
+}
+
+# ===== Civic and volunteer tradition (democratic) =====
+
+# Romania starts in 1936 under a democratic government. The 1917-18 volunteer corps (Darnița, Siberia, Italy) and the civic leaders of the National Peasant and Liberal parties; extrapolated as division titles.
+ROM_DEM_01 = 
+{
+	name = "Volunteer Divisions"
+
+	for_countries = { ROM }
+
+	can_use = { has_government = democratic }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Divizia %d Voluntari"
+
+	ordered =
+	{
+		1 = { "Divizia %d Voluntari 'Darnița'" }
+		2 = { "Divizia %d Voluntari 'Siberia'" }
+		3 = { "Divizia %d Voluntari 'Italia'" }
+		4 = { "Divizia %d Voluntari 'Transilvania'" }
+		5 = { "Divizia %d Voluntari 'Bucovina'" }
+		6 = { "Divizia %d Voluntari 'Alba Iulia'" }
+		7 = { "Divizia %d Voluntari 'Marea Unire'" }
+		8 = { "Divizia %d Voluntari 'Mărășești'" }
+		9 = { "Divizia %d Voluntari 'Iuliu Maniu'" }
+		10 = { "Divizia %d Voluntari 'Ion C. Brătianu'" }
+		11 = { "Divizia %d Voluntari 'Take Ionescu'" }
+		12 = { "Divizia %d Voluntari 'Nicolae Iorga'" }
+	}
+}
+
+# Civic guards of the 1848 revolution (Islaz, Dealul Spirii) and the Gărzile Naționale of 1918, by city; extrapolated.
+ROM_DEM_02 = 
+{
+	name = "National Guard Regiments"
+
+	for_countries = { ROM }
+
+	can_use = { has_government = democratic }
+
+	division_types = { "infantry" "militia" }
+
+	fallback_name = "Regimentul %d Garda Națională"
+
+	ordered =
+	{
+		1 = { "Regimentul %d Garda Națională 'București'" }
+		2 = { "Regimentul %d Garda Națională 'Iași'" }
+		3 = { "Regimentul %d Garda Națională 'Craiova'" }
+		4 = { "Regimentul %d Garda Națională 'Brașov'" }
+		5 = { "Regimentul %d Garda Națională 'Cluj'" }
+		6 = { "Regimentul %d Garda Națională 'Cernăuți'" }
+		7 = { "Regimentul %d Garda Națională 'Chișinău'" }
+		8 = { "Regimentul %d Garda Națională 'Timișoara'" }
+		9 = { "Regimentul %d Garda Națională 'Islaz'" }
+		10 = { "Regimentul %d Garda Națională 'Dealul Spirii'" }
+		11 = { "Regimentul %d Garda Națională 'Padeș'" }
+		12 = { "Regimentul %d Garda Națională 'Oltenia'" }
+	}
+}

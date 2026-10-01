@@ -183,9 +183,50 @@ Describe "Subagent Config & Budgeting" {
         $front = [regex]::Match($text, '(?s)^---\r?\n(.*?)\r?\n---').Groups[1].Value
         $tools = [regex]::Match($front, '(?m)^tools:\s*(.+)$').Groups[1].Value
         $tools | Should -Not -Match '\b(Read|Grep|Glob|Bash|PowerShell|Edit)\b' -Because "the caller pastes the vanilla and current names; whole-file reads in a subagent cost tokens too"
-        $tools | Should -Match '\bWrite\b' -Because "the dossier goes to scratch/ so it survives /clear"
+        $tools | Should -Match '\bWrite\b' -Because "the dossier goes to scratch/ so the planner can read it by section"
         $text | Should -Match 'scratch/<tag>_dossier\.md'
         $text | Should -Match 'at most 200 words'
+    }
+}
+
+Describe "Plan hand-off: planning skills stop, the implement skill only executes" {
+    BeforeAll {
+        $script:ReadSkill = {
+            param([string]$Name)
+            [System.IO.File]::ReadAllText((Join-Path $script:RepoRoot ".claude\skills\$Name\SKILL.md"), [System.Text.Encoding]::UTF8)
+        }
+    }
+
+    It "Planning skills end at the hand-off and gate it with a dry run" {
+        foreach ($name in 'hoi4-inex-namelist-authoring', 'hoi4-inex-namelist-audit') {
+            $text = & $script:ReadSkill $name
+            $text | Should -Match 'hoi4-inex-namelist-implement' -Because "$name hands a READY plan to the implement skill"
+            $text | Should -Match '-DryRun' -Because "$name proves the batch applies before hand-off"
+            $text | Should -Match 'Status: READY'
+            $text | Should -Not -Match 'push-wiki\.ps1' -Because "$name writes the plan; applying and pushing belong to the implement skill"
+            $text | Should -Not -Match 'safe to `/clear`' -Because "the old mid-workflow clear point made fresh sessions repeat finished phases"
+        }
+    }
+
+    It "Implement skill names no researcher and no web tool" {
+        $text = & $script:ReadSkill 'hoi4-inex-namelist-implement'
+        $text | Should -Not -Match 'inex-(historical|audit)-researcher' -Because "a cheaper model follows what it reads; research must not be on the page"
+        $text | Should -Not -Match 'WebSearch|WebFetch|-InspectVanilla'
+        $text | Should -Match '## Edit batch'
+        $text | Should -Match 'IN PROGRESS'
+    }
+
+    It "Authoring template and audit skeleton share the hand-off sections" {
+        $template = [System.IO.File]::ReadAllText((Join-Path $script:RepoRoot 'docs\superpowers\plans\TEMPLATE-namelist.md'), [System.Text.Encoding]::UTF8)
+        $build = [System.IO.File]::ReadAllText((Join-Path $script:RepoRoot 'build.ps1'), [System.Text.Encoding]::UTF8)
+        $template | Should -Match '(?m)^Status: PLANNING\r?$'
+        foreach ($h in 'For the implementer', 'Author confirmation', 'Kept on judgment', 'Implementation steps', 'Docs payload', 'Stop conditions', 'Review', 'Outcome', 'Edit batch') {
+            $template | Should -Match "(?m)^## $h" -Because "TEMPLATE-namelist.md needs the '$h' section"
+            $build | Should -Match "'## $h" -Because "New-AuditPlanText needs the '$h' section"
+        }
+        $headings = @([regex]::Matches($template, '(?m)^## (.+?)\r?$') | ForEach-Object { $_.Groups[1].Value })
+        $headings[-1] | Should -Be 'Edit batch' -Because "the implementer reads the plan only up to this heading"
+        $template | Should -Match '(?m)^```json batch\r?$'
     }
 }
 
