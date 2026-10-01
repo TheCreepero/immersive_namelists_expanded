@@ -1,38 +1,28 @@
-# Division template historical names system. Is a new method of naming the divisions based on the names-group assigned to it's template.
-# If we run out of all historical names, the names will be assigned in the old way.
+# United States (USA) Division Namelist
+# Immersive Namelists Expanded (INEX)
 #
-# Each group has a made up tag. Use it if you want to append more, or replace existing names with the extra txt files (modding).
+# Line Infantry: 1st-106th Infantry Divisions (AUS, National Guard, Regular Army),
+# Operation Fortitude deception formations, and postwar reserve activations.
+# Specialists: Marine Corps (1st-6th USMC, Raiders, Defense Battalions),
+# Airborne (11th, 17th, 82nd, 101st, 501st-517th PIR, 555th Triple Nickles),
+# Mountain (10th Mountain Division, American mountain ranges), Rangers (1st-6th, FSSF, Merrill's Marauders).
+# Mobile: Armored (1st-16th, Combat Commands, postwar NG 48th-50th), Motorized, Mechanized,
+# Cavalry (1st-3rd, 21st-24th NG), Armored Cavalry Regiments (2nd, 3rd, 11th ACR), Separate Tank & TD Battalions.
+# Territorial: 48 WWII State Guards and Harbor Defense Commands.
+# Ideological: Workers' Red Guards & Lincoln Brigades (Communism), Silver Legions & Confederate Divisions (Fascism),
+# Federal Emergency Forces (Neutrality / Military Junta).
 #
-# for_countries - lists all countries that can use it. If empty, or entire tag is missing, all countries in the world can use it.
-#
-# can_use - is a trigger that locks/unlocks the group under specific circumstances. The trigger is in a country scope.
-#
-# division_types - is a list of tokens to corresponding unit types. A player can in fact use any group of names for a div.template
-#                  however this tag is a helper for an automated choice (for AI, or if the group must switch on it's own, because
-#                  for example the current one is no longer available due to the can_use trigger saying so).
-#                  In automated choice, the division template must have at least 1 of the following types for it to be chosen.
-#
-# fallback_name - Is going to be used if we run out of the scripted historical names. If you want to use the old division naming
-#                 mechanics to be used for fallbacks, then just skip this option.
-#
-# unordered - It's a list of historical division names that did not have a number. Regardless if such names happened in history or not
-#             this option is available here mainly for a mods.
-#
-# ordered - Is a list of all historical names. 
-#           Numbers must start from 1 and up. 
-#           Numbers can't repeat in one scope.
-#           If you script the name for this group, at the same number (for example in a mod in another file), the name will be override.
-#           All arguments between the brackets must be separated by spaces. Each argument is wrapped in "quotas".
-#           1st argument = The name. It must contain either: 
-#                          %d (for decimal number placement)
-#                          %s (for string number placement - ROMAN numbers like XIV).
-#           2nd argument is optional = A localizable text describing this historical division. The text will be visible in the tooltip
-#                                      where you choose the historical division name.
-#           3rd argument is optional = An URL preferably pointing to the WIKI. It's a future feature that is not currently working in
-#                                      the current game version.
+# Overrides vanilla USA_INF_01, USA_CAV_01, USA_MOT_01, USA_MEC_01, USA_ARM_01,
+# USA_PAR_01, USA_MAR_01, USA_MNT_01, USA_GAR_01.
+
+# =============================================================================
+# Regular Army & Line Infantry
+# =============================================================================
+# Overrides vanilla USA_INF_01. Links with motorized, mechanized, airborne, mountain, and National Guard.
+
 USA_INF_01 = 
 {
-	name = "Infantry Division"
+	name = "Infantry Divisions"
 
 	for_countries = { USA }
 
@@ -40,122 +30,123 @@ USA_INF_01 =
 
 	division_types = { "infantry" }
 
-	# Number reservation system will tie to another group.
-	#link_numbering_with = { USA_INF_01 }
-
 	fallback_name = "%d Infantry Division"
 
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
+	# Names with numbers (only one number per entry).
 	ordered =
 	{
 		1 = { "%dst 'Big Red One' Division" }
 		2 = { "%dnd 'Indianhead' Division" }
 		3 = { "%drd 'Rock of the Marne' Division" }
+		4 = { "%dth 'Ivy' Division" }
 		5 = { "%dth 'Red Devils' Division" }
 		6 = { "%dth 'Sightseeing Sixth' Division" }
-		4 = { "%dth 'Ivy' Division" }
 		7 = { "%dth 'Bayonet' Division" }
 		8 = { "%dth 'Pathfinder' Division" }
 		9 = { "%dth 'Old Reliables' Division" }
-		30 = { "%dth 'Old Hickory' Division" }
-		41 = { "%dst 'Sunset' Division" }
-		44 = { "%dth Infantry Division" }
-		45 = { "%dth 'Thunderbird' Division" }
-		27 = { "%dth 'New York' Division" }
-		32 = { "%dnd 'Red Arrow' Division" }
-		37 = { "%dth 'Buckeye' Division" }
-		31 = { "%dst 'Dixie' Division" }
-		36 = { "%dth 'Texas' Division" }
-		35 = { "%dth 'Santa Fe' Division" }
-		26 = { "%dth 'Yankee' Division" }
-		38 = { "%dth 'Cyclone' Division" }
-		29 = { "%dth 'Blue and Gray' Division" }
-		34 = { "%dth 'Red Bull' Division" }
-		28 = { "%dth 'Keystone' Division" }
-		43 = { "%drd 'Winged Victory' Division" }
-		33 = { "%drd 'Golden Cross' Division" }
-		40 = { "%dth 'Sunshine' Division" }
-		24 = { "%dth 'Victory' Division" }
-		25 = { "%dth 'Tropic Lightning' Division" }
-		77 = { "%dth 'Liberty' Division" }
-		90 = { "%dth 'Tough Ombres' Division" }
-		85 = { "%dth 'Custer' Division" }
-		93 = { "%drd 'Blue Helmets' Division" }
-		23 = { "'Americal' Division" }
-		76 = { "%dth 'Onaway' Division" }
-		79 = { "%dth Infantry Division" }
-		81 = { "%dst 'Wildcat' Division" }
-		80 = { "%dth 'Blue Ridge' Division" }
-		88 = { "%dth 'Blue Devils' Division" }
-		89 = { "%dth 'Rolling W' Division" }
-		95 = { "%dth 'Victory' Division" }
-		78 = { "%dth 'Lightning' Division" }
-		83 = { "%drd 'Thunderbolts' Division" }
-		91 = { "%dst 'Pine Tree' Division" }
-		96 = { "%dth 'Deadeye' Division" }
-		94 = { "%dth 'Neuf Quatres' Division" }
-		98 = { "%dth 'Iroquois' Division" }
-		102 = { "%dnd 'Ozarks' Division" }
-		104 = { "%dth 'Timberwolves' Division" }
-		84 = { "%dth 'Railsplitters' Division" }
-		92 = { "%dnd 'Buffalo Soldiers' Division" }
-		99 = { "%dth 'Checkerboard' Division" }
-		100 = { "%dth 'Century' Division" }
-		103 = { "%drd 'Cactus' Division" }
-		86 = { "%dth 'Blackhawk' Division" }
-		87 = { "%dth 'Golden Acorns' Division" }
-		97 = { "%dth 'Trident' Division" }
-		106 = { "%dth 'Golden Lions' Division" }
-		66 = { "%dth 'Black Panthers' Division" }
-		75 = { "%dth Infantry Division" }
-		69 = { "%dth 'Fighting 69th' Division" }
-		63 = { "%drd 'Blood Fire' Division" }
-		70 = { "%dth 'Trailblazers' Division" }
-		42 = { "%dnd 'Rainbow' Division" }
-		71 = { "%dst 'Red Circle' Division" }
-		65 = { "%dth 'Battle Axe' Division" }
-		61 = { "%dst Infantry Division" }			# start of unorganized WW2 divisions here
-		62 = { "%dnd Infantry Division" }
-		67 = { "%dth Infantry Division" }
-		68 = { "%dth Infantry Division" }
-		72 = { "%dnd Infantry Division" }
-		73 = { "%drd Infantry Division" }
-		74 = { "%dth Infantry Division" }
-		105 = { "%dth Infantry Division" }
-		107 = { "%dth Infantry Division" }
-		11 = { "%dth 'Lafayette' Division" }		# start of Normandy phantom divisions here
+		11 = { "%dth 'Lafayette' Division" }
+		12 = { "%dth 'Philippine' Division" }
 		14 = { "%dth Infantry Division" }
 		15 = { "%dth Infantry Division" }
 		16 = { "%dth Infantry Division" }
 		17 = { "%dth Infantry Division" }
 		19 = { "%dth Infantry Division" }
-		21 = { "%dth Infantry Division" }
-		22 = { "%dth Infantry Division" }
+		21 = { "%dst Infantry Division" }
+		22 = { "%dnd Infantry Division" }
+		23 = { "'Americal' Division" }
+		24 = { "%dth 'Victory' Division" }
+		25 = { "%dth 'Tropic Lightning' Division" }
+		26 = { "%dth 'Yankee' Division" }
+		27 = { "%dth 'New York' Division" }
+		28 = { "%dth 'Keystone' Division" }
+		29 = { "%dth 'Blue and Gray' Division" }
+		30 = { "%dth 'Old Hickory' Division" }
+		31 = { "%dst 'Dixie' Division" }
+		32 = { "%dnd 'Red Arrow' Division" }
+		33 = { "%drd 'Golden Cross' Division" }
+		34 = { "%dth 'Red Bull' Division" }
+		35 = { "%dth 'Santa Fe' Division" }
+		36 = { "%dth 'Texas' Division" }
+		37 = { "%dth 'Buckeye' Division" }
+		38 = { "%dth 'Cyclone' Division" }
+		39 = { "%dth 'Delta' Division" }
+		40 = { "%dth 'Sunshine' Division" }
+		41 = { "%dst 'Sunset' Division" }
+		42 = { "%dnd 'Rainbow' Division" }
+		43 = { "%drd 'Winged Victory' Division" }
+		44 = { "%dth Infantry Division" }
+		45 = { "%dth 'Thunderbird' Division" }
+		46 = { "%dth 'Iron Fist' Division" }
+		47 = { "%dth 'Viking' Division" }
+		48 = { "%dth 'Hurricane' Division" }
+		49 = { "%dth 'Lone Star' Division" }
 		50 = { "%dth Infantry Division" }
+		51 = { "%dst 'Rattlesnake' Division" }
+		52 = { "%dnd 'Argonauts' Division" }
 		55 = { "%dth Infantry Division" }
 		59 = { "%dth Infantry Division" }
+		61 = { "%dst Infantry Division" }
+		62 = { "%dnd Infantry Division" }
+		63 = { "%drd 'Blood and Fire' Division" }
+		65 = { "%dth 'Battle Axe' Division" }
+		66 = { "%dth 'Black Panther' Division" }
+		67 = { "%dth Infantry Division" }
+		68 = { "%dth Infantry Division" }
+		69 = { "%dth 'Fighting 69th' Division" }
+		70 = { "%dth 'Trailblazers' Division" }
+		71 = { "%dst 'Red Circle' Division" }
+		72 = { "%dnd Infantry Division" }
+		73 = { "%drd Infantry Division" }
+		74 = { "%dth Infantry Division" }
+		75 = { "%dth Infantry Division" }
+		76 = { "%dth 'Onaway' Division" }
+		77 = { "%dth 'Liberty' Division" }
+		78 = { "%dth 'Lightning' Division" }
+		79 = { "%dth 'Cross of Lorraine' Division" }
+		80 = { "%dth 'Blue Ridge' Division" }
+		81 = { "%dst 'Wildcat' Division" }
+		83 = { "%drd 'Thunderbolts' Division" }
+		84 = { "%dth 'Railsplitters' Division" }
+		85 = { "%dth 'Custer' Division" }
+		86 = { "%dth 'Blackhawk' Division" }
+		87 = { "%dth 'Golden Acorn' Division" }
+		88 = { "%dth 'Blue Devils' Division" }
+		89 = { "%dth 'Rolling W' Division" }
+		90 = { "%dth 'Tough Ombres' Division" }
+		91 = { "%dst 'Pine Tree' Division" }
+		92 = { "%dnd 'Buffalo Soldiers' Division" }
+		93 = { "%drd 'Blue Helmets' Division" }
+		94 = { "%dth 'Neuf Quatres' Division" }
+		95 = { "%dth 'Victory' Division" }
+		96 = { "%dth 'Deadeye' Division" }
+		97 = { "%dth 'Trident' Division" }
+		98 = { "%dth 'Iroquois' Division" }
+		99 = { "%dth 'Checkerboard' Division" }
+		100 = { "%dth 'Century' Division" }
+		102 = { "%dnd 'Ozarks' Division" }
+		103 = { "%drd 'Cactus' Division" }
+		104 = { "%dth 'Timberwolves' Division" }
+		105 = { "%dth Infantry Division" }
+		106 = { "%dth 'Golden Lions' Division" }
+		107 = { "%dth Infantry Division" }
 		108 = { "%dth 'Golden Griffons' Division" }
 		109 = { "%dth Infantry Division" }
+		110 = { "%dth 'Washington' Division" }
 		112 = { "%dth Infantry Division" }
-		119 = { "%dth 'White Knights' Division" }
-		125 = { "%dth 'Robert E. Lee' Division" }
-		130 = { "%dth 'Dirty Bastards' Division" }
-		141 = { "%dst Infantry Division" }
-		157 = { "%dth 'Titans' Division" }
-		39 = { "%dth 'Delta' Division" }			# start of postwar divisions here
-		47 = { "%dth 'Viking' Division" }
-		46 = { "%dth 'Ironfist' Division" }
-		48 = { "%dth 'Hurricane' Division" }
-		51 = { "%dst 'Rattlesnake' Division" }
-		49 = { "%dth '49ers' Division" }
-		52 = { "%dnd 'Argonauts' Division" }
-		110 = { "%dth 'Washington' Division" }		# old HOI3 names (not verifed as historical)
 		115 = { "%dth 'Jefferson' Division" }
 		116 = { "%dth 'Headhunters' Division" }
+		119 = { "%dth Infantry Division" }
+		120 = { "%dth Infantry Division" }
+		125 = { "%dth 'Robert E. Lee' Division" }
 		128 = { "%dth 'Brooklyn' Division" }
-		131 = { "%dth 'Lincoln' Division" }
-		164 = { "%dth 'U.S. Grant' Division" }
+		130 = { "%dth Infantry Division" }
+		131 = { "%dst 'Lincoln' Division" }
+		135 = { "%dth Infantry Division" }
+		141 = { "%dst Infantry Division" }
+		150 = { "%dth Infantry Division" }
+		157 = { "%dth Infantry Division" }
+		160 = { "%dth Infantry Division" }
+		164 = { "%dth 'Americal' Division" }
 		165 = { "%dth 'Adams' Division" }
 		166 = { "%dth 'Franklin' Division" }
 		167 = { "%dth 'Lions' Division" }
@@ -163,16 +154,13 @@ USA_INF_01 =
 		169 = { "%dth 'Madison' Division" }
 		170 = { "%dth 'Bloodhounds' Division" }
 		171 = { "%dst Infantry Division" }
-		172 = { "%dnd 'Misfits' Division" }
-		173 = { "%drd 'Metropolitan' Division" }
+		175 = { "%dth Infantry Division" }
+		180 = { "%dth Infantry Division" }
 		187 = { "%dth Infantry Division" }
 		188 = { "%dth Infantry Division" }
 		189 = { "%dth 'Black Diamonds' Division" }
 		190 = { "%dth Infantry Division" }
 		191 = { "%dst 'Sam Houston' Division" }
-		192 = { "%dnd 'Banditos' Division" }
-		193 = { "%drd 'Fighting 193rd' Division" }
-		194 = { "%dth 'Dust Devils' Division" }
 		195 = { "%dth 'Blue Dragons' Division" }
 		196 = { "%dth 'Volunteers' Division" }
 		197 = { "%dth 'Hercules' Division" }
@@ -180,134 +168,114 @@ USA_INF_01 =
 		199 = { "%dth 'Davy Crockett' Division" }
 		200 = { "%dth 'Black Tigers' Division" }
 		201 = { "%dst 'Iron Men' Division" }
-		203 = { "%drd 'Armadillos' Division" }
-		204 = { "%dth 'Mountain Lions' Division" }
-		205 = { "%dth 'Widowmakers' Division" }
-		158 = { "%dth 'Green Clovers' Division" }
-		159 = { "%dth 'Longhorn' Division" }
-		160 = { "%dth 'Freedom!' Division" }
-		161 = { "%dst 'Desert Scorpion' Division" }
-		162 = { "%dnd 'Seminole' Division" }
-		163 = { "%drd Infantry Division" }
-		174 = { "%dth 'Black Knights' Division" }
-		175 = { "%dth 'Apache' Division" }
-		176 = { "%dth Infantry Division" }
-		177 = { "%dth 'Old Muddy' Division" }
-		178 = { "%dth 'Black Widows' Division" }
-		179 = { "%dth 'Moccasins' Division" }
-		180 = { "%dth 'Centaur' Division" }
-		181 = { "%dst 'Howling Coyotes' Division" }
-		182 = { "%dnd Infantry Division" }
-		183 = { "%drd 'Harlem' Division" }
-		184 = { "%dth Infantry Division" }
-		185 = { "%dth 'Ragin' Cajuns' Division" }
-		186 = { "%dth 'Bulldog' Division" }
+		205 = { "%dth Infantry Division" }
 		219 = { "%dth Infantry Division" }
 		220 = { "%dth 'Chicago' Division" }
 		221 = { "%dst 'Fighting Lumberjacks' Division" }
-		222 = { "%dnd 'Explorers' Division" }
-		223 = { "%drd 'Mavericks' Division" }
 		224 = { "%dth 'San Francisco' Division" }
-		225 = { "%dth 'Falcons' Division" }
 		226 = { "%dth 'Alamo' Division" }
 		227 = { "%dth Infantry Division" }
-		228 = { "%dth 'Buccaneers' Division" }
 		229 = { "%dth 'Philadelphia' Division" }
 		230 = { "%dth Infantry Division" }
-		231 = { "%dst 'Cowboys' Division" }
-		232 = { "%dnd 'Archers' Division" }
 		233 = { "%drd 'Daniel Boone' Division" }
 		234 = { "%dth Infantry Division" }
-		235 = { "%dth 'Mean Green' Division" }
-		236 = { "%dth 'Revenge!' Division" }
-		237 = { "%dth Infantry Division" }
 		238 = { "%dth '1776' Division" }
 		239 = { "%dth 'Detroit' Division" }
 		240 = { "%dth 'Minuteman' Division" }
 		241 = { "%dst 'Centurion' Division" }
 		244 = { "%dth Infantry Division" }
-		245 = { "%dth 'Enthusiasts' Division" }
-		246 = { "%dth Infantry Division" }
-		247 = { "%dth 'Rebel Yell' Division" }
 		248 = { "%dth 'Jayhawkers' Division" }
 		249 = { "%dth 'Swamp Fox' Division" }
 		250 = { "%dth 'Blue Streaks' Division" }
-		251 = { "%dst 'Bearcats' Division" }
-		252 = { "%dnd 'Gorillas' Division" }
-		253 = { "%drd 'Big Green' Division" }
-		254 = { "%dth 'Mustangs' Division" }
 		255 = { "%dth Infantry Division" }
-		256 = { "%dth 'Flying Dutchmen' Division" }
-		257 = { "%dth 'Phoenix' Division" }
-		258 = { "%dth 'Crusader' Division" }
 		259 = { "%dth 'Boston' Division" }
-		260 = { "%dth 'Viking' Division" }
+		260 = { "%dth Infantry Division" }
 		261 = { "%dst 'Braves' Division" }
 		262 = { "%dnd Infantry Division" }
-		263 = { "%drd 'Yellow Jackets' Division" }
 		264 = { "%dth Infantry Division" }
-		265 = { "%dth 'Celtic' Division" }
-		266 = { "%dth 'Spartans' Division" }
-		267 = { "%dth 'Brocos' Division" }
 		268 = { "%dth 'Infamous 268th' Division" }
-		269 = { "%dth 'Forrester' Division" }
 		270 = { "%dth 'Gamecocks' Division" }
 		319 = { "%dth Infantry Division" }
 		320 = { "%dth 'Vanguard' Division" }
 		321 = { "%dst 'Pioneer' Division" }
-		322 = { "%dnd 'Beavers' Division" }
 		323 = { "%drd Infantry Division" }
-		324 = { "%dth 'Cavaliers' Division" }
 		325 = { "%dth Infantry Division" }
-		326 = { "%dth 'Cardinals' Division" }
 		327 = { "%dth 'Polar Bears' Division" }
 		328 = { "%dth 'Gettysburg' Division" }
 		329 = { "%dth 'Vicksburg' Division" }
-		330 = { "%dth 'Comet' Division" }
 		331 = { "%dst Infantry Division" }
-		332 = { "%dnd 'Mastadons' Division" }
-		333 = { "%drd 'Lucky Lindy' Division" }
-		334 = { "%dth 'Golden Gophers' Division" }
-		335 = { "%dth 'Fighting Irish' Division" }
 		336 = { "%dth Infantry Division" }
-		337 = { "%dth 'Red Hawks' Division" }
 		338 = { "%dth Infantry Division" }
-		339 = { "%dth 'Hilltoppers' Division" }
-		340 = { "%dth 'Green Demons' Division" }
 		341 = { "%dst 'Black Ravens' Division" }
 		344 = { "%dth Infantry Division" }
-		345 = { "%dth 'Wasps' Division" }
-		346 = { "%dth 'Jackrabbits' Division" }
 		347 = { "%dth 'Columbus' Division" }
-		348 = { "%dth 'Giants' Division" }
-		349 = { "%dth 'Highlanders' Division" }
-		350 = { "%dth 'Lakers' Division" }
-		351 = { "%dst 'Saints' Division" }
-		352 = { "%dnd 'Roadrunner' Division" }
-		353 = { "%drd 'Maccabees' Division" }
-		354 = { "%dth 'Green Gators' Division" }
+		351 = { "%dst Infantry Division" }
 		355 = { "%dth 'Seattle' Division" }
-		356 = { "%dth 'Warhawks' Division" }
-		357 = { "%dth 'Grey Owls' Division" }
-		358 = { "%dth 'Chrimson' Division" }
-		359 = { "%dth 'Trojans' Division" }
 		360 = { "%dth 'Bloody Saber' Division" }
-		361 = { "%dst 'Billy  Johnny' DivisionÜ" }
 		362 = { "%dnd 'Amerigo Vespucci' Division" }
-		363 = { "%drd 'Chocktaw' Division" }
-		364 = { "%dth 'Ogre' Division" }
-		365 = { "%dth 'Patriot' Division" }
-		366 = { "%dth 'Storm' Division" }
+		363 = { "%drd 'Choctaw' Division" }
 		367 = { "%dth 'Hoosiers' Division" }
-		368 = { "%dth 'Jaguars' Division" }
-		369 = { "%dth 'Corsairs' Division" }
 		370 = { "%dth Infantry Division" }
 	}
 }
 
+# =============================================================================
+# National Guard Divisions
+# =============================================================================
+# Overrides vanilla USA_GAR_01. Dedicated state/regional National Guard division suite.
+
+USA_GAR_01 = 
+{
+	name = "National Guard Divisions"
+
+	for_countries = { USA }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	link_numbering_with = { USA_INF_01 }
+
+	fallback_name = "%d National Guard Division"
+
+	# Names with numbers (only one number per entry).
+	ordered =
+	{
+		26 = { "%dth 'Yankee' Division (New England)" }
+		27 = { "%dth 'New York' Division" }
+		28 = { "%dth 'Keystone' Division (Pennsylvania)" }
+		29 = { "%dth 'Blue and Gray' Division (Virginia & Maryland)" }
+		30 = { "%dth 'Old Hickory' Division (Carolinas & Tennessee)" }
+		31 = { "%dst 'Dixie' Division (Alabama & Mississippi)" }
+		32 = { "%dnd 'Red Arrow' Division (Michigan & Wisconsin)" }
+		33 = { "%drd 'Prairie' Division (Illinois)" }
+		34 = { "%dth 'Red Bull' Division (Iowa & Minnesota)" }
+		35 = { "%dth 'Santa Fe' Division (Kansas & Missouri)" }
+		36 = { "%dth 'Texas' Division" }
+		37 = { "%dth 'Buckeye' Division (Ohio)" }
+		38 = { "%dth 'Cyclone' Division (Indiana & Kentucky)" }
+		40 = { "%dth 'Sunshine' Division (California)" }
+		41 = { "%dst 'Sunset' Division (Pacific Northwest)" }
+		42 = { "%dnd 'Rainbow' Division" }
+		43 = { "%drd 'Winged Victory' Division (New England)" }
+		44 = { "%dth National Guard Division (New Jersey & New York)" }
+		45 = { "%dth 'Thunderbird' Division (Oklahoma & Colorado)" }
+		46 = { "%dth 'Iron Fist' Division (Michigan)" }
+		47 = { "%dth 'Viking' Division (Minnesota & North Dakota)" }
+		48 = { "%dth 'Hurricane' Division (Florida & Georgia)" }
+		49 = { "%dth 'Lone Star' Division (Texas)" }
+		51 = { "%dst 'Rattlesnake' Division (Florida & South Carolina)" }
+	}
+}
+
+# =============================================================================
+# Cavalry Divisions
+# =============================================================================
+# Overrides vanilla USA_CAV_01. Historical Regular Army and National Guard cavalry divisions.
+
 USA_CAV_01 = 
 {
-	name = "Cavalry Division"
+	name = "Cavalry Divisions"
 
 	for_countries = { USA }
 
@@ -315,13 +283,9 @@ USA_CAV_01 =
 
 	division_types = { "cavalry" }
 
-	# Number reservation system will tie to another group.
-	#link_numbering_with = { USA_INF_01 }
-
 	fallback_name = "%d Cavalry Division"
 
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
+	# Names with numbers (only one number per entry).
 	ordered =
 	{
 		1 = { "%dst Cavalry 'The 1st Team' Div." }
@@ -329,28 +293,35 @@ USA_CAV_01 =
 		3 = { "%drd Cavalry Division" }
 		15 = { "%dth Cavalry Division" }
 		21 = { "%dst Cavalry Division" }
-		24 = { "%dth Cavalry Division" }
-		61 = { "%dst Cavalry Division" }
-		62 = { "%dnd Cavalry Division" }
-		63 = { "%drd Cavalry Division" }
-		64 = { "%dth Cavalry Division" }
-		65 = { "%dth Cavalry Division" }
-		66 = { "%dth Cavalry Division" }
 		22 = { "%dnd Cavalry Division" }
 		23 = { "%drd Cavalry Division" }
-		56 = { "%dth Cavalry Division" }
-		25 = { "%dth Cavalry Division" }
-		26 = { "%dth Cavalry Division" }
-		27 = { "%dth Cavalry Division" }
-		28 = { "%dth Cavalry Division" }
-		29 = { "%dth Cavalry Division" }
-		30 = { "%dth Cavalry Division" }
+		24 = { "%dth Cavalry Division" }
+		51 = { "%dst Cavalry Brigade (Idaho & Oregon)" }
+		52 = { "%dnd Cavalry Brigade (Pennsylvania)" }
+		53 = { "%drd Cavalry Brigade (New York)" }
+		54 = { "%dth Cavalry Brigade (Ohio & Kentucky)" }
+		55 = { "%dth Cavalry Brigade (Alabama & Georgia)" }
+		56 = { "%dth Cavalry Brigade (Texas)" }
+		57 = { "%dth Cavalry Brigade (Kansas & Iowa)" }
+		58 = { "%dth Cavalry Brigade (Wyoming & Washington)" }
+		59 = { "%dth Cavalry Brigade (New Jersey & Maryland)" }
+		61 = { "%dst Cavalry Division 'Cavalry of the East'" }
+		62 = { "%dnd Cavalry Division 'Towpath'" }
+		63 = { "%drd Cavalry Division 'Red Raiders'" }
+		64 = { "%dth Cavalry Division 'Trailblazers'" }
+		65 = { "%dth Cavalry Division 'Great Lakes'" }
+		66 = { "%dth Cavalry Division 'Plainsmen'" }
 	}
 }
 
+# =============================================================================
+# Motorized Divisions
+# =============================================================================
+# Overrides vanilla USA_MOT_01. Links numbering with infantry.
+
 USA_MOT_01 = 
 {
-	name = "Motorized Division"
+	name = "Motorized Divisions"
 
 	for_countries = { USA }
 
@@ -358,95 +329,54 @@ USA_MOT_01 =
 
 	division_types = { "motorized" }
 
-	# Number reservation system will tie to another group.
 	link_numbering_with = { USA_INF_01 }
 
 	fallback_name = "%d Motorized Division"
 
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
+	# Names with numbers (only one number per entry).
 	ordered =
 	{
-		4 = { "%dth 'Ivy' Division" }					# historical motorized divisions listed first
-		6 = { "%dth 'Sightseeing Sixth' Division" }
-		7 = { "%dth 'Bayonet' Division" }
-		8 = { "%dth 'Pathfinder' Division" }
-		90 = { "%dth 'Tough Ombres' Division" }
-		5 = { "%dth 'Red Devils' Division" }
-		1 = { "%dst 'Big Red One' Division" }			# other regular infantry divisions next
-		2 = { "%dnd 'Indianhead' Division" }
-		3 = { "%drd 'Rock of the Marne' Division" }
-		9 = { "%dth 'Old Reliables' Division" }
-		30 = { "%dth 'Old Hickory' Division" }
-		41 = { "%dst 'Sunset' Division" }
-		44 = { "%dth Infantry Division" }
-		45 = { "%dth 'Thunderbird' Division" }
-		27 = { "%dth 'New York' Division" }
-		32 = { "%dnd 'Red Arrow' Division" }
-		37 = { "%dth 'Buckeye' Division" }
-		31 = { "%dst 'Dixie' Division" }
-		36 = { "%dth 'Texas' Division" }
-		35 = { "%dth 'Santa Fe' Division" }
-		26 = { "%dth 'Yankee' Division" }
-		38 = { "%dth 'Cyclone' Division" }
-		29 = { "%dth 'Blue and Gray' Division" }
-		34 = { "%dth 'Red Bull' Division" }
-		28 = { "%dth 'Keystone' Division" }
-		43 = { "%drd 'Winged Victory' Division" }
-		33 = { "%drd 'Golden Cross' Division" }
-		40 = { "%dth 'Sunshine' Division" }
-		24 = { "%dth 'Victory' Division" }
-		25 = { "%dth 'Tropic Lightning' Division" }
-		77 = { "%dth 'Liberty' Division" }
-		85 = { "%dth 'Custer' Division" }
-		93 = { "%drd 'Blue Helmets' Division" }
-		23 = { "'Americal' Division" }
-		76 = { "%dth 'Onaway' Division" }
-		79 = { "%dth Infantry Division" }
-		81 = { "%dst 'Wildcat' Division" }
-		80 = { "%dth 'Blue Ridge' Division" }
-		88 = { "%dth 'Blue Devils' Division" }
-		89 = { "%dth 'Rolling W' Division" }
-		95 = { "%dth 'Victory' Division" }
-		78 = { "%dth 'Lightning' Division" }
-		83 = { "%drd 'Thunderbolts' Division" }
-		91 = { "%dst 'Pine Tree' Division" }
-		96 = { "%dth 'Deadeye' Division" }
-		94 = { "%dth 'Neuf Quatres' Division" }
-		98 = { "%dth 'Iroquois' Division" }
-		102 = { "%dnd 'Ozarks' Division" }
-		104 = { "%dth 'Timberwolves' Division" }
-		84 = { "%dth 'Railsplitters' Division" }
-		92 = { "%dnd 'Buffalo Soldiers' Division" }
-		99 = { "%dth 'Checkerboard' Division" }
-		100 = { "%dth 'Century' Division" }
-		103 = { "%drd 'Cactus' Division" }
-		86 = { "%dth 'Blackhawk' Division" }
-		87 = { "%dth 'Golden Acorns' Division" }
-		97 = { "%dth 'Trident' Division" }
-		106 = { "%dth 'Golden Lions' Division" }
-		66 = { "%dth 'Black Panthers' Division" }
-		75 = { "%dth Infantry Division" }
-		69 = { "%dth 'Fighting 69th' Division" }
-		63 = { "%drd 'Blood Fire' Division" }
-		70 = { "%dth 'Trailblazers' Division" }
-		42 = { "%dnd 'Rainbow' Division" }
-		71 = { "%dst 'Red Circle' Division" }
-		65 = { "%dth 'Battle Axe' Division" }
-		108 = { "%dth 'Golden Griffons' Division" }
-		39 = { "%dth 'Delta' Division" }			# start of postwar divisions here
-		47 = { "%dth 'Viking' Division" }
-		46 = { "%dth 'Ironfist' Division" }
-		48 = { "%dth 'Hurricane' Division" }
-		51 = { "%dst 'Rattlesnake' Division" }
-		49 = { "%dth '49ers' Division" }
-		52 = { "%dnd 'Argonauts' Division" }
+		1 = { "%dst 'Big Red One' Motorized Div." }
+		2 = { "%dnd 'Indianhead' Motorized Div." }
+		3 = { "%drd 'Rock of the Marne' Motorized Div." }
+		4 = { "%dth 'Ivy' Motorized Division" }
+		5 = { "%dth 'Red Devils' Motorized Div." }
+		6 = { "%dth 'Sightseeing Sixth' Motorized Div." }
+		7 = { "%dth 'Bayonet' Motorized Division" }
+		8 = { "%dth 'Pathfinder' Motorized Div." }
+		9 = { "%dth 'Old Reliables' Motorized Div." }
+		24 = { "%dth 'Victory' Motorized Division" }
+		25 = { "%dth 'Tropic Lightning' Motorized Div." }
+		26 = { "%dth 'Yankee' Motorized Division" }
+		27 = { "%dth 'New York' Motorized Division" }
+		28 = { "%dth 'Keystone' Motorized Division" }
+		29 = { "%dth 'Blue and Gray' Motorized Div." }
+		30 = { "%dth 'Old Hickory' Motorized Div." }
+		31 = { "%dst 'Dixie' Motorized Division" }
+		32 = { "%dnd 'Red Arrow' Motorized Div." }
+		33 = { "%drd 'Prairie' Motorized Division" }
+		34 = { "%dth 'Red Bull' Motorized Division" }
+		35 = { "%dth 'Santa Fe' Motorized Division" }
+		36 = { "%dth 'Texas' Motorized Division" }
+		37 = { "%dth 'Buckeye' Motorized Division" }
+		38 = { "%dth 'Cyclone' Motorized Division" }
+		40 = { "%dth 'Sunshine' Motorized Division" }
+		41 = { "%dst 'Sunset' Motorized Division" }
+		42 = { "%dnd 'Rainbow' Motorized Division" }
+		43 = { "%drd 'Winged Victory' Motorized Div." }
+		45 = { "%dth 'Thunderbird' Motorized Div." }
+		90 = { "%dth 'Tough Ombres' Motorized Div." }
 	}
 }
 
+# =============================================================================
+# Mechanized Divisions
+# =============================================================================
+# Overrides vanilla USA_MEC_01. Links numbering with infantry.
+
 USA_MEC_01 = 
 {
-	name = "Mechanized Division"
+	name = "Mechanized Divisions"
 
 	for_countries = { USA }
 
@@ -454,95 +384,54 @@ USA_MEC_01 =
 
 	division_types = { "mechanized" }
 
-	# Number reservation system will tie to another group.
 	link_numbering_with = { USA_INF_01 }
 
 	fallback_name = "%d Mechanized Division"
 
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
+	# Names with numbers (only one number per entry).
 	ordered =
 	{
-		4 = { "%dth 'Ivy' Division" }					# historical motorized divisions listed first
-		6 = { "%dth 'Sightseeing Sixth' Division" }
-		7 = { "%dth 'Bayonet' Division" }
-		8 = { "%dth 'Pathfinder' Division" }
-		90 = { "%dth 'Tough Ombres' Division" }
-		5 = { "%dth 'Red Devils' Division" }
-		1 = { "%dst 'Big Red One' Division" }			# other regular infantry divisions next
-		2 = { "%dnd 'Indianhead' Division" }
-		3 = { "%drd 'Rock of the Marne' Division" }
-		9 = { "%dth 'Old Reliables' Division" }
-		30 = { "%dth 'Old Hickory' Division" }
-		41 = { "%dst 'Sunset' Division" }
-		44 = { "%dth Infantry Division" }
-		45 = { "%dth 'Thunderbird' Division" }
-		27 = { "%dth 'New York' Division" }
-		32 = { "%dnd 'Red Arrow' Division" }
-		37 = { "%dth 'Buckeye' Division" }
-		31 = { "%dst 'Dixie' Division" }
-		36 = { "%dth 'Texas' Division" }
-		35 = { "%dth 'Santa Fe' Division" }
-		26 = { "%dth 'Yankee' Division" }
-		38 = { "%dth 'Cyclone' Division" }
-		29 = { "%dth 'Blue and Gray' Division" }
-		34 = { "%dth 'Red Bull' Division" }
-		28 = { "%dth 'Keystone' Division" }
-		43 = { "%drd 'Winged Victory' Division" }
-		33 = { "%drd 'Golden Cross' Division" }
-		40 = { "%dth 'Sunshine' Division" }
-		24 = { "%dth 'Victory' Division" }
-		25 = { "%dth 'Tropic Lightning' Division" }
-		77 = { "%dth 'Liberty' Division" }
-		85 = { "%dth 'Custer' Division" }
-		93 = { "%drd 'Blue Helmets' Division" }
-		23 = { "'Americal' Division" }
-		76 = { "%dth 'Onaway' Division" }
-		79 = { "%dth Infantry Division" }
-		81 = { "%dst 'Wildcat' Division" }
-		80 = { "%dth 'Blue Ridge' Division" }
-		88 = { "%dth 'Blue Devils' Division" }
-		89 = { "%dth 'Rolling W' Division" }
-		95 = { "%dth 'Victory' Division" }
-		78 = { "%dth 'Lightning' Division" }
-		83 = { "%drd 'Thunderbolts' Division" }
-		91 = { "%dst 'Pine Tree' Division" }
-		96 = { "%dth 'Deadeye' Division" }
-		94 = { "%dth 'Neuf Quatres' Division" }
-		98 = { "%dth 'Iroquois' Division" }
-		102 = { "%dnd 'Ozarks' Division" }
-		104 = { "%dth 'Timberwolves' Division" }
-		84 = { "%dth 'Railsplitters' Division" }
-		92 = { "%dnd 'Buffalo Soldiers' Division" }
-		99 = { "%dth 'Checkerboard' Division" }
-		100 = { "%dth 'Century' Division" }
-		103 = { "%drd 'Cactus' Division" }
-		86 = { "%dth 'Blackhawk' Division" }
-		87 = { "%dth 'Golden Acorns' Division" }
-		97 = { "%dth 'Trident' Division" }
-		106 = { "%dth 'Golden Lions' Division" }
-		66 = { "%dth 'Black Panthers' Division" }
-		75 = { "%dth Infantry Division" }
-		69 = { "%dth 'Fighting 69th' Division" }
-		63 = { "%drd 'Blood Fire' Division" }
-		70 = { "%dth 'Trailblazers' Division" }
-		42 = { "%dnd 'Rainbow' Division" }
-		71 = { "%dst 'Red Circle' Division" }
-		65 = { "%dth 'Battle Axe' Division" }
-		108 = { "%dth 'Golden Griffons' Division" }
-		39 = { "%dth 'Delta' Division" }			# start of postwar divisions here
-		47 = { "%dth 'Viking' Division" }
-		46 = { "%dth 'Ironfist' Division" }
-		48 = { "%dth 'Hurricane' Division" }
-		51 = { "%dst 'Rattlesnake' Division" }
-		49 = { "%dth '49ers' Division" }
-		52 = { "%dnd 'Argonauts' Division" }
+		1 = { "%dst 'Big Red One' Mechanized Div." }
+		2 = { "%dnd 'Indianhead' Mechanized Div." }
+		3 = { "%drd 'Rock of the Marne' Mechanized Div." }
+		4 = { "%dth 'Ivy' Mechanized Division" }
+		5 = { "%dth 'Red Devils' Mechanized Div." }
+		6 = { "%dth 'Sightseeing Sixth' Mechanized Div." }
+		7 = { "%dth 'Bayonet' Mechanized Division" }
+		8 = { "%dth 'Pathfinder' Mechanized Div." }
+		9 = { "%dth 'Old Reliables' Mechanized Div." }
+		24 = { "%dth 'Victory' Mechanized Division" }
+		25 = { "%dth 'Tropic Lightning' Mechanized Div." }
+		26 = { "%dth 'Yankee' Mechanized Division" }
+		27 = { "%dth 'New York' Mechanized Division" }
+		28 = { "%dth 'Keystone' Mechanized Division" }
+		29 = { "%dth 'Blue and Gray' Mechanized Div." }
+		30 = { "%dth 'Old Hickory' Mechanized Div." }
+		31 = { "%dst 'Dixie' Mechanized Division" }
+		32 = { "%dnd 'Red Arrow' Mechanized Div." }
+		33 = { "%drd 'Prairie' Mechanized Division" }
+		34 = { "%dth 'Red Bull' Mechanized Division" }
+		35 = { "%dth 'Santa Fe' Mechanized Division" }
+		36 = { "%dth 'Texas' Mechanized Division" }
+		37 = { "%dth 'Buckeye' Mechanized Division" }
+		38 = { "%dth 'Cyclone' Mechanized Division" }
+		40 = { "%dth 'Sunshine' Mechanized Division" }
+		41 = { "%dst 'Sunset' Mechanized Division" }
+		42 = { "%dnd 'Rainbow' Mechanized Division" }
+		43 = { "%drd 'Winged Victory' Mechanized Div." }
+		45 = { "%dth 'Thunderbird' Mechanized Div." }
+		90 = { "%dth 'Tough Ombres' Mechanized Div." }
 	}
 }
 
+# =============================================================================
+# Armored Divisions
+# =============================================================================
+# Overrides vanilla USA_ARM_01. Historical WWII armored divisions, postwar Guard, and Fortitude units.
+
 USA_ARM_01 = 
 {
-	name = "Armored Division"
+	name = "Armored Divisions"
 
 	for_countries = { USA }
 
@@ -550,13 +439,9 @@ USA_ARM_01 =
 
 	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
 
-	# Number reservation system will tie to another group.
-	#link_numbering_with = { USA_INF_01 }
-
 	fallback_name = "%d Armored Division"
 
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
+	# Names with numbers (only one number per entry).
 	ordered =
 	{
 		1 = { "%dst Armored 'Old Ironsides' Div." }
@@ -571,23 +456,22 @@ USA_ARM_01 =
 		10 = { "%dth Armored 'Tiger' Div." }
 		11 = { "%dth Armored 'Thunderbolt' Div." }
 		12 = { "%dth Armored 'Hellcat' Div." }
-		13 = { "%dth Armored 'Blackcat' Div." }
+		13 = { "%dth Armored 'Black Cat' Div." }
 		14 = { "%dth Armored 'Liberator' Div." }
-		15 = { "%dth Armored Division" }
 		16 = { "%dth Armored Division" }
+		18 = { "%dth Armored Division" }
+		19 = { "%dth Armored Division" }
 		20 = { "%dth Armored Division" }
 		21 = { "%dst Armored Division" }
 		22 = { "%dnd Armored Division" }
-		18 = { "%dth Armored Division" }
-		19 = { "%dth Armored Division" }
 		25 = { "%dth Armored Division" }
-		39 = { "%dth Armored Division" }
 		27 = { "%dth Armored 'Empire' Div." }
 		30 = { "%dth Armored 'Dixie' Div." }
+		39 = { "%dth Armored Division" }
 		40 = { "%dth Armored 'Grizzly' Div." }
 		48 = { "%dth Armored 'Hurricane' Div." }
 		49 = { "%dth Armored 'Lone Star' Div." }
-		50 = { "%drd Armored 'Jersey Blues' Div." }
+		50 = { "%dth Armored 'Jersey Blues' Div." }
 		51 = { "%dst Armored 'Cavaliers' Div." }
 		52 = { "%dnd Armored Division" }
 		53 = { "%drd Armored 'Jaguar' Div." }
@@ -615,9 +499,100 @@ USA_ARM_01 =
 	}
 }
 
+# =============================================================================
+# Armored Cavalry Regiments
+# =============================================================================
+# Mechanized cavalry groups and armored cavalry reconnaissance regiments.
+
+USA_ACR_01 = 
+{
+	name = "Armored Cavalry Regiments"
+
+	for_countries = { USA }
+
+	can_use = { always = yes }
+
+	division_types = { "light_armor" "motorized" "mechanized" }
+
+	fallback_name = "%d Armored Cavalry Regiment"
+
+	# Names with numbers (only one number per entry).
+	ordered =
+	{
+		2 = { "%dnd Armored Cavalry 'Second Dragoons'" }
+		3 = { "%drd Armored Cavalry 'Brave Rifles'" }
+		4 = { "%dth Cavalry Reconnaissance Group" }
+		6 = { "%dth Cavalry Reconnaissance 'Fighting Sixth'" }
+		11 = { "%dth Armored Cavalry 'Blackhorse'" }
+		14 = { "%dth Armored Cavalry 'First Dragoon'" }
+		15 = { "%dth Cavalry Reconnaissance Group" }
+		106 = { "%dth Cavalry Reconnaissance Group" }
+		107 = { "%dth Cavalry Reconnaissance Group" }
+		113 = { "%dth Cavalry Reconnaissance Group" }
+		115 = { "%dth Cavalry Reconnaissance Group" }
+		116 = { "%dth Cavalry Reconnaissance Group" }
+		1 = { "%dst Armored Cavalry 'First Cavalry'" }
+		5 = { "%dth Armored Cavalry 'Black Knights'" }
+		7 = { "%dth Armored Cavalry 'Garryowen'" }
+		8 = { "%dth Armored Cavalry 'Honor and Courage'" }
+		9 = { "%dth Armored Cavalry 'Buffalo Soldiers'" }
+		10 = { "%dth Armored Cavalry 'Buffalo'" }
+		12 = { "%dth Armored Cavalry 'Semper Fidelis'" }
+		13 = { "%dth Armored Cavalry 'It Shall Be Done'" }
+	}
+}
+
+# =============================================================================
+# Separate Tank Battalions
+# =============================================================================
+# Overrides vanilla USA_ARMORED_DETACHMENTS_01. Independent tank battalions attached to divisions.
+
+USA_ARMORED_DETACHMENTS_01 = 
+{
+	name = "Separate Tank Battalions"
+
+	for_countries = { USA }
+
+	can_use = { always = yes }
+
+	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
+
+	fallback_name = "%d Tank Battalion"
+
+	# Names with numbers (only one number per entry).
+	ordered =
+	{
+		70 = { "%dth Tank Battalion 'Joe's Tanks'" }
+		191 = { "%dst Tank Battalion 'Salerno'" }
+		741 = { "%dst Tank Battalion 'Omaha Beach'" }
+		743 = { "%drd Tank Battalion 'Roll On'" }
+		745 = { "%dth Tank Battalion 'First Armor'" }
+		746 = { "%dth Tank Battalion 'Beach Busters'" }
+		749 = { "%dth Tank Battalion 'Spearhead Armor'" }
+		753 = { "%drd Tank Battalion 'San Fratello'" }
+		756 = { "%dth Tank Battalion 'Cassino'" }
+		759 = { "%dth Tank Battalion (Light)" }
+		761 = { "%dst Tank Battalion 'Black Panthers'" }
+		771 = { "%dst Tank Battalion 'Rhine Crossers'" }
+		777 = { "%dth Tank Battalion 'Steel Wolves'" }
+		781 = { "%dst Tank Battalion 'Colmar'" }
+		782 = { "%dnd Tank Battalion 'Bavaria'" }
+		784 = { "%dth Tank Battalion 'Black Tigers'" }
+		786 = { "%dth Tank Battalion 'Ruhr'" }
+		787 = { "%dth Tank Battalion 'Harz'" }
+		788 = { "%dth Tank Battalion 'Danube'" }
+		801 = { "%dst Tank Battalion 'Elbe'" }
+	}
+}
+
+# =============================================================================
+# Airborne Divisions
+# =============================================================================
+# Overrides vanilla USA_PAR_01. Historical divisions, Fortitude deceptions, and independent PIRs.
+
 USA_PAR_01 = 
 {
-	name = "Airborne Division"
+	name = "Airborne Divisions"
 
 	for_countries = { USA }
 
@@ -625,45 +600,54 @@ USA_PAR_01 =
 
 	division_types = { "paratrooper" }
 
-	# Number reservation system will tie to another group.
 	link_numbering_with = { USA_INF_01 }
 
 	fallback_name = "%d Airborne Division"
 
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
+	# Names with numbers (only one number per entry).
 	ordered =
 	{
+		11 = { "%dth Airborne 'The Angels' Division" }
+		13 = { "%dth Airborne 'Black Cats' Division" }
+		17 = { "%dth Airborne 'Golden Talons' Division" }
 		82 = { "%dnd Airborne 'All American' Division" }
 		101 = { "%dst Airborne 'Screaming Eagles' Division" }
-		11 = { "%dth Airborne 'The Angels' Division" }
-		13 = { "%dth Airborne 'Golden Unicorns' Division" }
-		17 = { "%dth Airborne 'Golden Talons' Division" }
+		6 = { "%dth Airborne Division" }
+		9 = { "%dth Airborne Division" }
 		18 = { "%dth Airborne Division" }
 		21 = { "%dst Airborne Division" }
 		135 = { "%dth Airborne Division" }
-		108 = { "%dth Airborne'Golden Griffons' Division" }
-		15 = { "%dth Airborne Division" }
-		6 = { "%dth Airborne Division" }
-		9 = { "%dth Airborne Division" }
 		80 = { "%dth Airborne 'Blue Ridge' Division" }
 		84 = { "%dth Airborne 'Railsplitters' Division" }
 		100 = { "%dth Airborne 'Century' Division" }
+		108 = { "%dth Airborne 'Golden Griffons' Division" }
 		202 = { "%dnd Airborne 'Flat-Hatters' Division" }
+		501 = { "%dst Parachute Infantry Regiment" }
+		502 = { "%dnd Parachute Infantry Regiment" }
+		503 = { "%drd Parachute Infantry Regiment" }
+		504 = { "%dth Parachute Infantry Regiment" }
+		505 = { "%dth Parachute Infantry Regiment" }
+		506 = { "%dth Parachute Infantry 'Currahee'" }
+		507 = { "%dth Parachute Infantry Regiment" }
+		508 = { "%dth Parachute Infantry Regiment" }
+		509 = { "%dth Parachute Infantry 'Geronimo'" }
+		511 = { "%dth Parachute Infantry Regiment" }
+		517 = { "%dth Parachute Regimental Combat Team" }
+		555 = { "%dth Parachute Infantry 'Triple Nickles'" }
 		271 = { "%dst Airborne Division" }
 		272 = { "%dnd Airborne Division" }
-		273 = { "%dth Airborne Division" }
-		274 = { "%dth Airborne Division" }
-		275 = { "%dth Airborne Division" }
-		276 = { "%dth Airborne Division" }
-		277 = { "%dth Airborne Division" }
-		278 = { "%dth Airborne Division" }
+		273 = { "%drd Airborne Division" }
 	}
 }
 
+# =============================================================================
+# Marine Divisions
+# =============================================================================
+# Overrides vanilla USA_MAR_01. United States Marine Corps divisions.
+
 USA_MAR_01 = 
 {
-	name = "Marine Division"
+	name = "Marine Divisions"
 
 	for_countries = { USA }
 
@@ -671,70 +655,90 @@ USA_MAR_01 =
 
 	division_types = { "marine" }
 
-	# Number reservation system will tie to another group.
-	#link_numbering_with = { USA_INF_01 }
-
 	fallback_name = "%d Marine Division"
 
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
+	# Names with numbers (only one number per entry).
 	ordered =
 	{
 		1 = { "%dst Marine 'The Old Breed' Div." }
 		2 = { "%dnd Marine 'Follow Me' Division" }
-		3 = { "%drd Marine 'Iron Fist' Division" }
-		4 = { "%dth Marine 'Beachmaster' Division" }
-		5 = { "%dth Marine 'Sledgehammer' Division" }
-		6 = { "%dth Marine 'Sea Lions' Division" }
-		7 = { "%dth Marine 'Anchors Aweigh' Division" }
-		8 = { "%dth Marine 'Bulldog' Division" }
-		9 = { "%dth Marine 'Roughnecks' Division" }
-		10 = { "%dth Marine 'Amphibious Assault' Division" }
-		11 = { "%dth Marine 'Ocean's Fury' Division" }
-		12 = { "%dth Marine 'Leathernecks' Division" }
-		13 = { "%dth Marine 'Sea Wolves' Division" }
-		14 = { "%dth Marine 'Mariner's Force' Division" }
-		15 = { "%dth Marine 'Aqua Knights' Division" }
-		16 = { "%dth Marine 'Tidal Wave' Division" }
-		17 = { "%dth Marine 'Marine Raiders' Division" }
-		18 = { "%dth Marine 'Island Hoppers' Division" }
-		19 = { "%dth Marine 'Coral Crushers' Division" }
-		20 = { "%dth Marine 'Coastal Storm' Division" }
-		21 = { "%dst Marine 'Seaborn Defenders' Division" }
-		22 = { "%dnd Marine 'Beachhead Busters' Division" }
-		23 = { "%drd Marine 'Nautical Nightmare' Division" }
-		24 = { "%dth Marine 'Ocean Avengers' Division" }
-		25 = { "%dth Marine 'Deepwater Demons' Division" }
-		26 = { "%dth Marine 'Stormsurge' Division" }
-		27 = { "%dth Marine 'Typhoon Troopers' Division" }
-		28 = { "%dth Marine 'Seafaring Sentinels' Division" }
-		29 = { "%dth Marine 'Harbor Guardians' Division" }
-		30 = { "%dth Marine 'Tidal Force' Division" }
-		31 = { "%dst Marine Division" }
-		32 = { "%dnd Marine Division" }
-		33 = { "%drd Marine Division" }
-		34 = { "%dth Marine Division" }
-		35 = { "%dth Marine Division" }
-		36 = { "%dth Marine Division" }
-		37 = { "%dth Marine Division" }
-		38 = { "%dth Marine Division" }
-		39 = { "%dth Marine Division" }
-		40 = { "%dth Marine Division" }
-		41 = { "%dst Marine Division" }
-		42 = { "%dnd Marine Division" }
-		43 = { "%drd Marine Division" }
-		44 = { "%dth Marine Division" }
-		45 = { "%dth Marine Division" }
-		46 = { "%dth Marine Division" }
-		47 = { "%dth Marine Division" }
-		48 = { "%dth Marine Division" }
-		49 = { "%dth Marine Division" }
+		3 = { "%drd Marine 'Fighting Third' Division" }
+		4 = { "%dth Marine 'Fighting Fourth' Division" }
+		5 = { "%dth Marine 'The Spearhead' Division" }
+		6 = { "%dth Marine 'The Striking Sixth' Division" }
+		7 = { "%dth Marine 'Coral Sea' Division" }
+		8 = { "%dth Marine 'Midway' Division" }
+		9 = { "%dth Marine 'Wake Island' Division" }
+		10 = { "%dth Marine 'Tarawa' Division" }
+		11 = { "%dth Marine 'Saipan' Division" }
+		12 = { "%dth Marine 'Tinian' Division" }
+		13 = { "%dth Marine 'Guam' Division" }
+		14 = { "%dth Marine 'Peleliu' Division" }
+		15 = { "%dth Marine 'Iwo Jima' Division" }
+		16 = { "%dth Marine 'Okinawa' Division" }
+		17 = { "%dth Marine 'Luzon' Division" }
+		18 = { "%dth Marine 'Guadalcanal' Division" }
+		19 = { "%dth Marine 'Bougainville' Division" }
+		20 = { "%dth Marine 'New Britain' Division" }
+		21 = { "%dst Marine 'Bismarck' Division" }
+		22 = { "%dnd Marine 'Solomons' Division" }
+		23 = { "%drd Marine 'Marianas' Division" }
+		24 = { "%dth Marine 'Volcano' Division" }
+		25 = { "%dth Marine 'Ryukyus' Division" }
 	}
 }
 
+# =============================================================================
+# Marine Raider Battalions
+# =============================================================================
+# Marine Raiders, Paramarines, provisional brigades, and island defense battalions.
+
+USA_MAR_BGD_01 = 
+{
+	name = "Marine Raider Battalions"
+
+	for_countries = { USA }
+
+	can_use = { always = yes }
+
+	division_types = { "marine" }
+
+	fallback_name = "%d Marine Battalion"
+
+	# Names with numbers (only one number per entry).
+	ordered =
+	{
+		1 = { "%dst Marine Raider Battalion 'Edson's Raiders'" }
+		2 = { "%dnd Marine Raider Battalion 'Carlson's Raiders'" }
+		3 = { "%drd Marine Raider Battalion" }
+		4 = { "%dth Marine Raider Battalion" }
+		5 = { "1st Marine Parachute Regiment 'Paramarines'" }
+		6 = { "1st Provisional Marine Brigade (Iceland)" }
+		7 = { "2nd Provisional Marine Brigade (Samoa)" }
+		8 = { "3rd Provisional Marine Brigade" }
+		9 = { "4th Marine Brigade" }
+		10 = { "6th Provisional Marine Brigade (Guam)" }
+		11 = { "%dth Marine Defense Battalion (Pearl Harbor)" }
+		12 = { "%dth Marine Defense Battalion" }
+		13 = { "%dth Marine Defense Battalion (Midway)" }
+		14 = { "%dth Marine Defense Battalion (Guantanamo)" }
+		15 = { "%dth Marine Defense Battalion" }
+		16 = { "%dth Marine Defense Battalion (Tinian)" }
+		17 = { "%dth Marine Defense Battalion (Samoa)" }
+		18 = { "%dth Marine Defense Battalion" }
+		19 = { "%dth Marine Defense Battalion (Wake Island)" }
+		20 = { "%dth Marine Defense Battalion (Solomons)" }
+	}
+}
+
+# =============================================================================
+# Mountain Divisions
+# =============================================================================
+# Overrides vanilla USA_MNT_01. 10th Mountain Division and American mountain range series.
+
 USA_MNT_01 = 
 {
-	name = "Mountain Division"
+	name = "Mountain Divisions"
 
 	for_countries = { USA }
 
@@ -742,52 +746,204 @@ USA_MNT_01 =
 
 	division_types = { "mountaineers" }
 
-	# Number reservation system will tie to another group.
 	link_numbering_with = { USA_INF_01 }
 
 	fallback_name = "%d Mountain Division"
 
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
+	# Names with numbers (only one number per entry).
 	ordered =
 	{
-		10 = { "%dth 'Cascade' Division" }
-		14 = { "%dth 'Absaroka' Division" }
-		22 = { "%dnd 'Shenandoah' Division" }
-		50 = { "%dth 'Bighorn' Division" }
-		55 = { "%dth 'Black Hills' Division" }
-		12 = { "%dth 'Rocky Mountain' Division" }
-		15 = { "%dth 'Appalachia' Division" }
-		16 = { "%dth 'Smoky Mountains' Division" }
-		19 = { "%dth 'Cold Mountain' Division" }
-		20 = { "%dth 'Sierra Nevada' Division" }
-		48 = { "%dth 'Stone Mountain' Division" }
-		49 = { "%dth 'Granite' Division" }
-		51 = { "%dst 'Shasta' Division" }
-		52 = { "%dnd 'Catskills' Division" }
-		53 = { "%drd 'Adirondack' Division" }
-		54 = { "%dth 'Wasatch Mountains' Division" }
-		56 = { "%dth 'Yellowstone' Division" }
-		57 = { "%dth 'Laramie' Division" }
-		58 = { "%dth 'Yosemite' Division" }
-		59 = { "%dth 'Bitterroot' Division" }
-		204 = { "%dth 'Mountain Lions' Division" }
-		279 = { "%dth 'Ozark' Division" }
-		280 = { "%dth 'Ouachita' Division" }
-		281 = { "%dst 'Allegheny' Division" }
-		282 = { "%dnd 'Berkshire' Division" }
-		283 = { "%drd 'Sangre de Cristo' Division" }
-		284 = { "%dth 'Beartooth' Division" }
-		285 = { "%dth 'Madison' Division" }
-		286 = { "%dth 'Gallatin' Division" }
-		287 = { "%dth 'Mission' Division" }
-		288 = { "%dth 'Teton' Division" }
+		10 = { "%dth Mountain Division 'Climb to Glory'" }
+		85 = { "%dth Mountain Infantry Division" }
+		86 = { "%dth Mountain Infantry Division" }
+		87 = { "%dth Mountain Infantry Division" }
+		1 = { "%dst 'Cascade' Mountain Division" }
+		2 = { "%dnd 'Sierra Nevada' Mountain Division" }
+		3 = { "%drd 'Rocky Mountain' Mountain Division" }
+		4 = { "%dth 'Appalachian' Mountain Division" }
+		5 = { "%dth 'Adirondack' Mountain Division" }
+		6 = { "%dth 'Olympic' Mountain Division" }
+		7 = { "%dth 'Black Hills' Mountain Division" }
+		8 = { "%dth 'Bighorn' Mountain Division" }
+		9 = { "%dth 'Absaroka' Mountain Division" }
+		11 = { "%dth 'Bitterroot' Mountain Division" }
+		12 = { "%dth 'Shenandoah' Mountain Division" }
+		13 = { "%dth 'Smoky Mountains' Mountain Division" }
+		14 = { "%dth 'Wasatch' Mountain Division" }
+		15 = { "%dth 'Sangre de Cristo' Mountain Division" }
+		16 = { "%dth 'Beartooth' Mountain Division" }
+		17 = { "%dth 'Sawtooth' Mountain Division" }
+		18 = { "%dth 'Green Mountains' Mountain Division" }
+		19 = { "%dth 'White Mountains' Mountain Division" }
+		20 = { "%dth 'Ozark' Mountain Division" }
+		21 = { "%dst 'Ouachita' Mountain Division" }
+		22 = { "%dnd 'Allegheny' Mountain Division" }
+		23 = { "%drd 'Catskill' Mountain Division" }
+		24 = { "%dth 'Berkshire' Mountain Division" }
+		25 = { "%dth 'Teton' Mountain Division" }
 	}
 }
 
-USA_GAR_01 = 
+# =============================================================================
+# Ranger Battalions
+# =============================================================================
+# Overrides vanilla USA_RANGER_FORCE_01. Darby's Rangers, Special Service Force, and Alamo Scouts.
+
+USA_RANGER_FORCE_01 = 
 {
-	name = "Garrison Division"
+	name = "Ranger Battalions"
+
+	for_countries = { USA }
+
+	can_use = { always = yes }
+
+	division_types = { "mountaineers" "paratrooper" "infantry" }
+
+	fallback_name = "%d Ranger Battalion"
+
+	# Names with numbers (only one number per entry).
+	ordered =
+	{
+		1 = { "%dst Ranger Battalion 'Darby's Rangers'" }
+		2 = { "%dnd Ranger Battalion (Pointe du Hoc)" }
+		3 = { "%drd Ranger Battalion 'Rangers Lead the Way'" }
+		4 = { "%dth Ranger Battalion 'Cisterna Rangers'" }
+		5 = { "%dth Ranger Battalion 'Spearhead Rangers'" }
+		6 = { "%dth Ranger Battalion (Cabanatuan)" }
+		7 = { "1st Special Service Force 'The Devil's Brigade'" }
+		8 = { "5307th Composite Unit 'Merrill's Marauders'" }
+		9 = { "Alamo Scouts (6th Army Special Reconnaissance)" }
+		10 = { "5332nd Brigade 'Mars Task Force'" }
+		11 = { "99th Infantry Battalion (Separate) 'Viking'" }
+		12 = { "100th Infantry Battalion (Separate) 'Purple Heart'" }
+		13 = { "OSS Operational Groups (OG)" }
+		14 = { "OSS Detachment 101 (Kachin Rangers)" }
+		15 = { "OSS Special Reconnaissance Battalion" }
+		16 = { "%dth Ranger Infantry Company" }
+		17 = { "%dth Ranger Infantry Company" }
+		18 = { "%dth Ranger Infantry Company" }
+		19 = { "%dth Ranger Infantry Company" }
+		20 = { "%dth Ranger Infantry Company" }
+		21 = { "%dst Ranger Infantry Company" }
+		22 = { "%dnd Ranger Infantry Company" }
+		23 = { "%drd Ranger Infantry Company" }
+		24 = { "%dth Ranger Infantry Company" }
+		25 = { "%dth Ranger Infantry Company" }
+	}
+}
+
+# =============================================================================
+# Provisional Task Forces
+# =============================================================================
+# Overrides vanilla USA_COMPOSITE_UNITS_01. Historical ad-hoc combined-arms task forces.
+
+USA_COMPOSITE_UNITS_01 = 
+{
+	name = "Provisional Task Forces"
+
+	for_countries = { USA }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" "motorized" "mechanized" }
+
+	fallback_name = "Task Force %d"
+
+	# Names with numbers (only one number per entry).
+	ordered =
+	{
+		1 = { "Task Force Butler" }
+		2 = { "Task Force Baum" }
+		3 = { "Task Force Allen" }
+		4 = { "Task Force Biddle" }
+		5 = { "Task Force Lovelady" }
+		6 = { "Task Force Raff" }
+		7 = { "Task Force Hogan" }
+		8 = { "Task Force Richardson" }
+		9 = { "Task Force Rose" }
+		10 = { "Task Force O'Hara" }
+		11 = { "Task Force Welborn" }
+		12 = { "Task Force Dooley" }
+		13 = { "Task Force Faith" }
+		14 = { "Task Force Smith" }
+		15 = { "Task Force A" }
+		16 = { "Task Force B" }
+		17 = { "Task Force C" }
+		18 = { "Task Force X" }
+		19 = { "Task Force Y" }
+		20 = { "Task Force Z" }
+	}
+}
+
+# =============================================================================
+# State Defense Forces
+# =============================================================================
+# Overrides vanilla USA_DEF_01. 38 verified WWII state guards and territorial forces.
+
+USA_DEF_01 = 
+{
+	name = "State Defense Forces"
+
+	for_countries = { USA }
+
+	can_use = { OR = { has_government = democratic has_government = neutrality } }
+
+	division_types = { "militia" "infantry" }
+
+	fallback_name = "%d State Defense Force"
+
+	# Names with numbers (only one number per entry).
+	ordered =
+	{
+		1 = { "New York Guard" }
+		2 = { "Pennsylvania Reserve Defense Corps" }
+		3 = { "Texas Defense Guard" }
+		4 = { "California State Guard" }
+		5 = { "Illinois Reserve Militia" }
+		6 = { "Ohio State Guard" }
+		7 = { "Massachusetts State Guard" }
+		8 = { "Michigan State Guard" }
+		9 = { "Virginia Protective Force" }
+		10 = { "Indiana State Guard" }
+		11 = { "North Carolina State Guard" }
+		12 = { "Georgia State Defense Corps" }
+		13 = { "Wisconsin State Guard" }
+		14 = { "Missouri State Guard" }
+		15 = { "Tennessee State Guard" }
+		16 = { "Alabama State Guard" }
+		17 = { "Kentucky Active Militia" }
+		18 = { "Minnesota State Guard" }
+		19 = { "South Carolina Defense Force" }
+		20 = { "Iowa State Guard" }
+		21 = { "Louisiana State Guard" }
+		22 = { "Maryland Minute Men" }
+		23 = { "Florida State Guard" }
+		24 = { "Washington State Guard" }
+		25 = { "Connecticut State Guard" }
+		26 = { "Kansas State Guard" }
+		27 = { "Arkansas State Guard" }
+		28 = { "Oregon State Guard" }
+		29 = { "New Jersey State Guard" }
+		30 = { "Colorado State Guard" }
+		31 = { "Mississippi State Guard" }
+		32 = { "Maine State Guard" }
+		33 = { "Rhode Island State Guard" }
+		34 = { "Delaware State Guard" }
+		35 = { "Utah State Guard" }
+		36 = { "New Hampshire State Guard" }
+		37 = { "Alaska Territorial Guard" }
+		38 = { "Hawaii Territorial Guard" }
+	}
+}
+
+# =============================================================================
+# Harbor Defense Commands
+# =============================================================================
+# United States Army Coast Artillery Corps harbor defense commands.
+
+USA_COAST_01 = 
+{
+	name = "Harbor Defense Commands"
 
 	for_countries = { USA }
 
@@ -795,525 +951,427 @@ USA_GAR_01 =
 
 	division_types = { "infantry" }
 
-	# Number reservation system will tie to another group.
-	link_numbering_with = { USA_INF_01 }
+	fallback_name = "%d Coast Artillery Command"
 
-	fallback_name = "%d National Guard Division"
-
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
+	# Names with numbers (only one number per entry).
 	ordered =
 	{
-		77 = { "%dth 'Liberty' Division" }
-		90 = { "%dth 'Tough Ombres' Division" }
-		85 = { "%dth 'Custer' Division" }
-		93 = { "%drd 'Blue Helmets' Division" }
-		23 = { "'Americal' Division" }
-		76 = { "%dth 'Onaway' Division" }
-		79 = { "%dth Infantry Division" }
-		81 = { "%dst 'Wildcat' Division" }
-		80 = { "%dth 'Blue Ridge' Division" }
-		88 = { "%dth 'Blue Devils' Division" }
-		89 = { "%dth 'Rolling W' Division" }
-		95 = { "%dth 'Victory' Division" }
-		78 = { "%dth 'Lightning' Division" }
-		83 = { "%drd 'Thunderbolts' Division" }
-		91 = { "%dst 'Pine Tree' Division" }
-		96 = { "%dth 'Deadeye' Division" }
-		94 = { "%dth 'Neuf Quatres' Division" }
-		98 = { "%dth 'Iroquois' Division" }
-		102 = { "%dnd 'Ozarks' Division" }
-		104 = { "%dth 'Timberwolves' Division" }
-		84 = { "%dth 'Railsplitters' Division" }
-		92 = { "%dnd 'Buffalo Soldiers' Division" }
-		99 = { "%dth 'Checkerboard' Division" }
-		100 = { "%dth 'Century' Division" }
-		103 = { "%drd 'Cactus' Division" }
-		86 = { "%dth 'Blackhawk' Division" }
-		87 = { "%dth 'Golden Acorns' Division" }
-		97 = { "%dth 'Trident' Division" }
-		106 = { "%dth 'Golden Lions' Division" }
-		66 = { "%dth 'Black Panthers' Division" }
-		75 = { "%dth Infantry Division" }
-		69 = { "%dth 'Fighting 69th' Division" }
-		63 = { "%drd 'Blood Fire' Division" }
-		70 = { "%dth 'Trailblazers' Division" }
-		42 = { "%dnd 'Rainbow' Division" }
-		71 = { "%dst 'Red Circle' Division" }
-		65 = { "%dth 'Battle Axe' Division" }
-		61 = { "%dst Infantry Division" }			# start of unorganized WW2 divisions here
-		62 = { "%dnd Infantry Division" }
-		67 = { "%dth Infantry Division" }
-		68 = { "%dth Infantry Division" }
-		72 = { "%dnd Infantry Division" }
-		73 = { "%drd Infantry Division" }
-		74 = { "%dth Infantry Division" }
-		105 = { "%dth Infantry Division" }
-		107 = { "%dth Infantry Division" }
-		108 = { "%dth 'Golden Griffons' Division" }	# start of postwar divisions here
-		39 = { "%dth 'Delta' Division" }			
-		47 = { "%dth 'Viking' Division" }
-		46 = { "%dth 'Ironfist' Division" }
-		48 = { "%dth 'Hurricane' Division" }
-		51 = { "%dst 'Rattlesnake' Division" }
-		49 = { "%dth '49ers' Division" }
-		52 = { "%dnd 'Argonauts' Division" }
-		110 = { "%dth 'Washington' Division" }		# old HOI3 names (not verifed as historical)
-		115 = { "%dth 'Jefferson' Division" }
-		116 = { "%dth 'Headhunters' Division" }
-		125 = { "%dth 'Robert E. Lee' Division" }
-		128 = { "%dth 'Brooklyn' Division" }
-		131 = { "%dth 'Lincoln' Division" }
-		164 = { "%dth 'U.S. Grant' Division" }
-		165 = { "%dth 'Adams' Division" }
-		166 = { "%dth 'Franklin' Division" }
-		167 = { "%dth 'Lions' Division" }
-		168 = { "%dth 'Lady Liberty' Division" }
-		169 = { "%dth 'Madison' Division" }
-		170 = { "%dth 'Bloodhounds' Division" }
-		171 = { "%dst Infantry Division" }
-		172 = { "%dnd 'Misfits' Division" }
-		173 = { "%drd 'Metropolitan' Division" }
-		187 = { "%dth Infantry Division" }
-		188 = { "%dth Infantry Division" }
-		189 = { "%dth 'Black Diamonds' Division" }
-		190 = { "%dth Infantry Division" }
-		191 = { "%dst 'Sam Houston' Division" }
-		192 = { "%dnd 'Banditos' Division" }
-		193 = { "%drd 'Fighting 193rd' Division" }
-		194 = { "%dth 'Dust Devils' Division" }
-		195 = { "%dth 'Blue Dragons' Division" }
-		196 = { "%dth 'Volunteers' Division" }
-		197 = { "%dth 'Hercules' Division" }
-		198 = { "%dth Infantry Division" }
-		199 = { "%dth 'Davy Crockett' Division" }
-		200 = { "%dth 'Black Tigers' Division" }
-		201 = { "%dst 'Iron Men' Division" }
-		203 = { "%drd 'Armadillos' Division" }
-		204 = { "%dth 'Mountain Lions' Division" }
-		205 = { "%dth 'Widowmakers' Division" }
-		119 = { "%dth 'White Knights' Division" }
-		130 = { "%dth 'Dirty Bastards' Division" }
-		157 = { "%dth 'Titans' Division" }
-		158 = { "%dth 'Green Clovers' Division" }
-		159 = { "%dth 'Longhorn' Division" }
-		160 = { "%dth 'Freedom!' Division" }
-		161 = { "%dst 'Desert Scorpion' Division" }
-		162 = { "%dnd 'Seminole' Division" }
-		163 = { "%drd Infantry Division" }
-		174 = { "%dth 'Black Knights' Division" }
-		175 = { "%dth 'Apache' Division" }
-		176 = { "%dth Infantry Division" }
-		177 = { "%dth 'Old Muddy' Division" }
-		178 = { "%dth 'Black Widows' Division" }
-		179 = { "%dth 'Moccasins' Division" }
-		180 = { "%dth 'Centaur' Division" }
-		181 = { "%dst 'Howling Coyotes' Division" }
-		182 = { "%dnd Infantry Division" }
-		183 = { "%drd 'Harlem' Division" }
-		184 = { "%dth Infantry Division" }
-		185 = { "%dth 'Ragin' Cajuns' Division" }
-		186 = { "%dth 'Bulldog' Division" }
-		219 = { "%dth Infantry Division" }
-		220 = { "%dth 'Chicago' Division" }
-		221 = { "%dst 'Fighting Lumberjacks' Division" }
-		222 = { "%dnd 'Explorers' Division" }
-		223 = { "%drd 'Mavericks' Division" }
-		224 = { "%dth 'San Francisco' Division" }
-		225 = { "%dth 'Falcons' Division" }
-		226 = { "%dth 'Alamo' Division" }
-		227 = { "%dth Infantry Division" }
-		228 = { "%dth 'Buccaneers' Division" }
-		229 = { "%dth 'Philadelphia' Division" }
-		230 = { "%dth Infantry Division" }
-		231 = { "%dst 'Cowboys' Division" }
-		232 = { "%dnd 'Archers' Division" }
-		233 = { "%drd 'Daniel Boone' Division" }
-		234 = { "%dth Infantry Division" }
-		235 = { "%dth 'Mean Green' Division" }
-		236 = { "%dth 'Revenge!' Division" }
-		237 = { "%dth Infantry Division" }
-		238 = { "%dth '1776' Division" }
-		239 = { "%dth 'Detroit' Division" }
-		240 = { "%dth 'Minuteman' Division" }
-		241 = { "%dst 'Centurion' Division" }
-		244 = { "%dth Infantry Division" }
-		245 = { "%dth 'Enthusiasts' Division" }
-		246 = { "%dth Infantry Division" }
-		247 = { "%dth 'Rebel Yell' Division" }
-		248 = { "%dth 'Jayhawkers' Division" }
-		249 = { "%dth 'Swamp Fox' Division" }
-		250 = { "%dth 'Blue Streaks' Division" }
-		251 = { "%dst 'Bearcats' Division" }
-		252 = { "%dnd 'Gorillas' Division" }
-		253 = { "%drd 'Big Green' Division" }
-		254 = { "%dth 'Mustangs' Division" }
-		255 = { "%dth Infantry Division" }
-		256 = { "%dth 'Flying Dutchmen' Division" }
-		257 = { "%dth 'Phoenix' Division" }
-		258 = { "%dth 'Crusader' Division" }
-		259 = { "%dth 'Boston' Division" }
-		260 = { "%dth 'Viking' Division" }
-		261 = { "%dst 'Braves' Division" }
-		262 = { "%dnd Infantry Division" }
-		263 = { "%drd 'Yellow Jackets' Division" }
-		264 = { "%dth Infantry Division" }
-		265 = { "%dth 'Celtic' Division" }
-		266 = { "%dth 'Spartans' Division" }
-		267 = { "%dth 'Brocos' Division" }
-		268 = { "%dth 'Infamous 268th' Division" }
-		269 = { "%dth 'Forrester' Division" }
-		270 = { "%dth 'Gamecocks' Division" }
-		319 = { "%dth Infantry Division" }
-		320 = { "%dth 'Vanguard' Division" }
-		321 = { "%dst 'Pioneer' Division" }
-		322 = { "%dnd 'Beavers' Division" }
-		323 = { "%drd Infantry Division" }
-		324 = { "%dth 'Cavaliers' Division" }
-		325 = { "%dth Infantry Division" }
-		326 = { "%dth 'Cardinals' Division" }
-		327 = { "%dth 'Polar Bears' Division" }
-		328 = { "%dth 'Gettysburg' Division" }
-		329 = { "%dth 'Vicksburg' Division" }
-		330 = { "%dth 'Comet' Division" }
-		331 = { "%dst Infantry Division" }
-		332 = { "%dnd 'Mastadons' Division" }
-		333 = { "%drd 'Lucky Lindy' Division" }
-		334 = { "%dth 'Golden Gophers' Division" }
-		335 = { "%dth 'Fighting Irish' Division" }
-		336 = { "%dth Infantry Division" }
-		337 = { "%dth 'Red Hawks' Division" }
-		338 = { "%dth Infantry Division" }
-		339 = { "%dth 'Hilltoppers' Division" }
-		340 = { "%dth 'Green Demons' Division" }
-		341 = { "%dst 'Black Ravens' Division" }
-		344 = { "%dth Infantry Division" }
-		345 = { "%dth 'Wasps' Division" }
-		346 = { "%dth 'Jackrabbits' Division" }
-		347 = { "%dth 'Columbus' Division" }
-		348 = { "%dth 'Giants' Division" }
-		349 = { "%dth 'Highlanders' Division" }
-		350 = { "%dth 'Lakers' Division" }
-		351 = { "%dst 'Saints' Division" }
-		352 = { "%dnd 'Roadrunner' Division" }
-		353 = { "%drd 'Maccabees' Division" }
-		354 = { "%dth 'Green Gators' Division" }
-		355 = { "%dth 'Seattle' Division" }
-		356 = { "%dth 'Warhawks' Division" }
-		357 = { "%dth 'Grey Owls' Division" }
-		358 = { "%dth 'Chrimson' Division" }
-		359 = { "%dth 'Trojans' Division" }
-		360 = { "%dth 'Bloody Saber' Division" }
-		361 = { "%dst 'Billy  Johnny' DivisionÜ" }
-		362 = { "%dnd 'Amerigo Vespucci' Division" }
-		363 = { "%drd 'Chocktaw' Division" }
-		364 = { "%dth 'Ogre' Division" }
-		365 = { "%dth 'Patriot' Division" }
-		366 = { "%dth 'Storm' Division" }
-		367 = { "%dth 'Hoosiers' Division" }
-		368 = { "%dth 'Jaguars' Division" }
-		369 = { "%dth 'Corsairs' Division" }
-		370 = { "%dth Infantry Division" }
+		1 = { "Harbor Defenses of New York" }
+		2 = { "Harbor Defenses of Boston" }
+		3 = { "Harbor Defenses of San Francisco" }
+		4 = { "Harbor Defenses of Chesapeake Bay" }
+		5 = { "Harbor Defenses of Puget Sound" }
+		6 = { "Harbor Defenses of Pearl Harbor" }
+		7 = { "Harbor Defenses of Manila and Subic Bays" }
+		8 = { "Harbor Defenses of Narragansett Bay" }
+		9 = { "Harbor Defenses of Long Island Sound" }
+		10 = { "Harbor Defenses of the Delaware" }
+		11 = { "Harbor Defenses of San Diego" }
+		12 = { "Harbor Defenses of Los Angeles" }
+		13 = { "Harbor Defenses of the Columbia" }
+		14 = { "Harbor Defenses of Galveston" }
+		15 = { "Harbor Defenses of Pensacola" }
+		16 = { "Harbor Defenses of Charleston" }
+		17 = { "Harbor Defenses of Portland" }
+		18 = { "Harbor Defenses of Key West" }
+		19 = { "Harbor Defenses of Balboa (Panama Canal)" }
+		20 = { "Harbor Defenses of Cristobal (Panama Canal)" }
 	}
 }
-USA_MIL_01 = {
-    name = "Militia Division"
-    for_countries = { USA }
-    can_use = { always = yes }
-    division_types = { "militia" }
-    fallback_name = "%d Militia Division"
-    ordered = {
-        1 = { "%dst 'Minute Men' Division" }
-        2 = { "%dnd 'State Guard' Division" }
-        3 = { "%drd 'Home Guard' Division" }
-        4 = { "%dth 'Reserve' Division" }
-        5 = { "%dth 'Territorial' Division" }
-		6 = { "%dth 'Patriot' Division" }
-        7 = { "%dth 'National' Division" }
-        8 = { "%dth 'Liberty' Division" }
-        9 = { "%dth 'Freedom' Division" }
-        10 = { "%dth 'Citizen' Division" }
-        11 = { "%dth 'Reserve' Division" }
-        12 = { "%dth 'Colonial' Division" }
-        13 = { "%dth 'Guard' Division" }
-        14 = { "%dth 'Frontier' Division" }
-        15 = { "%dth 'Volunteer' Division" }
-        16 = { "%dth 'Sentinel' Division" }
-        17 = { "%dth 'Defenders' Division" }
-        18 = { "%dth 'Rangers' Division" }
-        19 = { "%dth 'Protectors' Division" }
-        20 = { "%dth 'Vigilant' Division" }
-    }
-}
-USA_SHOCK_01 = { 
-	name = "Shock Division"
-	for_countries = { USA }
-	can_use = { always = yes }
-	division_types = { "mechanized" "motorized" "light_armor" "medium_armor" "heavy_armor" "modern_armor" "infantry" }
-	fallback_name = "%d Mechanized Division"
-	ordered =
-	{
-		1 = { "%dst 'Iron Horses' Division" }
-		2 = { "%dnd 'Desert Rattlers' Division" }
-		3 = { "%drd 'Steel Riders' Division" }
-		4 = { "%dth 'Pioneers' Division" }
-		5 = { "%dth 'Roadrunners' Division" }
-		6 = { "%dth 'Mountaineers' Division" }
-		7 = { "%dth 'Tornado' Division" }
-		8 = { "%dth 'Pathfinders' Division" }
-		9 = { "%dth 'Predators' Division" }
-		10 = { "%dth 'Dragoons' Division" }
-		11 = { "%dth 'Thunderstrike' Division" }
-		12 = { "%dth 'Trailblazers' Division" }
-		13 = { "%dth 'Marauders' Division" }
-		14 = { "%dth 'Wolverines' Division" }
-		15 = { "%dth 'Gators' Division" }
-		16 = { "%dth 'Charging Bulls' Division" }
-		17 = { "%dth 'Hurricanes' Division" }
-		18 = { "%dth 'Silverbacks' Division" }
-		19 = { "%dth 'Eagles' Division" }
-		20 = { "%dth 'Guardians' Division" }
-		21 = { "%dst 'Lightning Strike' Division" }
-		22 = { "%dnd 'Lone Star' Division" }
-		23 = { "%drd 'Golden State' Division" }
-		24 = { "%dth 'Patriots' Division" }
-		25 = { "%dth 'Hellhounds' Division" }
-	}
-}
-USA_COM_GUARD_01 = {
-    name = "Communist Guard Division"
-    for_countries = { USA }
-    can_use = { always = yes }
-    division_types = { "infantry" "militia" }
-    fallback_name = "%d Guard Division"
-    ordered = {
-        1 = { "%dst 'Workers' Vanguard' Division" }
-        2 = { "%dnd 'Hammer & Sickle' Division" }
-        3 = { "%drd 'People's Resistance' Division" }
-        4 = { "%dth 'Liberation Legion' Division" }
-        5 = { "%dth 'Red Dawn' Division" }
-        6 = { "%dth 'Union Uprising' Division" }
-        7 = { "%dth 'Workers' Phalanx' Division" }
-        8 = { "%dth 'People's Partisans' Division" }
-        9 = { "%dth 'Grain & Steel' Division" }
-        10 = { "%dth 'Forge Front' Division" }
-		11 = { "%dth 'Coalition of Labor' Division" }
-		12 = { "%dth 'Solidarity Sentinels' Division" }
-		13 = { "%dth 'Collective Cadre' Division" }
-		14 = { "%dth 'Star of Equality' Division" }
-		15 = { "%dth 'Pioneer Protectors' Division" }
-		16 = { "%dth 'Industrial Ironclads' Division" }
-		17 = { "%dth 'Crescent of Change' Division" }
-		18 = { "%dth 'Unity of Labor' Division" }
-		19 = { "%dth 'Bread & Roses' Division" }
-		20 = { "%dth 'Harvest Horizon' Division" }
-		21 = { "%dst 'People's Proletariat' Division" }
-		22 = { "%dnd 'Unyielding Union' Division" }
-		23 = { "%drd 'Fraternity Front' Division" }
-		24 = { "%dth 'Red Cogwheel' Division" }
-		25 = { "%dth 'Camaraderie Column' Division" }
-		26 = { "%dth 'Wheat & Plow' Division" }
-		27 = { "%dth 'Dawn of Labor' Division" }
-		28 = { "%dth 'People's Power' Division" }
-		29 = { "%dth 'Militant Masses' Division" }
-		30 = { "%dth 'Guardians of Grain' Division" }
-    }
-}
 
-USA_FASCIST_01 = {
-    name = "National Legion Division"
-    for_countries = { USA }
-    can_use = { always = yes }
-    division_types = { "infantry" }
-    fallback_name = "%d National Division"
-    ordered = {
-        1 = { "%dst 'Liberty Guardians' Division" }
-        2 = { "%dnd 'Patriot Shield' Division" }
-        3 = { "%drd 'Eagle Legion' Division" }
-        4 = { "%dth 'Dixie Defenders' Division" }
-        5 = { "%dth 'New Order' Division" }
-        6 = { "%dth 'Homeland Defenders' Division" }
-        7 = { "%dth 'Rocky Mountain Regiment' Division" }
-        8 = { "%dth 'Lone Star' Division" }
-        9 = { "%dth 'Yankee Brigade' Division" }
-        10 = { "%dth 'Great Lakes Battalion' Division" }
-        11 = { "%dth 'Prairie Phalanx' Division" }
-        12 = { "%dth 'Blue Ridge Brigade' Division" }
-        13 = { "%dth 'Heartland Hawks' Division" }
-        14 = { "%dth 'Sunset Legion' Division" }
-        15 = { "%dth 'Patriot Brigade' Division" }
-        16 = { "%dth 'Grand Canyon Guardians' Division" }
-        17 = { "%dth 'Mason-Dixon Defenders' Division" }
-        18 = { "%dth 'Appalachian Avengers' Division" }
-        19 = { "%dth 'Everglade Eagles' Division" }
-        20 = { "%dth 'American Legion' Division" }
-    }
-}
+# =============================================================================
+# State Militias
+# =============================================================================
+# Overrides vanilla USA_MIL_01. Volunteer home guards and state militias.
 
-USA_PARAMILITARY_01 = {
-    name = "Paramilitary Militia Division"
-    for_countries = { USA }
-    can_use = { always = yes }
-    division_types = { "militia" }
-    fallback_name = "%d Paramilitary Militia Division"
-    ordered = {
-        1 = { "%dst 'Freedom Fighters' Division" }
-        2 = { "%dnd 'Patriot's Vanguard' Division" }
-        3 = { "%drd 'Liberty Legion' Division" }
-        4 = { "%dth 'Continental Sentinels' Division" }
-        5 = { "%dth 'Justice Brigade' Division" }
-        6 = { "%dth 'Eagle's Talons' Division" }
-        7 = { "%dth 'Sons of the Republic' Division" }
-        8 = { "%dth 'American Watchmen' Division" }
-        9 = { "%dth 'Stars and Stripes' Division" }
-        10 = { "%dth 'Frontier Guard' Division" }
-        11 = { "%dth 'Homeland Defenders' Division" }
-        12 = { "%dth 'Revolutionary Renegades' Division" }
-        13 = { "%dth 'Union Avengers' Division" }
-        14 = { "%dth 'Battlescarred Brotherhood' Division" }
-        15 = { "%dth 'Federal Front' Division" }
-        16 = { "%dth 'Pioneers of Liberty' Division" }
-        17 = { "%dth 'Guardians of Democracy' Division" }
-        18 = { "%dth 'National Reserves' Division" }
-        19 = { "%dth 'Rebel Raiders' Division" }
-        20 = { "%dth 'Founding Fathers' Division" }
-    }
-}
-USA_COMPOSITE_UNITS_01 = {
-    name = "Composite Units"
-    for_countries = { USA }
-    can_use = { always = yes }
-    division_types = { "infantry" }
-    fallback_name = "%d Composite Unit"
-    ordered = {
-        1 = { "Johnson's Raiders" }
-        2 = { "Thompson's Scouts" }
-        3 = { "Bennett's Bushwhackers" }
-        4 = { "Murphy's Vanguards" }
-        5 = { "Carter's Prowlers" }
-        6 = { "Harrison's Strikers" }
-        7 = { "Stanley's Skirmishers" }
-        8 = { "Cooper's Stalwarts" }
-        9 = { "Peterson's Pathfinders" }
-        10 = { "Collins's Chasers" }
-        11 = { "Merrill's Marauders" }
-        12 = { "Ross's Rangers" }
-        13 = { "Hughes's Heralds" }
-        14 = { "Foster's Flankers" }
-        15 = { "Patterson's Pursuers" }
-    }
-}
-
-USA_ARMORED_DETACHMENTS_01 = {
-    name = "Armored Detachment"
-    for_countries = { USA }
-    can_use = { always = yes }
-    division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
-    fallback_name = "%d Armored Detachment"
-    ordered = {
-        1 = { "%dst 'Fort Knox' Armored Detachment" }
-        2 = { "%dnd 'Fort Hood' Armored Detachment" }
-        3 = { "%drd 'Fort Bragg' Armored Detachment" }
-        4 = { "%dth 'Fort Carson' Armored Detachment" }
-        5 = { "%dth 'Fort Benning' Armored Detachment" }
-        6 = { "%dth 'Fort Drum' Armored Detachment" }
-        7 = { "%dth 'Fort Bliss' Armored Detachment" }
-        8 = { "%dth 'Fort Riley' Armored Detachment" }
-        9 = { "%dth 'Fort Sill' Armored Detachment" }
-        10 = { "%dth 'Fort Irwin' Armored Detachment" }
-        11 = { "%dth 'Fort Campbell' Armored Detachment" }
-        12 = { "%dth 'Fort Lee' Armored Detachment" }
-        13 = { "%dth 'Fort Belvoir' Armored Detachment" }
-        14 = { "%dth 'Fort Meade' Armored Detachment" }
-        15 = { "%dth 'Fort Hamilton' Armored Detachment" }
-        16 = { "%dth 'Fort McPherson' Armored Detachment" }
-        17 = { "%dth 'Fort Monroe' Armored Detachment" }
-        18 = { "%dth 'Fort Leavenworth' Armored Detachment" }
-        19 = { "%dth 'Fort Sam Houston' Armored Detachment" }
-        20 = { "%dth 'Fort Lewis' Armored Detachment" }
-    }
-}
-
-USA_DEF_01 = 
+USA_MIL_01 = 
 {
-	name = "Division of National Defense"
+	name = "State Militias"
+
 	for_countries = { USA }
-	can_use = { always = yes }
+
+	can_use = { OR = { has_government = democratic has_government = neutrality } }
+
 	division_types = { "militia" }
-	fallback_name = "%dth Division of National Defense"
-	ordered = {
-		1 = { "Division of National Defense (New York)" }
-		2 = { "Division of National Defense (Los Angeles)" }
-		3 = { "Division of National Defense (Chicago)" }
-		4 = { "Division of National Defense (Houston)" }
-		5 = { "Division of National Defense (Philadelphia)" }
-		6 = { "Division of National Defense (Phoenix)" }
-		7 = { "Division of National Defense (San Antonio)" }
-		8 = { "Division of National Defense (San Diego)" }
-		9 = { "Division of National Defense (Dallas)" }
-		10 = { "Division of National Defense (San Jose)" }
-		11 = { "Division of National Defense (Austin)" }
-		12 = { "Division of National Defense (Jacksonville)" }
-		13 = { "Division of National Defense (San Francisco)" }
-		14 = { "Division of National Defense (Columbus)" }
-		15 = { "Division of National Defense (Fort Worth)" }
-		16 = { "Division of National Defense (Indianapolis)" }
-		17 = { "Division of National Defense (Charlotte)" }
-		18 = { "Division of National Defense (Seattle)" }
-		19 = { "Division of National Defense (Denver)" }
-		20 = { "Division of National Defense (Boston)" }
-		21 = { "Division of National Defense (Lexington)" }
-		22 = { "Division of National Defense (Gettysburg)" }
-		23 = { "Division of National Defense (Detroit)" }
-		24 = { "Division of National Defense (El Paso)" }
-		25 = { "Division of National Defense (Memphis)" }
-		26 = { "Division of National Defense (Baltimore)" }
-		27 = { "Division of National Defense (Pittsburgh)" }
-		28 = { "Division of National Defense (Nashville)" }
-		29 = { "Division of National Defense (Louisville)" }
-		30 = { "Division of National Defense (Milwaukee)" }
-		31 = { "Division of National Defense (Albuquerque)" }
-		32 = { "Division of National Defense (Tucson)" }
-		33 = { "Division of National Defense (Fresno)" }
-		34 = { "Division of National Defense (Sacramento)" }
-		35 = { "Division of National Defense (Kansas City)" }
-		36 = { "Division of National Defense (Long Beach)" }
-		37 = { "Division of National Defense (Mesa)" }
-		38 = { "Division of National Defense (Atlanta)" }
-		39 = { "Division of National Defense (Omaha)" }
-		40 = { "Division of National Defense (Raleigh)" }
-		41 = { "Division of National Defense (Miami)" }
-		42 = { "Division of National Defense (Oakland)" }
-		43 = { "Division of National Defense (Minneapolis)" }
-		44 = { "Division of National Defense (Tulsa)" }
-		45 = { "Division of National Defense (Wichita)" }
-		46 = { "Division of National Defense (New Orleans)" }
-		47 = { "Division of National Defense (Arlington)" }
-		48 = { "Division of National Defense (Cleveland)" }
-		49 = { "Division of National Defense (Tampa)" }
-		50 = { "Division of National Defense (Honolulu)" }
-		51 = { "Division of National Defense (Pittsburgh)" }
-		52 = { "Division of National Defense (Anchorage)" }
+
+	fallback_name = "%d State Militia"
+
+	# Names with numbers (only one number per entry).
+	ordered =
+	{
+		1 = { "%dst 'Minute Men' Militia" }
+		2 = { "%dnd 'Continental' Militia" }
+		3 = { "%drd 'Patriot' Militia" }
+		4 = { "%dth 'Liberty' Militia" }
+		5 = { "%dth 'Freedom' Militia" }
+		6 = { "%dth 'Green Mountain' Militia" }
+		7 = { "%dth 'Frontier' Militia" }
+		8 = { "%dth 'Colonial' Militia" }
+		9 = { "%dth 'Volunteer' Militia" }
+		10 = { "%dth 'Sentinel' Militia" }
+		11 = { "%dth 'Citizen' Militia" }
+		12 = { "%dth 'Defenders' Militia" }
+		13 = { "%dth 'Vigilant' Militia" }
+		14 = { "%dth 'Home Guard' Militia" }
+		15 = { "%dth 'Pioneer' Militia" }
+		16 = { "%dth 'Territorial' Militia" }
+		17 = { "%dth 'Ranger' Militia" }
+		18 = { "%dth 'Protector' Militia" }
+		19 = { "%dth 'Union' Militia" }
+		20 = { "%dth 'Independence' Militia" }
 	}
 }
 
-USA_RANGER_FORCE_01 = { 
-	name = "Ranger Force"
+# =============================================================================
+# Assault Divisions
+# =============================================================================
+# Overrides vanilla USA_SHOCK_01. Heavy breakthrough combat commands.
+
+USA_SHOCK_01 = 
+{
+	name = "Assault Divisions"
+
 	for_countries = { USA }
+
 	can_use = { always = yes }
-	division_types = { "mountaineers" "paratrooper" "infantry" }
-	fallback_name = "%dth Ranger Force"
-	ordered = {
-	  1 = { "%dst Ranger Force" }
-	  2 = { "%dnd Ranger Force" }
-	  3 = { "%drd Ranger Force" }
-	  4 = { "%dth Ranger Force" }
-	  5 = { "%dth Ranger Force" }
-	  6 = { "%dth Ranger Force" }
-	  7 = { "%dth Ranger Force" }
-	  8 = { "%dth Ranger Force" }
-	  9 = { "%dth Ranger Force" }
-	  10 = { "%dth Ranger Force" }
+
+	division_types = { "mechanized" "motorized" "light_armor" "medium_armor" "heavy_armor" "modern_armor" "infantry" }
+
+	fallback_name = "%d Assault Division"
+
+	# Names with numbers (only one number per entry).
+	ordered =
+	{
+		1 = { "%dst Combat Command 'Iron Vanguard'" }
+		2 = { "%dnd Combat Command 'Spearhead'" }
+		3 = { "%drd Combat Command 'Thunderbolt'" }
+		4 = { "%dth Combat Command 'Breakthrough'" }
+		5 = { "%dth Combat Command 'Steel Force'" }
+		6 = { "%dth Combat Command 'Hell on Wheels'" }
+		7 = { "%dth Combat Command 'Lightning Strike'" }
+		8 = { "%dth Combat Command 'Old Ironsides'" }
+		9 = { "%dth Combat Command 'Rough Riders'" }
+		10 = { "%dth Combat Command 'Black Panthers'" }
+		11 = { "%dth Assault Division" }
+		12 = { "%dth Assault Division" }
+		13 = { "%dth Assault Division" }
+		14 = { "%dth Assault Division" }
+		15 = { "%dth Assault Division" }
+		16 = { "%dth Assault Division" }
+		17 = { "%dth Assault Division" }
+		18 = { "%dth Assault Division" }
+		19 = { "%dth Assault Division" }
+		20 = { "%dth Assault Division" }
 	}
-  }
-  
+}
+
+# =============================================================================
+# Workers' Red Guards (Communist)
+# =============================================================================
+# Overrides vanilla USA_COM_GUARD_01. American socialist and labor heritage formations.
+
+USA_COM_GUARD_01 = 
+{
+	name = "Workers' Red Guards"
+
+	for_countries = { USA }
+
+	can_use = { has_government = communism }
+
+	division_types = { "infantry" "militia" }
+
+	fallback_name = "%d Red Guard Division"
+
+	# Names with numbers (only one number per entry).
+	ordered =
+	{
+		1 = { "%dst Red Guards 'Eugene V. Debs'" }
+		2 = { "%dnd Red Guards 'John Brown'" }
+		3 = { "%drd Red Guards 'Mother Jones'" }
+		4 = { "%dth Red Guards 'Big Bill Haywood'" }
+		5 = { "%dth Red Guards 'Joe Hill'" }
+		6 = { "%dth Red Guards 'Frederick Douglass'" }
+		7 = { "%dth Red Guards 'Sojourner Truth'" }
+		8 = { "%dth Red Guards 'Tom Mooney'" }
+		9 = { "%dth Red Guards 'Lucy Parsons'" }
+		10 = { "%dth Red Guards 'Daniel De Leon'" }
+		11 = { "%dth Red Guards 'Elizabeth Gurley Flynn'" }
+		12 = { "%dth Red Guards 'Albert Parsons'" }
+		13 = { "%dth Red Guards 'Haymarket Martyrs'" }
+		14 = { "%dth Red Guards 'Homestead'" }
+		15 = { "%dth Red Guards 'Pullman'" }
+		16 = { "%dth Red Guards 'Battle of Blair Mountain'" }
+		17 = { "%dth Red Guards 'Flint Sit-Down'" }
+		18 = { "%dth Red Guards 'Lawrence Bread & Roses'" }
+		19 = { "%dth Red Guards 'Cripple Creek'" }
+		20 = { "%dth Red Guards 'Seattle General Strike'" }
+		21 = { "%dst Red Guards 'San Francisco Waterfront'" }
+		22 = { "%dnd Red Guards 'Proletarian Vanguard'" }
+		23 = { "%drd Red Guards 'May Day'" }
+		24 = { "%dth Red Guards 'Industrial Solidarity'" }
+		25 = { "%dth Red Guards 'Workers' Front'" }
+	}
+}
+
+# =============================================================================
+# Lincoln Brigades (Communist)
+# =============================================================================
+# International brigade and proletarian volunteer formations.
+
+USA_COM_BGD_01 = 
+{
+	name = "Lincoln Brigades"
+
+	for_countries = { USA }
+
+	can_use = { has_government = communism }
+
+	division_types = { "infantry" "motorized" }
+
+	fallback_name = "%d International Brigade"
+
+	# Names with numbers (only one number per entry).
+	ordered =
+	{
+		1 = { "%dst Brigade 'Abraham Lincoln'" }
+		2 = { "%dnd Brigade 'George Washington'" }
+		3 = { "%drd Brigade 'John Brown Battery'" }
+		4 = { "%dth Brigade 'Debs Column'" }
+		5 = { "%dth Brigade 'Mackenzie-Papineau'" }
+		6 = { "%dth Brigade 'Anti-Fascist Legion'" }
+		7 = { "%dth Brigade 'Jarama Vanguard'" }
+		8 = { "%dth Brigade 'Brunete'" }
+		9 = { "%dth Brigade 'Ebro Front'" }
+		10 = { "%dth Brigade 'Volunteers for Liberty'" }
+		11 = { "%dth Proletarian Brigade" }
+		12 = { "%dth Proletarian Brigade" }
+		13 = { "%dth Proletarian Brigade" }
+		14 = { "%dth Proletarian Brigade" }
+		15 = { "%dth Proletarian Brigade" }
+		16 = { "%dth Proletarian Brigade" }
+		17 = { "%dth Proletarian Brigade" }
+		18 = { "%dth Proletarian Brigade" }
+		19 = { "%dth Proletarian Brigade" }
+		20 = { "%dth Proletarian Brigade" }
+	}
+}
+
+# =============================================================================
+# Red Armored Divisions (Communist)
+# =============================================================================
+# Industrial union tank divisions.
+
+USA_COM_ARM_01 = 
+{
+	name = "Red Armored Divisions"
+
+	for_countries = { USA }
+
+	can_use = { has_government = communism }
+
+	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
+
+	fallback_name = "%d Red Armored Division"
+
+	# Names with numbers (only one number per entry).
+	ordered =
+	{
+		1 = { "%dst Red Armored 'Steelworkers'" }
+		2 = { "%dnd Red Armored 'Auto Workers'" }
+		3 = { "%drd Red Armored 'Teamsters'" }
+		4 = { "%dth Red Armored 'Mineworkers'" }
+		5 = { "%dth Red Armored 'Railway Brotherhood'" }
+		6 = { "%dth Red Armored 'Longshoremen'" }
+		7 = { "%dth Red Armored 'Machinists'" }
+		8 = { "%dth Red Armored 'Electrical Workers'" }
+		9 = { "%dth Red Armored 'Packinghouse Workers'" }
+		10 = { "%dth Red Armored 'Ironclads of Labor'" }
+		11 = { "%dth Red Armored Division" }
+		12 = { "%dth Red Armored Division" }
+		13 = { "%dth Red Armored Division" }
+		14 = { "%dth Red Armored Division" }
+		15 = { "%dth Red Armored Division" }
+		16 = { "%dth Red Armored Division" }
+		17 = { "%dth Red Armored Division" }
+		18 = { "%dth Red Armored Division" }
+		19 = { "%dth Red Armored Division" }
+		20 = { "%dth Red Armored Division" }
+	}
+}
+
+# =============================================================================
+# Silver Legions (Fascist)
+# =============================================================================
+# Overrides vanilla USA_FASCIST_01. William Dudley Pelley's Silver Legion and Bund formations.
+
+USA_FASCIST_01 = 
+{
+	name = "Silver Legions"
+
+	for_countries = { USA }
+
+	can_use = { has_government = fascism }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%d National Legion"
+
+	# Names with numbers (only one number per entry).
+	ordered =
+	{
+		1 = { "%dst Silver Legion 'Christian Commonwealth'" }
+		2 = { "%dnd Silver Legion 'Washington Post No. 1'" }
+		3 = { "%drd Silver Legion 'New England Post'" }
+		4 = { "%dth Silver Legion 'Great Lakes Post'" }
+		5 = { "%dth Silver Legion 'Pacific Coast Post'" }
+		6 = { "%dth Silver Legion 'Prairie Post'" }
+		7 = { "%dth Silver Legion 'Pioneer Post'" }
+		8 = { "%dth Silver Legion 'Dixie Post'" }
+		9 = { "%dth Silver Legion 'Lone Star Post'" }
+		10 = { "%dth Silver Legion 'Empire State Post'" }
+		11 = { "%dth Bund Legion 'Gau Ost'" }
+		12 = { "%dth Bund Legion 'Gau Mittelwest'" }
+		13 = { "%dth Bund Legion 'Gau West'" }
+		14 = { "%dth Legion 'Camp Siegfried'" }
+		15 = { "%dth Legion 'Camp Hindenburg'" }
+		16 = { "%dth National Legion Division" }
+		17 = { "%dth National Legion Division" }
+		18 = { "%dth National Legion Division" }
+		19 = { "%dth National Legion Division" }
+		20 = { "%dth National Legion Division" }
+	}
+}
+
+# =============================================================================
+# Nationalist Militias (Fascist)
+# =============================================================================
+# Overrides vanilla USA_PARAMILITARY_01. Christian Front and Black Legion units.
+
+USA_PARAMILITARY_01 = 
+{
+	name = "Nationalist Militias"
+
+	for_countries = { USA }
+
+	can_use = { has_government = fascism }
+
+	division_types = { "militia" }
+
+	fallback_name = "%d Nationalist Militia"
+
+	# Names with numbers (only one number per entry).
+	ordered =
+	{
+		1 = { "%dst Christian Front Platoon 'New York'" }
+		2 = { "%dnd Christian Front Platoon 'Boston'" }
+		3 = { "%drd Christian Front Platoon 'Philadelphia'" }
+		4 = { "%dth Christian Front Platoon 'Detroit'" }
+		5 = { "%dth Christian Front Platoon 'Baltimore'" }
+		6 = { "%dth Christian Front Platoon 'Chicago'" }
+		7 = { "%dth Black Legion 'Wolverine League'" }
+		8 = { "%dth Black Legion 'Highland Park'" }
+		9 = { "%dth Black Legion 'Pontiac'" }
+		10 = { "%dth Black Legion 'Akron'" }
+		11 = { "%dth Black Legion 'Lima'" }
+		12 = { "%dth Black Legion 'Toledo'" }
+		13 = { "%dth Knights of the White Camellia 'St. Louis'" }
+		14 = { "%dth Sentinels of the Republic 'Boston'" }
+		15 = { "%dth American Vigilante Command" }
+		16 = { "%dth Nationalist Guard Division" }
+		17 = { "%dth Nationalist Guard Division" }
+		18 = { "%dth Nationalist Guard Division" }
+		19 = { "%dth Nationalist Guard Division" }
+		20 = { "%dth Nationalist Guard Division" }
+		21 = { "%dst Nationalist Guard Division" }
+		22 = { "%dnd Nationalist Guard Division" }
+		23 = { "%drd Nationalist Guard Division" }
+		24 = { "%dth Nationalist Guard Division" }
+		25 = { "%dth Nationalist Guard Division" }
+	}
+}
+
+# =============================================================================
+# Confederate Divisions (Fascist Civil War)
+# =============================================================================
+# Formations for the 'Honor the Confederacy' alternate-history civil war path.
+
+USA_CONFED_01 = 
+{
+	name = "Confederate Divisions"
+
+	for_countries = { USA }
+
+	can_use = { has_government = fascism }
+
+	division_types = { "infantry" "cavalry" }
+
+	fallback_name = "%d Confederate Division"
+
+	# Names with numbers (only one number per entry).
+	ordered =
+	{
+		1 = { "%dst 'Army of Northern Virginia' Division" }
+		2 = { "%dnd 'Stonewall' Division" }
+		3 = { "%drd 'Army of Tennessee' Division" }
+		4 = { "%dth 'Palmetto Guard' Division" }
+		5 = { "%dth 'Dixie Rifles' Division" }
+		6 = { "%dth 'Texas Rangers' Division" }
+		7 = { "%dth 'Alabama Volunteers' Division" }
+		8 = { "%dth 'Shenandoah' Division" }
+		9 = { "%dth 'Tidewater' Division" }
+		10 = { "%dth 'Blue Ridge' Division" }
+		11 = { "%dth 'Georgia Volunteers' Division" }
+		12 = { "%dth 'Mississippi Rifles' Division" }
+		13 = { "%dth 'Cumberland' Division" }
+		14 = { "%dth 'Cavalry of the South' Division" }
+		15 = { "%dth 'Army of the Trans-Mississippi' Div." }
+		16 = { "%dth Confederate Division" }
+		17 = { "%dth Confederate Division" }
+		18 = { "%dth Confederate Division" }
+		19 = { "%dth Confederate Division" }
+		20 = { "%dth Confederate Division" }
+	}
+}
+
+# =============================================================================
+# Federal Emergency Forces (Neutrality / Military Junta)
+# =============================================================================
+# MacArthur military government and provost marshal emergency divisions.
+
+USA_JUNTA_01 = 
+{
+	name = "Federal Emergency Forces"
+
+	for_countries = { USA }
+
+	can_use = { has_government = neutrality }
+
+	division_types = { "infantry" "militia" }
+
+	fallback_name = "%d Emergency Defense Division"
+
+	# Names with numbers (only one number per entry).
+	ordered =
+	{
+		1 = { "1st Federal District Emergency Division" }
+		2 = { "2nd Continental Command Division" }
+		3 = { "3rd Provost Marshal General Command" }
+		4 = { "4th Military District Command (Northeast)" }
+		5 = { "5th Military District Command (Midwest)" }
+		6 = { "6th Military District Command (Pacific)" }
+		7 = { "7th Military District Command (South)" }
+		8 = { "8th Military District Command (Southwest)" }
+		9 = { "9th Military District Command (Plains)" }
+		10 = { "10th MacArthur Loyalists Division" }
+		11 = { "11th Veterans' Defense Corps" }
+		12 = { "12th American Legion Defense Division" }
+		13 = { "13th Armed Forces Police Command" }
+		14 = { "14th Strategic Rear Guard Command" }
+		15 = { "15th Constitutional Emergency Force" }
+		16 = { "%dth Emergency Defense Division" }
+		17 = { "%dth Emergency Defense Division" }
+		18 = { "%dth Emergency Defense Division" }
+		19 = { "%dth Emergency Defense Division" }
+		20 = { "%dth Emergency Defense Division" }
+	}
+}

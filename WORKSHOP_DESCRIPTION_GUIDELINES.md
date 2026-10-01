@@ -55,7 +55,7 @@ This document serves as an instruction and reference guide for maintaining and u
 
 | File | Nation | Tag | Status in Description |
 | :--- | :--- | :--- | :--- |
-| `INEX_USA_names_divisions.txt` | USA | `USA` | Included (Guards, Fascist/Legion, Shock, Forts, Rangers, National Defense) |
+| `INEX_USA_names_divisions.txt` | United States | `USA` | Included (Infantry, Armor, Armored Cavalry Regiments, Separate Tank Bns, National Guard, Airborne, Marines, Marine Raiders, Rangers, Harbor Defenses, State Defense Forces, Red Guards & Lincoln Brigades, Silver Legions & Confederate, MacArthur Emergency Forces) |
 | `INEX_GER_names_divisions.txt` | Germany | `GER` | Included (Plain & Named infantry, motorized, Panzergrenadier and Panzer lists with garrison identities and nicknames, Jäger, Gebirgs, Fallschirmjäger, Marine, Cavalry, fascist Elite Formations, Imperial & Guard, Republican, Red Army) |
 | `INEX_GER_SS_names_divisions.txt` | Germany (SS) | `GER` | Included (Fascist-only Waffen-SS divisions 1-41 by type incl. mountain & cavalry, shared honour-name expansion, heavy battalions, SS Kampfgruppen, Standarten) |
 | `INEX_GER_ADDITIONAL_names_divisions.txt` | Germany (Extra) | `GER` | Included (Heavy battalions, Panzer brigades, Volksgrenadier/Reserve/Grenadier series, Luftwaffe field & Flak, Festungen, Kampfgruppen, Volkssturm, SA, Freikorps, Schutztruppe, Reichsbanner, Red Front, Foreign Legions) |
@@ -68,7 +68,7 @@ This document serves as an instruction and reference guide for maintaining and u
 | `INEX_FIN_names_divisions.txt` | Finland | `FIN` | Included (Wartime divisions & JR 1–70 regiments, Suojeluskunta, Ryhmä groups, Frontier & Coastal brigades, Blackshirt legions, Heimojoukot, Red Guards, People's Army, Royal Guards, Penal battalions, Swedish Volunteers SFK) |
 | `INEX_POL_names_divisions.txt` | Poland | `POL` | Included (Home Army, PSZ, LWP, KOP Border Guards, Brygada Świętokrzyska) |
 | `INEX_ITA_names_divisions.txt` | Italy | `ITA` | Included (Historical numbering, Blackshirts, RSI, Black Brigades, Royal Army, Party-gated Partisans, Bersaglieri, Carabinieri, Frontier Guard, Colonial, Legione Romana) |
-| `INEX_SOV_names_divisions.txt` | USSR | `SOV` | Included (NKVD, Guards Para, Artillery, Penal units, Cossacks) |
+| `INEX_SOV_names_divisions.txt` | USSR | `SOV` | Included (Rifle honors, Guards Tanks & Mech Corps, Guards Airborne, Breakthrough Artillery, Moscow/Leningrad Opolcheniye, Cossacks, NKVD, Penal units) |
 | `INEX_MEX_names_divisions.txt` | Mexico | `MEX` | Included (Cristero, Imperial Guard, Sinarquistas, Gold Shirts, CTM & Agrarian Militias, Anáhuac, Regular Army) |
 | `INEX_PER_names_divisions.txt` | Iran / Persia | `PER` | Included (Garrison-city Lashkars, Imperial & Immortal Guard, Shahnameh armor, Cossack atriads, Tribal levies, Camel corps, Gendarmerie) |
 
@@ -96,9 +96,10 @@ If you have any ideas for namelists, please leave them in the discussion thread!
 [h1]Included nations:[/h1]
 This is not a complete list of included namelists! Just some examples.
 
-[b]USA[/b]
-- Guards (Communist), Legion & Fascist divisions, and emergency National Defense units
-- Shock, Rangers, Merrill's Marauders, and fort-named armored detachments
+[b]United States[/b]
+- Regular Army & Mobile: 1st–106th Infantry, Armored divisions ([i]1st 'Old Ironsides'[/i], [i]2nd 'Hell on Wheels'[/i]), Armored Cavalry Regiments ([i]2nd 'Second Dragoons'[/i], [i]3rd 'Brave Rifles'[/i], [i]11th 'Blackhorse'[/i]), Separate Tank Battalions ([i]761st 'Black Panthers'[/i]), and state National Guard divisions
+- Airborne, Marine & Special Forces: Airborne divisions ([i]82nd 'All-American'[/i], [i]101st 'Screaming Eagles'[/i]), 1st–6th Marines, Marine Raiders ([i]1st 'Edson's'[/i], [i]2nd 'Carlson's'[/i]), Rangers ([i]1st FSSF 'The Devil's Brigade'[/i], [i]Merrill's Marauders[/i]), Mountain ([i]10th 'Climb to Glory'[/i]), and 18 Harbor Defense Commands
+- Territorial & Ideology Suites: 38 authentic WWII State Defense Forces, Workers' Red Guards & Lincoln Brigades (Communist), Silver Legions & Confederate Divisions (Fascist), and Federal Emergency Forces (Military Junta)
 
 [b]Germany[/b]
 - Plain and Named Heer lists in historical raising order, with nicknames and home garrisons ([i]7. Panzer-Division 'Gespenster'[/i], [i]97. Jäger-Division 'Spielhahnjäger'[/i])
@@ -144,8 +145,9 @@ This is not a complete list of included namelists! Just some examples.
 - Bersaglieri, Arditi, Carabinieri, Frontier Guard sectors ([i]XII Settore di Copertura 'Valtellina'[/i]), colonial troops and fascist-only imperial legions (Legione Romana)
 
 [b]USSR[/b]
-- NKVD security and penal (Shtrafbat) units
-- Guards paratroopers, artillery divisions, and Cossack cavalry
+- Red Army Rifle divisions ([i]1-ya 'Moskovskaya Proletarskaya'[/i], [i]25-ya 'Chapayevskaya'[/i]), Guards Rifles ([i]8-ya Gv. 'Panfilovskaya'[/i]), and Moscow/Leningrad Narodnoe Opolcheniye
+- Armor & Mechanized Corps with WWII battle honors: Guards Tank Corps ([i]4-y Gv. 'Kantemirovskiy'[/i], [i]1-y Gv. 'Donskoy'[/i]) and all 9 Guards Mechanized Corps ([i]1-y Gv. 'Venskiy'[/i])
+- Specialized & Security: 1st–10th Guards Airborne ([i]7-ya Gv. 'Cherkasskaya'[/i]), Breakthrough Artillery RVGK, Cossack cavalry hosts ([i]Donskaya[/i], [i]Kubanskaya[/i]), Penal units ([i]Shtrafbat[/i]), and communist-gated NKVD Internal Troops
 
 [b]Mexico[/b]
 - Cristero National Guard & cavalry ([i]Los Altos[/i], [i]El Catorce[/i])

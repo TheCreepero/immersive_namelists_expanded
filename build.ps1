@@ -272,6 +272,9 @@ param(
     [string]$Selector,
 
     [Parameter(ParameterSetName = 'EditNames')]
+    [string]$Fallback,
+
+    [Parameter(ParameterSetName = 'EditNames')]
     [string]$AddType,
 
     [Parameter(ParameterSetName = 'EditNames')]
@@ -1370,6 +1373,7 @@ function Edit-NamelistGroupText {
         [string]$Section,
         [string[]]$RenameSection = @(),
         [string]$Selector,
+        [string]$Fallback,
         [string[]]$AddTypes = @(),
         [string[]]$RemoveTypes = @(),
         [string]$CanUse,
@@ -1380,7 +1384,7 @@ function Edit-NamelistGroupText {
     )
 
     if ($After -and $Section) { throw "Use -After or -Section, not both" }
-    if ($RemoveGroup -and ($Add.Count -or $Remove.Count -or $Rename.Count -or $Set.Count -or $Selector -or $CanUse -or $AddTypes.Count -or $RemoveTypes.Count -or $RemoveAll -or $ClearOrdered -or $Comment)) {
+    if ($RemoveGroup -and ($Add.Count -or $Remove.Count -or $Rename.Count -or $Set.Count -or $Selector -or $Fallback -or $CanUse -or $AddTypes.Count -or $RemoveTypes.Count -or $RemoveAll -or $ClearOrdered -or $Comment)) {
         throw "-RemoveGroup cannot be combined with other edits"
     }
     if ($ClearOrdered -and ($Add.Count -or $Remove.Count -or $Rename.Count -or $Set.Count -or $RemoveAll)) {
@@ -1445,6 +1449,18 @@ function Edit-NamelistGroupText {
             $preBlock = [regex]::Replace($preBlock, '(?m)^([ \t]*name\s*=\s*)"[^"]*"', "`${1}`"$Selector`"")
         } else {
             $preBlock = [regex]::Replace($preBlock, "(?m)(^[ \t]*$([regex]::Escape($GroupTag))[ \t]*=\s*\{[ \t]*`r?`n)", "`${1}`tname = `"$Selector`"$nl")
+        }
+    }
+
+    # 1b. Update fallback_name
+    if ($Fallback) {
+        if ($Fallback -notmatch '%d|%s') {
+            throw "Fallback '$Fallback' in $GroupTag must contain %d or %s"
+        }
+        if ($preBlock -match '(?m)^([ \t]*fallback_name\s*=\s*)"[^"]*"') {
+            $preBlock = [regex]::Replace($preBlock, '(?m)^([ \t]*fallback_name\s*=\s*)"[^"]*"', "`${1}`"$Fallback`"")
+        } else {
+            $preBlock = [regex]::Replace($preBlock, "(?m)(^[ \t]*$([regex]::Escape($GroupTag))[ \t]*=\s*\{[ \t]*`r?`n)", "`${1}`tfallback_name = `"$Fallback`"$nl")
         }
     }
 
@@ -1532,6 +1548,10 @@ function Edit-NamelistGroupText {
             }
         }
     }
+
+    # Clean dead commented self-links in group body
+    $preBlock = [regex]::Replace($preBlock, '(?m)^[ \t]*#[ \t]*Number reservation system will tie to another group\.[ \t]*\r?\n?', '')
+    $preBlock = [regex]::Replace($preBlock, '(?m)^[ \t]*#[ \t]*link_numbering_with\s*=\s*\{\s*' + [regex]::Escape($GroupTag) + '\s*\}[ \t]*\r?\n?', '')
 
     # Fallback-only group: drop the whole ordered block, plus the comment and blank lines that introduce it
     if ($ClearOrdered) {
@@ -1744,6 +1764,7 @@ function Invoke-NamelistEdit {
         [string]$SectionName,
         [string]$RenameSectionList,
         [string]$Selector,
+        [string]$Fallback,
         [string]$AddTypeList,
         [string]$RemoveTypeList,
         [string]$CanUse,
@@ -1766,9 +1787,9 @@ function Invoke-NamelistEdit {
     $addTypes = & $split $AddTypeList
     $removeTypes = & $split $RemoveTypeList
 
-    $hasAction = ($adds.Count + $removes.Count + $renames.Count + $sets.Count + $renameSections.Count + $addTypes.Count + $removeTypes.Count) -gt 0 -or $Selector -or $CanUse -or $RemoveAll -or $ClearOrdered -or $RemoveGroup -or $Comment
+    $hasAction = ($adds.Count + $removes.Count + $renames.Count + $sets.Count + $renameSections.Count + $addTypes.Count + $removeTypes.Count) -gt 0 -or $Selector -or $Fallback -or $CanUse -or $RemoveAll -or $ClearOrdered -or $RemoveGroup -or $Comment
     if (-not $hasAction) {
-        Write-Err "Nothing to do: pass -Add, -Remove, -RemoveAll, -Rename, -Set, -RenameSection, -ClearOrdered, -RemoveGroup, -Comment, -Selector, -AddType, -RemoveType, and/or -CanUse"
+        Write-Err "Nothing to do: pass -Add, -Remove, -RemoveAll, -Rename, -Set, -RenameSection, -ClearOrdered, -RemoveGroup, -Comment, -Selector, -Fallback, -AddType, -RemoveType, and/or -CanUse"
         return 1
     }
 
@@ -1805,7 +1826,7 @@ function Invoke-NamelistEdit {
     $text = [System.IO.File]::ReadAllText($modFile, [System.Text.Encoding]::UTF8)
     foreach ($groupTag in $resolvedGroups) {
         try {
-            $text = Edit-NamelistGroupText -Text $text -GroupTag $groupTag -Add $adds -Remove $removes -Rename $renames -Set $sets -After $AfterName -Section $SectionName -RenameSection $renameSections -Selector $Selector -AddTypes $addTypes -RemoveTypes $removeTypes -CanUse $CanUse -RemoveAll:$RemoveAll -ClearOrdered:$ClearOrdered -RemoveGroup:$RemoveGroup -Comment $Comment
+            $text = Edit-NamelistGroupText -Text $text -GroupTag $groupTag -Add $adds -Remove $removes -Rename $renames -Set $sets -After $AfterName -Section $SectionName -RenameSection $renameSections -Selector $Selector -Fallback $Fallback -AddTypes $addTypes -RemoveTypes $removeTypes -CanUse $CanUse -RemoveAll:$RemoveAll -ClearOrdered:$ClearOrdered -RemoveGroup:$RemoveGroup -Comment $Comment
         } catch {
             Write-Err "${groupTag}: $($_.Exception.Message)"
             return 1
@@ -1820,6 +1841,7 @@ function Invoke-NamelistEdit {
         $g = $updatedData.Groups | Where-Object { $_.Tag -eq $groupTag }
         $metaChanges = @()
         if ($Selector) { $metaChanges += "Selector='$Selector'" }
+        if ($Fallback) { $metaChanges += "Fallback='$Fallback'" }
         if ($addTypes.Count) { $metaChanges += "+Types: $($addTypes -join ', ')" }
         if ($removeTypes.Count) { $metaChanges += "-Types: $($removeTypes -join ', ')" }
         if ($CanUse) { $metaChanges += "CanUse='$CanUse'" }
@@ -2573,7 +2595,7 @@ if ($Audit) {
 
 # --- Action: EditNames ---
 if ($EditNames) {
-    exit (Invoke-NamelistEdit -Tag $EditNames -TargetGroup $Group -AddList $Add -RemoveList $Remove -RenameList $Rename -SetList $Set -AfterName $After -SectionName $Section -RenameSectionList $RenameSection -Selector $Selector -AddTypeList $AddType -RemoveTypeList $RemoveType -CanUse $CanUse -RemoveAll:$RemoveAll -ClearOrdered:$ClearOrdered -RemoveGroup:$RemoveGroup -Comment $Comment -Quiet:$Quiet)
+    exit (Invoke-NamelistEdit -Tag $EditNames -TargetGroup $Group -AddList $Add -RemoveList $Remove -RenameList $Rename -SetList $Set -AfterName $After -SectionName $Section -RenameSectionList $RenameSection -Selector $Selector -Fallback $Fallback -AddTypeList $AddType -RemoveTypeList $RemoveType -CanUse $CanUse -RemoveAll:$RemoveAll -ClearOrdered:$ClearOrdered -RemoveGroup:$RemoveGroup -Comment $Comment -Quiet:$Quiet)
 }
 
 # --- Action: SetHeader ---
