@@ -19,6 +19,8 @@
 - [Latvia](Latvia)
 - [Lithuania](Lithuania)
 - [Mexico](Mexico)
+- [Brazil](Brazil)
+- [Greece](Greece)
 - [Iran](Iran)
 
 ---

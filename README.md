@@ -95,6 +95,8 @@ powershell -File .\build.ps1 -PublishSteam -ChangeNote "Add new division namelis
 | `LAT` | Latvia | `INEX_LAT_names_divisions.txt` |
 | `LIT` | Lithuania | `INEX_LIT_names_divisions.txt` |
 | `MEX` | Mexico | `INEX_MEX_names_divisions.txt` |
+| `BRA` | Brazil | `INEX_BRA_names_divisions.txt` |
+| `GRE` | Greece | `INEX_GRE_names_divisions.txt` |
 | `PER` | Iran / Persia | `INEX_PER_names_divisions.txt` |
 
 *(Refer to [WORKSHOP_DESCRIPTION_GUIDELINES.md](WORKSHOP_DESCRIPTION_GUIDELINES.md) for full descriptions, examples, and Steam BBCode formatting rules).*

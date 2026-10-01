@@ -77,14 +77,46 @@ Group-tag count and per-group `can_use` triggers get finalized once the dossier 
 - `git status` shows only the intended files changed (no `CLAUDE.md`/`GEMINI.md` edits, so no mirror sync).
 
 ## Author confirmation
-(extrapolated names and entries held for the author; filled during authoring)
+Extrapolated (plausible in the Brazilian pattern, not attested units). Hold for the author:
+- **Patron names on divisions** (INF_02, MOT_02, MEC_02, ARM_02, PAR_01, CAV_01 keys 4-12, MAR_01 battle names as division names): real regimental denominations (Sampaio, Ipiranga, Tiradentes, Osório) stretched to divisions. `Regimento Escola` on MOT_02 key 1 follows the Escola de Infantaria motorized battalions. `Visconde de Pelotas` stands for the dossier's "General Câmara".
+- **Terms of a later doctrine**: Infantaria de Montanha (MNT_01), Infantaria de Selva (SEL_01), Paraquedista divisions (PAR_01 keys 1-20).
+- **PAR_02**: Batalhão de Infantaria de Guarda base names (air bases), Companhia de Infantaria de Guarda 11-16, Esquadrão Aeroterrestre de Salvamento 17-20 (modern, post-1990s unit).
+- **GAR_01**: Região Militar seats 1-12 (11ª RM given as Cuiabá instead of Brasília, which did not exist), garrison towns 13-31.
+- **GNA_01, FAS_02, IMP_02**: one legion/corps per province, extrapolated from "Legião da Guarda Nacional da Comarca de ...".
+- **FPU_01**: keys 15-22 (state forces other than the São Paulo Força Pública, Bento Gonçalves, Batalhão de Ferro, Rio Pardo cavalry, 9 de Julho mounted police) are generic state-force names.
+- **RES_01**: Tiro de Guerra and reserve battalion numbering with city nicknames.
+- **GUA_01**: Estado Novo guard names (Guarda Pessoal, 1º/2º Batalhão de Guardas, Palácio do Catete and Guanabara guards, Esquadrão de Honra); `Regimento Marechal Hermes` from the brief is left out as unverified.
+- **FOR_01**: coastal artillery groups named after forts; only Copacabana (3º GACos) and Duque de Caxias (ex-Leme) have attested group designations. Itapema and Pico were dropped as unverifiable; Ilha das Cobras and Monte Serrat added.
+- **FRO_01**: frontier battalions by border town (the 1930s used Batalhões de Caçadores; the 4º PEF dates from 1940).
+- **FL_01**: Imperial-era foreign battalions (Alemão, Irlandês), `Batalhão de Estrangeiros` and `Legião Portuguesa` and `Legião de Voluntários Estrangeiros` are UNVERIFIED names for a Legião Estrangeira that Brazil never had.
+- **FAS_01**: Gustavo Barroso, Raimundo Padilha, Tupi, Vanguarda Integralista, Jovens Integralistas, Estado Integral beyond the verified AIB vocabulary.
+- **RED_01/COM_01**: places and people of the 1935 uprising and Coluna Prestes (Olga Benário, Agildo Barata, Gregório Bezerra, Astrojildo Pereira, João Cândido); `Governo Popular` abbreviates the ANL's "Governo Popular Nacional Revolucionário". The `Revolucionária` entry echoes the 1ª Divisão Revolucionária.
+- **DEM_01/DEM_02**: person names (Klinger, Isidoro, Toledo, Borges de Medeiros, Euclides Figueiredo) as division names; `Pérolas Negras` is the dossier's nickname for the Legião Negra and was not confirmed by the proofreader.
+- **IMP_01/IMP_02**: Imperial heroes and provinces; `Imperial Guarda de Honra` (word order as in the dossier; proofreader could not settle it), `Dragões do Imperador`, `Lanceiros Imperiais`, `Conde d'Eu`.
+- **EXP_01**: `Esquadrão de Reconhecimento Expedicionário` and `Batalhão de Saúde Expedicionário` follow the verified 1ª DIE organization.
+- Other: `Felipe Camarão` kept (the proofreader prefers `Filipe`, the spelling varies in Brazilian sources); `Roberto de Pessôa` keeps the circumflex of the Army sources.
+
+## Decisions and deviations
+- **FL_01 gating**: the dossier suggested democratic/neutrality, but the only reference is a commented-out vanilla focus line and Brazil has no ideological foreign-legion tradition, so it is ungated (`always = yes`).
+- **GNA_01 gating**: `OR = { has_government = democratic has_government = neutrality }` (the Guarda Nacional was an Empire/Old Republic institution, and the audit flags ungated "National Guard" lists); GUA_01 is `NOT = { has_government = communism }`.
+- **Types**: GNA_01, FPU_01 and RES_01 use `infantry`, not `militia`, so they are not political lists. FAS_02, RED_01, DEM_02 and IMP_02 use `militia`, each gated.
+- **MEC_02 link**: it links to `BRA_MEC_01` rather than `BRA_MOT_01` as first planned, so the audit pairs the plain and Named list. MEC_01 keeps its vanilla link to `BRA_INF_01`.
+- **CAV_02** (cavalry regiments keyed to the 1921 regiment numbers) was added to the suite, 32 groups in all.
+- **Quotes**: nicknames use escaped double quotes (`\"Duque de Caxias\"`), the same escaping the Mexico file uses.
+- **Merged/thin**: FL_01 stays at 6 entries, with no padding.
+
+## Audit flags kept
+- `LOW_DEPTH` on `BRA_FL_01` (6 entries): Brazil never had a foreign legion, and the only precedent is the Imperial-era foreign battalions. Padding with invented legions was ruled out in Phase 0.
+
+## Proofread (inex-code-reviewer, 500+ added names)
+Fixed: Lage to Laje (FOR_01); Yauaretê to Iauaretê (FRO_01); `Marquês do Herval` replaced (it is Osório's own title, a duplicate of General Osório) by `Conde d'Eu` (IMP_01). Dropped Itapema and Pico (not placeable as coastal forts), added Ilha das Cobras and Monte Serrat. Kept with a note above: Felipe Camarão, Pérolas Negras, Roberto de Pessôa, Imperial Guarda de Honra. Found self-detected before the review: `Monte Cassino` removed from EXP_01 (not a Brazilian battle), `Guarda Imperial de Honra` reverted to the dossier's word order, `Caxias` made `Duque de Caxias`.
 
 ## Progress
 - [x] Phase 0 decisions and vanilla inspection
 - [x] Dossier: scratch/bra_dossier.md (about 28 web calls; about 12 UNVERIFIED items listed at its end)
   - Corrections: 1ª DC HQ was Santiago in 1921, not Santana do Livramento; airborne units are 25º/26º/27º BI Pqdt, no 1º BI Pqdt.
   - Dossier advises gating IMP lists on a monarchy/restoration flag. Rejected: `CLAUDE.md` §6 bans flag/focus locks, so IMP stays `has_government = neutrality`, worded as an Empire tradition.
-- [ ] Authoring
-- [ ] Docs sync
-- [ ] -Check BRA
-- [ ] Proofread
+- [x] Authoring: `INEX_BRA_names_divisions.txt`, 32 groups (generator `scratch/gen_bra.py`, batch `scratch/bra_edits.json`, fixes `scratch/bra_fix*.json`)
+- [x] Docs sync: README, workshop guide (row and `[b]Brazil[/b]` block), `wiki/Brazil.md`, `wiki/Home.md`, `wiki/_Sidebar.md`. Wiki push NOT run (waits for the user).
+- [x] -Check BRA passes (1 flag, explained above)
+- [x] Proofread

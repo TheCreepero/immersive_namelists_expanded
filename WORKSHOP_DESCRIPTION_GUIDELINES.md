@@ -61,6 +61,8 @@ This document serves as an instruction and reference guide for maintaining and u
 | `INEX_GER_ADDITIONAL_names_divisions.txt` | Germany (Extra) | `GER` | Included (Heavy battalions, Panzer brigades, Volksgrenadier/Reserve/Grenadier series, Luftwaffe field & Flak, Festungen, Kampfgruppen, Volkssturm, SA, Freikorps, Schutztruppe, Reichsbanner, Red Front, Foreign Legions) |
 | `INEX_SWE_names_divisions.txt` | Sweden | `SWE` | Included (Plain & Named arméfördelningar, motorized, mechanized and armored divisions, Cavalry, Marine, Mountain and Paratrooper divisions, provincial brigades, Ski/Arctic, Home Guard & Landstorm, Royal & Carolean Guards, fascist Stormtroopers & Legions, communist Red Guards, Volunteers) |
 | `INEX_JAP_names_divisions.txt` | Japan | `JAP` | Included (Plain & Named Dai-N Shidan infantry, motorized, mechanized and Sensha armored lists with tsūshōgō, Cavalry, Teishin airborne, SNLF marines, Mountain, Garrison, Fortress, Border, Imperial Guard, Kenpeitai, militia, Rangers & Bicycle, fascist Kokutai & Yokusan, democratic Jieitai-style, communist Red Guards & People's Army) |
+| `INEX_BRA_names_divisions.txt` | Brazil | `BRA` | Included (Plain & Named infantry, motorized, mechanized and armored divisions with Army patrons, Cavalry, Paraquedista, Fuzileiros Navais, Mountain, coastal artillery, State Forças Públicas, Guarda Nacional, Presidential Guard, Frontier and Amazon jungle troops, FEB Expeditionary, Foreign Legions, fascist Integralist, communist Red Guards & People's Army, democratic Constitutionalist, Imperial Guard & Voluntários da Pátria) |
+| `INEX_GRE_names_divisions.txt` | Greece | `GRE` | Included (Plain & Named Merarchía infantry, motorized, mechanized and armored lists, Cavalry, Mountain divisions & brigades, Evzones, Raiders & Sacred Band, Paratrooper, Marine, garrison, island & Metaxas Line fortress commands, Gendarmerie, Asia Minor Army, Middle East & Korea expeditionary, royal Fourth of August Guard, fascist EON, communist ELAS & Democratic Army, democratic National Defence & Republican volunteers) |
 | `INEX_EST_names_divisions.txt` | Estonia | `EST` | Included (Historical & elite regiments, Kaitseliit malevad, Armored trains/cars, Coastal fortresses) |
 | `INEX_LAT_names_divisions.txt` | Latvia | `LAT` | Included (Historical divisions & regiments, Aizsargu pulki, Armored cars/trains, Coastal fortresses, Cavalry) |
 | `INEX_LIT_names_divisions.txt` | Lithuania | `LIT` | Included (Grand Duke/Royal regiments, Iron Wolf cavalry, AA/Armored teams) |
@@ -116,6 +118,16 @@ This is not a complete list of included namelists! Just some examples.
 - Plain and Named infantry, motorized and mechanized divisions with wartime tsūshōgō ([i]Dai-1 Shidan 'Tama'[/i], [i]Dai-7 Shidan 'Kuma'[/i]), Sensha armored divisions ([i]Sensha Dai-1 Shidan 'Taku'[/i]), and Cavalry Group lineages
 - Teishin airborne, Special Naval Landing Forces ([i]Yokosuka Dai-1 Tokubetsu Rikusentai[/i]), Konoe Guard, Kenpeitai, border and fortress garrisons, and prefectural Kokumin Giyū Sentōtai
 - Ideology suites: Kokutai Divisions & Yokusan Corps (fascist), Jieitai-style Defense Force (democratic), and Red Guards & People's Army (communist)
+
+[b]Brazil[/b]
+- Plain and Named infantry, motorized, mechanized and armored divisions with Army patrons ([i]1ª Divisão de Infantaria "Duque de Caxias"[/i], [i]7ª Divisão de Infantaria "Regimento Sampaio"[/i]), plus Cavalry, Paraquedista, Fuzileiros Navais and Mountain divisions
+- Forças Públicas, Guarda Nacional legions, Presidential Guard, frontier battalions, Amazon jungle divisions, coastal artillery groups, and FEB Expeditionary divisions
+- Ideology suites: Integralist Divisions & Militia (fascist), Red Guards & People's Army (communist), 1932 Constitutionalist (democratic), and Imperial Guard & Voluntários da Pátria (neutrality)
+
+[b]Greece[/b]
+- Plain and Named infantry, motorized, mechanized and armored Merarchíes with regional titles ([i]1i Merarchía Thessalías[/i], [i]8i Merarchía Ipeírou[/i]), plus Cavalry, Mountain, Evzone ([i]2/39 Evzonikó Sýntagma[/i]), Raider, Paratrooper and Marine lists
+- Island commands, Metaxas Line fortress sectors ([i]Tmíma Ochýrosis Roupel[/i]), Gendarmerie, Asia Minor Army divisions, and Middle East and Korea expeditionary brigades
+- Ideology suites: Royal Guard & Fourth of August (neutrality), EON youth (fascist), ELAS & Democratic Army (communist), and National Defence & Republican volunteers (democratic)
 
 [b]Lithuania[/b]
 - Grand Duke infantry regiments ([i]Gedimino[/i], [i]Vytauto[/i], [i]Algirdo[/i]) & [i]Geležinio Vilko[/i] cavalry
