@@ -11,9 +11,10 @@
 # a plain, un-nicknamed variant ("%d. Divisioona") and a "(Named)" variant carries the
 # identities; each pair shares numbering.
 #
-# Overrides vanilla FIN_INF_01, FIN_CAV_01, FIN_MOT_01, FIN_ARM_01, FIN_MEC_01,
-# FIN_GAR_01, FIN_GAR_02, FIN_MAR_01, FIN_MTN_01 and FIN_PAR_01. Scripted vanilla
-# groups (FIN_INF_02, FIN_INF_04, FIN_MIL_01, FIN_MIL_02, FIN_PEN_01) are left to vanilla.
+# Overrides vanilla FIN_INF_01, FIN_INF_02, FIN_INF_04, FIN_CAV_01, FIN_MOT_01,
+# FIN_ARM_01, FIN_MEC_01, FIN_GAR_01, FIN_GAR_02, FIN_MIL_01, FIN_MIL_02,
+# FIN_PEN_01, FIN_MAR_01, FIN_MTN_01 and FIN_PAR_01. All empty vanilla focus-scripted
+# stubs are fully authored and gated by government type.
 
 # ==============================================================================
 # 1. FIELD ARMY (Kenttäarmeija)
@@ -108,6 +109,93 @@ FIN_CAV_01 = {
 		13 = { "13. Ratsuväkiprikaati 'Kainuu'" }
 		14 = { "14. Ratsuväkiprikaati 'Lappi'" }
 		15 = { "15. Ratsuväkiprikaati 'Varsinais-Suomi'" }
+	}
+}
+
+# Wartime infantry regiments (Jalkaväkirykmentit JR 1 - JR 65+) with authentic battle,
+# commander, and regional identities from the Winter and Continuation Wars.
+FIN_REG_01 = {
+	name = "Infantry Regiments"
+
+	for_countries = { FIN }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%d. Jalkaväkirykmentti"
+
+	ordered = {
+		1 = { "JR 1 'Valkeasaari'" }
+		2 = { "JR 2 'Syväri'" }
+		3 = { "JR 3 'Joutselkä'" }
+		4 = { "JR 4 'Länsi-Suomi'" }
+		5 = { "JR 5 'Aaverykmentti'" }
+		6 = { "JR 6 'Kannaksen kahlaajat'" }
+		7 = { "JR 7 'Tyrjän rykmentti'" }
+		8 = { "JR 8 'Ukko-rykmentti'" }
+		9 = { "JR 9 'Kallavesi'" }
+		10 = { "JR 10 'Tuusula'" }
+		11 = { "JR 11 'Ässärykmentti'" }
+		12 = { "JR 12 'Jänkäjääkärit'" }
+		13 = { "JR 13 'Tammisaari'" }
+		14 = { "JR 14 'Raasepori'" }
+		15 = { "JR 15 'Porilaiset'" }
+		16 = { "JR 16 'Pajarin rykmentti'" }
+		17 = { "JR 17 'Saimaa'" }
+		18 = { "JR 18 'Pohjois-Savo'" }
+		19 = { "JR 19 'Laatokka'" }
+		20 = { "JR 20 'Kymenlaakso'" }
+		21 = { "JR 21 'Pohjois-Karjala'" }
+		22 = { "JR 22 'Lounais-Häme'" }
+		23 = { "JR 23 'Laurilan rykmentti'" }
+		24 = { "JR 24 'Länsi-Uusimaa'" }
+		25 = { "JR 25 'Piikkirykmentti'" }
+		26 = { "JR 26 'Kallion rykmentti'" }
+		27 = { "JR 27 'Mäkiniemen rykmentti'" }
+		28 = { "JR 28 'Sakkolan rykmentti'" }
+		29 = { "JR 29 'Susi-Paavon rykmentti'" }
+		30 = { "JR 30 'Iisalmi'" }
+		31 = { "JR 31 'Pielisjärvi'" }
+		32 = { "JR 32 'Kalajokilaakso'" }
+		33 = { "JR 33 'Oulujoki'" }
+		34 = { "JR 34 'Kollaan rykmentti'" }
+		35 = { "JR 35 'Aurajoki'" }
+		36 = { "JR 36 'Etelä-Satakunta'" }
+		37 = { "JR 37 'Etelä-Pohjanmaa'" }
+		38 = { "JR 38 'Suur-Saimaa'" }
+		39 = { "JR 39 'Viena'" }
+		40 = { "JR 40 'Aunus'" }
+		41 = { "JR 41 'Pirkka-Häme'" }
+		42 = { "JR 42 'Keski-Suomi'" }
+		43 = { "JR 43 'Itä-Uusimaa'" }
+		44 = { "JR 44 'Pohjois-Häme'" }
+		45 = { "JR 45 'Halikko'" }
+		46 = { "JR 46 'Kanta-Häme'" }
+		47 = { "JR 47 'Vallilan rykmentti'" }
+		48 = { "JR 48 'Sisä-Suomi'" }
+		49 = { "JR 49 'Vuosalmen rykmentti'" }
+		50 = { "JR 50 'Vorna'" }
+		51 = { "JR 51 'Varkaus'" }
+		52 = { "JR 52 'Lieksa'" }
+		53 = { "JR 53 'Kiestinki'" }
+		54 = { "JR 54 'Raahe'" }
+		55 = { "JR 55 'Etelä-Häme'" }
+		56 = { "JR 56 'Vakka-Suomi'" }
+		57 = { "JR 57 'Pohjois-Satakunta'" }
+		58 = { "JR 58 'Keski-Pohjanmaa'" }
+		59 = { "JR 59 'Salmi'" }
+		60 = { "JR 60 'Sortavala'" }
+		61 = { "JR 61 'Tienhaaran rykmentti'" }
+		62 = { "JR 62 'Pohjola'" }
+		63 = { "JR 63 'Napapiiri'" }
+		64 = { "JR 64 'Suomussalmi'" }
+		65 = { "JR 65 'Raatteen rykmentti'" }
+		66 = { "JR 66 'Korpirykmentti'" }
+		67 = { "JR 67 'Koillismaa'" }
+		68 = { "JR 68 'Peräpohjola'" }
+		69 = { "JR 69 'Tornionlaakso'" }
+		70 = { "JR 70 'Länsi-Pohja'" }
 	}
 }
 
@@ -432,8 +520,45 @@ FIN_DET_02 = {
 	}
 }
 
+# Overrides vanilla FIN_PEN_01 (spawned by the penal unit focus). Features Major Nikke
+# Pärmi's famous Erillinen Pataljoona 21 ("Pärmin pirut") and Finnish disciplinary labor units.
+FIN_PEN_01 = {
+	name = "Penal Battalions"
+
+	for_countries = { FIN }
+
+	can_use = { always = yes }
+
+	division_types = { "penal_battalion" "infantry" }
+
+	fallback_name = "%d. Rangaistuspataljoona"
+
+	ordered = {
+		1 = { "Erillinen Pataljoona 21 'Pärmin pirut'" }
+		2 = { "Erillinen Työkomppania 'Kovera'" }
+		3 = { "Erillinen Työkomppania 'Kangasjärvi'" }
+		4 = { "Erillinen Työkomppania 'Säämäjärvi'" }
+		5 = { "Huuhanmäen Koulutuskeskus" }
+		6 = { "Erillinen Työkomppania 'Riihimäki'" }
+		7 = { "Erillinen Työkomppania 'Köyliö'" }
+		8 = { "Erillinen Työkomppania 'Sukeva'" }
+		9 = { "Erillinen Työkomppania 'Konnunsuo'" }
+		10 = { "Erillinen Työkomppania 'Pelso'" }
+		11 = { "Erillinen Työkomppania 'Kerava'" }
+		12 = { "Erillinen Työkomppania 'Matkaselkä'" }
+		13 = { "Erillinen Työkomppania 'Karhumäki'" }
+		14 = { "Erillinen Työkomppania 'Syväri'" }
+		15 = { "Erillinen Työkomppania 'Äänislinna'" }
+		16 = { "Erillinen Työkomppania 'Naarajärvi'" }
+		17 = { "Erillinen Työkomppania 'Käkisalmi'" }
+		18 = { "Erillinen Työkomppania 'Suursaari'" }
+		19 = { "Erillinen Työkomppania 'Viipuri'" }
+		20 = { "Erillinen Työkomppania 'Mikkeli'" }
+	}
+}
+
 # ==============================================================================
-# 4. SPECIALIST FORMATIONS
+# 4. SPECIALIST & FRONTIER FORMATIONS
 # ==============================================================================
 
 # No Finnish marine divisions existed; coastal jäger divisions named after the
@@ -496,6 +621,92 @@ FIN_MTN_01 = {
 	}
 }
 
+# Finnish Border Guard (Rajavartiolaitos) battalions, district commands, and detached
+# wilderness border jaeger forces (Rajajääkärit).
+FIN_FRN_01 = {
+	name = "Frontier Jaegers"
+
+	for_countries = { FIN }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" "mountaineers" }
+
+	fallback_name = "%d. Rajajääkäripataljoona"
+
+	ordered = {
+		1 = { "Lapin Rajavartiosto" }
+		2 = { "Kainuun Rajavartiosto" }
+		3 = { "Pohjois-Karjalan Rajavartiosto" }
+		4 = { "Salmin Rajavartiosto" }
+		5 = { "Kannaksen Rajavartiosto" }
+		6 = { "Petsamon Erillisosasto 'Pennanen'" }
+		7 = { "1. Rajajääkäriprikaati" }
+		8 = { "1. Rajajääkäripataljoona" }
+		9 = { "2. Rajajääkäripataljoona" }
+		10 = { "3. Rajajääkäripataljoona" }
+		11 = { "4. Rajajääkäripataljoona" }
+		12 = { "5. Rajajääkäripataljoona" }
+		13 = { "6. Rajajääkäripataljoona" }
+		14 = { "7. Rajajääkäripataljoona" }
+		15 = { "8. Rajajääkäripataljoona" }
+		16 = { "Erillinen Pataljoona 7 'Lieksa'" }
+		17 = { "Erillinen Pataljoona 8 'Ilomantsi'" }
+		18 = { "Erillinen Pataljoona 15 'Kuhmo'" }
+		19 = { "Erillinen Pataljoona 16 'Suomussalmi'" }
+		20 = { "Rajajääkäripataljoona 'Ahvenanmaa'" }
+		21 = { "Sallan Rajajääkäripataljoona" }
+		22 = { "Inarin Rajajääkäripataljoona" }
+		23 = { "Utsjoen Rajajääkäriosasto" }
+		24 = { "Kuusamon Rajajääkäripataljoona" }
+		25 = { "Suojärven Rajajääkäripataljoona" }
+		26 = { "Repolan Rajajääkäriosasto" }
+		27 = { "Rukajärven Rajajääkäripataljoona" }
+		28 = { "Porajärven Rajajääkäripataljoona" }
+	}
+}
+
+# Coastal defence brigades and coastal artillery regiments (Rannikkotykistörykmentit
+# RT 1 - RT 5 and wartime coastal brigades).
+FIN_CST_01 = {
+	name = "Coastal Brigades"
+
+	for_countries = { FIN }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" "marine" }
+
+	fallback_name = "%d. Rannikkoprikaati"
+
+	ordered = {
+		1 = { "Rannikkotykistörykmentti 1 'Suomenlinna'" }
+		2 = { "Rannikkotykistörykmentti 2 'Koivisto'" }
+		3 = { "Rannikkotykistörykmentti 3 'Laatokka'" }
+		4 = { "Rannikkotykistörykmentti 4 'Kotka'" }
+		5 = { "Rannikkotykistörykmentti 5 'Turku'" }
+		6 = { "1. Rannikkoprikaati" }
+		7 = { "2. Rannikkoprikaati" }
+		8 = { "3. Rannikkoprikaati" }
+		9 = { "4. Rannikkoprikaati 'Hangon lohko'" }
+		10 = { "11. Rannikkoprikaati" }
+		11 = { "12. Rannikkoprikaati" }
+		12 = { "Uudenmaan Rannikkoprikaati" }
+		13 = { "Itä-Suomenlahden Rannikkoprikaati" }
+		14 = { "Saaristomeren Rannikkoprikaati" }
+		15 = { "Laatokan Rannikkoprikaati" }
+		16 = { "Äänisen Rannikkoprikaati" }
+		17 = { "Pohjanlahden Rannikkoprikaati" }
+		18 = { "Vaasan Rannikkolohko" }
+		19 = { "Oulun Rannikkolohko" }
+		20 = { "Ahvenanmaan Rannikkoprikaati" }
+		21 = { "Porkkalan Rannikkorykmentti" }
+		22 = { "Viipurinlahden Rannikkoprikaati" }
+		23 = { "Suursaaren Rannikkolohko" }
+		24 = { "Valamon Rannikkorykmentti" }
+	}
+}
+
 # No Finnish airborne divisions existed; named after the long-range patrol
 # tradition and Finnish Air Force bases.
 FIN_PAR_01 = {
@@ -527,8 +738,8 @@ FIN_PAR_01 = {
 # 5. SWEDISH VOLUNTEER CORPS (Svenska frivilligkåren, SFK)
 # ==============================================================================
 
-# Mirrors the SFK battle group organisation of 1940: three rifle companies,
-# a jäger company and a heavy company per Stridsgrupp.
+# Mirrors the full SFK company roster of 1940: rifle companies, jäger companies,
+# heavy companies and independent detachments.
 FIN_SVFK_01 = {
 	name = "SFK Companies"
 
@@ -541,15 +752,26 @@ FIN_SVFK_01 = {
 	fallback_name = "%d. Skyttekompaniet"
 
 	ordered = {
-		1 = { "%d. Skyttekompaniet" }
-		2 = { "%d. Skyttekompaniet" }
-		3 = { "%d. Skyttekompaniet" }
-		4 = { "%d. Jägarkompaniet" }
-		5 = { "%d. Tunga Kompaniet" }
-		6 = { "%d. Skyttekompaniet" }
-		7 = { "%d. Skyttekompaniet" }
-		8 = { "%d. Skyttekompaniet" }
-		9 = { "%d. Skyttekompaniet" }
+		1 = { "1. Skyttekompaniet 'Dyrssen'" }
+		2 = { "2. Skyttekompaniet 'Göteborg'" }
+		3 = { "3. Skyttekompaniet 'Malmö'" }
+		4 = { "1. Jägarkompaniet 'Lappland'" }
+		5 = { "1. Tunga Kompaniet 'Bofors'" }
+		6 = { "4. Skyttekompaniet 'Tamm'" }
+		7 = { "5. Skyttekompaniet 'Linköping'" }
+		8 = { "6. Skyttekompaniet 'Örebro'" }
+		9 = { "2. Jägarkompaniet 'Värmland'" }
+		10 = { "2. Tunga Kompaniet 'Västerås'" }
+		11 = { "7. Skyttekompaniet 'Hanngren'" }
+		12 = { "8. Skyttekompaniet 'Sundsvall'" }
+		13 = { "9. Skyttekompaniet 'Umeå'" }
+		14 = { "3. Jägarkompaniet 'Jämtland'" }
+		15 = { "3. Tunga Kompaniet 'Norrbotten'" }
+		16 = { "16. Självständiga Jägarkompaniet 'Joutsijärvi'" }
+		17 = { "17. Självständiga Jägarkompaniet 'Märkäjärvi'" }
+		18 = { "Kårkvarteret 'Rovaniemi'" }
+		19 = { "Pansarvärnskompaniet 'Tornio'" }
+		20 = { "Luftvärnskompaniet 'Kemi'" }
 	}
 }
 
@@ -570,5 +792,223 @@ FIN_SVFK_02 = {
 		3 = { "Svenska Frivilligkåren 'III. Stridsgruppen'" }
 		4 = { "Svenska Frivilligbataljonen 'Hangö'" }
 		5 = { "Svenska Frivilligkompaniet 'Svir'" }
+		6 = { "Stridsgrupp Dyrssen" }
+		7 = { "Stridsgrupp Tamm" }
+		8 = { "Stridsgrupp Hanngren" }
+		9 = { "Flygflottilj 19 'Kemi'" }
+		10 = { "Stridsgrupp Ehrensvärd" }
+		11 = { "Stridsgrupp Berggren" }
+		12 = { "Stridsgrupp Linder" }
+		13 = { "Svenska Ambulansen 'Savukoski'" }
+		14 = { "Svenska Basbataljonen 'Torneå'" }
+		15 = { "Svenska Ingenjörskompaniet 'Kemijärvi'" }
+	}
+}
+
+# ==============================================================================
+# 6. IDEOLOGICAL FORMATIONS & POLITICAL WINGS
+# ==============================================================================
+
+# Fascist party militias and nationalist shock formations. Overrides vanilla FIN_MIL_01
+# ("Mustapaidat Legions", spawned by AAT focus). Features Isänmaallinen kansanliike (IKL),
+# Sinimustat, and Akateeminen Karjala-Seura (AKS) regional shock battalions.
+FIN_MIL_01 = {
+	name = "Blackshirt Legions"
+
+	for_countries = { FIN }
+
+	can_use = { has_government = fascism }
+
+	division_types = { "infantry" "militia" }
+
+	fallback_name = "%d. Mustapaitalegioona"
+
+	ordered = {
+		1 = { "Mustapaitojen Keskuslegioona" }
+		2 = { "Lapuan Mustapaitapataljoona" }
+		3 = { "Sinimustien Iskuosasto" }
+		4 = { "Akateeminen Iskupataljoona" }
+		5 = { "Karjalan Rynnäkköprikaati" }
+		6 = { "Vihan Veljien Osasto" }
+		7 = { "Bobi Sivénin Rynnäkköpataljoona" }
+		8 = { "Elmo Kailan Iskuosasto" }
+		9 = { "Etelä-Pohjanmaan Mustapaitapataljoona" }
+		10 = { "Helsingin Mustapaitapataljoona" }
+		11 = { "Turun Mustapaitapataljoona" }
+		12 = { "Viipurin Mustapaitapataljoona" }
+		13 = { "Kymenlaakson Mustapaitapataljoona" }
+		14 = { "Satakunnan Mustapaitapataljoona" }
+		15 = { "Hämeen Mustapaitapataljoona" }
+		16 = { "Savon Mustapaitapataljoona" }
+		17 = { "Keski-Suomen Mustapaitapataljoona" }
+		18 = { "Pohjois-Karjalan Mustapaitapataljoona" }
+		19 = { "Pohjolan Mustapaitapataljoona" }
+		20 = { "Kainuun Mustapaitapataljoona" }
+		21 = { "Suur-Suomen 1. Rynnäkköprikaati" }
+		22 = { "Suur-Suomen 2. Rynnäkköprikaati 'Aunus'" }
+		23 = { "Suur-Suomen 3. Rynnäkköprikaati 'Viena'" }
+		24 = { "Suur-Suomen 4. Rynnäkköprikaati 'Inkeri'" }
+		25 = { "Suur-Suomen 5. Rynnäkköprikaati 'Kuola'" }
+	}
+}
+
+# Kindred peoples and foreign volunteer formations. Overrides vanilla FIN_INF_02
+# ("Legions of Honor", spawned by AAT focus). Features Heimopataljoona 3, Estonian
+# volunteers (JR 200 "Suomen-pojat"), Ingrian, Karelian and Nordic volunteer legions.
+FIN_INF_02 = {
+	name = "Legions of Honor"
+
+	for_countries = { FIN }
+
+	can_use = { has_government = fascism }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%d. Heimolegioona"
+
+	ordered = {
+		1 = { "Heimopataljoona 3" }
+		2 = { "Jalkaväkirykmentti 200 'Suomen-pojat'" }
+		3 = { "Erillinen Pataljoona 6 'Inkeri'" }
+		4 = { "Pohjan Poikain Rykmentti" }
+		5 = { "I Suomalainen Vapaajoukko" }
+		6 = { "1. Karjalan Rykmentti" }
+		7 = { "2. Karjalan Rykmentti" }
+		8 = { "3. Karjalan Rykmentti" }
+		9 = { "Vienan Rykmentti" }
+		10 = { "Pohjois-Inkerin Rykmentti" }
+		11 = { "Sissipataljoona 5 'Ilmarinen'" }
+		12 = { "Aunuksen Vapaaehtoinen Armeija" }
+		13 = { "Viron Vapaaehtoislegioona" }
+		14 = { "Skandinaavinen Vapaaehtoislegioona" }
+		15 = { "Tanskalainen Vapaaehtoispataljoona" }
+		16 = { "Norjalainen Vapaaehtoiskomppania" }
+		17 = { "Saksalainen Vapaaehtoispataljoona" }
+		18 = { "Unkarilainen Vapaaehtoispataljoona" }
+		19 = { "Vepsän Vapaaehtoispataljoona" }
+		20 = { "Liivin Vapaaehtoisosasto" }
+		21 = { "Mordvan Heimopataljoona" }
+		22 = { "Marin Heimopataljoona" }
+	}
+}
+
+# Communist workers' militias and revolutionary red guards. Overrides vanilla FIN_MIL_02
+# ("Red Guard Divisions", spawned by AAT focus). Features 1918 Red Guard regional regiments
+# and expanded revolutionary industrial workers' formations.
+FIN_MIL_02 = {
+	name = "Red Guard Divisions"
+
+	for_countries = { FIN }
+
+	can_use = { has_government = communism }
+
+	division_types = { "infantry" "militia" }
+
+	fallback_name = "%d. Punakaartin Divisioona"
+
+	ordered = {
+		1 = { "Helsingin Punakaartin 1. Rykmentti" }
+		2 = { "Helsingin Punakaartin 2. Rykmentti" }
+		3 = { "Helsingin Punakaartin 3. Rykmentti" }
+		4 = { "Helsingin Punakaartin Portun Pataljoona" }
+		5 = { "Helsingin Punakaartin Sörnäisten Pataljoona" }
+		6 = { "Helsingin Punakaartin Kallion Pataljoona" }
+		7 = { "Tampereen Punakaartin Rykmentti" }
+		8 = { "Hämeen 1. Punakaartirykmentti" }
+		9 = { "Hämeen 2. Punakaartirykmentti" }
+		10 = { "Turun Punakaartin Rykmentti" }
+		11 = { "Viipurin Punakaartin Rykmentti" }
+		12 = { "Kymenlaakson Punakaartin Rykmentti" }
+		13 = { "Kotkan Punakaartin Rykmentti" }
+		14 = { "Kouvolan Punakaartin Rykmentti" }
+		15 = { "Lahden Punakaartin Rykmentti" }
+		16 = { "Porin Punakaartin Rykmentti" }
+		17 = { "Lappeenrannan Punakaartin Rykmentti" }
+		18 = { "Pietarin Suomalainen Punakaarti" }
+		19 = { "Hämeenlinnan Punakaartin Pataljoona" }
+		20 = { "Riihimäen Punakaartin Pataljoona" }
+		21 = { "Hyvinkään Punakaartin Pataljoona" }
+		22 = { "Valkeakosken Punakaartin Pataljoona" }
+		23 = { "Kuopion Punakaartin Pataljoona" }
+		24 = { "Oulun Punakaartin Pataljoona" }
+		25 = { "Forssan Punakaartin Pataljoona" }
+		26 = { "Vaasan Punakaartin Pataljoona" }
+		27 = { "Rovaniemen Punakaartin Pataljoona" }
+		28 = { "Punaisen Laivaston Työläisosasto" }
+	}
+}
+
+# Regular army formations of the 1939-1940 Terijoki government (Suomen Kansanarmeija)
+# and pro-Soviet partisan detachments. Overrides vanilla FIN_INF_04 ("Soviet Commando Groups").
+FIN_INF_04 = {
+	name = "People's Army Divisions"
+
+	for_countries = { FIN }
+
+	can_use = { has_government = communism }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%d. Kansanarmeijan Divisioona"
+
+	ordered = {
+		1 = { "Suomen Kansanarmeijan 1. Divisioona" }
+		2 = { "Suomen Kansanarmeijan 2. Divisioona" }
+		3 = { "Suomen Kansanarmeijan 3. Divisioona" }
+		4 = { "Suomen Kansanarmeijan 4. Divisioona" }
+		5 = { "1. Kansanpanssarirykmentti" }
+		6 = { "Karjalan Partisaaniprikaati" }
+		7 = { "Punainen Partisaaniosasto 'Taisto'" }
+		8 = { "Punainen Partisaaniosasto 'Ukko'" }
+		9 = { "Punainen Partisaaniosasto 'Bolshevik'" }
+		10 = { "Punainen Partisaaniosasto 'Napapiiri'" }
+		11 = { "Punainen Partisaaniosasto 'Punatähti'" }
+		12 = { "Punainen Desanttiosasto" }
+		13 = { "Terijoen 1. Työläisrykmentti" }
+		14 = { "Petroskoin Suomalainen Kiväärirykmentti" }
+		15 = { "Uhtuan Kansankaartinrykmentti" }
+		16 = { "Kannan Suomalainen Partisaanipataljoona" }
+		17 = { "Aunuksen Punainen Rajarykmentti" }
+		18 = { "Vienan Punainen Rajarykmentti" }
+		19 = { "Suomen Kansantasavallan Kaarti" }
+		20 = { "Punainen Sissiprikaati" }
+	}
+}
+
+# Monarchist royal guard and imperial regiment heritage for the 1918 Kingdom of Finland
+# path (King Kaarle I / Friedrich Karl of Hesse). Anchored in the Suomen Kaarti (Life Guards)
+# tradition and historical provincial regiments.
+FIN_GUA_01 = {
+	name = "Royal Guards"
+
+	for_countries = { FIN }
+
+	can_use = { has_government = neutrality }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%d. Kuninkaallinen Kaartinrykmentti"
+
+	ordered = {
+		1 = { "Suomen Kaarti" }
+		2 = { "Kaartin Jääkärirykmentti" }
+		3 = { "Kuninkaallinen Henkivartioväki" }
+		4 = { "Kuninkaallinen Kaartinrykmentti" }
+		5 = { "Kuninkaan Omat Tarkk'ampujat" }
+		6 = { "Kuninkaallinen Henkirakuunarykmentti" }
+		7 = { "Kuningatar Margareten Henkirykmentti" }
+		8 = { "Kruununprinssi Wolfgangin Rykmentti" }
+		9 = { "Uudenmaan Henkirykmentti" }
+		10 = { "Hämeen Henkirykmentti" }
+		11 = { "Savon Henkirykmentti" }
+		12 = { "Porin Henkirykmentti" }
+		13 = { "Turun Henkikaarti" }
+		14 = { "Karjalan Henkirykmentti" }
+		15 = { "Pohjanmaan Henkirykmentti" }
+		16 = { "Viipurin Kuninkaallinen Rykmentti" }
+		17 = { "Helsingin Henkivartiopataljoona" }
+		18 = { "Kuningas Kaarlen Rakuunakaarti" }
+		19 = { "Suomen Suuriruhtinaskunnan Kaarti" }
+		20 = { "Kruunun Henkikaartinprikaati" }
 	}
 }

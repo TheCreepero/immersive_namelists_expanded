@@ -65,7 +65,7 @@ This document serves as an instruction and reference guide for maintaining and u
 | `INEX_LIT_names_divisions.txt` | Lithuania | `LIT` | Included (Grand Duke/Royal regiments, Iron Wolf cavalry, AA/Armored teams) |
 | `INEX_FRA_names_divisions.txt` | France | `FRA` | Included (1940 order of battle, Nicknames, National Guard, Metropolitan, Milice, FTP, Armistice Army) |
 | `INEX_ENG_names_divisions.txt` | United Kingdom | `ENG` | Included (Home Guard, Royal Guard, Independent, Commandos, Alt-history) |
-| `INEX_FIN_names_divisions.txt` | Finland | `FIN` | Included (Battle-honour divisions, Suojeluskunta districts, Ryhmä groups, Panssaridivisioona, Sissi, Swedish Volunteers SFK) |
+| `INEX_FIN_names_divisions.txt` | Finland | `FIN` | Included (Wartime divisions & JR 1–70 regiments, Suojeluskunta, Ryhmä groups, Frontier & Coastal brigades, Blackshirt legions, Heimojoukot, Red Guards, People's Army, Royal Guards, Penal battalions, Swedish Volunteers SFK) |
 | `INEX_POL_names_divisions.txt` | Poland | `POL` | Included (Home Army, PSZ, LWP, KOP Border Guards, Brygada Świętokrzyska) |
 | `INEX_ITA_names_divisions.txt` | Italy | `ITA` | Included (Historical numbering, Blackshirts, RSI, Black Brigades, Royal Army, Party-gated Partisans, Bersaglieri, Carabinieri, Frontier Guard, Colonial, Legione Romana) |
 | `INEX_SOV_names_divisions.txt` | USSR | `SOV` | Included (NKVD, Guards Para, Artillery, Penal units, Cossacks) |
@@ -130,8 +130,9 @@ This is not a complete list of included namelists! Just some examples.
 - Special Service commando formations, plus alt-history Loyalist & Blackshirt brigades
 
 [b]Finland[/b]
-- Numbered divisions with battle honours ([i]12. Divisioona 'Kollaa'[/i]) and Suojeluskunta districts
-- Commander-named groups ([i]Ryhmä Talvela[/i]), [i]Panssaridivisioona 'Lagus'[/i], Sissi rangers, and Swedish Volunteers (SFK)
+- Numbered divisions & wartime regiments ([i]12. Divisioona 'Kollaa'[/i], [i]JR 7 'Tyrjän rykmentti'[/i], [i]JR 61[/i]) and Suojeluskunta districts
+- Frontier Jaegers, Coastal brigades ([i]Rannikkotykistörykmentti 1[/i]), Sissi rangers, [i]Panssaridivisioona 'Lagus'[/i], and Swedish Volunteers (SFK)
+- Ideology suites: Blackshirt legions ([i]Mustapaitojen Keskuslegioona[/i]), [i]Heimopataljoona 3[/i], 1918 Red Guards, [i]Suomen Kansanarmeija[/i], and Royal Guards ([i]Suomen Kaarti[/i])
 
 [b]Poland[/b]
 - Home Army (AK) and Polish Armed Forces in the West (PSZ) post-capitulation lists
