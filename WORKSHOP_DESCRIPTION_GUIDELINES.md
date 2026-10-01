@@ -60,6 +60,7 @@ This document serves as an instruction and reference guide for maintaining and u
 | `INEX_GER_SS_names_divisions.txt` | Germany (SS) | `GER` | Included (Fascist-only Waffen-SS divisions 1-41 by type incl. mountain & cavalry, shared honour-name expansion, heavy battalions, SS Kampfgruppen, Standarten) |
 | `INEX_GER_ADDITIONAL_names_divisions.txt` | Germany (Extra) | `GER` | Included (Heavy battalions, Panzer brigades, Volksgrenadier/Reserve/Grenadier series, Luftwaffe field & Flak, Festungen, Kampfgruppen, Volkssturm, SA, Freikorps, Schutztruppe, Reichsbanner, Red Front, Foreign Legions) |
 | `INEX_SWE_names_divisions.txt` | Sweden | `SWE` | Included (Plain & Named arméfördelningar, motorized, mechanized and armored divisions, Cavalry, Marine, Mountain and Paratrooper divisions, provincial brigades, Ski/Arctic, Home Guard & Landstorm, Royal & Carolean Guards, fascist Stormtroopers & Legions, communist Red Guards, Volunteers) |
+| `INEX_JAP_names_divisions.txt` | Japan | `JAP` | Included (Plain & Named Dai-N Shidan infantry, motorized, mechanized and Sensha armored lists with tsūshōgō, Cavalry, Teishin airborne, SNLF marines, Mountain, Garrison, Fortress, Border, Imperial Guard, Kenpeitai, militia, Rangers & Bicycle, fascist Kokutai & Yokusan, democratic Jieitai-style, communist Red Guards & People's Army) |
 | `INEX_EST_names_divisions.txt` | Estonia | `EST` | Included (Historical & elite regiments, Kaitseliit malevad, Armored trains/cars, Coastal fortresses) |
 | `INEX_LAT_names_divisions.txt` | Latvia | `LAT` | Included (Historical divisions & regiments, Aizsargu pulki, Armored cars/trains, Coastal fortresses, Cavalry) |
 | `INEX_LIT_names_divisions.txt` | Lithuania | `LIT` | Included (Grand Duke/Royal regiments, Iron Wolf cavalry, AA/Armored teams) |
@@ -110,6 +111,11 @@ This is not a complete list of included namelists! Just some examples.
 - Plain and Named Roman-numbered Arméfördelningar, plus motorized, mechanized and armored divisions ([i]II. Arméfördelningen 'Jämtlands'[/i], [i]Pansarfördelningen 'Skaraborgs pansarregemente'[/i])
 - Provincial Infanteribrigader ([i]Gula brigaden[/i]), Pansar-, Cykel- and Kavalleribrigader, Fältjägare, Kustjägare and Fallskärmsjägare divisions
 - Ideology suites: Home Guard, Landstorm and Royal Guards (democratic and neutral), Carolean Guards, Stormtroopers & Fascist Legions, and communist Red Guards
+
+[b]Japan[/b]
+- Plain and Named infantry, motorized and mechanized divisions with wartime tsūshōgō ([i]Dai-1 Shidan 'Tama'[/i], [i]Dai-7 Shidan 'Kuma'[/i]), Sensha armored divisions ([i]Sensha Dai-1 Shidan 'Taku'[/i]), and Cavalry Group lineages
+- Teishin airborne, Special Naval Landing Forces ([i]Yokosuka Dai-1 Tokubetsu Rikusentai[/i]), Konoe Guard, Kenpeitai, border and fortress garrisons, and prefectural Kokumin Giyū Sentōtai
+- Ideology suites: Kokutai Divisions & Yokusan Corps (fascist), Jieitai-style Defense Force (democratic), and Red Guards & People's Army (communist)
 
 [b]Lithuania[/b]
 - Grand Duke infantry regiments ([i]Gedimino[/i], [i]Vytauto[/i], [i]Algirdo[/i]) & [i]Geležinio Vilko[/i] cavalry

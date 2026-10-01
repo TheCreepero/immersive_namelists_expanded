@@ -22,6 +22,7 @@
 | [Poland](Poland) | `POL` | 36 | `INEX_POL_names_divisions.txt` |
 | [Finland](Finland) | `FIN` | 27 | `INEX_FIN_names_divisions.txt` |
 | [Sweden](Sweden) | `SWE` | 29 | `INEX_SWE_names_divisions.txt` |
+| [Japan](Japan) | `JAP` | 32 | `INEX_JAP_names_divisions.txt` |
 | [Estonia](Estonia) | `EST` | 4 | `INEX_EST_names_divisions.txt` |
 | [Latvia](Latvia) | `LAT` | 7 | `INEX_LAT_names_divisions.txt` |
 | [Lithuania](Lithuania) | `LIT` | 13 | `INEX_LIT_names_divisions.txt` |

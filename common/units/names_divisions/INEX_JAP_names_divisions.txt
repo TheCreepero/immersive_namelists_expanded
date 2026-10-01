@@ -1,0 +1,1125 @@
+# Division template historical names system for Japan (JAP).
+# Immersive Namelists Expanded (INEX)
+
+JAP_INF_01 =
+{
+	name = "Infantry Divisions"
+
+	for_countries = { JAP }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Dai-%d Shidan"
+}
+
+# ==============================================================================
+# 1. FIELD DIVISIONS (Yasen Shidan)
+# ==============================================================================
+
+# Named variant of JAP_INF_01; shares its numbering. Keys are real IJA division numbers and the names are
+# tsushogo (e.g. 1st Division 'Tama'); entries use the kun readings attested in -heidan form.
+# JAP_INF_01, MOT_01, MEC_01 and ARM_01 are plain variants that override vanilla (macrons, no English text).
+JAP_INF_02 = 
+{
+	name = "Infantry Divisions (Named)"
+
+	for_countries = { JAP }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	link_numbering_with = { JAP_INF_01 }
+
+	fallback_name = "Dai-%d Shidan"
+
+	ordered =
+	{
+		1 = { "Dai-%d Shidan 'Tama'" }
+		2 = { "Dai-%d Shidan 'Isamu'" }
+		3 = { "Dai-%d Shidan 'Kō'" }
+		4 = { "Dai-%d Shidan 'Yodo'" }
+		5 = { "Dai-%d Shidan 'Koi'" }
+		6 = { "Dai-%d Shidan 'Mei'" }
+		7 = { "Dai-%d Shidan 'Kuma'" }
+		8 = { "Dai-%d Shidan 'Sugi'" }
+		9 = { "Dai-%d Shidan 'Take'" }
+		10 = { "Dai-%d Shidan 'Tetsu'" }
+		11 = { "Dai-%d Shidan 'Nishiki'" }
+		12 = { "Dai-%d Shidan 'Ken'" }
+		13 = { "Dai-%d Shidan 'Kagami'" }
+		14 = { "Dai-%d Shidan 'Teru'" }
+		15 = { "Dai-%d Shidan 'Matsuri'" }
+		16 = { "Dai-%d Shidan 'Kaki'" }
+		17 = { "Dai-%d Shidan 'Tsuki'" }
+		18 = { "Dai-%d Shidan 'Kiku'" }
+		19 = { "Dai-%d Shidan 'Tora'" }
+		20 = { "Dai-%d Shidan 'Asa'" }
+		21 = { "Dai-%d Shidan 'Tō'" }
+		23 = { "Dai-%d Shidan 'Asahi'" }
+		24 = { "Dai-%d Shidan 'Yama'" }
+		33 = { "Dai-%d Shidan 'Yumi'" }
+		43 = { "Dai-%d Shidan 'Homare'" }
+		46 = { "Dai-%d Shidan 'Sei'" }
+		58 = { "Dai-%d Shidan 'Hiro'" }
+		62 = { "Dai-%d Shidan 'Ishi'" }
+		65 = { "Dai-%d Shidan 'Sen'" }
+		68 = { "Dai-%d Shidan 'Hinoki'" }
+		70 = { "Dai-%d Shidan 'Yari'" }
+		91 = { "Dai-%d Shidan 'Saki'" }
+		93 = { "Dai-%d Shidan 'Ketsu'" }
+		100 = { "Dai-%d Shidan 'Kyo'" }
+		103 = { "Dai-%d Shidan 'Shun'" }
+		109 = { "Dai-%d Shidan 'Tan'" }
+		115 = { "Dai-%d Shidan 'Kita'" }
+		135 = { "Dai-%d Shidan 'Magokoro'" }
+		138 = { "Dai-%d Shidan 'Fudō'" }
+		142 = { "Dai-%d Shidan 'Gosen'" }
+		209 = { "Dai-%d Shidan 'Kaetsu'" }
+	}
+}
+
+# Plain variant; overrides vanilla JAP_MOT_01. The IJA fielded no motorized divisions: the form follows its
+# branch-first pattern (extrapolated). Anchor of the mobile family.
+JAP_MOT_01 = 
+{
+	name = "Motorized Divisions"
+
+	for_countries = { JAP }
+
+	can_use = { always = yes }
+
+	division_types = { "motorized" }
+
+	link_numbering_with = { JAP_INF_01 }
+
+	fallback_name = "Jidōsha Dai-%d Shidan"
+}
+
+# Named variant; reuses the infantry tsushogo keyed to the shared division number (extrapolated pairing).
+JAP_MOT_02 = 
+{
+	name = "Motorized Divisions (Named)"
+
+	for_countries = { JAP }
+
+	can_use = { always = yes }
+
+	division_types = { "motorized" }
+
+	link_numbering_with = { JAP_MOT_01 }
+
+	fallback_name = "Jidōsha Dai-%d Shidan"
+
+	ordered =
+	{
+		1 = { "Jidōsha Dai-%d Shidan 'Tama'" }
+		2 = { "Jidōsha Dai-%d Shidan 'Isamu'" }
+		3 = { "Jidōsha Dai-%d Shidan 'Kō'" }
+		4 = { "Jidōsha Dai-%d Shidan 'Yodo'" }
+		5 = { "Jidōsha Dai-%d Shidan 'Koi'" }
+		6 = { "Jidōsha Dai-%d Shidan 'Mei'" }
+		7 = { "Jidōsha Dai-%d Shidan 'Kuma'" }
+		8 = { "Jidōsha Dai-%d Shidan 'Sugi'" }
+		9 = { "Jidōsha Dai-%d Shidan 'Take'" }
+		10 = { "Jidōsha Dai-%d Shidan 'Tetsu'" }
+		11 = { "Jidōsha Dai-%d Shidan 'Nishiki'" }
+		12 = { "Jidōsha Dai-%d Shidan 'Ken'" }
+		13 = { "Jidōsha Dai-%d Shidan 'Kagami'" }
+		14 = { "Jidōsha Dai-%d Shidan 'Teru'" }
+		15 = { "Jidōsha Dai-%d Shidan 'Matsuri'" }
+		16 = { "Jidōsha Dai-%d Shidan 'Kaki'" }
+		17 = { "Jidōsha Dai-%d Shidan 'Tsuki'" }
+		18 = { "Jidōsha Dai-%d Shidan 'Kiku'" }
+		19 = { "Jidōsha Dai-%d Shidan 'Tora'" }
+		20 = { "Jidōsha Dai-%d Shidan 'Asa'" }
+		21 = { "Jidōsha Dai-%d Shidan 'Tō'" }
+		23 = { "Jidōsha Dai-%d Shidan 'Asahi'" }
+		24 = { "Jidōsha Dai-%d Shidan 'Yama'" }
+		33 = { "Jidōsha Dai-%d Shidan 'Yumi'" }
+		43 = { "Jidōsha Dai-%d Shidan 'Homare'" }
+		46 = { "Jidōsha Dai-%d Shidan 'Sei'" }
+		58 = { "Jidōsha Dai-%d Shidan 'Hiro'" }
+		62 = { "Jidōsha Dai-%d Shidan 'Ishi'" }
+		65 = { "Jidōsha Dai-%d Shidan 'Sen'" }
+		68 = { "Jidōsha Dai-%d Shidan 'Hinoki'" }
+		70 = { "Jidōsha Dai-%d Shidan 'Yari'" }
+		91 = { "Jidōsha Dai-%d Shidan 'Saki'" }
+		93 = { "Jidōsha Dai-%d Shidan 'Ketsu'" }
+		100 = { "Jidōsha Dai-%d Shidan 'Kyo'" }
+		103 = { "Jidōsha Dai-%d Shidan 'Shun'" }
+		109 = { "Jidōsha Dai-%d Shidan 'Tan'" }
+		115 = { "Jidōsha Dai-%d Shidan 'Kita'" }
+		135 = { "Jidōsha Dai-%d Shidan 'Magokoro'" }
+		138 = { "Jidōsha Dai-%d Shidan 'Fudō'" }
+		142 = { "Jidōsha Dai-%d Shidan 'Gosen'" }
+		209 = { "Jidōsha Dai-%d Shidan 'Kaetsu'" }
+	}
+}
+
+# Plain variant; overrides vanilla JAP_MEC_01. Kikaika (mechanization) is period vocabulary; the division
+# form is extrapolated from the 1930s Kwantung mechanized brigade experiment.
+JAP_MEC_01 = 
+{
+	name = "Mechanized Divisions"
+
+	for_countries = { JAP }
+
+	can_use = { always = yes }
+
+	division_types = { "mechanized" }
+
+	link_numbering_with = { JAP_MOT_01 }
+
+	fallback_name = "Kikaika Dai-%d Shidan"
+}
+
+# Named variant; reuses the infantry tsushogo keyed to the shared division number (extrapolated pairing).
+JAP_MEC_02 = 
+{
+	name = "Mechanized Divisions (Named)"
+
+	for_countries = { JAP }
+
+	can_use = { always = yes }
+
+	division_types = { "mechanized" }
+
+	link_numbering_with = { JAP_MOT_01 }
+
+	fallback_name = "Kikaika Dai-%d Shidan"
+
+	ordered =
+	{
+		1 = { "Kikaika Dai-%d Shidan 'Tama'" }
+		2 = { "Kikaika Dai-%d Shidan 'Isamu'" }
+		3 = { "Kikaika Dai-%d Shidan 'Kō'" }
+		4 = { "Kikaika Dai-%d Shidan 'Yodo'" }
+		5 = { "Kikaika Dai-%d Shidan 'Koi'" }
+		6 = { "Kikaika Dai-%d Shidan 'Mei'" }
+		7 = { "Kikaika Dai-%d Shidan 'Kuma'" }
+		8 = { "Kikaika Dai-%d Shidan 'Sugi'" }
+		9 = { "Kikaika Dai-%d Shidan 'Take'" }
+		10 = { "Kikaika Dai-%d Shidan 'Tetsu'" }
+		11 = { "Kikaika Dai-%d Shidan 'Nishiki'" }
+		12 = { "Kikaika Dai-%d Shidan 'Ken'" }
+		13 = { "Kikaika Dai-%d Shidan 'Kagami'" }
+		14 = { "Kikaika Dai-%d Shidan 'Teru'" }
+		15 = { "Kikaika Dai-%d Shidan 'Matsuri'" }
+		16 = { "Kikaika Dai-%d Shidan 'Kaki'" }
+		17 = { "Kikaika Dai-%d Shidan 'Tsuki'" }
+		18 = { "Kikaika Dai-%d Shidan 'Kiku'" }
+		19 = { "Kikaika Dai-%d Shidan 'Tora'" }
+		20 = { "Kikaika Dai-%d Shidan 'Asa'" }
+		21 = { "Kikaika Dai-%d Shidan 'Tō'" }
+		23 = { "Kikaika Dai-%d Shidan 'Asahi'" }
+		24 = { "Kikaika Dai-%d Shidan 'Yama'" }
+		33 = { "Kikaika Dai-%d Shidan 'Yumi'" }
+		43 = { "Kikaika Dai-%d Shidan 'Homare'" }
+		46 = { "Kikaika Dai-%d Shidan 'Sei'" }
+		58 = { "Kikaika Dai-%d Shidan 'Hiro'" }
+		62 = { "Kikaika Dai-%d Shidan 'Ishi'" }
+		65 = { "Kikaika Dai-%d Shidan 'Sen'" }
+		68 = { "Kikaika Dai-%d Shidan 'Hinoki'" }
+		70 = { "Kikaika Dai-%d Shidan 'Yari'" }
+		91 = { "Kikaika Dai-%d Shidan 'Saki'" }
+		93 = { "Kikaika Dai-%d Shidan 'Ketsu'" }
+		100 = { "Kikaika Dai-%d Shidan 'Kyo'" }
+		103 = { "Kikaika Dai-%d Shidan 'Shun'" }
+		109 = { "Kikaika Dai-%d Shidan 'Tan'" }
+		115 = { "Kikaika Dai-%d Shidan 'Kita'" }
+		135 = { "Kikaika Dai-%d Shidan 'Magokoro'" }
+		138 = { "Kikaika Dai-%d Shidan 'Fudō'" }
+		142 = { "Kikaika Dai-%d Shidan 'Gosen'" }
+		209 = { "Kikaika Dai-%d Shidan 'Kaetsu'" }
+	}
+}
+
+# Plain variant; overrides vanilla JAP_ARM_01 (vanilla put 'Taku' into every ordinal). The branch comes first:
+# Sensha Dai-N Shidan. Tank-division numbering is independent of the infantry family.
+JAP_ARM_01 = 
+{
+	name = "Armored Divisions"
+
+	for_countries = { JAP }
+
+	can_use = { always = yes }
+
+	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
+
+	fallback_name = "Sensha Dai-%d Shidan"
+}
+
+# Named variant. Keys 1-4 are the real tank divisions with their tsushogo (Taku, Geki, Taki, Hagane);
+# later keys are extrapolated in the same pattern.
+JAP_ARM_02 = 
+{
+	name = "Armored Divisions (Named)"
+
+	for_countries = { JAP }
+
+	can_use = { always = yes }
+
+	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
+
+	link_numbering_with = { JAP_ARM_01 }
+
+	fallback_name = "Sensha Dai-%d Shidan"
+
+	ordered =
+	{
+		1 = { "Sensha Dai-%d Shidan 'Taku'" }
+		2 = { "Sensha Dai-%d Shidan 'Geki'" }
+		3 = { "Sensha Dai-%d Shidan 'Taki'" }
+		4 = { "Sensha Dai-%d Shidan 'Hagane'" }
+		5 = { "Sensha Dai-%d Shidan 'Ikazuchi'" }
+		6 = { "Sensha Dai-%d Shidan 'Arashi'" }
+		7 = { "Sensha Dai-%d Shidan 'Hayate'" }
+		8 = { "Sensha Dai-%d Shidan 'Kaminari'" }
+		9 = { "Sensha Dai-%d Shidan 'Tsurugi'" }
+		10 = { "Sensha Dai-%d Shidan 'Kongō'" }
+	}
+}
+
+# ==============================================================================
+# 2. SPECIALIST FORMATIONS
+# ==============================================================================
+
+# Overrides vanilla JAP_CAV_01 (focus-referenced). The IJA's top cavalry formations were the Cavalry Group
+# (Kihei Shudan, 1933-42) and the brigades. Each division had a cavalry regiment numbered like it; the
+# regiments here borrow the division's tsushogo (extrapolated).
+JAP_CAV_01 = 
+{
+	name = "Cavalry Divisions"
+
+	for_countries = { JAP }
+
+	can_use = { always = yes }
+
+	division_types = { "cavalry" }
+
+	fallback_name = "Kihei Dai-%d Ryodan"
+
+	ordered =
+	{
+		1 = { "Kihei Shūdan" }
+		2 = { "Kihei Dai-1 Ryodan" }
+		3 = { "Kihei Dai-4 Ryodan" }
+		4 = { "Kihei Dai-3 Ryodan" }
+		5 = { "Kihei Dai-2 Ryodan" }
+		6 = { "Konoe Kihei Rentai" }
+		7 = { "Kantōgun Kihei Ryodan" }
+		8 = { "Tama Kihei Rentai" }
+		9 = { "Isamu Kihei Rentai" }
+		10 = { "Kō Kihei Rentai" }
+		11 = { "Yodo Kihei Rentai" }
+		12 = { "Koi Kihei Rentai" }
+		13 = { "Mei Kihei Rentai" }
+		14 = { "Kuma Kihei Rentai" }
+		15 = { "Sugi Kihei Rentai" }
+		16 = { "Take Kihei Rentai" }
+		17 = { "Tetsu Kihei Rentai" }
+		18 = { "Nishiki Kihei Rentai" }
+		19 = { "Ken Kihei Rentai" }
+		20 = { "Kagami Kihei Rentai" }
+		21 = { "Teru Kihei Rentai" }
+		22 = { "Matsuri Kihei Rentai" }
+		23 = { "Kaki Kihei Rentai" }
+		24 = { "Tsuki Kihei Rentai" }
+		25 = { "Kiku Kihei Rentai" }
+		26 = { "Tora Kihei Rentai" }
+		27 = { "Asa Kihei Rentai" }
+	}
+}
+
+# Overrides vanilla JAP_PAR_01. The Army's airborne arm was the Teishin Shudan (Raiding Group); Teishin = raiding.
+# Vanilla '%d Kutei Shidan' lacked the macron and was never an IJA form.
+JAP_PAR_01 = 
+{
+	name = "Paratrooper Divisions"
+
+	for_countries = { JAP }
+
+	can_use = { always = yes }
+
+	division_types = { "paratrooper" }
+
+	fallback_name = "Teishin Dai-%d Dan"
+
+	ordered =
+	{
+		1 = { "Teishin Shūdan" }
+		2 = { "Teishin Ryodan" }
+		3 = { "Teishin Rentai" }
+		4 = { "Teishin Renshū Butai" }
+		5 = { "Giretsu Kūteitai" }
+		6 = { "Kaoru Kūteitai" }
+		7 = { "Ran Heidan" }
+		8 = { "Teishin Kūtei Dan" }
+	}
+}
+
+# Navy parachute troops (Rakkasan Butai: Yokosuka 1st SNLF at Menado, Sasebo 1st SNLF at Kupang, 1942). The air
+# group (Kokutai) bases are real; pairing them with parachute units is an extrapolation.
+JAP_PAR_02 = 
+{
+	name = "Naval Airborne Groups"
+
+	for_countries = { JAP }
+
+	can_use = { always = yes }
+
+	division_types = { "paratrooper" }
+
+	fallback_name = "Dai-%d Kaigun Rakkasan Butai"
+
+	ordered =
+	{
+		1 = { "Kaigun Rakkasan Butai" }
+		2 = { "Yokosuka Kaigun Rakkasan Butai" }
+		3 = { "Sasebo Kaigun Rakkasan Butai" }
+		4 = { "Yokosuka Kōkūtai Rakkasan Butai" }
+		5 = { "Kisarazu Kōkūtai Rakkasan Butai" }
+		6 = { "Tsukuba Kōkūtai Rakkasan Butai" }
+		7 = { "Kasumigaura Kōkūtai Rakkasan Butai" }
+		8 = { "Kanoya Kōkūtai Rakkasan Butai" }
+		9 = { "Genzan Kōkūtai Rakkasan Butai" }
+		10 = { "Tainan Kōkūtai Rakkasan Butai" }
+		11 = { "Takao Kōkūtai Rakkasan Butai" }
+		12 = { "Chitose Kōkūtai Rakkasan Butai" }
+		13 = { "Suzuka Kōkūtai Rakkasan Butai" }
+	}
+}
+
+# Overrides vanilla JAP_MAR_01 (vanilla misspelled Maizuru and dropped the naval district). Special Naval Landing
+# Forces (SNLF, Tokubetsu Rikusentai) are named district first, then ordinal.
+JAP_MAR_01 = 
+{
+	name = "Marine Divisions"
+
+	for_countries = { JAP }
+
+	can_use = { always = yes }
+
+	division_types = { "marine" }
+
+	fallback_name = "Dai-%d Tokubetsu Rikusentai"
+
+	ordered =
+	{
+		1 = { "Yokosuka Dai-1 Tokubetsu Rikusentai" }
+		2 = { "Yokosuka Dai-2 Tokubetsu Rikusentai" }
+		3 = { "Yokosuka Dai-3 Tokubetsu Rikusentai" }
+		4 = { "Yokosuka Dai-4 Tokubetsu Rikusentai" }
+		5 = { "Yokosuka Dai-5 Tokubetsu Rikusentai" }
+		6 = { "Yokosuka Dai-6 Tokubetsu Rikusentai" }
+		7 = { "Yokosuka Dai-7 Tokubetsu Rikusentai" }
+		8 = { "Kure Dai-1 Tokubetsu Rikusentai" }
+		9 = { "Kure Dai-2 Tokubetsu Rikusentai" }
+		10 = { "Kure Dai-3 Tokubetsu Rikusentai" }
+		11 = { "Kure Dai-5 Tokubetsu Rikusentai" }
+		12 = { "Kure Dai-6 Tokubetsu Rikusentai" }
+		13 = { "Kure Dai-7 Tokubetsu Rikusentai" }
+		14 = { "Maizuru Dai-1 Tokubetsu Rikusentai" }
+		15 = { "Maizuru Dai-2 Tokubetsu Rikusentai" }
+		16 = { "Maizuru Dai-4 Tokubetsu Rikusentai" }
+		17 = { "Maizuru Dai-5 Tokubetsu Rikusentai" }
+		18 = { "Sasebo Dai-1 Tokubetsu Rikusentai" }
+		19 = { "Sasebo Dai-2 Tokubetsu Rikusentai" }
+		20 = { "Sasebo Dai-5 Tokubetsu Rikusentai" }
+		21 = { "Sasebo Dai-6 Tokubetsu Rikusentai" }
+		22 = { "Sasebo Dai-7 Tokubetsu Rikusentai" }
+		23 = { "Sasebo Dai-8 Tokubetsu Rikusentai" }
+		24 = { "Sasebo Rengō Tokubetsu Rikusentai" }
+		25 = { "Shanhai Kaigun Tokubetsu Rikusentai" }
+		26 = { "Kankō Tokubetsu Rikusentai" }
+		27 = { "Kaigun Rikusentai" }
+	}
+}
+
+# Army amphibious and shipping troops (Senpaku Shireibu / Akatsuki Butai, Maritime Raiding Battalions, Shipping
+# Engineers). Regiment and battalion numbers beyond the verified commands are extrapolated.
+JAP_AMP_01 = 
+{
+	name = "Amphibious Brigades"
+
+	for_countries = { JAP }
+
+	can_use = { always = yes }
+
+	division_types = { "marine" }
+
+	fallback_name = "Kaijō Teishin Dai-%d Sentai"
+
+	ordered =
+	{
+		1 = { "Akatsuki Butai" }
+		2 = { "Senpaku Shireibu" }
+		3 = { "Senpaku Kōhei Rentai" }
+		4 = { "Kaijō Kihon Daitai" }
+		5 = { "Kaijō Teishin Sentai" }
+		6 = { "Akitsu Maru Butai" }
+		7 = { "Shinshū Maru Butai" }
+		8 = { "Nigitsu Maru Butai" }
+		9 = { "Mayasan Maru Butai" }
+		10 = { "Kumano Maru Butai" }
+	}
+}
+
+# Overrides vanilla JAP_MNT_01 (English fallback, 'Asahigawa'). The IJA fielded no mountain divisions; the names
+# are extrapolated from the cold-region garrison cities (7th Asahikawa, 8th Hirosaki, 2nd Sendai) and the
+# Japanese Alps.
+JAP_MNT_01 = 
+{
+	name = "Mountain Divisions"
+
+	for_countries = { JAP }
+
+	can_use = { always = yes }
+
+	division_types = { "mountaineers" }
+
+	fallback_name = "Sangaku Dai-%d Shidan"
+
+	ordered =
+	{
+		1 = { "Sangaku Dai-%d Shidan 'Daisetsu'" }
+		2 = { "Sangaku Dai-%d Shidan 'Hakusan'" }
+		3 = { "Sangaku Dai-%d Shidan 'Fuji'" }
+		4 = { "Sangaku Dai-%d Shidan 'Tsurugi'" }
+		5 = { "Sangaku Dai-%d Shidan 'Ontake'" }
+		6 = { "Sangaku Dai-%d Shidan 'Yarigatake'" }
+		7 = { "Sangaku Dai-%d Shidan 'Hotaka'" }
+		8 = { "Sangaku Dai-%d Shidan 'Yatsugatake'" }
+		9 = { "Sangaku Dai-%d Shidan 'Asama'" }
+		10 = { "Sangaku Dai-%d Shidan 'Iwate'" }
+		11 = { "Sangaku Dai-%d Shidan 'Zaō'" }
+		12 = { "Sangaku Dai-%d Shidan 'Chōkai'" }
+		13 = { "Sangaku Dai-%d Shidan 'Gassan'" }
+		14 = { "Sangaku Dai-%d Shidan 'Ibuki'" }
+		15 = { "Sangaku Dai-%d Shidan 'Akagi'" }
+		16 = { "Sangaku Dai-%d Shidan 'Tanigawa'" }
+		17 = { "Sangaku Dai-%d Shidan 'Kirishima'" }
+		18 = { "Sangaku Dai-%d Shidan 'Aso'" }
+		19 = { "Sangaku Dai-%d Shidan 'Asahikawa'" }
+		20 = { "Sangaku Dai-%d Shidan 'Hirosaki'" }
+		21 = { "Sangaku Dai-%d Shidan 'Sendai'" }
+		22 = { "Sangaku Dai-%d Shidan 'Kanazawa'" }
+		23 = { "Sangaku Dai-%d Shidan 'Takada'" }
+		24 = { "Sangaku Dai-%d Shidan 'Matsumoto'" }
+	}
+}
+
+# ==============================================================================
+# 3. GARRISON AND TERRITORIAL FORCES
+# ==============================================================================
+
+# Overrides vanilla JAP_GAR_01 (its 'Tokubetsu Keibitai' form is not attested). Shubitai = garrison unit;
+# the regional list follows the army districts and overseas commands (extrapolated).
+JAP_GAR_01 = 
+{
+	name = "Garrison Units"
+
+	for_countries = { JAP }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Dai-%d Shubitai"
+
+	ordered =
+	{
+		1 = { "Hokkaidō Shubitai" }
+		2 = { "Karafuto Shubitai" }
+		3 = { "Hokuchishima Shubitai" }
+		4 = { "Ogasawara Shubitai" }
+		5 = { "Okinawa Shubitai" }
+		6 = { "Miyako Shubitai" }
+		7 = { "Taiwan Shubitai" }
+		8 = { "Chōsen Shubitai" }
+		9 = { "Tsushima Shubitai" }
+		10 = { "Tōkyō Shubitai" }
+		11 = { "Kantō Shubitai" }
+		12 = { "Tōhoku Shubitai" }
+		13 = { "Tōkai Shubitai" }
+		14 = { "Chūbu Shubitai" }
+		15 = { "Kinki Shubitai" }
+		16 = { "Chūgoku Shubitai" }
+		17 = { "Shikoku Shubitai" }
+		18 = { "Seibu Shubitai" }
+		19 = { "Kyūshū Shubitai" }
+		20 = { "Kantōgun Shubitai" }
+		21 = { "Shina Hakengun Shubitai" }
+	}
+}
+
+# Navy base and guard forces: Keibitai (guard units) of the four naval districts (Chinjufu) and the guard
+# districts (Keibufu) of Ominato, Chinkai, Ryojun and Mako. Konkyochitai = base force.
+JAP_GAR_02 = 
+{
+	name = "Naval Garrison Units"
+
+	for_countries = { JAP }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Dai-%d Konkyochitai"
+
+	ordered =
+	{
+		1 = { "Yokosuka Keibitai" }
+		2 = { "Kure Keibitai" }
+		3 = { "Sasebo Keibitai" }
+		4 = { "Maizuru Keibitai" }
+		5 = { "Ōminato Keibufu" }
+		6 = { "Chinkai Keibufu" }
+		7 = { "Ryojun Keibufu" }
+		8 = { "Mako Keibufu" }
+		9 = { "Kaigun Keibitai" }
+	}
+}
+
+# Fortress Commands (Yosai Shireibu) guarding the straits and bays; Yosai = fortress.
+JAP_FOR_01 = 
+{
+	name = "Fortress Garrisons"
+
+	for_countries = { JAP }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Dai-%d Yōsai Hohei Rentai"
+
+	ordered =
+	{
+		1 = { "Tōkyō-wan Yōsai Shubitai" }
+		2 = { "Tsushima Yōsai Shubitai" }
+		3 = { "Kanmon Yōsai Shubitai" }
+		4 = { "Tsugaru Yōsai Shubitai" }
+		5 = { "Hōyo Yōsai Shubitai" }
+		6 = { "Kii Yōsai Shubitai" }
+		7 = { "Hakodate Yōsai Shubitai" }
+		8 = { "Maizuru Yōsai Shubitai" }
+		9 = { "Chinkai Yōsai Shubitai" }
+		10 = { "Ryojun Yōsai Shubitai" }
+		11 = { "Takao Yōsai Shubitai" }
+		12 = { "Mako Yōsai Shubitai" }
+	}
+}
+
+# Overrides vanilla JAP_IMB_01. Dokuritsu Konsei Ryodan were numbered only (126 brigades, 1937-45), so the plain
+# fallback is the historical form; vanilla's 129 stub entries are dropped.
+JAP_IMB_01 = 
+{
+	name = "Independent Mixed Brigades"
+
+	for_countries = { JAP }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Dokuritsu Konsei Dai-%d Ryodan"
+}
+
+# Kwantung Army border garrison units (Kokkyo Shubitai) along the Soviet frontier, named for their fortified
+# districts.
+JAP_BDR_01 = 
+{
+	name = "Border Garrison Units"
+
+	for_countries = { JAP }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Dai-%d Kokkyō Shubitai"
+
+	ordered =
+	{
+		1 = { "Kotō Kokkyō Shubitai" }
+		2 = { "Tōnei Kokkyō Shubitai" }
+		3 = { "Suifunka Kokkyō Shubitai" }
+		4 = { "Konshun Kokkyō Shubitai" }
+		5 = { "Manshūri Kokkyō Shubitai" }
+		6 = { "Kokka Kokkyō Shubitai" }
+		7 = { "Sonugo Kokkyō Shubitai" }
+		8 = { "Aikun Kokkyō Shubitai" }
+		9 = { "Hairaru Kokkyō Shubitai" }
+		10 = { "Arushan Kokkyō Shubitai" }
+	}
+}
+
+# Konoe (Imperial Guard) formations. Open to every government except communism.
+JAP_GUA_01 = 
+{
+	name = "Imperial Guards"
+
+	for_countries = { JAP }
+
+	can_use = { NOT = { has_government = communism } }
+
+	division_types = { "infantry" "motorized" }
+
+	fallback_name = "Konoe Dai-%d Shidan"
+
+	ordered =
+	{
+		1 = { "Konoe Shidan" }
+		2 = { "Miya Heidan" }
+		3 = { "Konoe Hohei Rentai" }
+		4 = { "Konoe Kihei Rentai" }
+		5 = { "Konoe Yasen Hōhei Rentai" }
+		6 = { "Konoe Kōhei Daitai" }
+		7 = { "Konoe Dai-1 Hohei Ryodan" }
+		8 = { "Kōkyo Keibitai" }
+	}
+}
+
+# Military police (Kenpeitai) by district and command; the support-only military police token is invalid, so the
+# list uses infantry. Fascism and neutrality only.
+JAP_KEN_01 = 
+{
+	name = "Kempeitai Units"
+
+	for_countries = { JAP }
+
+	can_use = { OR = { has_government = fascism has_government = neutrality } }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Dai-%d Kenpeitai"
+
+	ordered =
+	{
+		1 = { "Tōkyō Kenpeitai" }
+		2 = { "Kantō Kenpeitai" }
+		3 = { "Ōsaka Kenpeitai" }
+		4 = { "Nagoya Kenpeitai" }
+		5 = { "Hiroshima Kenpeitai" }
+		6 = { "Kumamoto Kenpeitai" }
+		7 = { "Sendai Kenpeitai" }
+		8 = { "Keijō Kenpeitai" }
+		9 = { "Hōten Kenpeitai" }
+		10 = { "Taiwan Kenpeitai" }
+		11 = { "Shanhai Kenpeitai" }
+		12 = { "Nankin Kenpeitai" }
+		13 = { "Kantōgun Kenpeitai" }
+		14 = { "Shina Hakengun Kenpeitai" }
+	}
+}
+
+# Overrides vanilla JAP_MIL_01 (focus-referenced by the Boeitai and fifth-column focuses, so ungated). The
+# Volunteer Fighting Corps (Kokumin Giyu Sentotai, 1945) was organised by prefecture.
+JAP_MIL_01 = 
+{
+	name = "Militia Units"
+
+	for_countries = { JAP }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Dai-%d Kokumin Giyū Sentōtai"
+
+	ordered =
+	{
+		1 = { "Hokkaidō Kokumin Giyū Sentōtai" }
+		2 = { "Aomori Kokumin Giyū Sentōtai" }
+		3 = { "Iwate Kokumin Giyū Sentōtai" }
+		4 = { "Miyagi Kokumin Giyū Sentōtai" }
+		5 = { "Akita Kokumin Giyū Sentōtai" }
+		6 = { "Yamagata Kokumin Giyū Sentōtai" }
+		7 = { "Fukushima Kokumin Giyū Sentōtai" }
+		8 = { "Ibaraki Kokumin Giyū Sentōtai" }
+		9 = { "Tochigi Kokumin Giyū Sentōtai" }
+		10 = { "Gunma Kokumin Giyū Sentōtai" }
+		11 = { "Saitama Kokumin Giyū Sentōtai" }
+		12 = { "Chiba Kokumin Giyū Sentōtai" }
+		13 = { "Tōkyō Kokumin Giyū Sentōtai" }
+		14 = { "Kanagawa Kokumin Giyū Sentōtai" }
+		15 = { "Niigata Kokumin Giyū Sentōtai" }
+		16 = { "Toyama Kokumin Giyū Sentōtai" }
+		17 = { "Ishikawa Kokumin Giyū Sentōtai" }
+		18 = { "Fukui Kokumin Giyū Sentōtai" }
+		19 = { "Yamanashi Kokumin Giyū Sentōtai" }
+		20 = { "Nagano Kokumin Giyū Sentōtai" }
+		21 = { "Gifu Kokumin Giyū Sentōtai" }
+		22 = { "Shizuoka Kokumin Giyū Sentōtai" }
+		23 = { "Aichi Kokumin Giyū Sentōtai" }
+		24 = { "Mie Kokumin Giyū Sentōtai" }
+		25 = { "Shiga Kokumin Giyū Sentōtai" }
+		26 = { "Kyōto Kokumin Giyū Sentōtai" }
+		27 = { "Ōsaka Kokumin Giyū Sentōtai" }
+		28 = { "Hyōgo Kokumin Giyū Sentōtai" }
+		29 = { "Nara Kokumin Giyū Sentōtai" }
+		30 = { "Wakayama Kokumin Giyū Sentōtai" }
+		31 = { "Tottori Kokumin Giyū Sentōtai" }
+		32 = { "Shimane Kokumin Giyū Sentōtai" }
+		33 = { "Okayama Kokumin Giyū Sentōtai" }
+		34 = { "Hiroshima Kokumin Giyū Sentōtai" }
+		35 = { "Yamaguchi Kokumin Giyū Sentōtai" }
+		36 = { "Tokushima Kokumin Giyū Sentōtai" }
+		37 = { "Kagawa Kokumin Giyū Sentōtai" }
+		38 = { "Ehime Kokumin Giyū Sentōtai" }
+		39 = { "Kōchi Kokumin Giyū Sentōtai" }
+		40 = { "Fukuoka Kokumin Giyū Sentōtai" }
+		41 = { "Saga Kokumin Giyū Sentōtai" }
+		42 = { "Nagasaki Kokumin Giyū Sentōtai" }
+		43 = { "Kumamoto Kokumin Giyū Sentōtai" }
+		44 = { "Ōita Kokumin Giyū Sentōtai" }
+		45 = { "Miyazaki Kokumin Giyū Sentōtai" }
+		46 = { "Kagoshima Kokumin Giyū Sentōtai" }
+		47 = { "Okinawa Kokumin Giyū Sentōtai" }
+	}
+}
+
+# Overrides vanilla JAP_RGR_01 (generic Betsudotai stubs). Gokyotai were the Okinawa home-guerilla units;
+# Yugekitai = guerilla/raiding unit. Regional pairings are extrapolated.
+JAP_RGR_01 = 
+{
+	name = "Ranger Units"
+
+	for_countries = { JAP }
+
+	can_use = { always = yes }
+
+	division_types = { "ranger_battalion" }
+
+	fallback_name = "Dai-%d Yūgekitai"
+
+	ordered =
+	{
+		1 = { "Dai-1 Gokyōtai" }
+		2 = { "Dai-2 Gokyōtai" }
+		3 = { "Hokkaidō Yūgekitai" }
+		4 = { "Tōhoku Yūgekitai" }
+		5 = { "Kantō Yūgekitai" }
+		6 = { "Chūbu Yūgekitai" }
+		7 = { "Kinki Yūgekitai" }
+		8 = { "Chūgoku Yūgekitai" }
+		9 = { "Shikoku Yūgekitai" }
+		10 = { "Kyūshū Yūgekitai" }
+		11 = { "Okinawa Yūgekitai" }
+		12 = { "Karafuto Yūgekitai" }
+		13 = { "Chishima Yūgekitai" }
+		14 = { "Kantōgun Yūgekitai" }
+	}
+}
+
+# Overrides vanilla JAP_BIC_01. Ginrin Butai ('silver wheel' units) were the bicycle infantry of the Malaya
+# campaign (Konoe, 5th and 18th Divisions); the other divisions are extrapolated.
+JAP_BIC_01 = 
+{
+	name = "Bicycle Units"
+
+	for_countries = { JAP }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Dai-%d Ginrin Daitai"
+
+	ordered =
+	{
+		1 = { "Konoe Ginrin Butai" }
+		2 = { "Koi Ginrin Butai" }
+		3 = { "Kiku Ginrin Butai" }
+		4 = { "Tama Ginrin Butai" }
+		5 = { "Isamu Ginrin Butai" }
+		6 = { "Kō Ginrin Butai" }
+		7 = { "Yodo Ginrin Butai" }
+		8 = { "Mei Ginrin Butai" }
+		9 = { "Kuma Ginrin Butai" }
+		10 = { "Sugi Ginrin Butai" }
+		11 = { "Take Ginrin Butai" }
+		12 = { "Tetsu Ginrin Butai" }
+		13 = { "Nishiki Ginrin Butai" }
+		14 = { "Ken Ginrin Butai" }
+		15 = { "Kagami Ginrin Butai" }
+	}
+}
+
+# ==============================================================================
+# 4. FASCIST SUITE (Kokutai / Imperial Way)
+# ==============================================================================
+
+# Divisions named for Kokutai-era ideals of the Kodoha and the Showa-era right wing; every formation is an
+# extrapolation. Gated by has_government = fascism.
+JAP_FAS_01 = 
+{
+	name = "Kokutai Divisions"
+
+	for_countries = { JAP }
+
+	can_use = { has_government = fascism }
+
+	division_types = { "infantry" "motorized" "mechanized" }
+
+	fallback_name = "Dai-%d Kokutai Shidan"
+
+	ordered =
+	{
+		1 = { "Dai-%d Shidan 'Kōdō'" }
+		2 = { "Dai-%d Shidan 'Kokutai'" }
+		3 = { "Dai-%d Shidan 'Shōwa Ishin'" }
+		4 = { "Dai-%d Shidan 'Yamato'" }
+		5 = { "Dai-%d Shidan 'Shinpū'" }
+		6 = { "Dai-%d Shidan 'Hakkō Ichiu'" }
+		7 = { "Dai-%d Shidan 'Kinnō'" }
+		8 = { "Dai-%d Shidan 'Kenkoku'" }
+		9 = { "Dai-%d Shidan 'Yasukuni'" }
+		10 = { "Dai-%d Shidan 'Kōkoku'" }
+		11 = { "Dai-%d Shidan 'Chūgi'" }
+		12 = { "Dai-%d Shidan 'Amatsu'" }
+		13 = { "Dai-%d Shidan 'Sakura'" }
+		14 = { "Dai-%d Shidan 'Meiji'" }
+		15 = { "Dai-%d Shidan 'Seiki'" }
+		16 = { "Dai-%d Shidan 'Kokuhon'" }
+		17 = { "Dai-%d Shidan 'Kokuryū'" }
+		18 = { "Dai-%d Shidan 'Tōhō'" }
+		19 = { "Dai-%d Shidan 'Taiwa'" }
+		20 = { "Dai-%d Shidan 'Shinkoku'" }
+	}
+}
+
+# Party and patriotic-society militias of the Kokutai right (Taisei Yokusankai, Seinendan, Zaigo Gunjinkai and
+# similar bodies). Fascism only.
+JAP_FAS_02 = 
+{
+	name = "Yokusan Corps"
+
+	for_countries = { JAP }
+
+	can_use = { has_government = fascism }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Dai-%d Hōkokutai"
+
+	ordered =
+	{
+		1 = { "Taisei Yokusankai Hōkokutai" }
+		2 = { "Dai Nippon Seinendan Hōkokutai" }
+		3 = { "Zaigō Gunjinkai Hōkokutai" }
+		4 = { "Dai Nippon Sangyō Hōkokukai Hōkokutai" }
+		5 = { "Kokuhonsha Hōkokutai" }
+		6 = { "Kokuryūkai Hōkokutai" }
+		7 = { "Tōhōkai Hōkokutai" }
+		8 = { "Kinnō-tō Hōkokutai" }
+		9 = { "Sakurakai Hōkokutai" }
+		10 = { "Yūzonsha Hōkokutai" }
+		11 = { "Shinpūren Hōkokutai" }
+		12 = { "Dai Nippon Seisantō Hōkokutai" }
+	}
+}
+
+# ==============================================================================
+# 5. DEMOCRATIC SUITE (Jieitai-style Defense Force)
+# ==============================================================================
+
+# Jieitai-style divisions named for their home region; keys follow the JGSDF divisions, later keys are
+# extrapolated regional commands. Gated by has_government = democratic.
+JAP_DEM_01 = 
+{
+	name = "Defense Force Divisions"
+
+	for_countries = { JAP }
+
+	can_use = { has_government = democratic }
+
+	division_types = { "infantry" "motorized" "mechanized" }
+
+	fallback_name = "Dai-%d Shidan"
+
+	ordered =
+	{
+		1 = { "Dai-%d Shidan 'Tōkyō'" }
+		2 = { "Dai-%d Shidan 'Asahikawa'" }
+		3 = { "Dai-%d Shidan 'Kansai'" }
+		4 = { "Dai-%d Shidan 'Kyūshū'" }
+		6 = { "Dai-%d Shidan 'Yamagata'" }
+		7 = { "Dai-%d Shidan 'Hokkaidō'" }
+		8 = { "Dai-%d Shidan 'Kumamoto'" }
+		9 = { "Dai-%d Shidan 'Aomori'" }
+		10 = { "Dai-%d Shidan 'Nagoya'" }
+		12 = { "Dai-%d Shidan 'Gunma'" }
+		13 = { "Dai-%d Shidan 'Shikoku'" }
+		14 = { "Dai-%d Shidan 'Tōhoku'" }
+		15 = { "Dai-%d Shidan 'Hokuriku'" }
+		16 = { "Dai-%d Shidan 'Tōkai'" }
+		17 = { "Dai-%d Shidan 'Kinki'" }
+		18 = { "Dai-%d Shidan 'Chūgoku'" }
+		19 = { "Dai-%d Shidan 'Okinawa'" }
+		20 = { "Dai-%d Shidan 'Kantō'" }
+	}
+}
+
+# Jieitai-style brigades: Obihiro, Makomanai, Kaita, Zentsuji and Naha follow the JGSDF; later entries are
+# extrapolated.
+JAP_DEM_02 = 
+{
+	name = "Defense Force Brigades"
+
+	for_countries = { JAP }
+
+	can_use = { has_government = democratic }
+
+	division_types = { "infantry" "mountaineers" }
+
+	fallback_name = "Dai-%d Ryodan"
+
+	ordered =
+	{
+		1 = { "Dai-%d Ryodan 'Tokachi'" }
+		2 = { "Dai-%d Ryodan 'Makomanai'" }
+		3 = { "Dai-%d Ryodan 'Kaita'" }
+		4 = { "Dai-%d Ryodan 'Zentsūji'" }
+		5 = { "Dai-%d Ryodan 'Naha'" }
+		6 = { "Dai-%d Ryodan 'Hokkaidō'" }
+		7 = { "Dai-%d Ryodan 'Tōhoku'" }
+		8 = { "Dai-%d Ryodan 'Kantō'" }
+		9 = { "Dai-%d Ryodan 'Chūbu'" }
+		10 = { "Dai-%d Ryodan 'Kinki'" }
+		11 = { "Dai-%d Ryodan 'Seibu'" }
+		12 = { "Dai-%d Ryodan 'Okinawa'" }
+	}
+}
+
+# Jieitai-style airborne brigades (1st Airborne Brigade, Narashino, and the Air Assault and Amphibious Rapid
+# Deployment commands); later entries are extrapolated.
+JAP_DEM_03 = 
+{
+	name = "Defense Force Airborne"
+
+	for_countries = { JAP }
+
+	can_use = { has_government = democratic }
+
+	division_types = { "paratrooper" }
+
+	fallback_name = "Dai-%d Kūtei Dan"
+
+	ordered =
+	{
+		1 = { "Dai-1 Kūtei Dan" }
+		2 = { "Dai-12 Herikoputā Dan" }
+		3 = { "Suiriku Kidō Dan" }
+		4 = { "Chūō Sokuō Shūdan" }
+		5 = { "Dai-2 Kūtei Dan" }
+		6 = { "Dai-3 Kūtei Dan" }
+	}
+}
+
+# Local volunteer defense corps (Jieidan) of a democratic Japan, by region (extrapolated).
+JAP_DEM_04 = 
+{
+	name = "Volunteer Defense Corps"
+
+	for_countries = { JAP }
+
+	can_use = { has_government = democratic }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Dai-%d Jieidan"
+
+	ordered =
+	{
+		1 = { "Hokkaidō Jieidan" }
+		2 = { "Tōhoku Jieidan" }
+		3 = { "Kantō Jieidan" }
+		4 = { "Chūbu Jieidan" }
+		5 = { "Kinki Jieidan" }
+		6 = { "Chūgoku Jieidan" }
+		7 = { "Shikoku Jieidan" }
+		8 = { "Kyūshū Jieidan" }
+		9 = { "Okinawa Jieidan" }
+		10 = { "Tōkyō Jieidan" }
+		11 = { "Ōsaka Jieidan" }
+		12 = { "Aichi Jieidan" }
+	}
+}
+
+# ==============================================================================
+# 6. COMMUNIST SUITE (People's Army / Red Guards)
+# ==============================================================================
+
+# Red Guard formations of the labour and student movement. The Chukaku Jieitai, Dokuritsu Yugekitai and
+# Sanson Kosakutai were real JCP organs (1951-55); Sekieitai is the Japanese term for Red Guards; the rest is
+# extrapolated. Gated by has_government = communism.
+JAP_RED_01 = 
+{
+	name = "Red Guards"
+
+	for_countries = { JAP }
+
+	can_use = { has_government = communism }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Dai-%d Sekieitai"
+
+	ordered =
+	{
+		1 = { "Chūkaku Jieitai" }
+		2 = { "Dokuritsu Yūgekitai" }
+		3 = { "Sanson Kōsakutai" }
+		4 = { "Rōdōsha Sekieitai" }
+		5 = { "Nōmin Sekieitai" }
+		6 = { "Zengakuren Sekieitai" }
+		7 = { "Sōhyō Sekieitai" }
+		8 = { "Zenkoku Rōdōkumiai Sekieitai" }
+		9 = { "Sanya Rōdōsha Sekieitai" }
+		10 = { "Ōsaka Rōdōsha Sekieitai" }
+		11 = { "Kōza-ha Sekieitai" }
+		12 = { "Hokkaidō Sekieitai" }
+		13 = { "Tōhoku Sekieitai" }
+		14 = { "Kantō Sekieitai" }
+		15 = { "Kansai Sekieitai" }
+		16 = { "Kyūshū Sekieitai" }
+	}
+}
+
+# Divisions of a People's Liberation Army (Jinmin Kaihō Gun) of a communist Japan; the pattern is Chinese-style
+# and entirely extrapolated.
+JAP_COM_01 = 
+{
+	name = "People's Army Divisions"
+
+	for_countries = { JAP }
+
+	can_use = { has_government = communism }
+
+	division_types = { "infantry" "motorized" "mechanized" }
+
+	fallback_name = "Dai-%d Jinmin Kaihō Shidan"
+
+	ordered =
+	{
+		1 = { "Dai-%d Shidan 'Akahata'" }
+		2 = { "Dai-%d Shidan 'Kaihō'" }
+		3 = { "Dai-%d Shidan 'Jinmin'" }
+		4 = { "Dai-%d Shidan 'Rōdō'" }
+		5 = { "Dai-%d Shidan 'Nōmin'" }
+		6 = { "Dai-%d Shidan 'Kyōsan'" }
+		7 = { "Dai-%d Shidan 'Kakumei'" }
+		8 = { "Dai-%d Shidan 'Kōza'" }
+		9 = { "Dai-%d Shidan 'Heiwa'" }
+		10 = { "Dai-%d Shidan 'Chūkaku'" }
+		11 = { "Dai-%d Shidan 'Sōhyō'" }
+		12 = { "Dai-%d Shidan 'Zengakuren'" }
+		13 = { "Dai-%d Shidan 'Sanya'" }
+		14 = { "Dai-%d Shidan 'Sekki'" }
+	}
+}

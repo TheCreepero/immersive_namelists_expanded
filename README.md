@@ -90,6 +90,7 @@ powershell -File .\build.ps1 -PublishSteam -ChangeNote "Add new division namelis
 | `POL` | Poland | `INEX_POL_names_divisions.txt` |
 | `FIN` | Finland | `INEX_FIN_names_divisions.txt` |
 | `SWE` | Sweden | `INEX_SWE_names_divisions.txt` |
+| `JAP` | Japan | `INEX_JAP_names_divisions.txt` |
 | `EST` | Estonia | `INEX_EST_names_divisions.txt` |
 | `LAT` | Latvia | `INEX_LAT_names_divisions.txt` |
 | `LIT` | Lithuania | `INEX_LIT_names_divisions.txt` |

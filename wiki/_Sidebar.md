@@ -14,6 +14,7 @@
 - [Poland](Poland)
 - [Finland](Finland)
 - [Sweden](Sweden)
+- [Japan](Japan)
 - [Estonia](Estonia)
 - [Latvia](Latvia)
 - [Lithuania](Lithuania)
