@@ -21,7 +21,7 @@ BeforeAll {
         . ([ScriptBlock]::Create($launcherFuncMatch.Groups[1].Value))
     }
 
-    foreach ($fn in 'Get-NamelistAuditData', 'Get-OrderedEntryStats', 'Compare-NamelistAuditData', 'Get-GitFileText', 'Get-NameVariantKey', 'Resolve-GroupTag', 'Get-GroupSections', 'Get-OrphanHeaderLines', 'Edit-NamelistGroupText', 'Compare-NamelistGroupSets', 'Format-NamelistDiff', 'Get-CountryName', 'Format-PlanChangeTable', 'Set-PlanChangeTable', 'New-AuditPlanText', 'Format-AuditSummaryLine', 'Update-WikiGroupRows', 'Find-WikiProseMentions') {
+    foreach ($fn in 'Get-NamelistAuditData', 'Get-OrderedEntryStats', 'Compare-NamelistAuditData', 'Get-GitFileText', 'Get-NameVariantKey', 'Resolve-GroupTag', 'Get-GroupSections', 'Format-EntryList', 'Get-OrphanHeaderLines', 'Set-NamelistGroupComment', 'Set-NamelistHeader', 'Edit-NamelistGroupText', 'Get-VanillaOverlap', 'Find-WikiLinkMismatches', 'Compare-NamelistGroupSets', 'Format-NamelistDiff', 'Get-CountryName', 'Format-PlanChangeTable', 'Set-PlanChangeTable', 'New-AuditPlanText', 'Format-AuditSummaryLine', 'Update-WikiGroupRows', 'Find-WikiProseMentions') {
         $fnMatch = [regex]::Match($script:BuildContent, "(?s)(function $fn\s*\{.*?\n\})")
         if ($fnMatch.Success) {
             . ([ScriptBlock]::Create($fnMatch.Groups[1].Value))
@@ -926,6 +926,411 @@ Describe "build.ps1 -EditNames action and -Audit CLI flags" {
         $output = & powershell -NoProfile -File $script:BuildScriptPath -EditNames LAT -Group INF_01 -Remove 'NonExistentDivisionName' 2>&1 | Out-String
         $LASTEXITCODE | Should -Be 1
         $output | Should -Match 'NonExistentDivisionName'
+        [System.IO.File]::ReadAllText($path) | Should -Be $before
+    }
+}
+
+Describe "build.ps1 Helper: Format-EntryList" {
+    It "Joins distinct names and collapses consecutive duplicates with a count" {
+        Format-EntryList -Names @('A', 'B', 'B', 'B', 'C') | Should -Be 'A; B (x3); C'
+    }
+
+    It "Does not collapse identical names that are not adjacent" {
+        Format-EntryList -Names @('A', 'B', 'A') | Should -Be 'A; B; A'
+    }
+
+    It "Prefixes keys, using ranges for contiguous runs" {
+        Format-EntryList -Names @('A', 'B', 'B', 'B', 'C') -Keys @(1, 2, 3, 4, 9) -ShowKeys | Should -Be '1=A; 2-4=B (x3); 9=C'
+    }
+
+    It "Lists the keys of a collapsed run that has gaps" {
+        Format-EntryList -Names @('B', 'B', 'B') -Keys @(2, 4, 6) -ShowKeys | Should -Be '2,4,6=B (x3)'
+    }
+
+    It "Returns an empty string for no names" {
+        Format-EntryList -Names @() | Should -Be ''
+    }
+}
+
+Describe "build.ps1 Helper: structural namelist edits" {
+    BeforeAll {
+        $script:Structural = @"
+# Vanilla header line
+# second header line
+
+# ===== Infantry =====
+
+# Overrides vanilla TST_INF_01.
+TST_INF_01 = {
+	name = "Infantry Divisions"
+	can_use = { always = yes }
+	division_types = { "infantry" }
+
+	# Number reservation system will tie to another group.
+	link_numbering_with = { TST_CAV_01 }
+
+	fallback_name = "%d. Divisioona"
+
+	# Names with numbers (only one number per entry).
+	# It's okay to have gaps in numbering.
+	ordered = {
+		# Frontline
+		1 = { "1. Divisioona" }
+		2 = { "2. Divisioona" }
+	}
+}
+
+TST_CAV_01 = {
+	name = "Cavalry Divisions"
+	division_types = { "cavalry" }
+	fallback_name = "%d. Ratsuvaki"
+	ordered = {
+		1 = { "Hameen Ratsurykmentti" }
+	}
+}
+
+TST_NOFB_01 = {
+	name = "No fallback"
+	division_types = { "infantry" }
+	ordered = {
+		1 = { "Only Name" }
+	}
+}
+"@
+    }
+
+    Context "Doubled line endings" {
+        It "Does not emit CR CR LF when adding a new section to a CRLF file" {
+            $crlf = $script:Structural -replace "`r?`n", "`r`n"
+            $edited = Edit-NamelistGroupText -Text $crlf -GroupTag 'TST_INF_01' -Add @('3. Divisioona', '4. Divisioona') -Section 'Reserve'
+            $edited | Should -Match '# Reserve'
+            $edited | Should -Not -Match "`r`r"
+            ([regex]::Matches($edited, "(?<!`r)`n")).Count | Should -Be 0
+        }
+    }
+
+    Context "-RemoveAll and '# Header' items" {
+        It "Rewrites the entries of a group in one edit" {
+            $edited = Edit-NamelistGroupText -Text $script:Structural -GroupTag 'TST_INF_01' -RemoveAll -Add @('7=7. Uusi')
+            $edited | Should -Match '7 = \{ "7\. Uusi" \}'
+            $edited | Should -Not -Match '"1\. Divisioona"'
+            $edited | Should -Not -Match '# Frontline'
+        }
+
+        It "Refuses -RemoveAll without anything to add" {
+            { Edit-NamelistGroupText -Text $script:Structural -GroupTag 'TST_INF_01' -RemoveAll } | Should -Throw '*empty ordered block*'
+        }
+
+        It "Creates several sections from '# Header' items" {
+            $edited = Edit-NamelistGroupText -Text $script:Structural -GroupTag 'TST_INF_01' -RemoveAll -Add @('# First', '1=1. A', '2=2. B', '# Second', '10=10. C')
+            $edited | Should -Match '(?s)# First.*1 = \{ "1\. A" \}.*2 = \{ "2\. B" \}.*# Second.*10 = \{ "10\. C" \}'
+        }
+
+        It "Rejects '# Header' items combined with -Section" {
+            { Edit-NamelistGroupText -Text $script:Structural -GroupTag 'TST_INF_01' -Add @('# H', '5=5. X') -Section 'Frontline' } | Should -Throw '*cannot be combined*'
+        }
+    }
+
+    Context "-ClearOrdered" {
+        It "Leaves a fallback-only group and removes the introducing comments" {
+            $edited = Edit-NamelistGroupText -Text $script:Structural -GroupTag 'TST_INF_01' -ClearOrdered
+            $block = [regex]::Match($edited, '(?s)TST_INF_01 = \{.*?\n\}').Value
+            $block | Should -Not -Match 'ordered'
+            $block | Should -Not -Match 'Names with numbers'
+            $block | Should -Match 'fallback_name = "%d\. Divisioona"'
+            $block | Should -Match 'link_numbering_with = \{ TST_CAV_01 \}'
+            $edited | Should -Match 'TST_CAV_01 = \{'
+        }
+
+        It "Keeps the file parseable by the audit" {
+            $tmp = [System.IO.Path]::GetTempFileName()
+            try {
+                $edited = Edit-NamelistGroupText -Text $script:Structural -GroupTag 'TST_INF_01' -ClearOrdered
+                [System.IO.File]::WriteAllText($tmp, $edited, (New-Object System.Text.UTF8Encoding($false)))
+                $data = Get-NamelistAuditData -Path $tmp
+                @($data.Groups | ForEach-Object { $_.Tag }) | Should -Be @('TST_INF_01', 'TST_CAV_01', 'TST_NOFB_01')
+                ($data.Groups | Where-Object { $_.Tag -eq 'TST_INF_01' }).OrderedCount | Should -Be 0
+            } finally { Remove-Item -Force $tmp }
+        }
+
+        It "Refuses a group without fallback_name and combinations with entry edits" {
+            { Edit-NamelistGroupText -Text $script:Structural -GroupTag 'TST_NOFB_01' -ClearOrdered } | Should -Throw '*fallback_name*'
+            { Edit-NamelistGroupText -Text $script:Structural -GroupTag 'TST_INF_01' -ClearOrdered -Add @('9=9. X') } | Should -Throw '*cannot be combined*'
+        }
+    }
+
+    Context "-RemoveGroup" {
+        It "Removes the group and the comments directly above it, keeping its neighbours" {
+            $edited = Edit-NamelistGroupText -Text $script:Structural -GroupTag 'TST_INF_01' -RemoveGroup
+            $edited | Should -Not -Match 'TST_INF_01'
+            $edited | Should -Not -Match 'Overrides vanilla TST_INF_01'
+            $edited | Should -Match '# ===== Infantry ====='
+            $edited | Should -Match 'TST_CAV_01 = \{'
+            $edited | Should -Not -Match "(\r?\n){3}"
+        }
+
+        It "Removes a group in the middle of the file without touching the next one" {
+            $edited = Edit-NamelistGroupText -Text $script:Structural -GroupTag 'TST_CAV_01' -RemoveGroup
+            $edited | Should -Not -Match 'TST_CAV_01 = \{'
+            $edited | Should -Not -Match 'Hameen Ratsurykmentti'
+            $edited | Should -Match 'TST_NOFB_01 = \{'
+            $edited | Should -Match '"2\. Divisioona"'
+        }
+
+        It "Cannot be combined with other edits" {
+            { Edit-NamelistGroupText -Text $script:Structural -GroupTag 'TST_CAV_01' -RemoveGroup -Selector 'X' } | Should -Throw '*cannot be combined*'
+        }
+    }
+
+    Context "-Comment" {
+        It "Replaces the comment lines directly above a group" {
+            $edited = Edit-NamelistGroupText -Text $script:Structural -GroupTag 'TST_INF_01' -Comment 'Plain variant; fallback names only.'
+            $edited | Should -Match "# Plain variant; fallback names only\.\r?\nTST_INF_01 = \{"
+            $edited | Should -Not -Match 'Overrides vanilla TST_INF_01'
+            $edited | Should -Match '# ===== Infantry ====='
+        }
+
+        It "Adds a comment (with a banner and a blank line) above an uncommented group" {
+            $edited = Edit-NamelistGroupText -Text $script:Structural -GroupTag 'TST_CAV_01' -Comment '# ===== Cavalry =====\n\nOverrides vanilla TST_CAV_01.'
+            $edited | Should -Match "(?s)\}\r?\n\r?\n# ===== Cavalry =====\r?\n\r?\n# Overrides vanilla TST_CAV_01\.\r?\nTST_CAV_01 = \{"
+        }
+    }
+
+    Context "Set-NamelistHeader" {
+        It "Replaces the header but keeps comments attached to the first group" {
+            $text = "# old 1`n# old 2`n`n# attached`nTST_A = {`n`tname = `"A`"`n}`n"
+            $edited = Set-NamelistHeader -Text $text -Header 'INEX test header\nsecond line'
+            $edited | Should -Match '^# INEX test header\n# second line\n\n# attached\nTST_A = \{'
+            $edited | Should -Not -Match 'old 1'
+        }
+
+        It "Keeps a section banner that sits between the header and the first group" {
+            $text = "# old 1`n`n# ===== Infantry =====`n`n# Overrides vanilla.`nTST_A = {`n`tname = `"A`"`n}`n"
+            $edited = Set-NamelistHeader -Text $text -Header 'New header'
+            $edited | Should -Match '^# New header\n\n# ===== Infantry =====\n\n# Overrides vanilla\.\nTST_A = \{'
+            $edited | Should -Not -Match 'old 1'
+        }
+
+        It "Clears the boilerplate flag in the audit" {
+            $tmp = [System.IO.Path]::GetTempFileName()
+            try {
+                $boiler = "# Division template historical names system. Is a new method of naming the divisions based on the names-group assigned to it's template.`n`nTST_A = {`n`tname = `"A`"`n`tfallback_name = `"%d. A`"`n}`n"
+                [System.IO.File]::WriteAllText($tmp, $boiler, (New-Object System.Text.UTF8Encoding($false)))
+                (Get-NamelistAuditData -Path $tmp).FileFlags | Should -Contain 'HEADER_BOILERPLATE'
+                [System.IO.File]::WriteAllText($tmp, (Set-NamelistHeader -Text $boiler -Header 'INEX - Test (TST)'), (New-Object System.Text.UTF8Encoding($false)))
+                (Get-NamelistAuditData -Path $tmp).FileFlags | Should -Not -Contain 'HEADER_BOILERPLATE'
+            } finally { Remove-Item -Force $tmp }
+        }
+    }
+}
+
+Describe "build.ps1 Helper: audit gating, ordinal and vanilla-overlap lints" {
+    BeforeAll {
+        $script:LintFixture = [System.IO.Path]::GetTempFileName()
+        $e = [char]0x00E8
+        $fixture = @"
+TST_MIL_01 = {
+	name = "Home Militia"
+	division_types = { "militia" }
+	fallback_name = "%d. Milicja"
+	ordered = {
+		1 = { "Milicja Wawelska" }
+	}
+}
+
+TST_MIL_02 = {
+	name = "Party Militia"
+	can_use = { has_government = fascism }
+	division_types = { "militia" }
+	fallback_name = "%d. Milicja"
+	ordered = {
+		1 = { "Milicja Partyjna" }
+	}
+}
+
+TST_MIL_03 = {
+	name = "Mixed Gate"
+	can_use = { OR = { has_government = fascism has_government = neutrality } }
+	division_types = { "infantry" }
+	fallback_name = "%d. Dywizja"
+}
+
+TST_FR_01 = {
+	name = "Divisions"
+	division_types = { "infantry" }
+	fallback_name = "%d${e}me Division"
+	ordered = {
+		1 = { "%d${e}re Division" }
+		5 = { "%d${e}re Division" }
+	}
+}
+
+TST_EN_01 = {
+	name = "English"
+	division_types = { "infantry" }
+	fallback_name = "%dth Division"
+	ordered = {
+		1 = { "%dst Division" }
+		2 = { "%dnd Division" }
+		3 = { "%drd Division" }
+		11 = { "%dth Division" }
+		12 = { "%dth Division" }
+		21 = { "%dst Division" }
+	}
+}
+
+TST_EN_02 = {
+	name = "English wrong"
+	division_types = { "infantry" }
+	fallback_name = "%dth Division"
+	ordered = {
+		1 = { "%dst Division" }
+		2 = { "%dst Division" }
+	}
+}
+"@
+        [System.IO.File]::WriteAllText($script:LintFixture, $fixture, (New-Object System.Text.UTF8Encoding($false)))
+        $script:LintData = Get-NamelistAuditData -Path $script:LintFixture
+        $script:LintGroup = { param($tag) $script:LintData.Groups | Where-Object { $_.Tag -eq $tag } }
+    }
+
+    AfterAll {
+        if (Test-Path $script:LintFixture) { Remove-Item -Force $script:LintFixture }
+    }
+
+    It "Parses can_use, including nested blocks, and entry keys" {
+        (& $script:LintGroup 'TST_MIL_01').CanUse | Should -BeNullOrEmpty
+        (& $script:LintGroup 'TST_MIL_02').CanUse | Should -Be 'has_government = fascism'
+        (& $script:LintGroup 'TST_MIL_03').CanUse | Should -Be 'OR = { has_government = fascism has_government = neutrality }'
+        (& $script:LintGroup 'TST_EN_01').EntryKeys | Should -Be @(1, 2, 3, 11, 12, 21)
+    }
+
+    It "Flags a militia or political group that any government may use" {
+        (& $script:LintGroup 'TST_MIL_01').Flags | Should -Contain 'UNGATED_POLITICAL'
+    }
+
+    It "Does not flag a gated political group" {
+        (& $script:LintGroup 'TST_MIL_02').Flags | Should -Not -Contain 'UNGATED_POLITICAL'
+        (& $script:LintGroup 'TST_MIL_03').Flags | Should -Not -Contain 'UNGATED_POLITICAL'
+    }
+
+    It "Flags a French feminine first ordinal at a key other than 1" {
+        (& $script:LintGroup 'TST_FR_01').Flags | Should -Contain 'ORDINAL_MISMATCH'
+    }
+
+    It "Accepts English ordinal suffixes that match their key" {
+        (& $script:LintGroup 'TST_EN_01').Flags | Should -Not -Contain 'ORDINAL_MISMATCH'
+    }
+
+    It "Flags an English ordinal suffix that does not match its key" {
+        (& $script:LintGroup 'TST_EN_02').Flags | Should -Contain 'ORDINAL_MISMATCH'
+    }
+
+    Context "Get-VanillaOverlap" {
+        BeforeAll {
+            $script:FakeHoi4 = Join-Path ([System.IO.Path]::GetTempPath()) ("inex_hoi4_" + [guid]::NewGuid().ToString('N'))
+            $dir = Join-Path $script:FakeHoi4 'common\units\names_divisions'
+            New-Item -ItemType Directory -Force -Path $dir | Out-Null
+            $e = [char]0x00E8
+            $vanilla = @"
+TST_FR_01 = {
+	name = "Divisions"
+	fallback_name = "%d${e}me Division"
+	ordered = {
+		1 = { "%d${e}re Division" }
+		5 = { "%d${e}re Division" }
+		6 = { "Sixieme" }
+	}
+}
+"@
+            [System.IO.File]::WriteAllText((Join-Path $dir 'TST_names_divisions.txt'), $vanilla, (New-Object System.Text.UTF8Encoding($false)))
+        }
+
+        AfterAll {
+            if (Test-Path $script:FakeHoi4) { Remove-Item -Recurse -Force $script:FakeHoi4 }
+        }
+
+        It "Counts entries identical in key and name to the vanilla group with the same tag" {
+            $o = Get-VanillaOverlap -Groups $script:LintData.Groups -Key 'TST' -Hoi4Dir $script:FakeHoi4
+            $o['TST_FR_01'].Matches | Should -Be 2
+            $o['TST_FR_01'].Total | Should -Be 2
+            $o.ContainsKey('TST_EN_01') | Should -BeFalse
+        }
+
+        It "Returns nothing when HOI4 is not installed" {
+            (Get-VanillaOverlap -Groups $script:LintData.Groups -Key 'TST' -Hoi4Dir $null).Count | Should -Be 0
+        }
+    }
+}
+
+Describe "build.ps1 Helper: wiki heading and link-claim checks" {
+    BeforeAll {
+        $script:LinkGroups = @(
+            [PSCustomObject]@{ Tag = 'TST_INF_01'; LinkTargets = @() },
+            [PSCustomObject]@{ Tag = 'TST_MOT_01'; LinkTargets = @('TST_INF_01') },
+            [PSCustomObject]@{ Tag = 'TST_MNT_01'; LinkTargets = @('TST_INF_01') }
+        )
+    }
+
+    It "Does not append a native parenthetical that the selector already contains" {
+        $groups = @([PSCustomObject]@{ Tag = 'TST_GN_01'; Selector = 'National Guard Divisions'; DivisionTypes = @('infantry'); Fallback = '%d. Garde'; LinkTargets = @() })
+        $wiki = "### ``TST_GN_01`` $([char]0x2014) Garde Nationale (National Guard)`n"
+        $r = Update-WikiGroupRows -WikiText $wiki -Groups $groups -Tag 'TST'
+        $r.Text | Should -Match 'National Guard Divisions\s*$'
+        $r.Text | Should -Not -Match 'Divisions \(National Guard\)'
+    }
+
+    It "Still keeps a native-name parenthetical that adds information" {
+        $groups = @([PSCustomObject]@{ Tag = 'TST_MOT_01'; Selector = 'Motorized Divisions'; DivisionTypes = @('motorized'); Fallback = '%d. DIM'; LinkTargets = @() })
+        $wiki = "### ``TST_MOT_01`` $([char]0x2014) Motorized Division (Division d'Infanterie Motorisee)`n"
+        $r = Update-WikiGroupRows -WikiText $wiki -Groups $groups -Tag 'TST'
+        $r.Text | Should -Match "Motorized Divisions \(Division d'Infanterie Motorisee\)"
+    }
+
+    It "Reports a section claim that names the wrong numbering partner" {
+        $wiki = "### ``TST_MOT_01`` Motorized`nShares numbering with ``TST_MNT_01`` via link_numbering_with.`n"
+        $r = Find-WikiLinkMismatches -WikiText $wiki -Groups $script:LinkGroups
+        $r.Count | Should -Be 1
+        $r[0] | Should -Match 'TST_MOT_01 is said to share numbering with TST_MNT_01'
+        $r[0] | Should -Match 'TST_INF_01'
+    }
+
+    It "Accepts a claim that matches the namelist, in either direction" {
+        $wiki = "### ``TST_MOT_01`` Motorized`nShares numbering with ``TST_INF_01``.`n### ``TST_INF_01`` Infantry`nShares numbering with ``TST_MOT_01``.`n"
+        (Find-WikiLinkMismatches -WikiText $wiki -Groups $script:LinkGroups).Count | Should -Be 0
+    }
+
+    It "Uses the bullet's own tag as the subject inside a multi-tag section" {
+        $wiki = "### ``TST_INF_01`` / ``TST_MOT_01`` Mixed`n- ``TST_MOT_01`` shares numbering with ``TST_MNT_01``.`n"
+        $r = Find-WikiLinkMismatches -WikiText $wiki -Groups $script:LinkGroups
+        $r.Count | Should -Be 1
+        $r[0] | Should -Match '^L2: TST_MOT_01'
+    }
+}
+
+Describe "build.ps1 -Audit -Keys and -EditNames CLI safety" {
+    It "Prints keys and collapses duplicate runs with -NamesOnly -Keys" {
+        $output = & powershell -NoProfile -File $script:BuildScriptPath -Audit LAT -Group INF_01 -NamesOnly -Keys 2>&1 | Out-String
+        $LASTEXITCODE | Should -Be 0
+        $output | Should -Match 'LAT_INF_01 \(\d+/\d+\)'
+        $output | Should -Match '(?m)\b\d+(-\d+)?='
+    }
+
+    It "Refuses -RemoveGroup while another group links to it, leaving the file untouched" {
+        # FRA_INF_01 is the numbering anchor of FRA_INF_02, FRA_MOT_01, FRA_MNT_01 and FRA_GAR_01
+        $path = Join-Path $script:RepoRoot 'common\units\names_divisions\INEX_FRA_names_divisions.txt'
+        $before = [System.IO.File]::ReadAllText($path)
+        $output = & powershell -NoProfile -File $script:BuildScriptPath -EditNames FRA -Group INF_01 -RemoveGroup 2>&1 | Out-String
+        $LASTEXITCODE | Should -Be 1
+        $output | Should -Match 'link_numbering_with'
+        [System.IO.File]::ReadAllText($path) | Should -Be $before
+    }
+
+    It "Fails -ClearOrdered on a group that is already fallback-only, leaving the file untouched" {
+        $path = Join-Path $script:RepoRoot 'common\units\names_divisions\INEX_FRA_names_divisions.txt'
+        $before = [System.IO.File]::ReadAllText($path)
+        $null = & powershell -NoProfile -File $script:BuildScriptPath -EditNames FRA -Group INF_01 -ClearOrdered 2>&1 | Out-String
+        $LASTEXITCODE | Should -Be 1
         [System.IO.File]::ReadAllText($path) | Should -Be $before
     }
 }

@@ -21,7 +21,7 @@ Entries that meet the standard stay untouched; only reported gaps are fixed. Rul
 
 ## Token Discipline
 - Start from `powershell -File .\build.ps1 -Audit <TAG>` (~40 lines: group table, findings, summary).
-- Read groups with `-Audit <TAG> -Group <A>,<B> -NamesOnly` (one line per group; `<TAG>_` prefix optional, e.g. `-Group INF_01,CAV_01`); add `-Sections` to show comment headers inline. Drop `-NamesOnly` only when you need block syntax (`division_types`, `fallback_name`, `link_numbering_with`, `can_use`). Never open the namelist file, not even to edit it: use `-EditNames`.
+- Read groups with `-Audit <TAG> -Group <A>,<B> -NamesOnly` (one line per group; `<TAG>_` prefix optional, e.g. `-Group INF_01,CAV_01`); add `-Sections` to show comment headers inline and `-Keys` to prefix each entry with its ordered key (what `-EditNames -Remove`/`-Set` by index needs). Consecutive identical names collapse to `name (xN)`, so a vanilla-stub group stays one short line, and a gated group shows its `can_use`. Drop `-NamesOnly` only when you need block syntax (`division_types`, `fallback_name`, `link_numbering_with`). Never open the namelist file, not even to edit it: use `-EditNames` and `-SetHeader`.
 - Read only the groups a finding names and the content-risk pools. Pure regional or numbered lists get a `-NamesOnly` skim for display names; the reviewer's whole-file check covers them.
 - Docs: `-SyncWiki <TAG>` rewrites wiki display names and fallbacks. Grep only for prose (README and workshop rows, the `[b]<Country>[/b]` block, wiki overview or scope notes) and edit only those lines; never print a whole wiki page.
 - Plan: `-AuditPlan <TAG>` writes the skeleton and the change table; never read an older plan as a template or hand-edit the table.
@@ -33,7 +33,7 @@ Entries that meet the standard stay untouched; only reported gaps are fixed. Rul
 
 ## 1. Non-Negotiables for Audits
 
-1. **Preserve every existing root group tag.** Players' division templates and other groups' `link_numbering_with` reference tags by name. Never rename or delete a tag. Fix it in place. Add a new tag only for a genuinely new category, or for the named variant of a plain/named pair (R10).
+1. **Preserve every existing root group tag.** Players' division templates and other groups' `link_numbering_with` reference tags by name. Never rename or delete a tag. Fix it in place. Add a new tag only for a genuinely new category, or for the named variant of a plain/named pair (R10). Removing a tag (`-EditNames -RemoveGroup`) happens only on the user's explicit instruction, and the report says that saved templates on it lose their names.
 2. **Keep what is already good.** Modernize; do not rewrite authored, historically sound names for the sake of it.
 3. **Keep file-level conventions:** `for_countries`, the German three-file split, and any group referenced by vanilla scripts (see `-InspectVanilla`).
 4. **No edits before approval.** The audit report is a checkpoint; apply only the items the user approves.
@@ -57,10 +57,15 @@ A modernized file meets all of these (reference implementation: `INEX_PER_names_
 | R7 | Motorized/mechanized groups `link_numbering_with` field infantry where the nation's doctrine plausibly shared numbering. | `UNLINKED_MOBILE` |
 | R8 | No dead commented self-links, TODO notes, or "barely any info" comments. | `DEAD_SELF_LINK_COMMENT`, `TODO_COMMENT` |
 | R9 | Wiki page, README row, and workshop cross-reference/BBCode describe the file as it now is. | (manual) |
-| R10 | Nicknamed infantry, motorized, mechanized, and armor lists keep a plain (un-nicknamed) variant: the existing/vanilla tag becomes the fallback-only plain group, and the nicknames move to a new `"<Selector> (Named)"` tag that shares its numbering (authoring skill §4). Not needed if vanilla already nicknames those divisions (e.g. USA). | (manual; `-Audit` shows `Variant: plain` and exempts it from R4/R5) |
-| R11 | Ideology-gated groups use `has_government` and never lock behind national focuses (`has_completed_focus`), decisions, or event flags. | `FOCUS_LOCKED` |
+| R10 | Nicknamed infantry, motorized, mechanized, and armor lists keep a plain (un-nicknamed) variant: the existing/vanilla tag becomes the fallback-only plain group, and the nicknames move to a new `"<Selector> (Named)"` tag that shares its numbering through `link_numbering_with = { <plain tag> }` (authoring skill §4). Not needed if vanilla already nicknames those divisions (e.g. USA). | (manual; `-Audit` shows `Variant: plain` and exempts it from R4/R5; without the link it cannot pair the two) |
+| R11 | Ideology-gated groups use `has_government` and never lock behind national focuses (`has_completed_focus`), decisions, or event flags. | `FOCUS_LOCKED`, `UNGATED_POLITICAL` |
 
-Two more informational lints: `NAME_LONG` (an entry over 60 characters; only outliers, since long honorific names are common and intended) and the file-level `IDENTITY_REPEAT`, which lists quoted identities (e.g. `'Tali'`) reused across groups under different division numbers.
+More informational lints:
+- `NAME_LONG`: an entry over 60 characters; only outliers, since long honorific names are common and intended.
+- `IDENTITY_REPEAT` (file level): quoted identities (e.g. `'Tali'`) reused across groups under different division numbers.
+- `UNGATED_POLITICAL`: a militia, party, guard or resistance style group still on `can_use = { always = yes }`; gate it by government (R11).
+- `ORDINAL_MISMATCH`: a fixed ordinal after `%d` at a key where it reads wrong (French `%dère` at key 5 renders "5ère"; English `%dth` at key 1 or `%dst` at key 2). Fix the entry with `-Set`.
+- `VANILLA_COPY` (single-file `-Audit` with HOI4 installed): at least 80% of the entries are identical to the vanilla group of the same tag, so the stubs can be dropped with `-RemoveAll` or `-ClearOrdered` without changing any name. The `Vanilla:` line shows the count.
 
 Lint flags are **heuristics**. Treat them as leads, confirm by reading the group, and override with a stated reason where history justifies it.
 
@@ -93,6 +98,8 @@ Dispatch a budgeted fact-checker subagent using `.claude/agents/inex-audit-resea
 - Web-only tools, maximum 25 web calls.
 - Send a **specific list** of questionable entries, fallbacks, or garrison titles needing native-language verification.
 - Paste the `-NamesOnly` lines of the relevant groups into the prompt.
+- Keep the ask narrow: 4-5 topics at most, highest value first, with the exact entries to check rather than whole topic areas. A wide ask spends the 25 calls on skimming and returns many UNVERIFIED.
+- Ask for numbered formation lists with official names and ordinals. Nicknames and epithets are scarce and usually only on secondary sources (forums, fan wikis); weigh them accordingly. Send a second, smaller run only for what stayed UNVERIFIED.
 - The researcher returns **verified facts, not finished namelist entries**. Mark UNVERIFIED rather than guessing.
 
 ### Phase 2: Audit Report (checkpoint)
@@ -119,13 +126,17 @@ Apply only what the user approves.
 ### Phase 3: Apply in Place via `-EditNames`
 Edit groups in place using `build.ps1 -EditNames`:
 ```powershell
-powershell -File .\build.ps1 -EditNames <TAG> -Group <GROUP> [-Remove "A; B"] [-Rename "Old=New"] [-Add "C; D" [-Section "Header"]] [-Set "Idx=NewName"] [-Selector "<Name>"] [-AddType "<type>"] [-RemoveType "<type>"] [-CanUse "<trigger>"]
+powershell -File .\build.ps1 -EditNames <TAG> -Group <GROUP> [-Remove "A; B"] [-RemoveAll] [-Rename "Old=New"] [-Add "C; D" [-Section "Header"]] [-Set "Idx=NewName"] [-Selector "<Name>"] [-AddType "<type>"] [-RemoveType "<type>"] [-CanUse "<trigger>"] [-ClearOrdered] [-Comment "<text>"] [-RemoveGroup]
+powershell -File .\build.ps1 -SetHeader <TAG> -HeaderText "<header text>"
 ```
 - Supports metadata edits (`-Selector`, `-AddType`, `-RemoveType`, `-CanUse`) and multi-group updates (`-Group G1,G2`).
+- Rewrite a whole list in one call: `-RemoveAll -Add "# Section A; 1=...; 2=...; # Section B; 40=..."` (a `# Header` item starts a comment-headed section). Use it to replace vanilla stubs with authored names; get the keys of what stays from `-NamesOnly -Keys`.
+- `-ClearOrdered` turns a group into the fallback-only plain variant (R10). `-Comment` replaces the comment above a group (`\n` splits lines; add a banner plus a blank line for a section banner). `-SetHeader` replaces the file header (R1) and keeps section banners.
+- `-RemoveGroup` is refused while another group links to it; see non-negotiable 1 before using it.
 - Preserves indentation, numbering, and line endings automatically.
 - Drops section headers that removals leave empty.
 - Automatically reports duplicate names or invalid indices.
-- Never edit the namelist file by hand unless adding a completely new group block or plain variant.
+- Never edit the namelist file by hand unless adding a completely new group block.
 
 ### Phase 4: Verification & Audit Plan Refresh
 1. `powershell -File .\build.ps1 -ValidateOnly`
@@ -134,7 +145,7 @@ powershell -File .\build.ps1 -EditNames <TAG> -Group <GROUP> [-Remove "A; B"] [-
 4. `powershell -File .\build.ps1 -AuditPlan <TAG>`: automatically refreshes the markdown change table between markers in the plan. Fill the remaining TODO sections in the plan.
 
 ### Phase 5: Docs Delta
-1. `powershell -File .\build.ps1 -SyncWiki <TAG>`: automatically updates wiki table rows (selectors, types, fallbacks) and reports stale/missing tags and prose mentions.
+1. `powershell -File .\build.ps1 -SyncWiki <TAG>`: automatically updates wiki table rows (selectors, types, fallbacks) and reports stale/missing tags, prose mentions of removed names, and prose that claims a numbering link the namelist does not have.
 2. Edit prose lines in `wiki/<Nation>.md`, `README.md`, and `WORKSHOP_DESCRIPTION_GUIDELINES.md` (no emojis, concise BBCode).
 
 ### Phase 6: Code Reviewer Subagent
@@ -155,7 +166,11 @@ powershell -File .\build.ps1 -Audit ALL               # triage table, most flags
 powershell -File .\build.ps1 -Audit <KEY>             # per-group scorecard for one file
 powershell -File .\build.ps1 -Audit <KEY> -NamesOnly  # compact name list (one line per group)
 powershell -File .\build.ps1 -Audit <KEY> -Group <G> -NamesOnly -Sections  # inspect one group with section comments
+powershell -File .\build.ps1 -Audit <KEY> -Group <G> -NamesOnly -Keys  # same, with ordered keys (duplicate runs collapse to name (xN))
 powershell -File .\build.ps1 -EditNames <KEY> -Group <G> -Add "Name" -Section "Header" # edit group in place
+powershell -File .\build.ps1 -EditNames <KEY> -Group <G> -RemoveAll -Add "# Header; 1=A; 2=B" # rewrite a whole list
+powershell -File .\build.ps1 -EditNames <KEY> -Group <G> -ClearOrdered -Comment "Plain variant" # fallback-only group
+powershell -File .\build.ps1 -SetHeader <KEY> -HeaderText "INEX - <Country> (<TAG>)"  # replace file header
 powershell -File .\build.ps1 -DiffNames <KEY>         # name-level diff vs HEAD with moves
 powershell -File .\build.ps1 -AuditPlan <KEY>         # create plan skeleton or refresh change table
 powershell -File .\build.ps1 -SyncWiki <KEY>          # sync wiki table rows and report prose mentions

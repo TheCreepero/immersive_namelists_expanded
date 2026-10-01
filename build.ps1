@@ -58,9 +58,36 @@
     With -Audit -NamesOnly: show each group's comment headers inline ("[Header] 1. Name; 2. Name"), so section
     placement can be planned without opening the file.
 
+.PARAMETER Keys
+    With -Audit -NamesOnly: prefix every entry with its ordered key ("7=Name", "2-41=Name (x40)"). Consecutive identical
+    names always collapse to "name (xN)" in -NamesOnly output. Use the keys to feed -EditNames -Remove / -Set.
+
 .PARAMETER EditNames
     Edit one group of a mod namelist in place without opening the file (e.g. -EditNames LAT -Group INF_01 -Rename "Old=New").
-    Supports -Add, -Remove, -Rename, -Set, -After, -Section, -RenameSection, -Quiet.
+    Supports -Add, -Remove, -RemoveAll, -Rename, -Set, -After, -Section, -RenameSection, -ClearOrdered, -RemoveGroup,
+    -Comment, -Selector, -AddType, -RemoveType, -CanUse, -Quiet.
+
+.PARAMETER RemoveAll
+    With -EditNames: empty the ordered block first, so -Add can rewrite the whole list in one call. Needs -Add.
+    -Add also accepts "# Header" items to create several comment-headed sections in one call.
+
+.PARAMETER ClearOrdered
+    With -EditNames: delete the whole ordered block, leaving a fallback-only (plain) group. Needs fallback_name.
+
+.PARAMETER RemoveGroup
+    With -EditNames: delete the whole group (and the comment lines directly above it). Refused while another group's
+    link_numbering_with points at it. Removing a tag breaks saved division templates; use only when asked.
+
+.PARAMETER Comment
+    With -EditNames: replace the comment lines directly above the group. Lines split on newlines or a literal "\n";
+    a banner plus a blank line adds a section banner (e.g. "# ===== Cavalry =====\n\nOverrides vanilla FRA_CAV_01.").
+
+.PARAMETER SetHeader
+    Replace the file header (comment lines before the first group) of INEX_<TAG>_names_divisions.txt with -HeaderText.
+    Comment lines attached directly to the first group are kept.
+
+.PARAMETER HeaderText
+    With -SetHeader: the new header; lines split on newlines or a literal "\n", "# " is added when missing.
 
 .PARAMETER Add
     With -EditNames: names to add ("A; B" or "15=Name"). Appended at the end of the ordered block, or after -After or in -Section.
@@ -209,6 +236,9 @@ param(
     [Parameter(ParameterSetName = 'Audit')]
     [switch]$Sections,
 
+    [Parameter(ParameterSetName = 'Audit')]
+    [switch]$Keys,
+
     [Parameter(ParameterSetName = 'InspectVanilla')]
     [Parameter(ParameterSetName = 'Audit')]
     [Parameter(ParameterSetName = 'EditNames', Mandatory = $true)]
@@ -251,7 +281,25 @@ param(
     [string]$CanUse,
 
     [Parameter(ParameterSetName = 'EditNames')]
+    [switch]$RemoveAll,
+
+    [Parameter(ParameterSetName = 'EditNames')]
+    [switch]$ClearOrdered,
+
+    [Parameter(ParameterSetName = 'EditNames')]
+    [switch]$RemoveGroup,
+
+    [Parameter(ParameterSetName = 'EditNames')]
+    [string]$Comment,
+
+    [Parameter(ParameterSetName = 'EditNames')]
     [switch]$Quiet,
+
+    [Parameter(ParameterSetName = 'SetHeader', Mandatory = $true)]
+    [string]$SetHeader,
+
+    [Parameter(ParameterSetName = 'SetHeader', Mandatory = $true)]
+    [string]$HeaderText,
 
     [Parameter(ParameterSetName = 'DiffNames', Mandatory = $true)]
     [string]$DiffNames,
@@ -267,6 +315,7 @@ param(
     [string]$Base = 'HEAD',
 
     [Parameter(ParameterSetName = 'InspectVanilla')]
+    [Parameter(ParameterSetName = 'Audit')]
     [string]$Hoi4InstallDir,
 
     [switch]$Validate,
@@ -925,9 +974,16 @@ function Get-NamelistAuditData {
         $links = if ($linkM.Success) { @([regex]::Matches($linkM.Groups[1].Value, '([A-Za-z0-9_]+)') | ForEach-Object { $_.Groups[1].Value }) } else { @() }
 
         $entries = @()
+        $entryKeys = @()
         if ($orderedM.Success) {
-            $entries = @([regex]::Matches($orderedM.Groups['content'].Value, ('(\d+)\s*=\s*\{?\s*' + $str)) | ForEach-Object { $_.Groups[2].Value })
+            $entryMatches = @([regex]::Matches($orderedM.Groups['content'].Value, ('(\d+)\s*=\s*\{?\s*' + $str)))
+            $entries = @($entryMatches | ForEach-Object { $_.Groups[2].Value })
+            $entryKeys = @($entryMatches | ForEach-Object { [int]$_.Groups[1].Value })
         }
+
+        # can_use may nest one or two levels (OR = { NOT = { ... } }); keep it as one whitespace-collapsed line
+        $canUseM = [regex]::Match($cleanBlock, 'can_use\s*=\s*\{(?<c>(?:[^{}]|\{(?:[^{}]|\{[^{}]*\})*\})*)\}')
+        $canUse = if ($canUseM.Success) { ($canUseM.Groups['c'].Value -replace '\s+', ' ').Trim() } else { $null }
 
         # An entry is a placeholder when it adds nothing over fallback_name or repeats another entry's pattern
         $fallbackNorm = if ($fallback) { & $normalize $fallback } else { $null }
@@ -956,6 +1012,23 @@ function Get-NamelistAuditData {
         }
         if ($rawBlock -match $todoRegex) { $flags.Add('TODO_COMMENT') }
         if ($cleanBlock -match '\bhas_completed_focus\b') { $flags.Add('FOCUS_LOCKED') }
+        # A political or militia group that any government may use: gate it with has_government (heuristic)
+        $isUngated = (-not $canUse) -or ($canUse -match '^always\s*=\s*yes$')
+        $politicalRx = '(?i)(militia|milice|volkssturm|partisan|blackshirt|red guard|waffen|\bSS\b|fascist|communist|monarchist|imperial|national guard|home guard|party|francs-tireurs|resistance)'
+        if ($isUngated -and ($types -contains 'militia' -or "$selector $($b.Tag) $fallback" -match $politicalRx)) { $flags.Add('UNGATED_POLITICAL') }
+        # A fixed ordinal suffix after %d only reads right at one key: the French feminine first ("1ere", "1re") at key 1 only,
+        # English "%dst"/"%dnd"/"%drd"/"%dth" at the key whose ordinal ends that way (else "1th", "2st")
+        $badOrdinal = $false
+        for ($ei = 0; $ei -lt $entries.Count; $ei++) {
+            $k = [int]$entryKeys[$ei]
+            if ($entries[$ei] -cmatch '%d(ère|re)\b') {
+                if ($k -ne 1) { $badOrdinal = $true; break }
+            } elseif ($entries[$ei] -cmatch '%d(st|nd|rd|th)\b') {
+                $expected = if ($k % 100 -ge 11 -and $k % 100 -le 13) { 'th' } else { switch ($k % 10) { 1 { 'st' } 2 { 'nd' } 3 { 'rd' } default { 'th' } } }
+                if ($matches[1] -cne $expected) { $badOrdinal = $true; break }
+            }
+        }
+        if ($badOrdinal) { $flags.Add('ORDINAL_MISMATCH') }
         # Outliers only: long honorific names are common and intentional (e.g. GER cavalry)
         if (@($entries | Where-Object { ($_ -replace '%[ds]', '10' -replace '\\"', '"').Length -gt 60 }).Count -gt 0) {
             $flags.Add('NAME_LONG')
@@ -970,7 +1043,9 @@ function Get-NamelistAuditData {
             OrderedCount  = $entries.Count
             AuthoredCount = $authoredCount
             PlainVariantOf = $null
+            CanUse        = $canUse
             Entries       = $entries
+            EntryKeys     = $entryKeys
             Flags         = $flags
             RawBlock      = $rawBlock
         })
@@ -1172,22 +1247,51 @@ function Get-GroupSections {
     $sections = [System.Collections.Generic.List[psobject]]::new()
     if (-not $m.Success) { return @() }
     $content = if ($m.Groups['content'].Success) { $m.Groups['content'].Value } else { $m.Groups[1].Value }
-    $current = [PSCustomObject]@{ Header = ''; Names = [System.Collections.Generic.List[string]]::new() }
+    $current = [PSCustomObject]@{ Header = ''; Names = [System.Collections.Generic.List[string]]::new(); Keys = [System.Collections.Generic.List[int]]::new() }
     foreach ($line in ($content -split "`n")) {
         $t = $line.Trim()
         if ($t.StartsWith('#')) {
             if ($current.Header -or $current.Names.Count) { $sections.Add($current) }
-            $current = [PSCustomObject]@{ Header = ($t -replace '^#+\s*', ''); Names = [System.Collections.Generic.List[string]]::new() }
+            $current = [PSCustomObject]@{ Header = ($t -replace '^#+\s*', ''); Names = [System.Collections.Generic.List[string]]::new(); Keys = [System.Collections.Generic.List[int]]::new() }
             continue
         }
-        $entryM = [regex]::Match($t, '\d+\s*=\s*(?:\{\s*"((?:[^"\\]|\\.)*)"\s*\}|"((?:[^"\\]|\\.)*)")')
+        $entryM = [regex]::Match($t, '(\d+)\s*=\s*(?:\{\s*"((?:[^"\\]|\\.)*)"\s*\}|"((?:[^"\\]|\\.)*)")')
         if ($entryM.Success) {
-            $val = if ($entryM.Groups[1].Success) { $entryM.Groups[1].Value } else { $entryM.Groups[2].Value }
+            $val = if ($entryM.Groups[2].Success) { $entryM.Groups[2].Value } else { $entryM.Groups[3].Value }
             $current.Names.Add($val)
+            $current.Keys.Add([int]$entryM.Groups[1].Value)
         }
     }
     if ($current.Header -or $current.Names.Count) { $sections.Add($current) }
     return $sections.ToArray()
+}
+
+# --- Helper: One-line listing of entry names; consecutive identical names collapse to "name (xN)" ---
+# With -ShowKeys each item is prefixed by its ordered key(s): "7=Name", "2-41=Name (x40)".
+function Format-EntryList {
+    param(
+        [string[]]$Names = @(),
+        [int[]]$Keys = @(),
+        [switch]$ShowKeys
+    )
+    $out = [System.Collections.Generic.List[string]]::new()
+    $i = 0
+    while ($i -lt $Names.Count) {
+        $j = $i
+        while ($j + 1 -lt $Names.Count -and $Names[$j + 1] -ceq $Names[$i]) { $j++ }
+        $n = $j - $i + 1
+        $label = if ($n -gt 1) { "$($Names[$i]) (x$n)" } else { $Names[$i] }
+        if ($ShowKeys -and $Keys.Count -eq $Names.Count) {
+            $ks = @($Keys[$i..$j])
+            $contiguous = $true
+            for ($k = 1; $k -lt $ks.Count; $k++) { if ($ks[$k] -ne $ks[$k - 1] + 1) { $contiguous = $false; break } }
+            $keyLabel = if ($n -eq 1) { "$($ks[0])" } elseif ($contiguous) { "$($ks[0])-$($ks[-1])" } else { $ks -join ',' }
+            $label = "$keyLabel=$label"
+        }
+        $out.Add($label)
+        $i = $j + 1
+    }
+    return ($out -join '; ')
 }
 
 # --- Helper: Comment headers in an ordered block that no longer head any entry ---
@@ -1201,6 +1305,56 @@ function Get-OrphanHeaderLines {
         if ($j -ge $Lines.Count -or $Lines[$j].Trim().StartsWith('#')) { $orphans += $i }
     }
     return , $orphans
+}
+
+# --- Helper: Replace the comment lines directly above a group (no blank line between) with new text ---
+# Comment lines are split on newlines or a literal "\n"; an empty line stays blank, a line without '#' gets "# ".
+# Include a banner plus a blank line to add a section banner above the group's own comment.
+function Set-NamelistGroupComment {
+    param(
+        [string]$Text,
+        [string]$GroupTag,
+        [string]$Comment
+    )
+    if (-not $Comment) { return $Text }
+    $nl = if ($Text.Contains("`r`n")) { "`r`n" } else { "`n" }
+    $head = [regex]::Match($Text, "(?m)^[ \t]*$([regex]::Escape($GroupTag))[ \t]*=\s*\{")
+    if (-not $head.Success) { throw "Group $GroupTag not found" }
+    $from = $head.Index
+    while ($from -gt 0) {
+        $prevEnd = $from - 1
+        $prevStart = $Text.LastIndexOf("`n", [Math]::Max(0, $prevEnd - 1)) + 1
+        if ($Text.Substring($prevStart, $prevEnd - $prevStart).Trim().StartsWith('#')) { $from = $prevStart } else { break }
+    }
+    $lines = @($Comment -split '\\n|\r?\n' | ForEach-Object { if (-not $_.Trim()) { '' } elseif ($_.TrimStart().StartsWith('#')) { $_.TrimStart() } else { "# $($_.Trim())" } })
+    $block = ($lines -join $nl) + $nl
+    $needsBlank = $from -gt 0 -and $lines[0] -ne '' -and $Text.Substring(0, $from).TrimEnd(" ", "`t") -notmatch '(\r?\n){2}\z'
+    if ($needsBlank) { $block = $nl + $block }
+    return $Text.Substring(0, $from) + $block + $Text.Substring($head.Index)
+}
+
+# --- Helper: Replace the file header (comment lines before the first group) with new text ---
+# Keeps any comment lines attached directly to the first group. Lines without '#' get "# ".
+function Set-NamelistHeader {
+    param(
+        [string]$Text,
+        [string]$Header
+    )
+    $nl = if ($Text.Contains("`r`n")) { "`r`n" } else { "`n" }
+    $first = [regex]::Match($Text, '(?m)^[ \t]*[A-Za-z][A-Za-z0-9_]*[ \t]*=[ \t]*\{?[ \t]*\r?$')
+    $cut = if ($first.Success) { $first.Index } else { $Text.Length }
+    $from = $cut
+    while ($from -gt 0) {
+        $prevEnd = $from - 1
+        $prevStart = $Text.LastIndexOf("`n", [Math]::Max(0, $prevEnd - 1)) + 1
+        if ($Text.Substring($prevStart, $prevEnd - $prevStart).Trim().StartsWith('#')) { $from = $prevStart } else { break }
+    }
+    # Section banners ("# =====" / "# -----") between the header and the first group are not part of the header
+    $region = $Text.Substring(0, $from)
+    $banner = [regex]::Match($region, '(?m)^[ \t]*#[ \t]*(={3,}|-{3,}).*$')
+    $keep = if ($banner.Success) { $region.Substring($banner.Index) } else { '' }
+    $lines = @($Header -split '\\n|\r?\n' | ForEach-Object { if (-not $_.Trim()) { '#' } elseif ($_.TrimStart().StartsWith('#')) { $_.TrimEnd() } else { "# $($_.Trim())" } })
+    return ($lines -join $nl) + $nl + $nl + $keep + $Text.Substring($from)
 }
 
 # --- Helper: Edit the ordered = { } block or metadata of one group in namelist text ---
@@ -1218,10 +1372,20 @@ function Edit-NamelistGroupText {
         [string]$Selector,
         [string[]]$AddTypes = @(),
         [string[]]$RemoveTypes = @(),
-        [string]$CanUse
+        [string]$CanUse,
+        [switch]$RemoveAll,
+        [switch]$ClearOrdered,
+        [switch]$RemoveGroup,
+        [string]$Comment
     )
 
     if ($After -and $Section) { throw "Use -After or -Section, not both" }
+    if ($RemoveGroup -and ($Add.Count -or $Remove.Count -or $Rename.Count -or $Set.Count -or $Selector -or $CanUse -or $AddTypes.Count -or $RemoveTypes.Count -or $RemoveAll -or $ClearOrdered -or $Comment)) {
+        throw "-RemoveGroup cannot be combined with other edits"
+    }
+    if ($ClearOrdered -and ($Add.Count -or $Remove.Count -or $Rename.Count -or $Set.Count -or $RemoveAll)) {
+        throw "-ClearOrdered cannot be combined with entry edits (use -RemoveAll with -Add to rewrite entries)"
+    }
     $nl = if ($Text.Contains("`r`n")) { "`r`n" } else { "`n" }
     $cr = if ($nl -eq "`r`n") { "`r" } else { '' }
     $headerText = { param($line) $line.Trim() -replace '^#+\s*', '' }
@@ -1246,7 +1410,28 @@ function Edit-NamelistGroupText {
     }
     if ($blockEnd -lt 0) { throw "Group $GroupTag has unbalanced braces" }
 
-    $hasOrderedEdits = ($Add.Count -gt 0 -or $Remove.Count -gt 0 -or $Rename.Count -gt 0 -or $Set.Count -gt 0 -or $RenameSection.Count -gt 0)
+    # Whole-group removal: also drops the comment lines directly above the group and one trailing blank line
+    if ($RemoveGroup) {
+        $from = $head.Index
+        while ($from -gt 0) {
+            $prevEnd = $from - 1
+            $prevStart = $Text.LastIndexOf("`n", [Math]::Max(0, $prevEnd - 1)) + 1
+            $prevLine = $Text.Substring($prevStart, $prevEnd - $prevStart).Trim()
+            if ($prevLine.StartsWith('#')) { $from = $prevStart } else { break }
+        }
+        $to = $blockEnd + 1
+        while ($to -lt $Text.Length -and ($Text[$to] -eq ' ' -or $Text[$to] -eq "`t")) { $to++ }
+        if ($to -lt $Text.Length -and $Text[$to] -eq "`r") { $to++ }
+        if ($to -lt $Text.Length -and $Text[$to] -eq "`n") { $to++ }
+        # Swallow one following blank line so groups stay separated by exactly one
+        $probe = $to
+        while ($probe -lt $Text.Length -and ($Text[$probe] -eq ' ' -or $Text[$probe] -eq "`t")) { $probe++ }
+        if ($probe -lt $Text.Length -and $Text[$probe] -eq "`r") { $probe++ }
+        if ($probe -lt $Text.Length -and $Text[$probe] -eq "`n") { $to = $probe + 1 }
+        return $Text.Substring(0, $from) + $Text.Substring($to)
+    }
+
+    $hasOrderedEdits = ($Add.Count -gt 0 -or $Remove.Count -gt 0 -or $Rename.Count -gt 0 -or $Set.Count -gt 0 -or $RenameSection.Count -gt 0 -or $RemoveAll)
     if ($hasOrderedEdits -and ($uStart -lt 0 -or $uEnd -lt 0)) {
         throw "Group $GroupTag has no ordered = { } block"
     }
@@ -1348,8 +1533,16 @@ function Edit-NamelistGroupText {
         }
     }
 
+    # Fallback-only group: drop the whole ordered block, plus the comment and blank lines that introduce it
+    if ($ClearOrdered) {
+        if (-not $hasOrdered) { throw "Group $GroupTag has no ordered = { } block" }
+        if ($preBlock -notmatch '(?m)^[ \t]*fallback_name\s*=') { throw "Group $GroupTag has no fallback_name; clearing ordered would leave it without names" }
+        $preCleared = [regex]::Replace($preBlock, '(?s)(?:\r?\n[ \t]*)*(?:#[^\r\n]*\r?\n[ \t]*)*ordered\s*=\s*\{\s*\z', '')
+        return Set-NamelistGroupComment -Text ($Text.Substring(0, $head.Index) + $preCleared + $Text.Substring($uEnd + 1)) -GroupTag $GroupTag -Comment $Comment
+    }
+
     if (-not $hasOrdered) {
-        return $Text.Substring(0, $head.Index) + $preBlock + $Text.Substring($blockEnd + 1)
+        return Set-NamelistGroupComment -Text ($Text.Substring(0, $head.Index) + $preBlock + $Text.Substring($blockEnd + 1)) -GroupTag $GroupTag -Comment $Comment
     }
 
     $inner = $Text.Substring($uStart, $uEnd - $uStart)
@@ -1368,6 +1561,13 @@ function Edit-NamelistGroupText {
     $countOf = { param($n) @($currentEntries | Where-Object { $_.Name -ceq $n }).Count }
     $origLines = @($inner -split "`n")
     $orphansBefore = @((Get-OrphanHeaderLines -Lines $origLines) | ForEach-Object { & $headerText $origLines[$_] })
+
+    # 0. RemoveAll: empty the block so -Add can rewrite it (the empty-block check at the end still applies)
+    if ($RemoveAll) {
+        $inner = "$nl`t"
+        $currentEntries = Get-CurrentEntries $inner
+        $orphansBefore = @()
+    }
 
     # 1. RenameSection
     foreach ($pair in $RenameSection) {
@@ -1454,10 +1654,13 @@ function Edit-NamelistGroupText {
 
     # 5. Add
     if ($Add.Count -gt 0) {
+        # "# Header" items start a comment-headed section inside the added run (end-of-block adds only)
+        $addNames = @($Add | Where-Object { $_ -notmatch '^#' })
+        if ($addNames.Count -lt $Add.Count -and ($After -or $Section)) { throw "Add: '# Header' items cannot be combined with -After or -Section" }
         $currentNames = @($currentEntries | ForEach-Object { $_.Name })
-        $dupes = @($Add | Where-Object { $currentNames -contains $_ })
+        $dupes = @($addNames | Where-Object { $currentNames -contains $_ })
         if ($dupes.Count -gt 0) { throw "Add: already in ${GroupTag}: $($dupes -join ', ')" }
-        $repeat = @($Add | Group-Object | Where-Object { $_.Count -gt 1 } | ForEach-Object { $_.Name })
+        $repeat = @($addNames | Group-Object | Where-Object { $_.Count -gt 1 } | ForEach-Object { $_.Name })
         if ($repeat.Count -gt 0) { throw "Add: listed twice: $($repeat -join ', ')" }
 
         $entryLines = @($inner -split "`n" | Where-Object { $_ -match '^\s*\d+\s*=' })
@@ -1467,6 +1670,10 @@ function Edit-NamelistGroupText {
 
         $linesToAdd = [System.Collections.Generic.List[string]]::new()
         foreach ($name in $Add) {
+            if ($name -match '^#\s*(.+)$') {
+                $linesToAdd.Add("$indent# $($matches[1].Trim())$cr")
+                continue
+            }
             $idx = $nextIdx
             $entryVal = $name
             if ($name -match '^(\d+)\s*=\s*(.*)$') {
@@ -1505,7 +1712,9 @@ function Edit-NamelistGroupText {
         } else {
             $newSectionLines = if ($Section) { @("$indent# $($Section.Trim())$cr") + $linesToAdd.ToArray() } else { $linesToAdd.ToArray() }
             $body = $inner.TrimEnd()
-            $inner = $body + $nl + ($newSectionLines -join "`n") + $nl + "`t"
+            # Each added line already ends in $cr; trim it so the closing $nl does not double it (CR CR LF makes git treat the file as binary)
+            $sectionText = ($newSectionLines -join "`n").TrimEnd("`r")
+            $inner = $body + $nl + $sectionText + $nl + "`t"
         }
         $currentEntries = Get-CurrentEntries $inner
     }
@@ -1519,7 +1728,7 @@ function Edit-NamelistGroupText {
         $inner = $lines -join "`n"
     }
 
-    return $Text.Substring(0, $head.Index) + $preBlock + $inner + $Text.Substring($uEnd)
+    return Set-NamelistGroupComment -Text ($Text.Substring(0, $head.Index) + $preBlock + $inner + $Text.Substring($uEnd)) -GroupTag $GroupTag -Comment $Comment
 }
 
 # --- Action: Edit one or more groups in a mod namelist in place ---
@@ -1538,6 +1747,10 @@ function Invoke-NamelistEdit {
         [string]$AddTypeList,
         [string]$RemoveTypeList,
         [string]$CanUse,
+        [switch]$RemoveAll,
+        [switch]$ClearOrdered,
+        [switch]$RemoveGroup,
+        [string]$Comment,
         [switch]$Quiet
     )
     $Tag = $Tag.ToUpper().Trim() -replace '^INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
@@ -1553,9 +1766,9 @@ function Invoke-NamelistEdit {
     $addTypes = & $split $AddTypeList
     $removeTypes = & $split $RemoveTypeList
 
-    $hasAction = ($adds.Count + $removes.Count + $renames.Count + $sets.Count + $renameSections.Count + $addTypes.Count + $removeTypes.Count) -gt 0 -or $Selector -or $CanUse
+    $hasAction = ($adds.Count + $removes.Count + $renames.Count + $sets.Count + $renameSections.Count + $addTypes.Count + $removeTypes.Count) -gt 0 -or $Selector -or $CanUse -or $RemoveAll -or $ClearOrdered -or $RemoveGroup -or $Comment
     if (-not $hasAction) {
-        Write-Err "Nothing to do: pass -Add, -Remove, -Rename, -Set, -RenameSection, -Selector, -AddType, -RemoveType, and/or -CanUse"
+        Write-Err "Nothing to do: pass -Add, -Remove, -RemoveAll, -Rename, -Set, -RenameSection, -ClearOrdered, -RemoveGroup, -Comment, -Selector, -AddType, -RemoveType, and/or -CanUse"
         return 1
     }
 
@@ -1577,10 +1790,22 @@ function Invoke-NamelistEdit {
         if (-not $resolvedGroups.Contains($gt)) { $resolvedGroups.Add($gt) }
     }
 
+    if ($RemoveGroup) {
+        # Removing a tag breaks saved division templates, and a group other groups link to would leave a dangling link
+        foreach ($groupTag in $resolvedGroups) {
+            $linkedBy = @($groupsData.Groups | Where-Object { $_.Tag -ne $groupTag -and $resolvedGroups -notcontains $_.Tag -and $_.LinkTargets -contains $groupTag } | ForEach-Object { $_.Tag })
+            if ($linkedBy.Count -gt 0) {
+                Write-Err "${groupTag}: cannot remove; link_numbering_with from $($linkedBy -join ', ') points at it"
+                return 1
+            }
+        }
+        Write-Warn "Removing group tag(s) $($resolvedGroups -join ', '): saved templates that use them fall back to default names"
+    }
+
     $text = [System.IO.File]::ReadAllText($modFile, [System.Text.Encoding]::UTF8)
     foreach ($groupTag in $resolvedGroups) {
         try {
-            $text = Edit-NamelistGroupText -Text $text -GroupTag $groupTag -Add $adds -Remove $removes -Rename $renames -Set $sets -After $AfterName -Section $SectionName -RenameSection $renameSections -Selector $Selector -AddTypes $addTypes -RemoveTypes $removeTypes -CanUse $CanUse
+            $text = Edit-NamelistGroupText -Text $text -GroupTag $groupTag -Add $adds -Remove $removes -Rename $renames -Set $sets -After $AfterName -Section $SectionName -RenameSection $renameSections -Selector $Selector -AddTypes $addTypes -RemoveTypes $removeTypes -CanUse $CanUse -RemoveAll:$RemoveAll -ClearOrdered:$ClearOrdered -RemoveGroup:$RemoveGroup -Comment $Comment
         } catch {
             Write-Err "${groupTag}: $($_.Exception.Message)"
             return 1
@@ -1591,12 +1816,16 @@ function Invoke-NamelistEdit {
 
     $updatedData = Get-NamelistAuditData -Path $modFile
     foreach ($groupTag in $resolvedGroups) {
+        if ($RemoveGroup) { Write-Host "Removed ${groupTag}" -ForegroundColor Green; continue }
         $g = $updatedData.Groups | Where-Object { $_.Tag -eq $groupTag }
         $metaChanges = @()
         if ($Selector) { $metaChanges += "Selector='$Selector'" }
         if ($addTypes.Count) { $metaChanges += "+Types: $($addTypes -join ', ')" }
         if ($removeTypes.Count) { $metaChanges += "-Types: $($removeTypes -join ', ')" }
         if ($CanUse) { $metaChanges += "CanUse='$CanUse'" }
+        if ($RemoveAll) { $metaChanges += 'RemoveAll' }
+        if ($ClearOrdered) { $metaChanges += 'ClearOrdered (fallback-only)' }
+        if ($Comment) { $metaChanges += 'Comment' }
         $metaStr = if ($metaChanges.Count) { " [" + ($metaChanges -join '; ') + "]" } else { '' }
         Write-Host "Edited ${groupTag}: +$($adds.Count) -$($removes.Count) ~$($renames.Count + $sets.Count)$metaStr" -ForegroundColor Green
         if (-not $Quiet -and $g) {
@@ -1604,6 +1833,23 @@ function Invoke-NamelistEdit {
             Write-Host "$($g.Tag) ($($g.OrderedCount)/$($g.AuthoredCount))${label}: $($g.Entries -join '; ')"
         }
     }
+    return 0
+}
+
+# --- Action: Replace a namelist file's header comment (the lines before the first group) ---
+function Invoke-NamelistHeader {
+    param(
+        [string]$Tag,
+        [string]$Header
+    )
+    $Tag = $Tag.ToUpper().Trim() -replace '^INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
+    $modFile = Join-Path $RepoDir "common\units\names_divisions\INEX_${Tag}_names_divisions.txt"
+    if (-not (Test-Path $modFile)) { Write-Err "Mod namelist not found: $modFile"; return 1 }
+    if (-not $Header.Trim()) { Write-Err "-HeaderText is empty"; return 1 }
+    $text = [System.IO.File]::ReadAllText($modFile, [System.Text.Encoding]::UTF8)
+    $new = Set-NamelistHeader -Text $text -Header $Header
+    [System.IO.File]::WriteAllText($modFile, $new, (New-Object System.Text.UTF8Encoding $false))
+    Write-Host "Header of INEX_${Tag}_names_divisions.txt replaced" -ForegroundColor Green
     return 0
 }
 
@@ -1933,7 +2179,9 @@ function Update-WikiGroupRows {
                 $curTitle = $mHead.Groups[2].Value.Trim()
                 if ($curTitle -cne $g.Selector) {
                     $mParen = [regex]::Match($curTitle, '^(.*?)\s*(\([^)]+\))$')
-                    $newTitle = if ($mParen.Success -and -not $g.Selector.Contains('(')) {
+                    # Keep a native-name parenthetical, but not when the selector already says the same thing
+                    $parenInner = if ($mParen.Success) { $mParen.Groups[2].Value.Trim('(', ')', ' ') } else { '' }
+                    $newTitle = if ($mParen.Success -and -not $g.Selector.Contains('(') -and $g.Selector.IndexOf($parenInner, [System.StringComparison]::OrdinalIgnoreCase) -lt 0) {
                         "$($g.Selector) $($mParen.Groups[2].Value)"
                     } else {
                         $g.Selector
@@ -2010,6 +2258,44 @@ function Find-WikiProseMentions {
     return , $out.ToArray()
 }
 
+# --- Helper: Wiki prose claims about numbering links ("Shares numbering with `TAG`") that the namelist contradicts ---
+# The subject is the bullet's own tag ("- `TAG` ...") or else the tag(s) of the enclosing "###" heading.
+# A claim holds when either group links to the other.
+function Find-WikiLinkMismatches {
+    param(
+        [string]$WikiText,
+        [object[]]$Groups
+    )
+    $byTag = @{}; foreach ($g in $Groups) { $byTag[$g.Tag] = $g }
+    $out = [System.Collections.Generic.List[string]]::new()
+    $sectionTags = @()
+    $lines = @($WikiText -split "`n")
+    for ($i = 0; $i -lt $lines.Count; $i++) {
+        $raw = $lines[$i].TrimEnd("`r")
+        if ($raw -match '^###\s') {
+            $sectionTags = @([regex]::Matches($raw, '`([A-Z0-9_]+)`') | ForEach-Object { $_.Groups[1].Value })
+            continue
+        }
+        if ($raw -match '^\|') { continue }
+        $claims = @([regex]::Matches($raw, '(?i)(?:shares?|sharing|linked?|links?)\s+(?:its\s+)?numbering\s+(?:with|to)\s+`([A-Z0-9_]+)`'))
+        if ($claims.Count -eq 0) { continue }
+        $subjects = if ($raw -match '^\s*[-*]\s+`([A-Z0-9_]+)`') { @($Matches[1]) } else { $sectionTags }
+        foreach ($c in $claims) {
+            $target = $c.Groups[1].Value
+            foreach ($s in $subjects) {
+                $g = $byTag[$s]
+                if (-not $g) { continue }
+                $reverse = $byTag[$target] -and ($byTag[$target].LinkTargets -contains $s)
+                if ($g.LinkTargets -notcontains $target -and -not $reverse) {
+                    $actual = if ($g.LinkTargets.Count) { $g.LinkTargets -join ', ' } else { 'none' }
+                    $out.Add("L$($i + 1): $s is said to share numbering with $target; the namelist links it to: $actual")
+                }
+            }
+        }
+    }
+    return , $out.ToArray()
+}
+
 # --- Action: Sync a nation's wiki page rows and its wiki/Home.md group count with the namelist ---
 function Invoke-SyncWiki {
     param([string]$Tag)
@@ -2037,6 +2323,11 @@ function Invoke-SyncWiki {
     foreach ($c in $r.Changes) { Write-Host "  $c" }
     if ($r.Missing.Count) { Write-Host "  no row in wiki table (add by hand): $($r.Missing -join ', ')" }
     if ($r.Stale.Count) { Write-Host "  stale row in wiki table (remove by hand): $($r.Stale -join ', ')" }
+    $linkClaims = Find-WikiLinkMismatches -WikiText $r.Text -Groups $groups
+    if ($linkClaims.Count) {
+        Write-Host "  prose claims about numbering links that the namelist contradicts (fix by hand):"
+        foreach ($lc in $linkClaims) { Write-Host "    $lc" }
+    }
 
     $diff = $null
     try { $diff = Get-TagNamelistDiff -Tag $Tag -BaseRev 'HEAD' } catch { Write-Host "  prose check skipped: $($_.Exception.Message)" }
@@ -2075,13 +2366,43 @@ function Invoke-SyncWiki {
 }
 
 # --- Action: Audit namelist quality ---
+# --- Helper: How much of each group's ordered block is a verbatim copy of the vanilla group with the same tag ---
+# Returns tag -> @{ Matches; Total }. Empty when HOI4 is not installed or the vanilla file has no such group.
+function Get-VanillaOverlap {
+    param(
+        [object[]]$Groups,
+        [string]$Key,
+        [string]$Hoi4Dir
+    )
+    $result = @{}
+    if (-not $Hoi4Dir) { return $result }
+    $vanillaFile = Join-Path $Hoi4Dir ("common\units\names_divisions\" + ($Key -split '_')[0] + '_names_divisions.txt')
+    if (-not (Test-Path $vanillaFile)) { return $result }
+    $vanilla = Get-NamelistAuditData -Path $vanillaFile
+    foreach ($g in $Groups) {
+        $v = $vanilla.Groups | Where-Object { $_.Tag -eq $g.Tag } | Select-Object -First 1
+        if (-not $v -or $g.OrderedCount -eq 0) { continue }
+        $vanillaByKey = @{}
+        for ($i = 0; $i -lt $v.Entries.Count; $i++) { $vanillaByKey[[int]$v.EntryKeys[$i]] = $v.Entries[$i] }
+        $same = 0
+        for ($i = 0; $i -lt $g.Entries.Count; $i++) {
+            $k = [int]$g.EntryKeys[$i]
+            if ($vanillaByKey.ContainsKey($k) -and $vanillaByKey[$k] -ceq $g.Entries[$i]) { $same++ }
+        }
+        $result[$g.Tag] = @{ Matches = $same; Total = $g.OrderedCount }
+    }
+    return $result
+}
+
 function Invoke-NamelistAudit {
     param(
         [string]$Key,
         [string]$CompareRef,
         [string[]]$TargetGroup,
         [switch]$NamesOnly,
-        [switch]$Sections
+        [switch]$Sections,
+        [switch]$Keys,
+        [string]$Hoi4Dir
     )
 
     $namelistDir = Join-Path $RepoDir "common\units\names_divisions"
@@ -2131,27 +2452,37 @@ function Invoke-NamelistAudit {
             $selected = @($data.Groups | Where-Object { $resolved -contains $_.Tag })
         }
         foreach ($g in $selected) {
+            $gated = $g.CanUse -and $g.CanUse -notmatch '^always\s*=\s*yes$'
             if ($NamesOnly) {
                 $label = if ($g.Selector) { " `"$($g.Selector)`"" } else { '' }
+                if ($gated) { $label += " [can_use: $($g.CanUse)]" }
                 $body = if ($Sections -and $g.RawBlock) {
                     (@(Get-GroupSections -RawBlock $g.RawBlock) | ForEach-Object {
-                        $names = if ($_.Names.Count) { $_.Names -join '; ' } else { '(empty)' }
+                        $names = if ($_.Names.Count) { Format-EntryList -Names $_.Names.ToArray() -Keys $_.Keys.ToArray() -ShowKeys:$Keys } else { '(empty)' }
                         if ($_.Header) { "[$($_.Header)] $names" } else { $names }
                     }) -join ' '
-                } else { $g.Entries -join '; ' }
+                } else { Format-EntryList -Names $g.Entries -Keys $g.EntryKeys -ShowKeys:$Keys }
                 Write-Host "$($g.Tag) ($($g.OrderedCount)/$($g.AuthoredCount))${label}: $body"
             } else {
                 Write-Host "[$($g.Tag)] `"$($g.Selector)`"" -ForegroundColor Green
                 Write-Host "  Types:    $($g.DivisionTypes -join ' ')" -ForegroundColor Gray
+                if ($gated) { Write-Host "  can_use:  $($g.CanUse)" -ForegroundColor Gray }
                 Write-Host "  Fallback: $($g.Fallback)" -ForegroundColor Gray
                 Write-Host "  Ordered:  $($g.OrderedCount) entries, $($g.AuthoredCount) authored" -ForegroundColor Gray
                 if ($g.Flags.Count -gt 0) {
                     Write-Host "  Flags:    $($g.Flags -join ', ')" -ForegroundColor Yellow
                 }
-                Write-Host "  Entries:  $($g.Entries -join '; ')"
+                Write-Host "  Entries:  $(Format-EntryList -Names $g.Entries -Keys $g.EntryKeys -ShowKeys:$Keys)"
             }
         }
         return
+    }
+
+    # Groups that merely repeat vanilla entries (needs a local HOI4 install; silently skipped otherwise)
+    $overlap = Get-VanillaOverlap -Groups $data.Groups -Key $Key -Hoi4Dir (Find-Hoi4Install -CustomPath $Hoi4Dir)
+    foreach ($g in $data.Groups) {
+        $o = $overlap[$g.Tag]
+        if ($o -and $o.Total -ge 5 -and ($o.Matches / $o.Total) -ge 0.8) { $g.Flags.Add('VANILLA_COPY') }
     }
 
     Write-Step "Quality audit: INEX_${Key}_names_divisions.txt ($($data.Groups.Count) groups)"
@@ -2162,8 +2493,13 @@ function Invoke-NamelistAudit {
         $color = if ($g.Flags.Count -gt 0) { 'Yellow' } else { 'Green' }
         Write-Host "[$($g.Tag)] `"$($g.Selector)`"$linkStr" -ForegroundColor $color
         Write-Host "  Types:    $($g.DivisionTypes -join ' ')" -ForegroundColor Gray
+        if ($g.CanUse -and $g.CanUse -notmatch '^always\s*=\s*yes$') { Write-Host "  can_use:  $($g.CanUse)" -ForegroundColor Gray }
         Write-Host "  Fallback: $($g.Fallback)" -ForegroundColor Gray
         Write-Host "  Ordered:  $($g.OrderedCount) entries, $($g.AuthoredCount) authored" -ForegroundColor Gray
+        $o = $overlap[$g.Tag]
+        if ($o -and $o.Matches -gt 0) {
+            Write-Host "  Vanilla:  $($o.Matches)/$($o.Total) entries identical to vanilla $($g.Tag) (same key and name)" -ForegroundColor Gray
+        }
         if ($g.PlainVariantOf) {
             Write-Host "  Variant:  plain (un-nicknamed) counterpart of $($g.PlainVariantOf)" -ForegroundColor Gray
         }
@@ -2229,7 +2565,7 @@ function Invoke-NamelistAudit {
 
 # --- Action: Audit ---
 if ($Audit) {
-    Invoke-NamelistAudit -Key $Audit -CompareRef $Compare -TargetGroup $Group -NamesOnly:$NamesOnly -Sections:$Sections
+    Invoke-NamelistAudit -Key $Audit -CompareRef $Compare -TargetGroup $Group -NamesOnly:$NamesOnly -Sections:$Sections -Keys:$Keys -Hoi4Dir $Hoi4InstallDir
     $stopwatch.Stop()
     Write-Info "Completed in $($stopwatch.Elapsed.TotalSeconds.ToString('0.00'))s"
     exit 0
@@ -2237,7 +2573,12 @@ if ($Audit) {
 
 # --- Action: EditNames ---
 if ($EditNames) {
-    exit (Invoke-NamelistEdit -Tag $EditNames -TargetGroup $Group -AddList $Add -RemoveList $Remove -RenameList $Rename -SetList $Set -AfterName $After -SectionName $Section -RenameSectionList $RenameSection -Selector $Selector -AddTypeList $AddType -RemoveTypeList $RemoveType -CanUse $CanUse -Quiet:$Quiet)
+    exit (Invoke-NamelistEdit -Tag $EditNames -TargetGroup $Group -AddList $Add -RemoveList $Remove -RenameList $Rename -SetList $Set -AfterName $After -SectionName $Section -RenameSectionList $RenameSection -Selector $Selector -AddTypeList $AddType -RemoveTypeList $RemoveType -CanUse $CanUse -RemoveAll:$RemoveAll -ClearOrdered:$ClearOrdered -RemoveGroup:$RemoveGroup -Comment $Comment -Quiet:$Quiet)
+}
+
+# --- Action: SetHeader ---
+if ($SetHeader) {
+    exit (Invoke-NamelistHeader -Tag $SetHeader -Header $HeaderText)
 }
 
 # --- Action: DiffNames ---

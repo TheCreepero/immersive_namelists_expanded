@@ -237,7 +237,8 @@ When regular infantry, motorized, mechanized, or armored divisions get nicknamed
 - **Named variant gets a new tag**: the next category number not used by vanilla (check `-InspectVanilla`), e.g. `FIN_INF_05`. Give it the selector `"<Plain Selector> (Named)"` (at most 28 characters) and the same `division_types` and `fallback_name`.
 - **Shared numbering**: the named variant uses `link_numbering_with` on its plain counterpart (`{ <TAG>_INF_01 }`). In a mobile family, link every plain and named mobile group to one anchor (e.g. `<TAG>_MOT_01`).
 - **Exception**: if the vanilla group already carries nicknames (e.g. USA's *1st Infantry Division "Big Red One"*), a single named group is enough.
-- `build.ps1 -Audit` reports such a fallback-only group as `Variant: plain (un-nicknamed) counterpart of <TAG>` and does not flag it `PLACEHOLDER_ENTRIES` or `LOW_DEPTH`.
+- `build.ps1 -Audit` reports such a fallback-only group as `Variant: plain (un-nicknamed) counterpart of <TAG>` and does not flag it `PLACEHOLDER_ENTRIES` or `LOW_DEPTH`. It pairs the two through the `link_numbering_with`; without that link the pairing is missed.
+- To turn an existing list into the plain variant, run `-EditNames <TAG> -Group <GROUP> -ClearOrdered` (add `-Comment` for the override note), then move any authored nicknames to the Named group.
 
 ---
 
@@ -370,7 +371,7 @@ powershell -File .\build.ps1 -DiffNames <TAG>
 
 # 2d. Compact name list or group inspection
 powershell -File .\build.ps1 -Audit <TAG> -NamesOnly
-powershell -File .\build.ps1 -Audit <TAG> -Group <GROUP> -NamesOnly -Sections
+powershell -File .\build.ps1 -Audit <TAG> -Group <GROUP> -NamesOnly -Sections [-Keys]
 
 # 3. Release packaging test (ensures clean ZIP excluding dev artifacts)
 powershell -File .\build.ps1 -Package
