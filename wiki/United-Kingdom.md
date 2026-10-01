@@ -14,31 +14,34 @@ The British Army's divisional system drew on a rich tradition of regional county
 
 | Group Tag | UI Name | Division Types | Fallback Name |
 |:---|:---|:---|:---|
-| `ENG_INF_01` | Infantry Division | infantry | `%d Infantry Division` |
-| `ENG_INF_02` | Infantry Brigade | infantry | *(brigade format)* |
-| `ENG_INF_03` | Light Division | infantry | *(light division format)* |
-| `ENG_CAV_01` | Cavalry Division | cavalry | *(cavalry format)* |
-| `ENG_CAV_02` | Cavalry Brigade | cavalry | *(cavalry brigade format)* |
-| `ENG_MOT_01` | Motorised Division | motorized | `%d Motorised Division` |
-| `ENG_MOT_02` | Motor Division | motorized | *(motor division format)* |
-| `ENG_MEC_01` | Mechanised Division | mechanized | `%d Mechanised Division` |
-| `ENG_ARM_01` | Armoured Division | light_armor, medium_armor, heavy_armor, modern_armor | `%d Armoured Division` |
-| `ENG_ARM_02` | Tank Brigade | light_armor, medium_armor, heavy_armor, modern_armor | *(brigade format)* |
-| `ENG_ARM_03` | Heavy Armoured Brigade | light_armor, medium_armor, heavy_armor, modern_armor | *(heavy format)* |
-| `ENG_PAR_01` | Airborne Division | paratrooper | `%d Airborne Division` |
-| `ENG_PAR_02` | Parachute Regiment | paratrooper | *(regiment format)* |
-| `ENG_MAR_01` | Royal Marines Division | marine | `%d Royal Marines Division` |
-| `ENG_MNT_01` | Mountain Division | mountaineers | `%d Mountain Division` |
-| `ENG_MNT_02` | Gurkha Division | mountaineers | *(Gurkha format)* |
-| `ENG_GAR_01` | Garrison Division | infantry | `%d Garrison Division` |
-| `ENG_COL_01` | Colonial Division | infantry | *(colonial format)* |
-| `ENG_AIR_01` | Anti-Aircraft Division | infantry | *(AA format)* |
-| `ENG_DEM_01` | Loyalist Brigade | infantry | *(loyalist format)* |
-| `ENG_FAS_01` | Blackshirt Brigade | infantry | *(blackshirt format)* |
-| `ENG_HOMEGUARD_01` | Home Guard Division | infantry | *(Home Guard format)* |
-| `ENG_ROYAL_GUARD_01` | Royal Guard Division | infantry | *(royal guard format)* |
-| `ENG_INDEPENDENT_BRIGADES_01` | Independent Brigade | infantry | *(independent brigade format)* |
-| `ENG_SSB_01` | Special Service Brigade | infantry | *(SAS/commando format)* |
+| `ENG_INF_01` | Infantry Divisions | infantry | `%d Infantry Division` |
+| `ENG_INF_02` | Infantry Brigades | infantry | `%d Infantry Brigade` |
+| `ENG_INF_03` | Light Divisions | infantry, mechanized | `%d (Light) Division` |
+| `ENG_CAV_01` | Cavalry Divisions | cavalry | `%d Cavalry Division` |
+| `ENG_CAV_02` | Cavalry Brigades | cavalry | `%d Cavalry Brigade` |
+| `ENG_MOT_01` | Motorised Divisions | motorized | `%d Infantry Division` |
+| `ENG_MOT_02` | Motor Divisions | motorized | `%d Motor Division` |
+| `ENG_MEC_01` | Mechanised Divisions | mechanized | `%d Infantry Division` |
+| `ENG_ARM_01` | Armoured Divisions | light_armor, medium_armor, heavy_armor, modern_armor | `%d Armoured Division` |
+| `ENG_ARM_02` | Armoured & Tank Brigades | light_armor, medium_armor, modern_armor | `%d Armoured Brigade` |
+| `ENG_ARM_03` | Heavy Armoured Brigades | heavy_armor | `%d Heavy Armoured Brigade` |
+| `ENG_PAR_01` | Airborne Divisions | paratrooper | `%d Airborne Division` |
+| `ENG_PAR_02` | Parachute Brigades | paratrooper | `%d Parachute Brigade` |
+| `ENG_MAR_01` | Royal Marines | marine | `%d Royal Marines Division` |
+| `ENG_MNT_01` | Mountain Divisions | mountaineers | `%d Infantry Division` |
+| `ENG_MNT_02` | Gurkha Divisions | mountaineers | `%d Gurkha Division` |
+| `ENG_GAR_01` | Garrison Divisions | infantry | `%d Garrison Division` |
+| `ENG_COL_01` | Colonial Divisions | infantry | `%d (Colonial) Division` |
+| `ENG_AIR_01` | Anti-Aircraft Divisions | infantry | `%d Anti-Aircraft Division` |
+| `ENG_DEM_01` | Loyalist Brigades | infantry | `%d Loyalist Brigade` |
+| `ENG_FAS_01` | Blackshirt Brigades | infantry | `%d Blackshirt Brigade` |
+| `ENG_FAS_02` | Legion of St. George | infantry, motorized | `%d Legion of St. George` |
+| `ENG_COM_01` | Workers' Defense Brigades | infantry, motorized | `%d Workers' Defense Brigade` |
+| `ENG_COM_02` | People's Army Divisions | infantry, motorized, mechanized, light_armor, medium_armor | `%d People's Division` |
+| `ENG_HOMEGUARD_01` | Home Guard | infantry | `%d Home Guard Division` |
+| `ENG_ROYAL_GUARD_01` | Household Divisions | infantry, motorized, mechanized, light_armor, medium_armor, modern_armor | `%d Royal Guard Division` |
+| `ENG_INDEPENDENT_BRIGADES_01` | Independent Brigades | infantry, motorized, mechanized | `%d Independent Brigade` |
+| `ENG_SSB_01` | Special Service Brigades | infantry, paratrooper, mountaineers | `%d Special Service Brigade` |
 
 ---
 
@@ -62,14 +65,18 @@ Brigade-sized and light division formations for players using smaller templates.
 British cavalry divisions and brigades. By WWII most had converted to armour, but the lists include historic cavalry designations for the early war period and alternate-history paths.
 
 ### `ENG_MOT_01` / `ENG_MOT_02` — Motorised Divisions
-British motorized infantry. `ENG_MOT_01` shares numbering with `ENG_MEC_01` via `link_numbering_with` to preserve consistent divisional numbering across motorized and mechanized types.
+British motorized infantry. `ENG_MOT_01` and `ENG_MOT_02` share numbering with `ENG_INF_01` via `link_numbering_with` to preserve consistent divisional numbering across infantry and motorized types.
 
 ### `ENG_ARM_01` — Armoured Divisions
 Historical British armoured divisions including:
-- 1st Armoured Division
-- 6th Armoured Division (*Battleaxe Division*)
+- 1st and 2nd Armoured Divisions
+- 6th Armoured Division (*Mailed Fist*)
 - 7th Armoured Division (*Desert Rats*)
-- 8th, 9th, 10th, 11th Armoured Divisions
+- 8th, 9th, 10th Armoured Divisions
+- 11th Armoured Division (*Black Bull*)
+- 42nd Armoured Division
+- 79th Armoured Division (*Hobart's Funnies*)
+- Guards Armoured Division
 
 ### `ENG_ARM_02` / `ENG_ARM_03` — Tank Brigades / Heavy Armoured Brigades
 Independent tank brigades and army tank brigades used for infantry support.
@@ -77,33 +84,36 @@ Independent tank brigades and army tank brigades used for infantry support.
 ### `ENG_PAR_01` — Airborne Divisions
 British airborne: 1st Airborne Division (*Red Devils* — Arnhem) and 6th Airborne Division (D-Day landings). Extended numbered series for alt-history airborne expansion.
 
-### `ENG_PAR_02` — Parachute Regiments
-Parachute Regiment formations below division level.
+### `ENG_PAR_02` — Parachute Brigades
+Parachute and airlanding brigade formations: 1st through 5th Parachute Brigades, plus 1st and 6th Airlanding Brigades.
 
-### `ENG_MAR_01` — Royal Marines Division
-Royal Marines formations, covering both historical Royal Marines Division and amphibious brigade-sized units.
+### `ENG_MAR_01` — Royal Marines
+Royal Marines formations, covering the historical Royal Marine Division and Royal Marine Commandos (Nos. 40 through 48 RM Commando).
 
 ### `ENG_MNT_01` — Mountain Divisions
 Mountain and highland infantry. `ENG_MNT_01` links numbering with motorized/mechanized lists.
 
 ### `ENG_MNT_02` — Gurkha Divisions
-Gurkha formations — the famous Nepalese light infantry regiments of the British Indian Army, with `can_use` tied to either being `ENG` or completing the relevant focus.
+Gurkha formations — the famous Nepalese light infantry regiments of the British Indian Army, with `can_use` available to either `ENG` or `RAJ`.
 
 ### `ENG_GAR_01` — Garrison Divisions
-Garrison and line-of-communication divisions. Numbered series in the 100s and 200s (e.g., 200–210 series, Line of Communication areas).
+Anti-invasion County Divisions (Devon & Cornwall, Dorset, Durham & North Riding, Essex, Hampshire, Lincolnshire, Norfolk, Northumberland, West Sussex, Yorkshire) and strategic overseas fortress garrisons (Gibraltar, Malta, Singapore, Hong Kong).
 
 ### `ENG_COL_01` — Colonial Divisions
-Formations from British colonial territories: India, Australia, Canada, South Africa, New Zealand, East Africa, West Africa, the Middle East. Numbers mirror historical command numbering (500–series for Indian, etc.).
+Formations from British colonial territories and protectorates: East Africa, West Africa, Sudan, Somaliland, Transjordan, Burma, Malaya, and Hong Kong, including the King's African Rifles (KAR) and the Royal West African Frontier Force (RWAFF).
 
 ### `ENG_HOMEGUARD_01` — Home Guard
-The British Home Guard (*Dad's Army*) — territorial defence formations organized by county and region to defend the British Isles against invasion. 40 named regional formations.
+The British Home Guard (*Dad's Army*) — territorial defence formations organized by county to defend the British Isles against invasion. 40 named county formations.
 
-### `ENG_ROYAL_GUARD_01` — Royal Guard Division
-Household Division formations: the Brigade of Guards, Life Guards, Blues and Royals, and Household Cavalry. 20 named entries.
+### `ENG_ROYAL_GUARD_01` — Household Divisions
+Household Division formations: Grenadier, Coldstream, Scots, Irish, and Welsh Guards, Household Cavalry, Life Guards, Royal Horse Guards (*The Blues*), and King's Guard formations.
 
-### `ENG_SSB_01` — Special Service Brigade (Commandos / SAS)
-Special forces formations: Royal Marine Commandos, Army Commandos, SAS brigades, and independent raider brigades.
+### `ENG_SSB_01` — Special Service Brigades (Commandos / SAS)
+Special Service brigades: 1st through 4th Special Service Brigades (later Commando Brigades), including Lord Lovat's commandos.
 
-### `ENG_DEM_01` / `ENG_FAS_01` — Loyalist / Blackshirt Brigades
-Alternate-history formations for a British civil conflict scenario — Loyalist (monarchy/government) brigades and British Union of Fascists (Blackshirt) formations.
+### `ENG_DEM_01` / `ENG_FAS_01` / `ENG_FAS_02` — Democratic Loyalist & Fascist Formations
+Ideology-gated formations for British political paths: Democratic/Neutral Loyalist Brigades (`ENG_DEM_01`), British Union of Fascists Blackshirt Brigades (`ENG_FAS_01`), and the Fascist volunteer Legion of St. George (`ENG_FAS_02`).
+
+### `ENG_COM_01` / `ENG_COM_02` — Communist Formations
+Communist-gated suites for a socialist Britain: Workers' Defense Brigades (`ENG_COM_01`) honoring historical labor movements and International Brigade veterans (Tom Mann, Shapurji Saklatvala, James Connolly Column, Tolpuddle Martyrs, Red Clydeside), and the regular People's Army Divisions (`ENG_COM_02`).
 
