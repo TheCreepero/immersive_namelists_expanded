@@ -59,7 +59,7 @@ This document serves as an instruction and reference guide for maintaining and u
 | `INEX_GER_names_divisions.txt` | Germany | `GER` | Included (Plain & Named infantry, motorized, Panzergrenadier and Panzer lists with garrison identities and nicknames, Jäger, Gebirgs, Fallschirmjäger, Marine, Cavalry, fascist Elite Formations, Imperial & Guard, Republican, Red Army) |
 | `INEX_GER_SS_names_divisions.txt` | Germany (SS) | `GER` | Included (Fascist-only Waffen-SS divisions 1-41 by type incl. mountain & cavalry, shared honour-name expansion, heavy battalions, SS Kampfgruppen, Standarten) |
 | `INEX_GER_ADDITIONAL_names_divisions.txt` | Germany (Extra) | `GER` | Included (Heavy battalions, Panzer brigades, Volksgrenadier/Reserve/Grenadier series, Luftwaffe field & Flak, Festungen, Kampfgruppen, Volkssturm, SA, Freikorps, Schutztruppe, Reichsbanner, Red Front, Foreign Legions) |
-| `INEX_SWE_names_divisions.txt` | Sweden | `SWE` | Included (Provincial brigades, Pansarbrigader, Ski/Arctic, Caroleans, Volunteers) |
+| `INEX_SWE_names_divisions.txt` | Sweden | `SWE` | Included (Plain & Named arméfördelningar, motorized, mechanized and armored divisions, Cavalry, Marine, Mountain and Paratrooper divisions, provincial brigades, Ski/Arctic, Home Guard & Landstorm, Royal & Carolean Guards, fascist Stormtroopers & Legions, communist Red Guards, Volunteers) |
 | `INEX_EST_names_divisions.txt` | Estonia | `EST` | Included (Historical & elite regiments, Kaitseliit malevad, Armored trains/cars, Coastal fortresses) |
 | `INEX_LAT_names_divisions.txt` | Latvia | `LAT` | Included (Historical divisions & regiments, Aizsargu pulki, Armored cars/trains, Coastal fortresses, Cavalry) |
 | `INEX_LIT_names_divisions.txt` | Lithuania | `LIT` | Included (Grand Duke/Royal regiments, Iron Wolf cavalry, AA/Armored teams) |
@@ -107,8 +107,9 @@ This is not a complete list of included namelists! Just some examples.
 - Ideology suites: Waffen-SS, SA & Volkssturm (fascist), Imperial Guard & Freikorps, Reichsbanner, and Red Army & Red Front
 
 [b]Sweden[/b]
-- Provincial Infanteribrigader ([i]Gula brigaden[/i]), Pansarbrigader, and Cykel- & Kavalleribrigader
-- Ski & Arctic rangers, coastal artillery, Royal Guards (Caroleans), and Volunteers (SFK)
+- Plain and Named Roman-numbered Arméfördelningar, plus motorized, mechanized and armored divisions ([i]II. Arméfördelningen 'Jämtlands'[/i], [i]Pansarfördelningen 'Skaraborgs pansarregemente'[/i])
+- Provincial Infanteribrigader ([i]Gula brigaden[/i]), Pansar-, Cykel- and Kavalleribrigader, Fältjägare, Kustjägare and Fallskärmsjägare divisions
+- Ideology suites: Home Guard, Landstorm and Royal Guards (democratic and neutral), Carolean Guards, Stormtroopers & Fascist Legions, and communist Red Guards
 
 [b]Lithuania[/b]
 - Grand Duke infantry regiments ([i]Gedimino[/i], [i]Vytauto[/i], [i]Algirdo[/i]) & [i]Geležinio Vilko[/i] cavalry

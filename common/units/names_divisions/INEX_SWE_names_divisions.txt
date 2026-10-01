@@ -2,11 +2,13 @@
 # Immersive Namelists Expanded (INEX)
 #
 # Language & Orthography: Standard Swedish (svenska) with correct diacritics
-# (å, ä, ö). Division names use authentic military abbreviations and regional
-# designations (Brigad 49/58/66 schemes).
+# (å, ä, ö). Divisions use Roman numerals (arméfördelningarna I-IV and XI-XVI, 1942-66);
+# brigades use the Brigad 49/58/66 schemes.
 #
-# Vanilla SWE groups (SWE_INF_01, SWE_CAV_01, etc.) remain as base-game division
-# fallbacks. INEX provides detailed historical brigade and specialist suites.
+# Vanilla groups overridden here: SWE_INF_01, MOT_01, MEC_01, ARM_01 (plain variants, with
+# Named counterparts), SWE_CAV_01, MAR_01, MNT_01, PAR_01 and SWE_BS_01 (fascism only).
+# Ideology suites: Fascist (BS_01, FAS_01), Communist (RG_01), Democratic/Neutral (HV_01, LS_01,
+# ROYAL_01), Carolean (CAR_01). Formations Sweden never fielded are extrapolations.
 
 # ==============================================================================
 # 1. FIELD ARMY BRIGADES (Fältförband)
@@ -121,6 +123,12 @@ SWE_CYC_01 = {
 		14 = { "%d. Cykeljägarbrigaden 'Norrland'" }
 		15 = { "%d. Cykeljägarbrigaden 'Karlsborg'" }
 		16 = { "%d. Cykeljägarbrigaden 'Jämtland'" }
+		17 = { "%d. Cykelbrigaden 'Uppland'" }
+		18 = { "%d. Cykelbrigaden 'Östergötland'" }
+		19 = { "%d. Cykelbrigaden 'Närke'" }
+		20 = { "%d. Cykelbrigaden 'Södermanland'" }
+		21 = { "%d. Cykelbrigaden 'Västmanland'" }
+		22 = { "%d. Cykelbrigaden 'Blekinge'" }
 	}
 }
 
@@ -214,7 +222,12 @@ SWE_HV_01 = {
 
 	for_countries = { SWE }
 
-	can_use = { always = yes }
+	can_use = {
+	OR = {
+		has_government = democratic
+		has_government = neutrality
+	}
+	}
 
 	division_types = { "militia" "infantry" }
 
@@ -345,13 +358,17 @@ SWE_PAR_02 = {
 # 3. PRESTIGE & VOLUNTEER FORMATIONS (Livgarde & Frivilliga)
 # ==============================================================================
 
+# Constitutional royal guard (Svea/Göta livgarde, Livregementet, K 1-K 3 heritage). The Carolean entries moved to SWE_CAR_01.
 SWE_ROYAL_01 = {
 	name = "Royal Guards"
 
 	for_countries = { SWE }
 
 	can_use = {
-		NOT = { has_government = communism }
+	OR = {
+		has_government = democratic
+		has_government = neutrality
+	}
 	}
 
 	division_types = { "infantry" "cavalry" "motorized" "mechanized" "light_armor" "medium_armor" }
@@ -361,29 +378,20 @@ SWE_ROYAL_01 = {
 	ordered = {
 		1 = { "1. Kungliga Livgardesdivisionen" }
 		2 = { "2. Kungliga Livgardesdivisionen" }
-		3 = { "Kungliga Majestäts Livgarde" }
-		4 = { "Kungliga Livgardet till Häst" }
-		5 = { "Kungliga Livgardet till Fot" }
-		6 = { "Kungliga Livdrabantkåren" }
-		7 = { "Kungliga Svea Livgardet" }
-		8 = { "Kungliga Göta Livgardet" }
-		9 = { "Karolinska Gardesdivisionen 'Carolus Rex'" }
-		10 = { "Karolinska Gardesdivisionen 'Gustavus Adolphus'" }
-		11 = { "Kungliga Dalregementets Karoliner" }
-		12 = { "Kungliga Hälsinge Karoliner" }
-		13 = { "Kungliga Jämtlands Dragonkaroliner" }
+		3 = { "Kungliga Livgardet till Häst" }
+		4 = { "Kungliga Livgardet till Fot" }
+		5 = { "Kungliga Livdrabantkåren" }
+		6 = { "Kungliga Svea Livgardet" }
+		7 = { "Kungliga Göta Livgardet" }
+		8 = { "Kungliga Göta Pansarlivgardet" }
+		9 = { "Kungliga Livgardets Dragoner" }
+		10 = { "Kungliga Livregementet till Häst" }
+		11 = { "Kungliga Livregementets Grenadjärer" }
+		12 = { "Kungliga Livregementets Husarer" }
+		13 = { "Kungliga Livgrenadjärregementet" }
 		14 = { "Kungliga Smålands Husarer" }
-		15 = { "Kungliga Östgöta Ryttare" }
-		16 = { "Kungliga Västgöta Ryttare" }
-		17 = { "Kungliga Södermanlands Ryttare" }
-		18 = { "Kungliga Livregementets Grenadjärer" }
-		19 = { "Kungliga Bohusläns Fältbataljon" }
-		20 = { "Kungliga Finska Gardesbataljonen" }
-		21 = { "Kungliga Estländska Adelsfanan" }
-		22 = { "Kungliga Livländska Dragonregementet" }
-		23 = { "Kungliga Pommerska Legionen" }
-		24 = { "Kungliga Narva Grenadjärkåren" }
-		25 = { "Kungliga Kronprinsens Husardivision" }
+		15 = { "Kungliga Kronprinsens Husarer" }
+		16 = { "Kungliga Kronprinsens Husardivision" }
 	}
 }
 
@@ -416,3 +424,528 @@ SWE_VOL_01 = {
 	}
 }
 
+# Plain variant; overrides vanilla SWE_INF_01 (Roman numerals, as used for the arméfördelningar 1942-66).
+SWE_INF_01 = 
+{
+	name = "Infantry Divisions"
+
+	for_countries = { SWE }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%s. Arméfördelningen"
+}
+
+# Named variant; shares numbering with the plain SWE_INF_01. Real divisions carried no names before 1966: identities are regiment and province names (extrapolated pairing).
+SWE_INF_02 = 
+{
+	name = "Infantry Divisions (Named)"
+
+	for_countries = { SWE }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	link_numbering_with = { SWE_INF_01 }
+
+	fallback_name = "%s. Arméfördelningen"
+
+	ordered =
+	{
+		1 = { "%s. Arméfördelningen 'Skånska'" }
+		2 = { "%s. Arméfördelningen 'Jämtlands'" }
+		3 = { "%s. Arméfördelningen 'Västgöta'" }
+		4 = { "%s. Arméfördelningen 'Svea'" }
+		5 = { "%s. Arméfördelningen 'Värmlands'" }
+		6 = { "%s. Arméfördelningen 'Norrbottens'" }
+		7 = { "%s. Arméfördelningen 'Gotlands'" }
+		8 = { "%s. Arméfördelningen 'Upplands'" }
+		9 = { "%s. Arméfördelningen 'Livregementets'" }
+		10 = { "%s. Arméfördelningen 'Älvsborgs'" }
+		11 = { "%s. Arméfördelningen 'Södra skånska'" }
+		12 = { "%s. Arméfördelningen 'Norrlands'" }
+		13 = { "%s. Arméfördelningen 'Norra skånska'" }
+		14 = { "%s. Arméfördelningen 'Östgöta'" }
+		15 = { "%s. Arméfördelningen 'Lapplands'" }
+		16 = { "%s. Arméfördelningen 'Dalregementets'" }
+		17 = { "%s. Arméfördelningen 'Smålands'" }
+		18 = { "%s. Arméfördelningen 'Hallands'" }
+		19 = { "%s. Arméfördelningen 'Södermanlands'" }
+		20 = { "%s. Arméfördelningen 'Hälsinge'" }
+		21 = { "%s. Arméfördelningen 'Kronobergs'" }
+		22 = { "%s. Arméfördelningen 'Västerbottens'" }
+		23 = { "%s. Arméfördelningen 'Västernorrlands'" }
+		24 = { "%s. Arméfördelningen 'Blekinge'" }
+		25 = { "%s. Arméfördelningen 'Kalmar'" }
+		26 = { "%s. Arméfördelningen 'Jönköpings'" }
+		27 = { "%s. Arméfördelningen 'Västmanlands'" }
+		28 = { "%s. Arméfördelningen 'Livgrenadjärregementets'" }
+	}
+}
+
+# Plain variant; overrides vanilla SWE_MOT_01 and keeps its numbering link to SWE_INF_01. Anchor of the mobile family.
+SWE_MOT_01 = 
+{
+	name = "Motorized Divisions"
+
+	for_countries = { SWE }
+
+	can_use = { always = yes }
+
+	division_types = { "motorized" }
+
+	link_numbering_with = { SWE_INF_01 }
+
+	fallback_name = "%s. Motoriserade arméfördelningen"
+}
+
+# Named variant; identities are infantry regiments (extrapolated pairing).
+SWE_MOT_02 = 
+{
+	name = "Motorized Divisions (Named)"
+
+	for_countries = { SWE }
+
+	can_use = { always = yes }
+
+	division_types = { "motorized" }
+
+	link_numbering_with = { SWE_MOT_01 }
+
+	fallback_name = "%s. Motoriserade arméfördelningen"
+
+	ordered =
+	{
+		1 = { "%s. Motoriserade arméfördelningen 'Svea livgarde'" }
+		2 = { "%s. Motoriserade arméfördelningen 'Göta'" }
+		3 = { "%s. Motoriserade arméfördelningen 'Värmlands'" }
+		4 = { "%s. Motoriserade arméfördelningen 'Jämtlands fältjägare'" }
+		5 = { "%s. Motoriserade arméfördelningen 'Norrbottens'" }
+		6 = { "%s. Motoriserade arméfördelningen 'Västerbottens'" }
+		7 = { "%s. Motoriserade arméfördelningen 'Gotlands'" }
+		8 = { "%s. Motoriserade arméfördelningen 'Skaraborgs'" }
+		9 = { "%s. Motoriserade arméfördelningen 'Södermanlands'" }
+		10 = { "%s. Motoriserade arméfördelningen 'Upplands'" }
+		11 = { "%s. Motoriserade arméfördelningen 'Västgöta'" }
+		12 = { "%s. Motoriserade arméfördelningen 'Östgöta'" }
+		13 = { "%s. Motoriserade arméfördelningen 'Livregementets'" }
+		14 = { "%s. Motoriserade arméfördelningen 'Livgrenadjärregementets'" }
+		15 = { "%s. Motoriserade arméfördelningen 'Älvsborgs'" }
+		16 = { "%s. Motoriserade arméfördelningen 'Hallands'" }
+		17 = { "%s. Motoriserade arméfördelningen 'Dalregementets'" }
+		18 = { "%s. Motoriserade arméfördelningen 'Hälsinge'" }
+		19 = { "%s. Motoriserade arméfördelningen 'Kronobergs'" }
+		20 = { "%s. Motoriserade arméfördelningen 'Jönköpings'" }
+	}
+}
+
+# Plain variant; overrides vanilla SWE_MEC_01 (numbering now anchored on SWE_MOT_01).
+SWE_MEC_01 = 
+{
+	name = "Mechanized Divisions"
+
+	for_countries = { SWE }
+
+	can_use = { always = yes }
+
+	division_types = { "mechanized" }
+
+	link_numbering_with = { SWE_MOT_01 }
+
+	fallback_name = "%s. Mekaniserade fördelningen"
+}
+
+# Named variant; cavalry heritage identities (extrapolated pairing).
+SWE_MEC_02 = 
+{
+	name = "Mechanized Divisions (Named)"
+
+	for_countries = { SWE }
+
+	can_use = { always = yes }
+
+	division_types = { "mechanized" }
+
+	link_numbering_with = { SWE_MOT_01 }
+
+	fallback_name = "%s. Mekaniserade fördelningen"
+
+	ordered =
+	{
+		1 = { "%s. Mekaniserade fördelningen 'Livregementets husarer'" }
+		2 = { "%s. Mekaniserade fördelningen 'Norrlands dragoner'" }
+		3 = { "%s. Mekaniserade fördelningen 'Skånska dragoner'" }
+		4 = { "%s. Mekaniserade fördelningen 'Kronprinsens husarer'" }
+		5 = { "%s. Mekaniserade fördelningen 'Smålands husarer'" }
+		6 = { "%s. Mekaniserade fördelningen 'Livgardets dragoner'" }
+		7 = { "%s. Mekaniserade fördelningen 'Södra skånska'" }
+		8 = { "%s. Mekaniserade fördelningen 'Norra skånska'" }
+		9 = { "%s. Mekaniserade fördelningen 'Älvsborgs'" }
+		10 = { "%s. Mekaniserade fördelningen 'Hallands'" }
+		11 = { "%s. Mekaniserade fördelningen 'Västgöta'" }
+		12 = { "%s. Mekaniserade fördelningen 'Östgöta'" }
+		13 = { "%s. Mekaniserade fördelningen 'Kalmar'" }
+		14 = { "%s. Mekaniserade fördelningen 'Blekinge'" }
+		15 = { "%s. Mekaniserade fördelningen 'Upplands'" }
+		16 = { "%s. Mekaniserade fördelningen 'Dalarnas'" }
+		17 = { "%s. Mekaniserade fördelningen 'Hälsinge'" }
+		18 = { "%s. Mekaniserade fördelningen 'Västernorrlands'" }
+	}
+}
+
+# Plain variant; overrides vanilla SWE_ARM_01 (numbering now anchored on SWE_MOT_01). Pansartrupperna were created 1 Oct 1942.
+SWE_ARM_01 = 
+{
+	name = "Armored Divisions"
+
+	for_countries = { SWE }
+
+	can_use = { always = yes }
+
+	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
+
+	link_numbering_with = { SWE_MOT_01 }
+
+	fallback_name = "%s. Pansarfördelningen"
+}
+
+# Named variant; identities from the pansarregementen P 1-P 4 (1942-44) and cavalry/armor garrison towns (extrapolated pairing).
+SWE_ARM_02 = 
+{
+	name = "Armored Divisions (Named)"
+
+	for_countries = { SWE }
+
+	can_use = { always = yes }
+
+	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
+
+	link_numbering_with = { SWE_MOT_01 }
+
+	fallback_name = "%s. Pansarfördelningen"
+
+	ordered =
+	{
+		1 = { "%s. Pansarfördelningen 'Göta pansarlivgarde'" }
+		2 = { "%s. Pansarfördelningen 'Skånska pansarregementet'" }
+		3 = { "%s. Pansarfördelningen 'Södermanlands pansarregemente'" }
+		4 = { "%s. Pansarfördelningen 'Skaraborgs pansarregemente'" }
+		5 = { "%s. Pansarfördelningen 'Norrlands'" }
+		6 = { "%s. Pansarfördelningen 'Svea'" }
+		7 = { "%s. Pansarfördelningen 'Upplands'" }
+		8 = { "%s. Pansarfördelningen 'Livregementets'" }
+		9 = { "%s. Pansarfördelningen 'Livgrenadjärregementets'" }
+		10 = { "%s. Pansarfördelningen 'Värmlands'" }
+		11 = { "%s. Pansarfördelningen 'Kristianstad'" }
+		12 = { "%s. Pansarfördelningen 'Hässleholm'" }
+		13 = { "%s. Pansarfördelningen 'Enköping'" }
+		14 = { "%s. Pansarfördelningen 'Skövde'" }
+		15 = { "%s. Pansarfördelningen 'Strängnäs'" }
+		16 = { "%s. Pansarfördelningen 'Karlsborg'" }
+		17 = { "%s. Pansarfördelningen 'Boden'" }
+		18 = { "%s. Pansarfördelningen 'Umeå'" }
+	}
+}
+
+# Overrides vanilla SWE_CAV_01. Sweden fielded no cavalry divisions: identities are the regiments K 1-K 4 and pre-1928 predecessors (extrapolated pairing); distinct from the brigade list SWE_CAV_02.
+SWE_CAV_01 = 
+{
+	name = "Cavalry Divisions"
+
+	for_countries = { SWE }
+
+	can_use = { always = yes }
+
+	division_types = { "cavalry" }
+
+	fallback_name = "%s. Kavallerifördelningen"
+
+	ordered =
+	{
+		1 = { "%s. Kavallerifördelningen 'Livregementet till häst'" }
+		2 = { "%s. Kavallerifördelningen 'Livregementets husarer'" }
+		3 = { "%s. Kavallerifördelningen 'Livregementets dragoner'" }
+		4 = { "%s. Kavallerifördelningen 'Skånska kavalleriregementet'" }
+		5 = { "%s. Kavallerifördelningen 'Skånska husarer'" }
+		6 = { "%s. Kavallerifördelningen 'Kronprinsens husarer'" }
+		7 = { "%s. Kavallerifördelningen 'Södra Skåne'" }
+		8 = { "%s. Kavallerifördelningen 'Norra Skåne'" }
+		9 = { "%s. Kavallerifördelningen 'Norrlands dragonregemente'" }
+		10 = { "%s. Kavallerifördelningen 'Umeå'" }
+		11 = { "%s. Kavallerifördelningen 'Uppland'" }
+		12 = { "%s. Kavallerifördelningen 'Östergötland'" }
+		13 = { "%s. Kavallerifördelningen 'Västergötland'" }
+		14 = { "%s. Kavallerifördelningen 'Småland'" }
+		15 = { "%s. Kavallerifördelningen 'Mälardalen'" }
+	}
+}
+
+# Overrides vanilla SWE_MAR_01. Sweden fielded no marine divisions: Kustjägare/Amfibiekåren heritage with maritime regions (extrapolated); avoids the stations used by SWE_KA_01.
+SWE_MAR_01 = 
+{
+	name = "Marine Divisions"
+
+	for_countries = { SWE }
+
+	can_use = { always = yes }
+
+	division_types = { "marine" }
+
+	fallback_name = "%s. Kustjägarfördelningen"
+
+	ordered =
+	{
+		1 = { "%s. Kustjägarfördelningen 'Amfibiekåren'" }
+		2 = { "%s. Kustjägarfördelningen 'Berga'" }
+		3 = { "%s. Kustjägarfördelningen 'Roslagen'" }
+		4 = { "%s. Kustjägarfördelningen 'Blekinge skärgård'" }
+		5 = { "%s. Kustjägarfördelningen 'Bohuslän'" }
+		6 = { "%s. Kustjägarfördelningen 'Öland'" }
+		7 = { "%s. Kustjägarfördelningen 'Kalmarsund'" }
+		8 = { "%s. Kustjägarfördelningen 'Vänern'" }
+		9 = { "%s. Kustjägarfördelningen 'Västerhavet'" }
+		10 = { "%s. Kustjägarfördelningen 'Östersjön'" }
+		11 = { "%s. Kustjägarfördelningen 'Bottenviken'" }
+		12 = { "%s. Kustjägarfördelningen 'Bottenhavet'" }
+		13 = { "%s. Kustjägarfördelningen 'Kvarken'" }
+		14 = { "%s. Kustjägarfördelningen 'Hanöbukten'" }
+	}
+}
+
+# Overrides vanilla SWE_MNT_01 (Jägarfördelningen -> Fältjägarfördelningen, after Jämtlands fältjägarregemente I 5). Identities are Norrland regiments, rivers and ski-battalion heritage (extrapolated pairing).
+SWE_MNT_01 = 
+{
+	name = "Mountain Divisions"
+
+	for_countries = { SWE }
+
+	can_use = { always = yes }
+
+	division_types = { "mountaineers" "ranger_battalion" }
+
+	fallback_name = "%s. Fältjägarfördelningen"
+
+	ordered =
+	{
+		1 = { "%s. Fältjägarfördelningen 'Jämtlands fältjägare'" }
+		2 = { "%s. Fältjägarfördelningen 'Lapplands jägare'" }
+		3 = { "%s. Fältjägarfördelningen 'Norrbottens'" }
+		4 = { "%s. Fältjägarfördelningen 'Skidlöparbataljonen'" }
+		5 = { "%s. Fältjägarfördelningen 'Boden'" }
+		6 = { "%s. Fältjägarfördelningen 'Östersund'" }
+		7 = { "%s. Fältjägarfördelningen 'Torneälven'" }
+		8 = { "%s. Fältjägarfördelningen 'Kalixälven'" }
+		9 = { "%s. Fältjägarfördelningen 'Luleälven'" }
+		10 = { "%s. Fältjägarfördelningen 'Piteälven'" }
+		11 = { "%s. Fältjägarfördelningen 'Skellefteälven'" }
+		12 = { "%s. Fältjägarfördelningen 'Umeälven'" }
+		13 = { "%s. Fältjägarfördelningen 'Ångermanälven'" }
+		14 = { "%s. Fältjägarfördelningen 'Indalsälven'" }
+		15 = { "%s. Fältjägarfördelningen 'Härjedalen'" }
+	}
+}
+
+# Overrides vanilla SWE_PAR_01. Sweden fielded no airborne divisions (Fallskärmsjägarskolan Karlsborg dates from 1952): extrapolated; avoids the bases used by SWE_PAR_02.
+SWE_PAR_01 = 
+{
+	name = "Paratrooper Divisions"
+
+	for_countries = { SWE }
+
+	can_use = { always = yes }
+
+	division_types = { "paratrooper" }
+
+	fallback_name = "%s. Fallskärmsjägarfördelningen"
+
+	ordered =
+	{
+		1 = { "%s. Fallskärmsjägarfördelningen 'Fallskärmsjägarskolan'" }
+		2 = { "%s. Fallskärmsjägarfördelningen 'Livregementets husarer'" }
+		3 = { "%s. Fallskärmsjägarfördelningen 'Luftburna'" }
+		4 = { "%s. Fallskärmsjägarfördelningen 'Flygvapnet'" }
+		5 = { "%s. Fallskärmsjägarfördelningen 'Tiveden'" }
+		6 = { "%s. Fallskärmsjägarfördelningen 'Göta kanal'" }
+		7 = { "%s. Fallskärmsjägarfördelningen 'Vänern'" }
+		8 = { "%s. Fallskärmsjägarfördelningen 'Mälaren'" }
+		9 = { "%s. Fallskärmsjägarfördelningen 'Hjälmaren'" }
+		10 = { "%s. Fallskärmsjägarfördelningen 'Bergslagen'" }
+		11 = { "%s. Fallskärmsjägarfördelningen 'Skåne'" }
+		12 = { "%s. Fallskärmsjägarfördelningen 'Halland'" }
+	}
+}
+
+# Overrides vanilla SWE_BS_01 (kept: focus scripts reference it). Party storm detachments of the Swedish interwar fascist and national socialist movements; party names are historical, the formation titles are extrapolated.
+SWE_BS_01 = 
+{
+	name = "Stormtroopers"
+
+	for_countries = { SWE }
+
+	can_use = { has_government = fascism }
+
+	division_types = { "militia" }
+
+	fallback_name = "%s. Stormavdelningen"
+
+	ordered =
+	{
+		1 = { "Sveriges Fascistiska Kamporganisations Stormavdelning" }
+		2 = { "Svenska Nationalsocialistiska Partiets Stormavdelning" }
+		3 = { "Nationalsocialistiska Arbetarpartiets Stormavdelning" }
+		4 = { "Svensk Socialistisk Samlings Stormavdelning" }
+		5 = { "Nysvenska Rörelsens Stormavdelning" }
+		6 = { "Frihetsförbundets Stormavdelning" }
+		7 = { "Stockholms Stormavdelning" }
+		8 = { "Göteborgs Stormavdelning" }
+		9 = { "Malmös Stormavdelning" }
+		10 = { "Norrlands Stormavdelning" }
+	}
+}
+
+# Field formations of a Swedish fascist state, named after the historical movements (extrapolated); no SS or Waffen-SS names.
+SWE_FAS_01 = 
+{
+	name = "Fascist Legions"
+
+	for_countries = { SWE }
+
+	can_use = { has_government = fascism }
+
+	division_types = { "infantry" "motorized" }
+
+	fallback_name = "%d. Kamplegionen"
+
+	ordered =
+	{
+		1 = { "Sveriges Fascistiska Folkpartis Kamplegion" }
+		2 = { "Sveriges Fascistiska Kamporganisations Legion" }
+		3 = { "Svenska Nationalsocialistiska Partiets Kamplegion" }
+		4 = { "Nationalsocialistiska Arbetarpartiets Kamplegion" }
+		5 = { "Svensk Socialistisk Samlings Legion" }
+		6 = { "Nysvenska Rörelsens Legion" }
+		7 = { "Svenska Nationalsocialistiska Frihetsförbundets Legion" }
+		8 = { "Nysvenska Nationalsocialistiska Förbundets Legion" }
+		9 = { "%d. Kamplegionen 'Svea'" }
+		10 = { "%d. Kamplegionen 'Göta'" }
+		11 = { "%d. Kamplegionen 'Norrland'" }
+		12 = { "%d. Kamplegionen 'Skåne'" }
+		13 = { "%d. Kamplegionen 'Gotland'" }
+		14 = { "%d. Kamplegionen 'Bergslagen'" }
+	}
+}
+
+# Workers' corps of a Swedish communist state. Organisations are historical (Soldat- och arbetarföreningen 1917, SSV, SKP); no source for a Swedish 'Röda gardet' was found, so the formation titles are extrapolated.
+SWE_RG_01 = 
+{
+	name = "Red Guards"
+
+	for_countries = { SWE }
+
+	can_use = { has_government = communism }
+
+	division_types = { "militia" "infantry" }
+
+	fallback_name = "%d. Arbetarkåren"
+
+	ordered =
+	{
+		1 = { "Soldat- och Arbetarföreningens Arbetarkår" }
+		2 = { "Vänstersocialisternas Arbetarkår" }
+		3 = { "Sveriges Kommunistiska Partis Arbetarkår" }
+		4 = { "Soldat- och Arbetarrådets Gardekår" }
+		5 = { "Arbetarmilisen" }
+		6 = { "Stockholms Arbetarkår" }
+		7 = { "Göteborgs Arbetarkår" }
+		8 = { "Malmös Arbetarkår" }
+		9 = { "Kirunas Arbetarkår" }
+		10 = { "Malmbergets Arbetarkår" }
+		11 = { "Gällivares Arbetarkår" }
+		12 = { "Norrlands Arbetarkår" }
+		13 = { "Bergslagens Arbetarkår" }
+		14 = { "Skånes Arbetarkår" }
+	}
+}
+
+# Landstormen (1885-1942) and the voluntary defence movement (Frivilliga skytterörelsen, Hemvärnet from 1940); the brigade form and regional pairing are extrapolated.
+SWE_LS_01 = 
+{
+	name = "Landstorm Brigades"
+
+	for_countries = { SWE }
+
+	can_use = {
+	OR = {
+		has_government = democratic
+		has_government = neutrality
+	}
+	}
+
+	division_types = { "infantry" "militia" }
+
+	fallback_name = "%d. Landstormsbrigaden"
+
+	ordered =
+	{
+		1 = { "%d. Landstormsbrigaden 'Svea'" }
+		2 = { "%d. Landstormsbrigaden 'Göta'" }
+		3 = { "%d. Landstormsbrigaden 'Norrland'" }
+		4 = { "%d. Landstormsbrigaden 'Skåne'" }
+		5 = { "%d. Landstormsbrigaden 'Gotland'" }
+		6 = { "%d. Landstormsbrigaden 'Älvsborg'" }
+		7 = { "%d. Landstormsbrigaden 'Bergslagen'" }
+		8 = { "%d. Landstormsbrigaden 'Värmland'" }
+		9 = { "%d. Landstormsbrigaden 'Dalarna'" }
+		10 = { "%d. Landstormsbrigaden 'Jämtland'" }
+		11 = { "%d. Landstormsbrigaden 'Norrbotten'" }
+		12 = { "%d. Landstormsbrigaden 'Kalmar'" }
+		13 = { "%d. Landstormsbrigaden 'Blekinge'" }
+		14 = { "%d. Landstormsbrigaden 'Halland'" }
+		15 = { "Skytteförbundens Skyttebrigad 'Stockholm'" }
+		16 = { "Skytteförbundens Skyttebrigad 'Göteborg'" }
+		17 = { "Skytteförbundens Skyttebrigad 'Malmö'" }
+		18 = { "Frivilliga Skytterörelsens Skyttebrigad" }
+	}
+}
+
+# Stormaktstiden (Carolean) tradition list, split from SWE_ROYAL_01. No sourced units exist under these exact names: extrapolated from Carolean battles, provinces and regiments.
+SWE_CAR_01 = 
+{
+	name = "Carolean Guards"
+
+	for_countries = { SWE }
+
+	can_use = {
+	OR = {
+		has_government = neutrality
+		has_government = fascism
+	}
+	}
+
+	division_types = { "infantry" "cavalry" "motorized" "mechanized" "light_armor" "medium_armor" }
+
+	fallback_name = "%d. Karolinska Gardet"
+
+	ordered =
+	{
+		1 = { "Karolinska Gardesdivisionen 'Carolus Rex'" }
+		2 = { "Karolinska Gardesdivisionen 'Gustavus Adolphus'" }
+		3 = { "Dalregementets Karoliner" }
+		4 = { "Hälsinge Karoliner" }
+		5 = { "Jämtlands Dragonkaroliner" }
+		6 = { "Finska Gardesbataljonen" }
+		7 = { "Estländska Adelsfanan" }
+		8 = { "Livländska Dragonregementet" }
+		9 = { "Pommerska Legionen" }
+		10 = { "Narva Grenadjärkåren" }
+		11 = { "Poltava Grenadjärkåren" }
+		12 = { "Fraustadt Gardesbataljonen" }
+		13 = { "Klissow Gardesbataljonen" }
+		14 = { "Lunds Dragonkår" }
+		15 = { "Holowczyn Kavallerikåren" }
+		16 = { "Gadebusch Fältbataljonen" }
+	}
+}
