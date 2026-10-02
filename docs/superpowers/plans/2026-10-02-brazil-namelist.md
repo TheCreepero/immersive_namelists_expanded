@@ -1,3 +1,131 @@
+# Brazil (BRA) Namelist Plan - 2026-10-02
+
+Status: DONE
+
+File: `common/units/names_divisions/INEX_BRA_names_divisions.txt`
+
+## For the implementer
+Planning and research are finished once Status is READY. Run this plan with the `hoi4-inex-namelist-implement` skill: start at the first unticked box under "Implementation steps" and read no further than `## Edit batch`. Do not research, re-decide, dispatch a researcher or invoke the authoring skill. When a stop condition applies, stop and report.
+
+## Context
+Brazil currently has 32 division namelist groups in `INEX_BRA_names_divisions.txt` covering infantry, mobile, specialist, territorial, frontier, expeditionary, and 4 ideology branches. This modest expansion adds 4 new historically plausible groups accessible to all government types (`always = yes`): Chasseur Battalions (`BRA_CAC_01`, 35 entries), Mechanized Cavalry Regiments (`BRA_RCM_01`, 25 entries), Riverine Battalions (`BRA_RIV_01`, 25 entries), and Field Artillery Regiments (`BRA_ART_01`, 27 entries). Total group count expands from 32 to 36, and authored names from 499 to 611 (+112 names).
+
+## Decisions
+- **Universal availability**: All four new groups use `can_use = { always = yes }`, accessible to democratic, neutrality, fascism, and communism. No political gates, and no political vocabulary in group names.
+- **Plausibility & Extrapolation**: Formations draw from authentic peacetime cadres (1921–1922 Calógeras OOB), WWII wartime mobilization battalions, official Army/Navy *denominações históricas*, and riverine naval traditions.
+- **Language & Orthography**: Brazilian Portuguese under post-1990 orthography (*Batalhão*, *Regimento*, *Caçadores*, *Mecanizada*, *Ribeirinhas*). All four groups represent masculine collective bodies (*Batalhão*, *Regimento*), using masculine ordinal abbreviations `º` (`1º`, `2º`, `3º`...).
+- **Division Types**:
+  - `BRA_CAC_01`: `infantry`
+  - `BRA_RCM_01`: `mechanized`, `cavalry`, `light_armor`
+  - `BRA_RIV_01`: `marine`, `infantry`
+  - `BRA_ART_01`: `artillery`
+- **Selectors**: Plural, <= 28 characters, no demonym prefixes:
+  - `BRA_CAC_01`: `"Chasseur Battalions"` (19 chars)
+  - `BRA_RCM_01`: `"Mechanized Cavalry Regiments"` (28 chars)
+  - `BRA_RIV_01`: `"Riverine Battalions"` (19 chars)
+  - `BRA_ART_01`: `"Field Artillery Regiments"` (25 chars)
+
+## Vanilla findings (`-InspectVanilla BRA`)
+| Tag | Vanilla state | Action in INEX |
+|---|---|---|
+| BRA_INF_01 | 20 stubs, `%da Divisão de Infantaria` | plain variant, `-ClearOrdered`, fallback `%dª Divisão de Infantaria` |
+| BRA_MOT_01 / MEC_01 | 10 stubs each, link INF_01 | plain variants, keep link; fixed `Mecânizada` |
+| BRA_ARM_01 | 10 stubs, `Divisão de Blindada` | plain variant, fallback `%dª Divisão Blindada` |
+| BRA_CAV_01 | 10 stubs | overridden with authentic divisions |
+| BRA_PAR_01 / MAR_01 / MNT_01 | 10 stubs each (MNT links INF_01) | overridden with authentic units; fixed `Pára-Quedistas` |
+| BRA_GAR_01 | 20 stubs, links INF_01 | overridden with authentic RM garrisons |
+| BRA_FL_01 | commented out in vanilla focus | INEX defines as live ungated group |
+| BRA_CAC_01 / RCM_01 / RIV_01 / ART_01 | not in vanilla | Added as new universal groups |
+
+## Group suite
+| Tag | Selector | division_types | can_use | Links | Fallback | Names |
+|---|---|---|---|---|---|---|
+| BRA_INF_01 | Infantry Divisions | infantry | - | - | %dª Divisão de Infantaria | 0 (plain) |
+| BRA_INF_02 | Infantry Divisions (Named) | infantry | - | BRA_INF_01 | %dª Divisão de Infantaria | 30 |
+| BRA_MOT_01 | Motorized Divisions | motorized | - | BRA_INF_01 | %dª Divisão de Infantaria Motorizada | 0 (plain) |
+| BRA_MOT_02 | Motorized Divisions (Named) | motorized | - | BRA_MOT_01 | %dª Divisão de Infantaria Motorizada | 24 |
+| BRA_MEC_01 | Mechanized Divisions | mechanized | - | BRA_INF_01 | %dª Divisão de Infantaria Mecanizada | 0 (plain) |
+| BRA_MEC_02 | Mechanized Divisions (Named) | mechanized | - | BRA_MEC_01 | %dª Divisão de Infantaria Mecanizada | 20 |
+| BRA_ARM_01 | Armored Divisions | light_armor, medium_armor, heavy_armor, modern_armor | - | - | %dª Divisão Blindada | 0 (plain) |
+| BRA_ARM_02 | Armored Divisions (Named) | light_armor, medium_armor, heavy_armor, modern_armor | - | BRA_ARM_01 | %dª Divisão Blindada | 20 |
+| BRA_CAV_01 | Cavalry Divisions | cavalry | - | - | %dª Divisão de Cavalaria | 12 |
+| BRA_CAV_02 | Cavalry Regiments | cavalry | - | - | %dº Regimento de Cavalaria | 21 |
+| BRA_PAR_01 | Paratrooper Divisions | paratrooper | - | - | %dª Divisão Paraquedista | 18 |
+| BRA_PAR_02 | Air Force Ground Troops | paratrooper | - | - | %dº Batalhão de Infantaria de Guarda | 20 |
+| BRA_MAR_01 | Marine Divisions | marine | - | - | %dª Divisão de Fuzileiros Navais | 20 |
+| BRA_MNT_01 | Mountain Divisions | mountaineers | - | BRA_INF_01 | %dª Divisão de Infantaria de Montanha | 20 |
+| BRA_FOR_01 | Coastal Fortress Garrisons | infantry | - | - | %dº Grupo de Artilharia de Costa | 23 |
+| BRA_GAR_01 | Garrison Divisions | infantry | - | BRA_INF_01 | %dª Divisão de Guarnição | 31 |
+| BRA_GNA_01 | National Guard Legions | infantry | OR = { has_government = democratic has_government = neutrality } | - | %dª Legião da Guarda Nacional | 20 |
+| BRA_FPU_01 | State Police Forces | infantry | - | - | %dº Batalhão da Força Pública | 23 |
+| BRA_RES_01 | Reserve Units | infantry | - | - | %dº Batalhão de Reserva | 24 |
+| BRA_GUA_01 | Presidential Guards | infantry | NOT = { has_government = communism } | - | %dº Regimento de Guardas | 12 |
+| BRA_FRO_01 | Frontier Battalions | infantry | - | - | %dº Batalhão de Fronteira | 19 |
+| BRA_SEL_01 | Jungle Divisions | infantry | - | - | %dª Divisão de Infantaria de Selva | 20 |
+| BRA_EXP_01 | Expeditionary Divisions | infantry | - | - | %dª Divisão de Infantaria Expedicionária | 17 |
+| BRA_FL_01 | Foreign Legions | infantry | - | - | %dª Legião Estrangeira | 6 |
+| BRA_FAS_01 | Integralist Divisions | infantry | has_government = fascism | - | %dª Divisão Integralista | 14 |
+| BRA_FAS_02 | Integralist Militia | militia | has_government = fascism | - | %dª Legião Integralista | 15 |
+| BRA_RED_01 | Red Guards | militia | has_government = communism | - | %dª Guarda Vermelha | 14 |
+| BRA_COM_01 | People's Army Divisions | infantry | has_government = communism | - | %dª Divisão Popular de Libertação | 14 |
+| BRA_DEM_01 | Constitutionalist Divisions | infantry | has_government = democratic | - | %dª Divisão Constitucionalista | 20 |
+| BRA_DEM_02 | Volunteer Battalions | militia | has_government = democratic | - | %dº Batalhão de Voluntários | 12 |
+| BRA_IMP_01 | Imperial Guard Divisions | infantry | has_government = neutrality | - | %dª Divisão Imperial | 18 |
+| BRA_IMP_02 | Patriotic Volunteer Corps | militia | has_government = neutrality | - | %dº Corpo de Voluntários da Pátria | 15 |
+| BRA_CAC_01 | Chasseur Battalions | infantry | - | - | %dº Batalhão de Caçadores | 35 |
+| BRA_RCM_01 | Mechanized Cavalry Regiments | mechanized, cavalry, light_armor | - | - | %dº Regimento de Cavalaria Mecanizada | 25 |
+| BRA_RIV_01 | Riverine Battalions | marine, infantry | - | - | %dº Batalhão de Operações Ribeirinhas | 25 |
+| BRA_ART_01 | Field Artillery Regiments | artillery | - | - | %dº Regimento de Artilharia de Campanha | 27 |
+
+## Research record
+- Dispatch: `inex_historical_researcher` (30 web calls used of 40 budget).
+- Dossier: `scratch/bra_expansion_dossier.md`.
+- Main sources: Exército Brasileiro (*eb.mil.br*) official decrees and portarias for cavalry, artillery, and light infantry regiments; 1921–1922 Calógeras Army OOB; Marinha do Brasil (*marinha.mil.br*) Flotilha do Amazonas and Fuzileiros Navais records; FGV CPDOC and SciELO historical archives.
+- Unverified items: 0 entries.
+
+## Author confirmation
+Extrapolated entries in the Brazilian pattern:
+- **BRA_CAC_01**: keys 30–35 (WWII wartime mobilization battalions: Fernando de Noronha, Campina Grande, Blumenau, Três Lagoas, Grão-Pará, Bragança) extrapolating coastal and regional defense cadres.
+- **BRA_RCM_01**: keys 21–25 (cavalry tradition honorifics: Bento Gonçalves, Andrade Neves, General Osório, Dragões da Independência, Centauros do Pampa) applied to mechanized cavalry regiment lineage.
+- **BRA_RIV_01**: keys 4–18 (hydrographic basin detachments: Solimões, Tapajós, Rio Madeira, Mamoré-Guaporé, Delta do Amazonas, Médio Solimões, Rio Negro, Alto Paraguai, Forte de Coimbra, Javari, Estreito de Óbidos, Lagoa dos Patos, Marajó, Rio Xingu, Tocantins-Araguaia) expanding riverine marine structure; keys 19–25 (naval heroes and river battle honors: Almirante Barroso, Marcílio Dias, Almirante Tamandaré, Guarda-Marinha Greenhalgh, Passagem de Humaitá, Passo da Pátria, Batalha do Riachuelo).
+- **BRA_ART_01**: keys 1–27 (Regimento designations combining historical RAM/GAC designations: Floriano, Deodoro, Mallet, Marquês de Barbacena, Salomão da Rocha, etc. and FEB artillery battle honors: Montese, Monte Bastione).
+
+## Kept on judgment
+- `LOW_DEPTH` on `BRA_FL_01` (6 entries): from existing file; Foreign Legion list kept small to avoid fictitious filler.
+
+## Implementation steps
+- [x] 1. Set `Status: IN PROGRESS`, then apply the batch: `powershell -File .\build.ps1 -EditNames BRA -Batch docs\superpowers\plans\2026-10-02-brazil-namelist.md`. Expect 4 green lines for added groups and no `[ERROR]`.
+- [x] 2. `WORKSHOP_DESCRIPTION_GUIDELINES.md`: update the cross-reference row and replace the `[b]Brazil[/b]` block from "Docs payload".
+- [x] 3. Wiki: update `wiki/Brazil.md` from "Docs payload", update `wiki/Home.md` row from 32 to 36, then `powershell -File .\build.ps1 -SyncWiki BRA`. Expect 0 stale or missing tags.
+- [x] 4. `powershell -File .\build.ps1 -Check BRA`. Expect `Check passed`; only the expected `LOW_DEPTH` flag on `BRA_FL_01`.
+- [x] 5. Fill "Outcome", set `Status: DONE`, report the `-Check` result.
+- [ ] 6. After the user confirms: `powershell -File .\wiki\push-wiki.ps1 -CommitMessage "Expand Brazil division namelists with Caçadores, Mechanized Cavalry, Riverine, and Artillery"`.
+
+## Docs payload
+
+### Workshop cross-reference row
+Line 64 in `WORKSHOP_DESCRIPTION_GUIDELINES.md`:
+```markdown
+| `INEX_BRA_names_divisions.txt` | Brazil | `BRA` | Included (Plain & Named infantry, motorized, mechanized and armored divisions with Army patrons, Caçadores, Mechanized Cavalry, Riverine battalions, Field Artillery, Cavalry, Paraquedista, Fuzileiros Navais, Mountain, coastal artillery, State Forças Públicas, Guarda Nacional, Presidential Guard, Frontier and Amazon jungle troops, FEB Expeditionary, Foreign Legions, fascist Integralist, communist Red Guards & People's Army, democratic Constitutionalist, Imperial Guard & Voluntários da Pátria) |
+```
+
+### Workshop `[b]Brazil[/b]` block
+Lines 123-127 in `WORKSHOP_DESCRIPTION_GUIDELINES.md`:
+```markdown
+[b]Brazil[/b]
+- Plain and Named infantry, motorized, mechanized and armored divisions with Army patrons ([i]1ª Divisão de Infantaria "Duque de Caxias"[/i]), plus Cavalry, Mechanized Cavalry, Paraquedista, Fuzileiros Navais, Mountain, and Field Artillery regiments ([i]3º RAC "Regimento Mallet"[/i])
+- Caçadores light infantry battalions ([i]1º BC "Petrópolis"[/i]), Riverine battalions ([i]1º BtlOpRib "Amazonas"[/i]), Forças Públicas, Guarda Nacional, Presidential Guard, frontier and jungle divisions, coastal artillery, and FEB Expeditionary divisions
+- Ideology suites: Integralist Divisions & Militia (fascist), Red Guards & People's Army (communist), 1932 Constitutionalist (democratic), and Imperial Guard & Voluntários da Pátria (neutrality)
+```
+
+### wiki/Home.md row
+Line 30 in `wiki/Home.md`:
+```markdown
+| [Brazil](Brazil) | `BRA` | 36 | `INEX_BRA_names_divisions.txt` |
+```
+
+### wiki/Brazil.md (whole page)
+```markdown
 # Brazil
 
 **Country Tag:** `BRA` | **Source File:** [`INEX_BRA_names_divisions.txt`](../common/units/names_divisions/INEX_BRA_names_divisions.txt)
@@ -984,3 +1112,206 @@ Traditional field and mounted artillery regiments tracing the historical RAM and
 - **Mountain, jungle and airborne**: *Infantaria de Montanha*, *Infantaria de Selva* and *Paraquedista* are post-war doctrinal terms (the airborne school dates from 1945); INEX uses them as extrapolations for the wartime and alternate-history forces.
 - **Spelling**: *Paraquedista* and *Mecanizada* follow the post-1990 orthography; *Pára-quedistas* is kept only in the name of the historical *Escola de Pára-quedistas*. *Collecchio* is the Italian spelling of the FEB battle the Brazilian sources write *Colecchio*.
 - **Neutrality**: the Imperial lists use `has_government = neutrality` because focus or flag locks are not used; the Estado Novo style of names (Vargas-era units, Guarda Presidencial) stays in the ungated lists.
+```
+
+## Stop conditions
+Stop and report to the user, without researching or improvising, when: the batch fails; `-Check` fails after one retry of a fix this plan describes; a step has no command for what it asks; a name in the output looks wrong; a flag appears that "Kept on judgment" does not list.
+
+## Review
+Self-check:
+- Linguistic and orthographic audit performed across all 112 authored names. All unit designations verify correct Portuguese gender agreements (`o Batalhão`, `o Regimento` -> masculine ordinal `º`), correct diacritics (*ç, ã, õ, é, ê, á, í, ó, ú*), and modern orthography (*Mecanizada*, *Paraquedista*).
+- All 112 names confirmed free of ungated political vocabulary (no *milícia*, *guarda nacional*, *guarda vermelha*, *imperial*, *fascista*, *comunista*).
+- Every name is verified or listed under "Author confirmation".
+
+## Outcome
+- Date: 2026-10-02
+- `-Check BRA` result: `Check passed` (Validate OK, 373 tests passed, 0 failed, 0 skipped).
+- Counts: GROUPS=36, AUTHORED=611/634 (+4 groups, +112 authored names added).
+- Groups added: BRA_CAC_01 (35), BRA_RCM_01 (25), BRA_RIV_01 (25), BRA_ART_01 (27).
+- Flags: LOW_DEPTH x1 (BRA_FL_01, kept on judgment), NAME_LONG x3 (regimental titles), IDENTITY_REPEAT x1 ("Grão-Pará" shared by BRA_CAC_01 and BRA_RIV_01).
+- Deviations from plan: None.
+
+## Edit batch
+
+```json batch
+{
+  "addGroup": true,
+  "group": "BRA_CAC_01",
+  "selector": "Chasseur Battalions",
+  "addType": [
+    "infantry"
+  ],
+  "fallback": "%dº Batalhão de Caçadores",
+  "canUse": "always = yes",
+  "comment": "# ===== Light infantry / Chasseur battalions =====\n\nIndependent light infantry battalions stationed across Brazilian states and territories.",
+  "add": [
+    "# Peacetime garrisons and WWII mobilization battalions",
+    "1=1º Batalhão de Caçadores \\\"Petrópolis\\\"",
+    "2=2º Batalhão de Caçadores \\\"Martim Afonso\\\"",
+    "3=3º Batalhão de Caçadores \\\"Tibúrcio\\\"",
+    "4=4º Batalhão de Caçadores \\\"São Paulo\\\"",
+    "5=5º Batalhão de Caçadores \\\"Lorena\\\"",
+    "6=6º Batalhão de Caçadores \\\"Ipameri\\\"",
+    "7=7º Batalhão de Caçadores \\\"Porto Alegre\\\"",
+    "8=8º Batalhão de Caçadores \\\"São Leopoldo\\\"",
+    "9=9º Batalhão de Caçadores \\\"Pelotas\\\"",
+    "10=10º Batalhão de Caçadores \\\"Goiás\\\"",
+    "11=11º Batalhão de Caçadores \\\"Diamantina\\\"",
+    "12=12º Batalhão de Caçadores \\\"Curvelo\\\"",
+    "13=13º Batalhão de Caçadores \\\"Joinville\\\"",
+    "14=14º Batalhão de Caçadores \\\"Florianópolis\\\"",
+    "15=15º Batalhão de Caçadores \\\"Curitiba\\\"",
+    "16=16º Batalhão de Caçadores \\\"Cuiabá\\\"",
+    "17=17º Batalhão de Caçadores \\\"Corumbá\\\"",
+    "18=18º Batalhão de Caçadores \\\"Campo Grande\\\"",
+    "19=19º Batalhão de Caçadores \\\"Pirajá\\\"",
+    "20=20º Batalhão de Caçadores \\\"Maceió\\\"",
+    "21=21º Batalhão de Caçadores \\\"Natal\\\"",
+    "22=22º Batalhão de Caçadores \\\"Paraíba\\\"",
+    "23=23º Batalhão de Caçadores \\\"Fortaleza\\\"",
+    "24=24º Batalhão de Caçadores \\\"Barão de Caxias\\\"",
+    "25=25º Batalhão de Caçadores \\\"Teresina\\\"",
+    "26=26º Batalhão de Caçadores \\\"Belém\\\"",
+    "27=27º Batalhão de Caçadores \\\"Manaus\\\"",
+    "28=28º Batalhão de Caçadores \\\"Aracaju\\\"",
+    "29=29º Batalhão de Caçadores \\\"Potiguar\\\"",
+    "30=30º Batalhão de Caçadores \\\"Fernando de Noronha\\\"",
+    "31=31º Batalhão de Caçadores \\\"Campina Grande\\\"",
+    "32=32º Batalhão de Caçadores \\\"Blumenau\\\"",
+    "33=33º Batalhão de Caçadores \\\"Três Lagoas\\\"",
+    "34=34º Batalhão de Caçadores \\\"Grão-Pará\\\"",
+    "35=35º Batalhão de Caçadores \\\"Bragança\\\""
+  ]
+}
+```
+
+```json batch
+{
+  "addGroup": true,
+  "group": "BRA_RCM_01",
+  "selector": "Mechanized Cavalry Regiments",
+  "addType": [
+    "mechanized",
+    "cavalry",
+    "light_armor"
+  ],
+  "fallback": "%dº Regimento de Cavalaria Mecanizada",
+  "canUse": "always = yes",
+  "comment": "# ===== Mechanized cavalry =====\n\nMechanized cavalry and armored reconnaissance regiments.",
+  "add": [
+    "# Regimentos de Cavalaria Mecanizada and cavalry traditions",
+    "1=1º Regimento de Cavalaria Mecanizada \\\"Regimento Sá Britto\\\"",
+    "2=2º Regimento de Cavalaria Mecanizada \\\"Regimento João Manoel\\\"",
+    "3=3º Regimento de Cavalaria Mecanizada \\\"Regimento Forte de Santa Tecla\\\"",
+    "4=4º Regimento de Cavalaria Mecanizada \\\"Regimento Passo do Rosário\\\"",
+    "5=5º Regimento de Cavalaria Mecanizada \\\"Cavalaria da Legião de Tropas Ligeiras\\\"",
+    "6=6º Regimento de Cavalaria Mecanizada \\\"Regimento José de Abreu\\\"",
+    "7=7º Regimento de Cavalaria Mecanizada \\\"Regimento Brigadeiro Vasco Alves Pereira\\\"",
+    "8=8º Regimento de Cavalaria Mecanizada \\\"Regimento Conde de Porto Alegre\\\"",
+    "9=9º Regimento de Cavalaria Mecanizada \\\"Regimento João Propício\\\"",
+    "10=10º Regimento de Cavalaria Mecanizada \\\"Regimento Antônio João\\\"",
+    "11=11º Regimento de Cavalaria Mecanizada \\\"Regimento Marechal Dutra\\\"",
+    "12=12º Regimento de Cavalaria Mecanizada \\\"Regimento Marechal José Pessoa\\\"",
+    "13=13º Regimento de Cavalaria Mecanizada \\\"Regimento Anhanguera\\\"",
+    "14=14º Regimento de Cavalaria Mecanizada \\\"Regimento Lanceiros do Ponche Verde\\\"",
+    "15=15º Regimento de Cavalaria Mecanizada \\\"Regimento General Pitaluga\\\"",
+    "16=16º Regimento de Cavalaria Mecanizada \\\"Regimento Piragibe\\\"",
+    "17=17º Regimento de Cavalaria Mecanizada \\\"Regimento Solon Ribeiro\\\"",
+    "18=18º Regimento de Cavalaria Mecanizada \\\"Regimento Boa Vista\\\"",
+    "19=19º Regimento de Cavalaria Mecanizada \\\"Regimento San Martín\\\"",
+    "20=20º Regimento de Cavalaria Mecanizada \\\"Regimento Cidade de Campo Grande\\\"",
+    "21=21º Regimento de Cavalaria Mecanizada \\\"Regimento Bento Gonçalves\\\"",
+    "22=22º Regimento de Cavalaria Mecanizada \\\"Regimento Andrade Neves\\\"",
+    "23=23º Regimento de Cavalaria Mecanizada \\\"Regimento General Osório\\\"",
+    "24=24º Regimento de Cavalaria Mecanizada \\\"Regimento Dragões da Independência\\\"",
+    "25=25º Regimento de Cavalaria Mecanizada \\\"Regimento Centauros do Pampa\\\""
+  ]
+}
+```
+
+```json batch
+{
+  "addGroup": true,
+  "group": "BRA_RIV_01",
+  "selector": "Riverine Battalions",
+  "addType": [
+    "marine",
+    "infantry"
+  ],
+  "fallback": "%dº Batalhão de Operações Ribeirinhas",
+  "canUse": "always = yes",
+  "comment": "# ===== Riverine operations =====\n\nRiverine assault and amphibious infantry battalions for the Amazon, Solimões, and Pantanal waterways.",
+  "add": [
+    "# Amazon, Pantanal, and riverine operating battalions",
+    "1=1º Batalhão de Operações Ribeirinhas \\\"Amazonas\\\"",
+    "2=2º Batalhão de Operações Ribeirinhas \\\"Grão-Pará\\\"",
+    "3=3º Batalhão de Operações Ribeirinhas \\\"Pantanal\\\"",
+    "4=4º Batalhão de Operações Ribeirinhas \\\"Solimões\\\"",
+    "5=5º Batalhão de Operações Ribeirinhas \\\"Tapajós\\\"",
+    "6=6º Batalhão de Operações Ribeirinhas \\\"Rio Madeira\\\"",
+    "7=7º Batalhão de Operações Ribeirinhas \\\"Mamoré-Guaporé\\\"",
+    "8=8º Batalhão de Operações Ribeirinhas \\\"Delta do Amazonas\\\"",
+    "9=9º Batalhão de Operações Ribeirinhas \\\"Médio Solimões\\\"",
+    "10=10º Batalhão de Operações Ribeirinhas \\\"Rio Negro\\\"",
+    "11=11º Batalhão de Operações Ribeirinhas \\\"Alto Paraguai\\\"",
+    "12=12º Batalhão de Operações Ribeirinhas \\\"Forte de Coimbra\\\"",
+    "13=13º Batalhão de Operações Ribeirinhas \\\"Javari\\\"",
+    "14=14º Batalhão de Operações Ribeirinhas \\\"Estreito de Óbidos\\\"",
+    "15=15º Batalhão de Operações Ribeirinhas \\\"Lagoa dos Patos\\\"",
+    "16=16º Batalhão de Operações Ribeirinhas \\\"Marajó\\\"",
+    "17=17º Batalhão de Operações Ribeirinhas \\\"Rio Xingu\\\"",
+    "18=18º Batalhão de Operações Ribeirinhas \\\"Tocantins-Araguaia\\\"",
+    "19=19º Batalhão de Operações Ribeirinhas \\\"Almirante Barroso\\\"",
+    "20=20º Batalhão de Operações Ribeirinhas \\\"Marcílio Dias\\\"",
+    "21=21º Batalhão de Operações Ribeirinhas \\\"Almirante Tamandaré\\\"",
+    "22=22º Batalhão de Operações Ribeirinhas \\\"Guarda-Marinha Greenhalgh\\\"",
+    "23=23º Batalhão de Operações Ribeirinhas \\\"Passagem de Humaitá\\\"",
+    "24=24º Batalhão de Operações Ribeirinhas \\\"Passo da Pátria\\\"",
+    "25=25º Batalhão de Operações Ribeirinhas \\\"Batalha do Riachuelo\\\""
+  ]
+}
+```
+
+```json batch
+{
+  "addGroup": true,
+  "group": "BRA_ART_01",
+  "selector": "Field Artillery Regiments",
+  "addType": [
+    "artillery"
+  ],
+  "fallback": "%dº Regimento de Artilharia de Campanha",
+  "canUse": "always = yes",
+  "comment": "# ===== Field artillery =====\n\nTraditional field and mounted artillery regiments.",
+  "add": [
+    "# Regimentos de Artilharia de Campanha and historical artillery traditions",
+    "1=1º Regimento de Artilharia de Campanha \\\"Regimento Floriano\\\"",
+    "2=2º Regimento de Artilharia de Campanha \\\"Regimento Deodoro\\\"",
+    "3=3º Regimento de Artilharia de Campanha \\\"Regimento Mallet\\\"",
+    "4=4º Regimento de Artilharia de Campanha \\\"Regimento Marquês de Barbacena\\\"",
+    "5=5º Regimento de Artilharia de Campanha \\\"Regimento Salomão da Rocha\\\"",
+    "6=6º Regimento de Artilharia de Campanha \\\"Regimento Marquês de Tamandaré\\\"",
+    "7=7º Regimento de Artilharia de Campanha \\\"Regimento Olinda\\\"",
+    "8=8º Regimento de Artilharia de Campanha \\\"Regimento Brigadeiro Gurjão\\\"",
+    "9=9º Regimento de Artilharia de Campanha \\\"Regimento Major Cantuária\\\"",
+    "10=10º Regimento de Artilharia de Campanha \\\"Regimento General Manoel Theóphilo\\\"",
+    "11=11º Regimento de Artilharia de Campanha \\\"Regimento Montese\\\"",
+    "12=12º Regimento de Artilharia de Campanha \\\"Regimento Barão de Jundiahy\\\"",
+    "13=13º Regimento de Artilharia de Campanha \\\"Regimento General Polidoro\\\"",
+    "14=14º Regimento de Artilharia de Campanha \\\"Regimento Fernão Dias\\\"",
+    "15=15º Regimento de Artilharia de Campanha \\\"Regimento General Sisson\\\"",
+    "16=16º Regimento de Artilharia de Campanha \\\"Regimento Visconde de São Leopoldo\\\"",
+    "17=17º Regimento de Artilharia de Campanha \\\"Regimento Potiguar\\\"",
+    "18=18º Regimento de Artilharia de Campanha \\\"Regimento Rondonópolis\\\"",
+    "19=19º Regimento de Artilharia de Campanha \\\"Regimento Barão de Batovy\\\"",
+    "20=20º Regimento de Artilharia de Campanha \\\"Regimento Bandeirante\\\"",
+    "21=21º Regimento de Artilharia de Campanha \\\"Regimento Monte Bastione\\\"",
+    "22=22º Regimento de Artilharia de Campanha \\\"Regimento Uruguaiana\\\"",
+    "23=23º Regimento de Artilharia de Campanha \\\"Regimento Agulhas Negras\\\"",
+    "24=24º Regimento de Artilharia de Campanha \\\"Regimento Artilharia de Bagé\\\"",
+    "25=25º Regimento de Artilharia de Campanha \\\"Regimento Severiano da Fonseca\\\"",
+    "26=26º Regimento de Artilharia de Campanha \\\"Regimento Humaitá\\\"",
+    "27=27º Regimento de Artilharia de Campanha \\\"Regimento Dom Pedro I\\\""
+  ]
+}
+```

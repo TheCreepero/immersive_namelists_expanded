@@ -1141,3 +1141,199 @@ BRA_IMP_02 =
 		15 = { "%dº Corpo de Voluntários da Pátria \"Mato Grosso\"" }
 	}
 }
+
+# ===== Light infantry / Chasseur battalions =====
+
+# Independent light infantry battalions stationed across Brazilian states and territories.
+BRA_CAC_01 = 
+{
+	name = "Chasseur Battalions"
+
+	for_countries = { BRA }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%dº Batalhão de Caçadores"
+
+	ordered =
+	{
+		# Peacetime garrisons and WWII mobilization battalions
+		1 = { "1º Batalhão de Caçadores \"Petrópolis\"" }
+		2 = { "2º Batalhão de Caçadores \"Martim Afonso\"" }
+		3 = { "3º Batalhão de Caçadores \"Tibúrcio\"" }
+		4 = { "4º Batalhão de Caçadores \"São Paulo\"" }
+		5 = { "5º Batalhão de Caçadores \"Lorena\"" }
+		6 = { "6º Batalhão de Caçadores \"Ipameri\"" }
+		7 = { "7º Batalhão de Caçadores \"Porto Alegre\"" }
+		8 = { "8º Batalhão de Caçadores \"São Leopoldo\"" }
+		9 = { "9º Batalhão de Caçadores \"Pelotas\"" }
+		10 = { "10º Batalhão de Caçadores \"Goiás\"" }
+		11 = { "11º Batalhão de Caçadores \"Diamantina\"" }
+		12 = { "12º Batalhão de Caçadores \"Curvelo\"" }
+		13 = { "13º Batalhão de Caçadores \"Joinville\"" }
+		14 = { "14º Batalhão de Caçadores \"Florianópolis\"" }
+		15 = { "15º Batalhão de Caçadores \"Curitiba\"" }
+		16 = { "16º Batalhão de Caçadores \"Cuiabá\"" }
+		17 = { "17º Batalhão de Caçadores \"Corumbá\"" }
+		18 = { "18º Batalhão de Caçadores \"Campo Grande\"" }
+		19 = { "19º Batalhão de Caçadores \"Pirajá\"" }
+		20 = { "20º Batalhão de Caçadores \"Maceió\"" }
+		21 = { "21º Batalhão de Caçadores \"Natal\"" }
+		22 = { "22º Batalhão de Caçadores \"Paraíba\"" }
+		23 = { "23º Batalhão de Caçadores \"Fortaleza\"" }
+		24 = { "24º Batalhão de Caçadores \"Barão de Caxias\"" }
+		25 = { "25º Batalhão de Caçadores \"Teresina\"" }
+		26 = { "26º Batalhão de Caçadores \"Belém\"" }
+		27 = { "27º Batalhão de Caçadores \"Manaus\"" }
+		28 = { "28º Batalhão de Caçadores \"Aracaju\"" }
+		29 = { "29º Batalhão de Caçadores \"Potiguar\"" }
+		30 = { "30º Batalhão de Caçadores \"Fernando de Noronha\"" }
+		31 = { "31º Batalhão de Caçadores \"Campina Grande\"" }
+		32 = { "32º Batalhão de Caçadores \"Blumenau\"" }
+		33 = { "33º Batalhão de Caçadores \"Três Lagoas\"" }
+		34 = { "34º Batalhão de Caçadores \"Grão-Pará\"" }
+		35 = { "35º Batalhão de Caçadores \"Bragança\"" }
+	}
+}
+
+# ===== Mechanized cavalry =====
+
+# Mechanized cavalry and armored reconnaissance regiments.
+BRA_RCM_01 = 
+{
+	name = "Mechanized Cavalry Regiments"
+
+	for_countries = { BRA }
+
+	can_use = { always = yes }
+
+	division_types = { "mechanized" "cavalry" "light_armor" }
+
+	fallback_name = "%dº Regimento de Cavalaria Mecanizada"
+
+	ordered =
+	{
+		# Regimentos de Cavalaria Mecanizada and cavalry traditions
+		1 = { "1º Regimento de Cavalaria Mecanizada \"Regimento Sá Britto\"" }
+		2 = { "2º Regimento de Cavalaria Mecanizada \"Regimento João Manoel\"" }
+		3 = { "3º Regimento de Cavalaria Mecanizada \"Regimento Forte de Santa Tecla\"" }
+		4 = { "4º Regimento de Cavalaria Mecanizada \"Regimento Passo do Rosário\"" }
+		5 = { "5º Regimento de Cavalaria Mecanizada \"Cavalaria da Legião de Tropas Ligeiras\"" }
+		6 = { "6º Regimento de Cavalaria Mecanizada \"Regimento José de Abreu\"" }
+		7 = { "7º Regimento de Cavalaria Mecanizada \"Regimento Brigadeiro Vasco Alves Pereira\"" }
+		8 = { "8º Regimento de Cavalaria Mecanizada \"Regimento Conde de Porto Alegre\"" }
+		9 = { "9º Regimento de Cavalaria Mecanizada \"Regimento João Propício\"" }
+		10 = { "10º Regimento de Cavalaria Mecanizada \"Regimento Antônio João\"" }
+		11 = { "11º Regimento de Cavalaria Mecanizada \"Regimento Marechal Dutra\"" }
+		12 = { "12º Regimento de Cavalaria Mecanizada \"Regimento Marechal José Pessoa\"" }
+		13 = { "13º Regimento de Cavalaria Mecanizada \"Regimento Anhanguera\"" }
+		14 = { "14º Regimento de Cavalaria Mecanizada \"Regimento Lanceiros do Ponche Verde\"" }
+		15 = { "15º Regimento de Cavalaria Mecanizada \"Regimento General Pitaluga\"" }
+		16 = { "16º Regimento de Cavalaria Mecanizada \"Regimento Piragibe\"" }
+		17 = { "17º Regimento de Cavalaria Mecanizada \"Regimento Solon Ribeiro\"" }
+		18 = { "18º Regimento de Cavalaria Mecanizada \"Regimento Boa Vista\"" }
+		19 = { "19º Regimento de Cavalaria Mecanizada \"Regimento San Martín\"" }
+		20 = { "20º Regimento de Cavalaria Mecanizada \"Regimento Cidade de Campo Grande\"" }
+		21 = { "21º Regimento de Cavalaria Mecanizada \"Regimento Bento Gonçalves\"" }
+		22 = { "22º Regimento de Cavalaria Mecanizada \"Regimento Andrade Neves\"" }
+		23 = { "23º Regimento de Cavalaria Mecanizada \"Regimento General Osório\"" }
+		24 = { "24º Regimento de Cavalaria Mecanizada \"Regimento Dragões da Independência\"" }
+		25 = { "25º Regimento de Cavalaria Mecanizada \"Regimento Centauros do Pampa\"" }
+	}
+}
+
+# ===== Riverine operations =====
+
+# Riverine assault and amphibious infantry battalions for the Amazon, Solimões, and Pantanal waterways.
+BRA_RIV_01 = 
+{
+	name = "Riverine Battalions"
+
+	for_countries = { BRA }
+
+	can_use = { always = yes }
+
+	division_types = { "marine" "infantry" }
+
+	fallback_name = "%dº Batalhão de Operações Ribeirinhas"
+
+	ordered =
+	{
+		# Amazon, Pantanal, and riverine operating battalions
+		1 = { "1º Batalhão de Operações Ribeirinhas \"Amazonas\"" }
+		2 = { "2º Batalhão de Operações Ribeirinhas \"Grão-Pará\"" }
+		3 = { "3º Batalhão de Operações Ribeirinhas \"Pantanal\"" }
+		4 = { "4º Batalhão de Operações Ribeirinhas \"Solimões\"" }
+		5 = { "5º Batalhão de Operações Ribeirinhas \"Tapajós\"" }
+		6 = { "6º Batalhão de Operações Ribeirinhas \"Rio Madeira\"" }
+		7 = { "7º Batalhão de Operações Ribeirinhas \"Mamoré-Guaporé\"" }
+		8 = { "8º Batalhão de Operações Ribeirinhas \"Delta do Amazonas\"" }
+		9 = { "9º Batalhão de Operações Ribeirinhas \"Médio Solimões\"" }
+		10 = { "10º Batalhão de Operações Ribeirinhas \"Rio Negro\"" }
+		11 = { "11º Batalhão de Operações Ribeirinhas \"Alto Paraguai\"" }
+		12 = { "12º Batalhão de Operações Ribeirinhas \"Forte de Coimbra\"" }
+		13 = { "13º Batalhão de Operações Ribeirinhas \"Javari\"" }
+		14 = { "14º Batalhão de Operações Ribeirinhas \"Estreito de Óbidos\"" }
+		15 = { "15º Batalhão de Operações Ribeirinhas \"Lagoa dos Patos\"" }
+		16 = { "16º Batalhão de Operações Ribeirinhas \"Marajó\"" }
+		17 = { "17º Batalhão de Operações Ribeirinhas \"Rio Xingu\"" }
+		18 = { "18º Batalhão de Operações Ribeirinhas \"Tocantins-Araguaia\"" }
+		19 = { "19º Batalhão de Operações Ribeirinhas \"Almirante Barroso\"" }
+		20 = { "20º Batalhão de Operações Ribeirinhas \"Marcílio Dias\"" }
+		21 = { "21º Batalhão de Operações Ribeirinhas \"Almirante Tamandaré\"" }
+		22 = { "22º Batalhão de Operações Ribeirinhas \"Guarda-Marinha Greenhalgh\"" }
+		23 = { "23º Batalhão de Operações Ribeirinhas \"Passagem de Humaitá\"" }
+		24 = { "24º Batalhão de Operações Ribeirinhas \"Passo da Pátria\"" }
+		25 = { "25º Batalhão de Operações Ribeirinhas \"Batalha do Riachuelo\"" }
+	}
+}
+
+# ===== Field artillery =====
+
+# Traditional field and mounted artillery regiments.
+BRA_ART_01 = 
+{
+	name = "Field Artillery Regiments"
+
+	for_countries = { BRA }
+
+	can_use = { always = yes }
+
+	division_types = { "artillery" }
+
+	fallback_name = "%dº Regimento de Artilharia de Campanha"
+
+	ordered =
+	{
+		# Regimentos de Artilharia de Campanha and historical artillery traditions
+		1 = { "1º Regimento de Artilharia de Campanha \"Regimento Floriano\"" }
+		2 = { "2º Regimento de Artilharia de Campanha \"Regimento Deodoro\"" }
+		3 = { "3º Regimento de Artilharia de Campanha \"Regimento Mallet\"" }
+		4 = { "4º Regimento de Artilharia de Campanha \"Regimento Marquês de Barbacena\"" }
+		5 = { "5º Regimento de Artilharia de Campanha \"Regimento Salomão da Rocha\"" }
+		6 = { "6º Regimento de Artilharia de Campanha \"Regimento Marquês de Tamandaré\"" }
+		7 = { "7º Regimento de Artilharia de Campanha \"Regimento Olinda\"" }
+		8 = { "8º Regimento de Artilharia de Campanha \"Regimento Brigadeiro Gurjão\"" }
+		9 = { "9º Regimento de Artilharia de Campanha \"Regimento Major Cantuária\"" }
+		10 = { "10º Regimento de Artilharia de Campanha \"Regimento General Manoel Theóphilo\"" }
+		11 = { "11º Regimento de Artilharia de Campanha \"Regimento Montese\"" }
+		12 = { "12º Regimento de Artilharia de Campanha \"Regimento Barão de Jundiahy\"" }
+		13 = { "13º Regimento de Artilharia de Campanha \"Regimento General Polidoro\"" }
+		14 = { "14º Regimento de Artilharia de Campanha \"Regimento Fernão Dias\"" }
+		15 = { "15º Regimento de Artilharia de Campanha \"Regimento General Sisson\"" }
+		16 = { "16º Regimento de Artilharia de Campanha \"Regimento Visconde de São Leopoldo\"" }
+		17 = { "17º Regimento de Artilharia de Campanha \"Regimento Potiguar\"" }
+		18 = { "18º Regimento de Artilharia de Campanha \"Regimento Rondonópolis\"" }
+		19 = { "19º Regimento de Artilharia de Campanha \"Regimento Barão de Batovy\"" }
+		20 = { "20º Regimento de Artilharia de Campanha \"Regimento Bandeirante\"" }
+		21 = { "21º Regimento de Artilharia de Campanha \"Regimento Monte Bastione\"" }
+		22 = { "22º Regimento de Artilharia de Campanha \"Regimento Uruguaiana\"" }
+		23 = { "23º Regimento de Artilharia de Campanha \"Regimento Agulhas Negras\"" }
+		24 = { "24º Regimento de Artilharia de Campanha \"Regimento Artilharia de Bagé\"" }
+		25 = { "25º Regimento de Artilharia de Campanha \"Regimento Severiano da Fonseca\"" }
+		26 = { "26º Regimento de Artilharia de Campanha \"Regimento Humaitá\"" }
+		27 = { "27º Regimento de Artilharia de Campanha \"Regimento Dom Pedro I\"" }
+	}
+}
