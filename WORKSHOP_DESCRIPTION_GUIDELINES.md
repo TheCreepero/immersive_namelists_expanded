@@ -71,7 +71,7 @@ This document serves as an instruction and reference guide for maintaining and u
 | `INEX_ENG_names_divisions.txt` | United Kingdom | `ENG` | Included (Regular & Territorial Army, Armoured divisions & tank brigades, Household Division, Airborne, Commandos, Anti-Aircraft Command, County Garrisons, Colonial KAR/RWAFF, Home Guard, Blackshirt & Workers' defense suites) |
 | `INEX_FIN_names_divisions.txt` | Finland | `FIN` | Included (Wartime divisions & JR 1–70 regiments, Suojeluskunta, Ryhmä groups, Frontier & Coastal brigades, Blackshirt legions, Heimojoukot, Red Guards, People's Army, Royal Guards, Penal battalions, Swedish Volunteers SFK) |
 | `INEX_POL_names_divisions.txt` | Poland | `POL` | Included (1939 divisions with regional titles, Maczek's armor, KOP Border Guards, Obrona Narodowa, Armia Krajowa, PSZ exile corps, Communist LWP & GL, Nationalist NSZ) |
-| `INEX_ITA_names_divisions.txt` | Italy | `ITA` | Included (Historical numbering, Blackshirts, RSI, Black Brigades, Royal Army, Party-gated Partisans, Bersaglieri, Carabinieri, Frontier Guard, Colonial, Legione Romana) |
+| `INEX_ITA_names_divisions.txt` | Italy | `ITA` | Included (Historical numbering, Blackshirts & specialist militias, RSI, Black Brigades, Royal Army, Republican volunteers, Red Guards, Party-gated Partisans, Bersaglieri, Carabinieri, Guardia di Finanza, Frontier Guard, Colonial divisions & battalions, Fiume & Albanian irredentists, Legione Romana) |
 | `INEX_SOV_names_divisions.txt` | USSR | `SOV` | Included (Rifle honors, Guards Tanks & Mech Corps, Guards Airborne, Breakthrough Artillery, Moscow/Leningrad Opolcheniye, Cossacks, NKVD, Penal units) |
 | `INEX_MEX_names_divisions.txt` | Mexico | `MEX` | Included (Cristero, Imperial Guard, Sinarquistas, Gold Shirts, CTM & Agrarian Militias, Anáhuac, Regular Army) |
 | `INEX_PER_names_divisions.txt` | Iran / Persia | `PER` | Included (Garrison-city Lashkars, Imperial & Immortal Guard, Shahnameh armor, Cossack atriads, Tribal levies, Camel corps, Gendarmerie) |
@@ -168,8 +168,8 @@ This is not a complete list of included namelists! Just some examples.
 
 [b]Italy[/b]
 - Regio Esercito divisions on their real numbers, shared across infantry, motorized and armored lists ([i]9a Divisione 'Pasubio'[/i], [i]132a Divisione Corazzata 'Ariete'[/i])
-- Government-gated lists: Blackshirt legions, the Social Republic and Black Brigades ([i]8a Brigata Nera 'Aldo Resega'[/i]), Royal Army ([i]Gruppo di Combattimento 'Cremona'[/i]), Communist, and Garibaldi, GL, Matteotti, Autonome and Fiamme Verdi partisans
-- Bersaglieri, Arditi, Carabinieri, Frontier Guard sectors ([i]XII Settore di Copertura 'Valtellina'[/i]), colonial troops and fascist-only imperial legions (Legione Romana)
+- Government-gated lists: Blackshirt legions and specialist militias ([i]XLII Battaglione d'Assalto CC.NN. 'M'[/i]), the Social Republic and Black Brigades ([i]8a Brigata Nera 'Aldo Resega'[/i]), Royal Army ([i]Gruppo di Combattimento 'Cremona'[/i]), Republican volunteer legions (democratic), Communist Red Guards, and Garibaldi, GL, Matteotti, Autonome and Fiamme Verdi partisans
+- Bersaglieri, Arditi, Carabinieri, Guardia di Finanza, Frontier Guard sectors ([i]XII Settore di Copertura 'Valtellina'[/i]), Eritrean and Libyan colonial battalions ([i]IV Battaglione Eritreo 'Toselli'[/i]), and fascist-only Fiume and Albanian irredentist legions with Legione Romana
 
 [b]USSR[/b]
 - Red Army Rifle divisions ([i]1-ya 'Moskovskaya Proletarskaya'[/i], [i]25-ya 'Chapayevskaya'[/i]), Guards Rifles ([i]8-ya Gv. 'Panfilovskaya'[/i]), and Moscow/Leningrad Narodnoe Opolcheniye

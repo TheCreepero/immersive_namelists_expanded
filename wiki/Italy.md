@@ -6,9 +6,9 @@
 
 ## Historical Overview
 
-The Regio Esercito named its divisions after cities, regions, rivers and battles, and INEX keeps those names on their real division numbers. Motorized, mechanized, armored and paratrooper lists share numbering with the infantry, so *9a Divisione 'Pasubio'* is either infantry or autotrasportabile, never both. Separate lists cover the colonial troops of Libya and East Africa, the cavalry, the Alpini, Bersaglieri and Arditi, the Frontier Guard and Carabinieri, and the 1943–45 Resistance.
+The Regio Esercito named its divisions after cities, regions, rivers and battles, and INEX keeps those names on their real division numbers. Motorized, mechanized, armored and paratrooper lists share numbering with the infantry, so *9a Divisione 'Pasubio'* is either infantry or autotrasportabile, never both. Separate lists cover the colonial troops of Libya and East Africa (divisions, bands and battalions), the cavalry, the Alpini, Bersaglieri and Arditi, the Frontier Guard, Carabinieri and Guardia di Finanza, and the 1943–45 Resistance.
 
-Ideology-gated lists: the MVSN Blackshirt divisions and legions, the Social Republic's army and the Black Brigades (fascism), a Royal Army list built on the 1943–45 Co-Belligerent Army (neutrality/democratic), a Communist list, and the partisan formations gated by party tradition. Legione Romana is fascist-only and never picked by the AI.
+Ideology-gated lists: the MVSN Blackshirt divisions, legions and specialist militias, the Social Republic's army, the Black Brigades and the Fiume and Albanian irredentist legions (fascism), a Royal Army list built on the 1943–45 Co-Belligerent Army (neutrality/democratic), Republican volunteer legions drawn from the Risorgimento (democratic), a Communist list with a Red Guards suite, and the partisan formations gated by party tradition. Legione Romana is fascist-only and never picked by the AI.
 
 ---
 
@@ -53,6 +53,12 @@ Ideology-gated lists: the MVSN Blackshirt divisions and legions, the Social Repu
 | `ITA_GAF_01` | Frontier Guard Sectors | infantry | `%s Settore di Copertura` |
 | `ITA_CAR_01` | Carabinieri Formations | infantry | `%da Legione Carabinieri` |
 | `ITA_ROM_01` | Legione Romana | infantry, light_armor, medium_armor, heavy_armor, modern_armor | `Legio %s` |
+| `ITA_MIL_01` | Blackshirt Special Militias | militia | `%da Legione Speciale CC.NN.` |
+| `ITA_GDF_01` | Finance Guard Formations | infantry | `%s Battaglione Mobilitato GdF` |
+| `ITA_COL_04` | Colonial Battalions | infantry | `%s Battaglione Coloniale` |
+| `ITA_REP_01` | Republican Volunteer Legions | infantry, militia | `%da Legione Repubblicana` |
+| `ITA_RED_01` | Red Guards | militia, infantry | `%da Guardia Rossa` |
+| `ITA_IRR_01` | Irredentist Legions | infantry | `%da Legione Irredentista` |
 
 ---
 
@@ -144,3 +150,21 @@ The Carabinieri Reali divisions *'Pastrengo'*, *'Podgora'* and *'Ogaden'*, the m
 
 ### `ITA_ROM_01` — Legione Romana
 Imperial legions by number and cognomen (*Legio I Germanica*, *Legio XX Valeria Victrix*). Fascism only, and never picked by the AI.
+
+### `ITA_MIL_01` — Blackshirt Special Militias
+Fascism only. The 22 'M' assault battalions of 1941–43 on their Roman numerals (*XLII*, *XLIII*, *L* and *LX* were the Malta landing group), the *Gruppi Battaglioni M* of the Russian front, the ten MILMART coastal-artillery legions by naval base (*1a Legione MILMART 'Venezia'*, *14a 'Reggio Calabria'*) with their autonomous groups, and the specialist militias (*Milizia Ferroviaria*, *Milizia Portuaria*, *Moschettieri del Duce*).
+
+### `ITA_GDF_01` — Finance Guard Formations
+The Guardia di Finanza as a fighting corps: the mobilised battalions of 1940–43 (*I Battaglione Mobilitato GdF 'Cefalonia'*, *VI 'Montenegro'*), battalions named for their theatres, and the territorial legions (*3a Legione Territoriale GdF 'Milano'*, *11a 'Salentina'*). Frontier sectors stay with `ITA_GAF_01`.
+
+### `ITA_COL_04` — Colonial Battalions
+The Regio Corpo Truppe Coloniali's Eritrean battalions named for their first commanders (*I Battaglione Eritreo 'Turitto'*, *IV 'Toselli'*, *III 'Galliano'*, *II 'Hidalgo'*), the Libyan and Arabo-Somali battalions, the Saharan groupings (*Raggruppamento Sahariano 'Maletti'*) and the colonial police (*Gruppo Zaptiè d'Eritrea*, *Reparto PAI*).
+
+### `ITA_REP_01` — Republican Volunteer Legions
+Democratic only. The volunteer tradition of Mazzini and Garibaldi: the Roman Republic of 1849 (*Legione Italiana 'Garibaldi'*, *Bersaglieri Lombardi 'Manara'*), the *Legione Garibaldina 'Argonne'* of 1914–15, Ricciotti Garibaldi's 1897 legion, and alt-history Republican divisions named for Mazzini, Saffi and Manin. It gives a democratic Italy a republican tradition apart from the House of Savoy names of `ITA_MONCH_01`.
+
+### `ITA_RED_01` — Red Guards
+Communism only. The *Centuria 'Gastone Sozzi'* and *Colonna 'Guido Picelli'* of the Spanish war, the *Formazioni di Difesa Proletaria* of the 1922 Parma barricades, Arditi del Popolo sections by city, and Red Guard formations named for labour-movement figures (*'Giuseppe Di Vittorio'*, *'Ilio Barontini'*, *'Oltretorrente'*).
+
+### `ITA_IRR_01` — Irredentist Legions
+Fascism only. D'Annunzio's Fiume legions of 1919–20 (*Legione 'Fiumana'*, *Legione del Carnaro*, *XII Reparto d'Assalto 'Irriducibili'*), the four legions of the Milizia Fascista Albanese, the Corsican battalion raised in Sardinia in 1942, and alt-history legions for Malta, Nice, Tunisia and Dalmatia.

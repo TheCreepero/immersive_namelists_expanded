@@ -17,7 +17,7 @@
 | [Soviet Union](Soviet-Union) | `SOV` | 20 | `INEX_SOV_names_divisions.txt` |
 | [United Kingdom](United-Kingdom) | `ENG` | 28 | `INEX_ENG_names_divisions.txt` |
 | [France](France) | `FRA` | 20 | `INEX_FRA_names_divisions.txt` |
-| [Italy](Italy) | `ITA` | 37 | `INEX_ITA_names_divisions.txt` |
+| [Italy](Italy) | `ITA` | 43 | `INEX_ITA_names_divisions.txt` |
 | [United States](United-States) | `USA` | 25 | `INEX_USA_names_divisions.txt` |
 | [Poland](Poland) | `POL` | 34 | `INEX_POL_names_divisions.txt` |
 | [Finland](Finland) | `FIN` | 27 | `INEX_FIN_names_divisions.txt` |
