@@ -121,6 +121,94 @@ GER_ARM_03 = {
 	}
 }
 
+# Sturmartillerie: the Heer's independent Sturmgeschütz-Abteilungen, renamed Brigaden on 14 February 1944 (battalion strength). Real numbers, own number series.
+GER_STUG_01 = 
+{
+	name = "Assault Gun Brigades"
+
+	for_countries = { GER }
+
+	can_use = { always = yes }
+
+	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
+
+	fallback_name = "Sturmgeschütz-Brigade %d"
+
+	ordered =
+	{
+		# Heer: Sturmgeschütz-Brigaden on their real numbers, with the Heeres-Sturmartillerie and Heeres-Sturmgeschütz designations of 1944
+		177 = { "Sturmgeschütz-Brigade %d" }
+		184 = { "Heeres-Sturmgeschütz-Brigade %d" }
+		185 = { "Heeres-Sturmgeschütz-Brigade %d" }
+		189 = { "Sturmgeschütz-Brigade %d" }
+		190 = { "leichte Sturmgeschütz-Brigade %d" }
+		191 = { "Sturmgeschütz-Brigade %d" }
+		201 = { "Sturmgeschütz-Brigade %d" }
+		202 = { "Heeres-Sturmartillerie-Brigade %d" }
+		203 = { "Sturmgeschütz-Brigade %d" }
+		209 = { "Sturmgeschütz-Brigade %d" }
+		210 = { "Sturmgeschütz-Brigade %d" }
+		226 = { "Heeres-Sturmartillerie-Brigade %d" }
+		228 = { "Sturmgeschütz-Brigade %d" }
+		232 = { "Sturmgeschütz-Brigade %d" }
+		236 = { "Heeres-Sturmartillerie-Brigade %d" }
+		237 = { "Sturmgeschütz-Brigade %d" }
+		239 = { "Heeres-Sturmartillerie-Brigade %d" }
+		242 = { "Sturmgeschütz-Brigade %d" }
+		243 = { "Heeres-Sturmartillerie-Brigade %d" }
+		244 = { "Sturmgeschütz-Brigade %d" }
+		245 = { "Sturmgeschütz-Brigade %d" }
+		249 = { "Heeres-Sturmartillerie-Brigade %d" }
+		259 = { "Sturmgeschütz-Brigade %d" }
+		261 = { "Heeres-Sturmartillerie-Brigade %d" }
+		270 = { "Sturmgeschütz-Brigade %d" }
+		276 = { "Sturmgeschütz-Brigade %d" }
+		277 = { "Heeres-Sturmartillerie-Brigade %d" }
+		278 = { "Sturmgeschütz-Brigade %d" }
+		279 = { "Sturmgeschütz-Brigade %d" }
+		280 = { "Sturmgeschütz-Brigade %d" }
+		281 = { "Sturmgeschütz-Brigade %d" }
+		286 = { "Sturmgeschütz-Brigade %d" }
+		300 = { "Heeres-Sturmartillerie-Brigade %d" }
+		301 = { "Sturmgeschütz-Brigade %d" }
+		303 = { "Heeres-Sturmartillerie-Brigade %d" }
+		311 = { "Sturmgeschütz-Brigade %d" }
+		322 = { "Sturmgeschütz-Brigade %d" }
+		325 = { "Sturmgeschütz-Brigade %d" }
+		341 = { "Sturmgeschütz-Brigade %d" }
+		393 = { "Heeres-Sturmartillerie-Brigade %d" }
+		394 = { "Sturmgeschütz-Brigade %d" }
+		395 = { "Sturmgeschütz-Brigade %d" }
+		396 = { "Sturmgeschütz-Brigade %d" }
+		397 = { "Sturmgeschütz-Brigade %d" }
+		398 = { "Sturmgeschütz-Brigade %d" }
+		600 = { "Heeres-Sturmartillerie-Brigade %d" }
+		667 = { "Heeres-Sturmartillerie-Brigade %d" }
+		901 = { "Sturmgeschütz-Brigade %d" }
+		902 = { "Sturmgeschütz-Brigade %d" }
+		904 = { "Sturmgeschütz-Brigade %d" }
+		905 = { "Heeres-Sturmartillerie-Brigade %d" }
+		907 = { "Sturmgeschütz-Brigade %d" }
+		909 = { "Sturmgeschütz-Brigade %d" }
+		911 = { "Heeres-Sturmartillerie-Brigade %d" }
+		912 = { "Heeres-Sturmartillerie-Brigade %d" }
+		914 = { "Sturmgeschütz-Brigade %d" }
+		920 = { "Sturmgeschütz-Lehr-Brigade %d" }
+		# Lehr and named brigades
+		951 = { "Sturmartillerie-Lehr-Brigade 111" }
+		952 = { "Sturmgeschütz-Brigade 'Schill'" }
+		# Luftwaffe: Fallschirm-Sturmgeschütz-Brigaden (designations of June 1944 and January 1945)
+		953 = { "Fallschirm-Sturmgeschütz-Brigade 11" }
+		954 = { "Fallschirm-Sturmgeschütz-Brigade 12" }
+		955 = { "Fallschirm-Sturmgeschütz-Brigade 21" }
+		# Panzertruppe: Sturmpanzer-Abteilungen (Sturmpanzer IV)
+		956 = { "Sturmpanzer-Abteilung 216" }
+		957 = { "Sturmpanzer-Abteilung 217" }
+		958 = { "Sturmpanzer-Abteilung 218" }
+		959 = { "Sturmpanzer-Abteilung 219" }
+	}
+}
+
 # Players only (is_ai = no): self-propelled artillery templates; own number series.
 GER_PANZERARTILLERIE_DIVISION_01 = {
 	name = "Panzer Artillery Divisions"
@@ -786,6 +874,113 @@ GER_KAMPFGRUPPE_01 = {
 	}
 }
 
+# Independent Heer, Luftwaffe and Kriegsmarine brigades for small infantry and motorized templates. Real numbers are written into the names. Armoured brigades are in GER_ARM_03, fortress brigades in GER_FORT_01.
+GER_BRIG_01 = 
+{
+	name = "Infantry Brigades"
+
+	for_countries = { GER }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" "motorized" }
+
+	fallback_name = "Grenadier-Brigade %d"
+
+	ordered =
+	{
+		# Grenadier-Brigaden of summer 1944
+		1 = { "Grenadier-Brigade 193" }
+		2 = { "Grenadier-Brigade 388" }
+		3 = { "Grenadier-Brigade 503" }
+		4 = { "Grenadier-Brigade 761" }
+		5 = { "Grenadier-Brigade 1131" }
+		6 = { "Grenadier-Brigade 1132" }
+		7 = { "Grenadier-Brigade 1133" }
+		8 = { "Grenadier-Brigade 1134" }
+		9 = { "Grenadier-Brigade 1135" }
+		10 = { "Grenadier-Brigade 1136" }
+		11 = { "Grenadier-Lehr-Brigade" }
+		# Motorized and fast brigades
+		12 = { "Lehr-Brigade (mot.) 900" }
+		13 = { "Grenadier-Brigade (mot.) 92" }
+		14 = { "Grenadier-Brigade (mot.) 1027" }
+		15 = { "Schnelle Brigade 20" }
+		16 = { "Schnelle Brigade 30" }
+		17 = { "Schnelle Brigade West" }
+		# Mountain, ski and bicycle brigades
+		18 = { "Gebirgsjäger-Brigade 139" }
+		19 = { "1. Skijäger-Brigade" }
+		20 = { "MG-Ski-Brigade Finnland" }
+		21 = { "Radfahr-Aufklärungs-Brigade Norwegen" }
+		22 = { "Radfahr-Jäger-Brigade 10" }
+		# Border and security brigades
+		23 = { "Brigade Lötzen" }
+		24 = { "Sicherungs-Brigade 74" }
+		25 = { "Sicherungs-Brigade 201" }
+		26 = { "Sicherungs-Brigade 202" }
+		27 = { "Sicherungs-Brigade 203" }
+		# Luftwaffe and Kriegsmarine ground brigades
+		28 = { "Fallschirmjäger-Brigade Ramcke" }
+		29 = { "Marine-Schützen-Brigade Nord" }
+		30 = { "Marine-Brigade Weber" }
+		# Emergency brigades of 1945
+		31 = { "Brigade 1005" }
+		32 = { "Brigade z.b.V. 100" }
+	}
+}
+
+# Overrides vanilla GER_PEN_01, which has no names and a focus lock. The vanilla focus GER_strafbataillon names its locked template from this group. Bewährungstruppe 500 and Division 999; real numbers are written into the names.
+GER_PEN_01 = 
+{
+	name = "Penal Units"
+
+	for_countries = { GER }
+
+	can_use = { always = yes }
+
+	division_types = { "penal_battalion" "infantry" }
+
+	fallback_name = "Bewährungs-Bataillon %d"
+
+	ordered =
+	{
+		# Bewährungstruppe 500: probation battalions (1941)
+		1 = { "Infanterie-Bataillon z.b.V. 500" }
+		2 = { "Infanterie-Bataillon z.b.V. 540" }
+		3 = { "Infanterie-Bataillon z.b.V. 550" }
+		4 = { "Infanterie-Bataillon z.b.V. 560" }
+		5 = { "Infanterie-Bataillon z.b.V. 561" }
+		# Division 999 (1942-43)
+		6 = { "Afrika-Brigade 999" }
+		7 = { "Afrika-Division 999" }
+		# Festungs-Infanterie-Bataillone 999 (Greece, from June 1943)
+		8 = { "I. Festungs-Infanterie-Bataillon 999" }
+		9 = { "II. Festungs-Infanterie-Bataillon 999" }
+		10 = { "III. Festungs-Infanterie-Bataillon 999" }
+		11 = { "IV. Festungs-Infanterie-Bataillon 999" }
+		12 = { "V. Festungs-Infanterie-Bataillon 999" }
+		13 = { "VI. Festungs-Infanterie-Bataillon 999" }
+		14 = { "VII. Festungs-Infanterie-Bataillon 999" }
+		15 = { "VIII. Festungs-Infanterie-Bataillon 999" }
+		16 = { "IX. Festungs-Infanterie-Bataillon 999" }
+		17 = { "X. Festungs-Infanterie-Bataillon 999" }
+		18 = { "XI. Festungs-Infanterie-Bataillon 999" }
+		19 = { "XII. Festungs-Infanterie-Bataillon 999" }
+		20 = { "XIII. Festungs-Infanterie-Bataillon 999" }
+		21 = { "XIV. Festungs-Infanterie-Bataillon 999" }
+		22 = { "XV. Festungs-Infanterie-Bataillon 999" }
+		23 = { "XVI. Festungs-Infanterie-Bataillon 999" }
+		24 = { "XVII. Festungs-Infanterie-Bataillon 999" }
+		25 = { "XVIII. Festungs-Infanterie-Bataillon 999" }
+		26 = { "XIX. Festungs-Infanterie-Bataillon 999" }
+		27 = { "XX. Festungs-Infanterie-Bataillon 999" }
+		28 = { "XXI. Festungs-Infanterie-Bataillon 999" }
+		29 = { "XXII. Festungs-Infanterie-Bataillon 999" }
+		30 = { "XXIII. Festungs-Infanterie-Bataillon 999" }
+	}
+}
+
 # ==============================================================================
 # 4. MILITIAS AND PARAMILITARY FORMATIONS (by ideology)
 # ==============================================================================
@@ -1112,5 +1307,103 @@ GER_LEG_01 = {
 		909 = { "Wolgatatarische Legion" }
 		910 = { "Kalmücken-Kavallerie-Korps" }
 		911 = { "Russische Befreiungsarmee" }
+	}
+}
+
+# ===== Imperial numbered series (neutrality and democratic) =====
+
+# The army-level Sturm-Bataillone of 1916-18 on their real numbers. Nr. 13 never grew beyond a company and has no entry.
+GER_STURM_01 = 
+{
+	name = "Imperial Storm Battalions"
+
+	for_countries = { GER }
+
+	can_use = { OR = { has_government = neutrality has_government = democratic } }
+
+	division_types = { "infantry" "ranger_battalion" }
+
+	fallback_name = "Sturm-Bataillon Nr. %d"
+
+	ordered =
+	{
+		# Sturm-Bataillone of the Imperial German Army (1916-18)
+		1 = { "Sturm-Bataillon Nr. %d" }
+		2 = { "Sturm-Bataillon Nr. %d" }
+		3 = { "Jäger-Sturm-Bataillon Nr. %d" }
+		4 = { "Sturm-Bataillon Nr. %d" }
+		5 = { "Sturm-Bataillon Nr. %d (Rohr)" }
+		6 = { "Kgl. Bayer. Sturm-Bataillon Nr. %d" }
+		7 = { "Sturm-Bataillon Nr. %d" }
+		8 = { "Sturm-Bataillon Nr. %d" }
+		9 = { "Sturm-Bataillon Nr. %d" }
+		10 = { "Sturm-Bataillon Nr. %d" }
+		11 = { "Sturm-Bataillon Nr. %d" }
+		12 = { "Sturm-Bataillon Nr. %d" }
+		14 = { "Sturm-Bataillon Nr. %d" }
+		15 = { "Kgl. Bayer. Sturm-Bataillon Nr. %d" }
+		16 = { "Sturm-Bataillon Nr. %d" }
+		17 = { "Sturm-Bataillon Nr. %d" }
+		18 = { "Sturm-Bataillon Nr. %d" }
+	}
+}
+
+# The Landwehr divisions of 1914-18 on their real numbers, the Bavarian series, and the divisions of 1914-15 under the names of their first commanders.
+GER_LANDWEHR_01 = 
+{
+	name = "Imperial Landwehr Divisions"
+
+	for_countries = { GER }
+
+	can_use = { OR = { has_government = neutrality has_government = democratic } }
+
+	division_types = { "infantry" "militia" }
+
+	fallback_name = "%d. Landwehr-Division"
+
+	ordered =
+	{
+		# Landwehr-Divisionen of 1914-18 on their real numbers
+		1 = { "%d. Landwehr-Division" }
+		2 = { "%d. (Württembergische) Landwehr-Division" }
+		3 = { "%d. Landwehr-Division" }
+		4 = { "%d. Landwehr-Division" }
+		5 = { "%d. Landwehr-Division" }
+		7 = { "%d. (Württembergische) Landwehr-Division" }
+		8 = { "%d. Landwehr-Division" }
+		9 = { "%d. Landwehr-Division" }
+		10 = { "%d. Landwehr-Division" }
+		11 = { "%d. Landwehr-Division" }
+		12 = { "%d. Landwehr-Division" }
+		13 = { "%d. Landwehr-Division" }
+		14 = { "%d. Landwehr-Division" }
+		15 = { "%d. Landwehr-Division" }
+		16 = { "%d. Landwehr-Division" }
+		17 = { "%d. Landwehr-Division" }
+		18 = { "%d. Landwehr-Division" }
+		19 = { "%d. Landwehr-Division" }
+		20 = { "%d. Landwehr-Division" }
+		21 = { "%d. Landwehr-Division" }
+		22 = { "%d. Landwehr-Division" }
+		23 = { "%d. Landwehr-Division" }
+		25 = { "%d. Landwehr-Division" }
+		26 = { "%d. (Württembergische) Landwehr-Division" }
+		38 = { "%d. Landwehr-Division" }
+		44 = { "%d. Landwehr-Division" }
+		45 = { "%d. Landwehr-Division (1. Königlich Sächsische)" }
+		46 = { "%d. Landwehr-Division (2. Königlich Sächsische)" }
+		47 = { "%d. Landwehr-Division (3. Königlich Sächsische)" }
+		48 = { "%d. Landwehr-Division" }
+		85 = { "%d. Landwehr-Division" }
+		# Bavarian Landwehr divisions (their own number series)
+		901 = { "1. Kgl. Bayer. Landwehr-Division" }
+		902 = { "2. Kgl. Bayer. Landwehr-Division" }
+		903 = { "6. Kgl. Bayer. Landwehr-Division" }
+		# Divisions of 1914-15 under the names of their first commanders
+		911 = { "Landwehr-Division Goltz" }
+		912 = { "Landwehr-Division Bredow" }
+		913 = { "Division Waldow" }
+		914 = { "Landwehr-Division Breugel" }
+		915 = { "Division Mühlenfels" }
 	}
 }
