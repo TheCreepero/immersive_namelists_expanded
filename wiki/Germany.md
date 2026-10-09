@@ -40,7 +40,7 @@ The basic lists are open to every government. Ideology-gated lists:
 | `GER_Cav_01` | Cavalry Divisions | cavalry | `%d. Kavallerie-Division` |
 | `GER_Mnt_01` | Mountain Divisions | mountaineers | `%d. Gebirgs-Division` |
 | `GER_PAR_01` | Paratrooper Divisions | paratrooper | `%d. Fallschirmjäger-Division` |
-| `GER_MAR_01` | Marine Divisions | marine | `%d. Seelande-Division` |
+| `GER_MAR_01` | Marine Divisions | marine | `%d. Marine-Infanterie-Division` |
 | `GER_GAR_01` | Garrison Divisions | infantry | `%d. Sicherungs-Division` |
 | `GER_ELI_01` | Elite Formations | infantry, motorized, mechanized, light_armor, medium_armor, heavy_armor, modern_armor | `Division 'Feldherrnhalle %d'` |
 | `GER_MEC_01_MONARNCHIST` | Guard Divisions | infantry, motorized, mechanized, light_armor, medium_armor, heavy_armor, modern_armor | `%d. Garde-Division` |
@@ -74,9 +74,9 @@ The 1943–45 Panzergrenadier divisions (*15. 'Sizilien'*, *90. 'Sardinien'*, *P
 Named identities include:
 - **Emblems and nicknames:** *3. 'Berliner Bär'*, *7. 'Gespenster'*, *116. 'Windhund'*.
 - **Formation cities:** *1. 'Weimar'*. A division converted from an infantry division keeps its predecessor's city (*14. 'Dresden'* from 4. Infanterie-Division).
-- **1945 named divisions:** *Panzer-Division Holstein*, *Müncheberg*, *Jüterbog*, *Clausewitz*, *Norwegen*.
+- **Named divisions of 1939–45:** *Panzer-Division Kempf*, *Norwegen*, *Holstein*, *Müncheberg*, *Jüterbog*, *Clausewitz*.
 
-The expansion keeps 31 names from the earlier INEX list (*'Donnerkeil'*, *'Stahlross'*). It then follows the 1945 practice of naming divisions after training grounds (*Panzer-Division Döberitz*, *Wünsdorf*).
+The expansion keeps 28 names from the earlier INEX list (*'Donnerkeil'*, *'Stahlross'*). It then follows the 1945 practice of naming divisions after training grounds (*Panzer-Division Döberitz*, *Wünsdorf*).
 
 ### `GER_LTARM_01` — Light Divisions
 The four *leichte Divisionen* of 1938–39 and the *5. leichte Division* of the Afrikakorps. Each is keyed by the number of the Panzer division it became.
@@ -94,7 +94,7 @@ Opens with the *7. Flieger-Division*. The Fallschirmjäger divisions carry:
 - **Airborne operations** in the expansion: *'Eben-Emael'*, *'Monte Cassino'*.
 
 ### `GER_MAR_01` — Marine Divisions
-Germany never had a true marine corps, so the list keeps the vanilla *Seelande-Division*. It opens with the Marinekorps Flandern divisions of 1914–18. It continues with:
+Germany never had a true marine corps. The list opens with the *Marine-Divisionen* of the Marinekorps Flandern (1914–18). The rest are *Marine-Infanterie-Divisionen*, the designation of the Kriegsmarine's divisions of 1945, in place of the vanilla coinage *Seelande-Division*. It continues with:
 - the Seebataillon and naval tradition: *'Kiautschou'*, *'Ösel'*, *'Skagerrak'*, *'Graf Spee'*, *'Graf Luckner'*;
 - kept names: *'Seeteufel'*.
 
@@ -102,7 +102,7 @@ Germany never had a true marine corps, so the list keeps the vanilla *Seelande-D
 Sicherungs, Feldausbildungs and Ausbildungs divisions and the Divisionen z.b.V. Reserve and Festung divisions have their own lists in the Additional file.
 
 ### `GER_ELI_01` — Elite Formations (fascism)
-*Großdeutschland*, *Feldherrnhalle* (Panzer-Division FHH 1 and 2), *Hermann Göring*, the *Führer-Begleit-* and *Führer-Grenadier-Division*, and *Infanterie-Division Schlageter*. Overflow continues the numbered Feldherrnhalle series.
+*Großdeutschland*, *Feldherrnhalle* (Panzer-Division FHH 1 and 2), *Hermann Göring*, the *Führer-Begleit-* and *Führer-Grenadier-Division*, *Infanterie-Division Schlageter* and the *Legion Condor*. Overflow continues the numbered Feldherrnhalle series.
 
 ### `GER_MEC_01_MONARNCHIST` — Guard Divisions (neutrality / democratic)
 The Prussian Garde-Korps (*1.–5. Garde-Infanterie-Division*, *Garde-Füsilier-Division 'Maikäfer'*) and the Leib regiments of the other German states. The expansion is named after residences and orders (*'Sanssouci'*, *'Schwarzer Adler'*). Overrides the focus-locked vanilla group.

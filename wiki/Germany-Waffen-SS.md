@@ -58,10 +58,10 @@ Cavalry:
 - *8. SS-Kavallerie-Division 'Florian Geyer'*, *22. 'Maria Theresia'* and *37. 'Lützow'*.
 
 ### `GER_SS_08` — SS Heavy Panzer Battalions
-*schwere SS-Panzer-Abteilung 501–503*, formed as 101–103 and each attached to its SS Panzer corps. The plausible expansion adds battalions for the IV. and XI. SS-Panzerkorps.
+*schwere SS-Panzer-Abteilung 501–503*, each attached to its SS Panzer corps, and the same three battalions under their 1943–44 numbers *101–103*. The plausible expansion adds battalions for the IV. and XI. SS-Panzerkorps.
 
 ### `GER_SS_09` — SS Kampfgruppen
-Historical Waffen-SS Kampfgruppen (*Kampfgruppe Peiper*, *Hansen*, *Knittel*), then SS division commanders.
+Kampfgruppen named after Waffen-SS commanders, the attested ones first (*Kampfgruppe Peiper*, *Hansen*, *Knittel*), then SS division commanders.
 
 ### `GER_SS_STANDARTE_01` — SS Standarten
 The SS-Verfügungstruppe Standarten (*Deutschland*, *Germania*, *Der Führer*), the *SS-Totenkopfstandarten I–XVI*, and the Allgemeine-SS *1. SS-Standarte 'Julius Schreck'*.

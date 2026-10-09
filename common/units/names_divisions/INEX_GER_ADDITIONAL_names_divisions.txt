@@ -209,9 +209,10 @@ GER_STUG_01 =
 	}
 }
 
-# Players only (is_ai = no): self-propelled artillery templates; own number series.
+# Players only (is_ai = no): artillery-heavy and self-propelled artillery templates; own number series.
+# Typed as armour, so the gate keeps the automatic choice from giving AI Panzer templates artillery names.
 GER_PANZERARTILLERIE_DIVISION_01 = {
-	name = "Panzer Artillery Divisions"
+	name = "Artillery Divisions"
 
 	for_countries = { GER }
 
@@ -221,7 +222,7 @@ GER_PANZERARTILLERIE_DIVISION_01 = {
 
 	division_types = { "heavy_armor" "medium_armor" "light_armor" "modern_armor" }
 
-	fallback_name = "%d. Panzer-Artillerie-Division"
+	fallback_name = "%d. Artillerie-Division"
 
 	ordered = {
 		# Historical: the Heer artillery divisions and the Volks-Artillerie-Korps of 1944-45
@@ -271,7 +272,7 @@ GER_RESERVE_DIVISION_01 = {
 		153 = { "%d. Reserve-Division" }
 		154 = { "%d. Reserve-Division" }
 		156 = { "%d. Reserve-Division" }
-		157 = { "%d. Reserve-Gebirgs-Division" }
+		157 = { "%d. Reserve-Division" }
 		158 = { "%d. Reserve-Division" }
 		159 = { "%d. Reserve-Division" }
 		160 = { "%d. Reserve-Division" }
@@ -452,13 +453,13 @@ GER_FLAK_DIVISION_01 = {
 	ordered = {
 		# Historical Flak-Divisionen of the Luftwaffe; home noted where verified
 		1 = { "%d. Flak-Division 'Berlin'" }
-		2 = { "%d. Flak-Division" }
-		3 = { "%d. Flak-Division" }
-		4 = { "%d. Flak-Division" }
+		2 = { "%d. Flak-Division 'Leipzig'" }
+		3 = { "%d. Flak-Division 'Hamburg'" }
+		4 = { "%d. Flak-Division 'Düsseldorf'" }
 		5 = { "%d. Flak-Division" }
 		6 = { "%d. Flak-Division" }
 		7 = { "%d. Flak-Division" }
-		8 = { "%d. Flak-Division" }
+		8 = { "%d. Flak-Division 'Bremen'" }
 		9 = { "%d. Flak-Division 'Stalingrad'" }
 		10 = { "%d. Flak-Division" }
 		11 = { "%d. Flak-Division" }
@@ -472,13 +473,13 @@ GER_FLAK_DIVISION_01 = {
 		19 = { "%d. Flak-Division" }
 		20 = { "%d. Flak-Division" }
 		21 = { "%d. Flak-Division" }
-		22 = { "%d. Flak-Division" }
+		22 = { "%d. Flak-Division 'Dortmund'" }
 		23 = { "%d. Flak-Division" }
-		24 = { "%d. Flak-Division" }
+		24 = { "%d. Flak-Division 'Wien'" }
 		25 = { "%d. Flak-Division" }
-		26 = { "%d. Flak-Division" }
+		26 = { "%d. Flak-Division 'München'" }
 		27 = { "%d. Flak-Division" }
-		28 = { "%d. Flak-Division" }
+		28 = { "%d. Flak-Division 'Stuttgart'" }
 		29 = { "%d. Flak-Division 'Oslo'" }
 		30 = { "%d. Flak-Division" }
 		31 = { "%d. Flak-Division" }
@@ -605,7 +606,7 @@ GER_FORT_01 = {
 		29 = { "Festungs-Division 'Minsk'" }
 		30 = { "Festungs-Division 'Nikolajew'" }
 		31 = { "Festungs-Division 'Metz'" }
-		32 = { "Festungs-Division ''s-Hertogenbosch'" }
+		32 = { "Festungs-Division 'Herzogenbusch'" }
 		# Atlantikwall, Norway and Aegean fortresses
 		33 = { "Festungs-Division 'Dünkirchen'" }
 		34 = { "Festungs-Division 'Calais'" }
@@ -1067,7 +1068,7 @@ GER_SA_01 = {
 		914 = { "SA-Gruppe 'Hansa'" }
 		915 = { "SA-Gruppe 'Westmark'" }
 		916 = { "SA-Gruppe 'Nordsee'" }
-		917 = { "SA-Gruppe 'Ostsee'" }
+		917 = { "SA-Gruppe 'Tannenberg'" }
 		918 = { "SA-Gruppe 'Nordmark'" }
 		919 = { "SA-Gruppe 'Niedersachsen'" }
 		920 = { "SA-Gruppe 'Schlesien'" }
@@ -1083,8 +1084,8 @@ GER_SA_01 = {
 		930 = { "SA-Gruppe 'Ostland'" }
 		931 = { "SA-Gruppe 'Alpenland'" }
 		932 = { "SA-Gruppe 'Donau'" }
-		933 = { "SA-Gruppe 'Sudetenland'" }
-		934 = { "SA-Gruppe 'Danzig'" }
+		933 = { "SA-Gruppe 'Sudeten'" }
+		934 = { "SA-Gruppe 'Südmark'" }
 		935 = { "SA-Gruppe 'Bayerische Ostmark'" }
 		936 = { "SA-Gruppe 'Weichsel'" }
 		937 = { "SA-Gruppe 'Warthe'" }
@@ -1134,7 +1135,7 @@ GER_MIL_01 = {
 		27 = { "Eiserne Schar Berthold" }
 		28 = { "Grenzschutz Ost" }
 		29 = { "Grenzschutz Nord" }
-		30 = { "Schlesischer Selbstschutz" }
+		30 = { "Selbstschutz Oberschlesien" }
 	}
 }
 
@@ -1293,7 +1294,6 @@ GER_LEG_01 = {
 		600 = { "%d. Infanterie-Division (russ.)" }
 		650 = { "%d. Infanterie-Division (russ.)" }
 		# Historical legions and volunteer regiments
-		901 = { "Legion Condor" }
 		902 = { "Legion Wallonie" }
 		638 = { "Infanterie-Regiment %d (franz.)" }
 		950 = { "Infanterie-Regiment %d (ind.)" }

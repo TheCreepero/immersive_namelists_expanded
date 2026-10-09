@@ -19,7 +19,7 @@
 # Overrides vanilla GER_Inf_01, GER_ALTINF_01, GER_LTINF_01, GER_MOT_01, GER_MOT_02, GER_MEC_01,
 # GER_MEC_01_MONARNCHIST, GER_MEC_01_COMMUNIST, GER_Mnt_01, GER_MAR_01, GER_PAR_01, GER_GAR_01, GER_Arm_01,
 # GER_Arm_01_ANTIFASCIST, GER_LTARM_01, GER_Cav_01, GER_MONINF_01 and GER_MONMOB_01. Vanilla focuses
-# reference GER_INF_01 and GER_CAV_01 (kept here); GER_PEN_01 is left to vanilla.
+# reference GER_INF_01 and GER_CAV_01 (kept here); GER_PEN_01 is overridden in the ADDITIONAL file.
 
 # ==============================================================================
 # 1. INFANTRY (Heer)
@@ -800,7 +800,7 @@ GER_Arm_02 = {
 	fallback_name = "%d. Panzer-Division"
 
 	ordered = {
-		# Historical: emblem or nickname, else formation city (predecessor division's city where it was converted)
+		# Historical divisions: emblem or nickname, else formation city (predecessor division's city where it was converted); 11, 18, 22, 23, 25 and 27 carry kept invented names
 		1 = { "%d. Panzer-Division 'Weimar'" }
 		2 = { "%d. Panzer-Division 'Dreizack'" }
 		3 = { "%d. Panzer-Division 'Berliner Bär'" }
@@ -831,7 +831,7 @@ GER_Arm_02 = {
 		116 = { "%d. Panzer-Division 'Windhund'" }
 		232 = { "%d. Panzer-Division 'Tatra'" }
 		130 = { "%d. Panzer-Lehr-Division" }
-		# Historical: Panzer divisions named in 1945
+		# Historical: named Panzer divisions (1939-45)
 		901 = { "Panzer-Division Holstein" }
 		902 = { "Panzer-Division Müncheberg" }
 		903 = { "Panzer-Division Jüterbog" }
@@ -839,11 +839,9 @@ GER_Arm_02 = {
 		905 = { "Panzer-Division Clausewitz" }
 		906 = { "Panzer-Division Norwegen" }
 		907 = { "Panzer-Division Kempf" }
-		908 = { "Panzer-Division Bergen" }
 		# Plausible expansion: names kept from the earlier INEX list
 		28 = { "%d. Panzer-Division 'Donnerkeil'" }
 		29 = { "%d. Panzer-Division 'Stahlross'" }
-		30 = { "%d. Panzer-Division 'Panthersturm'" }
 		31 = { "%d. Panzer-Division 'Kampfschmiede'" }
 		32 = { "%d. Panzer-Division 'Berglöwe'" }
 		33 = { "%d. Panzer-Division 'Eisengarde'" }
@@ -855,7 +853,6 @@ GER_Arm_02 = {
 		39 = { "%d. Panzer-Division 'Stahlthron'" }
 		40 = { "%d. Panzer-Division 'Königssturm'" }
 		41 = { "%d. Panzer-Division 'Feuervogel'" }
-		42 = { "%d. Panzer-Division 'Eisenpanther'" }
 		43 = { "%d. Panzer-Division 'Eisenschild'" }
 		44 = { "%d. Panzer-Division 'Feuerklaue'" }
 		45 = { "%d. Panzer-Division 'Eisenpfeil'" }
@@ -866,7 +863,6 @@ GER_Arm_02 = {
 		50 = { "%d. Panzer-Division 'Felsbrecher'" }
 		51 = { "%d. Panzer-Division 'Feueradler'" }
 		52 = { "%d. Panzer-Division 'Sturmspitze'" }
-		53 = { "%d. Panzer-Division 'Eisentiger'" }
 		54 = { "%d. Panzer-Division 'Stahlsturm'" }
 		55 = { "%d. Panzer-Division 'Eisenklaue'" }
 		56 = { "%d. Panzer-Division 'Falkensturm'" }
@@ -888,6 +884,7 @@ GER_Arm_02 = {
 		923 = { "Panzer-Division Stablack" }
 		924 = { "Panzer-Division Hammerstein" }
 		925 = { "Panzer-Division Lamsdorf" }
+		926 = { "Panzer-Division Bergen" }
 	}
 }
 
@@ -1021,7 +1018,7 @@ GER_PAR_01 = {
 	fallback_name = "%d. Fallschirmjäger-Division"
 
 	ordered = {
-		# Historical: 7. Flieger-Division, then the Fallschirmjäger-Divisionen (commander or battle honour where verified)
+		# Historical: 7. Flieger-Division, then the Fallschirmjäger-Divisionen (commander or battle honour where verified; 3-5, 9-11, 20 and 21 carry kept invented names)
 		900 = { "7. Flieger-Division" }
 		1 = { "%d. Fallschirmjäger-Division 'Kreta'" }
 		2 = { "%d. Fallschirmjäger-Division 'Ramcke'" }
@@ -1051,7 +1048,8 @@ GER_PAR_01 = {
 	}
 }
 
-# A proper German marine corps never existed; 'Seelande-Division' is the vanilla designation.
+# A proper German marine corps never existed. Keys 1-3 are the Marine-Divisionen of the Marinekorps Flandern (1914-18);
+# the rest use 'Marine-Infanterie-Division', the Kriegsmarine designation of 1945, not vanilla's unattested 'Seelande-Division'.
 GER_MAR_01 = {
 	name = "Marine Divisions"
 
@@ -1061,7 +1059,7 @@ GER_MAR_01 = {
 
 	division_types = { "marine" }
 
-	fallback_name = "%d. Seelande-Division"
+	fallback_name = "%d. Marine-Infanterie-Division"
 
 	ordered = {
 		# Historical: the Marinekorps Flandern divisions of 1914-18
@@ -1069,41 +1067,41 @@ GER_MAR_01 = {
 		2 = { "%d. Marine-Division" }
 		3 = { "%d. Marine-Division" }
 		# Plausible expansion: Seebataillon garrisons, naval battles and landings, navy tradition names
-		4 = { "%d. Seelande-Division 'Kiautschou'" }
-		5 = { "%d. Seelande-Division 'Flandern'" }
-		6 = { "%d. Seelande-Division 'Zeebrügge'" }
-		7 = { "%d. Seelande-Division 'Ösel'" }
-		8 = { "%d. Seelande-Division 'Dagö'" }
-		9 = { "%d. Seelande-Division 'Moon'" }
-		10 = { "%d. Seelande-Division 'Albion'" }
-		11 = { "%d. Seelande-Division 'Skagerrak'" }
-		12 = { "%d. Seelande-Division 'Doggerbank'" }
-		13 = { "%d. Seelande-Division 'Coronel'" }
-		14 = { "%d. Seelande-Division 'Helgoland'" }
-		15 = { "%d. Seelande-Division 'Brommy'" }
-		16 = { "%d. Seelande-Division 'Prinz Adalbert'" }
-		17 = { "%d. Seelande-Division 'Graf Spee'" }
-		18 = { "%d. Seelande-Division 'Scheer'" }
-		19 = { "%d. Seelande-Division 'Hipper'" }
-		20 = { "%d. Seelande-Division 'Tirpitz'" }
-		21 = { "%d. Seelande-Division 'Weddigen'" }
-		22 = { "%d. Seelande-Division 'Graf Luckner'" }
-		23 = { "%d. Seelande-Division 'von Müller'" }
-		24 = { "%d. Seelande-Division 'Emden'" }
-		25 = { "%d. Seelande-Division 'Seeadler'" }
-		26 = { "%d. Seelande-Division 'Möwe'" }
-		27 = { "%d. Seelande-Division 'Wolf'" }
+		4 = { "%d. Marine-Infanterie-Division 'Kiautschou'" }
+		5 = { "%d. Marine-Infanterie-Division 'Flandern'" }
+		6 = { "%d. Marine-Infanterie-Division 'Zeebrügge'" }
+		7 = { "%d. Marine-Infanterie-Division 'Ösel'" }
+		8 = { "%d. Marine-Infanterie-Division 'Dagö'" }
+		9 = { "%d. Marine-Infanterie-Division 'Moon'" }
+		10 = { "%d. Marine-Infanterie-Division 'Albion'" }
+		11 = { "%d. Marine-Infanterie-Division 'Skagerrak'" }
+		12 = { "%d. Marine-Infanterie-Division 'Doggerbank'" }
+		13 = { "%d. Marine-Infanterie-Division 'Coronel'" }
+		14 = { "%d. Marine-Infanterie-Division 'Helgoland'" }
+		15 = { "%d. Marine-Infanterie-Division 'Brommy'" }
+		16 = { "%d. Marine-Infanterie-Division 'Prinz Adalbert'" }
+		17 = { "%d. Marine-Infanterie-Division 'Graf Spee'" }
+		18 = { "%d. Marine-Infanterie-Division 'Scheer'" }
+		19 = { "%d. Marine-Infanterie-Division 'Hipper'" }
+		20 = { "%d. Marine-Infanterie-Division 'Tirpitz'" }
+		21 = { "%d. Marine-Infanterie-Division 'Weddigen'" }
+		22 = { "%d. Marine-Infanterie-Division 'Graf Luckner'" }
+		23 = { "%d. Marine-Infanterie-Division 'von Müller'" }
+		24 = { "%d. Marine-Infanterie-Division 'Emden'" }
+		25 = { "%d. Marine-Infanterie-Division 'Seeadler'" }
+		26 = { "%d. Marine-Infanterie-Division 'Möwe'" }
+		27 = { "%d. Marine-Infanterie-Division 'Wolf'" }
 		# Plausible expansion: names kept from the earlier INEX list
-		28 = { "%d. Seelande-Division 'Seeteufel'" }
-		29 = { "%d. Seelande-Division 'Neptun'" }
-		30 = { "%d. Seelande-Division 'Wellenbrecher'" }
-		31 = { "%d. Seelande-Division 'Küstenwacht'" }
-		32 = { "%d. Seelande-Division 'Seehund'" }
-		33 = { "%d. Seelande-Division 'Meereswelle'" }
-		34 = { "%d. Seelande-Division 'Sturmwelle'" }
-		35 = { "%d. Seelande-Division 'Meerjäger'" }
-		36 = { "%d. Seelande-Division 'Kaperfahrt'" }
-		37 = { "%d. Seelande-Division 'Seeschlange'" }
+		28 = { "%d. Marine-Infanterie-Division 'Seeteufel'" }
+		29 = { "%d. Marine-Infanterie-Division 'Neptun'" }
+		30 = { "%d. Marine-Infanterie-Division 'Wellenbrecher'" }
+		31 = { "%d. Marine-Infanterie-Division 'Küstenwacht'" }
+		32 = { "%d. Marine-Infanterie-Division 'Seehund'" }
+		33 = { "%d. Marine-Infanterie-Division 'Meereswelle'" }
+		34 = { "%d. Marine-Infanterie-Division 'Sturmwelle'" }
+		35 = { "%d. Marine-Infanterie-Division 'Meerjäger'" }
+		36 = { "%d. Marine-Infanterie-Division 'Kaperfahrt'" }
+		37 = { "%d. Marine-Infanterie-Division 'Seeschlange'" }
 	}
 }
 
@@ -1220,6 +1218,7 @@ GER_ELI_01 = {
 		939 = { "Panzerkorps 'Großdeutschland'" }
 		940 = { "Panzerkorps 'Feldherrnhalle'" }
 		941 = { "Fallschirm-Panzerkorps 'Hermann Göring'" }
+		945 = { "Legion Condor" }
 	}
 }
 
@@ -1447,7 +1446,7 @@ GER_MONINF_01 = {
 		122 = { "%d. Division 'Kaiser Franz Joseph'" }
 		123 = { "%d. Division 'König Karl'" }
 		124 = { "%d. Division 'König Wilhelm I.'" }
-		125 = { "%d. Division 'Friedrich, König von Preußen'" }
+		125 = { "%d. Division 'Kaiser Friedrich, König von Preußen'" }
 		126 = { "%d. Division 'Großherzog Friedrich von Baden'" }
 		127 = { "%d. Württembergische Division" }
 		128 = { "%d. Danziger Division" }

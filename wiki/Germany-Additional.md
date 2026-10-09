@@ -37,7 +37,7 @@ Ideology gating:
 | `GER_SCHWERE_PANZERABTEILUNG_02` | Heavy Panzer Bns (Abbr.) | heavy_armor, medium_armor, modern_armor | `s.Pz.Abt. %d` |
 | `GER_ARM_03` | Panzer Brigades | light_armor, medium_armor, heavy_armor, modern_armor | `Panzer-Brigade %d` |
 | `GER_STUG_01` | Assault Gun Brigades | light_armor, medium_armor, heavy_armor, modern_armor | `Sturmgeschütz-Brigade %d` |
-| `GER_PANZERARTILLERIE_DIVISION_01` | Panzer Artillery Divisions | heavy_armor, medium_armor, light_armor, modern_armor | `%d. Panzer-Artillerie-Division` |
+| `GER_PANZERARTILLERIE_DIVISION_01` | Artillery Divisions | heavy_armor, medium_armor, light_armor, modern_armor | `%d. Artillerie-Division` |
 | `GER_RESERVE_DIVISION_01` | Reserve Divisions | infantry | `%d. Reserve-Division` |
 | `GER_VOLKSGRENADIER_01` | Volksgrenadier Divisions | infantry | `%d. Volksgrenadier-Division` |
 | `GER_GRENADIER_DIVISION_01` | Grenadier Divisions | infantry | `%d. Grenadier-Division` |
@@ -60,7 +60,7 @@ Ideology gating:
 
 > **Note:** `GER_SCHWERE_PANZERABTEILUNG_01` and `_02` are linked (`link_numbering_with`), so the long and abbreviated forms share one number series.
 
-> **Note:** `GER_PANZERARTILLERIE_DIVISION_01` uses `can_use = { is_ai = no }`, so only human players can use it.
+> **Note:** `GER_PANZERARTILLERIE_DIVISION_01` uses `can_use = { is_ai = no }`, so only human players can use it. The group is typed as armour, and the gate keeps the game from giving AI Panzer divisions artillery names.
 
 > **Note:** `GER_PEN_01` overrides the vanilla tag. Vanilla ships it without names and locks it behind the focus `GER_strafbataillon`. INEX drops the focus lock, and the focus still names its penal divisions from this group.
 
@@ -77,11 +77,11 @@ The Tiger battalions *schwere Panzer-Abteilung 501–510* and their 1945 renumbe
 ### `GER_STUG_01` — Assault Gun Brigades
 The Sturmartillerie of the Heer on its real numbers, *Sturmgeschütz-Brigade 177* to *914*. The independent Sturmgeschütz-Abteilungen were renamed brigades on 14 February 1944 and stayed at battalion strength (31 guns, later 45). The brigades given an escort grenadier battery later in 1944 appear as *Heeres-Sturmartillerie-Brigaden* (*236*, *239*, *667*), and *184* and *185* as *Heeres-Sturmgeschütz-Brigaden*. The list closes with *Sturmgeschütz-Lehr-Brigade 920*, *Sturmartillerie-Lehr-Brigade 111* and *Sturmgeschütz-Brigade 'Schill'*, the Luftwaffe's *Fallschirm-Sturmgeschütz-Brigaden 11*, *12* and *21*, and the *Sturmpanzer-Abteilungen 216–219*.
 
-### `GER_PANZERARTILLERIE_DIVISION_01` — Panzer Artillery Divisions
+### `GER_PANZERARTILLERIE_DIVISION_01` — Artillery Divisions
 Players only. Covers the *18. Artillerie-Division*, the *Artillerie-Divisionen 309–312* and the *Volks-Artillerie-Korps* of 1944–45.
 
 ### `GER_RESERVE_DIVISION_01` — Reserve Divisions
-The real Reserve divisions of 1942–44 (*141.–191.*), including the *157.* and *188. Reserve-Gebirgs-Division*.
+The real Reserve divisions of 1942–44 (*141.–191.*), including the *188. Reserve-Gebirgs-Division*.
 
 ### `GER_VOLKSGRENADIER_01` / `GER_GRENADIER_DIVISION_01` — Volksgrenadier and Grenadier Divisions
 The Volksgrenadier divisions in raising order, led by the *78. Volks-Sturm-Division*. The Grenadier list holds the 29th- and 30th-wave *Grenadier-Divisionen 541–562*, which became Volksgrenadier divisions after July 1944.
@@ -90,7 +90,7 @@ The Volksgrenadier divisions in raising order, led by the *78. Volks-Sturm-Divis
 *Luftwaffen-Division Meindl* and *Luftwaffen-Feld-Division 1–21*, in the Luftwaffe's own usage before the Heer took them over. The group runs its own number series.
 
 ### `GER_FLAK_DIVISION_01` — Flak Divisions
-*1.–31. Flak-Division* and the two Flakscheinwerfer divisions. A home is noted where verified (*1. 'Berlin'*, *29. 'Oslo'*), and *9. 'Stalingrad'* marks the division destroyed there.
+*1.–31. Flak-Division* and the two Flakscheinwerfer divisions. A home is noted where verified (*1. 'Berlin'*, *3. 'Hamburg'*, *26. 'München'*, *29. 'Oslo'*), and *9. 'Stalingrad'* marks the division destroyed there.
 
 ### `GER_GAR_02` — City Garrisons
 *Wehrmachtkommandantur Berlin*, *Kommandant von Groß-Paris* and the *Stadtkommandanturen* of occupied and allied capitals and major cities, using German names of the period (*Reval*, *Wilna*, *Agram*, *Laibach*). Overflow uses the numbered *Feldkommandantur*.
@@ -136,7 +136,7 @@ Overflow uses *Bewährungs-Bataillon*, the Wehrmacht's own term.
 ### `GER_LEG_01` — Foreign Legions (fascism)
 The foreign divisions and legions in German service:
 - *250. 'Azul'*, the Croatian *369.*, *373.* and *392.*, and the *Kosaken-Kavallerie-Divisionen*.
-- The *Ostlegionen*, *Legion Condor*, *Legion Wallonie*, the LVF and the Indian Legion.
+- The *Ostlegionen*, *Legion Wallonie*, the LVF and the Indian Legion.
 
 ### `GER_STURM_01` — Imperial Storm Battalions (neutrality/democratic)
 The army-level assault battalions of 1916–18, *Sturm-Bataillon Nr. 1* to *Nr. 18*, with *Sturm-Bataillon Nr. 5 (Rohr)*, *Jäger-Sturm-Bataillon Nr. 3* and the Bavarian *Nr. 6* and *Nr. 15*. Number 13 never grew beyond a company and is left to the overflow.
