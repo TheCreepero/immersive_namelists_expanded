@@ -17,16 +17,16 @@ The project rules are in `CLAUDE.md` (Antigravity: `GEMINI.md`) and are not repe
 > A plan whose `Status:` is `READY` or `IN PROGRESS` is past this skill: use `hoi4-inex-namelist-implement` and do not repeat any phase below.
 
 ## The contract
-This skill produces one file, `docs/superpowers/plans/YYYY-MM-DD-<country>-namelist.md`, and stops. The plan must be complete enough that a fresh session on a cheaper model can carry it out with nothing else: no dossier, no conversation, no research, no naming decisions.
+This skill produces one file, `docs/superpowers/plans/YYYY-MM-DD-<country>-namelist.md`, and stops. The plan is carried out by the `inex-implementer` subagent, a cheap model in a fresh context, so it must be complete with nothing else: no dossier, no conversation, no research, no naming decisions.
 
 - **Every name is written here.** The plan's `## Edit batch` holds the whole namelist as `build.ps1` operations. The implementer applies it with one command and never types a name.
 - **Every decision is final.** No "to be settled during authoring", no "merge if thin": decide, and write what was decided.
 - **Every docs text is verbatim.** README row, workshop row and block, wiki page, Home row, Sidebar line.
-- **No namelist or docs file is touched in this skill.** Only the plan and `scratch/` are written.
+- **No namelist or docs file is touched in this skill.** Only the plan, `scratch/` and entries in `docs/tooling-backlog.md` are written.
 
 ## Working rules
 - **One nation per session.**
-- **Tooling problems are worked around and noted in the plan; `build.ps1`, tests and skill text are not edited during planning.** Fix them in a fresh session.
+- **Tooling problems are worked around and get one entry in `docs/tooling-backlog.md`; `build.ps1`, tests and skill text are not edited during planning.** A workaround the implementer must run (a one-off script, an extra command) is written into the plan's steps with its expected output.
 - For an existing file, do not read it whole. Inspect with `-Audit <TAG> -NamesOnly` (add `-Group <A>,<B> -Sections -Keys` for one group).
 - Subagents get context, not file access: paste what they must judge into the prompt.
 - Read the dossier by section: `Grep -n '^## '` for the headings, then `Read` the section for the group family you are writing.
@@ -53,7 +53,7 @@ Phase 4  Hand-off                                report and STOP
 
 ### Phase 0: Policy questions and vanilla inspection
 1. Ask the user every naming-policy question **before** research, so the dossier is scoped once: verified names only or plausible extrapolation, which ideology suites, which lists get a plain/named pair.
-2. `powershell -File .\build.ps1 -InspectVanilla <TAG>` lists the vanilla groups, fallbacks, entry counts and scripted `division_names_group` references; `-Group <GROUP>` excerpts one group. Note vanilla's grammar errors and which tags you will override (`CLAUDE.md` §6).
+2. `powershell -File .\build.ps1 -InspectVanilla <TAG>` lists the vanilla groups, fallbacks, entry counts and scripted `division_names_group` references; `-Group <GROUP>` excerpts one group. Note vanilla's grammar errors and which tags you will override. A group that reuses a vanilla tag replaces the vanilla group whole (`CLAUDE.md` §6): for each tag you override, read its vanilla entries and decide which names and numbers the INEX group carries over. What it leaves out is gone from the game.
 3. Copy `docs/superpowers/plans/TEMPLATE-namelist.md` to `docs/superpowers/plans/YYYY-MM-DD-<country>-namelist.md` and fill Context, Decisions and Vanilla findings. `Status:` stays `PLANNING`.
 
 ### Phase 1: Research
@@ -72,8 +72,8 @@ Research results in hand, settle everything and write it down. The dossier is ra
    - A section banner goes in the first group's `"comment"` (`"# ===== Cavalry =====\n\nOverrides vanilla ..."`).
    - Write the names with their final diacritics and case. Nothing in the batch is a placeholder.
 3. **Research record, Author confirmation, Kept on judgment**: sources and call counts; every extrapolated or unverified entry in the batch, per group; the audit flags you expect to remain (thin specialist lists) with the reason.
-4. **Docs payload**: the verbatim text for each file in `CLAUDE.md` §4, each with the line it goes after. Workshop block: 2-3 bullets, italic examples, no emojis, concise. Wiki page: the whole page, with a group table whose rows match the suite.
-5. **Implementation steps**: adjust the template's steps to this nation. Each step is one action with its exact command and the output to expect.
+4. **Docs payload**: the verbatim text a script cannot derive, each with the line it goes after: the workshop cross-reference row, the workshop block (2-3 bullets, italic examples, no emojis, concise) and the whole wiki page, with a group table whose rows match the suite. The `README.md` row, the `wiki/Home.md` row and the `wiki/_Sidebar.md` line are written by `-SyncWiki <TAG> -Country "<Name>"` in the plan's steps; `<Name>` is the README nation name and, with hyphens for spaces, the wiki page name.
+5. **Implementation steps**: adjust the template's steps to this nation. Each step is one action with its exact command and the output to expect. The last step is the ship step: write its commit message.
 
 ### Phase 3: Gate
 1. **Proofread** the names before hand-off, so the implementer never has to judge one. When the batch adds 25 or more authored names in a language other than English, or the user asks, dispatch `inex-code-reviewer` (`.claude/agents/inex-code-reviewer.md`) with the names per group pasted from the batch, the language they are written in, and the "Author confirmation" list. It answers with problems only or `No issues found`. Apply what it found to the batch and record the findings and what you did with each under "Review". Do not dispatch it a second time for a data-only fix. Otherwise run the self-check and write "Self-check" with its result under "Review":
@@ -86,9 +86,9 @@ Research results in hand, settle everything and write it down. The dossier is ra
 Report to the user and end the turn:
 - the plan path, the group and name counts, the `Dry run OK` line;
 - how many entries are on the "Author confirmation" list, and anything else worth a look before it is built;
-- the three ways to continue: say "continue" in this session, `/clear` and continue, or open a new session (any model), each with the same prompt: `/hoi4-inex-namelist-implement <plan path>`.
+- how to continue: `/hoi4-inex-namelist-implement <plan path>`, here or in a new session. Either way the work runs in the implementer's fresh context, so continuing here costs no more.
 
-Do not start implementing in the same turn, and do not offer to. If the user then says to continue here, invoke `hoi4-inex-namelist-implement` and work from the plan file as a fresh session would.
+Do not start implementing in the same turn, and do not offer to. If the user then says to continue here, invoke `hoi4-inex-namelist-implement`.
 
 ## 3. Scoping and modular design
 
@@ -106,7 +106,8 @@ Where history or an alternate path gives a nation political wings (Waffen-SS, Bl
 
 **Plain and named variants (infantry, motorized, mechanized, armor)**
 When these lists get nicknames or identity names (`12. Divisioona 'Kollaa'`), keep an un-nicknamed variant beside them so players can choose plain numbering:
-- The **plain variant keeps the vanilla tag** (`<TAG>_INF_01`, or whatever vanilla uses) with the plain selector (`"Infantry Divisions"`), a plain `fallback_name` and **no `ordered` block**. Define it in INEX so vanilla's errors are fixed and the pairing is visible; templates already on that tag keep plain names.
+- The **plain variant keeps the vanilla tag** (`<TAG>_INF_01`, or whatever vanilla uses) with the plain selector (`"Infantry Divisions"`) and a plain `fallback_name`. Define it in INEX so vanilla's errors are fixed and the pairing is visible; templates already on that tag keep plain names.
+- **What the plain variant's `ordered` block holds** follows from the replace rule (`CLAUDE.md` §6). Where vanilla's entries only repeat the fallback in a 1..N run, the plain variant has no `ordered` block. Where vanilla's keys are historical numbers with gaps (`GER_Inf_01`: 1-36, 44, 45, 46, 50), the plain variant keeps those numbered entries, because a fallback counts on without the gaps. Vanilla nicknames move to the named variant.
 - The **named variant gets a new tag**: the next category number vanilla does not use (check `-InspectVanilla`), e.g. `FIN_INF_05`, with the selector `"<Plain Selector> (Named)"` and the same `division_types` and `fallback_name`. In the batch it is an `addGroup` with `"link": "<plain tag>"`.
 - **Shared numbering**: the named variant links to its plain counterpart with `link_numbering_with`. In a mobile family, link every plain and named mobile group to one anchor (e.g. `<TAG>_MOT_01`).
 - Exception: if vanilla already nicknames those divisions (USA's *1st Infantry Division "Big Red One"*), one named group is enough.
@@ -155,5 +156,6 @@ Tokens, fallback formats, keys and links: `CLAUDE.md` §6. `-DryRun` catches unk
 - [ ] **Authenticity**: nicknames, honorifics and regions come from the nation's geography, history and military culture, with no anachronisms or fantasy tropes.
 - [ ] **Gating**: ideology groups use `has_government`; no focus, decision, idea or flag locks; no opposing traditions in one list.
 - [ ] **Plain/named**: every nicknamed infantry, motorized, mechanized or armor list has its plain variant sharing numbering.
+- [ ] **Vanilla carried over**: for every reused vanilla tag, each vanilla name or historical number is in the batch or named in "Decisions" as dropped on purpose.
 - [ ] **Self-contained**: no open decision, no reference to the dossier or this conversation as something the implementer must read, every docs text verbatim, every step with its command and expected output.
 - [ ] **`-DryRun` is clean**: `Dry run OK`, no `[WARN] Plan:` line, totals match the "Group suite" table.

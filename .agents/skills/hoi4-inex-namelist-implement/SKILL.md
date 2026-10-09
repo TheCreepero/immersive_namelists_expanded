@@ -2,55 +2,53 @@
 name: hoi4-inex-namelist-implement
 description: >-
   Use when carrying out a finished Immersive Namelists Expanded (INEX) plan file from docs/superpowers/plans
-  (Status READY or IN PROGRESS): "implement", "apply" or "continue" a namelist or audit plan, or a plan path
-  given as the argument. Applies the plan's edit batch, syncs the docs and verifies. Does no research and makes
-  no naming decisions; for those use hoi4-inex-namelist-authoring or hoi4-inex-namelist-audit.
+  (Status READY or IN PROGRESS): "implement", "apply", "continue" or "ship" a namelist or audit plan, or a plan
+  path given as the argument. Dispatches the inex-implementer subagent, verifies its result and ships on the
+  user's word. Does no research and makes no naming decisions; for those use hoi4-inex-namelist-authoring or
+  hoi4-inex-namelist-audit.
 ---
 
 # INEX Namelist Plan Implementation
 
-Carries out one plan file written by `hoi4-inex-namelist-authoring` or `hoi4-inex-namelist-audit`. The planning is done: the plan holds every decision, every name and every docs text. Your job is to run its steps exactly and report.
+Carries out one plan file written by `hoi4-inex-namelist-authoring` or `hoi4-inex-namelist-audit`. The planning is done: the plan holds every decision, every name and every docs text, so the work is mechanical. The `inex-implementer` subagent does it in a fresh context on a cheap model; this session dispatches it, verifies what it reports, and ships.
 
 ## Rules
-- **The plan is the only source.** Do not search the web, dispatch a research or proofreading subagent, read a dossier in `scratch/`, ask policy questions, or invoke the authoring or audit skill.
-- **Do not decide and do not compose.** No new names, no respellings, no regrouping, no rewording of docs text. If the plan looks wrong or incomplete, that is a stop condition, not something to fix.
-- **Never open the namelist file**, and never edit it by hand. It changes only through the `build.ps1` commands the plan gives.
-- **Never read the plan past `## Edit batch`.** The batch is applied by the script from the file; it is not typed out, copied or read back.
+- **The plan is the only source.** This skill decides nothing and composes nothing: no new names, no respellings, no regrouping, no rewording of docs text, no research. A plan that looks wrong or incomplete goes back to its planner (§4).
+- **The namelist file changes only through the `build.ps1` commands the plan gives**, run by the implementer.
+- **Read the plan only up to `## Edit batch`.** The batch is applied by the script from the file.
 - `build.ps1`, tests, skill files, `CLAUDE.md` and `GEMINI.md` are not edited.
-- The wiki push is outward-facing: run it only after the user confirms.
+- Commit and wiki push are outward-facing: they run only in §5, on the user's word.
 
-## 1. Open the plan
-1. Take the plan path from the request. With no path, look in `docs/superpowers/plans/` for a file whose `Status:` line is `READY` or `IN PROGRESS` (`Grep -n '^Status:'`); if there is more than one or none, ask the user which plan to run.
-2. `Grep -n '^## '` the plan for its headings, then `Read` it from the top with a `limit` that stops at the `## Edit batch` line.
-3. Check the `Status:` line:
+## 1. Find the plan
+1. Take the plan path from the request. With no path, `Grep -n '^Status:'` across `docs/superpowers/plans/` for `READY` or `IN PROGRESS`; with more than one or none, ask the user which plan to run.
+2. Act on its `Status:` line:
    - `PLANNING`: stop. Tell the user the plan is unfinished and belongs back with the planning skill.
-   - `READY`: begin at step 1 of "Implementation steps".
-   - `IN PROGRESS`: an earlier session got part-way. Begin at the first unticked step; ticked steps are done and are not repeated.
-   - `DONE`: stop and say so. Only the wiki push may remain, if its box is unticked.
+   - `READY` or `IN PROGRESS`: continue with §2. The implementer starts at the first unticked step.
+   - `DONE`: skip to §3. Only the ship step may remain.
 
-## 2. Run the steps
-Work through "Implementation steps" in order. For each step:
-1. Run the command exactly as written (replace `<this file>` with the plan path).
-2. Compare the output with what the step says to expect.
-3. Tick the box in the plan (`- [ ]` to `- [x]`) before starting the next step, so a later session can resume.
+## 2. Dispatch the implementer
+Dispatch `inex-implementer` (`.claude/agents/inex-implementer.md`; the brief sets its model and holds the whole runbook). The prompt is the plan path and nothing else: `Carry out docs/superpowers/plans/<file>.md`. One plan per dispatch. Wait for its report.
 
-What the usual steps mean:
-- **Apply the batch**: `powershell -File .\build.ps1 -EditNames <TAG> -Batch <plan path>` applies every `` ```json batch `` block, all or nothing. One summary line per group. A new nation's batch creates the file; if it reports that the file already exists, the batch was applied before: stop and report.
-- **Docs payload**: insert or replace exactly the text the plan gives, at the place it names, with the Edit and Write tools. Docs are UTF-8 without BOM: never use Windows PowerShell 5.1 `Set-Content`/`Get-Content` or Git Bash `sed -i` on them (they corrupt diacritics), and do not normalize line endings.
-- **`-SyncWiki <TAG>`**: brings the wiki's group rows in step with the file and reports stale or missing tags. A report the plan did not predict is a stop condition.
-- **`-Check <TAG>`**: validation, the Pester suite, the audit summary with flags and `Docs:` warnings, and diff counts in about ten lines. It must end with `Check passed`. Every flag it shows must be listed in the plan's "Kept on judgment".
+Antigravity: pass the brief's path to `invoke_subagent`. Where no subagent can be dispatched, read the brief and follow it yourself.
 
-## 3. Stop conditions
-Stop, leave the remaining boxes unticked, and report what happened with the exact output when:
-- the batch fails (the error names the operation; the file is untouched);
-- `-Check` fails, or shows a flag or `Docs:` warning that "Kept on judgment" does not list, and the plan describes no fix for it, or its fix did not work on the first try;
-- a step is unclear, has no command for what it asks, or refers to text the plan does not contain;
-- a name in any output looks wrong to you. Report it; do not change it.
+## 3. Verify
+The implementer's report is a claim. Check it yourself before telling the user anything:
+1. `powershell -File .\build.ps1 -Check <TAG>` ends with `Check passed`.
+2. Every flag on its `Flags:` line is listed in the plan's "Kept on judgment" (`Grep -n '^## '` the plan, then `Read` that section).
+3. `git status --short` lists only the namelist file, the docs files the plan's "Docs payload" and steps name, and the plan itself.
+4. The plan's `Status:` is `DONE` and every box is ticked except the ship step.
 
-The plan's own "Stop conditions" section applies as well. Do not research, guess or work around: the person who wrote the plan fixes the plan.
+All four hold: go to §5. Otherwise §4.
 
-## 4. Finish
-1. Fill the plan's "Outcome" section: the date, the `-Check` summary line (groups, authored entries, flags), and any deviation from the plan with its reason.
-2. Set `Status: DONE`.
-3. Run `git status` and confirm only the files the plan names have changed.
-4. Report to the user: the `-Check` result, the files changed, and that the wiki push is waiting for confirmation. Do not commit unless asked.
+## 4. When it stops
+The implementer reported `STOPPED`, or a check in §3 does not hold. Leave the files as they are and report to the user: the step, the exact output, and what the plan would need. The planner corrects the plan (the planning skill that wrote it, or the user); this skill does not fix names, plan text or tooling, and does not work around. Once the plan is corrected, dispatch again: the implementer resumes at the first unticked step.
+
+## 5. Report and ship
+Report to the user: the `-Check` summary, the files changed, any deviation the implementer recorded, and that the plan is ready to ship. Then stop.
+
+On the user's word, one confirmation covers the plan's whole ship step:
+1. Tick the ship box in the plan, so the commit carries the finished plan.
+2. Commit the files from §3.3 with the commit message the ship step gives.
+3. Run the ship step's wiki push command. If it fails, report the output; the commit stands.
+
+Publishing to the Steam Workshop is a separate decision: `hoi4-inex-release`.

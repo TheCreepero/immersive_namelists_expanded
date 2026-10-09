@@ -27,7 +27,7 @@ BeforeAll {
         . ([ScriptBlock]::Create($typesMatch.Value))
     }
 
-    foreach ($fn in 'Get-NamePatternKey', 'Test-FallbackStub', 'Get-NamelistAuditData', 'Get-OrderedEntryStats', 'Compare-NamelistAuditData', 'Get-GitFileText', 'Get-NameVariantKey', 'Resolve-GroupTag', 'Get-GroupSections', 'Format-EntryList', 'Get-OrphanHeaderLines', 'Set-NamelistGroupComment', 'Set-NamelistHeader', 'Edit-NamelistGroupText', 'Get-NamelistGroupEnd', 'Add-NamelistGroupText', 'ConvertTo-NamelistEditOp', 'Invoke-NamelistEditOps', 'Get-PlanBatchBlocks', 'Get-PlanReadinessWarnings', 'Read-NamelistEditBatch', 'Get-WorkshopDocStats', 'Get-VanillaOverlap', 'Find-WikiLinkMismatches', 'Compare-NamelistGroupSets', 'Format-NamelistDiff', 'Get-CountryName', 'Format-PlanChangeTable', 'Set-PlanChangeTable', 'New-AuditPlanText', 'Format-AuditSummaryLine', 'Update-WikiGroupRows', 'Find-WikiProseMentions') {
+    foreach ($fn in 'Get-NamePatternKey', 'Test-FallbackStub', 'Get-NamelistAuditData', 'Get-OrderedEntryStats', 'Compare-NamelistAuditData', 'Get-GitFileText', 'Get-NameVariantKey', 'Resolve-GroupTag', 'Get-GroupSections', 'Format-EntryList', 'Get-OrphanHeaderLines', 'Set-NamelistGroupComment', 'Set-NamelistHeader', 'Edit-NamelistGroupText', 'Get-NamelistGroupEnd', 'Add-NamelistGroupText', 'ConvertTo-NamelistEditOp', 'Invoke-NamelistEditOps', 'Get-PlanBatchBlocks', 'Get-PlanReadinessWarnings', 'Read-NamelistEditBatch', 'Get-WorkshopDocStats', 'Get-VanillaOverlap', 'Find-WikiLinkMismatches', 'Compare-NamelistGroupSets', 'Format-NamelistDiff', 'Get-CountryName', 'Format-PlanChangeTable', 'Set-PlanChangeTable', 'New-AuditPlanText', 'Format-AuditSummaryLine', 'Update-WikiGroupRows', 'Find-WikiProseMentions', 'Format-CappedList', 'Add-MarkdownTableRow', 'Add-MarkdownListLine', 'Add-NationDocRows', 'Sync-AgentMirrors', 'Get-GameLogFindings') {
         $fnMatch = [regex]::Match($script:BuildContent, "(?s)(function $fn\s*\{.*?\n\})")
         if ($fnMatch.Success) {
             . ([ScriptBlock]::Create($fnMatch.Groups[1].Value))
@@ -217,6 +217,18 @@ $OrderedBody
 		1 = { "First Division" }
 		2 = { "Second Division" }
 		2 = { "Duplicate Second Division" }
+'@
+        Invoke-FixtureValidation | Should -BeFalse
+    }
+
+    It "Accepts an escaped quote and rejects any other backslash escape" {
+        # The game's lexer logs "Backslash followed by neither quote nor backslash" for \' and drops the entry
+        New-ValidationFixtureFile -OrderedBody @'
+		1 = { "Division \"Kaveh\"" }
+'@
+        Invoke-FixtureValidation | Should -BeTrue
+        New-ValidationFixtureFile -OrderedBody @'
+		1 = { "Division 'Hobart\'s Funnies'" }
 '@
         Invoke-FixtureValidation | Should -BeFalse
     }
@@ -677,6 +689,22 @@ Describe "build.ps1 Helper: Resolve-GroupTag" {
     It "Returns null for unknown group names" {
         Resolve-GroupTag -Tag 'TST' -Name 'XYZ' -Known $script:KnownTags | Should -BeNullOrEmpty
     }
+
+    It "Returns a mixed-case tag in the file's own spelling" {
+        # Vanilla German tags (GER_Arm_02) are mixed-case; the edit looks the tag up case-sensitively
+        $known = @('TST_Arm_01', 'TST_Arm_02', 'TST_INF_01')
+        Resolve-GroupTag -Tag 'TST' -Name 'TST_ARM_02' -Known $known | Should -BeExactly 'TST_Arm_02'
+        Resolve-GroupTag -Tag 'TST' -Name 'Arm_02' -Known $known | Should -BeExactly 'TST_Arm_02'
+        Resolve-GroupTag -Tag 'TST' -Name 'arm' -Known $known | Should -BeExactly 'TST_Arm_01'
+    }
+
+    It "Edits a group whose tag is mixed-case" {
+        $text = "TST_Arm_02 = {`n`tname = `"Armor`"`n`tdivision_types = { `"light_armor`" }`n`tfallback_name = `"%d. Panzer`"`n`tordered = {`n`t`t1 = { `"Alpha`" }`n`t}`n}`n"
+        $op = ConvertTo-NamelistEditOp @{ Group = 'ARM_02'; Add = 'Beta' }
+        $res = Invoke-NamelistEditOps -Text $text -Tag 'TST' -Ops @($op)
+        $res.Text | Should -Match '2 = \{ "Beta" \}'
+        $res.Edited | Should -Be @('TST_Arm_02')
+    }
 }
 
 Describe "build.ps1 Helper: Get-GroupSections" {
@@ -892,6 +920,14 @@ Describe "build.ps1 Helper: Update-WikiGroupRows and Find-WikiProseMentions" {
         $res.Text | Should -Match '\| Infantry Divisions \|'
         $res.Text | Should -Match '`%d\. Divisioona`'
         $res.Stale | Should -Be @('TST_OLD_01')
+    }
+
+    It "Updates the row of a mixed-case tag" {
+        $wiki = "| ``TST_Arm_01`` | Tanks | light_armor | ``%d. Old`` | x |"
+        $groups = @([PSCustomObject]@{ Tag = 'TST_Arm_01'; Selector = 'Panzer Divisions'; DivisionTypes = @('light_armor'); Fallback = '%d. Panzer'; Entries = @() })
+        $res = Update-WikiGroupRows -WikiText $wiki -Groups $groups -Tag 'TST'
+        $res.Text | Should -Match '\| Panzer Divisions \|'
+        $res.Missing.Count | Should -Be 0
     }
 
     It "Finds prose lines mentioning names" {
@@ -1271,6 +1307,17 @@ TST_FR_01 = {
 		6 = { "Sixieme" }
 	}
 }
+
+TST_MIL_03 = {
+	name = "Mixed"
+	fallback_name = "%d. Dywizja"
+	ordered = {
+		1 = { "%d. Dywizja" }
+		2 = { "%d. Dywizja" }
+		44 = { "%d. Dywizja" }
+		45 = { "Dywizja Kresowa" }
+	}
+}
 "@
             [System.IO.File]::WriteAllText((Join-Path $dir 'TST_names_divisions.txt'), $vanilla, (New-Object System.Text.UTF8Encoding($false)))
         }
@@ -1284,6 +1331,36 @@ TST_FR_01 = {
             $o['TST_FR_01'].Matches | Should -Be 2
             $o['TST_FR_01'].Total | Should -Be 2
             $o.ContainsKey('TST_EN_01') | Should -BeFalse
+        }
+
+        It "Lists the vanilla names a same-tag group leaves out (the group replaces vanilla's)" {
+            $o = Get-VanillaOverlap -Groups $script:LintData.Groups -Key 'TST' -Hoi4Dir $script:FakeHoi4
+            $o['TST_FR_01'].LeftOutNames | Should -Be @('6=Sixieme')
+            $o['TST_FR_01'].LeftOutNumbers.Count | Should -Be 0
+        }
+
+        It "Reports a fallback-only group: named entries, and numbers past the first gap" {
+            $o = Get-VanillaOverlap -Groups $script:LintData.Groups -Key 'TST' -Hoi4Dir $script:FakeHoi4
+            $o['TST_MIL_03'].Total | Should -Be 0
+            $o['TST_MIL_03'].LeftOutNames | Should -Be @('45=Dywizja Kresowa')
+            # Keys 1-2 are what the fallback counts anyway; 44 lies past the gap
+            $o['TST_MIL_03'].LeftOutNumbers | Should -Be @(44)
+        }
+
+        It "Counts a left-out name whose quoted identity another entry of the file keeps" {
+            $own = @(
+                [PSCustomObject]@{ Tag = 'TST_INF_01'; Fallback = '%d. Dywizja'; OrderedCount = 0; Entries = @(); EntryKeys = @() },
+                [PSCustomObject]@{ Tag = 'TST_INF_02'; Fallback = '%d. Dywizja'; OrderedCount = 1; Entries = @("%d. Dywizja 'Kresowa'"); EntryKeys = @(1) }
+            )
+            $dir = Join-Path $script:FakeHoi4 'common\units\names_divisions'
+            [System.IO.File]::WriteAllText((Join-Path $dir 'TSU_names_divisions.txt'), "TST_INF_01 = {`n`tname = `"Infantry`"`n`tfallback_name = `"%d. Dywizja`"`n`tordered = {`n`t`t1 = { `"Dywizja 'Kresowa'`" }`n`t`t2 = { `"Dywizja 'Podlaska'`" }`n`t}`n}`n", (New-Object System.Text.UTF8Encoding($false)))
+            $o = Get-VanillaOverlap -Groups $own -Key 'TSU' -Hoi4Dir $script:FakeHoi4
+            $o['TST_INF_01'].KeptElsewhere | Should -Be 1
+            $o['TST_INF_01'].LeftOutNames | Should -Be @("2=Dywizja 'Podlaska'")
+        }
+
+        It "Raises no flag for entries copied from vanilla: they are the only copy the game reads" {
+            $script:BuildContent | Should -Not -Match "Flags\.Add\('VANILLA_COPY'\)"
         }
 
         It "Returns nothing when HOI4 is not installed" {
@@ -2087,5 +2164,82 @@ ${fence}
         )
         { Invoke-NamelistEditOps -Text $script:CliNamelist -Tag 'TST' -Ops $ops } | Should -Throw '*must be the first operation*'
         { Invoke-NamelistEditOps -Text '' -Tag 'TST' -Ops @(ConvertTo-NamelistEditOp @{ newFile = $true }) } | Should -Throw '*needs "header"*'
+    }
+}
+
+Describe "build.ps1 Helper: nation registration in README, wiki Home and sidebar" {
+    BeforeAll {
+        $script:DocsRoot = Join-Path ([System.IO.Path]::GetTempPath()) ("inex_docs_" + [guid]::NewGuid().ToString('N'))
+        New-Item -ItemType Directory -Force -Path (Join-Path $script:DocsRoot 'wiki') | Out-Null
+        $utf8 = New-Object System.Text.UTF8Encoding($false)
+        [System.IO.File]::WriteAllText((Join-Path $script:DocsRoot 'README.md'), "# Mod`n`n| Tag | Nation | Source File |`n| :--- | :--- | :--- |`n| ``AAA`` | Aland | ``INEX_AAA_names_divisions.txt`` |`n`nFooter`n", $utf8)
+        [System.IO.File]::WriteAllText((Join-Path $script:DocsRoot 'wiki\Home.md'), "| Nation | Tag | Groups | Source File(s) |`n|:---|:---|:---|:---|`n| [Aland](Aland) | ``AAA`` | 3 | ``INEX_AAA_names_divisions.txt`` |`n`n---`n", $utf8)
+        [System.IO.File]::WriteAllText((Join-Path $script:DocsRoot 'wiki\_Sidebar.md'), "**Nations**`n- [Aland](Aland)`n`n---`n`n**Reference**`n- [Contributing](Contributing)`n", $utf8)
+    }
+
+    AfterAll {
+        if (Test-Path $script:DocsRoot) { Remove-Item -Recurse -Force $script:DocsRoot }
+    }
+
+    It "Appends a row after the last row of the matching table" {
+        $text = "| Tag | Nation |`n|---|---|`n| A | One |`n`nAfter"
+        Add-MarkdownTableRow -Text $text -HeaderPattern '^\|\s*Tag\s*\|' -Row '| B | Two |' | Should -Be "| Tag | Nation |`n|---|---|`n| A | One |`n| B | Two |`n`nAfter"
+        Add-MarkdownTableRow -Text 'no table' -HeaderPattern '^\|\s*Tag\s*\|' -Row '| B |' | Should -Be 'no table'
+    }
+
+    It "Appends a list line under the named bold heading only" {
+        $text = "**Nations**`n- [A](A)`n`n**Reference**`n- [C](C)"
+        Add-MarkdownListLine -Text $text -Heading 'Nations' -Line '- [B](B)' | Should -Be "**Nations**`n- [A](A)`n- [B](B)`n`n**Reference**`n- [C](C)"
+    }
+
+    It "Registers a new nation in all three files, once" {
+        $added = Add-NationDocRows -Root $script:DocsRoot -Tag 'BBB' -Country 'New Bland' -GroupCount 7
+        $added | Should -Be @('README.md', 'wiki/Home.md', 'wiki/_Sidebar.md')
+        [System.IO.File]::ReadAllText((Join-Path $script:DocsRoot 'README.md')) | Should -Match '(?m)^\| `BBB` \| New Bland \| `INEX_BBB_names_divisions\.txt` \|$'
+        [System.IO.File]::ReadAllText((Join-Path $script:DocsRoot 'wiki\Home.md')) | Should -Match '(?m)^\| \[New Bland\]\(New-Bland\) \| `BBB` \| 7 \| `INEX_BBB_names_divisions\.txt` \|$'
+        [System.IO.File]::ReadAllText((Join-Path $script:DocsRoot 'wiki\_Sidebar.md')) | Should -Match '(?m)^- \[Aland\]\(Aland\)\n- \[New Bland\]\(New-Bland\)$'
+        (Add-NationDocRows -Root $script:DocsRoot -Tag 'BBB' -Country 'New Bland' -GroupCount 7).Count | Should -Be 0
+    }
+}
+
+Describe "build.ps1 Helper: Sync-AgentMirrors" {
+    BeforeAll {
+        $script:MirrorRoot = Join-Path ([System.IO.Path]::GetTempPath()) ("inex_mirror_" + [guid]::NewGuid().ToString('N'))
+        New-Item -ItemType Directory -Force -Path (Join-Path $script:MirrorRoot '.claude\skills\one') | Out-Null
+        $utf8 = New-Object System.Text.UTF8Encoding($false)
+        [System.IO.File]::WriteAllText((Join-Path $script:MirrorRoot 'CLAUDE.md'), "rules`n", $utf8)
+        [System.IO.File]::WriteAllText((Join-Path $script:MirrorRoot 'GEMINI.md'), "old rules`n", $utf8)
+        [System.IO.File]::WriteAllText((Join-Path $script:MirrorRoot '.claude\skills\one\SKILL.md'), "skill`r`n", $utf8)
+    }
+
+    AfterAll {
+        if (Test-Path $script:MirrorRoot) { Remove-Item -Recurse -Force $script:MirrorRoot }
+    }
+
+    It "Copies the Claude side over stale or missing mirrors, byte for byte, and then reports nothing" {
+        $updated = Sync-AgentMirrors -Root $script:MirrorRoot
+        $updated | Should -Be @('GEMINI.md', '.agents/skills/one/SKILL.md')
+        (Get-FileHash (Join-Path $script:MirrorRoot 'GEMINI.md')).Hash | Should -Be (Get-FileHash (Join-Path $script:MirrorRoot 'CLAUDE.md')).Hash
+        (Get-FileHash (Join-Path $script:MirrorRoot '.agents\skills\one\SKILL.md')).Hash | Should -Be (Get-FileHash (Join-Path $script:MirrorRoot '.claude\skills\one\SKILL.md')).Hash
+        (Sync-AgentMirrors -Root $script:MirrorRoot).Count | Should -Be 0
+    }
+}
+
+Describe "build.ps1 Helper: Get-GameLogFindings" {
+    It "Returns the lines that name a mod file, without timestamps, repeated lines once" {
+        $log = @(
+            '[21:13:24][no_game_date][dlc.cpp:218]: Invalid supported_version in  file: mod/ugc_1.mod line: 7',
+            '[21:14:55][no_game_date][lexer.cpp:553]: Location: common/units/names_divisions/INEX_TST_names_divisions.txt(332): Backslash followed by neither quote nor backslash',
+            '[21:15:01][1936.1.1.12][lexer.cpp:553]: Location: common/units/names_divisions/INEX_TST_names_divisions.txt(332): Backslash followed by neither quote nor backslash',
+            '[21:15:02][no_game_date][lexer.cpp:553]: Location: common/units/names_divisions/OTHER_names_divisions.txt(1): Backslash'
+        )
+        $found = Get-GameLogFindings -LogLines $log -FileNames @('INEX_TST_names_divisions.txt')
+        $found.Count | Should -Be 1
+        $found[0] | Should -Be '[lexer.cpp:553]: Location: common/units/names_divisions/INEX_TST_names_divisions.txt(332): Backslash followed by neither quote nor backslash (x2)'
+    }
+
+    It "Returns nothing for a clean log or an empty file list" {
+        (Get-GameLogFindings -LogLines @('[21:13:24][no_game_date][dlc.cpp:218]: other') -FileNames @('INEX_TST_names_divisions.txt')).Count | Should -Be 0
+        (Get-GameLogFindings -LogLines @('x INEX_TST_names_divisions.txt') -FileNames @()).Count | Should -Be 0
     }
 }

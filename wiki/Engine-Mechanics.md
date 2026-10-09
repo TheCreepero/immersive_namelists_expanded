@@ -22,7 +22,7 @@ Within the additive loading system, **individual group tags** follow a last-writ
 
 | Scenario | Result |
 |:---|:---|
-| INEX defines `SOV_INF_01` (same as vanilla) | INEX's version **overrides** vanilla for that group |
+| INEX defines `SOV_INF_01` (same as vanilla) | INEX's version **replaces** the vanilla group whole: vanilla entries that INEX leaves out are not merged in |
 | INEX defines `EST_KL_01` (new tag, no vanilla equivalent) | INEX adds a **new group** available in-game |
 | INEX omits a vanilla group (e.g., `SOV_INF_02`) | Vanilla definition remains **untouched** |
 

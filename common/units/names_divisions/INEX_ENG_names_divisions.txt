@@ -329,7 +329,7 @@ ENG_ARM_01 = {
 		10 = { "%dth Armoured Division" }
 		11 = { "%dth Armoured Division 'Black Bull'" }
 		42 = { "%dnd Armoured Division" }
-		79 = { "%dth Armoured Division 'Hobart\'s Funnies'" }
+		79 = { "%dth Armoured Division 'Hobart's Funnies'" }
 		31 = { "Guards Armoured Division" }
 	}
 }
@@ -880,7 +880,7 @@ ENG_SSB_01 = {
 	division_types = { "infantry" "paratrooper" "mountaineers" }
 	fallback_name = "%d Special Service Brigade"
 	ordered = {
-		1 = { "%dst Special Service Brigade 'Lovat\'s Commandos'" }
+		1 = { "%dst Special Service Brigade 'Lovat's Commandos'" }
 		2 = { "%dnd Special Service Brigade" }
 		3 = { "%drd Special Service Brigade" }
 		4 = { "%dth Special Service Brigade" }

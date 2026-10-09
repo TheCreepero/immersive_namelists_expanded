@@ -16,7 +16,7 @@ Planning and research are finished once Status is READY. Run this plan with the 
 <!-- TODO: the user's policy answers (verified only or extrapolation, ideology suites, plain/named pairs) and every design decision (script and transliteration, ordinal format, gating, merges). All final: nothing "to be settled later" -->
 
 ## Vanilla findings (`-InspectVanilla <TAG>`)
-<!-- TODO: table of vanilla tag, vanilla state (entry count, fallback, scripted references), action taken in the batch -->
+<!-- TODO: table of vanilla tag, vanilla state (entry count, fallback, scripted references), action taken in the batch. A reused tag replaces the vanilla group whole: say which vanilla names and numbers the batch carries over and which it drops on purpose -->
 
 ## Group suite
 <!-- TODO: the final groups, one row each, matching the batch exactly -->
@@ -35,21 +35,18 @@ Planning and research are finished once Status is READY. Run this plan with the 
 ## Implementation steps
 <!-- TODO: adjust the steps to this nation -->
 - [ ] 1. Set `Status: IN PROGRESS`, then apply the batch: `powershell -File .\build.ps1 -EditNames <TAG> -Batch <this file>`. Expect `Created INEX_<TAG>_names_divisions.txt`, one green line per group and no `[ERROR]`.
-- [ ] 2. `README.md`: insert the row from "Docs payload" (validation fails without it).
-- [ ] 3. `WORKSHOP_DESCRIPTION_GUIDELINES.md`: insert the cross-reference row and the `[b]<Country>[/b]` block from "Docs payload".
-- [ ] 4. Wiki: write `wiki/<Country>.md` from "Docs payload", add the `wiki/Home.md` row and the `wiki/_Sidebar.md` line, then `powershell -File .\build.ps1 -SyncWiki <TAG>`. Expect no stale or missing tags.
+- [ ] 2. Write `wiki/<Country>.md` from "Docs payload" with the Write tool.
+- [ ] 3. `powershell -File .\build.ps1 -SyncWiki <TAG> -Country "<Country>"`. Expect `Registered <TAG> (<Country>) in: README.md, wiki/Home.md, wiki/_Sidebar.md`, `<Country>.md: 0 row(s) updated` and no line about stale or missing rows. (An expansion of an existing nation runs it without `-Country`.)
+- [ ] 4. `WORKSHOP_DESCRIPTION_GUIDELINES.md`: insert the cross-reference row and the `[b]<Country>[/b]` block from "Docs payload".
 - [ ] 5. `powershell -File .\build.ps1 -Check <TAG>`. Expect `Check passed`; remaining flags must match "Kept on judgment".
 - [ ] 6. Fill "Outcome", set `Status: DONE`, report the `-Check` result.
-- [ ] 7. After the user confirms: `powershell -File .\wiki\push-wiki.ps1 -CommitMessage "Document <TAG> division namelists"`.
+- [ ] 7. Ship, on the user's word: commit with the message `Add <Country> division namelists`, then `powershell -File .\wiki\push-wiki.ps1 -CommitMessage "Document <TAG> division namelists"`.
 
 ## Docs payload
-<!-- TODO: verbatim text, each with the file and the line it goes after -->
-### README.md row
+<!-- TODO: verbatim text, each with the file and the line it goes after. The README row, the wiki/Home.md row and the wiki/_Sidebar.md line are written by -SyncWiki -Country in step 3 -->
 ### Workshop cross-reference row
 ### Workshop `[b]<Country>[/b]` block
 ### wiki/<Country>.md (whole page)
-### wiki/Home.md row
-### wiki/_Sidebar.md line
 
 ## Stop conditions
 Stop and report to the user, without researching or improvising, when: the batch fails; `-Check` fails after one retry of a fix this plan describes; a step has no command for what it asks; a name in the output looks wrong; a flag appears that "Kept on judgment" does not list.

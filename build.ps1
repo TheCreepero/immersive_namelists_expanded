@@ -11,6 +11,8 @@
     - Validate: Checks all division namelist .txt files for balanced braces ({}) and syntax validity.
     - PublishSteam: Staged, clean upload directly to Steam Workshop via SteamCMD.
     - Clean: Removes deployed mod files and generated archives.
+    Namelist tooling (-Check, -Audit, -EditNames, -SyncWiki and others) is described per parameter below:
+    Get-Help .\build.ps1 -Parameter <Name>, or -Full for everything.
 
 .PARAMETER Deploy
     Deploy mod files to the Paradox Interactive Hearts of Iron IV mod folder (default action).
@@ -76,8 +78,8 @@
     whole) or one "A; B" string. Use it for more than two edits and for names with apostrophes or quotes.
     A .md file is read as a plan: the operations are its ```json batch fenced blocks, in document order.
     A first operation { "newFile": true, "header": "<text>" } creates the namelist file of a new nation.
-    Add -DryRun to run the batch in memory and print the summary lines and totals without writing the file; with a
-    .md plan it also warns when the plan's Status is PLANNING or a "<!-- TODO:" section is unfilled. Syntax
+    Add -DryRun to run the batch in memory and print the summary lines and totals without writing the file; for a
+    plan (.md) it also warns when the plan's Status is PLANNING or a "<!-- TODO:" section is unfilled. Syntax
     validation still happens in -Check after the batch is applied.
 
 .PARAMETER AddGroup
@@ -113,6 +115,21 @@
 
 .PARAMETER HeaderText
     With -SetHeader: the new header; lines split on newlines or a literal "\n", "# " is added when missing.
+
+.PARAMETER Selector
+    With -EditNames: set the group's UI selector (name = "..."). Required with -AddGroup.
+
+.PARAMETER Fallback
+    With -EditNames: set the group's fallback_name pattern (needs %d or %s). Required with -AddGroup.
+
+.PARAMETER AddType
+    With -EditNames: division_types tokens to add ("infantry; motorized"). Required with -AddGroup.
+
+.PARAMETER RemoveType
+    With -EditNames: division_types tokens to remove.
+
+.PARAMETER CanUse
+    With -EditNames: set the group's can_use trigger (e.g. "has_government = fascism").
 
 .PARAMETER Add
     With -EditNames: names to add ("A; B" or "15=Name"). Appended at the end of the ordered block, or after -After or in -Section.
@@ -155,9 +172,24 @@
     -Audit reports unfilled TODOs as PlanTodo.
 
 .PARAMETER SyncWiki
-    Sync wiki/<Country>.md group rows with the namelist (literal display names, division types, fallback) and the TAG's
+    Sync wiki/<Country>.md group rows with the namelist (literal display names, division types, fallback) and the file's
     group count in wiki/Home.md (e.g. -SyncWiki LAT). Lists groups without a row, rows without a group, and prose
     lines that mention names removed or moved since HEAD.
+
+.PARAMETER Country
+    With -SyncWiki, for a new nation (e.g. -SyncWiki ROM -Country "Romania"): add the README.md row, the wiki/Home.md
+    row and the wiki/_Sidebar.md line when they are missing, then sync as usual. wiki/<Country>.md must exist.
+
+.PARAMETER SyncMirrors
+    Copy the Claude Code agent files over their Antigravity mirrors: CLAUDE.md to GEMINI.md, and every SKILL.md under
+    the .claude/skills folder to the same path under .agents/skills. Edit the Claude side, then run this.
+
+.PARAMETER GameLog
+    Scan the game's error.log for lines that name this mod's files (e.g. lexer errors in a namelist). Run it after
+    starting the game with the mod enabled. Exit code 1 when a line is found.
+
+.PARAMETER LogPath
+    With -GameLog: path of the log to scan. Defaults to Documents\Paradox Interactive\Hearts of Iron IV\logs\error.log.
 
 .PARAMETER Audit
     Print a heuristic quality scorecard for an INEX namelist file (informational, never fails the build).
@@ -349,6 +381,18 @@ param(
 
     [Parameter(ParameterSetName = 'SyncWiki', Mandatory = $true)]
     [string]$SyncWiki,
+
+    [Parameter(ParameterSetName = 'SyncWiki')]
+    [string]$Country,
+
+    [Parameter(ParameterSetName = 'SyncMirrors', Mandatory = $true)]
+    [switch]$SyncMirrors,
+
+    [Parameter(ParameterSetName = 'GameLog', Mandatory = $true)]
+    [switch]$GameLog,
+
+    [Parameter(ParameterSetName = 'GameLog')]
+    [string]$LogPath,
 
     [Parameter(ParameterSetName = 'Check', Mandatory = $true)]
     [string]$Check,
@@ -547,6 +591,14 @@ function Invoke-Validation {
         if ($quoteCount % 2 -ne 0) {
             Write-Err "$($file.Name): Unbalanced double quotes ($quoteCount quotes found)"
             $fileHasError = $true
+        }
+
+        # A backslash may only escape a quote or another backslash; the game's lexer rejects the rest (e.g. 'Hobart\'s Funnies')
+        for ($ln = 0; $ln -lt $cleanLines.Count; $ln++) {
+            if ($cleanLines[$ln] -match '\\(?!["\\])') {
+                Write-Err "$($file.Name)($($ln + 1)): Backslash followed by neither quote nor backslash: $($cleanLines[$ln].Trim())"
+                $fileHasError = $true
+            }
         }
 
         # Check for invalid division types against approved subunit whitelist
@@ -921,7 +973,7 @@ function Invoke-InspectVanilla {
         (Join-Path $hoi4Dir "common\national_focus"),
         (Join-Path $hoi4Dir "common\scripted_effects")
     )
-    $refRegex = [regex]"division_names_group\s*=\s*($Tag[A-Z0-9_]*)"
+    $refRegex = [regex]"division_names_group\s*=\s*($Tag[A-Za-z0-9_]*)"
     $foundRefs = [System.Collections.Generic.List[string]]::new()
 
     foreach ($rd in $refDirs) {
@@ -1305,7 +1357,9 @@ function Resolve-GroupTag {
     $n = $Name.Trim().ToUpper()
     $cleanTag = $Tag.ToUpper().Trim() -replace '^INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
     foreach ($cand in @($n, "${cleanTag}_$n", "INEX_${cleanTag}_$n", "${cleanTag}_${n}_01")) {
-        if ($Known -contains $cand) { return $cand }
+        # Return the file's own spelling: vanilla tags such as GER_Arm_02 are mixed-case, and the edit looks them up case-sensitively
+        $hit = @($Known | Where-Object { $_ -eq $cand } | Select-Object -First 1)
+        if ($hit.Count) { return $hit[0] }
     }
     $suffixMatches = @($Known | Where-Object { $_ -match "_$([regex]::Escape($n))$" })
     if ($suffixMatches.Count -eq 1) { return $suffixMatches[0] }
@@ -2474,7 +2528,7 @@ function New-AuditPlanText {
     $l.Add("- [ ] 2. ``powershell -File .\build.ps1 -SyncWiki $Tag``, then make the edits listed under `"Docs payload`".")
     $l.Add("- [ ] 3. ``powershell -File .\build.ps1 -Check $Tag``. Expect ``Check passed``; remaining flags must match `"Kept on judgment`".")
     $l.Add('- [ ] 4. Fill "Outcome", set `Status: DONE`, report the `-Check` result.')
-    $l.Add("- [ ] 5. After the user confirms: ``powershell -File .\wiki\push-wiki.ps1 -CommitMessage `"Audit $Tag division namelists`"``."); $l.Add('')
+    $l.Add("- [ ] 5. Ship, on the user's word: commit with the message ``Audit $Tag division namelists``, then ``powershell -File .\wiki\push-wiki.ps1 -CommitMessage `"Audit $Tag division namelists`"``."); $l.Add('')
     $l.Add('## Docs payload'); $l.Add('<!-- TODO: verbatim replacement text and where it goes (wiki prose lines, README row, workshop row and [b]Nation[/b] block), or "No docs change beyond -SyncWiki" -->'); $l.Add('')
     $l.Add('## Stop conditions')
     $l.Add('Stop and report to the user, without researching or improvising, when: the batch fails; `-Check` fails after one retry of a fix this plan describes; a step has no command for what it asks; a name in the output looks wrong; a flag appears that "Kept on judgment" does not list.'); $l.Add('')
@@ -2586,7 +2640,7 @@ function Update-WikiGroupRows {
         $raw = $lines[$i].TrimEnd("`r")
 
         # Heading sync: ### `TAG` - <Selector> [(<Native>)]
-        $mHead = [regex]::Match($raw, '^###\s+`([A-Z0-9_]+)`\s*(?:--|\u2014|\xe2\x80\x94|-)\s*(.*)$')
+        $mHead = [regex]::Match($raw, '^###\s+`([A-Za-z0-9_]+)`\s*(?:--|\u2014|\xe2\x80\x94|-)\s*(.*)$')
         if ($mHead.Success) {
             $headTag = $mHead.Groups[1].Value
             $g = $byTag[$headTag]
@@ -2611,7 +2665,7 @@ function Update-WikiGroupRows {
             continue
         }
 
-        $m = [regex]::Match($raw, "^\|\s*``([A-Z0-9_]+)``\s*\|")
+        $m = [regex]::Match($raw, "^\|\s*``([A-Za-z0-9_]+)``\s*\|")
         if (-not $m.Success) { continue }
         $tagName = $m.Groups[1].Value
         $seen[$tagName] = $true
@@ -2688,13 +2742,13 @@ function Find-WikiLinkMismatches {
     for ($i = 0; $i -lt $lines.Count; $i++) {
         $raw = $lines[$i].TrimEnd("`r")
         if ($raw -match '^###\s') {
-            $sectionTags = @([regex]::Matches($raw, '`([A-Z0-9_]+)`') | ForEach-Object { $_.Groups[1].Value })
+            $sectionTags = @([regex]::Matches($raw, '`([A-Za-z0-9_]+)`') | ForEach-Object { $_.Groups[1].Value })
             continue
         }
         if ($raw -match '^\|') { continue }
-        $claims = @([regex]::Matches($raw, '(?i)(?:shares?|sharing|linked?|links?)\s+(?:its\s+)?numbering\s+(?:with|to)\s+`([A-Z0-9_]+)`'))
+        $claims = @([regex]::Matches($raw, '(?i)(?:shares?|sharing|linked?|links?)\s+(?:its\s+)?numbering\s+(?:with|to)\s+`([A-Za-z0-9_]+)`'))
         if ($claims.Count -eq 0) { continue }
-        $subjects = if ($raw -match '^\s*[-*]\s+`([A-Z0-9_]+)`') { @($Matches[1]) } else { $sectionTags }
+        $subjects = if ($raw -match '^\s*[-*]\s+`([A-Za-z0-9_]+)`') { @($Matches[1]) } else { $sectionTags }
         foreach ($c in $claims) {
             $target = $c.Groups[1].Value
             foreach ($s in $subjects) {
@@ -2711,14 +2765,86 @@ function Find-WikiLinkMismatches {
     return , $out.ToArray()
 }
 
+# --- Helper: Append a row to the markdown table whose header line matches a pattern ---
+# Returns the text unchanged when no such table exists.
+function Add-MarkdownTableRow {
+    param([string]$Text, [string]$HeaderPattern, [string]$Row)
+    $nl = if ($Text.Contains("`r`n")) { "`r`n" } else { "`n" }
+    $lines = [System.Collections.Generic.List[string]]::new()
+    $lines.AddRange([string[]]($Text -split '\r?\n'))
+    $last = -1
+    for ($i = 0; $i -lt $lines.Count; $i++) {
+        if ($lines[$i] -notmatch $HeaderPattern) { continue }
+        $last = $i
+        while ($last + 1 -lt $lines.Count -and $lines[$last + 1].TrimStart().StartsWith('|')) { $last++ }
+        break
+    }
+    if ($last -lt 0) { return $Text }
+    $lines.Insert($last + 1, $Row)
+    return ($lines -join $nl)
+}
+
+# --- Helper: Append a "- [Name](Page)" line to the list under a bold heading (the wiki sidebar's **Nations**) ---
+# Returns the text unchanged when no such heading exists.
+function Add-MarkdownListLine {
+    param([string]$Text, [string]$Heading, [string]$Line)
+    $nl = if ($Text.Contains("`r`n")) { "`r`n" } else { "`n" }
+    $lines = [System.Collections.Generic.List[string]]::new()
+    $lines.AddRange([string[]]($Text -split '\r?\n'))
+    $last = -1
+    for ($i = 0; $i -lt $lines.Count; $i++) {
+        if ($lines[$i].Trim() -ne "**$Heading**") { continue }
+        $last = $i
+        while ($last + 1 -lt $lines.Count -and $lines[$last + 1].TrimStart().StartsWith('- ')) { $last++ }
+        break
+    }
+    if ($last -lt 0) { return $Text }
+    $lines.Insert($last + 1, $Line)
+    return ($lines -join $nl)
+}
+
+# --- Helper: Register a new nation in README.md, wiki/Home.md and wiki/_Sidebar.md (the lines a script can derive) ---
+# Each line is added only when missing. Returns the files that changed, for the report.
+function Add-NationDocRows {
+    param([string]$Root, [string]$Tag, [string]$Country, [int]$GroupCount)
+    $utf8 = New-Object System.Text.UTF8Encoding $false
+    $file = "INEX_${Tag}_names_divisions.txt"
+    $page = $Country -replace ' ', '-'
+    $added = [System.Collections.Generic.List[string]]::new()
+    $targets = @(
+        @{ Path = 'README.md'; Has = "``$file``"; Table = '^\|\s*Tag\s*\|\s*Nation\s*\|'; Row = "| ``$Tag`` | $Country | ``$file`` |" },
+        @{ Path = 'wiki\Home.md'; Has = "``$file``"; Table = '^\|\s*Nation\s*\|\s*Tag\s*\|'; Row = "| [$Country]($page) | ``$Tag`` | $GroupCount | ``$file`` |" },
+        @{ Path = 'wiki\_Sidebar.md'; Has = "]($page)"; List = 'Nations'; Row = "- [$Country]($page)" }
+    )
+    foreach ($t in $targets) {
+        $path = Join-Path $Root $t.Path
+        if (-not (Test-Path $path)) { continue }
+        $text = [System.IO.File]::ReadAllText($path, [System.Text.Encoding]::UTF8)
+        if ($text.Contains($t.Has)) { continue }
+        $new = if ($t.Table) { Add-MarkdownTableRow -Text $text -HeaderPattern $t.Table -Row $t.Row } else { Add-MarkdownListLine -Text $text -Heading $t.List -Line $t.Row }
+        if ($new -ceq $text) { Write-Host "  [WARN] $($t.Path): no place found for the $Tag line; add by hand: $($t.Row)" -ForegroundColor Yellow; continue }
+        [System.IO.File]::WriteAllText($path, $new, $utf8)
+        $added.Add(($t.Path -replace '\\', '/'))
+    }
+    return , $added.ToArray()
+}
+
 # --- Action: Sync a nation's wiki page rows and its wiki/Home.md group count with the namelist ---
+# -Country registers a new nation first: its README.md row, wiki/Home.md row and wiki/_Sidebar.md line.
 function Invoke-SyncWiki {
-    param([string]$Tag)
+    param([string]$Tag, [string]$Country)
     $Tag = $Tag.ToUpper().Trim() -replace '^INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
     $modFile = Join-Path $RepoDir "common\units\names_divisions\INEX_${Tag}_names_divisions.txt"
     if (-not (Test-Path $modFile)) { Write-Err "Mod namelist not found: $modFile"; return 1 }
+    if ($Country) {
+        $Country = $Country.Trim()
+        $pageName = "$($Country -replace ' ', '-').md"
+        if (-not (Test-Path (Join-Path $RepoDir "wiki\$pageName"))) { Write-Err "wiki\$pageName not found: write the wiki page before registering $Tag"; return 1 }
+        $registered = Add-NationDocRows -Root $RepoDir -Tag $Tag -Country $Country -GroupCount (Get-NamelistAuditData -Path $modFile).Groups.Count
+        if ($registered.Count) { Write-Host "Registered $Tag ($Country) in: $($registered -join ', ')" } else { Write-Host "$Tag ($Country) is already registered in README.md, wiki/Home.md and wiki/_Sidebar.md" }
+    }
     $country = Get-CountryName -Tag $Tag
-    if (-not $country) { Write-Err "README.md has no row for $Tag"; return 1 }
+    if (-not $country) { Write-Err "README.md has no row for $Tag (for a new nation add -Country `"<Name>`")"; return 1 }
 
     $wikiPath = Join-Path $RepoDir "wiki\$country.md"
     if (-not (Test-Path $wikiPath)) {
@@ -2765,7 +2891,8 @@ function Invoke-SyncWiki {
     $homePath = Join-Path $RepoDir 'wiki\Home.md'
     if (Test-Path $homePath) {
         $homeText = [System.IO.File]::ReadAllText($homePath, [System.Text.Encoding]::UTF8)
-        $pattern = "(\|\s*``?$([regex]::Escape($Tag))``?\s*\|\s*)(\d+)(\s*\|)"
+        # The row is found by its source file: the three German files share the tag GER
+        $pattern = "(?m)^(\|[^|\r\n]*\|[^|\r\n]*\|\s*)(\d+)(\s*\|\s*``INEX_$([regex]::Escape($Tag))_names_divisions\.txt``)"
         $m = [regex]::Match($homeText, $pattern)
         if (-not $m.Success) {
             Write-Host "wiki/Home.md: no $Tag row"
@@ -2781,8 +2908,17 @@ function Invoke-SyncWiki {
 }
 
 # --- Action: Audit namelist quality ---
-# --- Helper: How much of each group's ordered block is a verbatim copy of the vanilla group with the same tag ---
-# Returns tag -> @{ Matches; Total }. Empty when HOI4 is not installed or the vanilla file has no such group.
+# --- Helper: How each group relates to the vanilla group with the same tag ---
+# A group that reuses a vanilla tag replaces the vanilla group whole (in-game test, 2026-10-09): its entries are the
+# only ones the game reads, and every vanilla key it leaves out is gone.
+# Returns tag -> @{ Matches; Total; LeftOutNames; LeftOutNumbers; KeptElsewhere }. Empty when HOI4 is not installed
+# or the vanilla file has no such group.
+#   Matches / Total   entries identical to vanilla in key and name / entries in the INEX group
+#   LeftOutNames      "key=name" of vanilla entries with an identity (not a fallback stub) that the group leaves out
+#   KeptElsewhere     how many more left-out vanilla names carry a quoted identity that another entry of the file has
+#                     (moved to a Named variant or an ideology list, so not lost)
+#   LeftOutNumbers    keys of left-out vanilla fallback stubs that lie past the first gap in vanilla's key series:
+#                     those numbers were historical, and a fallback counts on without the gap
 function Get-VanillaOverlap {
     param(
         [object[]]$Groups,
@@ -2794,30 +2930,58 @@ function Get-VanillaOverlap {
     $vanillaFile = Join-Path $Hoi4Dir ("common\units\names_divisions\" + ($Key -split '_')[0] + '_names_divisions.txt')
     if (-not (Test-Path $vanillaFile)) { return $result }
     $vanilla = Get-NamelistAuditData -Path $vanillaFile
+    $identityRx = "'([^']+)'"
+    $ownIdentities = [System.Collections.Generic.HashSet[string]]::new()
+    foreach ($g in $Groups) {
+        foreach ($e in $g.Entries) {
+            foreach ($m in [regex]::Matches($e, $identityRx)) { [void]$ownIdentities.Add($m.Groups[1].Value) }
+        }
+    }
+    # "%dth Infantry Division" and "%d. Infantry Division" are the same stub: drop the ordinal mark before comparing
+    $stubKey = { param($s) Get-NamePatternKey ($s -replace '(%[ds]|\b\d+)(st|nd|rd|th)\b', '$1' -replace '(%[ds]|\b\d+)\.', '$1') }
     foreach ($g in $Groups) {
         $v = $vanilla.Groups | Where-Object { $_.Tag -eq $g.Tag } | Select-Object -First 1
-        if (-not $v -or $g.OrderedCount -eq 0) { continue }
+        if (-not $v -or $v.Entries.Count -eq 0) { continue }
         $vanillaByKey = @{}
         for ($i = 0; $i -lt $v.Entries.Count; $i++) { $vanillaByKey[[int]$v.EntryKeys[$i]] = $v.Entries[$i] }
+        $own = @{}
         $same = 0
         for ($i = 0; $i -lt $g.Entries.Count; $i++) {
             $k = [int]$g.EntryKeys[$i]
+            $own[$k] = $true
             if ($vanillaByKey.ContainsKey($k) -and $vanillaByKey[$k] -ceq $g.Entries[$i]) { $same++ }
         }
-        $result[$g.Tag] = @{ Matches = $same; Total = $g.OrderedCount }
+        $vKeys = @($vanillaByKey.Keys | Sort-Object)
+        $run = 0
+        while ($vanillaByKey.ContainsKey($run + 1)) { $run++ }
+        $stubKeys = @(@($v.Fallback, $g.Fallback) | Where-Object { $_ } | ForEach-Object { & $stubKey $_ })
+        $names = [System.Collections.Generic.List[string]]::new()
+        $numbers = [System.Collections.Generic.List[int]]::new()
+        $elsewhere = 0
+        foreach ($k in $vKeys) {
+            if ($own.ContainsKey($k)) { continue }
+            $name = $vanillaByKey[$k]
+            if ($stubKeys -contains (& $stubKey $name)) {
+                if ($k -gt $run) { $numbers.Add($k) }
+                continue
+            }
+            $ids = @([regex]::Matches($name, $identityRx) | ForEach-Object { $_.Groups[1].Value })
+            if ($ids.Count -gt 0 -and @($ids | Where-Object { -not $ownIdentities.Contains($_) }).Count -eq 0) {
+                $elsewhere++
+            } else {
+                $names.Add("$k=$name")
+            }
+        }
+        $result[$g.Tag] = @{ Matches = $same; Total = $g.OrderedCount; LeftOutNames = $names.ToArray(); LeftOutNumbers = $numbers.ToArray(); KeptElsewhere = $elsewhere }
     }
     return $result
 }
 
-# --- Helper: Flag groups that merely repeat vanilla entries (needs a local HOI4 install; silently skipped otherwise) ---
-function Add-VanillaCopyFlags {
-    param($Data, [string]$Key, [string]$Hoi4Dir)
-    $overlap = Get-VanillaOverlap -Groups $Data.Groups -Key $Key -Hoi4Dir $Hoi4Dir
-    foreach ($g in $Data.Groups) {
-        $o = $overlap[$g.Tag]
-        if ($o -and $o.Total -ge 5 -and ($o.Matches / $o.Total) -ge 0.8) { $g.Flags.Add('VANILLA_COPY') }
-    }
-    return $overlap
+# --- Helper: First items of a list, with the rest as a count ---
+function Format-CappedList {
+    param([object[]]$Items = @(), [int]$Max = 10)
+    if ($Items.Count -le $Max) { return ($Items -join '; ') }
+    return (($Items[0..($Max - 1)] -join '; ') + " (+$($Items.Count - $Max) more)")
 }
 
 # --- Helper: Workshop description conventions for a namelist file's nation block ---
@@ -2956,7 +3120,7 @@ function Invoke-NamelistAudit {
         return
     }
 
-    $overlap = Add-VanillaCopyFlags -Data $data -Key $Key -Hoi4Dir (Find-Hoi4Install -CustomPath $Hoi4Dir)
+    $overlap = Get-VanillaOverlap -Groups $data.Groups -Key $Key -Hoi4Dir (Find-Hoi4Install -CustomPath $Hoi4Dir)
 
     Write-Step "Quality audit: INEX_${Key}_names_divisions.txt ($($data.Groups.Count) groups)"
     foreach ($ff in $data.FileFlags) { Write-Warn "File: $ff" }
@@ -2971,7 +3135,15 @@ function Invoke-NamelistAudit {
         Write-Host "  Ordered:  $($g.OrderedCount) entries, $($g.AuthoredCount) authored" -ForegroundColor Gray
         $o = $overlap[$g.Tag]
         if ($o -and $o.Matches -gt 0) {
-            Write-Host "  Vanilla:  $($o.Matches)/$($o.Total) entries identical to vanilla $($g.Tag) (same key and name)" -ForegroundColor Gray
+            Write-Host "  Vanilla:  $($o.Matches)/$($o.Total) entries identical to vanilla $($g.Tag) (same key and name); the game reads only this copy" -ForegroundColor Gray
+        }
+        if ($o -and ($o.LeftOutNames.Count -gt 0 -or $o.KeptElsewhere -gt 0)) {
+            $moved = if ($o.KeptElsewhere -gt 0) { " ($($o.KeptElsewhere) more keep their identity in another list)" } else { '' }
+            $listed = if ($o.LeftOutNames.Count -gt 0) { ": $(Format-CappedList -Items $o.LeftOutNames)" } else { '' }
+            Write-Host "  Vanilla:  leaves out $($o.LeftOutNames.Count) vanilla name(s), gone in game$moved$listed" -ForegroundColor Gray
+        }
+        if ($o -and $o.LeftOutNumbers.Count -gt 0) {
+            Write-Host "  Vanilla:  leaves out $($o.LeftOutNumbers.Count) numbered key(s) past a gap in vanilla's series (the fallback counts on without the gap): $(Format-CappedList -Items $o.LeftOutNumbers -Max 15)" -ForegroundColor Gray
         }
         if ($g.PlainVariantOf) {
             Write-Host "  Variant:  plain (un-nicknamed) counterpart of $($g.PlainVariantOf)" -ForegroundColor Gray
@@ -3046,13 +3218,75 @@ function Invoke-NamelistAudit {
     }
 }
 
+# --- Helper: Copy the Claude Code agent files over their Antigravity mirrors (the Claude side is the source) ---
+# CLAUDE.md -> GEMINI.md and .claude/skills/<skill>/SKILL.md -> .agents/skills/<skill>/SKILL.md, byte for byte.
+# Returns the mirrors that changed, as repo-relative paths.
+function Sync-AgentMirrors {
+    param([string]$Root)
+    $pairs = [System.Collections.Generic.List[object]]::new()
+    $pairs.Add(@{ From = 'CLAUDE.md'; To = 'GEMINI.md' })
+    $skillsDir = Join-Path $Root '.claude\skills'
+    if (Test-Path $skillsDir) {
+        foreach ($d in (Get-ChildItem -Path $skillsDir -Directory | Sort-Object Name)) {
+            if (Test-Path (Join-Path $d.FullName 'SKILL.md')) {
+                $pairs.Add(@{ From = ".claude\skills\$($d.Name)\SKILL.md"; To = ".agents\skills\$($d.Name)\SKILL.md" })
+            }
+        }
+    }
+    $updated = [System.Collections.Generic.List[string]]::new()
+    foreach ($p in $pairs) {
+        $from = Join-Path $Root $p.From
+        $to = Join-Path $Root $p.To
+        if (-not (Test-Path $from)) { continue }
+        $bytes = [System.IO.File]::ReadAllBytes($from)
+        if ((Test-Path $to) -and [System.Linq.Enumerable]::SequenceEqual([byte[]]$bytes, [System.IO.File]::ReadAllBytes($to))) { continue }
+        $toDir = Split-Path $to
+        if (-not (Test-Path $toDir)) { New-Item -ItemType Directory -Force $toDir | Out-Null }
+        [System.IO.File]::WriteAllBytes($to, $bytes)
+        $updated.Add(($p.To -replace '\\', '/'))
+    }
+    return , $updated.ToArray()
+}
+
+# --- Helper: Lines of the game's error.log that name one of the given files, without their timestamps ---
+# A repeated line is returned once, as "line (xN)".
+function Get-GameLogFindings {
+    param([string[]]$LogLines = @(), [string[]]$FileNames = @())
+    if ($FileNames.Count -eq 0) { return , @() }
+    $rx = '(' + (($FileNames | ForEach-Object { [regex]::Escape($_) }) -join '|') + ')'
+    $counts = [ordered]@{}
+    foreach ($line in $LogLines) {
+        if ($line -notmatch $rx) { continue }
+        $text = ($line -replace '^\[\d{2}:\d{2}:\d{2}\]\[[^\]]*\]', '').Trim()
+        if ($counts.Contains($text)) { $counts[$text]++ } else { $counts[$text] = 1 }
+    }
+    return , @($counts.Keys | ForEach-Object { if ($counts[$_] -gt 1) { "$_ (x$($counts[$_]))" } else { $_ } })
+}
+
+# --- Action: Scan the game's error.log for lines that name this mod's files ---
+function Invoke-GameLog {
+    param([string]$Path)
+    if (-not $Path) { $Path = Join-Path ([Environment]::GetFolderPath('MyDocuments')) 'Paradox Interactive\Hearts of Iron IV\logs\error.log' }
+    if (-not (Test-Path $Path)) { Write-Err "error.log not found: $Path (start the game once with the mod enabled)"; return 1 }
+    $modFiles = @(Get-ChildItem -Path (Join-Path $RepoDir 'common') -Recurse -File)
+    $log = Get-Item $Path
+    $newest = $modFiles | Sort-Object LastWriteTime -Descending | Select-Object -First 1
+    $findings = Get-GameLogFindings -LogLines ([System.IO.File]::ReadAllLines($Path, [System.Text.Encoding]::UTF8)) -FileNames @($modFiles | ForEach-Object { $_.Name })
+    Write-Host "error.log of $($log.LastWriteTime.ToString('yyyy-MM-dd HH:mm', [cultureinfo]::InvariantCulture)): $($findings.Count) line(s) name INEX files"
+    foreach ($f in $findings) { Write-Host "  $f" }
+    if ($newest -and $newest.LastWriteTime -gt $log.LastWriteTime) {
+        Write-Warn "The log is older than $($newest.Name) ($($newest.LastWriteTime.ToString('yyyy-MM-dd HH:mm', [cultureinfo]::InvariantCulture))): deploy (build.ps1) or -DevLink, start the game to the main menu, then run -GameLog again"
+    }
+    if ($findings.Count -gt 0) { return 1 }
+    return 0
+}
+
 # --- Action: One compact pass over validation, tests, audit summary, plan refresh and name diff ---
 # Prints about ten lines; errors, failed tests and warnings are printed in full.
 function Invoke-Check {
     param(
         [string]$Tag,
-        [string]$BaseRev = 'HEAD',
-        [string]$Hoi4Dir
+        [string]$BaseRev = 'HEAD'
     )
     $Tag = $Tag.ToUpper().Trim() -replace '^INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
     $modFile = Join-Path $RepoDir "common\units\names_divisions\INEX_${Tag}_names_divisions.txt"
@@ -3095,7 +3329,6 @@ function Invoke-Check {
     }
 
     $data = Get-NamelistAuditData -Path $modFile
-    $null = Add-VanillaCopyFlags -Data $data -Key $Tag -Hoi4Dir (Find-Hoi4Install -CustomPath $Hoi4Dir)
     Write-Host "  $(Format-AuditSummaryLine -Key $Tag -Data $data)"
     $allFlags = @(@($data.FileFlags) + @($data.Groups | ForEach-Object { $_.Flags }) | Where-Object { $_ })
     if ($allFlags.Count -gt 0) {
@@ -3127,7 +3360,7 @@ function Invoke-Check {
 
 # --- Action: Check ---
 if ($Check) {
-    exit (Invoke-Check -Tag $Check -BaseRev $Base -Hoi4Dir $Hoi4InstallDir)
+    exit (Invoke-Check -Tag $Check -BaseRev $Base)
 }
 
 # --- Action: Audit ---
@@ -3181,7 +3414,19 @@ if ($AuditPlan) {
 
 # --- Action: SyncWiki ---
 if ($SyncWiki) {
-    exit (Invoke-SyncWiki -Tag $SyncWiki)
+    exit (Invoke-SyncWiki -Tag $SyncWiki -Country $Country)
+}
+
+# --- Action: SyncMirrors ---
+if ($SyncMirrors) {
+    $updated = Sync-AgentMirrors -Root $RepoDir
+    if ($updated.Count) { foreach ($u in $updated) { Write-Host "Updated $u" -ForegroundColor Green } } else { Write-Host 'Mirrors already in sync' -ForegroundColor Green }
+    exit 0
+}
+
+# --- Action: GameLog ---
+if ($GameLog) {
+    exit (Invoke-GameLog -Path $LogPath)
 }
 
 

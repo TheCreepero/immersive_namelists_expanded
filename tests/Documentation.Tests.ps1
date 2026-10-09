@@ -132,7 +132,7 @@ Describe "Agent Rule Files: CLAUDE.md and GEMINI.md" {
 
 Describe "Subagent Config & Budgeting" {
     It "Subagent briefs exist in .claude/agents" {
-        $requiredAgents = @('inex-audit-researcher.md', 'inex-historical-researcher.md', 'inex-code-reviewer.md')
+        $requiredAgents = @('inex-audit-researcher.md', 'inex-historical-researcher.md', 'inex-code-reviewer.md', 'inex-implementer.md')
         foreach ($agent in $requiredAgents) {
             $path = Join-Path $script:RepoRoot ".claude\agents\$agent"
             (Test-Path $path) | Should -BeTrue -Because "subagent brief '$agent' must exist in .claude/agents/"
@@ -166,6 +166,23 @@ Describe "Subagent Config & Budgeting" {
         $calls.Success | Should -BeTrue
         [int]$calls.Groups[1].Value | Should -BeLessOrEqual 10
         $text | Should -Match 'No issues found' -Because "a clean proofread is one line, with no list of what was verified"
+    }
+
+    It "Implementer runs on Haiku in a fresh context: turn cap, no web or agent tools, the whole runbook in the brief" {
+        $text = [System.IO.File]::ReadAllText((Join-Path $script:RepoRoot '.claude\agents\inex-implementer.md'), [System.Text.Encoding]::UTF8)
+        $front = [regex]::Match($text, '(?s)^---\r?\n(.*?)\r?\n---').Groups[1].Value
+        $front | Should -Match '(?m)^model:\s*haiku\s*$' -Because "carrying out a finished plan is mechanical work"
+        $front | Should -Match '(?m)^effort:\s*(medium|high)\s*$' -Because "instruction following matters more than speed here"
+        $turns = [regex]::Match($front, '(?m)^maxTurns:\s*(\d+)\s*$')
+        $turns.Success | Should -BeTrue
+        [int]$turns.Groups[1].Value | Should -BeLessOrEqual 80
+        $front | Should -Match '(?m)^omitClaudeMd:\s*true\s*$' -Because "the brief carries everything the implementer needs"
+        $tools = [regex]::Match($front, '(?m)^tools:\s*(.+)$').Groups[1].Value
+        $tools | Should -Not -Match '\b(WebSearch|WebFetch|Agent|Task)\b' -Because "the implementer neither researches nor delegates"
+        $text | Should -Not -Match 'inex-(historical|audit)-researcher|inex-code-reviewer|-InspectVanilla' -Because "a cheap model follows what it reads; research must not be on the page"
+        $text | Should -Match '## Edit batch'
+        $text | Should -Match 'IN PROGRESS'
+        $text | Should -Match 'RESULT: DONE \| STOPPED' -Because "the dispatching session verifies a fixed report form"
     }
 
     It "Historical researcher has a turn cap and a stated call budget" {
@@ -216,6 +233,33 @@ Describe "Plan hand-off: planning skills stop, the implement skill only executes
         $text | Should -Match 'IN PROGRESS'
     }
 
+    It "Implement skill dispatches the implementer, verifies its report and ships only on the user's word" {
+        $text = & $script:ReadSkill 'hoi4-inex-namelist-implement'
+        $text | Should -Match 'inex-implementer' -Because "the mechanical work runs in the Haiku subagent's fresh context"
+        $text | Should -Match '-Check <TAG>' -Because "the dispatching session checks the result itself"
+        $text | Should -Match 'git status'
+        $text | Should -Match "On the user's word"
+    }
+
+    It "Release skill leaves the game and the upload to the user" {
+        $text = & $script:ReadSkill 'hoi4-inex-release'
+        $text | Should -Match '-GameLog' -Because "the game's own log is the only check of what the engine does with a file"
+        $text | Should -Match '-PublishSteam -DryRun'
+        $text | Should -Match 'The user runs the upload' -Because "SteamCMD may prompt, and publishing is outward-facing"
+    }
+
+    It "Rules and skills describe same-tag replacement, with no advice to drop vanilla copies" {
+        $rules = [System.IO.File]::ReadAllText((Join-Path $script:RepoRoot 'CLAUDE.md'), [System.Text.Encoding]::UTF8)
+        $rules | Should -Match 'replaces the vanilla group whole' -Because "the in-game test of 2026-10-09 showed that omitted vanilla keys are gone"
+        foreach ($name in 'hoi4-inex-namelist-authoring', 'hoi4-inex-namelist-audit') {
+            $text = & $script:ReadSkill $name
+            $text | Should -Not -Match 'VANILLA_COPY' -Because "copied vanilla entries are the only copy the game reads"
+            $text | Should -Not -Match 'without changing any name'
+            $text | Should -Match 'tooling-backlog\.md' -Because "$name records tooling problems in one place"
+        }
+        (Test-Path (Join-Path $script:RepoRoot 'docs\tooling-backlog.md')) | Should -BeTrue
+    }
+
     It "Authoring template and audit skeleton share the hand-off sections" {
         $template = [System.IO.File]::ReadAllText((Join-Path $script:RepoRoot 'docs\superpowers\plans\TEMPLATE-namelist.md'), [System.Text.Encoding]::UTF8)
         $build = [System.IO.File]::ReadAllText((Join-Path $script:RepoRoot 'build.ps1'), [System.Text.Encoding]::UTF8)
@@ -229,5 +273,3 @@ Describe "Plan hand-off: planning skills stop, the implement skill only executes
         $template | Should -Match '(?m)^```json batch\r?$'
     }
 }
-
-

@@ -10,36 +10,34 @@ description: >-
 
 # INEX Namelist Audit & Modernization (planning)
 
-> **Mirror**: `.claude/skills/hoi4-inex-namelist-audit/SKILL.md` (Claude Code). Apply rule changes to both (`GEMINI.md` §8).
-
 Plans how one existing `INEX_<KEY>_names_divisions.txt` file is brought up to current project standards without breaking players' saved templates.
 
-Entries that meet the standard stay untouched; only reported gaps are fixed. Rules: `GEMINI.md` §2–6. The script does the mechanical checking; keep your context for judgment.
+Entries that meet the standard stay untouched; only reported gaps are fixed. The project rules are in `CLAUDE.md` (Antigravity: `GEMINI.md`) §2-6 and are not repeated here. The script does the mechanical checking; keep your context for judgment.
 
 `<KEY>` is the part of the filename between `INEX_` and `_names_divisions` (e.g. `LIT`, `GER_SS`, `GER_ADDITIONAL`). Audit **one file per run**.
 
 > A plan whose `Status:` is `READY` or `IN PROGRESS` is past this skill: use `hoi4-inex-namelist-implement` and do not repeat any phase below.
 
 ## The contract
-This skill produces one file, `docs/superpowers/plans/YYYY-MM-DD-<country>-audit.md`, and stops. The plan must be complete enough that a fresh session on a cheaper model can carry it out with nothing else: no conversation, no research, no naming decisions.
+This skill produces one file, `docs/superpowers/plans/YYYY-MM-DD-<country>-audit.md`, and stops. The plan is carried out by the `inex-implementer` subagent, a cheap model in a fresh context, so it must be complete with nothing else: no conversation, no research, no naming decisions.
 
 - **Every edit is written here.** The plan's `## Edit batch` holds all changes as `build.ps1` operations. The implementer applies it with one command and never types a name.
 - **Every decision is final** and recorded, including what the user dropped at the checkpoint.
 - **Every docs text is verbatim**: the prose lines to replace and what replaces them.
-- **No namelist or docs file is touched in this skill.** Only the plan and `scratch/` are written.
+- **No namelist or docs file is touched in this skill.** Only the plan, `scratch/` and entries in `docs/tooling-backlog.md` are written.
 
 ---
 
 ## Token Discipline
 - **One nation per session.**
-- **Tooling problems are worked around and recorded in the plan's Rationale as a tooling note; `build.ps1`, tests and skill text are not edited during an audit.** Fix them in a fresh session, where the same edits cost a fraction.
+- **Tooling problems are worked around and get one entry in `docs/tooling-backlog.md`; `build.ps1`, tests and skill text are not edited during an audit.** A workaround the implementer must run (a one-off script, an extra command) is written into the plan's steps with its expected output.
 - Start from `powershell -File .\build.ps1 -Audit <TAG>` (~40 lines: group table, findings, summary).
 - Read groups with `-Audit <TAG> -Group <A>,<B> -NamesOnly` (one line per group; `<TAG>_` prefix optional, e.g. `-Group INF_01,CAV_01`); add `-Sections` to show comment headers inline and `-Keys` to prefix each entry with its ordered key (what a `"remove"` or `"set"` by index needs). Consecutive identical names collapse to `name (xN)`, so a vanilla-stub group stays one short line, and a gated group shows its `can_use`. Drop `-NamesOnly` only when you need block syntax (`division_types`, `fallback_name`, `link_numbering_with`). Never open the namelist file.
 - Read only the groups a finding names and the content-risk pools. Pure regional or numbered lists get one `-NamesOnly` skim for display names; nobody reads them after you.
 - Docs: grep only for prose (README and workshop rows, the `[b]<Country>[/b]` block, wiki overview or scope notes) to write the "Docs payload"; never print a whole wiki page. `-SyncWiki <TAG>` rewrites wiki display names and fallbacks during implementation.
 - Plan: `-AuditPlan <TAG>` writes the skeleton and the change table; never read an older plan as a template or hand-edit the table.
 - Never read a plan file whole: `## Edit batch` and `## Per-group changes` come last and can run to tens of KB. `Grep -n '^## '` for the headings, then `Read` with a `limit` that stops before them. (Older plans keep the table in the middle; read around it.)
-- Run `-InspectVanilla <TAG>` only for a fallback or vanilla overlap finding.
+- Run `-InspectVanilla <TAG>` only for a fallback finding or a `Vanilla: leaves out` line.
 - Subagents get context, not file access: paste the `-NamesOnly` lines of every group they must judge into their prompt (the audit researcher has web tools only). Refer to `.claude/agents/inex-audit-researcher.md`.
 - The researcher verifies; you decide. Identify what you can yourself, draft candidates yourself, and send only what needs a source.
 
@@ -51,8 +49,9 @@ This skill produces one file, `docs/superpowers/plans/YYYY-MM-DD-<country>-audit
 2. **Keep what is already good.** Modernize; do not rewrite authored, historically sound names for the sake of it.
 3. **Keep file-level conventions:** `for_countries`, the German three-file split, and any group referenced by vanilla scripts (see `-InspectVanilla`).
 4. **Nothing reaches the plan's batch without approval.** The audit report is a checkpoint; the batch holds only the items the user approves.
-5. **Wiki push is outward-facing.** The plan lists it as the last step, to run only after the user confirms.
-6. **Never retain focus-locked namelists (`has_completed_focus`).** Namelists must never be locked behind national focuses. Convert any legacy focus locks to pure government type checks (`has_government = <ideology>`), war state triggers (`has_war = yes`), or country tags to maximize compatibility with mods like *Road to 56* and overhaul focus trees.
+5. **Commit and wiki push are outward-facing.** The plan lists them as its last step, the ship step, which runs only on the user's word.
+6. **A group replaces the vanilla group of the same tag** (`CLAUDE.md` §6). Its entries are the only copy the game reads: `"removeAll"` and `"clearOrdered"` delete names from the game, so use them only on entries that repeat the fallback in a 1..N run, or when the batch writes the names back. A vanilla entry the group leaves out is gone; `-Audit` lists those per group.
+7. **Never retain focus-locked namelists (`has_completed_focus`).** Namelists must never be locked behind national focuses. Convert any legacy focus locks to pure government type checks (`has_government = <ideology>`), war state triggers (`has_war = yes`), or country tags to maximize compatibility with mods like *Road to 56* and overhaul focus trees.
 
 ---
 
@@ -71,7 +70,8 @@ A modernized file meets all of these (reference implementation: `INEX_PER_names_
 | R7 | Motorized/mechanized groups `link_numbering_with` field infantry where the nation's doctrine plausibly shared numbering. | `UNLINKED_MOBILE` |
 | R8 | No dead commented self-links, TODO notes, "barely any info" or leftover "fictional divisions start here" comments. | `DEAD_SELF_LINK_COMMENT`, `TODO_COMMENT`, `STALE_COMMENT` |
 | R9 | Wiki page, README row, and workshop cross-reference/BBCode describe the file as it now is. The nation's `[b]<Country>[/b]` block has 2-3 bullets and at least two `[i]` examples; the description has no emojis and stays under 17,000 characters. | `Docs:` warnings in `-Audit` and `-Check` for the workshop block; prose is manual |
-| R10 | Nicknamed infantry, motorized, mechanized, and armor lists keep a plain (un-nicknamed) variant: the existing/vanilla tag becomes the fallback-only plain group, and the nicknames move to a new `"<Selector> (Named)"` tag that shares its numbering through `link_numbering_with = { <plain tag> }` (authoring skill §3). Not needed if vanilla already nicknames those divisions (e.g. USA). | (manual; `-Audit` shows `Variant: plain` and exempts it from R4/R5; without the link it cannot pair the two) |
+| R10 | Nicknamed infantry, motorized, mechanized, and armor lists keep a plain (un-nicknamed) variant: the existing/vanilla tag becomes the plain group, and the nicknames move to a new `"<Selector> (Named)"` tag that shares its numbering through `link_numbering_with = { <plain tag> }` (authoring skill §3). The plain group is fallback-only, or keeps its numbered entries where the keys are historical numbers with gaps. Not needed if vanilla already nicknames those divisions (e.g. USA). | (manual; `-Audit` shows `Variant: plain` and exempts it from R4/R5; without the link it cannot pair the two) |
+| R12 | Every vanilla name or historical number that a reused tag leaves out is left out on purpose. | (manual; `Vanilla: leaves out ...` lines in `-Audit`) |
 | R11 | Ideology-gated groups use `has_government` and never lock behind national focuses (`has_completed_focus`), decisions, or event flags. Political names do not sit in a group every government may use. | `FOCUS_LOCKED`, `UNGATED_POLITICAL`, `POLITICAL_ENTRY` |
 
 More informational lints:
@@ -82,7 +82,11 @@ More informational lints:
 - `IDENTITY_REPEAT` (file level): quoted identities (e.g. `'Tali'`) reused across groups under different division numbers.
 - `UNGATED_POLITICAL`: a militia, party, guard or resistance style group still on `can_use = { always = yes }`; gate it by government (R11).
 - `ORDINAL_MISMATCH`: a fixed ordinal after `%d` at a key where it reads wrong (French `%dère` at key 5 renders "5ère"; English `%dth` at key 1 or `%dst` at key 2). Fix the entry with `"set"`.
-- `VANILLA_COPY` (single-file `-Audit` with HOI4 installed): at least 80% of the entries are identical to the vanilla group of the same tag, so the stubs can be dropped with `"removeAll"` or `"clearOrdered"` without changing any name. The `Vanilla:` line shows the count.
+
+`Vanilla:` lines (single-file `-Audit` with HOI4 installed) are facts, not flags:
+- `N/M entries identical to vanilla`: entries copied from vanilla. They are the only copy the game reads, so they stay unless the batch replaces them.
+- `leaves out N vanilla name(s), gone in game`: vanilla entries with an identity that the group does not carry, listed as `key=name`. Entries whose quoted identity lives on in another group of the file are only counted. Decide each one: restore it in the batch, or record it under "Kept on judgment" as dropped on purpose.
+- `leaves out N numbered key(s) past a gap`: vanilla numbered its divisions historically and the group falls back to counting 1, 2, 3. Restore the numbered entries unless the plain count is intended.
 
 Lint flags are **heuristics**. Treat them as leads, confirm by reading the group, and override with a stated reason where history justifies it.
 
@@ -103,7 +107,7 @@ Phase 5  Hand-off                  report and STOP
 1. If the user has not named a file, run `powershell -File .\build.ps1 -Audit ALL` and suggest the top candidates.
 2. `powershell -File .\build.ps1 -Audit <KEY>`: per-group metrics and rubric flags.
 3. `powershell -File .\build.ps1 -AuditPlan <KEY>`: creates the plan skeleton (`docs/superpowers/plans/YYYY-MM-DD-<country>-audit.md`) with `Status: PLANNING`, the initial report, TODO sections, the standard implementation steps and an empty change table.
-4. Only for a fallback or vanilla overlap finding: `powershell -File .\build.ps1 -InspectVanilla <TAG>` (vanilla groups and scripted `division_names_group` references; skip if HOI4 is not installed and note it in the report).
+4. Only for a fallback finding or a `Vanilla: leaves out` line: `powershell -File .\build.ps1 -InspectVanilla <TAG> -Group <GROUP>` (the vanilla group's entries and scripted `division_names_group` references; skip if HOI4 is not installed and note it in the report).
 5. Read flagged groups with `powershell -File .\build.ps1 -Audit <KEY> -Group <GROUP> -NamesOnly -Sections`. Never dump the full file.
 6. Check for linguistic problems the lint cannot see: wrong case, missing diacritics, machine-translated words, copy-paste selectors.
 7. Ask policy questions (e.g. naming conventions, plain vs named variants) before research.
@@ -143,7 +147,7 @@ Only what the user approved goes in.
 
 1. **Edit batch**: under `## Edit batch`, write fenced blocks whose opening line is `` ```json batch ``, one per group, in the order they must run. The format is in §4. Take keys for `"remove"` and `"set"` from `-NamesOnly -Keys`.
 2. **Docs payload**: for each prose line that changes in `wiki/<Nation>.md`, `README.md` and `WORKSHOP_DESCRIPTION_GUIDELINES.md`, the current text and its replacement, verbatim (no emojis, concise BBCode). Wiki table rows are left to `-SyncWiki`. Write "No docs change beyond -SyncWiki" when that is the case.
-3. **Implementation steps**: adjust the generated steps to this audit. Each step is one action with its exact command and the output to expect.
+3. **Implementation steps**: adjust the generated steps to this audit. Each step is one action with its exact command and the output to expect. The last step is the ship step: adjust its commit message.
 4. **Kept on judgment**: every flag `-Check` will still show after the batch, with its reason, so the implementer can tell an expected flag from a new one.
 
 ### Phase 4: Gate
@@ -156,9 +160,9 @@ Only what the user approved goes in.
 Report to the user and end the turn:
 - the plan path, how many groups the batch touches, the `Dry run OK` line;
 - the "Author confirmation" count and anything else worth a look before it is applied;
-- the three ways to continue: say "continue" in this session, `/clear` and continue, or open a new session (any model), each with the same prompt: `/hoi4-inex-namelist-implement <plan path>`.
+- how to continue: `/hoi4-inex-namelist-implement <plan path>`, here or in a new session. Either way the work runs in the implementer's fresh context, so continuing here costs no more.
 
-Do not start applying in the same turn, and do not offer to. If the user then says to continue here, invoke `hoi4-inex-namelist-implement` and work from the plan file as a fresh session would.
+Do not start applying in the same turn, and do not offer to. If the user then says to continue here, invoke `hoi4-inex-namelist-implement`.
 
 ---
 
@@ -177,7 +181,7 @@ Each fenced block is one operation object or an array of them; the keys are the 
 - Operations run in order across all blocks, all or nothing: a failed operation leaves the file untouched and names the operation.
 - `"addGroup"` creates a new group (named variant, new category) in the file template layout, at the end of the file or after `"after": "<group>"`. It needs a selector, at least one division type and a fallback, refuses a tag used anywhere in the mod, and carries its names in its own `"add"`.
 - Rewrite a whole list: `"removeAll": true` with `"add": ["# Section A", "1=...", "2=...", "# Section B", "40=..."]` (a `# Header` item starts a comment-headed section). Use it to replace vanilla stubs with authored names; get the keys of what stays from `-NamesOnly -Keys`.
-- `"clearOrdered"` turns a group into the fallback-only plain variant (R10). `"comment"` replaces the comment above a group (`\n` splits lines; add a banner plus a blank line for a section banner).
+- `"clearOrdered"` turns a group into the fallback-only plain variant (R10); the group's entries are deleted from the game (non-negotiable 6). `"comment"` replaces the comment above a group (`\n` splits lines; add a banner plus a blank line for a section banner).
 - The file header (R1) is not a batch key: give `powershell -File .\build.ps1 -SetHeader <TAG> -HeaderText "<text>"` its own implementation step.
 - `"removeGroup"` is refused while another group links to it; see non-negotiable 1 before using it.
 - Indentation, numbering and line endings are preserved; section headers that removals leave empty are dropped; duplicate names and invalid indices are reported.
