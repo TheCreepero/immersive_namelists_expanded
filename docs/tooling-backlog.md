@@ -15,6 +15,7 @@ An entry says what happens, where it was seen, the workaround, and what a fix wo
 - **`$ValidDivisionTypes` accepts `artillery`, `anti_air`, `anti_tank` and `rocket_artillery`**, which are support-company ids in vanilla (`common/units/artillery.txt`, `anti-air.txt`); the line battalions are `*_brigade`. No group uses them today. Check against vanilla `common/units/` before changing the list.
 
 ### Editing
+- **`-AddGroup` cannot create a group whose tag does not start with the file's country tag.** It puts `<TAG>_` in front, so vanilla's `SPA_INF_01` and `SPD_INF_01` to `SPD_INF_06` (all in the SPR file) come out as `SPR_SPA_INF_01` and so on, and the vanilla groups are not overridden. Seen in the Spain plan of 2026-10-09. Workaround: a one-line rename after the batch, written as a step of that plan. Fix idea: keep a tag that already has the `<XXX>_<CAT>_<NN>` form, or add a batch key that marks the tag as final.
 - **`-Comment` with a banner on a group that already has one may add a second banner.** Seen once for `JAP_CAV_01` (2026-10-01) and removed by hand; not re-tested since.
 
 ### Docs

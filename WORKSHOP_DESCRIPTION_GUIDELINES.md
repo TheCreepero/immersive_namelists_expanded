@@ -75,6 +75,7 @@ This document serves as an instruction and reference guide for maintaining and u
 | `INEX_SOV_names_divisions.txt` | USSR | `SOV` | Included (Rifle honors, Guards Tanks & Mech Corps, Guards Airborne, Breakthrough Artillery, Moscow/Leningrad Opolcheniye, Cossacks, NKVD, Penal units) |
 | `INEX_MEX_names_divisions.txt` | Mexico | `MEX` | Included (Cristero, Imperial Guard, Sinarquistas, Gold Shirts, CTM & Agrarian Militias, Anáhuac, Regular Army) |
 | `INEX_PER_names_divisions.txt` | Iran / Persia | `PER` | Included (Garrison-city Lashkars, Imperial & Immortal Guard, Shahnameh armor, Cossack atriads, Tribal levies, Camel corps, Gendarmerie) |
+| `INEX_SPR_names_divisions.txt` | Spain | `SPR` | Included (Plain & Named Republican and Nationalist infantry, Named armored divisions, 1936 infantry & cavalry regiments, Mountain, Marine tercios, Paratrooper banderas, garrison commands, Army of Africa & Legion, Guardia Civil, Assault Guards, Carabineros, Requeté tercios, Falange & División Azul, royal regiments, Mixed & International Brigades, socialist, communist, POUM & anarchist militias, Basque & Catalan forces, guerrillas) |
 
 ---
 
@@ -185,6 +186,11 @@ This is not a complete list of included namelists! Just some examples.
 - Garrison-city divisions ([i]Lashkar-e 15-e Piyadeh-ye Shiraz[/i]) and Shahnameh-named armor ([i]Rostam[/i], [i]Kaveh[/i])
 - Imperial & Immortal Guard ([i]Gard-e Javidan[/i]) and Persian Cossack atriads ([i]Hamadan[/i])
 - Tribal levies ([i]Bakhtiari[/i], [i]Qashqai[/i]), camel corps, gendarmerie, and Gulf marines
+
+[b]Spain[/b]
+- Both armies of the Civil War: People's Army divisions and Mixed Brigades ([i]11.ª División 'Líster'[/i], [i]XI Brigada Internacional 'Thälmann'[/i]), Nationalist divisions ([i]4.ª División de Navarra[/i]) and the 1936 regiments ([i]Regimiento de Infantería 'Wad-Ras' n.º 1[/i])
+- Army of Africa and Legion ([i]IV Bandera de La Legión 'Cristo de Lepanto'[/i]), Guardia Civil, Assault Guards, Carabineros, mountain, marine and paratrooper lists
+- Ideology suites: Requeté tercios ([i]Tercio de Montejurra[/i]) and royal regiments, Falange and División Azul, communist, POUM and anarchist militias ([i]Columna Durruti[/i]), Basque and Catalan forces
 
 If you enjoy the mod, please give it a thumbs up and favorite!
 ```

@@ -31,6 +31,7 @@
 | [Greece](Greece) | `GRE` | 28 | `INEX_GRE_names_divisions.txt` |
 | [Romania](Romania) | `ROM` | 29 | `INEX_ROM_names_divisions.txt` |
 | [Iran](Iran) | `PER` | 13 | `INEX_PER_names_divisions.txt` |
+| [Spain](Spain) | `SPR` | 38 | `INEX_SPR_names_divisions.txt` |
 
 ---
 

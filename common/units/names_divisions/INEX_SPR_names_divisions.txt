@@ -1,0 +1,1531 @@
+# Division template historical names system for Spain (SPR).
+# Immersive Namelists Expanded (INEX)
+# Spanish ordinals: 1.ª (feminine), 1.º and 1.er (masculine). Honorifics are in single quotes. The Basque and Catalan lists keep their own spelling.
+# Overrides all 21 vanilla groups (SPR_*, SPA_INF_01, SPD_INF_01 to SPD_INF_06). Every group is for_countries = { SPR }, as in vanilla.
+
+# ===== Field divisions =====
+
+# Overrides vanilla SPR_INF_01 as the plain variant, with vanilla's gate. The People's Army numbered its divisions without an arm (11.ª División).
+# Vanilla's civil-war, Carabineros and Chilean templates use this tag.
+SPR_INF_01 = 
+{
+	name = "Republican Infantry"
+
+	for_countries = { SPR }
+
+	can_use = { NOT = { has_government = fascism } }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%d.ª División"
+}
+
+# Named variant of SPR_INF_01. People's Army divisions under their real numbers, with the column, commander or regional name they carried.
+SPR_INF_07 = 
+{
+	name = "Republican Infantry (Named)"
+
+	for_countries = { SPR }
+
+	can_use = { NOT = { has_government = fascism } }
+
+	division_types = { "infantry" }
+
+	link_numbering_with = { SPR_INF_01 }
+
+	fallback_name = "%d.ª División"
+
+	ordered =
+	{
+		# Divisions that kept the name of their column or commander
+		10 = { "10.ª División 'A'" }
+		11 = { "11.ª División 'Líster'" }
+		25 = { "25.ª División 'Jubert'" }
+		26 = { "26.ª División 'Durruti'" }
+		27 = { "27.ª División 'Carlos Marx'" }
+		28 = { "28.ª División 'Ascaso'" }
+		29 = { "29.ª División 'Lenin'" }
+		30 = { "30.ª División 'Macià-Companys'" }
+		35 = { "35.ª División Internacional" }
+		43 = { "43.ª División 'La Heroica'" }
+		45 = { "45.ª División Internacional" }
+		46 = { "46.ª División 'El Campesino'" }
+		# Divisions of the Army of the North
+		48 = { "48.ª División Vasca" }
+		49 = { "49.ª División Vasca" }
+		50 = { "50.ª División Vasca" }
+		51 = { "51.ª División Vasca" }
+		52 = { "52.ª División Santanderina" }
+		53 = { "53.ª División Santanderina" }
+		54 = { "54.ª División Santanderina" }
+		56 = { "56.ª División Asturiana" }
+		57 = { "57.ª División Asturiana de Choque" }
+		58 = { "58.ª División Asturiana" }
+		59 = { "59.ª División Asturiana" }
+		60 = { "60.ª División Asturiana" }
+		61 = { "61.ª División Asturiana" }
+		62 = { "62.ª División Asturiana" }
+		# Guerrilla and provisional divisions
+		75 = { "75.ª División Guerrillera" }
+		78 = { "División 'Andalucía'" }
+		79 = { "División 'Extremadura'" }
+		80 = { "División 'Levante'" }
+		81 = { "División del Zújar" }
+	}
+}
+
+# Overrides vanilla SPA_INF_01 as the plain variant. Vanilla's focus gate is replaced by government type.
+# The numbers are vanilla's and follow the 1939 army, where the first digit is the army corps.
+SPA_INF_01 = 
+{
+	name = "Nationalist Infantry"
+
+	for_countries = { SPR }
+
+	can_use = { OR = { has_government = fascism has_government = neutrality } }
+
+	division_types = { "infantry" }
+
+	fallback_name = "División de Infantería n.º %d"
+
+	ordered =
+	{
+		# Division numbers of the 1939 army
+		11 = { "División de Infantería n.º %d" }
+		12 = { "División de Infantería n.º %d" }
+		13 = { "División de Infantería n.º %d" }
+		14 = { "División de Infantería n.º %d" }
+		15 = { "División de Infantería n.º %d" }
+		16 = { "División de Infantería n.º %d" }
+		21 = { "División de Infantería n.º %d" }
+		22 = { "División de Infantería n.º %d" }
+		23 = { "División de Infantería n.º %d" }
+		24 = { "División de Infantería n.º %d" }
+		25 = { "División de Infantería n.º %d" }
+		26 = { "División de Infantería n.º %d" }
+		31 = { "División de Infantería n.º %d" }
+		32 = { "División de Infantería n.º %d" }
+		33 = { "División de Infantería n.º %d" }
+		34 = { "División de Infantería n.º %d" }
+		35 = { "División de Infantería n.º %d" }
+		36 = { "División de Infantería n.º %d" }
+		41 = { "División de Infantería n.º %d" }
+		42 = { "División de Infantería n.º %d" }
+		43 = { "División de Infantería n.º %d" }
+		44 = { "División de Infantería n.º %d" }
+		45 = { "División de Infantería n.º %d" }
+		46 = { "División de Infantería n.º %d" }
+		51 = { "División de Infantería n.º %d" }
+		52 = { "División de Infantería n.º %d" }
+		53 = { "División de Infantería n.º %d" }
+		54 = { "División de Infantería n.º %d" }
+		55 = { "División de Infantería n.º %d" }
+		56 = { "División de Infantería n.º %d" }
+		61 = { "División de Infantería n.º %d" }
+		62 = { "División de Infantería n.º %d" }
+		63 = { "División de Infantería n.º %d" }
+		64 = { "División de Infantería n.º %d" }
+		65 = { "División de Infantería n.º %d" }
+		66 = { "División de Infantería n.º %d" }
+		71 = { "División de Infantería n.º %d" }
+		72 = { "División de Infantería n.º %d" }
+		73 = { "División de Infantería n.º %d" }
+		74 = { "División de Infantería n.º %d" }
+		75 = { "División de Infantería n.º %d" }
+		76 = { "División de Infantería n.º %d" }
+		81 = { "División de Infantería n.º %d" }
+		82 = { "División de Infantería n.º %d" }
+		83 = { "División de Infantería n.º %d" }
+		84 = { "División de Infantería n.º %d" }
+		85 = { "División de Infantería n.º %d" }
+		91 = { "División de Infantería n.º %d" }
+		92 = { "División de Infantería n.º %d" }
+		93 = { "División de Infantería n.º %d" }
+		94 = { "División de Infantería n.º %d" }
+		101 = { "División de Infantería n.º %d" }
+		102 = { "División de Infantería n.º %d" }
+		103 = { "División de Infantería n.º %d" }
+		104 = { "División de Infantería n.º %d" }
+	}
+}
+
+# Named variant of SPA_INF_01. The wartime Divisiones de Navarra, then the divisions of the 1939 army with regional and battle names in the pattern of Guadarrama, Guzmán el Bueno and Maestrazgo.
+SPA_INF_02 = 
+{
+	name = "Nationalist Infantry (Named)"
+
+	for_countries = { SPR }
+
+	can_use = { OR = { has_government = fascism has_government = neutrality } }
+
+	division_types = { "infantry" }
+
+	link_numbering_with = { SPA_INF_01 }
+
+	fallback_name = "División de Infantería n.º %d"
+
+	ordered =
+	{
+		# Wartime divisions
+		1 = { "1.ª División de Navarra" }
+		2 = { "2.ª División de Navarra" }
+		3 = { "3.ª División de Navarra" }
+		4 = { "4.ª División de Navarra" }
+		5 = { "5.ª División de Navarra" }
+		6 = { "6.ª División de Navarra" }
+		7 = { "División de Soria" }
+		8 = { "División de Ávila" }
+		# I and II Cuerpo de Ejército (Madrid, Sevilla)
+		11 = { "División de Infantería 'Guadarrama' n.º 11" }
+		12 = { "División de Infantería 'Somosierra' n.º 12" }
+		13 = { "División de Infantería 'Mano Negra' n.º 13" }
+		14 = { "División de Infantería 'Jarama' n.º 14" }
+		21 = { "División de Infantería 'Guzmán el Bueno' n.º 21" }
+		22 = { "División de Infantería 'Bailén' n.º 22" }
+		23 = { "División de Infantería 'Las Navas de Tolosa' n.º 23" }
+		# III, IV and V Cuerpo de Ejército (Valencia, Barcelona, Zaragoza)
+		31 = { "División de Infantería 'Maestrazgo' n.º 31" }
+		32 = { "División de Infantería 'Turia' n.º 32" }
+		33 = { "División de Infantería 'Levante' n.º 33" }
+		41 = { "División de Infantería 'Ampurdán' n.º 41" }
+		43 = { "División de Infantería 'Almogávares' n.º 43" }
+		51 = { "División de Infantería 'Aragón' n.º 51" }
+		52 = { "División de Infantería 'Belchite' n.º 52" }
+		53 = { "División de Infantería 'Teruel' n.º 53" }
+		# VI, VII and VIII Cuerpo de Ejército (Burgos, Valladolid, La Coruña)
+		61 = { "División de Infantería 'San Marcial' n.º 61" }
+		63 = { "División de Infantería 'Cantabria' n.º 63" }
+		71 = { "División de Infantería 'Castilla' n.º 71" }
+		72 = { "División de Infantería 'San Quintín' n.º 72" }
+		73 = { "División de Infantería 'Arapiles' n.º 73" }
+		81 = { "División de Infantería 'Galicia' n.º 81" }
+		82 = { "División de Infantería 'Covadonga' n.º 82" }
+		83 = { "División de Infantería 'Oviedo' n.º 83" }
+		# IX and X Cuerpo de Ejército (Morocco)
+		91 = { "División de Infantería 'Tetuán' n.º 91" }
+		92 = { "División de Infantería 'Larache' n.º 92" }
+		93 = { "División de Infantería 'Xauen' n.º 93" }
+		101 = { "División de Infantería 'Melilla' n.º 101" }
+		102 = { "División de Infantería 'Alhucemas' n.º 102" }
+	}
+}
+
+# Overrides vanilla SPR_MOT_01: fallback only, with the ordinal corrected. Anchor of the mobile numbering.
+SPR_MOT_01 = 
+{
+	name = "Motorized Divisions"
+
+	for_countries = { SPR }
+
+	can_use = { always = yes }
+
+	division_types = { "motorized" }
+
+	fallback_name = "%d.ª División Motorizada"
+}
+
+# Overrides vanilla SPR_MEC_01: fallback only, with the ordinal corrected.
+SPR_MEC_01 = 
+{
+	name = "Mechanized Divisions"
+
+	for_countries = { SPR }
+
+	can_use = { always = yes }
+
+	division_types = { "mechanized" }
+
+	link_numbering_with = { SPR_MOT_01 }
+
+	fallback_name = "%d.ª División Mecanizada"
+}
+
+# Overrides vanilla SPR_ARM_01 as the plain variant. The Spanish term is División Acorazada (vanilla: Blindada). Vanilla's Brunete entry is in SPR_ARM_02.
+SPR_ARM_01 = 
+{
+	name = "Armored Divisions"
+
+	for_countries = { SPR }
+
+	can_use = { always = yes }
+
+	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
+
+	fallback_name = "División Acorazada n.º %d"
+}
+
+# Named variant of SPR_ARM_01. The División Acorazada Brunete of 1943, then the names of the cavalry regiments that became Spain's armored regiments.
+SPR_ARM_02 = 
+{
+	name = "Armored Divisions (Named)"
+
+	for_countries = { SPR }
+
+	can_use = { always = yes }
+
+	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
+
+	link_numbering_with = { SPR_ARM_01 }
+
+	fallback_name = "División Acorazada n.º %d"
+
+	ordered =
+	{
+		# División Acorazada Brunete and the cavalry lineage
+		1 = { "División Acorazada 'Brunete' n.º 1" }
+		2 = { "División Acorazada 'Villaviciosa' n.º 2" }
+		3 = { "División Acorazada 'Almansa' n.º 3" }
+		4 = { "División Acorazada 'Pavía' n.º 4" }
+		5 = { "División Acorazada 'Lusitania' n.º 5" }
+		6 = { "División Acorazada 'Farnesio' n.º 6" }
+		7 = { "División Acorazada 'Numancia' n.º 7" }
+		8 = { "División Acorazada 'Sagunto' n.º 8" }
+		9 = { "División Acorazada 'Santiago' n.º 9" }
+		10 = { "División Acorazada 'Montesa' n.º 10" }
+		11 = { "División Acorazada 'Alcántara' n.º 11" }
+		12 = { "División Acorazada 'Calatrava' n.º 12" }
+		13 = { "División Acorazada 'España' n.º 13" }
+		14 = { "División Acorazada 'Castillejos' n.º 14" }
+	}
+}
+
+# ===== Arms and services =====
+
+# The 32 infantry regiments of the eight Divisiones Orgánicas in July 1936, with the names restored in 1935, and island and later regiments under their 1943 numbers.
+SPR_REG_01 = 
+{
+	name = "Infantry Regiments"
+
+	for_countries = { SPR }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Regimiento de Infantería n.º %d"
+
+	ordered =
+	{
+		# I to IV División Orgánica (Madrid, Sevilla, Valencia, Barcelona)
+		1 = { "Regimiento de Infantería 'Wad-Ras' n.º 1" }
+		2 = { "Regimiento de Infantería 'León' n.º 2" }
+		3 = { "Regimiento de Infantería 'Castilla' n.º 3" }
+		4 = { "Regimiento de Infantería 'Covadonga' n.º 4" }
+		5 = { "Regimiento de Infantería 'Lepanto' n.º 5" }
+		6 = { "Regimiento de Infantería 'Granada' n.º 6" }
+		7 = { "Regimiento de Infantería 'Pavía' n.º 7" }
+		8 = { "Regimiento de Infantería 'Vitoria' n.º 8" }
+		9 = { "Regimiento de Infantería 'Otumba' n.º 9" }
+		10 = { "Regimiento de Infantería 'Guadalajara' n.º 10" }
+		11 = { "Regimiento de Infantería 'Tarifa' n.º 11" }
+		12 = { "Regimiento de Infantería 'Vizcaya' n.º 12" }
+		13 = { "Regimiento de Infantería 'Badajoz' n.º 13" }
+		14 = { "Regimiento de Infantería 'Alcántara' n.º 14" }
+		15 = { "Regimiento de Infantería 'Almansa' n.º 15" }
+		16 = { "Regimiento de Infantería 'Albuera' n.º 16" }
+		# V to VIII División Orgánica (Zaragoza, Burgos, Valladolid, La Coruña)
+		17 = { "Regimiento de Infantería 'Aragón' n.º 17" }
+		18 = { "Regimiento de Infantería 'Gerona' n.º 18" }
+		19 = { "Regimiento de Infantería 'Galicia' n.º 19" }
+		20 = { "Regimiento de Infantería 'Valladolid' n.º 20" }
+		21 = { "Regimiento de Infantería 'Valencia' n.º 21" }
+		22 = { "Regimiento de Infantería 'San Marcial' n.º 22" }
+		23 = { "Regimiento de Infantería 'América' n.º 23" }
+		24 = { "Regimiento de Infantería 'Bailén' n.º 24" }
+		25 = { "Regimiento de Infantería 'San Quintín' n.º 25" }
+		26 = { "Regimiento de Infantería 'Toledo' n.º 26" }
+		27 = { "Regimiento de Infantería 'Argel' n.º 27" }
+		28 = { "Regimiento de Infantería 'La Victoria' n.º 28" }
+		29 = { "Regimiento de Infantería 'Zamora' n.º 29" }
+		30 = { "Regimiento de Infantería 'Zaragoza' n.º 30" }
+		31 = { "Regimiento de Infantería 'Burgos' n.º 31" }
+		32 = { "Regimiento de Infantería 'Milán' n.º 32" }
+		# Island and later regiments (1943 numbers)
+		41 = { "Regimiento de Infantería 'Gravelinas' n.º 41" }
+		45 = { "Regimiento de Infantería 'Garellano' n.º 45" }
+		47 = { "Regimiento de Infantería 'Palma' n.º 47" }
+		49 = { "Regimiento de Infantería 'Tenerife' n.º 49" }
+		50 = { "Regimiento de Infantería 'Canarias' n.º 50" }
+	}
+}
+
+# Overrides vanilla SPR_CAV_01: fallback only, with the ordinal corrected. Spain fielded a single División de Caballería; the regiments are in SPR_CAV_02.
+SPR_CAV_01 = 
+{
+	name = "Cavalry Divisions"
+
+	for_countries = { SPR }
+
+	can_use = { always = yes }
+
+	division_types = { "cavalry" }
+
+	fallback_name = "%d.ª División de Caballería"
+}
+
+# Cavalry regiments under the numbers and arms (lancers, dragoons, hussars, cazadores) they held before the 1931 reform. The regiments with royal titles are in SPR_ROY_02.
+SPR_CAV_02 = 
+{
+	name = "Cavalry Regiments"
+
+	for_countries = { SPR }
+
+	can_use = { always = yes }
+
+	division_types = { "cavalry" }
+
+	fallback_name = "Regimiento de Caballería n.º %d"
+
+	ordered =
+	{
+		# Lancers and dragoons
+		5 = { "Regimiento de Lanceros de Farnesio n.º 5" }
+		6 = { "Regimiento de Lanceros de Villaviciosa n.º 6" }
+		7 = { "Regimiento de Lanceros de España n.º 7" }
+		8 = { "Regimiento de Lanceros de Sagunto n.º 8" }
+		9 = { "Regimiento de Dragones de Santiago n.º 9" }
+		10 = { "Regimiento de Dragones de Montesa n.º 10" }
+		11 = { "Regimiento de Dragones de Numancia n.º 11" }
+		# Cazadores and hussars
+		12 = { "Regimiento de Cazadores de Lusitania n.º 12" }
+		13 = { "Regimiento de Cazadores de Almansa n.º 13" }
+		14 = { "Regimiento de Cazadores de Alcántara n.º 14" }
+		15 = { "Regimiento de Cazadores de Talavera n.º 15" }
+		16 = { "Regimiento de Cazadores de Albuera n.º 16" }
+		17 = { "Regimiento de Cazadores de Tetuán n.º 17" }
+		18 = { "Regimiento de Cazadores de Castillejos n.º 18" }
+		20 = { "Regimiento de Húsares de Pavía n.º 20" }
+		23 = { "Regimiento de Cazadores de Villarrobledo n.º 23" }
+		25 = { "Regimiento de Cazadores de Galicia n.º 25" }
+		26 = { "Regimiento de Cazadores de Treviño n.º 26" }
+		28 = { "Regimiento de Cazadores de Vitoria n.º 28" }
+		29 = { "Regimiento de Cazadores de Taxdir n.º 29" }
+		30 = { "Regimiento de Cazadores de Calatrava n.º 30" }
+	}
+}
+
+# Overrides vanilla SPR_MNT_01. The Divisiones de Montaña Urgel and Navarra, then Pyrenean and mountain names in the same pattern.
+SPR_MNT_01 = 
+{
+	name = "Mountain Divisions"
+
+	for_countries = { SPR }
+
+	can_use = { always = yes }
+
+	division_types = { "mountaineers" }
+
+	fallback_name = "División de Montaña n.º %d"
+
+	ordered =
+	{
+		# Mountain divisions
+		1 = { "División de Montaña 'Pirineos' n.º 1" }
+		2 = { "División de Montaña 'Roncesvalles' n.º 2" }
+		3 = { "División de Montaña 'Jaca' n.º 3" }
+		4 = { "División de Montaña 'Urgel' n.º 4" }
+		5 = { "División de Montaña 'Navarra' n.º 5" }
+		6 = { "División de Montaña 'Valle de Arán' n.º 6" }
+		7 = { "División de Montaña 'Sobrarbe' n.º 7" }
+		8 = { "División de Montaña 'Ribagorza' n.º 8" }
+		9 = { "División de Montaña 'Cerdaña' n.º 9" }
+		10 = { "División de Montaña 'Roncal' n.º 10" }
+		11 = { "División de Montaña 'Picos de Europa' n.º 11" }
+		12 = { "División de Montaña 'Sierra Nevada' n.º 12" }
+	}
+}
+
+# The Batallones de Cazadores de Montaña of the two mountain brigades of 1936, older cazadores names and the later mountain regiments.
+SPR_MNT_02 = 
+{
+	name = "Mountain Battalions"
+
+	for_countries = { SPR }
+
+	can_use = { always = yes }
+
+	division_types = { "mountaineers" }
+
+	fallback_name = "Batallón de Cazadores de Montaña n.º %d"
+
+	ordered =
+	{
+		# Mountain brigades of 1936
+		1 = { "Batallón de Cazadores de Montaña 'Chiclana' n.º 1" }
+		2 = { "Batallón de Cazadores de Montaña 'Asia' n.º 2" }
+		3 = { "Batallón de Cazadores de Montaña 'Madrid' n.º 3" }
+		4 = { "Batallón de Cazadores de Montaña 'Ciudad Rodrigo' n.º 4" }
+		5 = { "Batallón de Cazadores de Montaña 'Flandes' n.º 5" }
+		6 = { "Batallón de Cazadores de Montaña 'Garellano' n.º 6" }
+		7 = { "Batallón de Cazadores de Montaña 'Arapiles' n.º 7" }
+		8 = { "Batallón de Cazadores de Montaña 'Sicilia' n.º 8" }
+		# Later battalions and older cazadores names
+		9 = { "Batallón de Cazadores de Montaña 'Tarifa' n.º 9" }
+		10 = { "Batallón de Cazadores de Montaña 'Estella' n.º 10" }
+		11 = { "Batallón de Cazadores de Montaña 'Barbastro' n.º 11" }
+		12 = { "Batallón de Cazadores de Montaña 'Las Navas' n.º 12" }
+		13 = { "Batallón de Cazadores de Montaña 'Alba de Tormes' n.º 13" }
+		14 = { "Batallón de Cazadores de Montaña 'Llerena' n.º 14" }
+		15 = { "Batallón de Montaña 'Pirineos'" }
+		# Mountain regiments of 1943
+		16 = { "Regimiento de Cazadores de Montaña 'Barcelona' n.º 63" }
+		17 = { "Regimiento de Cazadores de Montaña 'Galicia' n.º 64" }
+		18 = { "Regimiento de Cazadores de Montaña 'América' n.º 66" }
+	}
+}
+
+# Overrides vanilla SPR_MAR_01. The Infantería de Marina's tercios and groupings by naval department, and the four tercios of the 16th century from which the corps descends.
+SPR_MAR_01 = 
+{
+	name = "Marine Tercios"
+
+	for_countries = { SPR }
+
+	can_use = { always = yes }
+
+	division_types = { "marine" }
+
+	fallback_name = "%d.º Tercio de Infantería de Marina"
+
+	ordered =
+	{
+		# Tercios and groupings by naval department
+		1 = { "Tercio del Norte" }
+		2 = { "Tercio del Sur" }
+		3 = { "Tercio de Levante" }
+		4 = { "Tercio de Baleares" }
+		5 = { "Agrupación de Infantería de Marina de Madrid" }
+		6 = { "Agrupación de Infantería de Marina de Canarias" }
+		7 = { "Tercio de Armada" }
+		8 = { "Grupo Especial de Infantería de Marina" }
+		# The corps' founding tercios
+		9 = { "Tercio Nuevo de la Mar de Nápoles" }
+		10 = { "Tercio de la Armada del Mar Océano" }
+		11 = { "Tercio de Galeras de Sicilia" }
+		12 = { "Tercio Viejo del Mar Océano" }
+	}
+}
+
+# Overrides vanilla SPR_PAR_01. Spain's paratroop units date from 1947-60, so the list is short: the three army banderas, the air force bandera and names in the same almogávar tradition.
+SPR_PAR_01 = 
+{
+	name = "Paratrooper Banderas"
+
+	for_countries = { SPR }
+
+	can_use = { always = yes }
+
+	division_types = { "paratrooper" }
+
+	fallback_name = "%s Bandera Paracaidista"
+
+	ordered =
+	{
+		# Banderas Paracaidistas
+		1 = { "I Bandera Paracaidista 'Roger de Flor'" }
+		2 = { "II Bandera Paracaidista 'Roger de Lauria'" }
+		3 = { "III Bandera Paracaidista 'Ortiz de Zárate'" }
+		4 = { "IV Bandera Paracaidista 'Almogávares'" }
+		5 = { "V Bandera Paracaidista 'Berenguer de Entenza'" }
+		6 = { "VI Bandera Paracaidista 'Bernat de Rocafort'" }
+		7 = { "Primera Bandera Paracaidista de Aviación" }
+	}
+}
+
+# Overrides vanilla SPR_GAR_01 and keeps its 18 commands under the same keys, respelled (Galacia, Coruna, Zaragosa, Morocco) and with the terms of 1936: Comandancia Militar, Circunscripción, Gobierno Militar.
+SPR_GAR_01 = 
+{
+	name = "Garrison Commands"
+
+	for_countries = { SPR }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%d.ª Agrupación de Guarnición"
+
+	ordered =
+	{
+		# Vanilla's commands, corrected
+		1 = { "Comandancia Militar de Baleares" }
+		2 = { "Comandancia Militar de Canarias" }
+		3 = { "Circunscripción Occidental de Marruecos" }
+		4 = { "Circunscripción Oriental de Marruecos" }
+		5 = { "Gobierno Militar de Madrid" }
+		6 = { "Gobierno Militar de Sevilla" }
+		7 = { "Gobierno Militar de El Ferrol" }
+		8 = { "Gobierno Militar de Barcelona" }
+		9 = { "Gobierno Militar de Valencia" }
+		10 = { "Gobierno Militar de Cádiz" }
+		11 = { "Gobierno Militar de La Coruña" }
+		12 = { "Gobierno Militar de Cartagena" }
+		13 = { "Gobierno Militar de Burgos" }
+		14 = { "Gobierno Militar de Zaragoza" }
+		15 = { "Comandancia Militar de Melilla" }
+		16 = { "Comandancia Militar de Ceuta" }
+		17 = { "Gobierno Militar de Bilbao" }
+		18 = { "Gobierno Militar de Valladolid" }
+		# Further commands
+		19 = { "Comandancia Militar de Asturias" }
+		20 = { "Gobierno Militar de Las Palmas" }
+		21 = { "Gobierno Militar de Granada" }
+		22 = { "Gobierno Militar de Málaga" }
+		23 = { "Gobierno Militar de Pamplona" }
+		24 = { "Gobierno Militar de San Sebastián" }
+		25 = { "Gobierno Militar de Menorca" }
+		26 = { "Gobierno Militar de Santander" }
+		27 = { "Gobierno Militar de Badajoz" }
+		28 = { "Gobierno Militar de Córdoba" }
+	}
+}
+
+# ===== Army of Africa =====
+
+# Overrides vanilla SPR_INF_06, the group of the event template División del Ejército de África. The Regulares, the Mehal-las of the Protectorate, the Ifni and Sahara troops and the Cazadores de África.
+SPR_INF_06 = 
+{
+	name = "Army of Africa"
+
+	for_countries = { SPR }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Grupo de Regulares n.º %d"
+
+	ordered =
+	{
+		# Grupos de Fuerzas Regulares Indígenas
+		1 = { "Grupo de Regulares de Tetuán n.º 1" }
+		2 = { "Grupo de Regulares de Melilla n.º 2" }
+		3 = { "Grupo de Regulares de Ceuta n.º 3" }
+		4 = { "Grupo de Regulares de Larache n.º 4" }
+		5 = { "Grupo de Regulares de Alhucemas n.º 5" }
+		6 = { "Grupo de Regulares de Xauen n.º 6" }
+		7 = { "Grupo de Regulares de Llano Amarillo n.º 7" }
+		8 = { "Grupo de Regulares del Rif n.º 8" }
+		9 = { "Grupo de Regulares de Arcila n.º 9" }
+		10 = { "Grupo de Regulares de Bab-Taza n.º 10" }
+		# Mehal-las Jalifianas
+		11 = { "Mehal-la Jalifiana de Tetuán n.º 1" }
+		12 = { "Mehal-la Jalifiana de Melilla n.º 2" }
+		13 = { "Mehal-la Jalifiana de Larache n.º 3" }
+		14 = { "Mehal-la Jalifiana de Gomara n.º 4" }
+		15 = { "Mehal-la Jalifiana del Rif n.º 5" }
+		# Ifni, Sahara and the Cazadores de África
+		16 = { "Batallón de Tiradores de Ifni" }
+		17 = { "Agrupación de Tropas Nómadas del Sáhara" }
+		18 = { "Batallón de Cazadores de África 'San Fernando' n.º 1" }
+		19 = { "Batallón de Cazadores de África 'Las Navas' n.º 2" }
+		20 = { "Batallón de Cazadores de África 'Melilla' n.º 3" }
+		21 = { "Batallón de Cazadores de África 'Ceriñola' n.º 6" }
+		22 = { "Batallón de Cazadores de África 'Ceuta' n.º 7" }
+		23 = { "Batallón de Cazadores de África 'Serrallo' n.º 8" }
+	}
+}
+
+# The banderas and tercios of the Tercio de Extranjeros, La Legión. The banderas named after Nationalist commanders and victories (IX, XIII, XIV, XVII) are left out, because the list is open to every government.
+SPR_LEG_01 = 
+{
+	name = "Legion Banderas"
+
+	for_countries = { SPR }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%s Bandera de La Legión"
+
+	ordered =
+	{
+		# Banderas
+		1 = { "I Bandera de La Legión 'Casa de Borgoña'" }
+		2 = { "II Bandera de La Legión 'Carlos V'" }
+		3 = { "III Bandera de La Legión 'Tigres de Buharrat'" }
+		4 = { "IV Bandera de La Legión 'Cristo de Lepanto'" }
+		5 = { "V Bandera de La Legión 'Gonzalo Fernández de Córdoba'" }
+		6 = { "VI Bandera de La Legión 'Duque de Alba'" }
+		7 = { "VII Bandera de La Legión 'Valenzuela'" }
+		8 = { "VIII Bandera de La Legión 'Colón'" }
+		10 = { "X Bandera de La Legión 'Millán Astray'" }
+		11 = { "XI Bandera de La Legión 'Comandante Tiede'" }
+		12 = { "XII Bandera de La Legión 'Cabo Suceso Terrero'" }
+		15 = { "XV Bandera de La Legión 'Reino de Aragón'" }
+		16 = { "XVI Bandera de La Legión 'Capitán Arredondo'" }
+		18 = { "XVIII Bandera de La Legión 'Nuestra Señora de África'" }
+		# Tercios and the tank bandera
+		19 = { "1.er Tercio 'Gran Capitán'" }
+		20 = { "2.º Tercio 'Duque de Alba'" }
+		21 = { "3.er Tercio 'Don Juan de Austria'" }
+		22 = { "4.º Tercio 'Alejandro Farnesio'" }
+		23 = { "Bandera de Carros de Combate de La Legión" }
+	}
+}
+
+# ===== Security corps =====
+
+# Overrides vanilla SPR_INF_04 (Brigada de la Guardia Civil): the corps was organized in tercios and comandancias, 24 tercios in 1936. Vanilla gives the group to both sides, so it is open to every government.
+SPR_INF_04 = 
+{
+	name = "Guardia Civil Tercios"
+
+	for_countries = { SPR }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%d.º Tercio de la Guardia Civil"
+
+	ordered =
+	{
+		# Tercios by seat
+		1 = { "Tercio de la Guardia Civil de Madrid" }
+		2 = { "Tercio Móvil de Madrid" }
+		3 = { "Tercio de la Guardia Civil de Barcelona" }
+		4 = { "Tercio de la Guardia Civil de Valencia" }
+		5 = { "Tercio de la Guardia Civil de Sevilla" }
+		6 = { "Tercio de la Guardia Civil de Zaragoza" }
+		7 = { "Tercio de la Guardia Civil de Granada" }
+		8 = { "Tercio de la Guardia Civil de Málaga" }
+		9 = { "Tercio de la Guardia Civil de Córdoba" }
+		10 = { "Tercio de la Guardia Civil de La Coruña" }
+		11 = { "Tercio de la Guardia Civil de Valladolid" }
+		12 = { "Tercio de la Guardia Civil de Burgos" }
+		13 = { "Tercio de la Guardia Civil de San Sebastián" }
+		14 = { "Tercio de la Guardia Civil de Toledo" }
+		15 = { "Tercio de la Guardia Civil de Murcia" }
+		16 = { "Tercio de la Guardia Civil de Oviedo" }
+		17 = { "Tercio de la Guardia Civil de León" }
+		18 = { "Tercio de la Guardia Civil de Badajoz" }
+		19 = { "Tercio de la Guardia Civil de Pamplona" }
+		20 = { "Tercio de la Guardia Civil de Jaén" }
+		21 = { "Tercio de la Guardia Civil de Palma de Mallorca" }
+		22 = { "Tercio de la Guardia Civil de Santa Cruz de Tenerife" }
+		23 = { "Tercio de la Guardia Civil de Bilbao" }
+		24 = { "Tercio de la Guardia Civil de Salamanca" }
+	}
+}
+
+# Overrides vanilla SPR_INF_05 (División de la Guardia de Asalto): the Cuerpo de Seguridad y Asalto was organized in groups, not divisions. Vanilla gives the group to both sides, so it is open to every government.
+SPR_INF_05 = 
+{
+	name = "Assault Guards"
+
+	for_countries = { SPR }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%d.º Grupo de Asalto"
+
+	ordered =
+	{
+		# Grupos de Asalto by city
+		1 = { "Grupo de Asalto de Madrid" }
+		2 = { "Grupo de Asalto de Barcelona" }
+		3 = { "Grupo de Asalto de Valencia" }
+		4 = { "Grupo de Asalto de Sevilla" }
+		5 = { "Grupo de Asalto de Zaragoza" }
+		6 = { "Grupo de Asalto de Bilbao" }
+		7 = { "Grupo de Asalto de Oviedo" }
+		8 = { "Grupo de Asalto de Málaga" }
+		9 = { "Grupo de Asalto de La Coruña" }
+		10 = { "Grupo de Asalto de Badajoz" }
+		11 = { "Grupo de Asalto de Granada" }
+		12 = { "Grupo de Asalto de Murcia" }
+		13 = { "Grupo de Asalto de Valladolid" }
+		14 = { "Grupo de Asalto de Córdoba" }
+		15 = { "Grupo de Asalto de Santander" }
+		16 = { "Grupo de Asalto de Cartagena" }
+	}
+}
+
+# The Cuerpo de Carabineros, the coast and frontier guard, by comandancia.
+SPR_CAR_01 = 
+{
+	name = "Carabineros"
+
+	for_countries = { SPR }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%d.ª Comandancia de Carabineros"
+
+	ordered =
+	{
+		# Comandancias of the coasts and frontiers
+		1 = { "Comandancia de Carabineros de Gerona" }
+		2 = { "Comandancia de Carabineros de Barcelona" }
+		3 = { "Comandancia de Carabineros de Tarragona" }
+		4 = { "Comandancia de Carabineros de Castellón" }
+		5 = { "Comandancia de Carabineros de Valencia" }
+		6 = { "Comandancia de Carabineros de Alicante" }
+		7 = { "Comandancia de Carabineros de Murcia" }
+		8 = { "Comandancia de Carabineros de Almería" }
+		9 = { "Comandancia de Carabineros de Málaga" }
+		10 = { "Comandancia de Carabineros de Algeciras" }
+		11 = { "Comandancia de Carabineros de Cádiz" }
+		12 = { "Comandancia de Carabineros de Huelva" }
+		13 = { "Comandancia de Carabineros de Badajoz" }
+		14 = { "Comandancia de Carabineros de Salamanca" }
+		15 = { "Comandancia de Carabineros de Pontevedra" }
+		16 = { "Comandancia de Carabineros de La Coruña" }
+		17 = { "Comandancia de Carabineros de Asturias" }
+		18 = { "Comandancia de Carabineros de Guipúzcoa" }
+		19 = { "Comandancia de Carabineros de Navarra" }
+		20 = { "Comandancia de Carabineros de Huesca" }
+	}
+}
+
+# ===== Nationalist side =====
+
+# Overrides vanilla SPR_INF_02 (Guarnición Nacionalista), the group of the Nationalist garrison template of the civil-war event. Garrisons that joined the rising of July 1936.
+SPR_INF_02 = 
+{
+	name = "Nationalist Garrisons"
+
+	for_countries = { SPR }
+
+	can_use = { OR = { has_government = fascism has_government = neutrality } }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Batallón de Guarnición n.º %d"
+
+	ordered =
+	{
+		# Garrisons of the rising
+		1 = { "Guarnición de Pamplona" }
+		2 = { "Guarnición de Burgos" }
+		3 = { "Guarnición de Valladolid" }
+		4 = { "Guarnición de Zaragoza" }
+		5 = { "Guarnición de Sevilla" }
+		6 = { "Guarnición de La Coruña" }
+		7 = { "Guarnición de Salamanca" }
+		8 = { "Guarnición de Cáceres" }
+		9 = { "Guarnición de Oviedo" }
+		10 = { "Guarnición de Córdoba" }
+		11 = { "Guarnición de Granada" }
+		12 = { "Guarnición de Cádiz" }
+		13 = { "Guarnición de Vitoria" }
+		14 = { "Guarnición de Palma de Mallorca" }
+		15 = { "Guarnición de Santa Cruz de Tenerife" }
+		16 = { "Guarnición de Las Palmas" }
+		17 = { "Guarnición de Ceuta" }
+		18 = { "Guarnición de Melilla" }
+		19 = { "Guarnición de Tetuán" }
+		20 = { "Guarnición de Huesca" }
+		21 = { "Guarnición de Teruel" }
+		22 = { "Guarnición de Jaca" }
+		23 = { "Guarnición de Logroño" }
+		24 = { "Guarnición de León" }
+		25 = { "Guarnición de Zamora" }
+		26 = { "Guarnición de Segovia" }
+		27 = { "Guarnición de Ávila" }
+		28 = { "Guarnición de Soria" }
+		29 = { "Guarnición de Palencia" }
+		30 = { "Guarnición de Vigo" }
+		31 = { "Guarnición de El Ferrol" }
+		32 = { "Guarnición de Lugo" }
+		33 = { "Guarnición del Alcázar de Toledo" }
+	}
+}
+
+# Overrides vanilla SPR_INF_03 (%d° Requeté), the group of the event template Requeté Carlista. The Carlist militia fought in tercios named after battles, saints and princes of the Carlist cause.
+SPR_INF_03 = 
+{
+	name = "Requeté Tercios"
+
+	for_countries = { SPR }
+
+	can_use = { OR = { has_government = fascism has_government = neutrality } }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%d.º Tercio de Requetés"
+
+	ordered =
+	{
+		# Navarra and the Basque provinces
+		1 = { "Tercio de Montejurra" }
+		2 = { "Tercio de Lácar" }
+		3 = { "Tercio de Navarra" }
+		4 = { "Tercio de San Miguel" }
+		5 = { "Tercio de San Fermín" }
+		6 = { "Tercio de Roncesvalles" }
+		7 = { "Tercio de Abárzuza" }
+		8 = { "Tercio de Nuestra Señora del Camino" }
+		9 = { "Tercio de Doña María de las Nieves" }
+		10 = { "Tercio de Oriamendi" }
+		11 = { "Tercio de Zumalacárregui" }
+		12 = { "Tercio de San Ignacio" }
+		13 = { "Tercio de Nuestra Señora de Begoña" }
+		14 = { "Tercio de Ortiz de Zárate" }
+		15 = { "Tercio de la Virgen Blanca" }
+		16 = { "Tercio de Nuestra Señora de Estíbaliz" }
+		# Castilla, Aragón, Cataluña and Andalucía
+		17 = { "Tercio de El Alcázar" }
+		18 = { "Tercio de Cristo Rey" }
+		19 = { "Tercio de Burgos-Sangüesa" }
+		20 = { "Tercio Castellano-Mola" }
+		21 = { "Tercio de Doña María de Molina" }
+		22 = { "Tercio de Nuestra Señora del Pilar" }
+		23 = { "Tercio de Almogávares" }
+		24 = { "Tercio de Nuestra Señora de Montserrat" }
+		25 = { "Tercio de la Virgen de los Reyes" }
+		26 = { "Tercio de San Rafael" }
+	}
+}
+
+# The militia of Falange Española de las JONS: banderas (battalions) and centurias (companies), raised by region.
+SPR_FAL_01 = 
+{
+	name = "Falange Banderas"
+
+	for_countries = { SPR }
+
+	can_use = { has_government = fascism }
+
+	division_types = { "infantry" "militia" }
+
+	fallback_name = "%d.ª Bandera de Falange"
+
+	ordered =
+	{
+		# Named banderas and centurias
+		1 = { "Bandera 'Leones de Castilla'" }
+		2 = { "Bandera 'General Sanjurjo'" }
+		3 = { "Bandera Legionaria Gallega" }
+		4 = { "Bandera 'Águilas de España'" }
+		5 = { "Bandera Móvil de Aragón" }
+		6 = { "Centuria 'José Antonio'" }
+		7 = { "Centuria 'Onésimo Redondo'" }
+		8 = { "Centuria 'Juan Barbará'" }
+		# Regional banderas
+		9 = { "1.ª Bandera de Falange de Castilla" }
+		10 = { "1.ª Bandera de Falange de Aragón" }
+		11 = { "1.ª Bandera de Falange de Navarra" }
+		12 = { "1.ª Bandera de Falange de Marruecos" }
+		13 = { "1.ª Bandera de Falange de Galicia" }
+		14 = { "1.ª Bandera de Falange de Asturias" }
+		15 = { "1.ª Bandera de Falange de León" }
+		16 = { "1.ª Bandera de Falange de Burgos" }
+		17 = { "1.ª Bandera de Falange de Sevilla" }
+		18 = { "1.ª Bandera de Falange de Cádiz" }
+		19 = { "1.ª Bandera de Falange de Extremadura" }
+		20 = { "1.ª Bandera de Falange de Canarias" }
+		21 = { "1.ª Bandera de Falange de Mallorca" }
+		# Extensions in the same tradition
+		22 = { "Bandera 'Ramiro Ledesma Ramos'" }
+		23 = { "Bandera 'Matías Montero'" }
+		24 = { "Bandera 'Julio Ruiz de Alda'" }
+	}
+}
+
+# The División Española de Voluntarios (División Azul, 1941-43) with its regiments and the Legión that followed it, and the mixed Flechas divisions of 1937-39.
+SPR_VOL_01 = 
+{
+	name = "Volunteer Divisions"
+
+	for_countries = { SPR }
+
+	can_use = { has_government = fascism }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%d.ª División Española de Voluntarios"
+
+	ordered =
+	{
+		# División Azul
+		1 = { "División Española de Voluntarios" }
+		2 = { "Legión Española de Voluntarios" }
+		3 = { "Regimiento 262 'Pimentel'" }
+		4 = { "Regimiento 263 'Vierna'" }
+		5 = { "Regimiento 269 'Esparza'" }
+		6 = { "Regimiento de Artillería 250 'Badillo'" }
+		7 = { "Batallón de Reserva 'Tía Bernarda'" }
+		8 = { "Compañía de Esquiadores 250" }
+		9 = { "Grupo de Exploración 250" }
+		10 = { "Batallón de Zapadores 250" }
+		# Flechas divisions
+		11 = { "División 'Flechas Negras'" }
+		12 = { "División 'Flechas Azules'" }
+		13 = { "División 'Flechas Verdes'" }
+	}
+}
+
+# The palace guard and the infantry regiments with royal titles, under the numbers they held until the Republic dissolved or renamed them in 1931.
+SPR_ROY_01 = 
+{
+	name = "Royal Regiments"
+
+	for_countries = { SPR }
+
+	can_use = { has_government = neutrality }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Regimiento de la Guardia Real n.º %d"
+
+	ordered =
+	{
+		# Palace guard and royal regiments
+		1 = { "Real Cuerpo de Guardias Alabarderos" }
+		2 = { "Regimiento de Infantería 'Inmemorial del Rey' n.º 1" }
+		3 = { "Regimiento de Infantería 'La Reina' n.º 2" }
+		4 = { "Regimiento de Infantería 'Príncipe' n.º 3" }
+		5 = { "Regimiento de Infantería 'Princesa' n.º 4" }
+		6 = { "Regimiento de Infantería 'Infante' n.º 5" }
+		7 = { "Regimiento de Infantería 'Borbón' n.º 17" }
+		8 = { "Regimiento de Infantería 'Lealtad' n.º 30" }
+		9 = { "Regimiento de Infantería 'Isabel II' n.º 32" }
+		10 = { "Regimiento de Infantería 'Isabel la Católica' n.º 54" }
+	}
+}
+
+# The royal escort and the cavalry regiments with royal titles, under their numbers before 1931.
+SPR_ROY_02 = 
+{
+	name = "Royal Cavalry Regiments"
+
+	for_countries = { SPR }
+
+	can_use = { has_government = neutrality }
+
+	division_types = { "cavalry" }
+
+	fallback_name = "Regimiento de Caballería de la Guardia Real n.º %d"
+
+	ordered =
+	{
+		# Royal escort and royal regiments
+		1 = { "Escuadrón de la Escolta Real" }
+		2 = { "Regimiento de Lanceros del Rey n.º 1" }
+		3 = { "Regimiento de Lanceros de la Reina n.º 2" }
+		4 = { "Regimiento de Lanceros del Príncipe n.º 3" }
+		5 = { "Regimiento de Lanceros de Borbón n.º 4" }
+		6 = { "Regimiento de Húsares de la Princesa n.º 19" }
+		7 = { "Regimiento de Cazadores de Alfonso XII n.º 21" }
+		8 = { "Regimiento de Cazadores de Victoria Eugenia n.º 22" }
+		9 = { "Regimiento de Cazadores de Alfonso XIII n.º 24" }
+		10 = { "Regimiento de Cazadores de María Cristina n.º 27" }
+	}
+}
+
+# ===== Republican side =====
+
+# Overrides vanilla SPD_INF_03 (Brigada Popular, not a period term). The event template of that name gets the People's Army's Brigadas Mixtas, keyed by their real numbers.
+SPD_INF_03 = 
+{
+	name = "Mixed Brigades"
+
+	for_countries = { SPR }
+
+	can_use = { NOT = { has_government = fascism } }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%d.ª Brigada Mixta"
+
+	ordered =
+	{
+		# Brigades with an identity: former columns, Carabineros, shock and marine brigades
+		1 = { "1.ª Brigada Mixta 'Líster'" }
+		3 = { "3.ª Brigada Mixta de Carabineros" }
+		5 = { "5.ª Brigada Mixta de Carabineros" }
+		10 = { "10.ª Brigada Mixta 'Móvil de Choque'" }
+		22 = { "22.ª Brigada Mixta 'Peire'" }
+		29 = { "29.ª Brigada Mixta 'Cuevas'" }
+		32 = { "32.ª Brigada Mixta 'Mangada'" }
+		34 = { "34.ª Brigada Mixta 'Robledo'" }
+		36 = { "36.ª Brigada Mixta 'Prada'" }
+		38 = { "38.ª Brigada Mixta 'Perea'" }
+		39 = { "39.ª Brigada Mixta 'Palacios'" }
+		40 = { "40.ª Brigada Mixta 'Ortega'" }
+		43 = { "43.ª Brigada Mixta 'Escobar'" }
+		44 = { "44.ª Brigada Mixta 'Enciso'" }
+		45 = { "45.ª Brigada Mixta 'Burillo'" }
+		46 = { "46.ª Brigada Mixta 'Fantasma'" }
+		60 = { "60.ª Brigada Mixta 'Del Rosal'" }
+		65 = { "65.ª Brigada Mixta de Carabineros" }
+		81 = { "81.ª Brigada Mixta 'Torres-Benedito'" }
+		83 = { "83.ª Brigada Mixta 'Columna de Hierro'" }
+		85 = { "85.ª Brigada Mixta de Carabineros" }
+		86 = { "86.ª Brigada Mixta 'Móvil de Puertollano'" }
+		87 = { "87.ª Brigada Mixta de Carabineros" }
+		88 = { "88.ª Brigada Mixta 'Andalucía-Extremadura'" }
+		100 = { "100.ª Brigada Mixta de Choque" }
+		101 = { "101.ª Brigada Mixta de Choque" }
+		119 = { "119.ª Brigada Mixta 'Durruti'" }
+		122 = { "122.ª Brigada Mixta 'Carlos Marx'" }
+		125 = { "125.ª Brigada Mixta 'Ascaso'" }
+		132 = { "132.ª Brigada Mixta 'Macià-Companys'" }
+		147 = { "147.ª Brigada Mixta 'Maroto'" }
+		151 = { "151.ª Brigada Mixta de Infantería de Marina" }
+		152 = { "152.ª Brigada Mixta de Carabineros" }
+		153 = { "153.ª Brigada Mixta 'Tierra y Libertad'" }
+		211 = { "211.ª Brigada Mixta de Carabineros" }
+		228 = { "228.ª Brigada Mixta de Carabineros" }
+	}
+}
+
+# The International Brigades of 1936-38 and their battalions. Keys run 1..N; the brigades keep their Roman numbers in the name.
+SPR_INT_01 = 
+{
+	name = "International Brigades"
+
+	for_countries = { SPR }
+
+	can_use = { OR = { has_government = democratic has_government = communism } }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%d.ª Brigada Internacional"
+
+	ordered =
+	{
+		# Brigades
+		1 = { "XI Brigada Internacional 'Thälmann'" }
+		2 = { "XII Brigada Internacional 'Garibaldi'" }
+		3 = { "XIII Brigada Internacional 'Dąbrowski'" }
+		4 = { "XIV Brigada Internacional 'La Marsellesa'" }
+		5 = { "XV Brigada Internacional 'Abraham Lincoln'" }
+		6 = { "129.ª Brigada Internacional" }
+		7 = { "150.ª Brigada Internacional" }
+		# Battalions
+		8 = { "Batallón 'Edgar André'" }
+		9 = { "Batallón 'Commune de Paris'" }
+		10 = { "Batallón 'Dąbrowski'" }
+		11 = { "Batallón 'Thälmann'" }
+		12 = { "Batallón 'Garibaldi'" }
+		13 = { "Batallón 'André Marty'" }
+		14 = { "Batallón 'Chapaiev'" }
+		15 = { "Batallón 'Henri Vuillemin'" }
+		16 = { "Batallón 'Louise Michel'" }
+		17 = { "Batallón 'Mickiewicz'" }
+		18 = { "Batallón 'Palafox'" }
+		19 = { "Batallón 'Domingo Germinal'" }
+		20 = { "Batallón 'Henri Barbusse'" }
+		21 = { "Batallón 'Pierre Brachet'" }
+		22 = { "Batallón 'Vaillant-Couturier'" }
+		23 = { "Batallón 'Dimitrov'" }
+		24 = { "Batallón 'Six Février'" }
+		25 = { "Batallón Británico" }
+		26 = { "Batallón 'Abraham Lincoln'" }
+		27 = { "Batallón 'George Washington'" }
+		28 = { "Batallón 'Mackenzie-Papineau'" }
+		29 = { "Batallón 'Masaryk'" }
+		30 = { "Batallón 'Đuro Đaković'" }
+		31 = { "Batallón 'Rákosi'" }
+		32 = { "Batallón 'Hans Beimler'" }
+		33 = { "Batallón 'Doce de Febrero'" }
+		34 = { "Batallón 'Nueve Naciones'" }
+	}
+}
+
+# Overrides vanilla SPD_INF_01 (Guarnición Republicana), the group of the Republican garrison template of the civil-war event. Garrisons of the cities that stayed loyal in July 1936.
+SPD_INF_01 = 
+{
+	name = "Republican Garrisons"
+
+	for_countries = { SPR }
+
+	can_use = { NOT = { has_government = fascism } }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Batallón de Retaguardia n.º %d"
+
+	ordered =
+	{
+		# Loyal garrisons of July 1936
+		1 = { "Guarnición de Madrid" }
+		2 = { "Guarnición de Barcelona" }
+		3 = { "Guarnición de Valencia" }
+		4 = { "Guarnición de Bilbao" }
+		5 = { "Guarnición de Cartagena" }
+		6 = { "Guarnición de Málaga" }
+		7 = { "Guarnición de San Sebastián" }
+		8 = { "Guarnición de Santander" }
+		9 = { "Guarnición de Gijón" }
+		10 = { "Guarnición de Almería" }
+		11 = { "Guarnición de Alicante" }
+		12 = { "Guarnición de Murcia" }
+		13 = { "Guarnición de Albacete" }
+		14 = { "Guarnición de Jaén" }
+		15 = { "Guarnición de Badajoz" }
+		16 = { "Guarnición de Castellón" }
+		17 = { "Guarnición de Tarragona" }
+		18 = { "Guarnición de Lérida" }
+		19 = { "Guarnición de Gerona" }
+		20 = { "Guarnición de Ciudad Real" }
+		21 = { "Guarnición de Cuenca" }
+		22 = { "Guarnición de Guadalajara" }
+		23 = { "Guarnición de Mahón" }
+		24 = { "Guarnición de Alcalá de Henares" }
+	}
+}
+
+# Overrides vanilla SPD_INF_02 (Brigada de Juventudes Sindicales, not a period term). Militia battalions of the UGT, the PSOE and the Juventudes Socialistas Unificadas.
+# Vanilla also gives this group to its POUM youth template.
+SPD_INF_02 = 
+{
+	name = "Socialist Battalions"
+
+	for_countries = { SPR }
+
+	can_use = { NOT = { has_government = fascism } }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Batallón UGT n.º %d"
+
+	ordered =
+	{
+		# UGT and PSOE battalions
+		1 = { "Batallón 'Pablo Iglesias'" }
+		2 = { "Batallón 'Largo Caballero'" }
+		3 = { "Batallón 'Margarita Nelken'" }
+		4 = { "Batallón 'Mateos'" }
+		5 = { "Batallón 'Prieto'" }
+		6 = { "Batallón 'Peña'" }
+		7 = { "Batallón 'Carlos Marx'" }
+		8 = { "Batallón 'Madrid'" }
+		9 = { "Batallón 'Jean Jaurès'" }
+		10 = { "Batallón 'México'" }
+		11 = { "Batallón 'Torrijos'" }
+		12 = { "Batallón 'Artes Blancas'" }
+		13 = { "Batallón 'Capitán Condés'" }
+		14 = { "Batallón 'Leones Rojos'" }
+		15 = { "Batallón 'Félix Bárzana'" }
+		# JSU battalions
+		16 = { "Batallón 'Octubre' n.º 11" }
+		17 = { "Batallón 'Joven Guardia'" }
+		18 = { "Batallón 'Cultura y Deporte'" }
+		19 = { "Batallón 'Castilla'" }
+		20 = { "Batallón 'UHP'" }
+		21 = { "Batallón 'Amuategi'" }
+		22 = { "Batallón 'Meabe'" }
+		23 = { "Batallón 'Dragones'" }
+		24 = { "Batallón 'Rusia'" }
+		25 = { "Batallón 'Juventud Campesina'" }
+		26 = { "Batallón 'Deportivo'" }
+		27 = { "Batallón 'Alpino Juventud'" }
+		# Extensions in the same tradition
+		28 = { "Batallón 'Aida Lafuente'" }
+		29 = { "Batallón 'Lina Odena'" }
+		30 = { "Batallón 'Julián Besteiro'" }
+		31 = { "Batallón 'Casa del Pueblo'" }
+		32 = { "Batallón 'Primero de Mayo'" }
+	}
+}
+
+# Overrides vanilla SPD_INF_05. Vanilla's focus gives this tag to its Basque template (and the Basque group SPD_INF_04 to the anarchist one), so the Euzko Gudarostea battalions are here.
+# Period Basque spelling (Euzko, Euzkadi); the unit term was the Spanish Batallón.
+SPD_INF_05 = 
+{
+	name = "Basque Battalions"
+
+	for_countries = { SPR }
+
+	can_use = { NOT = { has_government = fascism } }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Euzko Gudarostea, Batallón n.º %d"
+
+	ordered =
+	{
+		# PNV battalions
+		1 = { "Batallón 'Arana Goiri'" }
+		2 = { "Batallón 'Itxarkundia'" }
+		3 = { "Batallón 'Amaiur'" }
+		4 = { "Batallón 'Otxandiano'" }
+		5 = { "Batallón 'Gordexola'" }
+		6 = { "Batallón 'Kirikiño'" }
+		7 = { "Batallón 'Loyola'" }
+		8 = { "Batallón 'Saseta'" }
+		9 = { "Batallón 'Padura'" }
+		10 = { "Batallón 'Ibaizabal'" }
+		11 = { "Batallón 'Mungia'" }
+		12 = { "Batallón 'Araba'" }
+		13 = { "Batallón 'Itxasalde'" }
+		14 = { "Batallón 'Martiartu'" }
+		15 = { "Batallón 'Malato'" }
+		16 = { "Batallón 'Rebelión de la Sal'" }
+		17 = { "Batallón 'Simón Bolibar'" }
+		18 = { "Batallón 'Sukarrieta'" }
+		19 = { "Batallón 'Abellaneda'" }
+		20 = { "Batallón 'Muñatones'" }
+		21 = { "Batallón 'Aralar'" }
+		22 = { "Batallón 'Larrazabal'" }
+		23 = { "Batallón 'Ariztimuño'" }
+		24 = { "Batallón 'Irrintzi'" }
+		25 = { "Batallón 'Alkartzea'" }
+		# ANV, Jagi-Jagi and STV battalions
+		26 = { "Batallón 'Olabarri'" }
+		27 = { "Batallón 'Euzko Indarra'" }
+		28 = { "Batallón 'Askatasuna'" }
+		29 = { "Batallón 'Lenago Il'" }
+		30 = { "Batallón 'Zergatik ez?'" }
+		31 = { "Batallón 'San Andrés'" }
+	}
+}
+
+# Forces of the Generalitat and of the Catalan republican parties, 1936-37, in Catalan.
+SPR_CAT_01 = 
+{
+	name = "Catalan Columns"
+
+	for_countries = { SPR }
+
+	can_use = { OR = { has_government = democratic has_government = communism } }
+
+	division_types = { "infantry" "militia" }
+
+	fallback_name = "Columna Catalana núm. %d"
+
+	ordered =
+	{
+		# Columns, Pyrenean militias and the Exèrcit Popular de Catalunya
+		1 = { "Columna Macià-Companys" }
+		2 = { "Regiment Pirinenc núm. 1 de Catalunya" }
+		3 = { "Milícies Alpines" }
+		4 = { "Milícies Pirinenques" }
+		5 = { "Grup Alpí" }
+		6 = { "Columna Volant Catalana" }
+		7 = { "Columna Pirinenca" }
+		8 = { "1a Divisió de l'Exèrcit de Catalunya" }
+		9 = { "2a Divisió de l'Exèrcit de Catalunya" }
+		10 = { "3a Divisió de l'Exèrcit de Catalunya" }
+		# Extensions in the same tradition
+		11 = { "Batalló 'Francesc Layret'" }
+		12 = { "Batalló 'Rafael Casanova'" }
+		13 = { "Batalló 'Pau Claris'" }
+		14 = { "Batalló 'Onze de Setembre'" }
+		15 = { "Batalló 'Els Segadors'" }
+		16 = { "Batalló 'Almogàvers'" }
+	}
+}
+
+# The People's Army's guerrilla corps and the Republican guerrilla groupings of 1939-45 in Spain and in France.
+SPR_GUE_01 = 
+{
+	name = "Guerrilla Groups"
+
+	for_countries = { SPR }
+
+	can_use = { OR = { has_government = democratic has_government = communism } }
+
+	division_types = { "infantry" "militia" }
+
+	fallback_name = "%d.ª Agrupación Guerrillera"
+
+	ordered =
+	{
+		# Guerrilla corps and groupings
+		1 = { "XIV Cuerpo de Ejército Guerrillero" }
+		2 = { "Agrupación de Guerrilleros Españoles" }
+		3 = { "Agrupación Guerrillera de Levante y Aragón" }
+		4 = { "Agrupación Guerrillera de Granada" }
+		5 = { "Agrupación Guerrillera de Málaga" }
+		6 = { "Federación de Guerrillas de León-Galicia" }
+		7 = { "Ejército Guerrillero de Galicia" }
+		8 = { "Agrupación Guerrillera de Asturias" }
+		9 = { "Agrupación Guerrillera de Extremadura" }
+		10 = { "Ejército Guerrillero del Centro" }
+		11 = { "Agrupación Guerrillera del Alto Aragón" }
+		12 = { "Agrupación Guerrillera 'Fermín Galán'" }
+		13 = { "Brigada Guerrillera 'Machado'" }
+		14 = { "Agrupación Guerrillera de Córdoba" }
+		15 = { "Agrupación Guerrillera de Ciudad Real" }
+		# Spanish guerrilla units in France, 1944
+		16 = { "204.ª División de Guerrilleros" }
+		17 = { "3.ª Brigada de Guerrilleros Españoles" }
+		18 = { "35.ª Brigada de Guerrilleros Españoles" }
+		19 = { "Compañía 'La Nueve'" }
+	}
+}
+
+# ===== Revolutionary left =====
+
+# Communist militias: the PCE's Quinto Regimiento de Milicias Populares, the Basque communist battalions and the PSUC columns.
+SPR_RED_01 = 
+{
+	name = "People's Militia Battalions"
+
+	for_countries = { SPR }
+
+	can_use = { has_government = communism }
+
+	division_types = { "infantry" "militia" }
+
+	fallback_name = "Batallón de Milicias Populares n.º %d"
+
+	ordered =
+	{
+		# Quinto Regimiento
+		1 = { "5.º Regimiento de Milicias Populares" }
+		2 = { "Compañías de Acero" }
+		3 = { "Batallón 'Thaelmann'" }
+		4 = { "Batallón 'Leningrado'" }
+		5 = { "Batallón 'Comuna de París'" }
+		6 = { "Batallón 'Pasionaria'" }
+		7 = { "Batallón 'Victoria'" }
+		8 = { "Batallón de Milicias Gallegas" }
+		9 = { "Batallón 'José Díaz'" }
+		10 = { "Batallón 'Lenin'" }
+		11 = { "Batallón 'El Campesino'" }
+		12 = { "Batallón 'Líster'" }
+		13 = { "Batallón 'Amanecer'" }
+		# Basque communist battalions
+		14 = { "Batallón 'Leandro Carro'" }
+		15 = { "Batallón 'Rosa Luxemburgo'" }
+		16 = { "Batallón 'Perezagua'" }
+		17 = { "Batallón 'Larrañaga'" }
+		18 = { "Batallón 'Karl Liebknecht'" }
+		19 = { "Batallón 'Salsamendi'" }
+		20 = { "Batallón 'Guipúzcoa'" }
+		# PSUC columns and the MAOC
+		21 = { "Columna Carlos Marx" }
+		22 = { "Columna Del Barrio" }
+		23 = { "Columna Libertad" }
+		24 = { "Milicias Antifascistas Obreras y Campesinas" }
+		# Extensions in the same tradition
+		25 = { "Batallón 'Mundo Obrero'" }
+		26 = { "Batallón 'Pedro Checa'" }
+		27 = { "Batallón 'Stalingrado'" }
+		28 = { "Batallón 'No Pasarán'" }
+		29 = { "Batallón 'Defensa de Madrid'" }
+		30 = { "Batallón 'Frente Rojo'" }
+	}
+}
+
+# Militias of the Partido Obrero de Unificación Marxista and its youth, the Juventud Comunista Ibérica. Kept apart from the PCE lists.
+SPR_POU_01 = 
+{
+	name = "POUM Columns"
+
+	for_countries = { SPR }
+
+	can_use = { has_government = communism }
+
+	division_types = { "infantry" "militia" }
+
+	fallback_name = "Columna del POUM n.º %d"
+
+	ordered =
+	{
+		# Columns and battalions of 1936-37
+		1 = { "Columna Lenin" }
+		2 = { "Columna Joaquín Maurín" }
+		3 = { "División Lenin" }
+		4 = { "Batallón de Choque del POUM" }
+		5 = { "Columna Motorizada del POUM" }
+		6 = { "Columna Internacional Lenin" }
+		7 = { "Batallón de la Juventud Comunista Ibérica" }
+		# Extensions in the same tradition
+		8 = { "Batallón 'Andreu Nin'" }
+		9 = { "Batallón 'Josep Rovira'" }
+		10 = { "Batallón 'Germinal Vidal'" }
+		11 = { "Batallón 'Hipólito Etchebéhère'" }
+		12 = { "Batallón 'La Batalla'" }
+		13 = { "Batallón 'Bloque Obrero y Campesino'" }
+	}
+}
+
+# Overrides vanilla SPD_INF_06 (Milicia Anarquista), the group of the focus template Anarchist Militia. The CNT-FAI columns of 1936.
+# The Anarchist Commune is non-aligned in the game, so the gate only shuts out a fascist government.
+SPD_INF_06 = 
+{
+	name = "Anarchist Columns"
+
+	for_countries = { SPR }
+
+	can_use = { NOT = { has_government = fascism } }
+
+	division_types = { "infantry" "militia" }
+
+	fallback_name = "Columna Confederal n.º %d"
+
+	ordered =
+	{
+		# Columns of the confederal militias
+		1 = { "Columna Durruti" }
+		2 = { "Columna Ascaso" }
+		3 = { "Columna Sur-Ebro" }
+		4 = { "Columna Los Aguiluchos" }
+		5 = { "Columna Roja y Negra" }
+		6 = { "Columna de Hierro" }
+		7 = { "Columna Tierra y Libertad" }
+		8 = { "Columna Del Rosal" }
+		9 = { "Columna Torres-Benedito" }
+		10 = { "Columna Iberia" }
+		11 = { "Columna Maroto" }
+		12 = { "Columna Andalucía-Extremadura" }
+		13 = { "Columna CNT n.º 13" }
+		14 = { "Columna Hilario-Zamora" }
+		15 = { "Columna Temple y Rebeldía" }
+		16 = { "Columna Carod-Ferrer" }
+		17 = { "Columna Cultura y Acción" }
+		18 = { "Columna CEFA" }
+		# International groups
+		19 = { "Grupo Internacional de la Columna Durruti" }
+		20 = { "Centuria 'Sébastien Faure'" }
+		21 = { "Centuria 'Erich Mühsam'" }
+	}
+}
+
+# Overrides vanilla SPD_INF_04. Vanilla's event gives this tag (its Basque group) to the template Brigada Anarquista, so the CNT battalions are here and the Basque battalions are in SPD_INF_05.
+SPD_INF_04 = 
+{
+	name = "Anarchist Battalions"
+
+	for_countries = { SPR }
+
+	can_use = { NOT = { has_government = fascism } }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Batallón Confederal n.º %d"
+
+	ordered =
+	{
+		# CNT battalions of Madrid, Euzkadi and Santander
+		1 = { "Batallón 'Isaac Puente'" }
+		2 = { "Batallón 'Malatesta'" }
+		3 = { "Batallón 'Bakunin'" }
+		4 = { "Batallón 'Durruti'" }
+		5 = { "Batallón 'Sacco-Vanzetti'" }
+		6 = { "Batallón 'Celta'" }
+		7 = { "Batallón CNT n.º 7" }
+		8 = { "Batallón 'Libertad'" }
+		9 = { "Batallón CNT-FAI" }
+		10 = { "Batallón 'España Libre'" }
+		11 = { "Batallón 'Águilas de la Libertad'" }
+		12 = { "Batallón 'Espartacus'" }
+		13 = { "Batallón 'Mora'" }
+		14 = { "Batallón 'Ferrer'" }
+		15 = { "Batallón 'Orobón Fernández'" }
+		16 = { "Batallón 'Juvenil Libertario'" }
+		17 = { "Batallón 'Sigüenza'" }
+		18 = { "Batallón 'Toledo'" }
+		# Extensions in the same tradition
+		19 = { "Batallón 'Kropotkin'" }
+		20 = { "Batallón 'Anselmo Lorenzo'" }
+		21 = { "Batallón 'Salvador Seguí'" }
+		22 = { "Batallón 'Fermín Salvochea'" }
+		23 = { "Batallón 'Ricardo Flores Magón'" }
+		24 = { "Batallón 'Germinal'" }
+		25 = { "Batallón 'Acracia'" }
+		26 = { "Batallón 'Solidaridad Obrera'" }
+	}
+}
