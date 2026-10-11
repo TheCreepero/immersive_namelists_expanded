@@ -11,11 +11,11 @@ BeforeAll {
     $script:WorkshopGuidePath = Join-Path $script:RepoRoot "WORKSHOP_DESCRIPTION_GUIDELINES.md"
     $script:NamelistDir = Join-Path $script:RepoRoot "common\units\names_divisions"
 
-    # Extract all distinct TAGs from INEX_<TAG>_*.txt
-    $files = Get-ChildItem -Path $script:NamelistDir -Filter "INEX_*.txt"
+    # Extract all distinct TAGs from zz_INEX_<TAG>_*.txt
+    $files = Get-ChildItem -Path $script:NamelistDir -Filter "zz_INEX_*.txt"
     $script:ImplementedTags = [System.Collections.Generic.HashSet[string]]::new()
     foreach ($f in $files) {
-        if ($f.Name -match '^INEX_([A-Z0-9]{3})_') {
+        if ($f.Name -match '^zz_INEX_([A-Z0-9]{3})_') {
             [void]$script:ImplementedTags.Add($matches[1])
         }
     }

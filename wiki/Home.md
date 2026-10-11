@@ -11,27 +11,27 @@
 
 | Nation | Tag | Groups | Source File(s) |
 |:---|:---|:---|:---|
-| [Germany (Wehrmacht)](Germany) | `GER` | 22 | `INEX_GER_names_divisions.txt` |
-| [Germany (Waffen-SS)](Germany-Waffen-SS) | `GER` | 10 | `INEX_GER_SS_names_divisions.txt` |
-| [Germany (Additional)](Germany-Additional) | `GER` | 24 | `INEX_GER_ADDITIONAL_names_divisions.txt` |
-| [Soviet Union](Soviet-Union) | `SOV` | 20 | `INEX_SOV_names_divisions.txt` |
-| [United Kingdom](United-Kingdom) | `ENG` | 28 | `INEX_ENG_names_divisions.txt` |
-| [France](France) | `FRA` | 20 | `INEX_FRA_names_divisions.txt` |
-| [Italy](Italy) | `ITA` | 43 | `INEX_ITA_names_divisions.txt` |
-| [United States](United-States) | `USA` | 25 | `INEX_USA_names_divisions.txt` |
-| [Poland](Poland) | `POL` | 34 | `INEX_POL_names_divisions.txt` |
-| [Finland](Finland) | `FIN` | 27 | `INEX_FIN_names_divisions.txt` |
-| [Sweden](Sweden) | `SWE` | 29 | `INEX_SWE_names_divisions.txt` |
-| [Japan](Japan) | `JAP` | 32 | `INEX_JAP_names_divisions.txt` |
-| [Estonia](Estonia) | `EST` | 4 | `INEX_EST_names_divisions.txt` |
-| [Latvia](Latvia) | `LAT` | 7 | `INEX_LAT_names_divisions.txt` |
-| [Lithuania](Lithuania) | `LIT` | 13 | `INEX_LIT_names_divisions.txt` |
-| [Mexico](Mexico) | `MEX` | 23 | `INEX_MEX_names_divisions.txt` |
-| [Brazil](Brazil) | `BRA` | 36 | `INEX_BRA_names_divisions.txt` |
-| [Greece](Greece) | `GRE` | 28 | `INEX_GRE_names_divisions.txt` |
-| [Romania](Romania) | `ROM` | 29 | `INEX_ROM_names_divisions.txt` |
-| [Iran](Iran) | `PER` | 13 | `INEX_PER_names_divisions.txt` |
-| [Spain](Spain) | `SPR` | 38 | `INEX_SPR_names_divisions.txt` |
+| [Germany (Wehrmacht)](Germany) | `GER` | 22 | `zz_INEX_GER_names_divisions.txt` |
+| [Germany (Waffen-SS)](Germany-Waffen-SS) | `GER` | 10 | `zz_INEX_GER_SS_names_divisions.txt` |
+| [Germany (Additional)](Germany-Additional) | `GER` | 24 | `zz_INEX_GER_ADDITIONAL_names_divisions.txt` |
+| [Soviet Union](Soviet-Union) | `SOV` | 20 | `zz_INEX_SOV_names_divisions.txt` |
+| [United Kingdom](United-Kingdom) | `ENG` | 28 | `zz_INEX_ENG_names_divisions.txt` |
+| [France](France) | `FRA` | 20 | `zz_INEX_FRA_names_divisions.txt` |
+| [Italy](Italy) | `ITA` | 43 | `zz_INEX_ITA_names_divisions.txt` |
+| [United States](United-States) | `USA` | 25 | `zz_INEX_USA_names_divisions.txt` |
+| [Poland](Poland) | `POL` | 34 | `zz_INEX_POL_names_divisions.txt` |
+| [Finland](Finland) | `FIN` | 27 | `zz_INEX_FIN_names_divisions.txt` |
+| [Sweden](Sweden) | `SWE` | 29 | `zz_INEX_SWE_names_divisions.txt` |
+| [Japan](Japan) | `JAP` | 32 | `zz_INEX_JAP_names_divisions.txt` |
+| [Estonia](Estonia) | `EST` | 4 | `zz_INEX_EST_names_divisions.txt` |
+| [Latvia](Latvia) | `LAT` | 7 | `zz_INEX_LAT_names_divisions.txt` |
+| [Lithuania](Lithuania) | `LIT` | 13 | `zz_INEX_LIT_names_divisions.txt` |
+| [Mexico](Mexico) | `MEX` | 23 | `zz_INEX_MEX_names_divisions.txt` |
+| [Brazil](Brazil) | `BRA` | 36 | `zz_INEX_BRA_names_divisions.txt` |
+| [Greece](Greece) | `GRE` | 28 | `zz_INEX_GRE_names_divisions.txt` |
+| [Romania](Romania) | `ROM` | 29 | `zz_INEX_ROM_names_divisions.txt` |
+| [Iran](Iran) | `PER` | 13 | `zz_INEX_PER_names_divisions.txt` |
+| [Spain](Spain) | `SPR` | 38 | `zz_INEX_SPR_names_divisions.txt` |
 
 ---
 

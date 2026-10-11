@@ -1,6 +1,6 @@
 # Japan
 
-**Country Tag:** `JAP` | **Source File:** [`INEX_JAP_names_divisions.txt`](../common/units/names_divisions/INEX_JAP_names_divisions.txt)
+**Country Tag:** `JAP` | **Source File:** [`zz_INEX_JAP_names_divisions.txt`](../common/units/names_divisions/zz_INEX_JAP_names_divisions.txt)
 
 ---
 

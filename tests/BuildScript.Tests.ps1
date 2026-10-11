@@ -170,7 +170,7 @@ tags={
             param([string]$Content)
             [System.IO.File]::WriteAllText((Join-Path $script:ValidationFixtureDir "README.md"), $Content, $utf8NoBom)
         }
-        Set-ValidationFixtureReadme "| TST | Test Nation | INEX_TST_names_divisions.txt |`n"
+        Set-ValidationFixtureReadme "| TST | Test Nation | zz_INEX_TST_names_divisions.txt |`n"
 
         function New-ValidationFixtureFile {
             param([string]$OrderedBody)
@@ -185,7 +185,7 @@ $OrderedBody
 	}
 }
 "@
-            [System.IO.File]::WriteAllText((Join-Path $namelistFixtureDir "INEX_TST_names_divisions.txt"), $content, $utf8NoBom)
+            [System.IO.File]::WriteAllText((Join-Path $namelistFixtureDir "zz_INEX_TST_names_divisions.txt"), $content, $utf8NoBom)
         }
 
         function Invoke-FixtureValidation {
@@ -251,7 +251,7 @@ $OrderedBody
         New-ValidationFixtureFile -OrderedBody @'
 		1 = { "First Division" }
 '@
-        Set-ValidationFixtureReadme "| ``TST`` | Test Nation | ``INEX_TST_names_divisions.txt`` |`n"
+        Set-ValidationFixtureReadme "| ``TST`` | Test Nation | ``zz_INEX_TST_names_divisions.txt`` |`n"
         Invoke-FixtureValidation | Should -BeTrue
     }
 
@@ -259,7 +259,7 @@ $OrderedBody
         New-ValidationFixtureFile -OrderedBody @'
 		1 = { "First Division" }
 '@
-        $file = Join-Path $script:ValidationFixtureDir "common\units\names_divisions\INEX_TST_names_divisions.txt"
+        $file = Join-Path $script:ValidationFixtureDir "common\units\names_divisions\zz_INEX_TST_names_divisions.txt"
         $raw = [System.IO.File]::ReadAllText($file, [System.Text.Encoding]::UTF8)
         $rawWithFocus = $raw -replace 'for_countries = \{ TST \}', "for_countries = { TST }`r`n`tcan_use = { has_completed_focus = TST_my_focus }"
         [System.IO.File]::WriteAllText($file, $rawWithFocus, [System.Text.Encoding]::UTF8)
@@ -560,7 +560,7 @@ Describe "build.ps1 Helper: Get-GitFileText" {
     }
 
     It "Returns the file text at a valid ref with diacritics intact" {
-        $text = Get-GitFileText -RepoPath $script:RepoRoot -Ref 'HEAD' -RelPath 'common/units/names_divisions/INEX_FIN_names_divisions.txt'
+        $text = Get-GitFileText -RepoPath $script:RepoRoot -Ref 'HEAD' -RelPath 'common/units/names_divisions/zz_INEX_FIN_names_divisions.txt'
         $text | Should -Match 'FIN_INF_01'
         # Built from char codes: Windows PowerShell reads this BOM-less test file as ANSI
         $a = [char]0x00E4
@@ -986,7 +986,7 @@ Describe "build.ps1 -EditNames action and -Audit CLI flags" {
     }
 
     It "Fails with exit 1 and leaves file untouched when -EditNames misses" {
-        $path = Join-Path $script:RepoRoot 'common\units\names_divisions\INEX_LAT_names_divisions.txt'
+        $path = Join-Path $script:RepoRoot 'common\units\names_divisions\zz_INEX_LAT_names_divisions.txt'
         $before = [System.IO.File]::ReadAllText($path)
         $output = & powershell -NoProfile -File $script:BuildScriptPath -EditNames LAT -Group INF_01 -Remove 'NonExistentDivisionName' 2>&1 | Out-String
         $LASTEXITCODE | Should -Be 1
@@ -1424,7 +1424,7 @@ Describe "build.ps1 -Audit -Keys and -EditNames CLI safety" {
 
     It "Refuses -RemoveGroup while another group links to it, leaving the file untouched" {
         # FRA_INF_01 is the numbering anchor of FRA_INF_02, FRA_MOT_01, FRA_MNT_01 and FRA_GAR_01
-        $path = Join-Path $script:RepoRoot 'common\units\names_divisions\INEX_FRA_names_divisions.txt'
+        $path = Join-Path $script:RepoRoot 'common\units\names_divisions\zz_INEX_FRA_names_divisions.txt'
         $before = [System.IO.File]::ReadAllText($path)
         $output = & powershell -NoProfile -File $script:BuildScriptPath -EditNames FRA -Group INF_01 -RemoveGroup 2>&1 | Out-String
         $LASTEXITCODE | Should -Be 1
@@ -1433,7 +1433,7 @@ Describe "build.ps1 -Audit -Keys and -EditNames CLI safety" {
     }
 
     It "Fails -ClearOrdered on a group that is already fallback-only, leaving the file untouched" {
-        $path = Join-Path $script:RepoRoot 'common\units\names_divisions\INEX_FRA_names_divisions.txt'
+        $path = Join-Path $script:RepoRoot 'common\units\names_divisions\zz_INEX_FRA_names_divisions.txt'
         $before = [System.IO.File]::ReadAllText($path)
         $null = & powershell -NoProfile -File $script:BuildScriptPath -EditNames FRA -Group INF_01 -ClearOrdered 2>&1 | Out-String
         $LASTEXITCODE | Should -Be 1
@@ -1787,7 +1787,7 @@ Describe "build.ps1 Helper: Get-WorkshopDocStats" {
             @"
 | File | Nation | Tag | Status in Description |
 | :--- | :--- | :--- | :--- |
-| ``INEX_TST_names_divisions.txt`` | $Nation | ``TST`` | Included |
+| ``zz_INEX_TST_names_divisions.txt`` | $Nation | ``TST`` | Included |
 
 ``````bbcode
 Intro line.
@@ -1842,14 +1842,14 @@ Describe "build.ps1 CLI on a fixture repo: -Batch, -AddGroup, quiet -EditNames, 
         $script:CliNamelistDir = Join-Path $script:CliDir "common\units\names_divisions"
         New-Item -ItemType Directory -Path $script:CliNamelistDir -Force | Out-Null
         $script:CliBuild = Join-Path $script:CliDir 'build.ps1'
-        $script:CliFile = Join-Path $script:CliNamelistDir 'INEX_TST_names_divisions.txt'
+        $script:CliFile = Join-Path $script:CliNamelistDir 'zz_INEX_TST_names_divisions.txt'
         $script:Utf8NoBom = New-Object System.Text.UTF8Encoding($false)
         Copy-Item $script:BuildScriptPath $script:CliBuild
         [System.IO.File]::WriteAllText((Join-Path $script:CliDir 'descriptor.mod'), "version=`"1.0.0`"`nname=`"Test Mod`"`nsupported_version=`"1.19.*`"`n", $script:Utf8NoBom)
         [System.IO.File]::WriteAllBytes((Join-Path $script:CliDir 'thumbnail.png'), [byte[]]@(0x89, 0x50, 0x4E, 0x47))
-        [System.IO.File]::WriteAllText((Join-Path $script:CliDir 'README.md'), "| Tag | Nation | Source File |`n| :--- | :--- | :--- |`n| ``TST`` | Testland | ``INEX_TST_names_divisions.txt`` |`n", $script:Utf8NoBom)
-        [System.IO.File]::WriteAllText((Join-Path $script:CliDir 'WORKSHOP_DESCRIPTION_GUIDELINES.md'), "| ``INEX_TST_names_divisions.txt`` | Testland | ``TST`` | Included |`n`n``````bbcode`n[h1]Included nations:[/h1]`n`n[b]Testland[/b]`n- Infantry ([i]1. Divisioona 'Karhu'[/i])`n```````n", $script:Utf8NoBom)
-        [System.IO.File]::WriteAllText((Join-Path $script:CliNamelistDir 'INEX_TST_EXTRA_names_divisions.txt'), "TST_MIL_01 = {`r`n`tname = `"Militia`"`r`n`tfor_countries = { TST }`r`n`tcan_use = { has_government = fascism }`r`n`tdivision_types = { `"militia`" }`r`n`tfallback_name = `"%d. Miliisi`"`r`n}`r`n", $script:Utf8NoBom)
+        [System.IO.File]::WriteAllText((Join-Path $script:CliDir 'README.md'), "| Tag | Nation | Source File |`n| :--- | :--- | :--- |`n| ``TST`` | Testland | ``zz_INEX_TST_names_divisions.txt`` |`n", $script:Utf8NoBom)
+        [System.IO.File]::WriteAllText((Join-Path $script:CliDir 'WORKSHOP_DESCRIPTION_GUIDELINES.md'), "| ``zz_INEX_TST_names_divisions.txt`` | Testland | ``TST`` | Included |`n`n``````bbcode`n[h1]Included nations:[/h1]`n`n[b]Testland[/b]`n- Infantry ([i]1. Divisioona 'Karhu'[/i])`n```````n", $script:Utf8NoBom)
+        [System.IO.File]::WriteAllText((Join-Path $script:CliNamelistDir 'zz_INEX_TST_EXTRA_names_divisions.txt'), "TST_MIL_01 = {`r`n`tname = `"Militia`"`r`n`tfor_countries = { TST }`r`n`tcan_use = { has_government = fascism }`r`n`tdivision_types = { `"militia`" }`r`n`tfallback_name = `"%d. Miliisi`"`r`n}`r`n", $script:Utf8NoBom)
 
         $script:CliNamelist = @"
 # Test header
@@ -2056,7 +2056,7 @@ TST_CAV_01 =
         Invoke-CliBuild -Check TST
         $script:CliExit | Should -Be 1
         $script:CliOutput | Should -Match 'Validate: FAILED'
-        $script:CliOutput | Should -Match '\[ERROR\] INEX_TST_names_divisions\.txt: Duplicate index 1'
+        $script:CliOutput | Should -Match '\[ERROR\] zz_INEX_TST_names_divisions\.txt: Duplicate index 1'
         Reset-CliNamelist
     }
 
@@ -2134,7 +2134,7 @@ ${fence}
     }
 
     It "Creates a new nation's file from a newFile operation, and refuses it when the file exists or is not first" {
-        $newFile = Join-Path $script:CliNamelistDir 'INEX_NEW_names_divisions.txt'
+        $newFile = Join-Path $script:CliNamelistDir 'zz_INEX_NEW_names_divisions.txt'
         $json = Join-Path $script:CliDir 'new.json'
         [System.IO.File]::WriteAllText($json, '[ { "newFile": true, "header": "Division names for Newland (NEW).\nImmersive Namelists Expanded (INEX)" }, { "addGroup": true, "group": "INF_01", "selector": "Infantry Divisions", "addType": "infantry", "fallback": "%d. Division", "add": ["1. Division ''Alpha''"] } ]', $script:Utf8NoBom)
 
@@ -2145,7 +2145,7 @@ ${fence}
 
         Invoke-CliBuild -EditNames NEW -Batch $json
         $script:CliExit | Should -Be 0 -Because $script:CliOutput
-        $script:CliOutput | Should -Match 'Created INEX_NEW_names_divisions\.txt'
+        $script:CliOutput | Should -Match 'Created zz_INEX_NEW_names_divisions\.txt'
         $bytes = [System.IO.File]::ReadAllBytes($newFile)
         $bytes[0] | Should -Not -Be 0xEF
         $text = [System.Text.Encoding]::UTF8.GetString($bytes)
@@ -2172,8 +2172,8 @@ Describe "build.ps1 Helper: nation registration in README, wiki Home and sidebar
         $script:DocsRoot = Join-Path ([System.IO.Path]::GetTempPath()) ("inex_docs_" + [guid]::NewGuid().ToString('N'))
         New-Item -ItemType Directory -Force -Path (Join-Path $script:DocsRoot 'wiki') | Out-Null
         $utf8 = New-Object System.Text.UTF8Encoding($false)
-        [System.IO.File]::WriteAllText((Join-Path $script:DocsRoot 'README.md'), "# Mod`n`n| Tag | Nation | Source File |`n| :--- | :--- | :--- |`n| ``AAA`` | Aland | ``INEX_AAA_names_divisions.txt`` |`n`nFooter`n", $utf8)
-        [System.IO.File]::WriteAllText((Join-Path $script:DocsRoot 'wiki\Home.md'), "| Nation | Tag | Groups | Source File(s) |`n|:---|:---|:---|:---|`n| [Aland](Aland) | ``AAA`` | 3 | ``INEX_AAA_names_divisions.txt`` |`n`n---`n", $utf8)
+        [System.IO.File]::WriteAllText((Join-Path $script:DocsRoot 'README.md'), "# Mod`n`n| Tag | Nation | Source File |`n| :--- | :--- | :--- |`n| ``AAA`` | Aland | ``zz_INEX_AAA_names_divisions.txt`` |`n`nFooter`n", $utf8)
+        [System.IO.File]::WriteAllText((Join-Path $script:DocsRoot 'wiki\Home.md'), "| Nation | Tag | Groups | Source File(s) |`n|:---|:---|:---|:---|`n| [Aland](Aland) | ``AAA`` | 3 | ``zz_INEX_AAA_names_divisions.txt`` |`n`n---`n", $utf8)
         [System.IO.File]::WriteAllText((Join-Path $script:DocsRoot 'wiki\_Sidebar.md'), "**Nations**`n- [Aland](Aland)`n`n---`n`n**Reference**`n- [Contributing](Contributing)`n", $utf8)
     }
 
@@ -2195,8 +2195,8 @@ Describe "build.ps1 Helper: nation registration in README, wiki Home and sidebar
     It "Registers a new nation in all three files, once" {
         $added = Add-NationDocRows -Root $script:DocsRoot -Tag 'BBB' -Country 'New Bland' -GroupCount 7
         $added | Should -Be @('README.md', 'wiki/Home.md', 'wiki/_Sidebar.md')
-        [System.IO.File]::ReadAllText((Join-Path $script:DocsRoot 'README.md')) | Should -Match '(?m)^\| `BBB` \| New Bland \| `INEX_BBB_names_divisions\.txt` \|$'
-        [System.IO.File]::ReadAllText((Join-Path $script:DocsRoot 'wiki\Home.md')) | Should -Match '(?m)^\| \[New Bland\]\(New-Bland\) \| `BBB` \| 7 \| `INEX_BBB_names_divisions\.txt` \|$'
+        [System.IO.File]::ReadAllText((Join-Path $script:DocsRoot 'README.md')) | Should -Match '(?m)^\| `BBB` \| New Bland \| `zz_INEX_BBB_names_divisions\.txt` \|$'
+        [System.IO.File]::ReadAllText((Join-Path $script:DocsRoot 'wiki\Home.md')) | Should -Match '(?m)^\| \[New Bland\]\(New-Bland\) \| `BBB` \| 7 \| `zz_INEX_BBB_names_divisions\.txt` \|$'
         [System.IO.File]::ReadAllText((Join-Path $script:DocsRoot 'wiki\_Sidebar.md')) | Should -Match '(?m)^- \[Aland\]\(Aland\)\n- \[New Bland\]\(New-Bland\)$'
         (Add-NationDocRows -Root $script:DocsRoot -Tag 'BBB' -Country 'New Bland' -GroupCount 7).Count | Should -Be 0
     }
@@ -2229,17 +2229,17 @@ Describe "build.ps1 Helper: Get-GameLogFindings" {
     It "Returns the lines that name a mod file, without timestamps, repeated lines once" {
         $log = @(
             '[21:13:24][no_game_date][dlc.cpp:218]: Invalid supported_version in  file: mod/ugc_1.mod line: 7',
-            '[21:14:55][no_game_date][lexer.cpp:553]: Location: common/units/names_divisions/INEX_TST_names_divisions.txt(332): Backslash followed by neither quote nor backslash',
-            '[21:15:01][1936.1.1.12][lexer.cpp:553]: Location: common/units/names_divisions/INEX_TST_names_divisions.txt(332): Backslash followed by neither quote nor backslash',
+            '[21:14:55][no_game_date][lexer.cpp:553]: Location: common/units/names_divisions/zz_INEX_TST_names_divisions.txt(332): Backslash followed by neither quote nor backslash',
+            '[21:15:01][1936.1.1.12][lexer.cpp:553]: Location: common/units/names_divisions/zz_INEX_TST_names_divisions.txt(332): Backslash followed by neither quote nor backslash',
             '[21:15:02][no_game_date][lexer.cpp:553]: Location: common/units/names_divisions/OTHER_names_divisions.txt(1): Backslash'
         )
-        $found = Get-GameLogFindings -LogLines $log -FileNames @('INEX_TST_names_divisions.txt')
+        $found = Get-GameLogFindings -LogLines $log -FileNames @('zz_INEX_TST_names_divisions.txt')
         $found.Count | Should -Be 1
-        $found[0] | Should -Be '[lexer.cpp:553]: Location: common/units/names_divisions/INEX_TST_names_divisions.txt(332): Backslash followed by neither quote nor backslash (x2)'
+        $found[0] | Should -Be '[lexer.cpp:553]: Location: common/units/names_divisions/zz_INEX_TST_names_divisions.txt(332): Backslash followed by neither quote nor backslash (x2)'
     }
 
     It "Returns nothing for a clean log or an empty file list" {
-        (Get-GameLogFindings -LogLines @('[21:13:24][no_game_date][dlc.cpp:218]: other') -FileNames @('INEX_TST_names_divisions.txt')).Count | Should -Be 0
-        (Get-GameLogFindings -LogLines @('x INEX_TST_names_divisions.txt') -FileNames @()).Count | Should -Be 0
+        (Get-GameLogFindings -LogLines @('[21:13:24][no_game_date][dlc.cpp:218]: other') -FileNames @('zz_INEX_TST_names_divisions.txt')).Count | Should -Be 0
+        (Get-GameLogFindings -LogLines @('x zz_INEX_TST_names_divisions.txt') -FileNames @()).Count | Should -Be 0
     }
 }

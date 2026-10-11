@@ -10,11 +10,11 @@ description: >-
 
 # INEX Namelist Audit & Modernization (planning)
 
-Plans how one existing `INEX_<KEY>_names_divisions.txt` file is brought up to current project standards without breaking players' saved templates.
+Plans how one existing `zz_INEX_<KEY>_names_divisions.txt` file is brought up to current project standards without breaking players' saved templates.
 
 Entries that meet the standard stay untouched; only reported gaps are fixed. The project rules are in `CLAUDE.md` (Antigravity: `GEMINI.md`) §2-6 and are not repeated here. The script does the mechanical checking; keep your context for judgment.
 
-`<KEY>` is the part of the filename between `INEX_` and `_names_divisions` (e.g. `LIT`, `GER_SS`, `GER_ADDITIONAL`). Audit **one file per run**.
+`<KEY>` is the part of the filename between `zz_INEX_` and `_names_divisions` (e.g. `LIT`, `GER_SS`, `GER_ADDITIONAL`). Audit **one file per run**.
 
 > A plan whose `Status:` is `READY` or `IN PROGRESS` is past this skill: use `hoi4-inex-namelist-implement` and do not repeat any phase below.
 
@@ -57,7 +57,7 @@ This skill produces one file, `docs/superpowers/plans/YYYY-MM-DD-<country>-audit
 
 ## 2. Modern Standards Rubric
 
-A modernized file meets all of these (reference implementation: `INEX_PER_names_divisions.txt`):
+A modernized file meets all of these (reference implementation: `zz_INEX_PER_names_divisions.txt`):
 
 | # | Standard | Lint flag |
 |---|---|---|
@@ -125,7 +125,7 @@ Dispatch a budgeted fact-checker subagent using `.claude/agents/inex-audit-resea
 Present this report and **stop for user approval**:
 
 ```markdown
-## Audit: INEX_<KEY>_names_divisions.txt
+## Audit: zz_INEX_<KEY>_names_divisions.txt
 Scorecard: <groups> groups, <authored>/<ordered> authored entries, <n> lint flags, last touched <date>
 
 ### Critical  (broken language, wrong names, invariant risks)

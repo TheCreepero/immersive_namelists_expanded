@@ -1,6 +1,6 @@
 # Greece
 
-**Country Tag:** `GRE` | **Source File:** [`INEX_GRE_names_divisions.txt`](../common/units/names_divisions/INEX_GRE_names_divisions.txt)
+**Country Tag:** `GRE` | **Source File:** [`zz_INEX_GRE_names_divisions.txt`](../common/units/names_divisions/zz_INEX_GRE_names_divisions.txt)
 
 ---
 

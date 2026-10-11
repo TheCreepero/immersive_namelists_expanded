@@ -8,11 +8,17 @@ This page explains how Hearts of Iron IV loads and processes division namelist f
 
 HoI4 loads **all files** in `common/units/names_divisions/` additively at game start. This means:
 
-- A file named `INEX_EST_names_divisions.txt` coexists alongside the vanilla `EST_names_divisions.txt`.
+- A file named `zz_INEX_EST_names_divisions.txt` coexists alongside the vanilla `EST_names_divisions.txt`.
 - Both files are active simultaneously.
 - There is **no overwrite of the whole file** — only individual group tags can be overridden.
 
-The INEX file naming prefix (`INEX_<TAG>_`) is what ensures INEX files don't collide with vanilla files at the filesystem level.
+The INEX file naming prefix (`zz_INEX_<TAG>_`) is what ensures INEX files don't collide with vanilla files at the filesystem level.
+
+### Load order
+
+The game reads the folder in file name order. When two files define the same group tag, the file that loads later wins. The `zz_` prefix makes every INEX file load after the vanilla `<TAG>_names_divisions.txt`, and after another mod's copy of that file. The order of mods in the playset does not change this.
+
+Before the prefix was added, the INEX files of nations whose tag sorts after "INEX" (Italy, Japan, the Soviet Union, the United States and others) loaded before the vanilla file, and their groups on vanilla tags were replaced by the vanilla ones.
 
 ---
 

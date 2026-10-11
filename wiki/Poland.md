@@ -1,6 +1,6 @@
 # Poland
 
-**Country Tag:** `POL` | **Source File:** [`INEX_POL_names_divisions.txt`](../common/units/names_divisions/INEX_POL_names_divisions.txt)
+**Country Tag:** `POL` | **Source File:** [`zz_INEX_POL_names_divisions.txt`](../common/units/names_divisions/zz_INEX_POL_names_divisions.txt)
 
 ---
 

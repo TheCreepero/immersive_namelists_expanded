@@ -1,6 +1,6 @@
 # Latvia
 
-**Country Tag:** `LAT` | **Source File:** [`INEX_LAT_names_divisions.txt`](../common/units/names_divisions/INEX_LAT_names_divisions.txt)
+**Country Tag:** `LAT` | **Source File:** [`zz_INEX_LAT_names_divisions.txt`](../common/units/names_divisions/zz_INEX_LAT_names_divisions.txt)
 
 ---
 

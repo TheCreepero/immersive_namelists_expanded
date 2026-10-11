@@ -110,7 +110,7 @@
     a banner plus a blank line adds a section banner (e.g. "# ===== Cavalry =====\n\nOverrides vanilla FRA_CAV_01.").
 
 .PARAMETER SetHeader
-    Replace the file header (comment lines before the first group) of INEX_<TAG>_names_divisions.txt with -HeaderText.
+    Replace the file header (comment lines before the first group) of zz_INEX_<TAG>_names_divisions.txt with -HeaderText.
     Comment lines attached directly to the first group are kept.
 
 .PARAMETER HeaderText
@@ -193,7 +193,7 @@
 
 .PARAMETER Audit
     Print a heuristic quality scorecard for an INEX namelist file (informational, never fails the build).
-    Accepts the file key between 'INEX_' and '_names_divisions' (e.g. -Audit LIT, -Audit GER_SS), or ALL for a triage table.
+    Accepts the file key between 'zz_INEX_' and '_names_divisions' (e.g. -Audit LIT, -Audit GER_SS), or ALL for a triage table.
 
 .PARAMETER Compare
     With -Audit <KEY>: compare the working copy against a git ref (e.g. -Compare HEAD). Lists removed/added tags,
@@ -712,7 +712,7 @@ function Invoke-Validation {
         $readmeText = [System.IO.File]::ReadAllText($readmePath, [System.Text.Encoding]::UTF8)
         $implementedTags = [System.Collections.Generic.HashSet[string]]::new()
         foreach ($f in $namelistFiles) {
-            if ($f.Name -match '^INEX_([A-Z0-9]{3})_') {
+            if ($f.Name -match '^zz_INEX_([A-Z0-9]{3})_') {
                 [void]$implementedTags.Add($matches[1])
             }
         }
@@ -1253,6 +1253,7 @@ function Get-NamelistAuditData {
 }
 
 # --- Helper: Read a file's text at a git ref; $null if the ref or path does not exist ---
+# A zz_INEX_ namelist path falls back to its pre-rename name (INEX_) when the ref does not have it.
 function Get-GitFileText {
     param([string]$RepoPath, [string]$Ref, [string]$RelPath)
 
@@ -1264,6 +1265,10 @@ function Get-GitFileText {
     [Console]::OutputEncoding = New-Object System.Text.UTF8Encoding($false)
     try {
         $out = & git -C $RepoPath show "${Ref}:$RelPath" 2>$null
+        # Refs older than the 2026-10-11 rename hold the namelist files without the zz_ prefix
+        if ($LASTEXITCODE -ne 0 -and $RelPath -match '/zz_INEX_[^/]+$') {
+            $out = & git -C $RepoPath show "${Ref}:$($RelPath -replace '/zz_(INEX_[^/]+)$', '/$1')" 2>$null
+        }
         if ($LASTEXITCODE -ne 0) { return $null }
         return (@($out) -join "`n")
     } catch {
@@ -1355,7 +1360,7 @@ function Resolve-GroupTag {
         [string[]]$Known
     )
     $n = $Name.Trim().ToUpper()
-    $cleanTag = $Tag.ToUpper().Trim() -replace '^INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
+    $cleanTag = $Tag.ToUpper().Trim() -replace '^(zz_)?INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
     foreach ($cand in @($n, "${cleanTag}_$n", "INEX_${cleanTag}_$n", "${cleanTag}_${n}_01")) {
         # Return the file's own spelling: vanilla tags such as GER_Arm_02 are mixed-case, and the edit looks them up case-sensitively
         $hit = @($Known | Where-Object { $_ -eq $cand } | Select-Object -First 1)
@@ -2055,11 +2060,11 @@ function Invoke-NamelistEditOps {
             if ($op.NewFile) {
                 # Batch only: the first operation of a new nation's plan creates the file from its header
                 if ($n -gt 0) { throw '"newFile" must be the first operation' }
-                if ($Text.Trim()) { throw "`"newFile`": INEX_${Tag}_names_divisions.txt already exists" }
+                if ($Text.Trim()) { throw "`"newFile`": zz_INEX_${Tag}_names_divisions.txt already exists" }
                 if (-not $op.Header.Trim()) { throw '"newFile" needs "header"' }
                 if ($op.Groups.Count -gt 0) { throw '"newFile" takes only "header"' }
                 $Text = Set-NamelistHeader -Text '' -Header $op.Header
-                $summaries.Add("Created INEX_${Tag}_names_divisions.txt")
+                $summaries.Add("Created zz_INEX_${Tag}_names_divisions.txt")
                 continue
             }
             if ($op.Header) { throw '"header" applies only to "newFile"; use -SetHeader for an existing file' }
@@ -2194,8 +2199,8 @@ function Invoke-NamelistEdit {
         [switch]$ShowNames,
         [switch]$DryRun
     )
-    $Tag = $Tag.ToUpper().Trim() -replace '^INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
-    $modFile = Join-Path $RepoDir "common\units\names_divisions\INEX_${Tag}_names_divisions.txt"
+    $Tag = $Tag.ToUpper().Trim() -replace '^(zz_)?INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
+    $modFile = Join-Path $RepoDir "common\units\names_divisions\zz_INEX_${Tag}_names_divisions.txt"
     # A batch that starts with "newFile" creates the file
     $creates = $Ops.Count -gt 0 -and $Ops[0].NewFile
     if (-not (Test-Path $modFile) -and -not $creates) { Write-Err "Mod namelist not found: $modFile"; return 1 }
@@ -2210,7 +2215,7 @@ function Invoke-NamelistEdit {
 
     $text = if (Test-Path $modFile) { [System.IO.File]::ReadAllText($modFile, [System.Text.Encoding]::UTF8) } else { '' }
     try {
-        if ($creates -and (Test-Path $modFile)) { throw "`"newFile`": INEX_${Tag}_names_divisions.txt already exists" }
+        if ($creates -and (Test-Path $modFile)) { throw "`"newFile`": zz_INEX_${Tag}_names_divisions.txt already exists" }
         $result = Invoke-NamelistEditOps -Text $text -Tag $Tag -Ops $Ops -TakenTags $takenTags
     } catch {
         Write-Err $_.Exception.Message
@@ -2248,14 +2253,14 @@ function Invoke-NamelistHeader {
         [string]$Tag,
         [string]$Header
     )
-    $Tag = $Tag.ToUpper().Trim() -replace '^INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
-    $modFile = Join-Path $RepoDir "common\units\names_divisions\INEX_${Tag}_names_divisions.txt"
+    $Tag = $Tag.ToUpper().Trim() -replace '^(zz_)?INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
+    $modFile = Join-Path $RepoDir "common\units\names_divisions\zz_INEX_${Tag}_names_divisions.txt"
     if (-not (Test-Path $modFile)) { Write-Err "Mod namelist not found: $modFile"; return 1 }
     if (-not $Header.Trim()) { Write-Err "-HeaderText is empty"; return 1 }
     $text = [System.IO.File]::ReadAllText($modFile, [System.Text.Encoding]::UTF8)
     $new = Set-NamelistHeader -Text $text -Header $Header
     [System.IO.File]::WriteAllText($modFile, $new, (New-Object System.Text.UTF8Encoding $false))
-    Write-Host "Header of INEX_${Tag}_names_divisions.txt replaced" -ForegroundColor Green
+    Write-Host "Header of zz_INEX_${Tag}_names_divisions.txt replaced" -ForegroundColor Green
     return 0
 }
 
@@ -2323,7 +2328,7 @@ function Format-NamelistDiff {
         [string]$Tag,
         [string]$BaseLabel
     )
-    $cleanTag = $Tag.ToUpper().Trim() -replace '^INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
+    $cleanTag = $Tag.ToUpper().Trim() -replace '^(zz_)?INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
     $short = { param($t) $t -replace "^$([regex]::Escape($cleanTag))_", '' }
     $changed = @($Diff | Where-Object { $_.Status -ne 'unchanged' })
     $same = @($Diff | Where-Object { $_.Status -eq 'unchanged' })
@@ -2364,8 +2369,8 @@ function Get-TagNamelistDiff {
         [string]$Tag,
         [string]$BaseRev = 'HEAD'
     )
-    $Tag = $Tag.ToUpper().Trim() -replace '^INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
-    $rel = "common/units/names_divisions/INEX_${Tag}_names_divisions.txt"
+    $Tag = $Tag.ToUpper().Trim() -replace '^(zz_)?INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
+    $rel = "common/units/names_divisions/zz_INEX_${Tag}_names_divisions.txt"
     $modFile = Join-Path $RepoDir $rel
     if (-not (Test-Path $modFile)) { throw "Mod namelist not found: $modFile" }
 
@@ -2410,7 +2415,7 @@ function Get-CountryName {
     $readmePath = Join-Path $RepoDir 'README.md'
     if (-not (Test-Path $readmePath)) { return $null }
     $readme = [System.IO.File]::ReadAllText($readmePath, [System.Text.Encoding]::UTF8)
-    $cleanTag = $Tag.ToUpper().Trim() -replace '^INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
+    $cleanTag = $Tag.ToUpper().Trim() -replace '^(zz_)?INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
     if ($cleanTag -eq 'GER_SS') { return 'Germany-Waffen-SS' }
     if ($cleanTag -eq 'GER_ADDITIONAL') { return 'Germany-Additional' }
     if ($cleanTag.StartsWith('GER')) { return 'Germany' }
@@ -2431,7 +2436,7 @@ function Format-PlanChangeTable {
         [object[]]$Diff,
         [string]$Tag
     )
-    $cleanTag = $Tag.ToUpper().Trim() -replace '^INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
+    $cleanTag = $Tag.ToUpper().Trim() -replace '^(zz_)?INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
     $short = { param($t) $t -replace "^$([regex]::Escape($cleanTag))_", '' }
     $changed = @($Diff | Where-Object { $_.Status -ne 'unchanged' })
     $same = @($Diff | Where-Object { $_.Status -eq 'unchanged' })
@@ -2509,7 +2514,7 @@ function New-AuditPlanText {
     $l = [System.Collections.Generic.List[string]]::new()
     $l.Add("# $Country ($Tag) Namelist Audit - $Date"); $l.Add('')
     $l.Add('Status: PLANNING'); $l.Add('')
-    $l.Add("File: ``common/units/names_divisions/INEX_${Tag}_names_divisions.txt``"); $l.Add('')
+    $l.Add("File: ``common/units/names_divisions/zz_INEX_${Tag}_names_divisions.txt``"); $l.Add('')
     $l.Add('## For the implementer')
     $l.Add('Planning and research are finished once Status is READY. Run this plan with the `hoi4-inex-namelist-implement` skill: start at the first unticked box under "Implementation steps" and read no further than `## Edit batch`. Do not research, re-decide, dispatch a researcher or invoke the audit skill. When a stop condition applies, stop and report.'); $l.Add('')
     $l.Add("## Initial report (``-Audit $Tag``)")
@@ -2576,7 +2581,7 @@ function Invoke-AuditPlan {
         [string]$BaseRev = 'HEAD',
         [switch]$RefreshOnly
     )
-    $Tag = $Tag.ToUpper().Trim() -replace '^INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
+    $Tag = $Tag.ToUpper().Trim() -replace '^(zz_)?INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
     $country = Get-CountryName -Tag $Tag
     if (-not $country) { Write-Err "README.md has no row for $Tag"; return 1 }
     try { $result = Get-TagNamelistDiff -Tag $Tag -BaseRev $BaseRev } catch { Write-Err $_.Exception.Message; return 1 }
@@ -2606,7 +2611,7 @@ function Invoke-AuditPlan {
             $verb = 'Refreshed change table in'
         }
     } else {
-        $target = Join-Path $RepoDir "common\units\names_divisions\INEX_${Tag}_names_divisions.txt"
+        $target = Join-Path $RepoDir "common\units\names_divisions\zz_INEX_${Tag}_names_divisions.txt"
         $data = Get-NamelistAuditData -Path $target
         $findingLines = @(foreach ($g in $data.Groups) {
             if ($g.Flags.Count -gt 0) { "[$($g.Tag)] flags: $($g.Flags -join ', ')" }
@@ -2628,7 +2633,7 @@ function Update-WikiGroupRows {
         [object[]]$Groups,
         [string]$Tag
     )
-    $cleanTag = $Tag.ToUpper().Trim() -replace '^INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
+    $cleanTag = $Tag.ToUpper().Trim() -replace '^(zz_)?INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
     $byTag = @{}; foreach ($g in $Groups) { $byTag[$g.Tag] = $g }
     $changes = [System.Collections.Generic.List[string]]::new()
     $stale = [System.Collections.Generic.List[string]]::new()
@@ -2808,7 +2813,7 @@ function Add-MarkdownListLine {
 function Add-NationDocRows {
     param([string]$Root, [string]$Tag, [string]$Country, [int]$GroupCount)
     $utf8 = New-Object System.Text.UTF8Encoding $false
-    $file = "INEX_${Tag}_names_divisions.txt"
+    $file = "zz_INEX_${Tag}_names_divisions.txt"
     $page = $Country -replace ' ', '-'
     $added = [System.Collections.Generic.List[string]]::new()
     $targets = @(
@@ -2833,8 +2838,8 @@ function Add-NationDocRows {
 # -Country registers a new nation first: its README.md row, wiki/Home.md row and wiki/_Sidebar.md line.
 function Invoke-SyncWiki {
     param([string]$Tag, [string]$Country)
-    $Tag = $Tag.ToUpper().Trim() -replace '^INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
-    $modFile = Join-Path $RepoDir "common\units\names_divisions\INEX_${Tag}_names_divisions.txt"
+    $Tag = $Tag.ToUpper().Trim() -replace '^(zz_)?INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
+    $modFile = Join-Path $RepoDir "common\units\names_divisions\zz_INEX_${Tag}_names_divisions.txt"
     if (-not (Test-Path $modFile)) { Write-Err "Mod namelist not found: $modFile"; return 1 }
     if ($Country) {
         $Country = $Country.Trim()
@@ -2892,7 +2897,7 @@ function Invoke-SyncWiki {
     if (Test-Path $homePath) {
         $homeText = [System.IO.File]::ReadAllText($homePath, [System.Text.Encoding]::UTF8)
         # The row is found by its source file: the three German files share the tag GER
-        $pattern = "(?m)^(\|[^|\r\n]*\|[^|\r\n]*\|\s*)(\d+)(\s*\|\s*``INEX_$([regex]::Escape($Tag))_names_divisions\.txt``)"
+        $pattern = "(?m)^(\|[^|\r\n]*\|[^|\r\n]*\|\s*)(\d+)(\s*\|\s*``zz_INEX_$([regex]::Escape($Tag))_names_divisions\.txt``)"
         $m = [regex]::Match($homeText, $pattern)
         if (-not $m.Success) {
             Write-Host "wiki/Home.md: no $Tag row"
@@ -3007,9 +3012,9 @@ function Get-WorkshopDocStats {
     if ($stats.Emojis -gt 0) { $warnings.Add("workshop description contains $($stats.Emojis) emoji(s)") }
     if ($stats.Length -gt 17000) { $warnings.Add("workshop description is $($stats.Length) chars (limit 17000)") }
 
-    $row = [regex]::Match($GuideText, "(?m)^\|[ \t]*``?INEX_$([regex]::Escape($Key))_names_divisions\.txt``?[ \t]*\|[ \t]*([^|\r\n]+?)[ \t]*\|")
+    $row = [regex]::Match($GuideText, "(?m)^\|[ \t]*``?zz_INEX_$([regex]::Escape($Key))_names_divisions\.txt``?[ \t]*\|[ \t]*([^|\r\n]+?)[ \t]*\|")
     if (-not $row.Success) {
-        $warnings.Add("workshop cross-reference table has no row for INEX_${Key}_names_divisions.txt")
+        $warnings.Add("workshop cross-reference table has no row for zz_INEX_${Key}_names_divisions.txt")
     } else {
         # "Germany (SS)" and "Iran / Persia" share the block of their first name
         $nation = (($row.Groups[1].Value -replace '\s*\(.*\)\s*$', '') -split '/')[0].Trim()
@@ -3048,18 +3053,18 @@ function Invoke-NamelistAudit {
     )
 
     $namelistDir = Join-Path $RepoDir "common\units\names_divisions"
-    $Key = $Key.ToUpper().Trim() -replace '^INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
+    $Key = $Key.ToUpper().Trim() -replace '^(zz_)?INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
 
     if ($Key -eq 'ALL') {
         Write-Step "Namelist quality triage (most flags first)"
-        $rows = foreach ($f in (Get-ChildItem -Path $namelistDir -Filter "INEX_*_names_divisions.txt")) {
+        $rows = foreach ($f in (Get-ChildItem -Path $namelistDir -Filter "zz_INEX_*_names_divisions.txt")) {
             $data = Get-NamelistAuditData -Path $f.FullName
             $ordered = ($data.Groups | Measure-Object -Property OrderedCount -Sum).Sum
             $authored = ($data.Groups | Measure-Object -Property AuthoredCount -Sum).Sum
             $flagCount = $data.FileFlags.Count + ($data.Groups | ForEach-Object { $_.Flags.Count } | Measure-Object -Sum).Sum
             $lastCommit = (& git -C $RepoDir log -1 --format=%ad --date=short -- $f.FullName 2>$null)
             [PSCustomObject]@{
-                Key        = ($f.Name -replace '^INEX_', '' -replace '_names_divisions\.txt$', '')
+                Key        = ($f.Name -replace '^(zz_)?INEX_', '' -replace '_names_divisions\.txt$', '')
                 Groups     = $data.Groups.Count
                 Authored   = if ($ordered -gt 0) { "{0}/{1} ({2:P0})" -f $authored, $ordered, ($authored / $ordered) } else { "0/0" }
                 Flags      = $flagCount
@@ -3071,10 +3076,10 @@ function Invoke-NamelistAudit {
         return
     }
 
-    $target = Join-Path $namelistDir "INEX_${Key}_names_divisions.txt"
+    $target = Join-Path $namelistDir "zz_INEX_${Key}_names_divisions.txt"
     if (-not (Test-Path $target)) {
         Write-Err "No namelist file for key '$Key' (expected $target)."
-        $keys = Get-ChildItem -Path $namelistDir -Filter "INEX_*_names_divisions.txt" | ForEach-Object { $_.Name -replace '^INEX_', '' -replace '_names_divisions\.txt$', '' }
+        $keys = Get-ChildItem -Path $namelistDir -Filter "zz_INEX_*_names_divisions.txt" | ForEach-Object { $_.Name -replace '^(zz_)?INEX_', '' -replace '_names_divisions\.txt$', '' }
         Write-Info "Available keys: $($keys -join ', '), ALL"
         exit 1
     }
@@ -3122,7 +3127,7 @@ function Invoke-NamelistAudit {
 
     $overlap = Get-VanillaOverlap -Groups $data.Groups -Key $Key -Hoi4Dir (Find-Hoi4Install -CustomPath $Hoi4Dir)
 
-    Write-Step "Quality audit: INEX_${Key}_names_divisions.txt ($($data.Groups.Count) groups)"
+    Write-Step "Quality audit: zz_INEX_${Key}_names_divisions.txt ($($data.Groups.Count) groups)"
     foreach ($ff in $data.FileFlags) { Write-Warn "File: $ff" }
 
     foreach ($g in $data.Groups) {
@@ -3193,7 +3198,7 @@ function Invoke-NamelistAudit {
     Write-Host "`n$(Format-AuditSummaryLine -Key $Key -Data $data)" -ForegroundColor Cyan
 
     if ($CompareRef) {
-        $relPath = "common/units/names_divisions/INEX_${Key}_names_divisions.txt"
+        $relPath = "common/units/names_divisions/zz_INEX_${Key}_names_divisions.txt"
         $oldText = Get-GitFileText -RepoPath $RepoDir -Ref $CompareRef -RelPath $relPath
 
         $oldData = [PSCustomObject]@{ Groups = @() }
@@ -3288,8 +3293,8 @@ function Invoke-Check {
         [string]$Tag,
         [string]$BaseRev = 'HEAD'
     )
-    $Tag = $Tag.ToUpper().Trim() -replace '^INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
-    $modFile = Join-Path $RepoDir "common\units\names_divisions\INEX_${Tag}_names_divisions.txt"
+    $Tag = $Tag.ToUpper().Trim() -replace '^(zz_)?INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
+    $modFile = Join-Path $RepoDir "common\units\names_divisions\zz_INEX_${Tag}_names_divisions.txt"
     if (-not (Test-Path $modFile)) { Write-Err "Mod namelist not found: $modFile"; return 1 }
     $failed = [System.Collections.Generic.List[string]]::new()
 

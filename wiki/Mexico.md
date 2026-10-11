@@ -1,6 +1,6 @@
 # Mexico
 
-**Country Tag:** `MEX` | **Source File:** [`INEX_MEX_names_divisions.txt`](../common/units/names_divisions/INEX_MEX_names_divisions.txt)
+**Country Tag:** `MEX` | **Source File:** [`zz_INEX_MEX_names_divisions.txt`](../common/units/names_divisions/zz_INEX_MEX_names_divisions.txt)
 
 ---
 

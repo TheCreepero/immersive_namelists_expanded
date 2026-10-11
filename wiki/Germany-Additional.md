@@ -1,6 +1,6 @@
 # Germany — Additional Formations
 
-**Country Tag:** `GER` | **Source File:** [`INEX_GER_ADDITIONAL_names_divisions.txt`](../common/units/names_divisions/INEX_GER_ADDITIONAL_names_divisions.txt)
+**Country Tag:** `GER` | **Source File:** [`zz_INEX_GER_ADDITIONAL_names_divisions.txt`](../common/units/names_divisions/zz_INEX_GER_ADDITIONAL_names_divisions.txt)
 
 > See also: [Heer](Germany) and [Waffen-SS](Germany-Waffen-SS).
 

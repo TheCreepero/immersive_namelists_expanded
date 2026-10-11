@@ -1,6 +1,6 @@
 # Lithuania
 
-**Country Tag:** `LIT` | **Source File:** [`INEX_LIT_names_divisions.txt`](../common/units/names_divisions/INEX_LIT_names_divisions.txt)
+**Country Tag:** `LIT` | **Source File:** [`zz_INEX_LIT_names_divisions.txt`](../common/units/names_divisions/zz_INEX_LIT_names_divisions.txt)
 
 ---
 

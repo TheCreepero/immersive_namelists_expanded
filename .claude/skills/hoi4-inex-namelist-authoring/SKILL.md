@@ -115,7 +115,7 @@ When these lists get nicknames or identity names (`12. Divisioona 'Kollaa'`), ke
 
 ## 4. What the batch produces
 
-`common/units/names_divisions/INEX_<TAG>_names_divisions.txt`, UTF-8 without BOM. Each `addGroup` operation writes a group in this layout:
+`common/units/names_divisions/zz_INEX_<TAG>_names_divisions.txt`, UTF-8 without BOM. Each `addGroup` operation writes a group in this layout:
 
 ```txt
 # Division template historical names system for <Country> (<TAG>).

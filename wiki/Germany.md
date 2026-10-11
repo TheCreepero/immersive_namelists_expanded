@@ -1,6 +1,6 @@
 # Germany — Heer
 
-**Country Tag:** `GER` | **Source File:** [`INEX_GER_names_divisions.txt`](../common/units/names_divisions/INEX_GER_names_divisions.txt)
+**Country Tag:** `GER` | **Source File:** [`zz_INEX_GER_names_divisions.txt`](../common/units/names_divisions/zz_INEX_GER_names_divisions.txt)
 
 > **Note on German files:** Germany is split across three files. See also [Waffen-SS](Germany-Waffen-SS) and [Additional Formations](Germany-Additional).
 

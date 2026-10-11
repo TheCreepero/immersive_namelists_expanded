@@ -18,6 +18,9 @@ An entry says what happens, where it was seen, the workaround, and what a fix wo
 - **`-AddGroup` cannot create a group whose tag does not start with the file's country tag.** It puts `<TAG>_` in front, so vanilla's `SPA_INF_01` and `SPD_INF_01` to `SPD_INF_06` (all in the SPR file) come out as `SPR_SPA_INF_01` and so on, and the vanilla groups are not overridden. Seen in the Spain plan of 2026-10-09. Workaround: a one-line rename after the batch, written as a step of that plan. Fix idea: keep a tag that already has the `<XXX>_<CAT>_<NN>` form, or add a batch key that marks the tag as final.
 - **`-Comment` with a banner on a group that already has one may add a second banner.** Seen once for `JAP_CAV_01` (2026-10-01) and removed by hand; not re-tested since.
 
+### Game log
+- **`-GameLog` fails while the game is running.** `ReadAllLines` cannot open `error.log` because the game holds it open for writing. Seen on 2026-10-11. Workaround: close the game first. Fix idea: open the log with `FileShare.ReadWrite`.
+
 ### Docs
 - **`Get-CountryName` hard-codes the three German wiki pages.** A second multi-file nation needs the same mapping. Fix idea: read the page from the `wiki/Home.md` row of the file.
 - **The Workshop description grows about 530 characters per nation**: 10,443 of 17,000 with 18 nations (2026-10-09), so the limit test fails around 12 nations from now. Decide on a shorter per-nation form before then.

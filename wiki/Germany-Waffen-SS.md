@@ -1,6 +1,6 @@
 # Germany — Waffen-SS
 
-**Country Tag:** `GER` | **Source File:** [`INEX_GER_SS_names_divisions.txt`](../common/units/names_divisions/INEX_GER_SS_names_divisions.txt)
+**Country Tag:** `GER` | **Source File:** [`zz_INEX_GER_SS_names_divisions.txt`](../common/units/names_divisions/zz_INEX_GER_SS_names_divisions.txt)
 
 > See also: [Heer](Germany) and [Additional Formations](Germany-Additional).
 

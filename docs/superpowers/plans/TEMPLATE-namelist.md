@@ -2,7 +2,7 @@
 
 Status: PLANNING
 
-File: `common/units/names_divisions/INEX_<TAG>_names_divisions.txt`
+File: `common/units/names_divisions/zz_INEX_<TAG>_names_divisions.txt`
 
 <!-- Template for hoi4-inex-namelist-authoring. Copy to YYYY-MM-DD-<country>-namelist.md, fill every "TODO:" section, delete this comment. Sections marked "TODO(implementer)" stay for the implementer. -->
 
@@ -34,7 +34,7 @@ Planning and research are finished once Status is READY. Run this plan with the 
 
 ## Implementation steps
 <!-- TODO: adjust the steps to this nation -->
-- [ ] 1. Set `Status: IN PROGRESS`, then apply the batch: `powershell -File .\build.ps1 -EditNames <TAG> -Batch <this file>`. Expect `Created INEX_<TAG>_names_divisions.txt`, one green line per group and no `[ERROR]`.
+- [ ] 1. Set `Status: IN PROGRESS`, then apply the batch: `powershell -File .\build.ps1 -EditNames <TAG> -Batch <this file>`. Expect `Created zz_INEX_<TAG>_names_divisions.txt`, one green line per group and no `[ERROR]`.
 - [ ] 2. Write `wiki/<Country>.md` from "Docs payload" with the Write tool.
 - [ ] 3. `powershell -File .\build.ps1 -SyncWiki <TAG> -Country "<Country>"`. Expect `Registered <TAG> (<Country>) in: README.md, wiki/Home.md, wiki/_Sidebar.md`, `<Country>.md: 0 row(s) updated` and no line about stale or missing rows. (An expansion of an existing nation runs it without `-Country`.)
 - [ ] 4. `WORKSHOP_DESCRIPTION_GUIDELINES.md`: insert the cross-reference row and the `[b]<Country>[/b]` block from "Docs payload".

@@ -15,7 +15,7 @@ BeforeAll {
         'camelry', 'ranger_battalion', 'penal_battalion'
     )
 
-    $script:NamelistFiles = Get-ChildItem -Path $script:NamelistDir -Filter "INEX_*.txt"
+    $script:NamelistFiles = Get-ChildItem -Path $script:NamelistDir -Filter "zz_INEX_*.txt"
 }
 
 Describe "Division Namelist Files: Global Invariants" {
@@ -58,10 +58,10 @@ Describe "Division Namelist Files: Global Invariants" {
 
 Describe "Division Namelist Files: Per-File Invariants" {
     BeforeAll {
-        $files = Get-ChildItem -Path (Join-Path (Resolve-Path (Join-Path $PSScriptRoot "..")) "common\units\names_divisions") -Filter "INEX_*.txt"
+        $files = Get-ChildItem -Path (Join-Path (Resolve-Path (Join-Path $PSScriptRoot "..")) "common\units\names_divisions") -Filter "zz_INEX_*.txt"
     }
 
-    Context "File: <_.Name>" -ForEach (Get-ChildItem -Path (Join-Path (Resolve-Path (Join-Path $PSScriptRoot "..")) "common\units\names_divisions") -Filter "INEX_*.txt") {
+    Context "File: <_.Name>" -ForEach (Get-ChildItem -Path (Join-Path (Resolve-Path (Join-Path $PSScriptRoot "..")) "common\units\names_divisions") -Filter "zz_INEX_*.txt") {
         BeforeAll {
             $script:CurrentFile = $_
             $script:RawBytes = [System.IO.File]::ReadAllBytes($script:CurrentFile.FullName)

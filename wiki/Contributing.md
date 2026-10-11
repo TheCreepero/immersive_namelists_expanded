@@ -25,7 +25,7 @@ This page describes how to contribute new namelists or expand existing ones in t
 
 All division namelist files live in:
 ```
-common/units/names_divisions/INEX_<TAG>_names_divisions.txt
+common/units/names_divisions/zz_INEX_<TAG>_names_divisions.txt
 ```
 
 Germany is intentionally split across three files — see [Germany](Germany), [Germany Waffen-SS](Germany-Waffen-SS), and [Germany Additional](Germany-Additional).

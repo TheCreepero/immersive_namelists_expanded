@@ -1,6 +1,6 @@
 # Sweden
 
-**Country Tag:** `SWE` | **Source File:** [`INEX_SWE_names_divisions.txt`](../common/units/names_divisions/INEX_SWE_names_divisions.txt)
+**Country Tag:** `SWE` | **Source File:** [`zz_INEX_SWE_names_divisions.txt`](../common/units/names_divisions/zz_INEX_SWE_names_divisions.txt)
 
 ---
 
