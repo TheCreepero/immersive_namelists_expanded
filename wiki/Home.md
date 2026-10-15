@@ -14,7 +14,7 @@
 | [Germany (Wehrmacht)](Germany) | `GER` | 22 | `zz_INEX_GER_names_divisions.txt` |
 | [Germany (Waffen-SS)](Germany-Waffen-SS) | `GER` | 10 | `zz_INEX_GER_SS_names_divisions.txt` |
 | [Germany (Additional)](Germany-Additional) | `GER` | 24 | `zz_INEX_GER_ADDITIONAL_names_divisions.txt` |
-| [Soviet Union](Soviet-Union) | `SOV` | 20 | `zz_INEX_SOV_names_divisions.txt` |
+| [Soviet Union](Soviet-Union) | `SOV` | 28 | `zz_INEX_SOV_names_divisions.txt` |
 | [United Kingdom](United-Kingdom) | `ENG` | 28 | `zz_INEX_ENG_names_divisions.txt` |
 | [France](France) | `FRA` | 20 | `zz_INEX_FRA_names_divisions.txt` |
 | [Italy](Italy) | `ITA` | 43 | `zz_INEX_ITA_names_divisions.txt` |

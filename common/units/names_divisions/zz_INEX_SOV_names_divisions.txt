@@ -1,18 +1,21 @@
 # Immersive Namelists Expanded: Soviet Union (SOV)
 #
-# Covers historical and wartime Red Army formations across all combat arms:
-# - Infantry: Strelkovye Divizii (Rifle Divisions), Narodnoe Opolcheniye (People's Militia)
-# - Mobile: Motostrelkovye Divizii (Motor Rifle), Mekhanizirovannye Divizii (Mechanized)
-# - Cavalry: Kavaleriyskie Divizii (Red Army & Red Cossack Cavalry)
-# - Armor: Tankovye Divizii, Tankovye Korpusa, Tankovye Brigady
-# - Elite & Guards: Gvardeyskie Strelkovye Divizii, Gvardeyskie Mekhanizirovannye Korpusa (1-9), Gvardeyskie Tankovye Korpusa (1-12)
-# - Specialized: Vozdushno-Desantnye (Guards Airborne 1-10), Morskaya Pekhota (Naval Infantry), Gornostrelkovye (Mountain), Artilleriyskie (Breakthrough Artillery RVGK), Voiska NKVD, Shtrafnye Chasti (Penal)
+# Red Army formations of 1936-45 across all arms, and four ideology-gated suites:
+# - Infantry: Strelkovye Divizii, national divisions, Narodnoye Opolcheniye, fortified regions (UR)
+# - Mobile: Motostrelkovye and Mekhanizirovannye Divizii, Mekhanizirovannye Korpusa
+# - Cavalry: Red Army, national and Cossack cavalry divisions
+# - Armor: Tankovye Divizii, Korpusa and Brigady
+# - Guards: rifle divisions, mechanized corps (1-9), tank corps (1-12), airborne divisions
+# - Specialized: naval infantry and naval rifle brigades, mountain rifle, breakthrough artillery, NKVD, penal units
+# - Ideology: partisans (communism), Imperial Guard (neutrality), Whites (fascism), republican shock divisions (democratic)
 #
-# Orthography: Standard Russian Latin transliteration. Masculine agreement for 'korpus' (tankovyy, gvardeyskiy).
+# Orthography: simplified BGN transliteration without soft signs; masculine agreement for korpus and rayon.
+# Honorifics are verified battle honours; titles on numbers that never existed are marked extrapolated above their group.
 # Overrides vanilla SOV_INF_01, CAV_01/02, MOT_01, MEC_01, ARM_01-04, PAR_01, MAR_01, MNT_01, GAR_01, GRD_01, GMC_01, GTC_01, PEN_01.
 
 # ===== Rifle Formations =====
-# Overrides vanilla SOV_INF_01.
+# Overrides vanilla SOV_INF_01 and keeps its historical numbers, which skip the mountain and motorized
+# divisions of SOV_MNT_01 and SOV_MOT_01 (shared numbering). Vanilla already nicknames this list, so it has no plain twin.
 SOV_INF_01 = 
 {
 	name = "Rifle Divisions"
@@ -30,7 +33,7 @@ SOV_INF_01 =
 	# It's okay to have gaps in numbering.
 	ordered =
 	{
-		# Historical Named Rifle Divisions
+		# Rifle divisions in vanilla's historical numbering; honorifics where the division held one
 		1 = { "%d-ya 'Moskovskaya Proletarskaya' Strelkovaya Diviziya" }
 		2 = { "%d-ya 'Belorusskaya' Strelkovaya Diviziya" }
 		3 = { "%d-ya 'Tikhookeanskaya' Strelkovaya Diviziya" }
@@ -39,17 +42,18 @@ SOV_INF_01 =
 		6 = { "%d-ya 'Orlovskaya' Strelkovaya Diviziya" }
 		7 = { "%d-ya 'Chernigovskaya' Strelkovaya Diviziya" }
 		8 = { "%d-ya 'Minskaya' Strelkovaya Diviziya" }
-		9 = { "%d-ya 'Ulyanovskaya' Strelkovaya Diviziya" }
 		10 = { "%d-ya 'Severnogo Kraya' Strelkovaya Diviziya" }
-		11 = { "%d-ya 'Permskaya' Strelkovaya Diviziya" }
+		11 = { "%d-ya Strelkovaya Diviziya" }
 		12 = { "%d-ya 'Amurskaya' Strelkovaya Diviziya" }
 		13 = { "%d-ya 'Dagestanskaya' Strelkovaya Diviziya" }
 		14 = { "%d-ya 'Krivorozhskaya' Strelkovaya Diviziya" }
 		15 = { "%d-ya 'Sivashskaya' Strelkovaya Diviziya" }
-		16 = { "%d-ya 'Krasnodarskaya' Strelkovaya Diviziya" }
+		16 = { "%d-ya 'Ulyanovskaya' Strelkovaya Diviziya" }
 		17 = { "%d-ya 'Gorkovskaya' Strelkovaya Diviziya" }
+		18 = { "%d-ya Strelkovaya Diviziya" }
 		19 = { "%d-ya 'Voronezhskaya' Strelkovaya Diviziya" }
-		20 = { "%d-ya 'Stalingradskaya' Strelkovaya Diviziya" }
+		21 = { "%d-ya 'Permskaya' Strelkovaya Diviziya" }
+		22 = { "%d-ya 'Krasnodarskaya' Strelkovaya Diviziya" }
 		23 = { "%d-ya 'Kharkovskaya' Strelkovaya Diviziya" }
 		24 = { "%d-ya 'Samaro-Ulyanovskaya' Strelkovaya Diviziya" }
 		25 = { "%d-ya 'Chapayevskaya' Strelkovaya Diviziya" }
@@ -62,31 +66,393 @@ SOV_INF_01 =
 		34 = { "%d-ya 'Srednevolzhskaya' Strelkovaya Diviziya" }
 		35 = { "%d-ya 'Sibirskaya' Strelkovaya Diviziya" }
 		36 = { "%d-ya 'Zabaykalskaya' Strelkovaya Diviziya" }
+		37 = { "%d-ya Strelkovaya Diviziya" }
+		38 = { "%d-ya Strelkovaya Diviziya" }
 		39 = { "%d-ya 'Tikhookeanskaya' Strelkovaya Diviziya" }
 		40 = { "%d-ya 'Bogucharskaya' Strelkovaya Diviziya" }
+		41 = { "%d-ya Strelkovaya Diviziya" }
+		42 = { "%d-ya Strelkovaya Diviziya" }
+		43 = { "%d-ya Strelkovaya Diviziya" }
 		45 = { "%d-ya 'Volynskaya' Strelkovaya Diviziya" }
 		46 = { "%d-ya 'Dnepropetrovskaya' Strelkovaya Diviziya" }
 		48 = { "%d-ya 'Kashino-Tverskaya' Strelkovaya Diviziya" }
+		49 = { "%d-ya Strelkovaya Diviziya" }
 		50 = { "%d-ya 'Tamanskaya' Strelkovaya Diviziya" }
 		51 = { "%d-ya 'Perekopskaya' Strelkovaya Diviziya" }
+		52 = { "%d-ya Strelkovaya Diviziya" }
+		53 = { "%d-ya Strelkovaya Diviziya" }
+		54 = { "%d-ya Strelkovaya Diviziya" }
 		55 = { "%d-ya 'Kurskaya' Strelkovaya Diviziya" }
 		56 = { "%d-ya 'Moskovskaya' Strelkovaya Diviziya" }
 		57 = { "%d-ya 'Uralskaya' Strelkovaya Diviziya" }
+		59 = { "%d-ya Strelkovaya Diviziya" }
 		61 = { "%d-ya 'Turkestanskaya' Strelkovaya Diviziya" }
 		62 = { "%d-ya 'Turkestanskaya' Strelkovaya Diviziya" }
+		64 = { "%d-ya Strelkovaya Diviziya" }
+		65 = { "%d-ya Strelkovaya Diviziya" }
+		66 = { "%d-ya Strelkovaya Diviziya" }
+		67 = { "%d-ya Strelkovaya Diviziya" }
+		69 = { "%d-ya Strelkovaya Diviziya" }
+		70 = { "%d-ya Strelkovaya Diviziya" }
+		71 = { "%d-ya Strelkovaya Diviziya" }
+		73 = { "%d-ya Strelkovaya Diviziya" }
 		74 = { "%d-ya 'Tamanskaya' Strelkovaya Diviziya" }
-		80 = { "%d-ya 'Donbassa' Strelkovaya Diviziya" }
-		84 = { "%d-ya 'Tulskaya' Strelkovaya Diviziya" }
+		75 = { "%d-ya Strelkovaya Diviziya" }
+		78 = { "%d-ya Strelkovaya Diviziya" }
+		80 = { "%d-ya 'imeni Proletariata Donbassa' Strelkovaya Diviziya" }
+		81 = { "%d-ya Strelkovaya Diviziya" }
+		82 = { "%d-ya Strelkovaya Diviziya" }
+		84 = { "%d-ya 'imeni Tulskogo Proletariata' Strelkovaya Diviziya" }
+		85 = { "%d-ya Strelkovaya Diviziya" }
 		86 = { "%d-ya 'Kazanskaya' Strelkovaya Diviziya" }
+		87 = { "%d-ya Strelkovaya Diviziya" }
+		88 = { "%d-ya Strelkovaya Diviziya" }
+		89 = { "%d-ya Strelkovaya Diviziya" }
+		90 = { "%d-ya Strelkovaya Diviziya" }
+		91 = { "%d-ya Strelkovaya Diviziya" }
+		92 = { "%d-ya Strelkovaya Diviziya" }
 		93 = { "%d-ya 'Vostochno-Sibirskaya' Strelkovaya Diviziya" }
+		94 = { "%d-ya Strelkovaya Diviziya" }
 		95 = { "%d-ya 'Moldavskaya' Strelkovaya Diviziya" }
+		97 = { "%d-ya Strelkovaya Diviziya" }
+		98 = { "%d-ya Strelkovaya Diviziya" }
+		99 = { "%d-ya Strelkovaya Diviziya" }
+		100 = { "%d-ya Strelkovaya Diviziya" }
+		102 = { "%d-ya Strelkovaya Diviziya" }
+		104 = { "%d-ya Strelkovaya Diviziya" }
+		105 = { "%d-ya Strelkovaya Diviziya" }
+		106 = { "%d-ya Strelkovaya Diviziya" }
+		107 = { "%d-ya Strelkovaya Diviziya" }
+		108 = { "%d-ya Strelkovaya Diviziya" }
+		110 = { "%d-ya Strelkovaya Diviziya" }
+		111 = { "%d-ya Strelkovaya Diviziya" }
+		112 = { "%d-ya Strelkovaya Diviziya" }
+		113 = { "%d-ya Strelkovaya Diviziya" }
+		114 = { "%d-ya Strelkovaya Diviziya" }
+		115 = { "%d-ya Strelkovaya Diviziya" }
+		116 = { "%d-ya Strelkovaya Diviziya" }
+		117 = { "%d-ya Strelkovaya Diviziya" }
+		118 = { "%d-ya Strelkovaya Diviziya" }
+		119 = { "%d-ya Strelkovaya Diviziya" }
+		120 = { "%d-ya Strelkovaya Diviziya" }
+		121 = { "%d-ya Strelkovaya Diviziya" }
+		122 = { "%d-ya Strelkovaya Diviziya" }
+		123 = { "%d-ya Strelkovaya Diviziya" }
+		124 = { "%d-ya Strelkovaya Diviziya" }
+		125 = { "%d-ya Strelkovaya Diviziya" }
+		126 = { "%d-ya Strelkovaya Diviziya" }
+		127 = { "%d-ya Strelkovaya Diviziya" }
+		128 = { "%d-ya Strelkovaya Diviziya" }
+		129 = { "%d-ya Strelkovaya Diviziya" }
+		130 = { "%d-ya Strelkovaya Diviziya" }
+		132 = { "%d-ya Strelkovaya Diviziya" }
+		133 = { "%d-ya Strelkovaya Diviziya" }
+		134 = { "%d-ya Strelkovaya Diviziya" }
+		135 = { "%d-ya Strelkovaya Diviziya" }
+		136 = { "%d-ya Strelkovaya Diviziya" }
+		137 = { "%d-ya Strelkovaya Diviziya" }
+		139 = { "%d-ya Strelkovaya Diviziya" }
+		140 = { "%d-ya Strelkovaya Diviziya" }
+		141 = { "%d-ya Strelkovaya Diviziya" }
+		142 = { "%d-ya Strelkovaya Diviziya" }
+		143 = { "%d-ya Strelkovaya Diviziya" }
+		144 = { "%d-ya Strelkovaya Diviziya" }
+		145 = { "%d-ya Strelkovaya Diviziya" }
+		146 = { "%d-ya Strelkovaya Diviziya" }
+		148 = { "%d-ya Strelkovaya Diviziya" }
+		149 = { "%d-ya Strelkovaya Diviziya" }
+		150 = { "%d-ya Strelkovaya Diviziya" }
+		151 = { "%d-ya Strelkovaya Diviziya" }
+		152 = { "%d-ya Strelkovaya Diviziya" }
+		153 = { "%d-ya Strelkovaya Diviziya" }
+		154 = { "%d-ya Strelkovaya Diviziya" }
+		155 = { "%d-ya Strelkovaya Diviziya" }
+		156 = { "%d-ya Strelkovaya Diviziya" }
+		157 = { "%d-ya Strelkovaya Diviziya" }
+		158 = { "%d-ya Strelkovaya Diviziya" }
+		159 = { "%d-ya Strelkovaya Diviziya" }
+		160 = { "%d-ya Strelkovaya Diviziya" }
+		161 = { "%d-ya Strelkovaya Diviziya" }
+		162 = { "%d-ya Strelkovaya Diviziya" }
+		164 = { "%d-ya Strelkovaya Diviziya" }
+		165 = { "%d-ya Strelkovaya Diviziya" }
+		166 = { "%d-ya Strelkovaya Diviziya" }
+		167 = { "%d-ya Strelkovaya Diviziya" }
+		168 = { "%d-ya Strelkovaya Diviziya" }
+		169 = { "%d-ya Strelkovaya Diviziya" }
+		170 = { "%d-ya Strelkovaya Diviziya" }
+		171 = { "%d-ya Strelkovaya Diviziya" }
+		172 = { "%d-ya Strelkovaya Diviziya" }
+		173 = { "%d-ya Strelkovaya Diviziya" }
+		174 = { "%d-ya Strelkovaya Diviziya" }
+		175 = { "%d-ya Strelkovaya Diviziya" }
+		176 = { "%d-ya Strelkovaya Diviziya" }
+		177 = { "%d-ya Strelkovaya Diviziya" }
+		178 = { "%d-ya Strelkovaya Diviziya" }
+		179 = { "%d-ya Strelkovaya Diviziya" }
+		180 = { "%d-ya Strelkovaya Diviziya" }
+		181 = { "%d-ya Strelkovaya Diviziya" }
+		182 = { "%d-ya Strelkovaya Diviziya" }
+		183 = { "%d-ya Strelkovaya Diviziya" }
+		184 = { "%d-ya Strelkovaya Diviziya" }
+		186 = { "%d-ya Strelkovaya Diviziya" }
+		187 = { "%d-ya Strelkovaya Diviziya" }
+		188 = { "%d-ya Strelkovaya Diviziya" }
+		189 = { "%d-ya Strelkovaya Diviziya" }
+		190 = { "%d-ya Strelkovaya Diviziya" }
+		191 = { "%d-ya Strelkovaya Diviziya" }
+		193 = { "%d-ya Strelkovaya Diviziya" }
+		195 = { "%d-ya Strelkovaya Diviziya" }
 		196 = { "%d-ya 'Dnepropetrovskaya' Strelkovaya Diviziya" }
-		197 = { "%d-ya 'Kievskaya' Strelkovaya Diviziya" }
+		197 = { "%d-ya 'Kiyevskaya' Strelkovaya Diviziya" }
+		199 = { "%d-ya Strelkovaya Diviziya" }
+		200 = { "%d-ya Strelkovaya Diviziya" }
+		201 = { "%d-ya Strelkovaya Diviziya" }
+		203 = { "%d-ya Strelkovaya Diviziya" }
+		206 = { "%d-ya Strelkovaya Diviziya" }
+		207 = { "%d-ya Strelkovaya Diviziya" }
+		211 = { "%d-ya Strelkovaya Diviziya" }
+		214 = { "%d-ya Strelkovaya Diviziya" }
+		217 = { "%d-ya Strelkovaya Diviziya" }
+		222 = { "%d-ya Strelkovaya Diviziya" }
+		223 = { "%d-ya Strelkovaya Diviziya" }
+		224 = { "%d-ya Strelkovaya Diviziya" }
+		225 = { "%d-ya Strelkovaya Diviziya" }
+		226 = { "%d-ya Strelkovaya Diviziya" }
+		227 = { "%d-ya Strelkovaya Diviziya" }
+		228 = { "%d-ya Strelkovaya Diviziya" }
+		229 = { "%d-ya Strelkovaya Diviziya" }
+		230 = { "%d-ya Strelkovaya Diviziya" }
+		231 = { "%d-ya Strelkovaya Diviziya" }
+		232 = { "%d-ya Strelkovaya Diviziya" }
+		233 = { "%d-ya Strelkovaya Diviziya" }
+		234 = { "%d-ya Strelkovaya Diviziya" }
+		235 = { "%d-ya Strelkovaya Diviziya" }
+		237 = { "%d-ya Strelkovaya Diviziya" }
+		238 = { "%d-ya Strelkovaya Diviziya" }
+		241 = { "%d-ya Strelkovaya Diviziya" }
+		243 = { "%d-ya Strelkovaya Diviziya" }
+		244 = { "%d-ya Strelkovaya Diviziya" }
+		245 = { "%d-ya Strelkovaya Diviziya" }
+		246 = { "%d-ya Strelkovaya Diviziya" }
+		247 = { "%d-ya Strelkovaya Diviziya" }
+		248 = { "%d-ya Strelkovaya Diviziya" }
+		249 = { "%d-ya Strelkovaya Diviziya" }
+		250 = { "%d-ya Strelkovaya Diviziya" }
+		251 = { "%d-ya Strelkovaya Diviziya" }
+		252 = { "%d-ya Strelkovaya Diviziya" }
+		253 = { "%d-ya Strelkovaya Diviziya" }
+		254 = { "%d-ya Strelkovaya Diviziya" }
+		255 = { "%d-ya Strelkovaya Diviziya" }
+		256 = { "%d-ya Strelkovaya Diviziya" }
+		257 = { "%d-ya Strelkovaya Diviziya" }
+		258 = { "%d-ya Strelkovaya Diviziya" }
+		259 = { "%d-ya Strelkovaya Diviziya" }
+		260 = { "%d-ya Strelkovaya Diviziya" }
+		261 = { "%d-ya Strelkovaya Diviziya" }
+		262 = { "%d-ya Strelkovaya Diviziya" }
+		263 = { "%d-ya Strelkovaya Diviziya" }
+		264 = { "%d-ya Strelkovaya Diviziya" }
+		265 = { "%d-ya Strelkovaya Diviziya" }
+		266 = { "%d-ya Strelkovaya Diviziya" }
+		267 = { "%d-ya Strelkovaya Diviziya" }
+		268 = { "%d-ya Strelkovaya Diviziya" }
+		269 = { "%d-ya Strelkovaya Diviziya" }
+		270 = { "%d-ya Strelkovaya Diviziya" }
+		271 = { "%d-ya Strelkovaya Diviziya" }
+		272 = { "%d-ya Strelkovaya Diviziya" }
+		273 = { "%d-ya Strelkovaya Diviziya" }
+		274 = { "%d-ya Strelkovaya Diviziya" }
+		275 = { "%d-ya Strelkovaya Diviziya" }
+		276 = { "%d-ya Strelkovaya Diviziya" }
+		277 = { "%d-ya Strelkovaya Diviziya" }
+		278 = { "%d-ya Strelkovaya Diviziya" }
+		279 = { "%d-ya Strelkovaya Diviziya" }
+		280 = { "%d-ya Strelkovaya Diviziya" }
+		281 = { "%d-ya Strelkovaya Diviziya" }
+		282 = { "%d-ya Strelkovaya Diviziya" }
+		283 = { "%d-ya Strelkovaya Diviziya" }
+		284 = { "%d-ya Strelkovaya Diviziya" }
+		285 = { "%d-ya Strelkovaya Diviziya" }
+		286 = { "%d-ya Strelkovaya Diviziya" }
+		287 = { "%d-ya Strelkovaya Diviziya" }
+		288 = { "%d-ya Strelkovaya Diviziya" }
+		289 = { "%d-ya Strelkovaya Diviziya" }
+		290 = { "%d-ya Strelkovaya Diviziya" }
+		291 = { "%d-ya Strelkovaya Diviziya" }
+		292 = { "%d-ya Strelkovaya Diviziya" }
+		293 = { "%d-ya Strelkovaya Diviziya" }
+		294 = { "%d-ya Strelkovaya Diviziya" }
+		295 = { "%d-ya Strelkovaya Diviziya" }
+		296 = { "%d-ya Strelkovaya Diviziya" }
+		297 = { "%d-ya Strelkovaya Diviziya" }
+		298 = { "%d-ya Strelkovaya Diviziya" }
+		299 = { "%d-ya Strelkovaya Diviziya" }
+		300 = { "%d-ya Strelkovaya Diviziya" }
+		301 = { "%d-ya Strelkovaya Diviziya" }
+		303 = { "%d-ya Strelkovaya Diviziya" }
+		304 = { "%d-ya Strelkovaya Diviziya" }
+		305 = { "%d-ya Strelkovaya Diviziya" }
+		306 = { "%d-ya Strelkovaya Diviziya" }
+		307 = { "%d-ya Strelkovaya Diviziya" }
+		308 = { "%d-ya Strelkovaya Diviziya" }
+		310 = { "%d-ya Strelkovaya Diviziya" }
+		311 = { "%d-ya Strelkovaya Diviziya" }
+		312 = { "%d-ya Strelkovaya Diviziya" }
+		313 = { "%d-ya Strelkovaya Diviziya" }
+		314 = { "%d-ya Strelkovaya Diviziya" }
+		315 = { "%d-ya Strelkovaya Diviziya" }
+		316 = { "%d-ya Strelkovaya Diviziya" }
+		317 = { "%d-ya Strelkovaya Diviziya" }
+		318 = { "%d-ya Strelkovaya Diviziya" }
+		319 = { "%d-ya Strelkovaya Diviziya" }
+		320 = { "%d-ya Strelkovaya Diviziya" }
+		321 = { "%d-ya Strelkovaya Diviziya" }
+		322 = { "%d-ya Strelkovaya Diviziya" }
+		323 = { "%d-ya Strelkovaya Diviziya" }
+		324 = { "%d-ya Strelkovaya Diviziya" }
+		325 = { "%d-ya Strelkovaya Diviziya" }
+		326 = { "%d-ya Strelkovaya Diviziya" }
+		327 = { "%d-ya Strelkovaya Diviziya" }
+		328 = { "%d-ya Strelkovaya Diviziya" }
+		329 = { "%d-ya Strelkovaya Diviziya" }
+		330 = { "%d-ya Strelkovaya Diviziya" }
+		332 = { "%d-ya Strelkovaya Diviziya" }
+		333 = { "%d-ya Strelkovaya Diviziya" }
+		334 = { "%d-ya Strelkovaya Diviziya" }
+		335 = { "%d-ya Strelkovaya Diviziya" }
+		336 = { "%d-ya Strelkovaya Diviziya" }
+		337 = { "%d-ya Strelkovaya Diviziya" }
+		339 = { "%d-ya Strelkovaya Diviziya" }
+		340 = { "%d-ya Strelkovaya Diviziya" }
+		341 = { "%d-ya Strelkovaya Diviziya" }
+		342 = { "%d-ya Strelkovaya Diviziya" }
+		343 = { "%d-ya Strelkovaya Diviziya" }
+		344 = { "%d-ya Strelkovaya Diviziya" }
+		345 = { "%d-ya Strelkovaya Diviziya" }
+		346 = { "%d-ya Strelkovaya Diviziya" }
+		348 = { "%d-ya Strelkovaya Diviziya" }
+		349 = { "%d-ya Strelkovaya Diviziya" }
+		350 = { "%d-ya Strelkovaya Diviziya" }
+		351 = { "%d-ya Strelkovaya Diviziya" }
+		352 = { "%d-ya Strelkovaya Diviziya" }
+		353 = { "%d-ya Strelkovaya Diviziya" }
+		354 = { "%d-ya Strelkovaya Diviziya" }
+		355 = { "%d-ya Strelkovaya Diviziya" }
+		356 = { "%d-ya Strelkovaya Diviziya" }
+		357 = { "%d-ya Strelkovaya Diviziya" }
+		358 = { "%d-ya Strelkovaya Diviziya" }
+		359 = { "%d-ya Strelkovaya Diviziya" }
+		360 = { "%d-ya Strelkovaya Diviziya" }
+		361 = { "%d-ya Strelkovaya Diviziya" }
+		362 = { "%d-ya Strelkovaya Diviziya" }
+		364 = { "%d-ya Strelkovaya Diviziya" }
+		365 = { "%d-ya Strelkovaya Diviziya" }
+		366 = { "%d-ya Strelkovaya Diviziya" }
+		367 = { "%d-ya Strelkovaya Diviziya" }
+		368 = { "%d-ya Strelkovaya Diviziya" }
+		369 = { "%d-ya Strelkovaya Diviziya" }
+		370 = { "%d-ya Strelkovaya Diviziya" }
+		371 = { "%d-ya Strelkovaya Diviziya" }
+		372 = { "%d-ya Strelkovaya Diviziya" }
+		373 = { "%d-ya Strelkovaya Diviziya" }
+		374 = { "%d-ya Strelkovaya Diviziya" }
+		375 = { "%d-ya Strelkovaya Diviziya" }
+		376 = { "%d-ya Strelkovaya Diviziya" }
+		377 = { "%d-ya Strelkovaya Diviziya" }
+		378 = { "%d-ya Strelkovaya Diviziya" }
+		379 = { "%d-ya Strelkovaya Diviziya" }
+		380 = { "%d-ya Strelkovaya Diviziya" }
+		381 = { "%d-ya Strelkovaya Diviziya" }
+		382 = { "%d-ya Strelkovaya Diviziya" }
+		383 = { "%d-ya Strelkovaya Diviziya" }
+		384 = { "%d-ya Strelkovaya Diviziya" }
+		386 = { "%d-ya Strelkovaya Diviziya" }
+		387 = { "%d-ya Strelkovaya Diviziya" }
+		388 = { "%d-ya Strelkovaya Diviziya" }
+		389 = { "%d-ya Strelkovaya Diviziya" }
+		390 = { "%d-ya Strelkovaya Diviziya" }
+		391 = { "%d-ya Strelkovaya Diviziya" }
+		393 = { "%d-ya Strelkovaya Diviziya" }
+		395 = { "%d-ya Strelkovaya Diviziya" }
+		396 = { "%d-ya Strelkovaya Diviziya" }
+		397 = { "%d-ya Strelkovaya Diviziya" }
+		399 = { "%d-ya Strelkovaya Diviziya" }
+		400 = { "%d-ya Strelkovaya Diviziya" }
+		402 = { "%d-ya Strelkovaya Diviziya" }
+		404 = { "%d-ya Strelkovaya Diviziya" }
+		405 = { "%d-ya Strelkovaya Diviziya" }
+		406 = { "%d-ya Strelkovaya Diviziya" }
+		407 = { "%d-ya Strelkovaya Diviziya" }
+		408 = { "%d-ya Strelkovaya Diviziya" }
+		409 = { "%d-ya Strelkovaya Diviziya" }
+		410 = { "%d-ya Strelkovaya Diviziya" }
+		411 = { "%d-ya Strelkovaya Diviziya" }
+		412 = { "%d-ya Strelkovaya Diviziya" }
+		413 = { "%d-ya Strelkovaya Diviziya" }
+		414 = { "%d-ya Strelkovaya Diviziya" }
+		415 = { "%d-ya Strelkovaya Diviziya" }
+		416 = { "%d-ya Strelkovaya Diviziya" }
+		417 = { "%d-ya Strelkovaya Diviziya" }
+		418 = { "%d-ya Strelkovaya Diviziya" }
+		419 = { "%d-ya Strelkovaya Diviziya" }
+		420 = { "%d-ya Strelkovaya Diviziya" }
+		421 = { "%d-ya Strelkovaya Diviziya" }
+		422 = { "%d-ya Strelkovaya Diviziya" }
+		423 = { "%d-ya Strelkovaya Diviziya" }
+		424 = { "%d-ya Strelkovaya Diviziya" }
+		425 = { "%d-ya Strelkovaya Diviziya" }
+		426 = { "%d-ya Strelkovaya Diviziya" }
+		427 = { "%d-ya Strelkovaya Diviziya" }
+		428 = { "%d-ya Strelkovaya Diviziya" }
+		429 = { "%d-ya Strelkovaya Diviziya" }
+		430 = { "%d-ya Strelkovaya Diviziya" }
+		432 = { "%d-ya Strelkovaya Diviziya" }
+		433 = { "%d-ya Strelkovaya Diviziya" }
+		434 = { "%d-ya Strelkovaya Diviziya" }
+		435 = { "%d-ya Strelkovaya Diviziya" }
+		436 = { "%d-ya Strelkovaya Diviziya" }
+		437 = { "%d-ya Strelkovaya Diviziya" }
+		439 = { "%d-ya Strelkovaya Diviziya" }
+		440 = { "%d-ya Strelkovaya Diviziya" }
+		441 = { "%d-ya Strelkovaya Diviziya" }
+		442 = { "%d-ya Strelkovaya Diviziya" }
+		443 = { "%d-ya Strelkovaya Diviziya" }
+		444 = { "%d-ya Strelkovaya Diviziya" }
+		445 = { "%d-ya Strelkovaya Diviziya" }
+		446 = { "%d-ya Strelkovaya Diviziya" }
+		448 = { "%d-ya Strelkovaya Diviziya" }
+		449 = { "%d-ya Strelkovaya Diviziya" }
+		450 = { "%d-ya Strelkovaya Diviziya" }
+		451 = { "%d-ya Strelkovaya Diviziya" }
+		452 = { "%d-ya Strelkovaya Diviziya" }
+		453 = { "%d-ya Strelkovaya Diviziya" }
+		454 = { "%d-ya Strelkovaya Diviziya" }
+		455 = { "%d-ya Strelkovaya Diviziya" }
+		456 = { "%d-ya Strelkovaya Diviziya" }
+		457 = { "%d-ya Strelkovaya Diviziya" }
+		458 = { "%d-ya Strelkovaya Diviziya" }
+		459 = { "%d-ya Strelkovaya Diviziya" }
+		460 = { "%d-ya Strelkovaya Diviziya" }
+		461 = { "%d-ya Strelkovaya Diviziya" }
+		462 = { "%d-ya Strelkovaya Diviziya" }
+		464 = { "%d-ya Strelkovaya Diviziya" }
+		465 = { "%d-ya Strelkovaya Diviziya" }
+		466 = { "%d-ya Strelkovaya Diviziya" }
+		467 = { "%d-ya Strelkovaya Diviziya" }
+		468 = { "%d-ya Strelkovaya Diviziya" }
+		469 = { "%d-ya Strelkovaya Diviziya" }
+		470 = { "%d-ya Strelkovaya Diviziya" }
+		471 = { "%d-ya Strelkovaya Diviziya" }
+		472 = { "%d-ya Strelkovaya Diviziya" }
+		473 = { "%d-ya Strelkovaya Diviziya" }
+		474 = { "%d-ya Strelkovaya Diviziya" }
 	}
 }
 
 # ===== Cavalry Formations =====
-# Overrides vanilla SOV_CAV_01.
+# Overrides vanilla SOV_CAV_01 and keeps its historical numbers. National cavalry divisions sit on their real numbers;
+# the Guards Cossack divisions are also in SOV_CAV_02.
 SOV_CAV_01 = 
 {
 	name = "Cavalry Divisions"
@@ -105,32 +471,108 @@ SOV_CAV_01 =
 	# It's okay to have gaps in numbering.
 	ordered =
 	{
-		# Cavalry Divisions
-		1 = { "%d-ya 'Zaporozhskaya' Kavaleriyskaya Diviziya" }
-		2 = { "%d-ya 'Chernigovskaya' Kavaleriyskaya Diviziya" }
+		# Red Army cavalry divisions in vanilla's historical numbering
+		1 = { "%d-ya 'Chernigovskaya' Kavaleriyskaya Diviziya" }
 		3 = { "%d-ya 'Bessarabskaya' Kavaleriyskaya Diviziya" }
+		4 = { "%d-ya Kavaleriyskaya Diviziya" }
 		5 = { "%d-ya 'imeni Blinova' Kavaleriyskaya Diviziya" }
 		6 = { "%d-ya 'Chongarskaya' Kavaleriyskaya Diviziya" }
+		7 = { "%d-ya Kavaleriyskaya Diviziya" }
 		8 = { "%d-ya 'Dalnevostochnaya' Kavaleriyskaya Diviziya" }
 		9 = { "%d-ya 'Krymskaya' Kavaleriyskaya Diviziya" }
+		10 = { "%d-ya Kavaleriyskaya Diviziya" }
+		11 = { "%d-ya Kavaleriyskaya Diviziya" }
 		12 = { "%d-ya 'Kubanskaya' Kavaleriyskaya Diviziya" }
+		13 = { "%d-ya Kavaleriyskaya Diviziya" }
 		14 = { "%d-ya 'Bessarabskaya' Kavaleriyskaya Diviziya" }
 		15 = { "%d-ya 'Donskaya' Kavaleriyskaya Diviziya" }
-		17 = { "%d-ya 'Kavkazskaya' Gorno-Kavaleriyskaya Diviziya" }
+		16 = { "%d-ya Kavaleriyskaya Diviziya" }
+		17 = { "%d-ya 'Armyanskaya' Gorno-Kavaleriyskaya Diviziya" }
 		18 = { "%d-ya 'Turkestanskaya' Gorno-Kavaleriyskaya Diviziya" }
 		19 = { "%d-ya 'Uzbekskaya' Gorno-Kavaleriyskaya Diviziya" }
 		20 = { "%d-ya 'Tadzhikskaya' Gorno-Kavaleriyskaya Diviziya" }
 		21 = { "%d-ya 'Ferganskaya' Gorno-Kavaleriyskaya Diviziya" }
-		22 = { "%d-ya 'Krasnoznamennaya' Kavaleriyskaya Diviziya" }
-		30 = { "%d-ya 'Krasnodarskaya' Kavaleriyskaya Diviziya" }
-		33 = { "%d-ya 'Stavropolskaya' Kavaleriyskaya Diviziya" }
+		22 = { "%d-ya Kavaleriyskaya Diviziya" }
+		23 = { "%d-ya Kavaleriyskaya Diviziya" }
+		24 = { "%d-ya Kavaleriyskaya Diviziya" }
+		25 = { "%d-ya Kavaleriyskaya Diviziya" }
+		26 = { "%d-ya Kavaleriyskaya Diviziya" }
+		27 = { "%d-ya Kavaleriyskaya Diviziya" }
+		28 = { "%d-ya Kavaleriyskaya Diviziya" }
+		29 = { "%d-ya Kavaleriyskaya Diviziya" }
+		30 = { "%d-ya Kavaleriyskaya Diviziya" }
+		31 = { "%d-ya Kavaleriyskaya Diviziya" }
+		32 = { "%d-ya Kavaleriyskaya Diviziya" }
+		33 = { "%d-ya Kavaleriyskaya Diviziya" }
+		34 = { "%d-ya Kavaleriyskaya Diviziya" }
+		35 = { "%d-ya Kavaleriyskaya Diviziya" }
 		36 = { "%d-ya 'Chongarskaya' Kavaleriyskaya Diviziya" }
-		41 = { "%d-ya 'Ural-Kavkazskaya' Kavaleriyskaya Diviziya" }
-		57 = { "%d-ya 'Zabaykalskaya' Kavaleriyskaya Diviziya" }
-		75 = { "%d-ya 'Altayskaya' Kavaleriyskaya Diviziya" }
-		83 = { "%d-ya 'Turkestanskaya' Gorno-Kavaleriyskaya Diviziya" }
-		# Guards Cavalry Divisions
-		301 = { "1-ya Gvardeyskaya Kavaleriyskaya Diviziya" }
+		38 = { "%d-ya Kavaleriyskaya Diviziya" }
+		40 = { "%d-ya Kavaleriyskaya Diviziya" }
+		41 = { "%d-ya Kavaleriyskaya Diviziya" }
+		43 = { "%d-ya Kavaleriyskaya Diviziya" }
+		44 = { "%d-ya Kavaleriyskaya Diviziya" }
+		46 = { "%d-ya Kavaleriyskaya Diviziya" }
+		47 = { "%d-ya Kavaleriyskaya Diviziya" }
+		48 = { "%d-ya Kavaleriyskaya Diviziya" }
+		49 = { "%d-ya Kavaleriyskaya Diviziya" }
+		50 = { "%d-ya Kavaleriyskaya Diviziya" }
+		51 = { "%d-ya Kavaleriyskaya Diviziya" }
+		52 = { "%d-ya Kavaleriyskaya Diviziya" }
+		53 = { "%d-ya Kavaleriyskaya Diviziya" }
+		54 = { "%d-ya Kavaleriyskaya Diviziya" }
+		55 = { "%d-ya Kavaleriyskaya Diviziya" }
+		56 = { "%d-ya Kavaleriyskaya Diviziya" }
+		57 = { "%d-ya Kavaleriyskaya Diviziya" }
+		59 = { "%d-ya Kavaleriyskaya Diviziya" }
+		60 = { "%d-ya Kavaleriyskaya Diviziya" }
+		61 = { "%d-ya Kavaleriyskaya Diviziya" }
+		62 = { "%d-ya Kavaleriyskaya Diviziya" }
+		63 = { "%d-ya Kavaleriyskaya Diviziya" }
+		64 = { "%d-ya Kavaleriyskaya Diviziya" }
+		66 = { "%d-ya Kavaleriyskaya Diviziya" }
+		67 = { "%d-ya Kavaleriyskaya Diviziya" }
+		68 = { "%d-ya Kavaleriyskaya Diviziya" }
+		70 = { "%d-ya Kavaleriyskaya Diviziya" }
+		72 = { "%d-ya Kavaleriyskaya Diviziya" }
+		73 = { "%d-ya Kavaleriyskaya Diviziya" }
+		74 = { "%d-ya Kavaleriyskaya Diviziya" }
+		75 = { "%d-ya Kavaleriyskaya Diviziya" }
+		76 = { "%d-ya Kavaleriyskaya Diviziya" }
+		77 = { "%d-ya Kavaleriyskaya Diviziya" }
+		78 = { "%d-ya Kavaleriyskaya Diviziya" }
+		79 = { "%d-ya Kavaleriyskaya Diviziya" }
+		80 = { "%d-ya Kavaleriyskaya Diviziya" }
+		81 = { "%d-ya Kavaleriyskaya Diviziya" }
+		82 = { "%d-ya Kavaleriyskaya Diviziya" }
+		83 = { "%d-ya Kavaleriyskaya Diviziya" }
+		84 = { "%d-ya Kavaleriyskaya Diviziya" }
+		87 = { "%d-ya Kavaleriyskaya Diviziya" }
+		91 = { "%d-ya Kavaleriyskaya Diviziya" }
+		94 = { "%d-ya Kavaleriyskaya Diviziya" }
+		# National cavalry divisions of 1941-42 (Turkmen, Uzbek, Tajik, Kazakh, Kyrgyz, Kalmyk, Bashkir, North Caucasian)
+		97 = { "%d-ya 'Turkmenskaya' Kavaleriyskaya Diviziya" }
+		98 = { "%d-ya 'Turkmenskaya' Kavaleriyskaya Diviziya" }
+		99 = { "%d-ya 'Uzbekskaya' Kavaleriyskaya Diviziya" }
+		100 = { "%d-ya 'Uzbekskaya' Kavaleriyskaya Diviziya" }
+		101 = { "%d-ya 'Uzbekskaya' Kavaleriyskaya Diviziya" }
+		102 = { "%d-ya 'Uzbekskaya' Kavaleriyskaya Diviziya" }
+		103 = { "%d-ya 'Uzbekskaya' Kavaleriyskaya Diviziya" }
+		104 = { "%d-ya 'Tadzhikskaya' Kavaleriyskaya Diviziya" }
+		105 = { "%d-ya 'Kazakhskaya' Kavaleriyskaya Diviziya" }
+		106 = { "%d-ya 'Kazakhskaya' Kavaleriyskaya Diviziya" }
+		107 = { "%d-ya 'Kirgizskaya' Kavaleriyskaya Diviziya" }
+		108 = { "%d-ya 'Kirgizskaya' Kavaleriyskaya Diviziya" }
+		109 = { "%d-ya 'Kirgizskaya' Kavaleriyskaya Diviziya" }
+		110 = { "%d-ya 'Kalmytskaya' Kavaleriyskaya Diviziya" }
+		111 = { "%d-ya 'Kalmytskaya' Kavaleriyskaya Diviziya" }
+		112 = { "%d-ya 'Bashkirskaya' Kavaleriyskaya Diviziya" }
+		113 = { "%d-ya 'Bashkirskaya' Kavaleriyskaya Diviziya" }
+		114 = { "%d-ya 'Checheno-Ingushskaya' Kavaleriyskaya Diviziya" }
+		115 = { "%d-ya 'Kabardino-Balkarskaya' Kavaleriyskaya Diviziya" }
+		116 = { "%d-ya Kavaleriyskaya Diviziya" }
+		# Guards cavalry divisions
+		301 = { "1-ya Gvardeyskaya 'Stavropolskaya' Kavaleriyskaya Diviziya" }
 		302 = { "2-ya Gvardeyskaya Kavaleriyskaya Diviziya" }
 		303 = { "3-ya Gvardeyskaya Kavaleriyskaya Diviziya" }
 		304 = { "4-ya Gvardeyskaya Kavaleriyskaya Diviziya" }
@@ -140,8 +582,8 @@ SOV_CAV_01 =
 		308 = { "8-ya Gvardeyskaya Kavaleriyskaya Diviziya" }
 		309 = { "9-ya Gvardeyskaya Kavaleriyskaya Diviziya" }
 		310 = { "10-ya Gvardeyskaya Kavaleriyskaya Diviziya" }
-		311 = { "11-ya Gvardeyskaya Kavaleriyskaya Diviziya" }
-		312 = { "12-ya Gvardeyskaya Kavaleriyskaya Diviziya" }
+		311 = { "11-ya Gvardeyskaya 'Volnovakhskaya' Kavaleriyskaya Diviziya" }
+		312 = { "12-ya Gvardeyskaya 'Korsunskaya' Kavaleriyskaya Diviziya" }
 		313 = { "13-ya Gvardeyskaya 'Rovenskaya' Kavaleriyskaya Diviziya" }
 		314 = { "14-ya Gvardeyskaya Kavaleriyskaya Diviziya" }
 		315 = { "15-ya Gvardeyskaya Kavaleriyskaya Diviziya" }
@@ -170,40 +612,51 @@ SOV_MOT_01 =
 	# It's okay to have gaps in numbering.
 	ordered =
 	{
-		# Motor Rifle Divisions
+		# Motorized divisions of 1939-41 in vanilla's historical numbering
 		1 = { "%d-ya 'Moskovskaya Proletarskaya' Motostrelkovaya Diviziya" }
 		7 = { "%d-ya 'Chernigovskaya' Motostrelkovaya Diviziya" }
 		15 = { "%d-ya 'Sivashskaya' Motostrelkovaya Diviziya" }
 		29 = { "%d-ya 'Sibirskaya' Motostrelkovaya Diviziya" }
 		36 = { "%d-ya 'Zabaykalskaya' Motostrelkovaya Diviziya" }
 		57 = { "%d-ya 'Uralskaya' Motostrelkovaya Diviziya" }
-		81 = { "%d-ya 'Kalininskaya' Motostrelkovaya Diviziya" }
-		82 = { "%d-ya 'Yartsevskaya' Motostrelkovaya Diviziya" }
-		84 = { "%d-ya 'Krasnokutskaya' Motostrelkovaya Diviziya" }
-		109 = { "%d-ya 'Krasnoznamennaya' Motostrelkovaya Diviziya" }
-		131 = { "%d-ya 'Ropshinskaya' Motostrelkovaya Diviziya" }
-		163 = { "%d-ya 'Novgorodskaya' Motostrelkovaya Diviziya" }
-		185 = { "%d-ya 'Pankovskaya' Motostrelkovaya Diviziya" }
-		198 = { "%d-ya 'Leningradskaya' Motostrelkovaya Diviziya" }
-		202 = { "%d-ya 'Khabarovskaya' Motostrelkovaya Diviziya" }
-		204 = { "%d-ya 'Vladivostokskaya' Motostrelkovaya Diviziya" }
-		205 = { "%d-ya 'Dalnevostochnaya' Motostrelkovaya Diviziya" }
-		208 = { "%d-ya 'Volochayevskaya' Motostrelkovaya Diviziya" }
-		209 = { "%d-ya 'Ussuriyskaya' Motostrelkovaya Diviziya" }
-		210 = { "%d-ya 'Prikaspiyskaya' Motostrelkovaya Diviziya" }
-		212 = { "%d-ya 'Brestskaya' Motostrelkovaya Diviziya" }
-		213 = { "%d-ya 'Poltavskaya' Motostrelkovaya Diviziya" }
-		215 = { "%d-ya 'Smolenskaya' Motostrelkovaya Diviziya" }
-		218 = { "%d-ya 'Minskaya' Motostrelkovaya Diviziya" }
-		219 = { "%d-ya 'Vitebskaya' Motostrelkovaya Diviziya" }
-		220 = { "%d-ya 'Orshanskaya' Motostrelkovaya Diviziya" }
-		221 = { "%d-ya 'Mogilevskaya' Motostrelkovaya Diviziya" }
-		# NKVD Motorized Rifle Formations
-		801 = { "OMSDON 'Dzerzhinskogo' Diviziya" }
-		802 = { "2-ya 'Khabarovskaya' Motostrelkovaya Diviziya Voisk NKVD" }
-		803 = { "3-ya 'Leningradskaya' Motostrelkovaya Diviziya Voisk NKVD" }
-		808 = { "8-ya 'Moskovskaya' Motostrelkovaya Diviziya Voisk NKVD" }
-		821 = { "21-ya 'Leningradskaya' Motostrelkovaya Diviziya Voisk NKVD" }
+		69 = { "%d-ya Motostrelkovaya Diviziya" }
+		81 = { "%d-ya Motostrelkovaya Diviziya" }
+		82 = { "%d-ya Motostrelkovaya Diviziya" }
+		84 = { "%d-ya 'imeni Tulskogo Proletariata' Motostrelkovaya Diviziya" }
+		103 = { "%d-ya Motostrelkovaya Diviziya" }
+		109 = { "%d-ya Motostrelkovaya Diviziya" }
+		131 = { "%d-ya Motostrelkovaya Diviziya" }
+		163 = { "%d-ya Motostrelkovaya Diviziya" }
+		185 = { "%d-ya Motostrelkovaya Diviziya" }
+		198 = { "%d-ya Motostrelkovaya Diviziya" }
+		202 = { "%d-ya Motostrelkovaya Diviziya" }
+		204 = { "%d-ya Motostrelkovaya Diviziya" }
+		205 = { "%d-ya Motostrelkovaya Diviziya" }
+		208 = { "%d-ya Motostrelkovaya Diviziya" }
+		209 = { "%d-ya Motostrelkovaya Diviziya" }
+		210 = { "%d-ya Motostrelkovaya Diviziya" }
+		212 = { "%d-ya Motostrelkovaya Diviziya" }
+		213 = { "%d-ya Motostrelkovaya Diviziya" }
+		215 = { "%d-ya Motostrelkovaya Diviziya" }
+		216 = { "%d-ya Motostrelkovaya Diviziya" }
+		218 = { "%d-ya Motostrelkovaya Diviziya" }
+		219 = { "%d-ya Motostrelkovaya Diviziya" }
+		220 = { "%d-ya Motostrelkovaya Diviziya" }
+		221 = { "%d-ya Motostrelkovaya Diviziya" }
+		236 = { "%d-ya Motostrelkovaya Diviziya" }
+		239 = { "%d-ya Motostrelkovaya Diviziya" }
+		# NKVD motor rifle divisions
+		801 = { "OMSDON 'imeni Dzerzhinskogo'" }
+		802 = { "2-ya Motostrelkovaya Diviziya Voisk NKVD" }
+		803 = { "3-ya Motostrelkovaya Diviziya Voisk NKVD" }
+		804 = { "4-ya Motostrelkovaya Diviziya Voisk NKVD" }
+		806 = { "6-ya Motostrelkovaya Diviziya Voisk NKVD" }
+		807 = { "7-ya Motostrelkovaya Diviziya Voisk NKVD" }
+		808 = { "8-ya Motostrelkovaya Diviziya Voisk NKVD" }
+		809 = { "9-ya Motostrelkovaya Diviziya Voisk NKVD" }
+		821 = { "21-ya Motostrelkovaya Diviziya Voisk NKVD" }
+		822 = { "22-ya Motostrelkovaya Diviziya Voisk NKVD" }
+		823 = { "23-ya Motostrelkovaya Diviziya Voisk NKVD" }
 	}
 }
 
@@ -218,7 +671,6 @@ SOV_MEC_01 =
 
 	division_types = { "mechanized" "motorized" }
 
-	# Number reservation system will tie to another group.
 	link_numbering_with = { SOV_INF_01 }
 
 	fallback_name = "%d-ya Mekhanizirovannaya Diviziya"
@@ -227,17 +679,43 @@ SOV_MEC_01 =
 	# It's okay to have gaps in numbering.
 	ordered =
 	{
-		# Mechanized Divisions
+		# Mechanized divisions with the titles of their motorized predecessors (extrapolated)
 		1 = { "%d-ya 'Moskovskaya Proletarskaya' Mekhanizirovannaya Diviziya" }
 		7 = { "%d-ya 'Chernigovskaya' Mekhanizirovannaya Diviziya" }
 		15 = { "%d-ya 'Sivashskaya' Mekhanizirovannaya Diviziya" }
 		29 = { "%d-ya 'Sibirskaya' Mekhanizirovannaya Diviziya" }
 		36 = { "%d-ya 'Zabaykalskaya' Mekhanizirovannaya Diviziya" }
 		57 = { "%d-ya 'Uralskaya' Mekhanizirovannaya Diviziya" }
-		69 = { "%d-ya 'Sevastopolskaya' Mekhanizirovannaya Diviziya" }
-		84 = { "%d-ya 'Krasnokutskaya' Mekhanizirovannaya Diviziya" }
-		103 = { "%d-ya 'Vitebskaya' Mekhanizirovannaya Diviziya" }
-		109 = { "%d-ya 'Krasnoznamennaya' Mekhanizirovannaya Diviziya" }
+		84 = { "%d-ya 'imeni Tulskogo Proletariata' Mekhanizirovannaya Diviziya" }
+	}
+}
+
+# Mechanized corps. The 1940-41 series (1-30) held no honorifics; of the 1942-45 corps only the 1st, 7th and 9th
+# stayed non-Guards and earned one. The Guards corps are in SOV_GMC_01.
+SOV_MEC_02 = 
+{
+	name = "Mechanized Corps"
+
+	for_countries = { SOV }
+
+	can_use = { always = yes }
+
+	division_types = { "mechanized" "motorized" }
+
+	fallback_name = "%d-y Mekhanizirovannyy Korpus"
+
+	ordered =
+	{
+		# Mechanized corps of 1942-45 (2-6 and 8 hold the numbers of the corps that became Guards)
+		1 = { "%d-y 'Krasnogradskiy' Mekhanizirovannyy Korpus" }
+		2 = { "%d-y Mekhanizirovannyy Korpus" }
+		3 = { "%d-y Mekhanizirovannyy Korpus" }
+		4 = { "%d-y Mekhanizirovannyy Korpus" }
+		5 = { "%d-y Mekhanizirovannyy Korpus" }
+		6 = { "%d-y Mekhanizirovannyy Korpus" }
+		7 = { "%d-y 'Novoukrainsko-Khinganskiy' Mekhanizirovannyy Korpus" }
+		8 = { "%d-y Mekhanizirovannyy Korpus" }
+		9 = { "%d-y 'Kiyevsko-Zhitomirskiy' Mekhanizirovannyy Korpus" }
 	}
 }
 
@@ -278,24 +756,26 @@ SOV_ARM_02 =
 	# It's okay to have gaps in numbering.
 	ordered =
 	{
-		# Historical Tank Corps
+		# Tank corps that held a battle honour in 1945
 		1 = { "%d-y 'Insterburgskiy' Tankovyy Korpus" }
-		5 = { "%d-y 'Daugavpilsskiy' Tankovyy Korpus" }
-		9 = { "%d-y 'Bobruyskiy' Tankovyy Korpus" }
+		5 = { "%d-y 'Dvinskiy' Tankovyy Korpus" }
+		9 = { "%d-y 'Bobruysko-Berlinskiy' Tankovyy Korpus" }
 		10 = { "%d-y 'Dneprovskiy' Tankovyy Korpus" }
-		18 = { "%d-y 'Znamenskiy' Tankovyy Korpus" }
+		11 = { "%d-y 'Radomsko-Berlinskiy' Tankovyy Korpus" }
+		18 = { "%d-y 'Znamensko-Budapeshtskiy' Tankovyy Korpus" }
+		19 = { "%d-y 'Perekopskiy' Tankovyy Korpus" }
 		20 = { "%d-y 'Zvenigorodskiy' Tankovyy Korpus" }
 		23 = { "%d-y 'Budapeshtskiy' Tankovyy Korpus" }
-		25 = { "%d-y 'Novograd-Volynskiy' Tankovyy Korpus" }
 		29 = { "%d-y 'Znamenskiy' Tankovyy Korpus" }
 		31 = { "%d-y 'Vislenskiy' Tankovyy Korpus" }
 	}
 }
 
-# Overrides vanilla SOV_ARM_03.
+# Overrides vanilla SOV_ARM_03 as the plain variant (war-gated as in vanilla). SOV_GTC_01 is the named variant
+# and shares this numbering.
 SOV_ARM_03 = 
 {
-	name = "Guard Tank Corps"
+	name = "Guards Tank Corps"
 
 	for_countries = { SOV }
 
@@ -303,29 +783,9 @@ SOV_ARM_03 =
 
 	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
 
-	# Number reservation system will tie to another group.
 	#link_numbering_with = { SOV_INF_01 }
 
 	fallback_name = "%d-y Gvardeyskiy Tankovyy Korpus"
-
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
-	ordered =
-	{
-		# Guards Tank Corps
-		1 = { "%d-y 'Donskoy' Gvardeyskiy Tankovyy Korpus" }
-		2 = { "%d-y 'Tatsinskiy' Gvardeyskiy Tankovyy Korpus" }
-		3 = { "%d-y 'Kotelnikovskiy' Gvardeyskiy Tankovyy Korpus" }
-		4 = { "%d-y 'Kantemirovskiy' Gvardeyskiy Tankovyy Korpus" }
-		5 = { "%d-y 'Stalingradsko-Kievskiy' Gvardeyskiy Tankovyy Korpus" }
-		6 = { "%d-y 'Kievsko-Berlinskiy' Gvardeyskiy Tankovyy Korpus" }
-		7 = { "%d-y 'Kievsko-Berlinskiy' Gvardeyskiy Tankovyy Korpus" }
-		8 = { "%d-y 'Krasnoznamyonnyy' Gvardeyskiy Tankovyy Korpus" }
-		9 = { "%d-y 'Umanskiy' Gvardeyskiy Tankovyy Korpus" }
-		10 = { "%d-y 'Uralsko-Lvovskiy' Gvardeyskiy Tankovyy Korpus" }
-		11 = { "%d-y 'Prikarpatsko-Berlinskiy' Gvardeyskiy Tankovyy Korpus" }
-		12 = { "%d-y 'Umanskiy' Gvardeyskiy Tankovyy Korpus" }
-	}
 }
 
 # Overrides vanilla SOV_ARM_04.
@@ -346,10 +806,10 @@ SOV_ARM_04 =
 }
 
 # ===== Specialized & Airborne =====
-# Overrides vanilla SOV_PAR_01.
+# Overrides vanilla SOV_PAR_01 as a plain list. The Guards airborne divisions vanilla kept here are in SOV_AIR_01.
 SOV_PAR_01 = 
 {
-	name = "Paratrooper Divisions"
+	name = "Airborne Divisions"
 
 	for_countries = { SOV }
 
@@ -360,29 +820,10 @@ SOV_PAR_01 =
 	#link_numbering_with = { SOV_INF_01 }
 
 	fallback_name = "%d-ya Vozdushno-Desantnaya Diviziya"
-
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
-	ordered =
-	{
-		# Guards Airborne Formations
-		101 = { "1-ya Gvardeyskaya 'Zvenigorodskaya' Vozdushno-Desantnaya Diviziya" }
-		102 = { "2-ya Gvardeyskaya 'Proskurovskaya' Vozdushno-Desantnaya Diviziya" }
-		103 = { "3-ya Gvardeyskaya 'Umanskaya' Vozdushno-Desantnaya Diviziya" }
-		104 = { "4-ya Gvardeyskaya 'Ovruchskaya' Vozdushno-Desantnaya Diviziya" }
-		105 = { "5-ya Gvardeyskaya 'Zvenigorodskaya' Vozdushno-Desantnaya Diviziya" }
-		106 = { "6-ya Gvardeyskaya 'Kremenchugsko-Znamenskaya' Vozdushno-Desantnaya Diviziya" }
-		107 = { "7-ya Gvardeyskaya 'Cherkasskaya' Vozdushno-Desantnaya Diviziya" }
-		108 = { "8-ya Gvardeyskaya 'Pervomayskaya' Vozdushno-Desantnaya Diviziya" }
-		109 = { "9-ya Gvardeyskaya 'Poltavskaya' Vozdushno-Desantnaya Diviziya" }
-		110 = { "10-ya Gvardeyskaya 'Krivorozhskaya' Vozdushno-Desantnaya Diviziya" }
-		176 = { "76-ya Gvardeyskaya 'Chernigovskaya' Vozdushno-Desantnaya Diviziya" }
-		198 = { "98-ya Gvardeyskaya 'Svirskaya' Vozdushno-Desantnaya Diviziya" }
-		206 = { "106-ya Gvardeyskaya 'Tulskaya' Vozdushno-Desantnaya Diviziya" }
-	}
 }
 
-# Overrides vanilla SOV_MAR_01.
+# Overrides vanilla SOV_MAR_01. The Red Army formed naval infantry brigades (SOV_MAR_02), not divisions, so after
+# the 1st Mozyrskaya the fleet and flotilla titles are extrapolated.
 SOV_MAR_01 = 
 {
 	name = "Naval Infantry Divisions"
@@ -401,8 +842,9 @@ SOV_MAR_01 =
 	# It's okay to have gaps in numbering.
 	ordered =
 	{
-		# Naval Infantry Divisions
-		1 = { "%d-ya 'Baltiyskaya' Diviziya Morskoy Pekhoty" }
+		# 1st Mozyr Naval Infantry Division (Baltic Fleet, 1944-48)
+		1 = { "%d-ya 'Mozyrskaya' Diviziya Morskoy Pekhoty" }
+		# Fleet and flotilla divisions (extrapolated)
 		2 = { "%d-ya 'Chernomorskaya' Diviziya Morskoy Pekhoty" }
 		3 = { "%d-ya 'Severnaya' Diviziya Morskoy Pekhoty" }
 		4 = { "%d-ya 'Tikhookeanskaya' Diviziya Morskoy Pekhoty" }
@@ -412,9 +854,65 @@ SOV_MAR_01 =
 		8 = { "%d-ya 'Azovskaya' Diviziya Morskoy Pekhoty" }
 		9 = { "%d-ya 'Amurskaya' Diviziya Morskoy Pekhoty" }
 		10 = { "%d-ya 'Ladozhskaya' Diviziya Morskoy Pekhoty" }
-		55 = { "%d-ya 'Mozyrskaya' Diviziya Morskoy Pekhoty" }
-		66 = { "%d-ya 'Krasnoznamennaya' Diviziya Morskoy Pekhoty" }
-		83 = { "%d-ya 'Novorossiyskaya' Diviziya Morskoy Pekhoty" }
+		11 = { "%d-ya 'Baltiyskaya' Diviziya Morskoy Pekhoty" }
+	}
+}
+
+# Naval infantry brigades of the fleets and the naval rifle brigades of 1941-42, sailors fighting on land fronts,
+# on their real numbers (ru.wikipedia, Morskaya pekhota SSSR).
+SOV_MAR_02 = 
+{
+	name = "Naval Rifle Brigades"
+
+	for_countries = { SOV }
+
+	can_use = { always = yes }
+
+	division_types = { "marine" }
+
+	fallback_name = "%d-ya Morskaya Strelkovaya Brigada"
+
+	ordered =
+	{
+		# Naval infantry brigades of the fleets
+		1 = { "%d-ya Osobaya Brigada Morskoy Pekhoty" }
+		2 = { "%d-ya Brigada Morskoy Pekhoty Baltiyskogo Flota" }
+		3 = { "%d-ya Brigada Morskoy Pekhoty Baltiyskogo Flota" }
+		4 = { "%d-ya Brigada Morskoy Pekhoty Baltiyskogo Flota" }
+		5 = { "%d-ya Brigada Morskoy Pekhoty Baltiyskogo Flota" }
+		6 = { "%d-ya Brigada Morskoy Pekhoty Baltiyskogo Flota" }
+		7 = { "%d-ya Brigada Morskoy Pekhoty Chernomorskogo Flota" }
+		8 = { "%d-ya Brigada Morskoy Pekhoty Chernomorskogo Flota" }
+		9 = { "%d-ya Brigada Morskoy Pekhoty Chernomorskogo Flota" }
+		12 = { "%d-ya 'Pechengskaya' Brigada Morskoy Pekhoty" }
+		13 = { "%d-ya Gvardeyskaya Brigada Morskoy Pekhoty" }
+		# Naval rifle brigades of 1941-42 and the later naval infantry brigades
+		61 = { "%d-ya Morskaya Strelkovaya Brigada" }
+		62 = { "%d-ya Morskaya Strelkovaya Brigada" }
+		63 = { "%d-ya 'Kirkenesskaya' Brigada Morskoy Pekhoty" }
+		64 = { "%d-ya Morskaya Strelkovaya Brigada" }
+		65 = { "%d-ya Morskaya Strelkovaya Brigada" }
+		66 = { "%d-ya Morskaya Strelkovaya Brigada" }
+		67 = { "%d-ya Morskaya Strelkovaya Brigada" }
+		68 = { "%d-ya Morskaya Strelkovaya Brigada" }
+		69 = { "%d-ya Morskaya Strelkovaya Brigada" }
+		70 = { "%d-ya Morskaya Strelkovaya Brigada" }
+		71 = { "%d-ya Morskaya Strelkovaya Brigada" }
+		72 = { "%d-ya Morskaya Strelkovaya Brigada" }
+		73 = { "%d-ya Morskaya Strelkovaya Brigada" }
+		74 = { "%d-ya Morskaya Strelkovaya Brigada" }
+		75 = { "%d-ya Morskaya Strelkovaya Brigada" }
+		76 = { "%d-ya Morskaya Strelkovaya Brigada" }
+		77 = { "%d-ya Morskaya Strelkovaya Brigada" }
+		80 = { "%d-ya Morskaya Strelkovaya Brigada" }
+		81 = { "%d-ya Morskaya Strelkovaya Brigada" }
+		83 = { "%d-ya 'Novorossiysko-Dunayskaya' Brigada Morskoy Pekhoty" }
+		85 = { "%d-ya Morskaya Strelkovaya Brigada" }
+		116 = { "%d-ya Morskaya Strelkovaya Brigada" }
+		154 = { "%d-ya Morskaya Strelkovaya Brigada" }
+		254 = { "%d-ya Brigada Morskoy Pekhoty Severnogo Flota" }
+		255 = { "%d-ya 'Tamanskaya' Brigada Morskoy Pekhoty" }
+		260 = { "%d-ya Brigada Morskoy Pekhoty Baltiyskogo Flota" }
 	}
 }
 
@@ -429,7 +927,6 @@ SOV_MNT_01 =
 
 	division_types = { "mountaineers" }
 
-	# Number reservation system will tie to another group.
 	link_numbering_with = { SOV_INF_01 }
 
 	fallback_name = "%d-ya Gornostrelkovaya Diviziya"
@@ -438,21 +935,29 @@ SOV_MNT_01 =
 	# It's okay to have gaps in numbering.
 	ordered =
 	{
-		# Mountain Rifle Divisions
+		# Mountain rifle divisions in vanilla's historical numbering
 		9 = { "%d-ya 'Kavkazskaya' Gornostrelkovaya Diviziya" }
-		20 = { "%d-ya 'Proletariata Donbassa' Gornostrelkovaya Diviziya" }
+		20 = { "%d-ya Gornostrelkovaya Diviziya" }
 		28 = { "%d-ya 'Gorskaya' Gornostrelkovaya Diviziya" }
 		30 = { "%d-ya 'Irkutskaya' Gornostrelkovaya Diviziya" }
-		44 = { "%d-ya 'Kievskaya' Gornostrelkovaya Diviziya" }
+		44 = { "%d-ya 'Kiyevskaya' Gornostrelkovaya Diviziya" }
 		47 = { "%d-ya 'Gruzinskaya' Gornostrelkovaya Diviziya" }
+		58 = { "%d-ya Gornostrelkovaya Diviziya" }
 		60 = { "%d-ya 'Kavkazskaya' Gornostrelkovaya Diviziya" }
 		63 = { "%d-ya 'Gruzinskaya' Gornostrelkovaya Diviziya" }
 		68 = { "%d-ya 'Turkestanskaya' Gornostrelkovaya Diviziya" }
 		72 = { "%d-ya 'Turkestanskaya' Gornostrelkovaya Diviziya" }
 		76 = { "%d-ya 'Armyanskaya' Gornostrelkovaya Diviziya" }
 		77 = { "%d-ya 'Azerbaydzhanskaya' Gornostrelkovaya Diviziya" }
+		79 = { "%d-ya Gornostrelkovaya Diviziya" }
 		83 = { "%d-ya 'Turkestanskaya' Gornostrelkovaya Diviziya" }
 		96 = { "%d-ya 'Vinnitskaya' Gornostrelkovaya Diviziya" }
+		101 = { "%d-ya Gornostrelkovaya Diviziya" }
+		138 = { "%d-ya Gornostrelkovaya Diviziya" }
+		192 = { "%d-ya Gornostrelkovaya Diviziya" }
+		194 = { "%d-ya Gornostrelkovaya Diviziya" }
+		232 = { "%d-ya Gornostrelkovaya Diviziya" }
+		302 = { "%d-ya Gornostrelkovaya Diviziya" }
 	}
 }
 
@@ -475,13 +980,13 @@ SOV_GAR_01 =
 	# It's okay to have gaps in numbering.
 	ordered =
 	{
-		# NKVD Border Guard & Security Divisions
-		1 = { "%d-ya 'Leningradskaya' Pogranichnaya Diviziya Voisk NKVD" }
-		2 = { "%d-ya 'Moskovskaya' Diviziya Voisk NKVD po Okhrane Zheleznykh Dorog" }
-		14 = { "%d-ya 'Ukrainskaya' Diviziya Voisk NKVD po Okhrane Zheleznykh Dorog" }
-		18 = { "%d-ya 'Kavkazskaya' Diviziya Voisk NKVD po Okhrane Zheleznykh Dorog" }
-		41 = { "%d-ya 'Povolzhskaya' Diviziya Voisk NKVD po Okhrane Zheleznykh Dorog" }
-		57 = { "%d-ya 'Uralskaya' Strelkovaya Diviziya Voisk NKVD" }
+		# NKVD border, railway protection and rifle divisions
+		1 = { "%d-ya Pogranichnaya Diviziya Voisk NKVD" }
+		2 = { "%d-ya Diviziya Voisk NKVD po Okhrane Zheleznykh Dorog" }
+		14 = { "%d-ya Diviziya Voisk NKVD po Okhrane Zheleznykh Dorog" }
+		18 = { "%d-ya Diviziya Voisk NKVD po Okhrane Zheleznykh Dorog" }
+		41 = { "%d-ya Diviziya Voisk NKVD po Okhrane Zheleznykh Dorog" }
+		57 = { "%d-ya Strelkovaya Diviziya Voisk NKVD" }
 		# Leningrad People's Militia Divisions
 		101 = { "1-ya 'Kirovskaya' (Leningrad) Diviziya Narodnogo Opolcheniya" }
 		102 = { "2-ya 'Moskovskaya' (Leningrad) Diviziya Narodnogo Opolcheniya" }
@@ -511,11 +1016,11 @@ SOV_GAR_01 =
 	}
 }
 
-# ===== Guards Formations =====
-# Overrides vanilla SOV_GRD_01.
-SOV_GRD_01 = 
+# Fortified regions (ukreplennyye rayony) on their 22 June 1941 numbers (istmat.org order of battle; ru.wikipedia).
+# The place name is the real designation; the field URs of the Moscow and Leningrad battles follow.
+SOV_UR_01 = 
 {
-	name = "Guards Rifles"
+	name = "Fortified Regions"
 
 	for_countries = { SOV }
 
@@ -523,7 +1028,98 @@ SOV_GRD_01 =
 
 	division_types = { "infantry" }
 
-	# Number reservation system will tie to another group.
+	fallback_name = "%d-y Ukreplennyy Rayon"
+
+	ordered =
+	{
+		# Stalin Line: Kiev, Odessa and Western districts
+		1 = { "%d-y 'Kiyevskiy' Ukreplennyy Rayon" }
+		3 = { "%d-y 'Letichevskiy' Ukreplennyy Rayon" }
+		5 = { "%d-y 'Korostenskiy' Ukreplennyy Rayon" }
+		7 = { "%d-y 'Novograd-Volynskiy' Ukreplennyy Rayon" }
+		10 = { "%d-y 'Kamenets-Podolskiy' Ukreplennyy Rayon" }
+		12 = { "%d-y 'Mogilev-Yampolskiy' Ukreplennyy Rayon" }
+		13 = { "%d-y 'Izyaslavskiy' Ukreplennyy Rayon" }
+		14 = { "%d-y 'Starokonstantinovskiy' Ukreplennyy Rayon" }
+		15 = { "%d-y 'Shepetovskiy' Ukreplennyy Rayon" }
+		17 = { "%d-y 'Ostropolskiy' Ukreplennyy Rayon" }
+		58 = { "%d-y 'Sebezhskiy' Ukreplennyy Rayon" }
+		61 = { "%d-y 'Polotskiy' Ukreplennyy Rayon" }
+		63 = { "%d-y 'Minskiy' Ukreplennyy Rayon" }
+		65 = { "%d-y 'Mozyrskiy' Ukreplennyy Rayon" }
+		67 = { "%d-y 'Slutskiy' Ukreplennyy Rayon" }
+		80 = { "%d-y 'Rybnitskiy' Ukreplennyy Rayon" }
+		82 = { "%d-y 'Tiraspolskiy' Ukreplennyy Rayon" }
+		# Leningrad and Karelia
+		21 = { "%d-y 'Kingiseppskiy' Ukreplennyy Rayon" }
+		22 = { "%d-y 'Karelskiy' Ukreplennyy Rayon" }
+		23 = { "%d-y 'Murmanskiy' Ukreplennyy Rayon" }
+		25 = { "%d-y 'Pskovskiy' Ukreplennyy Rayon" }
+		26 = { "%d-y 'Sortavalskiy' Ukreplennyy Rayon" }
+		27 = { "%d-y 'Keksgolmskiy' Ukreplennyy Rayon" }
+		28 = { "%d-y 'Vyborgskiy' Ukreplennyy Rayon" }
+		# New western frontier, 1940-41 (Molotov Line)
+		2 = { "%d-y 'Vladimir-Volynskiy' Ukreplennyy Rayon" }
+		4 = { "%d-y 'Strumilovskiy' Ukreplennyy Rayon" }
+		6 = { "%d-y 'Rava-Russkiy' Ukreplennyy Rayon" }
+		8 = { "%d-y 'Peremyshlskiy' Ukreplennyy Rayon" }
+		9 = { "%d-y 'Kovelskiy' Ukreplennyy Rayon" }
+		11 = { "%d-y 'Chernovitskiy' Ukreplennyy Rayon" }
+		41 = { "%d-y 'Libavskiy' Ukreplennyy Rayon" }
+		42 = { "%d-y 'Shyaulyayskiy' Ukreplennyy Rayon" }
+		44 = { "%d-y 'Kaunasskiy' Ukreplennyy Rayon" }
+		45 = { "%d-y 'Rizhskiy' Ukreplennyy Rayon" }
+		46 = { "%d-y 'Telshyayskiy' Ukreplennyy Rayon" }
+		48 = { "%d-y 'Alitusskiy' Ukreplennyy Rayon" }
+		62 = { "%d-y 'Brestskiy' Ukreplennyy Rayon" }
+		64 = { "%d-y 'Zambrovskiy' Ukreplennyy Rayon" }
+		66 = { "%d-y 'Osovetskiy' Ukreplennyy Rayon" }
+		68 = { "%d-y 'Grodnenskiy' Ukreplennyy Rayon" }
+		81 = { "%d-y 'Dunayskiy' Ukreplennyy Rayon" }
+		83 = { "%d-y 'Odesskiy' Ukreplennyy Rayon" }
+		84 = { "%d-y 'Verkhneprutskiy' Ukreplennyy Rayon" }
+		86 = { "%d-y 'Nizhneprutskiy' Ukreplennyy Rayon" }
+		# Transcaucasus, Transbaikal and Far East
+		31 = { "%d-y 'Daurskiy' Ukreplennyy Rayon" }
+		32 = { "%d-y 'Borzinskiy' Ukreplennyy Rayon" }
+		51 = { "%d-y 'Batumskiy' Ukreplennyy Rayon" }
+		55 = { "%d-y 'Lenkoranskiy' Ukreplennyy Rayon" }
+		101 = { "%d-y 'Blagoveshchenskiy' Ukreplennyy Rayon" }
+		102 = { "%d-y 'Ust-Sungariyskiy' Ukreplennyy Rayon" }
+		103 = { "%d-y 'Nizhne-Amurskiy' Ukreplennyy Rayon" }
+		104 = { "%d-y 'De-Kastrinskiy' Ukreplennyy Rayon" }
+		105 = { "%d-y 'Grodekovskiy' Ukreplennyy Rayon" }
+		106 = { "%d-y 'Poltavskiy' Ukreplennyy Rayon" }
+		107 = { "%d-y 'Barabashskiy' Ukreplennyy Rayon" }
+		108 = { "%d-y 'Posyetskiy' Ukreplennyy Rayon" }
+		109 = { "%d-y 'Imanskiy' Ukreplennyy Rayon" }
+		110 = { "%d-y 'Slavyanskiy' Ukreplennyy Rayon" }
+		111 = { "%d-y 'Shufanskiy' Ukreplennyy Rayon" }
+		112 = { "%d-y 'Khorolskiy' Ukreplennyy Rayon" }
+		113 = { "%d-y 'Khasanskiy' Ukreplennyy Rayon" }
+		# Field fortified regions of 1941
+		16 = { "%d-y 'Nevskiy' Ukreplennyy Rayon" }
+		90 = { "%d-y 'Lovatskiy' Ukreplennyy Rayon" }
+		152 = { "%d-y 'Mozhayskiy' Ukreplennyy Rayon" }
+		154 = { "%d-y 'Maloyaroslavetskiy' Ukreplennyy Rayon" }
+		155 = { "%d-y 'Volokolamskiy' Ukreplennyy Rayon" }
+		156 = { "%d-y 'Odintsovskiy' Ukreplennyy Rayon" }
+		157 = { "%d-y 'Moskovskiy' Ukreplennyy Rayon" }
+	}
+}
+
+# ===== Guards Formations =====
+# Overrides vanilla SOV_GRD_01.
+SOV_GRD_01 = 
+{
+	name = "Guards Rifle Divisions"
+
+	for_countries = { SOV }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
 	#link_numbering_with = { SOV_INF_01 }
 
 	fallback_name = "%d-ya Gvardeyskaya Strelkovaya Diviziya"
@@ -532,7 +1128,7 @@ SOV_GRD_01 =
 	# It's okay to have gaps in numbering.
 	ordered =
 	{
-		# Guards Rifle Divisions
+		# Guards rifle divisions
 		1 = { "%d-ya 'Moskovsko-Minskaya' Gvardeyskaya Strelkovaya Diviziya" }
 		2 = { "%d-ya 'Tamanskaya' Gvardeyskaya Strelkovaya Diviziya" }
 		3 = { "%d-ya 'Volnovakhskaya' Gvardeyskaya Strelkovaya Diviziya" }
@@ -541,42 +1137,93 @@ SOV_GRD_01 =
 		6 = { "%d-ya 'Rovenskaya' Gvardeyskaya Strelkovaya Diviziya" }
 		7 = { "%d-ya 'Rezhitskaya' Gvardeyskaya Strelkovaya Diviziya" }
 		8 = { "%d-ya 'Panfilovskaya' Gvardeyskaya Strelkovaya Diviziya" }
-		9 = { "%d-ya 'Krasnoznamennaya' Gvardeyskaya Strelkovaya Diviziya" }
+		9 = { "%d-ya Gvardeyskaya Strelkovaya Diviziya" }
 		10 = { "%d-ya 'Pechengskaya' Gvardeyskaya Strelkovaya Diviziya" }
 		11 = { "%d-ya 'Gorodokskaya' Gvardeyskaya Strelkovaya Diviziya" }
 		13 = { "%d-ya 'Poltavskaya' Gvardeyskaya Strelkovaya Diviziya" }
 		15 = { "%d-ya 'Kharkovsko-Prazhskaya' Gvardeyskaya Strelkovaya Diviziya" }
 		20 = { "%d-ya 'Krivorozhskaya' Gvardeyskaya Strelkovaya Diviziya" }
-		22 = { "%d-ya 'Nikolayevskaya' Gvardeyskaya Strelkovaya Diviziya" }
+		22 = { "%d-ya 'Rizhskaya' Gvardeyskaya Strelkovaya Diviziya" }
 		24 = { "%d-ya 'Yevpatoriyskaya' Gvardeyskaya Strelkovaya Diviziya" }
 		25 = { "%d-ya 'Sinelnikovskaya' Gvardeyskaya Strelkovaya Diviziya" }
 		27 = { "%d-ya 'Novobugskaya' Gvardeyskaya Strelkovaya Diviziya" }
-		29 = { "%d-ya 'Polotskaya' Gvardeyskaya Strelkovaya Diviziya" }
-		30 = { "%d-ya 'Leningradskaya' Gvardeyskaya Strelkovaya Diviziya" }
+		29 = { "%d-ya 'Yelninskaya' Gvardeyskaya Strelkovaya Diviziya" }
+		30 = { "%d-ya 'Rizhskaya' Gvardeyskaya Strelkovaya Diviziya" }
 		32 = { "%d-ya 'Tamanskaya' Gvardeyskaya Strelkovaya Diviziya" }
 		33 = { "%d-ya 'Sevastopolskaya' Gvardeyskaya Strelkovaya Diviziya" }
 		35 = { "%d-ya 'Lozovskaya' Gvardeyskaya Strelkovaya Diviziya" }
 		39 = { "%d-ya 'Barvenkovskaya' Gvardeyskaya Strelkovaya Diviziya" }
-		41 = { "%d-ya 'Korsunskaya' Gvardeyskaya Strelkovaya Diviziya" }
+		41 = { "%d-ya 'Korsunsko-Dunayskaya' Gvardeyskaya Strelkovaya Diviziya" }
+		43 = { "%d-ya 'Rizhskaya' Latyshskaya Gvardeyskaya Strelkovaya Diviziya" }
 		45 = { "%d-ya 'Krasnoselskaya' Gvardeyskaya Strelkovaya Diviziya" }
-		50 = { "%d-ya 'Zaporozhskaya' Gvardeyskaya Strelkovaya Diviziya" }
+		50 = { "%d-ya 'Stalinskaya' Gvardeyskaya Strelkovaya Diviziya" }
 		51 = { "%d-ya 'Vitebskaya' Gvardeyskaya Strelkovaya Diviziya" }
-		53 = { "%d-ya 'Tartusskaya' Gvardeyskaya Strelkovaya Diviziya" }
+		53 = { "%d-ya 'Tartuskaya' Gvardeyskaya Strelkovaya Diviziya" }
 		63 = { "%d-ya 'Krasnoselskaya' Gvardeyskaya Strelkovaya Diviziya" }
 		64 = { "%d-ya 'Krasnoselskaya' Gvardeyskaya Strelkovaya Diviziya" }
 		70 = { "%d-ya 'Glukhovskaya' Gvardeyskaya Strelkovaya Diviziya" }
 		72 = { "%d-ya 'Krasnogradskaya' Gvardeyskaya Strelkovaya Diviziya" }
 		75 = { "%d-ya 'Bakhmachskaya' Gvardeyskaya Strelkovaya Diviziya" }
 		82 = { "%d-ya 'Zaporozhskaya' Gvardeyskaya Strelkovaya Diviziya" }
-		90 = { "%d-ya 'Rozhdestvenskaya' Gvardeyskaya Strelkovaya Diviziya" }
-		100 = { "%d-ya 'Brestskaya' Gvardeyskaya Strelkovaya Diviziya" }
+		90 = { "%d-ya 'Vitebsko-Novgorodskaya' Gvardeyskaya Strelkovaya Diviziya" }
+		100 = { "%d-ya 'Svirskaya' Gvardeyskaya Strelkovaya Diviziya" }
+		# Estonian Guards rifle divisions
+		118 = { "%d-ya 'Tallinnskaya' Estonskaya Gvardeyskaya Strelkovaya Diviziya" }
+		122 = { "%d-ya 'Estonskaya' Gvardeyskaya Strelkovaya Diviziya" }
+	}
+}
+
+# National rifle divisions raised in the Union republics, 1941-45, on their real numbers (ru.wikipedia, national
+# formations of the Red Army). Shares numbering with SOV_INF_01; the Latvian and Estonian Guards are in SOV_GRD_01.
+SOV_NAT_01 = 
+{
+	name = "National Rifle Divisions"
+
+	for_countries = { SOV }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	link_numbering_with = { SOV_INF_01 }
+
+	fallback_name = "%d-ya Natsionalnaya Strelkovaya Diviziya"
+
+	ordered =
+	{
+		# Baltic national divisions
+		7 = { "%d-ya 'Estonskaya' Strelkovaya Diviziya" }
+		16 = { "%d-ya 'Klaypedskaya' Litovskaya Strelkovaya Diviziya" }
+		201 = { "%d-ya 'Latyshskaya' Strelkovaya Diviziya" }
+		249 = { "%d-ya 'Estonskaya' Strelkovaya Diviziya" }
+		308 = { "%d-ya 'Latyshskaya' Strelkovaya Diviziya" }
+		# Transcaucasian national divisions
+		77 = { "%d-ya 'Simferopolskaya' Azerbaydzhanskaya Strelkovaya Diviziya" }
+		89 = { "%d-ya 'Tamanskaya' Armyanskaya Strelkovaya Diviziya" }
+		223 = { "%d-ya 'Belgradskaya' Azerbaydzhanskaya Strelkovaya Diviziya" }
+		227 = { "%d-ya 'Temryukskaya' Azerbaydzhanskaya Strelkovaya Diviziya" }
+		261 = { "%d-ya 'Armyanskaya' Strelkovaya Diviziya" }
+		271 = { "%d-ya 'Gorlovskaya' Azerbaydzhanskaya Strelkovaya Diviziya" }
+		276 = { "%d-ya 'Temryukskaya' Gruzinskaya Strelkovaya Diviziya" }
+		390 = { "%d-ya 'Armyanskaya' Strelkovaya Diviziya" }
+		392 = { "%d-ya 'Gruzinskaya' Strelkovaya Diviziya" }
+		396 = { "%d-ya 'Azerbaydzhanskaya' Strelkovaya Diviziya" }
+		402 = { "%d-ya 'Azerbaydzhanskaya' Strelkovaya Diviziya" }
+		408 = { "%d-ya 'Armyanskaya' Strelkovaya Diviziya" }
+		409 = { "%d-ya 'Armyanskaya' Strelkovaya Diviziya" }
+		414 = { "%d-ya 'Anapskaya' Gruzinskaya Strelkovaya Diviziya" }
+		416 = { "%d-ya 'Taganrogskaya' Azerbaydzhanskaya Strelkovaya Diviziya" }
+		# Karelo-Finnish and Kazakh national divisions
+		71 = { "%d-ya 'Karelo-Finskaya' Strelkovaya Diviziya" }
+		150 = { "%d-ya 'Kazakhskaya' Strelkovaya Diviziya" }
+		316 = { "%d-ya 'Kazakhskaya' Strelkovaya Diviziya" }
 	}
 }
 
 # Overrides vanilla SOV_GMC_01.
 SOV_GMC_01 = 
 {
-	name = "Guards Mechanized"
+	name = "Guards Mechanized Corps"
 
 	for_countries = { SOV }
 
@@ -584,7 +1231,6 @@ SOV_GMC_01 =
 
 	division_types = { "mechanized" "motorized" }
 
-	# Number reservation system will tie to another group.
 	#link_numbering_with = { SOV_INF_01 }
 
 	fallback_name = "%d-y Gvardeyskiy Mekhanizirovannyy Korpus"
@@ -606,10 +1252,11 @@ SOV_GMC_01 =
 	}
 }
 
-# Overrides vanilla SOV_GTC_01.
+# Overrides vanilla SOV_GTC_01 as the named variant of SOV_ARM_03 and shares its numbering. All twelve Guards tank corps;
+# the 8th held no place honorific.
 SOV_GTC_01 = 
 {
-	name = "Guards Tanks"
+	name = "Guards Tank Corps (Named)"
 
 	for_countries = { SOV }
 
@@ -617,8 +1264,7 @@ SOV_GTC_01 =
 
 	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
 
-	# Number reservation system will tie to another group.
-	#link_numbering_with = { SOV_INF_01 }
+	link_numbering_with = { SOV_ARM_03 }
 
 	fallback_name = "%d-y Gvardeyskiy Tankovyy Korpus"
 
@@ -626,15 +1272,15 @@ SOV_GTC_01 =
 	# It's okay to have gaps in numbering.
 	ordered =
 	{
-		# Guards Tank Corps
+		# Guards tank corps 1-12
 		1 = { "%d-y 'Donskoy' Gvardeyskiy Tankovyy Korpus" }
 		2 = { "%d-y 'Tatsinskiy' Gvardeyskiy Tankovyy Korpus" }
 		3 = { "%d-y 'Kotelnikovskiy' Gvardeyskiy Tankovyy Korpus" }
 		4 = { "%d-y 'Kantemirovskiy' Gvardeyskiy Tankovyy Korpus" }
-		5 = { "%d-y 'Stalingradsko-Kievskiy' Gvardeyskiy Tankovyy Korpus" }
-		6 = { "%d-y 'Kievsko-Berlinskiy' Gvardeyskiy Tankovyy Korpus" }
-		7 = { "%d-y 'Kievsko-Berlinskiy' Gvardeyskiy Tankovyy Korpus" }
-		8 = { "%d-y 'Krasnoznamyonnyy' Gvardeyskiy Tankovyy Korpus" }
+		5 = { "%d-y 'Stalingradsko-Kiyevskiy' Gvardeyskiy Tankovyy Korpus" }
+		6 = { "%d-y 'Kiyevsko-Berlinskiy' Gvardeyskiy Tankovyy Korpus" }
+		7 = { "%d-y 'Kiyevsko-Berlinskiy' Gvardeyskiy Tankovyy Korpus" }
+		8 = { "%d-y Gvardeyskiy Tankovyy Korpus" }
 		9 = { "%d-y 'Umanskiy' Gvardeyskiy Tankovyy Korpus" }
 		10 = { "%d-y 'Uralsko-Lvovskiy' Gvardeyskiy Tankovyy Korpus" }
 		11 = { "%d-y 'Prikarpatsko-Berlinskiy' Gvardeyskiy Tankovyy Korpus" }
@@ -643,7 +1289,8 @@ SOV_GTC_01 =
 }
 
 
-# Overrides vanilla SOV_CAV_02.
+# Overrides vanilla SOV_CAV_02 (SOV and UKR, as in vanilla). The host titles are extrapolated; the four Guards
+# Cossack divisions (9th and 10th Kuban, 11th and 12th Don) are real.
 SOV_CAV_02 =
 {
 	name = "Cossack Cavalry Divisions"
@@ -661,31 +1308,26 @@ SOV_CAV_02 =
 
 	#link_numbering_with = { SOV_INF_01 }
 
-	fallback_name = "%d-ya Kazach'ya Kavaleriyskaya Diviziya"
+	fallback_name = "%d-ya Kazachya Kavaleriyskaya Diviziya"
 
 	# Names with numbers (only one number per entry). 
 	# It's okay to have gaps in numbering.
 	ordered =
 	{
-		# Cossack Cavalry Divisions
-		1 = { "%d-ya 'Donskaya' Kazach'ya Kavaleriyskaya Diviziya" }
-		2 = { "%d-ya 'Kubanskaya' Kazach'ya Kavaleriyskaya Diviziya" }
-		3 = { "%d-ya 'Terskaya' Kazach'ya Kavaleriyskaya Diviziya" }
-		4 = { "%d-ya 'Stavropol'skaya' Kazach'ya Kavaleriyskaya Diviziya" }
-		5 = { "%d-ya 'Ural'skaya' Kazach'ya Kavaleriyskaya Diviziya" }
-		6 = { "%d-ya 'Orenburgskaya' Kazach'ya Kavaleriyskaya Diviziya" }
-		7 = { "%d-ya 'Zabaykal'skaya' Kazach'ya Kavaleriyskaya Diviziya" }
-		8 = { "%d-ya 'Amurskaya' Kazach'ya Kavaleriyskaya Diviziya" }
-		# Guards Cossack Cavalry Formations
-		9 = { "%d-ya (9-ya Gv.) 'Kubanskaya' Kazach'ya Kavaleriyskaya Diviziya" }
-		10 = { "%d-ya (10-ya Gv.) 'Kubansko-Slonimskaya' Kazach'ya Kavaleriyskaya Diviziya" }
-		11 = { "%d-ya (11-ya Gv.) 'Donskaya' Kazach'ya Kavaleriyskaya Diviziya" }
-		12 = { "%d-ya (12-ya Gv.) 'Donsko-Korsunskaya' Kazach'ya Kavaleriyskaya Diviziya" }
-		13 = { "%d-ya (13-ya Gv.) 'Donsko-Debaltsevskaya' Kazach'ya Kavaleriyskaya Diviziya" }
-		14 = { "%d-ya (14-ya Gv.) 'Gneznenskaya' Kazach'ya Kavaleriyskaya Diviziya" }
-		15 = { "%d-ya (15-ya Gv.) 'Mozyrskaya' Kazach'ya Kavaleriyskaya Diviziya" }
-		16 = { "%d-ya (16-ya Gv.) 'Chernigovskaya' Kazach'ya Kavaleriyskaya Diviziya" }
-		17 = { "%d-ya (17-ya Gv.) 'Mozyrskaya' Kazach'ya Kavaleriyskaya Diviziya" }
+		# Cossack host divisions (extrapolated)
+		1 = { "%d-ya 'Donskaya' Kazachya Kavaleriyskaya Diviziya" }
+		2 = { "%d-ya 'Kubanskaya' Kazachya Kavaleriyskaya Diviziya" }
+		3 = { "%d-ya 'Terskaya' Kazachya Kavaleriyskaya Diviziya" }
+		4 = { "%d-ya 'Stavropolskaya' Kazachya Kavaleriyskaya Diviziya" }
+		5 = { "%d-ya 'Uralskaya' Kazachya Kavaleriyskaya Diviziya" }
+		6 = { "%d-ya 'Orenburgskaya' Kazachya Kavaleriyskaya Diviziya" }
+		7 = { "%d-ya 'Zabaykalskaya' Kazachya Kavaleriyskaya Diviziya" }
+		8 = { "%d-ya 'Amurskaya' Kazachya Kavaleriyskaya Diviziya" }
+		# Guards Cossack cavalry divisions (4th Guards Cossack Cavalry Corps)
+		309 = { "9-ya Gvardeyskaya 'Kubanskaya' Kazachya Kavaleriyskaya Diviziya" }
+		310 = { "10-ya Gvardeyskaya 'Kubanskaya' Kazachya Kavaleriyskaya Diviziya" }
+		311 = { "11-ya Gvardeyskaya 'Volnovakhskaya' Kazachya Kavaleriyskaya Diviziya" }
+		312 = { "12-ya Gvardeyskaya 'Korsunskaya' Kazachya Kavaleriyskaya Diviziya" }
 	}
 }
 
@@ -700,14 +1342,13 @@ SOV_PEN_01 =
 
 	division_types = { "infantry" }
 
-	# Number reservation system will tie to another group.
 	#link_numbering_with = { SOV_INF_01 }
 
-	fallback_name = "%d-ya Shtrafnaya Chast'"
+	fallback_name = "%d-ya Shtrafnaya Chast"
 }
 
 # ===== NKVD Security Divisions =====
-# Authentic wartime internal troops (VV NKVD).
+# Communist only. The six named NKVD rifle divisions that formed the 70th Army; numbered NKVD divisions take the fallback.
 SOV_NKVD_01 = {
     name = "NKVD Security Divisions"
     for_countries = { SOV }
@@ -716,41 +1357,17 @@ SOV_NKVD_01 = {
     fallback_name = "%d-ya Diviziya Voisk NKVD"
     ordered =
     {
-		# NKVD Internal Troops Formations
-		1 = { "%d-ya 'Leningradskaya' Strelkovaya Diviziya Voisk NKVD" }
-		2 = { "%d-ya 'Krymskaya' Strelkovaya Diviziya Voisk NKVD" }
-		3 = { "%d-ya 'Kiyevskaya' Strelkovaya Diviziya Voisk NKVD" }
-		4 = { "%d-ya 'Krasnoznamennaya' Strelkovaya Diviziya Voisk NKVD" }
-		5 = { "%d-ya 'Belorusskaya' Strelkovaya Diviziya Voisk NKVD" }
-		6 = { "%d-ya 'Kavkazskaya' Strelkovaya Diviziya Voisk NKVD" }
-		7 = { "%d-ya 'Zabaykalskaya' Strelkovaya Diviziya Voisk NKVD" }
-		8 = { "%d-ya 'Tbilisskaya' Strelkovaya Diviziya Voisk NKVD" }
-		9 = { "%d-ya 'Rostovskaya' Strelkovaya Diviziya Voisk NKVD" }
-		10 = { "%d-ya 'Stalingradskaya' Strelkovaya Diviziya Voisk NKVD" }
-		11 = { "%d-ya 'Krasnoznamennaya' Strelkovaya Diviziya Voisk NKVD" }
-		12 = { "%d-ya 'Saratovskaya' Strelkovaya Diviziya Voisk NKVD" }
-		13 = { "%d-ya 'Voronezhskaya' Strelkovaya Diviziya Voisk NKVD" }
-		14 = { "%d-ya 'Severnaya' Diviziya Voisk NKVD" }
-		15 = { "%d-ya 'Dalnevostochnaya' Diviziya Voisk NKVD" }
-		16 = { "%d-ya 'Pribaltiyskaya' Diviziya Voisk NKVD" }
-		17 = { "%d-ya 'Gorkovskaya' Diviziya Voisk NKVD" }
-		18 = { "%d-ya 'Yuzhnaya' Diviziya Voisk NKVD" }
-		19 = { "%d-ya 'Zapadnaya' Diviziya Voisk NKVD" }
-		20 = { "%d-ya 'Moskovskaya' Diviziya Voisk NKVD" }
-		21 = { "%d-ya 'Leningradskaya' Motostrelkovaya Diviziya Voisk NKVD" }
-		22 = { "%d-ya 'Khabarovskaya' Motostrelkovaya Diviziya Voisk NKVD" }
-		23 = { "%d-ya 'Vladivostokskaya' Motostrelkovaya Diviziya Voisk NKVD" }
-		24 = { "%d-ya 'Uralskaya' Diviziya Voisk NKVD" }
-		25 = { "%d-ya 'Sibirskaya' Diviziya Voisk NKVD" }
-		26 = { "%d-ya 'Sredneaziatskaya' Diviziya Voisk NKVD" }
-		27 = { "%d-ya 'Povolzhskaya' Diviziya Voisk NKVD" }
-		28 = { "%d-ya 'Dneprovskaya' Diviziya Voisk NKVD" }
-		29 = { "%d-ya 'Donetskaya' Diviziya Voisk NKVD" }
-		30 = { "%d-ya 'Kazakhskaya' Diviziya Voisk NKVD" }
+		# NKVD rifle divisions of the Separate NKVD Army (70th Army, 1942-43)
+		1 = { "'Dalnevostochnaya' Strelkovaya Diviziya Voisk NKVD" }
+		2 = { "'Zabaykalskaya' Strelkovaya Diviziya Voisk NKVD" }
+		3 = { "'Sibirskaya' Strelkovaya Diviziya Voisk NKVD" }
+		4 = { "'Uralskaya' Strelkovaya Diviziya Voisk NKVD" }
+		5 = { "'Sredneaziatskaya' Strelkovaya Diviziya Voisk NKVD" }
+		6 = { "'Stalingradskaya' Strelkovaya Diviziya Voisk NKVD" }
 	}
 }
 
-# Elite airborne formations with historical WWII battle honors.
+# Guards airborne divisions on their own numbers (vanilla kept them in SOV_PAR_01 as keys 101-131 and 203-214).
 SOV_AIR_01 = 
 {
     name = "Guards Airborne Divisions"
@@ -761,7 +1378,6 @@ SOV_AIR_01 =
 
     division_types = { "paratrooper" }
 
-    # Number reservation system will tie to another group.
     #link_numbering_with = { SOV_INF_01 }
 
     fallback_name = "%d-ya Gvardeyskaya Vozdushno-Desantnaya Diviziya"
@@ -770,7 +1386,7 @@ SOV_AIR_01 =
     # It's okay to have gaps in numbering.
     ordered =
     {
-		# Guards Airborne Formations
+		# Guards airborne divisions of December 1942 and 1944
 		1 = { "%d-ya 'Zvenigorodskaya' Gvardeyskaya Vozdushno-Desantnaya Diviziya" }
 		2 = { "%d-ya 'Proskurovskaya' Gvardeyskaya Vozdushno-Desantnaya Diviziya" }
 		3 = { "%d-ya 'Umanskaya' Gvardeyskaya Vozdushno-Desantnaya Diviziya" }
@@ -781,11 +1397,27 @@ SOV_AIR_01 =
 		8 = { "%d-ya 'Pervomayskaya' Gvardeyskaya Vozdushno-Desantnaya Diviziya" }
 		9 = { "%d-ya 'Poltavskaya' Gvardeyskaya Vozdushno-Desantnaya Diviziya" }
 		10 = { "%d-ya 'Krivorozhskaya' Gvardeyskaya Vozdushno-Desantnaya Diviziya" }
+		11 = { "%d-ya Gvardeyskaya Vozdushno-Desantnaya Diviziya" }
+		12 = { "%d-ya Gvardeyskaya Vozdushno-Desantnaya Diviziya" }
+		13 = { "%d-ya Gvardeyskaya Vozdushno-Desantnaya Diviziya" }
+		14 = { "%d-ya Gvardeyskaya Vozdushno-Desantnaya Diviziya" }
+		15 = { "%d-ya Gvardeyskaya Vozdushno-Desantnaya Diviziya" }
+		16 = { "%d-ya Gvardeyskaya Vozdushno-Desantnaya Diviziya" }
+		# Guards airborne divisions of 1944-46
+		21 = { "%d-ya Gvardeyskaya Vozdushno-Desantnaya Diviziya" }
+		31 = { "%d-ya Gvardeyskaya Vozdushno-Desantnaya Diviziya" }
+		76 = { "%d-ya 'Chernigovskaya' Gvardeyskaya Vozdushno-Desantnaya Diviziya" }
+		98 = { "%d-ya 'Svirskaya' Gvardeyskaya Vozdushno-Desantnaya Diviziya" }
+		103 = { "%d-ya Gvardeyskaya Vozdushno-Desantnaya Diviziya" }
+		104 = { "%d-ya Gvardeyskaya Vozdushno-Desantnaya Diviziya" }
+		106 = { "%d-ya 'Tulskaya' Gvardeyskaya Vozdushno-Desantnaya Diviziya" }
+		114 = { "%d-ya Gvardeyskaya Vozdushno-Desantnaya Diviziya" }
 	}
 }
 
 # ===== Artillery Formations =====
-# Breakthrough Artillery & Rocket Artillery divisions (RVGK).
+# Breakthrough artillery divisions of the Supreme Command Reserve (RVGK) on their own numbers, and the six Guards
+# artillery divisions. Shares numbering with SOV_INF_01.
 SOV_ART_01 = 
 {
 	name = "Artillery Divisions"
@@ -803,28 +1435,212 @@ SOV_ART_01 =
 	# Names with numbers (only one number per entry). 
 	ordered =
 	{
-		# Breakthrough Artillery Divisions (RVGK)
-		1 = { "%d-ya (1-ya Gv.) 'Glukhovskaya' Artilleriyskaya Diviziya Proryva" }
-		2 = { "%d-ya (2-ya Gv.) 'Perekopskaya' Artilleriyskaya Diviziya Proryva" }
-		3 = { "%d-ya (3-ya Gv.) 'Vitebskaya' Artilleriyskaya Diviziya Proryva" }
-		4 = { "%d-ya (4-ya Gv.) 'Smolenskaya' Artilleriyskaya Diviziya Proryva" }
-		5 = { "%d-ya (5-ya Gv.) 'Stalingradskaya' Artilleriyskaya Diviziya Proryva" }
-		6 = { "%d-ya (6-ya Gv.) 'Krasnoznamennaya' Artilleriyskaya Diviziya Proryva" }
-		7 = { "%d-ya (7-ya Gv.) 'Kovelskaya' Artilleriyskaya Diviziya Proryva" }
-		8 = { "%d-ya 'Perekopskaya' Artilleriyskaya Diviziya Proryva" }
+		# Breakthrough artillery divisions of the RVGK
+		1 = { "%d-ya 'Pomeranskaya' Artilleriyskaya Diviziya Proryva" }
+		2 = { "%d-ya 'Ostrovskaya' Artilleriyskaya Diviziya Proryva" }
+		3 = { "%d-ya 'Zhitomirskaya' Artilleriyskaya Diviziya Proryva" }
+		4 = { "%d-ya 'Berlinskaya' Artilleriyskaya Diviziya Proryva" }
+		5 = { "%d-ya 'Kalinkovichskaya' Artilleriyskaya Diviziya Proryva" }
+		6 = { "%d-ya 'Mozyrskaya' Artilleriyskaya Diviziya Proryva" }
+		7 = { "%d-ya 'Zaporozhskaya' Artilleriyskaya Diviziya Proryva" }
+		8 = { "%d-ya Artilleriyskaya Diviziya" }
 		9 = { "%d-ya 'Zaporozhskaya' Artilleriyskaya Diviziya Proryva" }
 		10 = { "%d-ya 'Gumbinnenskaya' Artilleriyskaya Diviziya Proryva" }
-		11 = { "%d-ya 'Krasnoselskaya' Artilleriyskaya Diviziya Proryva" }
-		12 = { "%d-ya 'Kirovogradskaya' Artilleriyskaya Diviziya Proryva" }
-		13 = { "%d-ya 'Berlinskaya' Artilleriyskaya Diviziya Proryva" }
-		14 = { "%d-ya 'Pochinkovskaya' Artilleriyskaya Diviziya Proryva" }
+		11 = { "%d-ya 'Kirovogradskaya' Artilleriyskaya Diviziya Proryva" }
+		12 = { "%d-ya Artilleriyskaya Diviziya Proryva" }
+		13 = { "%d-ya 'Kiyevskaya' Artilleriyskaya Diviziya Proryva" }
+		14 = { "%d-ya 'Berlinskaya' Artilleriyskaya Diviziya Proryva" }
 		15 = { "%d-ya 'Leningradskaya' Artilleriyskaya Diviziya Proryva" }
-		16 = { "%d-ya 'Klaipedskaya' Artilleriyskaya Diviziya Proryva" }
+		16 = { "%d-ya 'Kirovogradskaya' Artilleriyskaya Diviziya Proryva" }
 		17 = { "%d-ya 'Kiyevsko-Zhitomirskaya' Artilleriyskaya Diviziya Proryva" }
-		18 = { "%d-ya 'Orshanskaya' Artilleriyskaya Diviziya Proryva" }
+		18 = { "%d-ya 'Gatchinskaya' Artilleriyskaya Diviziya Proryva" }
 		19 = { "%d-ya 'Venskaya' Artilleriyskaya Diviziya Proryva" }
-		20 = { "%d-ya 'Sivashsko-Shtettinskaya' Artilleriyskaya Diviziya Proryva" }
-		21 = { "%d-ya 'Terskaya' Artilleriyskaya Diviziya Proryva" }
+		20 = { "%d-ya 'Orshanskaya' Artilleriyskaya Diviziya Proryva" }
+		21 = { "%d-ya 'Dukhovshchinskaya' Artilleriyskaya Diviziya Proryva" }
 		22 = { "%d-ya 'Gomelskaya' Artilleriyskaya Diviziya Proryva" }
+		23 = { "%d-ya 'Krasnoselskaya' Artilleriyskaya Diviziya Proryva" }
+		24 = { "%d-ya Artilleriyskaya Diviziya Proryva" }
+		25 = { "%d-ya 'Berlinskaya' Artilleriyskaya Diviziya Proryva" }
+		26 = { "%d-ya 'Sivashsko-Shtettinskaya' Artilleriyskaya Diviziya Proryva" }
+		27 = { "%d-ya 'Rezhitskaya' Artilleriyskaya Diviziya Proryva" }
+		28 = { "%d-ya Artilleriyskaya Diviziya Proryva" }
+		29 = { "%d-ya Artilleriyskaya Diviziya Proryva" }
+		30 = { "%d-ya 'Venskaya' Artilleriyskaya Diviziya Proryva" }
+		31 = { "%d-ya 'Drezdenskaya' Artilleriyskaya Diviziya Proryva" }
+		# Guards artillery divisions
+		101 = { "1-ya Gvardeyskaya 'Glukhovskaya' Artilleriyskaya Diviziya Proryva" }
+		102 = { "2-ya Gvardeyskaya 'Perekopskaya' Artilleriyskaya Diviziya Proryva" }
+		103 = { "3-ya Gvardeyskaya 'Vitebsko-Khinganskaya' Artilleriyskaya Diviziya Proryva" }
+		104 = { "4-ya Gvardeyskaya 'Smolenskaya' Tyazhelaya Pushechnaya Artilleriyskaya Diviziya" }
+		105 = { "5-ya Gvardeyskaya 'Stalingradskaya' Artilleriyskaya Diviziya Proryva" }
+		106 = { "6-ya Gvardeyskaya 'Rizhsko-Khinganskaya' Artilleriyskaya Diviziya Proryva" }
+	}
+}
+
+# ===== Ideology-Gated Groups =====
+# Communist only. Soviet partisan formations of 1941-44: Kovpak's 1st Ukrainian Partisan Division, the Ukrainian
+# raiding formations, Belarusian and Leningrad brigades and the Crimean formations. Numbered brigades past the list are extrapolated.
+SOV_PRT_01 = 
+{
+	name = "Partisan Formations"
+
+	for_countries = { SOV }
+
+	can_use = { has_government = communism }
+
+	division_types = { "militia" "infantry" }
+
+	fallback_name = "%d-ya Partizanskaya Brigada"
+
+	ordered =
+	{
+		# Partisan division and formations
+		1 = { "1-ya 'imeni Kovpaka' Ukrainskaya Partizanskaya Diviziya" }
+		2 = { "'Sumskoye' Partizanskoye Soyedineniye" }
+		3 = { "'Chernigovsko-Volynskoye' Partizanskoye Soyedineniye" }
+		4 = { "'Chernigovskoye' Partizanskoye Soyedineniye" }
+		5 = { "'Rovenskoye' Partizanskoye Soyedineniye" }
+		6 = { "'Zhitomirskoye' Partizanskoye Soyedineniye" }
+		7 = { "'imeni Mikhaylova' Partizanskoye Soyedineniye" }
+		8 = { "'Severnoye' Krymskoye Partizanskoye Soyedineniye" }
+		9 = { "'Yuzhnoye' Krymskoye Partizanskoye Soyedineniye" }
+		10 = { "'Vostochnoye' Krymskoye Partizanskoye Soyedineniye" }
+		# Belarusian brigades
+		11 = { "1-ya 'Belorusskaya' Partizanskaya Brigada" }
+		12 = { "2-ya 'Belorusskaya' Partizanskaya Brigada" }
+		13 = { "1-ya 'Minskaya' Partizanskaya Brigada" }
+		14 = { "1-ya 'Vitebskaya' Partizanskaya Brigada" }
+		15 = { "'Chekist' Partizanskaya Brigada" }
+		16 = { "'Zheleznyak' Partizanskaya Brigada" }
+		17 = { "'imeni Chapayeva' Partizanskaya Brigada" }
+		18 = { "'imeni Lenina' Diversionnaya Brigada" }
+		19 = { "100-ya 'imeni Kirova' Partizanskaya Brigada" }
+		# Leningrad brigades
+		20 = { "1-ya 'Leningradskaya' Partizanskaya Brigada" }
+		21 = { "2-ya 'Leningradskaya' Partizanskaya Brigada" }
+		22 = { "3-ya 'imeni Germana' Leningradskaya Partizanskaya Brigada" }
+		23 = { "5-ya 'Leningradskaya' Partizanskaya Brigada" }
+		24 = { "6-ya 'Leningradskaya' Partizanskaya Brigada" }
+		25 = { "7-ya 'Leningradskaya' Partizanskaya Brigada" }
+		# Detachments
+		26 = { "'Pobediteli' Partizanskiy Otryad" }
+	}
+}
+
+# Neutrality only (monarchist restoration). The Guards Corps of 1914: the 1st-3rd Guards Infantry Divisions bear the names of their
+# senior regiments, further divisions those of the other Leib-Guard regiments (extrapolated onto real regiment names).
+SOV_IMP_01 = 
+{
+	name = "Imperial Guard Divisions"
+
+	for_countries = { SOV }
+
+	can_use = { has_government = neutrality }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%d-ya Gvardeyskaya Pekhotnaya Diviziya"
+
+	ordered =
+	{
+		# Guards infantry divisions of 1914, named after their senior regiments
+		1 = { "%d-ya 'Preobrazhenskaya' Gvardeyskaya Pekhotnaya Diviziya" }
+		2 = { "%d-ya 'Moskovskaya' Gvardeyskaya Pekhotnaya Diviziya" }
+		3 = { "%d-ya 'Litovskaya' Gvardeyskaya Pekhotnaya Diviziya" }
+		# Further divisions named after the Leib-Guard infantry regiments
+		4 = { "%d-ya 'Semyonovskaya' Gvardeyskaya Pekhotnaya Diviziya" }
+		5 = { "%d-ya 'Izmaylovskaya' Gvardeyskaya Pekhotnaya Diviziya" }
+		6 = { "%d-ya 'Yegerskaya' Gvardeyskaya Pekhotnaya Diviziya" }
+		7 = { "%d-ya 'Grenaderskaya' Gvardeyskaya Pekhotnaya Diviziya" }
+		8 = { "%d-ya 'Pavlovskaya' Gvardeyskaya Pekhotnaya Diviziya" }
+		9 = { "%d-ya 'Finlyandskaya' Gvardeyskaya Pekhotnaya Diviziya" }
+		10 = { "%d-ya 'Keksgolmskaya' Gvardeyskaya Pekhotnaya Diviziya" }
+		11 = { "%d-ya 'Petrogradskaya' Gvardeyskaya Pekhotnaya Diviziya" }
+		12 = { "%d-ya 'Volynskaya' Gvardeyskaya Pekhotnaya Diviziya" }
+		# Guards rifle divisions named after the Imperial Guard rifle regiments
+		13 = { "%d-ya 'Yego Velichestva' Gvardeyskaya Strelkovaya Diviziya" }
+		14 = { "%d-ya 'Tsarskoselskaya' Gvardeyskaya Strelkovaya Diviziya" }
+		15 = { "%d-ya 'Imperatorskoy Familii' Gvardeyskaya Strelkovaya Diviziya" }
+	}
+}
+
+# Fascist only (nationalist anti-Bolshevik Russia). The colored divisions and the named divisions of the Eastern Front
+# are real (ru.wikipedia; pygmywars.com); the North-Western Army's regiment towns as division titles are extrapolated.
+SOV_WHT_01 = 
+{
+	name = "White Volunteer Divisions"
+
+	for_countries = { SOV }
+
+	can_use = { has_government = fascism }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%d-ya Dobrovolcheskaya Diviziya"
+
+	ordered =
+	{
+		# Colored divisions of the Volunteer Army and the Russian Army (1919-20)
+		1 = { "'Kornilovskaya' Udarnaya Diviziya" }
+		2 = { "'Markovskaya' Pekhotnaya Diviziya" }
+		3 = { "'Drozdovskaya' Strelkovaya Diviziya" }
+		4 = { "'Alekseyevskaya' Pekhotnaya Diviziya" }
+		# Eastern Front divisions (1919)
+		5 = { "'Izhevskaya' Strelkovaya Diviziya" }
+		6 = { "15-ya 'Votkinskaya' Strelkovaya Diviziya" }
+		7 = { "16-ya 'Sarapulskaya' Strelkovaya Diviziya" }
+		8 = { "1-ya 'Sibirskaya' Strelkovaya Diviziya" }
+		9 = { "4-ya 'Stepnaya' Strelkovaya Diviziya" }
+		10 = { "7-ya 'Uralskaya' Gornostrelkovaya Diviziya" }
+		11 = { "1-ya Udarnaya Diviziya" }
+		12 = { "2-ya Udarnaya Diviziya" }
+		# North-Western Army regiment towns as division titles (extrapolated)
+		13 = { "'Talabskaya' Pekhotnaya Diviziya" }
+		14 = { "'Gdovskaya' Pekhotnaya Diviziya" }
+		15 = { "'Pskovskaya' Pekhotnaya Diviziya" }
+		16 = { "'Revelskaya' Pekhotnaya Diviziya" }
+		17 = { "'Narvskaya' Pekhotnaya Diviziya" }
+		18 = { "'Kolyvanskaya' Pekhotnaya Diviziya" }
+		19 = { "'Chudskaya' Pekhotnaya Diviziya" }
+		20 = { "'Pechorskaya' Pekhotnaya Diviziya" }
+	}
+}
+
+# Democratic only (the Russian Republic of 1917 and the SR Komuch of 1918). The 2nd and 3rd divisions, the Volga regiments and
+# groups and the 1917 battalions are real; the Volga town titles on the other divisions are extrapolated.
+SOV_REP_01 = 
+{
+	name = "Republican Shock Divisions"
+
+	for_countries = { SOV }
+
+	can_use = { has_government = democratic }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%d-ya Udarnaya Diviziya"
+
+	ordered =
+	{
+		# People's Army of the Komuch (1918)
+		1 = { "%d-ya 'Samarskaya' Strelkovaya Diviziya" }
+		2 = { "%d-ya 'Syzranskaya' Strelkovaya Diviziya" }
+		3 = { "%d-ya Strelkovaya Diviziya Narodnoy Armii" }
+		4 = { "%d-ya 'Simbirskaya' Strelkovaya Diviziya" }
+		5 = { "%d-ya 'Kazanskaya' Strelkovaya Diviziya" }
+		6 = { "%d-ya 'Stavropolskaya' Strelkovaya Diviziya" }
+		7 = { "%d-ya 'Buzulukskaya' Strelkovaya Diviziya" }
+		8 = { "%d-ya 'Buguruslanskaya' Strelkovaya Diviziya" }
+		9 = { "%d-ya 'Bugulminskaya' Strelkovaya Diviziya" }
+		10 = { "%d-ya 'Khvalynskaya' Strelkovaya Diviziya" }
+		11 = { "%d-ya 'Ufimskaya' Strelkovaya Diviziya" }
+		12 = { "%d-ya 'Nikolayevskaya' Strelkovaya Diviziya" }
+		# Shock and women's battalions of 1917
+		13 = { "1-y 'Slavyanskiy' Udarnyy Polk" }
+		14 = { "1-y 'Russkiy' Zhenskiy Batalyon Smerti" }
+		15 = { "1-y 'Petrogradskiy' Zhenskiy Batalyon" }
+		16 = { "2-y 'Moskovskiy' Zhenskiy Batalyon Smerti" }
+		17 = { "3-y 'Kubanskiy' Zhenskiy Udarnyy Batalyon" }
+		18 = { "'Saratovskiy' Zhenskiy Udarnyy Batalyon" }
 	}
 }

@@ -72,7 +72,7 @@ This document serves as an instruction and reference guide for maintaining and u
 | `zz_INEX_FIN_names_divisions.txt` | Finland | `FIN` | Included (Wartime divisions & JR 1–70 regiments, Suojeluskunta, Ryhmä groups, Frontier & Coastal brigades, Blackshirt legions, Heimojoukot, Red Guards, People's Army, Royal Guards, Penal battalions, Swedish Volunteers SFK) |
 | `zz_INEX_POL_names_divisions.txt` | Poland | `POL` | Included (1939 divisions with regional titles, Maczek's armor, KOP Border Guards, Obrona Narodowa, Armia Krajowa, PSZ exile corps, Communist LWP & GL, Nationalist NSZ) |
 | `zz_INEX_ITA_names_divisions.txt` | Italy | `ITA` | Included (Historical numbering, Blackshirts & specialist militias, RSI, Black Brigades, Royal Army, Republican volunteers, Red Guards, Party-gated Partisans, Bersaglieri, Carabinieri, Guardia di Finanza, Frontier Guard, Colonial divisions & battalions, Fiume & Albanian irredentists, Legione Romana) |
-| `zz_INEX_SOV_names_divisions.txt` | USSR | `SOV` | Included (Rifle honors, Guards Tanks & Mech Corps, Guards Airborne, Breakthrough Artillery, Moscow/Leningrad Opolcheniye, Cossacks, NKVD, Penal units) |
+| `zz_INEX_SOV_names_divisions.txt` | USSR | `SOV` | Included (Rifle & Guards honors on historical numbers, National divisions, Fortified regions, Guards Tank & Mech Corps, Airborne, Naval brigades, Breakthrough Artillery, Opolcheniye, Cossacks, NKVD, Penal units, Partisans, Imperial Guard, Whites, Republican shock units) |
 | `zz_INEX_MEX_names_divisions.txt` | Mexico | `MEX` | Included (Cristero, Imperial Guard, Sinarquistas, Gold Shirts, CTM & Agrarian Militias, Anáhuac, Regular Army) |
 | `zz_INEX_PER_names_divisions.txt` | Iran / Persia | `PER` | Included (Garrison-city Lashkars, Imperial & Immortal Guard, Shahnameh armor, Cossack atriads, Tribal levies, Camel corps, Gendarmerie) |
 | `zz_INEX_SPR_names_divisions.txt` | Spain | `SPR` | Included (Plain & Named Republican and Nationalist infantry, Named armored divisions, 1936 infantry & cavalry regiments, Mountain, Marine tercios, Paratrooper banderas, garrison commands, Army of Africa & Legion, Guardia Civil, Assault Guards, Carabineros, Requeté tercios, Falange & División Azul, royal regiments, Mixed & International Brigades, socialist, communist, POUM & anarchist militias, Basque & Catalan forces, guerrillas) |
@@ -173,9 +173,9 @@ This is not a complete list of included namelists! Just some examples.
 - Bersaglieri, Arditi, Carabinieri, Guardia di Finanza, Frontier Guard sectors ([i]XII Settore di Copertura 'Valtellina'[/i]), Eritrean and Libyan colonial battalions ([i]IV Battaglione Eritreo 'Toselli'[/i]), and fascist-only Fiume and Albanian irredentist legions with Legione Romana
 
 [b]USSR[/b]
-- Red Army Rifle divisions ([i]1-ya 'Moskovskaya Proletarskaya'[/i], [i]25-ya 'Chapayevskaya'[/i]), Guards Rifles ([i]8-ya Gv. 'Panfilovskaya'[/i]), and Moscow/Leningrad Narodnoe Opolcheniye
-- Armor & Mechanized Corps with WWII battle honors: Guards Tank Corps ([i]4-y Gv. 'Kantemirovskiy'[/i], [i]1-y Gv. 'Donskoy'[/i]) and all 9 Guards Mechanized Corps ([i]1-y Gv. 'Venskiy'[/i])
-- Specialized & Security: 1st–10th Guards Airborne ([i]7-ya Gv. 'Cherkasskaya'[/i]), Breakthrough Artillery RVGK, Cossack cavalry hosts ([i]Donskaya[/i], [i]Kubanskaya[/i]), Penal units ([i]Shtrafbat[/i]), and communist-gated NKVD Internal Troops
+- Red Army rifle divisions on their historical numbers, each with the honour it held ([i]1-ya 'Moskovskaya Proletarskaya'[/i], [i]25-ya 'Chapayevskaya'[/i]), Guards Rifles ([i]8-ya 'Panfilovskaya'[/i]), national divisions ([i]16-ya 'Klaypedskaya' Litovskaya[/i]), Opolcheniye and Stalin Line fortified regions
+- Armor & Mechanized Corps with WWII battle honors: Guards Tank Corps ([i]4-y 'Kantemirovskiy'[/i]), all 9 Guards Mechanized Corps ([i]1-y 'Venskiy'[/i]), Guards Airborne, Breakthrough Artillery, naval infantry brigades ([i]63-ya 'Kirkenesskaya'[/i]), Cossack cavalry and penal units
+- Government-gated suites: NKVD troops and partisans ([i]1-ya 'imeni Kovpaka' Ukrainskaya Partizanskaya Diviziya[/i]) for communists, the Imperial Guard ([i]'Preobrazhenskaya'[/i]) for monarchists, White volunteer divisions ([i]'Kornilovskaya' Udarnaya Diviziya[/i]) for fascists, and republican shock divisions for democrats
 
 [b]Mexico[/b]
 - Cristero National Guard & cavalry ([i]Los Altos[/i], [i]El Catorce[/i])
