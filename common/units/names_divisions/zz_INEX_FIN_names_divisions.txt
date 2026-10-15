@@ -51,16 +51,16 @@ FIN_INF_05 = {
 		1 = { "1. Divisioona 'Varsinais-Suomi'" }
 		2 = { "2. Divisioona 'Vuosalmi'" }
 		3 = { "3. Divisioona 'Kiestinki'" }
-		4 = { "4. Divisioona 'Porlammi'" }
+		4 = { "4. Divisioona 'Kuolemajärvi'" }
 		5 = { "5. Divisioona 'Syväri'" }
 		6 = { "6. Divisioona 'Salla'" }
 		7 = { "7. Divisioona 'Sortavala'" }
-		8 = { "8. Divisioona 'Kannas'" }
+		8 = { "8. Divisioona 'Porlampi'" }
 		9 = { "9. Divisioona 'Suomussalmi'" }
 		10 = { "10. Divisioona 'Valkeasaari'" }
-		11 = { "11. Divisioona 'Iskevä Kiila'" }
+		11 = { "11. Divisioona 'Jänisjärvi'" }
 		12 = { "12. Divisioona 'Kollaa'" }
-		13 = { "13. Divisioona 'Jänisjoki'" }
+		13 = { "13. Divisioona 'Lemetti'" }
 		14 = { "14. Divisioona 'Rukajärvi'" }
 		15 = { "15. Divisioona 'Hiitola'" }
 		# No 16. Divisioona was ever raised; key 16 uses the fallback.
@@ -112,6 +112,31 @@ FIN_CAV_01 = {
 	}
 }
 
+# Light detachments (Kevyet Osastot): the bicycle and ski reconnaissance units of 1939-44.
+# Only sourced numbers carry an identity; the fallback is the authentic designation.
+FIN_LGT_01 = 
+{
+	name = "Light Detachments"
+
+	for_countries = { FIN }
+
+	can_use = { always = yes }
+
+	division_types = { "cavalry" "infantry" }
+
+	fallback_name = "Kevyt Osasto %d"
+
+	ordered =
+	{
+		# Winter War, 1939-40
+		7 = { "Kevyt Osasto 7 'Taipale'" }
+		9 = { "Kevyt Osasto 9 'Suomussalmi'" }
+		# Continuation War, 1941-44
+		6 = { "Kevyt Osasto 6 'Blick'" }
+		8 = { "Kevyt Osasto 8 'Äänislinna'" }
+	}
+}
+
 # Wartime infantry regiments (Jalkaväkirykmentit JR 1 - JR 65+) with authentic battle,
 # commander, and regional identities from the Winter and Continuation Wars.
 FIN_REG_01 = {
@@ -123,7 +148,7 @@ FIN_REG_01 = {
 
 	division_types = { "infantry" }
 
-	fallback_name = "%d. Jalkaväkirykmentti"
+	fallback_name = "JR %d"
 
 	ordered = {
 		1 = { "JR 1 'Valkeasaari'" }
@@ -196,6 +221,42 @@ FIN_REG_01 = {
 		68 = { "JR 68 'Peräpohjola'" }
 		69 = { "JR 69 'Tornionlaakso'" }
 		70 = { "JR 70 'Länsi-Pohja'" }
+	}
+}
+
+# Infantry brigades (Prikaatit): the 1941 Jäger brigades and the 1941-44 brigades with their
+# best-known battle; 22+ extend the list with the regional brigades of the post-war army.
+# Not linked to FIN_INF_01: in 1944 a 15. Prikaati and a 15. Divisioona served at the same time.
+FIN_BRIG_01 = 
+{
+	name = "Infantry Brigades"
+
+	for_countries = { FIN }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%d. Prikaati"
+
+	ordered =
+	{
+		# Jäger brigades of 1941
+		1 = { "1. Jääkäriprikaati 'Aunus'" }
+		2 = { "2. Jääkäriprikaati 'Maaselkä'" }
+		# Brigades of 1941-44
+		3 = { "3. Prikaati 'Ihantala'" }
+		15 = { "15. Prikaati 'Nietjärvi'" }
+		19 = { "19. Prikaati 'Taipale'" }
+		20 = { "20. Prikaati 'Viipuri'" }
+		21 = { "21. Prikaati 'Ilomantsi'" }
+		# Extension: regional brigades of the post-war army
+		22 = { "Porin Prikaati" }
+		23 = { "Karjalan Prikaati" }
+		24 = { "Kainuun Prikaati" }
+		25 = { "Pohjan Prikaati" }
+		26 = { "Savon Prikaati" }
+		27 = { "Uudenmaan Prikaati" }
 	}
 }
 
@@ -480,11 +541,17 @@ FIN_DET_01 = {
 		18 = { "Simpeleen Komennuskunta" }
 		19 = { "Juvan Komennuskunta" }
 		20 = { "Liperin Komennuskunta" }
+		# Komennuskunnat of vanilla FIN_GAR_01
+		21 = { "Petsamon Komennuskunta" }
+		22 = { "Lahden Komennuskunta" }
+		23 = { "Lemin Komennuskunta" }
+		24 = { "Savitaipaleen Komennuskunta" }
 	}
 }
 
-# Ad hoc groups: 1-10 are historical formations (1939-44); 11+ are plausible groups
-# named after regiment and detachment commanders of the period.
+# Ad hoc groups: 1-10 are historical formations (1939-44), 11-20 plausible groups named after
+# regiment and detachment commanders of the period. 15 and 21-25 are the Winter War groups of
+# vanilla FIN_GAR_01.
 FIN_DET_02 = {
 	name = "Separate Groups"
 
@@ -511,12 +578,47 @@ FIN_DET_02 = {
 		12 = { "Ryhmä Teittinen" }
 		13 = { "Ryhmä Mäkiniemi" }
 		14 = { "Ryhmä Vuokko" }
-		15 = { "Ryhmä Kekkonen" }
+		15 = { "Uudenkirkon Ryhmä" }
 		16 = { "Ryhmä Roininen" }
 		17 = { "Ryhmä Suoranta" }
 		18 = { "Ryhmä Pennanen" }
 		19 = { "Ryhmä Kuussaari" }
 		20 = { "Ryhmä Halsti" }
+		# Winter War groups of vanilla FIN_GAR_01
+		21 = { "Muolaan Ryhmä" }
+		22 = { "Raudun Ryhmä" }
+		23 = { "Pohjois-Karjalan Ryhmä" }
+		24 = { "Räsäsen Ryhmä" }
+		25 = { "Lipolan Ryhmä" }
+	}
+}
+
+# Separate battalions (Erilliset Pataljoonat). Only sourced numbers carry an identity; the fallback
+# is the authentic designation. The penal ErP 21 is in FIN_PEN_01.
+FIN_ERP_01 = 
+{
+	name = "Separate Battalions"
+
+	for_countries = { FIN }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Erillinen Pataljoona %d"
+
+	ordered =
+	{
+		# Winter War, 1939-40
+		7 = { "Erillinen Pataljoona 7 'Nisalahti'" }
+		8 = { "Erillinen Pataljoona 8 'Laatokan Karjala'" }
+		11 = { "Erillinen Pataljoona 11 'Mekrijärvi'" }
+		14 = { "Erillinen Pataljoona 14 'Kuhmo'" }
+		15 = { "Erillinen Pataljoona 15 'Raate'" }
+		16 = { "Erillinen Pataljoona 16 'Piispajärvi'" }
+		# Continuation War, 1941-44
+		4 = { "Erillinen Pataljoona 4 'Kaukopartio'" }
+		6 = { "Erillinen Pataljoona 6 'Inkeri'" }
 	}
 }
 
@@ -591,7 +693,7 @@ FIN_MAR_01 = {
 # Sissi (ranger) divisions for the northern wilderness front. Vanilla FIN_INF_03
 # "Sissi Divisions" links its numbering to this group.
 FIN_MTN_01 = {
-	name = "Mountain Divisions"
+	name = "Sissi Divisions"
 
 	for_countries = { FIN }
 
@@ -612,10 +714,10 @@ FIN_MTN_01 = {
 		8 = { "8. Sissidivisioona 'Kittilä'" }
 		9 = { "9. Sissidivisioona 'Muonio'" }
 		10 = { "10. Sissidivisioona 'Inari'" }
-		11 = { "11. Sissidivisioona 'Osasto Marttina'" }
-		12 = { "12. Sissidivisioona 'Osasto Vehniäinen'" }
-		13 = { "13. Sissidivisioona 'Osasto Kuismanen'" }
-		14 = { "14. Sissidivisioona 'Osasto Paatsalo'" }
+		11 = { "11. Sissidivisioona 'Marttina'" }
+		12 = { "12. Sissidivisioona 'Vehniäinen'" }
+		13 = { "13. Sissidivisioona 'Kuismanen'" }
+		14 = { "14. Sissidivisioona 'Paatsalo'" }
 		15 = { "15. Sissidivisioona 'Kemijärvi'" }
 		16 = { "16. Sissidivisioona 'Rovaniemi'" }
 	}
@@ -650,10 +752,6 @@ FIN_FRN_01 = {
 		13 = { "6. Rajajääkäripataljoona" }
 		14 = { "7. Rajajääkäripataljoona" }
 		15 = { "8. Rajajääkäripataljoona" }
-		16 = { "Erillinen Pataljoona 7 'Lieksa'" }
-		17 = { "Erillinen Pataljoona 8 'Ilomantsi'" }
-		18 = { "Erillinen Pataljoona 15 'Kuhmo'" }
-		19 = { "Erillinen Pataljoona 16 'Suomussalmi'" }
 		20 = { "Rajajääkäripataljoona 'Ahvenanmaa'" }
 		21 = { "Sallan Rajajääkäripataljoona" }
 		22 = { "Inarin Rajajääkäripataljoona" }

@@ -20,7 +20,7 @@
 | [Italy](Italy) | `ITA` | 43 | `zz_INEX_ITA_names_divisions.txt` |
 | [United States](United-States) | `USA` | 36 | `zz_INEX_USA_names_divisions.txt` |
 | [Poland](Poland) | `POL` | 34 | `zz_INEX_POL_names_divisions.txt` |
-| [Finland](Finland) | `FIN` | 27 | `zz_INEX_FIN_names_divisions.txt` |
+| [Finland](Finland) | `FIN` | 30 | `zz_INEX_FIN_names_divisions.txt` |
 | [Sweden](Sweden) | `SWE` | 29 | `zz_INEX_SWE_names_divisions.txt` |
 | [Japan](Japan) | `JAP` | 32 | `zz_INEX_JAP_names_divisions.txt` |
 | [Estonia](Estonia) | `EST` | 4 | `zz_INEX_EST_names_divisions.txt` |

@@ -8,7 +8,7 @@
 
 Finland fought the Soviet Union in the Winter War (1939–40) and the Continuation War (1941–44), followed by the Lapland War against Germany (1944–45). The Finnish field army mobilized through territorial Civil Guard (*Suojeluskunta*) districts, raising numbered infantry divisions and wartime infantry regiments (*Jalkaväkirykmentit*, JR 1–JR 61+). Mobile operations were spearheaded by the Jäger brigades and Maj.Gen. Ruben Lagus's *Panssaridivisioona* (1942), supported by specialized wilderness frontier jaegers (*Rajajääkärit*), coastal artillery regiments (*Rannikkotykistörykmentit*), and ad hoc battle groups (*Ryhmä*). Swedish volunteers formed the *Svenska frivilligkåren* (SFK) on the Salla front in 1940 and served in subsequent volunteer detachments.
 
-INEX overrides 15 vanilla groups (`FIN_INF_01`, `FIN_INF_02`, `FIN_INF_04`, `FIN_CAV_01`, `FIN_MOT_01`, `FIN_ARM_01`, `FIN_MEC_01`, `FIN_GAR_01`, `FIN_GAR_02`, `FIN_MIL_01`, `FIN_MIL_02`, `FIN_PEN_01`, `FIN_MAR_01`, `FIN_MTN_01`, `FIN_PAR_01`) and adds 12 new groups (`FIN_INF_05`, `FIN_MOT_02`, `FIN_ARM_02`, `FIN_MEC_02`, `FIN_DET_01`, `FIN_DET_02`, `FIN_SVFK_01`, `FIN_SVFK_02`, `FIN_REG_01`, `FIN_FRN_01`, `FIN_CST_01`, `FIN_GUA_01`), for **27 namelist groups** in total. All empty vanilla focus-scripted stubs spawned by national focuses in *Arms Against Tyranny* are fully authored and gated cleanly by government type.
+INEX overrides 15 vanilla groups (`FIN_INF_01`, `FIN_INF_02`, `FIN_INF_04`, `FIN_CAV_01`, `FIN_MOT_01`, `FIN_ARM_01`, `FIN_MEC_01`, `FIN_GAR_01`, `FIN_GAR_02`, `FIN_MIL_01`, `FIN_MIL_02`, `FIN_PEN_01`, `FIN_MAR_01`, `FIN_MTN_01`, `FIN_PAR_01`) and adds 15 new groups (`FIN_INF_05`, `FIN_MOT_02`, `FIN_ARM_02`, `FIN_MEC_02`, `FIN_DET_01`, `FIN_DET_02`, `FIN_SVFK_01`, `FIN_SVFK_02`, `FIN_REG_01`, `FIN_FRN_01`, `FIN_CST_01`, `FIN_GUA_01`, `FIN_BRIG_01`, `FIN_LGT_01`, `FIN_ERP_01`), for **30 namelist groups** in total. All empty vanilla focus-scripted stubs spawned by national focuses in *Arms Against Tyranny* are fully authored and gated cleanly by government type.
 
 ### Naming convention
 
@@ -26,6 +26,8 @@ Infantry, motorised, armoured, and mechanised divisions come in pairs: the vanil
 | *Rannikkotykistörykmentti (RT)* | Coastal Artillery Regiment |
 | *Ryhmä* | Group (ad hoc formation) |
 | *Osasto* | Detachment |
+| *Kevyt Osasto (KevOs)* | Light detachment (bicycle and ski reconnaissance) |
+| *Erillinen Pataljoona (ErP)* | Separate battalion |
 | *Komennuskunta* | Local command detachment |
 | *Paikallisjoukot* | Local (garrison) troops |
 | *Suojeluskuntapiiri* | Civil Guard district |
@@ -49,7 +51,9 @@ Infantry, motorised, armoured, and mechanised divisions come in pairs: the vanil
 | `FIN_INF_01` | Infantry Divisions | infantry | `%d. Divisioona` | Universal (Plain variant) |
 | `FIN_INF_05` | Infantry Divisions (Named) | infantry | `%d. Divisioona` | Universal (Links: `FIN_INF_01`) |
 | `FIN_CAV_01` | Cavalry Brigades | cavalry | `%d. Ratsuväkiprikaati` | Universal |
-| `FIN_REG_01` | Infantry Regiments | infantry | `%d. Jalkaväkirykmentti` | Universal (JR 1–70) |
+| `FIN_LGT_01` | Light Detachments | cavalry, infantry | `Kevyt Osasto %d` | Universal |
+| `FIN_REG_01` | Infantry Regiments | infantry | `JR %d` | Universal (JR 1–70) |
+| `FIN_BRIG_01` | Infantry Brigades | infantry | `%d. Prikaati` | Universal |
 | `FIN_MOT_01` | Motorised Divisions | motorized | `%d. Jääkäridivisioona` | Universal (Plain variant) |
 | `FIN_MOT_02` | Motorised Divisions (Named) | motorized | `%d. Jääkäridivisioona` | Universal (Links: `FIN_MOT_01`) |
 | `FIN_ARM_01` | Armoured Divisions | light_armor, medium_armor, heavy_armor, modern_armor | `%d. Panssaridivisioona` | Universal (Plain variant, links: `FIN_MOT_01`) |
@@ -60,9 +64,10 @@ Infantry, motorised, armoured, and mechanised divisions come in pairs: the vanil
 | `FIN_GAR_02` | Suojeluskunta Divisions | infantry | `%d. Suojeluskuntapiiri` | `has_dlc = "Arms Against Tyranny"` |
 | `FIN_DET_01` | Command Detachments | infantry, motorized, mechanized | `%d. Komennuskunta` | Universal |
 | `FIN_DET_02` | Separate Groups | infantry | `Ryhmä %s` | Universal |
+| `FIN_ERP_01` | Separate Battalions | infantry | `Erillinen Pataljoona %d` | Universal |
 | `FIN_PEN_01` | Penal Battalions | penal_battalion, infantry | `%d. Rangaistuspataljoona` | Universal (Vanilla focus override) |
 | `FIN_MAR_01` | Marine Divisions | marine | `%d. Rannikkojääkäridivisioona` | Universal |
-| `FIN_MTN_01` | Mountain Divisions | mountaineers | `%d. Sissidivisioona` | Universal |
+| `FIN_MTN_01` | Sissi Divisions | mountaineers | `%d. Sissidivisioona` | Universal |
 | `FIN_FRN_01` | Frontier Jaegers | infantry, mountaineers | `%d. Rajajääkäripataljoona` | Universal |
 | `FIN_CST_01` | Coastal Brigades | infantry, marine | `%d. Rannikkoprikaati` | Universal |
 | `FIN_PAR_01` | Paratrooper Divisions | paratrooper | `%d. Laskuvarjojääkäridivisioona` | Universal |
@@ -85,21 +90,22 @@ Infantry, motorised, armoured, and mechanised divisions come in pairs: the vanil
 |:---|:---|:---|
 | 2 | Vuosalmi | Continuation War (1944) |
 | 3 | Kiestinki | Continuation War (1941) |
-| 4 | Porlammi | Continuation War (1941) |
+| 4 | Kuolemajärvi | Winter War |
 | 5 | Syväri | Continuation War (1941) |
 | 6 | Salla | Continuation War (1941) |
 | 7 | Sortavala | Continuation War (1941) |
+| 8 | Porlampi | Continuation War (1941) |
 | 9 | Suomussalmi | Winter War |
 | 10 | Valkeasaari | Continuation War (1944) |
-| 11 | *Iskevä Kiila* (nickname) | Continuation War |
+| 11 | Jänisjärvi | Continuation War (1941) |
 | 12 | Kollaa | Winter War |
-| 13 | Jänisjoki | Winter War |
+| 13 | Lemetti | Winter War |
 | 14 | Rukajärvi | Continuation War |
 | 15 | Hiitola | Continuation War (1941) |
 | 17 | Hanko | Continuation War (1941) |
 | 18 | Tali | Continuation War (1944) |
 
-1. D (*Varsinais-Suomi*, formation area), 8. D (*Kannas*) and 19. D (*Itä-Karjala*) carry their theatre or region. No 16. Divisioona was raised, so key 16 uses the fallback. Numbers 20–30 represent extended mobilization anchored to Suojeluskunta regions (*Pohjois-Savo*, *Satakunta*, *Etelä-Häme* … *Pohjois-Häme*).
+1. D (*Varsinais-Suomi*, formation area) and 19. D (*Itä-Karjala*) carry their theatre or region. No 16. Divisioona was raised, so key 16 uses the fallback. Numbers 20–30 represent extended mobilization anchored to Suojeluskunta regions (*Pohjois-Savo*, *Satakunta*, *Etelä-Häme* … *Pohjois-Häme*).
 
 ### `FIN_REG_01` — Infantry Regiments (Jalkaväkirykmentit)
 Covers historical Finnish wartime regiments (**JR 1 – JR 65+**) with famous commander, battle, and regional identities:
@@ -115,14 +121,20 @@ Covers historical Finnish wartime regiments (**JR 1 – JR 65+**) with famous co
 - *JR 61 'Tienhaaran rykmentti'* (Alpo Marttinen, Swedish-speaking Vasa distrikt)
 - *JR 64 'Suomussalmi'* & *JR 65 'Raatteen rykmentti'* (Winter War border battles)
 
+### `FIN_BRIG_01` — Infantry Brigades (Prikaati)
+The brigades of 1941–44 carry their best-known battle: *1. Jääkäriprikaati 'Aunus'* and *2. Jääkäriprikaati 'Maaselkä'* (1941), *3. Prikaati 'Ihantala'*, *15. Prikaati 'Nietjärvi'*, *19. Prikaati 'Taipale'*, *20. Prikaati 'Viipuri'* and *21. Prikaati 'Ilomantsi'* (1944). Numbers 22–27 extend the list with the regional brigades of the post-war army (*Porin*, *Karjalan*, *Kainuun*, *Pohjan*, *Savon* and *Uudenmaan Prikaati*). Not linked to the division numbering: a 15. Prikaati and a 15. Divisioona served at the same time.
+
 ### `FIN_FRN_01` — Frontier Jaegers (Rajajääkärit)
-Border guard battalions and wilderness detachments of the Finnish Border Guard (*Rajavartiolaitos*): *Lapin*, *Kainuun*, *Pohjois-Karjalan*, *Salmin*, and *Kannaksen Rajavartiostot*, Capt. Antti Pennanen's *Petsamon Erillisosasto*, the *1. Rajajääkäriprikaati* (1944), *Rajajääkäripataljoonat 1–8*, and independent border battalions (*Er.P 7*, *Er.P 8*, *Er.P 15*, *Er.P 16*).
+Border guard battalions and wilderness detachments of the Finnish Border Guard (*Rajavartiolaitos*): *Lapin*, *Kainuun*, *Pohjois-Karjalan*, *Salmin*, and *Kannaksen Rajavartiostot*, Capt. Antti Pennanen's *Petsamon Erillisosasto*, the *1. Rajajääkäriprikaati* (1944) and *Rajajääkäripataljoonat 1–8*. The separate battalions (*Erilliset Pataljoonat*) are in `FIN_ERP_01`.
 
 ### `FIN_CST_01` — Coastal Brigades (Rannikkoprikaatit)
 Coastal artillery regiments (*Rannikkotykistörykmentit RT 1 – RT 5*) and fortress brigades protecting the Gulf of Finland, Lake Ladoga, and Lake Onega: *1.–4. Rannikkoprikaatit*, *11.–12. Rannikkoprikaatit*, *Uudenmaan*, *Itä-Suomenlahden*, *Saaristomeren*, *Laatokan*, and *Äänisen Rannikkoprikaatit*.
 
 ### `FIN_CAV_01` — Cavalry Brigades (Ratsuväkiprikaati)
 Finland fielded the *Ratsuväkiprikaati*, combining the Uusimaa Dragoons and Häme Cavalry Regiment. Entry 1 is the historical brigade, entries 2–3 carry its heritage (*Uudenmaan Rakuunat*, *Hakkapeliitta*), and 4–15 its garrison (*Lappeenranta*) and Finnish regions.
+
+### `FIN_LGT_01` — Light Detachments (Kevyt Osasto)
+The bicycle and ski light detachments (*Kevyet Osastot*) of 1939–44. Numbers with a sourced sector carry it: *Kevyt Osasto 7 'Taipale'* and *Kevyt Osasto 9 'Suomussalmi'* (Winter War), *Kevyt Osasto 6 'Blick'* (Col. Blick's light force, 1941–42) and *Kevyt Osasto 8 'Äänislinna'* (Continuation War). Every other number uses the designation itself (*Kevyt Osasto %d*).
 
 ### `FIN_MOT_01` / `FIN_MOT_02` — Motorised Divisions (Jääkäridivisioona)
 `FIN_MOT_01` is the plain variant and numbering anchor for all mobile groups. The named `FIN_MOT_02` draws from the Jäger movement: *Lockstedt*, *Misse*, *Aajoki*, *Terijoki*, and *Vaasa*. Later entries are regional.
@@ -140,10 +152,13 @@ Local garrison troops of 30 cities and regions, from *Helsingin Paikallisjoukot*
 Overrides the vanilla group spawned by the Suojeluskunta focus (*Arms Against Tyranny*). Features all 41 historical civil guard districts with correct Finnish and Swedish orthography.
 
 ### `FIN_DET_01` — Command Detachments (Komennuskunta)
-Local border defense detachments named after 20 parishes of the eastern border zone (*Ilomantsin*, *Lieksan*, *Nurmeksen* …).
+Local border defense detachments named after 20 parishes of the eastern border zone (*Ilomantsin*, *Lieksan*, *Nurmeksen* …), and the komennuskunnat of vanilla's garrison list (*Petsamon*, *Lahden*, *Lemin*, *Savitaipaleen Komennuskunta*).
 
 ### `FIN_DET_02` — Separate Groups (Ryhmä)
-Ad hoc corps-level groups: historical formations 1–10 (*Talvela*, *Siilasvuo*, *Susi*, *Sihvo*, *Oinonen*, *Raappana*, *Lapin*, *Pohjois-Suomen*, *Aunuksen*, *Maaselän Ryhmä*) and commander-named wartime groups 11–20 (*Pajari*, *Teittinen*, *Mäkiniemi*, *Vuokko*, *Kekkonen*, *Roininen*, *Suoranta*, *Pennanen*, *Kuussaari*, *Halsti*).
+Ad hoc corps-level groups: historical formations 1–10 (*Talvela*, *Siilasvuo*, *Susi*, *Sihvo*, *Oinonen*, *Raappana*, *Lapin*, *Pohjois-Suomen*, *Aunuksen*, *Maaselän Ryhmä*), commander-named wartime groups 11–20 (*Pajari*, *Teittinen*, *Mäkiniemi*, *Vuokko*, *Roininen*, *Suoranta*, *Pennanen*, *Kuussaari*, *Halsti*), and the Winter War groups of vanilla's garrison list (*Uudenkirkon*, *Muolaan*, *Raudun*, *Pohjois-Karjalan*, *Räsäsen*, *Lipolan Ryhmä*).
+
+### `FIN_ERP_01` — Separate Battalions (Erillinen Pataljoona)
+The separate battalions (*Erilliset Pataljoonat*, ErP) of 1939–44, each numbered battalion with the sector a source places it in: in the Winter War *ErP 7 'Nisalahti'*, *ErP 8 'Laatokan Karjala'*, *ErP 11 'Mekrijärvi'*, *ErP 14 'Kuhmo'*, *ErP 15 'Raate'* and *ErP 16 'Piispajärvi'*; in the Continuation War *ErP 4 'Kaukopartio'* (long-range patrols) and *ErP 6 'Inkeri'* (the Ingrian battalion). Every other number uses the designation itself. The penal *ErP 21* is in `FIN_PEN_01`.
 
 ### `FIN_PEN_01` — Penal Battalions (Rangaistusjoukot)
 Overrides the vanilla focus-spawned stub (`%d. Rangaistusdivisioona`). Features Maj. Nikke Pärmi's renowned *Erillinen Pataljoona 21 'Pärmin pirut'*, the disciplinary camp companies of *Kovera*, *Kangasjärvi*, and *Säämäjärvi*, the Huuhanmäki training center, and fortress labor battalions.
@@ -151,8 +166,8 @@ Overrides the vanilla focus-spawned stub (`%d. Rangaistusdivisioona`). Features 
 ### `FIN_MAR_01` — Marine Divisions (Rannikkojääkäridivisioona)
 Coastal assault divisions named after key island fortresses: *Ahvenanmaa*, *Hanko*, *Porkkala*, *Suursaari*, *Tytärsaari*, *Koivisto*, *Saarenpää*, *Utö*, *Örö*, *Kotka*.
 
-### `FIN_MTN_01` — Mountain Divisions (Sissidivisioona)
-Wilderness ranger divisions for the northern front (*Kuhmo*, *Kuusamo*, *Petsamo*, *Pelkosenniemi*, *Ivalo* …) and Er.P 4 long-range patrol detachments (*Osasto Marttina*, *Osasto Vehniäinen*, *Osasto Kuismanen*, *Osasto Paatsalo*).
+### `FIN_MTN_01` — Sissi Divisions (Sissidivisioona)
+Wilderness ranger divisions for the northern front (*Kuhmo*, *Kuusamo*, *Petsamo*, *Pelkosenniemi*, *Ivalo* …) and the leaders of the Er.P 4 long-range patrol detachments (*Marttina*, *Vehniäinen*, *Kuismanen*, *Paatsalo*). The selector reads *Sissi Divisions*, so it does not repeat vanilla's "Mountain Divisions" (`FIN_MTN_02`).
 
 ### `FIN_PAR_01` — Paratrooper Divisions (Laskuvarjojääkäridivisioona)
 Airborne divisions named after the long-range patrol tradition (*Kaukopartio*) and Finnish Air Force air bases (*Utti*, *Immola*, *Malmi*, *Kauhava*, *Tikkakoski* …).

@@ -69,7 +69,7 @@ This document serves as an instruction and reference guide for maintaining and u
 | `zz_INEX_LIT_names_divisions.txt` | Lithuania | `LIT` | Included (Grand Duke/Royal regiments, Iron Wolf cavalry, AA/Armored teams) |
 | `zz_INEX_FRA_names_divisions.txt` | France | `FRA` | Included (1940 order of battle, Nicknames, National Guard, Metropolitan, Milice, FTP, Armistice Army) |
 | `zz_INEX_ENG_names_divisions.txt` | United Kingdom | `ENG` | Included (Regular & Territorial Army, Armoured divisions & tank brigades, Household Division, Airborne, Commandos, Anti-Aircraft Command, County Garrisons, Colonial KAR/RWAFF, Home Guard, Blackshirt & Workers' defense suites) |
-| `zz_INEX_FIN_names_divisions.txt` | Finland | `FIN` | Included (Wartime divisions & JR 1–70 regiments, Suojeluskunta, Ryhmä groups, Frontier & Coastal brigades, Blackshirt legions, Heimojoukot, Red Guards, People's Army, Royal Guards, Penal battalions, Swedish Volunteers SFK) |
+| `zz_INEX_FIN_names_divisions.txt` | Finland | `FIN` | Included (Wartime divisions & JR 1–70 regiments, Prikaati brigades, Separate battalions (ErP), Light detachments (KevOs), Suojeluskunta, Ryhmä groups, Frontier & Coastal brigades, Blackshirt legions, Heimojoukot, Red Guards, People's Army, Royal Guards, Penal battalions, Swedish Volunteers SFK) |
 | `zz_INEX_POL_names_divisions.txt` | Poland | `POL` | Included (1939 divisions with regional titles, Maczek's armor, KOP Border Guards, Obrona Narodowa, Armia Krajowa, PSZ exile corps, Communist LWP & GL, Nationalist NSZ) |
 | `zz_INEX_ITA_names_divisions.txt` | Italy | `ITA` | Included (Historical numbering, Blackshirts & specialist militias, RSI, Black Brigades, Royal Army, Republican volunteers, Red Guards, Party-gated Partisans, Bersaglieri, Carabinieri, Guardia di Finanza, Frontier Guard, Colonial divisions & battalions, Fiume & Albanian irredentists, Legione Romana) |
 | `zz_INEX_SOV_names_divisions.txt` | USSR | `SOV` | Included (Rifle & Guards honors on historical numbers, National divisions, Fortified regions, Guards Tank & Mech Corps, Airborne, Naval brigades, Breakthrough Artillery, Opolcheniye, Cossacks, NKVD, Penal units, Partisans, Imperial Guard, Whites, Republican shock units) |
@@ -158,7 +158,7 @@ This is not a complete list of included namelists! Just some examples.
 - Colonial and ideology suites: King's African Rifles, RWAFF, [i]Arab Legion[/i], Blackshirt Brigades, Legion of St. George, and communist Workers' Defense Brigades
 
 [b]Finland[/b]
-- Numbered divisions & wartime regiments ([i]12. Divisioona 'Kollaa'[/i], [i]JR 7 'Tyrjän rykmentti'[/i], [i]JR 61[/i]) and Suojeluskunta districts
+- Numbered divisions, brigades & wartime regiments ([i]12. Divisioona 'Kollaa'[/i], [i]20. Prikaati 'Viipuri'[/i], [i]JR 7 'Tyrjän rykmentti'[/i]), separate battalions and Suojeluskunta districts
 - Frontier Jaegers, Coastal brigades ([i]Rannikkotykistörykmentti 1[/i]), Sissi rangers, [i]Panssaridivisioona 'Lagus'[/i], and Swedish Volunteers (SFK)
 - Ideology suites: Blackshirt legions ([i]Mustapaitojen Keskuslegioona[/i]), [i]Heimopataljoona 3[/i], 1918 Red Guards, [i]Suomen Kansanarmeija[/i], and Royal Guards ([i]Suomen Kaarti[/i])
 
