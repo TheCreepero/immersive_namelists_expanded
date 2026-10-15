@@ -244,8 +244,9 @@ Describe "Plan hand-off: planning skills stop, the implement skill only executes
     It "Release skill leaves the game and the upload to the user" {
         $text = & $script:ReadSkill 'hoi4-inex-release'
         $text | Should -Match '-GameLog' -Because "the game's own log is the only check of what the engine does with a file"
-        $text | Should -Match '-PublishSteam -DryRun'
-        $text | Should -Match 'The user runs the upload' -Because "SteamCMD may prompt, and publishing is outward-facing"
+        $text | Should -Match 'hoi4-mod-release' -Because "the shared release skill and Publish-Mod.ps1 run the preflight and the upload"
+        $text | Should -Match 'Publish-Mod\.ps1 "Immersive Namelists Expanded" -DryRun'
+        $text | Should -Match 'the user runs the upload' -Because "SteamCMD may prompt, and publishing is outward-facing"
     }
 
     It "Rules and skills describe same-tag replacement, with no advice to drop vanilla copies" {

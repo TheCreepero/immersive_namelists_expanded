@@ -50,7 +50,7 @@ This skill produces one file, `docs/superpowers/plans/YYYY-MM-DD-<country>-audit
 3. **Keep file-level conventions:** `for_countries`, the German three-file split, and any group referenced by vanilla scripts (see `-InspectVanilla`).
 4. **Nothing reaches the plan's batch without approval.** The audit report is a checkpoint; the batch holds only the items the user approves.
 5. **Commit and wiki push are outward-facing.** The plan lists them as its last step, the ship step, which runs only on the user's word.
-6. **A group replaces the vanilla group of the same tag** (`CLAUDE.md` §6). Its entries are the only copy the game reads: `"removeAll"` and `"clearOrdered"` delete names from the game, so use them only on entries that repeat the fallback in a 1..N run, or when the batch writes the names back. A vanilla entry the group leaves out is gone; `-Audit` lists those per group.
+6. **A group replaces the vanilla group of the same tag** (`CLAUDE.md` §6, [NAM-002]). Its entries are the only copy the game reads: `"removeAll"` and `"clearOrdered"` delete names from the game, so use them only on entries that repeat the fallback in a 1..N run, or when the batch writes the names back. A vanilla entry the group leaves out is gone; `-Audit` lists those per group.
 7. **Never retain focus-locked namelists (`has_completed_focus`).** Namelists must never be locked behind national focuses. Convert any legacy focus locks to pure government type checks (`has_government = <ideology>`), war state triggers (`has_war = yes`), or country tags to maximize compatibility with mods like *Road to 56* and overhaul focus trees.
 
 ---

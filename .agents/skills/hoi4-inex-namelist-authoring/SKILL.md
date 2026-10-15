@@ -146,7 +146,7 @@ When these lists get nicknames or identity names (`12. Divisioona 'Kollaa'`), ke
 }
 ```
 
-Tokens, fallback formats, keys and links: `CLAUDE.md` §6. `-DryRun` catches unknown groups, invalid tokens, reused tags and bad fallbacks; `-Check` validates the file once the implementer has applied the batch. Write the plan with the Write and Edit tools (UTF-8 without BOM); never with PowerShell 5.1 `Set-Content` or Git Bash `sed -i`, which corrupt diacritics.
+Tokens, fallback formats, keys and links: `CLAUDE.md` §6, which cites the records of the knowledge register (`hoi4-modding-knowledge` skill, topic `namelists`). `-DryRun` catches unknown groups, invalid tokens, reused tags and bad fallbacks; `-Check` validates the file once the implementer has applied the batch. Write the plan with the Write and Edit tools (UTF-8 without BOM); never with PowerShell 5.1 `Set-Content` or Git Bash `sed -i`, which corrupt diacritics.
 
 ## 5. Checklist before `Status: READY`
 

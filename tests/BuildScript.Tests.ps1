@@ -10,16 +10,9 @@ BeforeAll {
     # Read build.ps1 script content to extract functions without executing the full script
     $script:BuildContent = [System.IO.File]::ReadAllText($script:BuildScriptPath, [System.Text.Encoding]::UTF8)
 
-    # Dot-source Get-ModMetadata and New-LauncherModContent definitions safely
-    $metaFuncMatch = [regex]::Match($script:BuildContent, '(?s)(function Get-ModMetadata\s*\{.*?\n\})')
-    $launcherFuncMatch = [regex]::Match($script:BuildContent, '(?s)(function New-LauncherModContent\s*\{.*?\n\})')
-
-    if ($metaFuncMatch.Success) {
-        . ([ScriptBlock]::Create($metaFuncMatch.Groups[1].Value))
-    }
-    if ($launcherFuncMatch.Success) {
-        . ([ScriptBlock]::Create($launcherFuncMatch.Groups[1].Value))
-    }
+    # Get-ModMetadata, New-LauncherModContent and the lifecycle actions live in the shared engine
+    . (Join-Path $script:RepoRoot 'tools\HoiModBuild.ps1')
+    $script:BuildConfig = Get-ModBuildConfig -RepoDir $script:RepoRoot
 
     # Script-level list of valid division_types tokens, read by Invoke-Validation and Edit-NamelistGroupText
     $typesMatch = [regex]::Match($script:BuildContent, '(?s)\$ValidDivisionTypes = @\(.*?\)')
@@ -39,7 +32,7 @@ BeforeAll {
     if ($writeHelpersMatch.Success) {
         . ([ScriptBlock]::Create($writeHelpersMatch.Groups[1].Value))
     }
-    $validationFuncMatch = [regex]::Match($script:BuildContent, '(?s)(function Invoke-Validation\s*\{.*?\n\})\r?\n\r?\n# --- Helper: Find or Install SteamCMD')
+    $validationFuncMatch = [regex]::Match($script:BuildContent, '(?s)(function Invoke-Validation\s*\{.*?\n\})\r?\n\r?\n# --- Helper: Find Hearts of Iron IV Game Installation')
     if ($validationFuncMatch.Success) {
         . ([ScriptBlock]::Create($validationFuncMatch.Groups[1].Value))
     }
@@ -114,36 +107,20 @@ remote_file_id="99999"
     }
 }
 
-Describe "build.ps1 Packaging & Staging Exclusions" {
-    It "Build script must exclude tests directory from packages and deployment" {
-        # Check that 'tests' is present in excludeDirs in build.ps1
-        $script:BuildContent | Should -Match "excludeDirs\s*=\s*@\([^)]*['`"]tests['`"]" -Because "tests directory must be excluded from release staging"
+Describe "build.ps1 Packaging Configuration" {
+    It "Ships only the common folder with the descriptor and thumbnail" {
+        $shippedTopLevel = @(Get-ModContentFiles -Config $script:BuildConfig | ForEach-Object { ($_ -split '/')[0] } | Sort-Object -Unique)
+        $shippedTopLevel | Should -Be @('common', 'descriptor.mod', 'thumbnail.png') -Because "docs, wiki, Files, tests and the agent folders are development material"
     }
 
-    It "Build script must exclude wiki directory from packages and deployment" {
-        $script:BuildContent | Should -Match "excludeDirs\s*=\s*@\([^)]*['`"]wiki['`"]" -Because "wiki directory must be excluded from release staging"
+    It "Installs as immersive_namelists_expanded and packages inex.zip as a mod folder with its launcher file" {
+        $script:BuildConfig.ModFolderName | Should -Be 'immersive_namelists_expanded'
+        $script:BuildConfig.ZipArchiveName | Should -Be 'inex.zip'
+        $script:BuildConfig.PackageLayout | Should -Be 'ModFolder'
     }
 
-    It "Build script must exclude .git and dev tools from packaging" {
-        $script:BuildContent | Should -Match "excludeDirs\s*=\s*@\([^)]*['`"]\.git['`"]"
-        $script:BuildContent | Should -Match "excludeDirs\s*=\s*@\([^)]*['`"]\.github['`"]"
-    }
-
-    It "All excludeDirs definitions in build.ps1 must include wiki and tests" {
-        $matches = [regex]::Matches($script:BuildContent, 'excludeDirs\s*=\s*@\([^)]+\)')
-        $matches.Count | Should -BeGreaterOrEqual 3
-        foreach ($m in $matches) {
-            $m.Value | Should -Match "['`"]wiki['`"]" -Because "Every staging and deployment step must exclude wiki"
-            $m.Value | Should -Match "['`"]tests['`"]" -Because "Every staging and deployment step must exclude tests"
-        }
-    }
-
-    It "All excludeDirs definitions in build.ps1 must exclude agent skill directories" {
-        $defs = [regex]::Matches($script:BuildContent, 'excludeDirs\s*=\s*@\([^)]+\)')
-        foreach ($d in $defs) {
-            $d.Value | Should -Match "['`"]\.claude['`"]" -Because "Claude Code skills and settings must not ship with the mod"
-            $d.Value | Should -Match "['`"]\.agents['`"]" -Because "Antigravity skills must not ship with the mod"
-        }
+    It "Hands the namelist validation to the shared engine" {
+        $script:BuildContent | Should -Match 'Invoke-ModBuild -Config \$buildConfig -ExtraValidation \{ Invoke-Validation \}'
     }
 }
 
@@ -1845,6 +1822,8 @@ Describe "build.ps1 CLI on a fixture repo: -Batch, -AddGroup, quiet -EditNames, 
         $script:CliFile = Join-Path $script:CliNamelistDir 'zz_INEX_TST_names_divisions.txt'
         $script:Utf8NoBom = New-Object System.Text.UTF8Encoding($false)
         Copy-Item $script:BuildScriptPath $script:CliBuild
+        New-Item -ItemType Directory -Path (Join-Path $script:CliDir 'tools') -Force | Out-Null
+        Copy-Item (Join-Path $script:RepoRoot 'tools\HoiModBuild.ps1') (Join-Path $script:CliDir 'tools\HoiModBuild.ps1')
         [System.IO.File]::WriteAllText((Join-Path $script:CliDir 'descriptor.mod'), "version=`"1.0.0`"`nname=`"Test Mod`"`nsupported_version=`"1.19.*`"`n", $script:Utf8NoBom)
         [System.IO.File]::WriteAllBytes((Join-Path $script:CliDir 'thumbnail.png'), [byte[]]@(0x89, 0x50, 0x4E, 0x47))
         [System.IO.File]::WriteAllText((Join-Path $script:CliDir 'README.md'), "| Tag | Nation | Source File |`n| :--- | :--- | :--- |`n| ``TST`` | Testland | ``zz_INEX_TST_names_divisions.txt`` |`n", $script:Utf8NoBom)

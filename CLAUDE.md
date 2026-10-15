@@ -9,7 +9,7 @@
 - **Tooling Backlog**: `docs/tooling-backlog.md` lists open problems in `build.ps1`, the tests, the skills and these rules. During a nation's planning or implementation, work around a tooling problem and add one entry there. Entries are fixed in a session of their own, and a fixed entry is deleted.
 
 ## 2. File & Group Conventions
-- **Files**: `common/units/names_divisions/zz_INEX_<TAG>_names_divisions.txt`. UTF-8 without BOM, balanced `{}`. The `zz_` prefix is load order (§6), not decoration.
+- **Files**: `common/units/names_divisions/zz_INEX_<TAG>_names_divisions.txt`. UTF-8 without BOM [ENC-001], balanced `{}`. The `zz_` prefix is load order (§6), not decoration.
 - **Group Tags**: `<TAG>_<CATEGORY>_<NUMBER>` (e.g., `EST_REG_01`, `SWE_ARM_01`). Globally unique across repo.
 - **German Split**: `zz_INEX_GER_names_divisions.txt` (Heer plain/Named pairs, Jäger, mountain, airborne, marine, cavalry, garrison, and the ideology suites: Elite, Guard/Imperial, Republican, Red Army), `zz_INEX_GER_SS_names_divisions.txt` (Waffen-SS, fascist-only), `zz_INEX_GER_ADDITIONAL_names_divisions.txt` (numbered series, heavy battalions, Festung, Kampfgruppen, militias per ideology, Foreign Legions).
 - **UI Selectors**: `name = "<Selector>"` must be concise; omit nation/demonym prefixes (e.g., `"Infantry Divisions"`, not `"Mexican Infantry Divisions"`) to prevent dropdown truncation.
@@ -44,18 +44,18 @@ Every command is `powershell -File .\build.ps1 <switch>`. `Get-Help .\build.ps1 
 - `-Package`, `-DevLink`, `-PublishSteam` : Release zip in `artifacts/`, live-edit link in the launcher's mod directory, Workshop upload (`hoi4-inex-release` skill).
 
 ## 6. Engine Invariants & Vanilla Overrides
-- **Additive Loading**: Namelist files load additively: a vanilla group whose tag INEX does not define stays as it is.
-- **Load Order**: The game reads the folder in file name order, and of two files that define the same tag the later one wins (in-game tests: Germany 2026-10-09, USA 2026-10-11). Every INEX file name starts with `zz_` so that it loads after vanilla's `<TAG>_names_divisions.txt` and after another mod's copy of that file (RT56 and others). Without the prefix, a nation whose tag sorts after "INEX" loses all its groups on vanilla tags. Mod order in the playset does not change this.
-- **Tag Overrides**: A group that reuses a vanilla tag (e.g., `SOV_INF_01`) replaces the vanilla group whole (in-game test, 2026-10-09). The INEX entries are the only ones the game reads, and every vanilla `ordered` key INEX leaves out is gone. Leaving a key out removes that vanilla name; keeping a vanilla name means writing it in the INEX group. A new tag (e.g., `EST_KL_01`) adds a group.
-- **Scripted Fallbacks**: A vanilla tag that events or focuses reference keeps its vanilla definition while INEX does not define it. Define a vanilla tag only to change it, or as the plain variant below.
+- **Additive Loading**: Namelist files load additively: a vanilla group whose tag INEX does not define stays as it is [NAM-001].
+- **Load Order**: The game reads the folder in file name order, and of two files that define the same tag the later one wins [NAM-001]. Every INEX file name starts with `zz_` so that it loads after vanilla's `<TAG>_names_divisions.txt` and after another mod's copy of that file (RT56 and others). Without the prefix, a nation whose tag sorts after "INEX" loses all its groups on vanilla tags. Mod order in the playset does not change this.
+- **Tag Overrides**: A group that reuses a vanilla tag (e.g., `SOV_INF_01`) replaces the vanilla group whole [NAM-002]. The INEX entries are the only ones the game reads, and every vanilla `ordered` key INEX leaves out is gone. Leaving a key out removes that vanilla name; keeping a vanilla name means writing it in the INEX group. A new tag (e.g., `EST_KL_01`) adds a group.
+- **Scripted Fallbacks**: A vanilla tag that events or focuses reference keeps its vanilla definition while INEX does not define it [NAM-002]. Define a vanilla tag only to change it, or as the plain variant below.
 - **Plain/Named Variants**: Nicknamed infantry, motorized, mechanized, and armor lists keep an un-nicknamed variant on the vanilla tag, and the nicknames go in a new `"<Selector> (Named)"` tag that shares its numbering via `link_numbering_with = { <plain tag> }`. The plain group is fallback-only (no `ordered`) where vanilla's entries only repeat the fallback in a 1..N run. Where vanilla's keys are historical numbers with gaps (e.g. `GER_Inf_01`: 1-36, 44, 45, 46, 50), the plain group keeps those numbered entries, because a fallback counts on without the gaps. Skip the pair only if vanilla already nicknames those divisions (e.g. USA).
-- **Subunits**: `division_types = { ... }` allows any line combat token that `-ValidateOnly` accepts (the full list is `$ValidDivisionTypes` in `build.ps1`). Common ones: `"infantry"`, `"cavalry"`, `"motorized"`, `"mechanized"`, `"marine"`, `"mountaineers"`, `"paratrooper"`, `"militia"`, `"light_armor"`, `"medium_armor"`, `"heavy_armor"`, `"modern_armor"`. Never use invalid (`"armor"`, `"marines"`) or support-only tokens (`"military_police"`).
-- **Ideology Gating (`can_use`)**: Optional group trigger evaluated in `Country` scope. Gate ideological namelists strictly via `can_use = { has_government = <ideology> }` (`democratic`, `neutrality`, `fascism`, `communism`, with boolean operators `OR = { ... }` or `NOT = { ... }`).
+- **Subunits**: `division_types = { ... }` allows any line combat token that `-ValidateOnly` accepts (the full list is `$ValidDivisionTypes` in `build.ps1`). Common ones: `"infantry"`, `"cavalry"`, `"motorized"`, `"mechanized"`, `"marine"`, `"mountaineers"`, `"paratrooper"`, `"militia"`, `"light_armor"`, `"medium_armor"`, `"heavy_armor"`, `"modern_armor"`. Never use invalid (`"armor"`, `"marines"`) or support-only tokens (`"military_police"`). The tokens vanilla uses are in [NAM-004].
+- **Ideology Gating (`can_use`)**: Optional group trigger evaluated in `Country` scope [NAM-003]. Gate ideological namelists strictly via `can_use = { has_government = <ideology> }` (`democratic`, `neutrality`, `fascism`, `communism`, with boolean operators `OR = { ... }` or `NOT = { ... }`).
   - **Strict Focus Ban**: **Never lock namelists behind national focuses (`has_completed_focus`)**, decisions, ideas, or event flags. Focus locks break compatibility with overhaul mods (e.g. *Road to 56*, national focus overhauls) and fail on peaceful advisor flips, referendums, civil wars, and puppet releases. Always gate by government type instead.
-- **Ordered Blocks**: Unique integer keys (duplicates overwrite). No empty `ordered = { }` blocks.
-- **Strings**: An apostrophe needs no escape (`'Hobart's Funnies'`). A backslash may only precede a double quote or another backslash; the game's lexer rejects anything else and `-ValidateOnly` fails on it.
-- **Fallback Formatting**: `fallback_name` requires `%d` (Arabic) or `%s` (Roman). Language suffixes without `%d`/`%s` (e.g., `%er`) are invalid in fallbacks (static `ordered` only).
-- **Link Numbering**: `link_numbering_with` links only to *different* external groups (e.g., motorized to infantry). Never self-referential (`link_numbering_with = { SELF }`).
+- **Ordered Blocks**: Unique integer keys (duplicates overwrite). No empty `ordered = { }` blocks: a rule of this mod, since vanilla itself has them [NAM-006].
+- **Strings**: An apostrophe needs no escape (`'Hobart's Funnies'`). A backslash may only precede a double quote or another backslash; the game's lexer rejects anything else and `-ValidateOnly` fails on it [NAM-008].
+- **Fallback Formatting**: `fallback_name` requires `%d` (Arabic) or `%s` (Roman) [NAM-005]. Language suffixes without `%d`/`%s` (e.g., `%er`) are invalid in fallbacks (static `ordered` only).
+- **Link Numbering**: `link_numbering_with` links only to *different* external groups (e.g., motorized to infantry) [NAM-007]. Never self-referential (`link_numbering_with = { SELF }`).
 - **Tag Uniqueness**: Group tags must be globally unique across all repo files.
 
 ## 7. Related Skills
@@ -79,3 +79,9 @@ Edit the Claude side (`CLAUDE.md`, `.claude/skills/`), then run `powershell -Fil
 
 ## 9. Compact Instructions
 When compacting, keep: the active nation and TAG, the plan file path and its `Status:`, whether the session is planning or implementing, the first unticked implementation step, group tags edited and their remaining TODOs, pending Section 4 doc-sync steps, and the latest `-ValidateOnly`/`-Test` result. Drop raw audit, test and research output once its findings are recorded in the plan file.
+
+## 10. Engine Knowledge
+- Facts about how the game and its engine behave live in one place: the knowledge register of the Modding Manager, reached through the user-level `hoi4-modding-knowledge` skill. Search it before writing a kind of mod file for the first time in a session and before asking for a game launch.
+- Do not write an engine fact into this repository (this file, `wiki/`, `docs/`, skills). Add it to the register with `Add-HoiKnowledge.ps1` and cite its id here, as in `[LOAD-010]`.
+- Topics this mod leans on: `namelists`, `loading-and-overrides`, `encoding-and-syntax`.
+- `tests/Knowledge.Tests.ps1` runs the register's audit for this repository. Keep it identical to the Manager's `Scripts/Knowledge/Knowledge.Tests.ps1`.

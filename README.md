@@ -19,25 +19,9 @@ Vanilla Hearts of Iron IV division namelists often leave gaps during extended ca
 
 ## Technical Architecture & Engine Mechanics
 
-### File Structure & Additive Loading
-- All division namelists reside in:
-  ```text
-  common/units/names_divisions/zz_INEX_<TAG>_names_divisions.txt
-  ```
-- Hearts of Iron IV loads namelist files additively. Files prefixed with `zz_INEX_` do not overwrite vanilla files (`<TAG>_names_divisions.txt`), leaving base-game groups intact unless intentionally overridden.
-- The game reads the folder in file name order, and when two files define the same group tag the later file wins. The `zz_` prefix makes every INEX file load after the vanilla file of its nation, and after another mod's copy of that file.
-
-### Tag Overriding & Fallback Behavior
-- **Overriding Vanilla Groups**: Declaring a group with an existing base-game tag (e.g., `SOV_INF_01`) overrides that specific group in game.
-- **New Group Tags**: Custom INEX groups follow the pattern `<TAG>_<CATEGORY>_<NUMBER>` (e.g., `EST_REG_01`, `EST_KL_01`, `SWE_ARM_01`).
-- **Scripted References**: Base-game focus trees and scripted effects that reference specific vanilla tags (e.g., `division_names_group = SOV_INF_02`) automatically fall back to vanilla definitions if omitted from `zz_INEX_<TAG>`. Custom identical stubs are never needed unless active replacements are authored.
-
-### Namelist Invariants
-- **Line Subunit Tokens**: In `division_types = { ... }`, only valid line combat subunits are recognized (e.g., `"infantry"`, `"marine"`, `"mountaineers"`, `"cavalry"`, `"motorized"`, `"mechanized"`, `"light_armor"`, `"medium_armor"`, `"heavy_armor"`, `"modern_armor"`). Engine tokens like `"armor"` or `"marines"` are invalid, and support-only battalions (e.g., `"military_police"`) are not accepted.
-- **Ordered Blocks**: Keys inside `ordered = { ... }` must be unique integers (`1 = "..."`). Duplicate keys silently overwrite earlier entries.
-- **Fallback Formats**: Every group requires a `fallback_name` containing an ordinal token (`%d` for Arabic, `%s` for Roman numerals) to prevent identically unnumbered names on overflow units.
-- **Link Numbering**: `link_numbering_with` is used exclusively across separate external groups (e.g., motorized divisions drawing numbers from regular infantry). Self-referential links are invalid.
-- **Encoding**: Files must be UTF-8 without BOM with balanced brackets `{}` and quotes `\"`.
+- All division namelists reside in `common/units/names_divisions/zz_INEX_<TAG>_names_divisions.txt`.
+- The `zz_` prefix makes every INEX file load after the vanilla file of its nation and after another mod's copy of that file. A vanilla group INEX does not define stays as it is, so focus trees that name a vanilla group keep working.
+- How the game loads name list files, what a group that reuses a vanilla tag does, and which tokens are valid: [Engine Mechanics](https://github.com/TheCreepero/immersive_namelists_expanded/wiki/Engine-Mechanics) in the wiki.
 
 ---
 
