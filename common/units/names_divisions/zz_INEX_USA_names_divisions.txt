@@ -1,19 +1,22 @@
 # United States (USA) Division Namelist
 # Immersive Namelists Expanded (INEX)
 #
-# Line Infantry: 1st-106th Infantry Divisions (AUS, National Guard, Regular Army),
-# Operation Fortitude deception formations, and postwar reserve activations.
-# Specialists: Marine Corps (1st-6th USMC, Raiders, Defense Battalions),
-# Airborne (11th, 17th, 82nd, 101st, 501st-517th PIR, 555th Triple Nickles),
-# Mountain (10th Mountain Division, American mountain ranges), Rangers (1st-6th, FSSF, Merrill's Marauders).
-# Mobile: Armored (1st-16th, Combat Commands, postwar NG 48th-50th), Motorized, Mechanized,
-# Cavalry (1st-3rd, 21st-24th NG), Armored Cavalry Regiments (2nd, 3rd, 11th ACR), Separate Tank & TD Battalions.
-# Territorial: 48 WWII State Guards and Harbor Defense Commands.
-# Ideological: Workers' Red Guards & Lincoln Brigades (Communism), Silver Legions & Confederate Divisions (Fascism),
-# Federal Emergency Forces (Neutrality / Military Junta).
+# American English. Ordered entries carry their ordinal (%dst, %dnd, %drd, %dth) matched to the key;
+# fallbacks use the bare number, as vanilla does.
 #
-# Overrides vanilla USA_INF_01, USA_CAV_01, USA_MOT_01, USA_MEC_01, USA_ARM_01,
-# USA_PAR_01, USA_MAR_01, USA_MNT_01, USA_GAR_01.
+# Line and mobile: Infantry (1st-106th, Fortitude deceptions, postwar reserve), National Guard, Regimental Combat Teams,
+# Motorized, Mechanized, Cavalry, Armored, Armored Cavalry Regiments, Separate Tank and Tank Destroyer Battalions,
+# Field Artillery Brigades, Assault Divisions, Provisional Task Forces.
+# Specialists: Airborne, Marines, Marine Raiders, Amtrac Battalions, Mountain, Rangers.
+# Territorial: 38 WWII State Guards, State Militias, Harbor Defense Commands, Overseas Garrisons, US Constabulary (1946-52).
+# Ideology and alternate history: Red Guards, Lincoln Brigades, Red Armored (communism); Silver Legions, Nationalist Militias,
+# Confederate Divisions (fascism); Federal Emergency Forces, Continental Army (neutrality); Union Divisions,
+# Conservation Corps (democratic); Volunteer Legions, Expeditionary Forces (democratic or neutrality).
+# Tank Destroyer and Field Artillery groups are typed as armor and gated is_ai = no (players only).
+#
+# Overrides vanilla USA_INF_01, USA_CAV_01, USA_MOT_01, USA_MEC_01, USA_ARM_01, USA_PAR_01, USA_MAR_01,
+# USA_MNT_01 and USA_GAR_01; vanilla USA_RGR_01 (Ranger Divisions) stays as it is.
+# USA_INF_01 is named by vanilla scripted effects and the Dutch focus tree.
 
 # =============================================================================
 # Regular Army & Line Infantry
@@ -265,6 +268,57 @@ USA_GAR_01 =
 		48 = { "%dth 'Hurricane' Division (Florida & Georgia)" }
 		49 = { "%dth 'Lone Star' Division (Texas)" }
 		51 = { "%dst 'Rattlesnake' Division (Florida & South Carolina)" }
+	}
+}
+
+# =============================================================================
+# Regimental Combat Teams
+# =============================================================================
+# Regular Army regiments under their special designations and separate regimental combat teams; real regiment numbers, own number series.
+
+USA_RCT_01 = 
+{
+	name = "Regimental Combat Teams"
+
+	for_countries = { USA }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%d Regimental Combat Team"
+
+	ordered =
+	{
+		1 = { "1st Filipino Infantry Regiment" }
+		2 = { "2nd Filipino Infantry Regiment" }
+		3 = { "%drd Infantry Regiment 'The Old Guard'" }
+		6 = { "%dth Infantry Regiment 'Regulars'" }
+		7 = { "%dth Infantry Regiment 'Cottonbalers'" }
+		9 = { "%dth Infantry Regiment 'Manchus'" }
+		14 = { "%dth Infantry Regiment 'Golden Dragons'" }
+		15 = { "%dth Infantry Regiment 'Can Do'" }
+		17 = { "%dth Infantry Regiment 'Buffalos'" }
+		18 = { "%dth Infantry Regiment 'Vanguards'" }
+		19 = { "%dth Infantry Regiment 'Rock of Chickamauga'" }
+		20 = { "%dth Infantry Regiment 'Sykes' Regulars'" }
+		21 = { "%dst Infantry Regiment 'Gimlets'" }
+		24 = { "%dth Infantry Regiment (Buffalo Soldiers)" }
+		26 = { "%dth Infantry Regiment 'Blue Spaders'" }
+		27 = { "%dth Infantry Regiment 'Wolfhounds'" }
+		28 = { "%dth Infantry Regiment 'Black Lions'" }
+		31 = { "%dst Infantry Regiment (Manila)" }
+		34 = { "%dth Infantry Regiment 'Leyte Dragons'" }
+		35 = { "%dth Infantry Regiment 'Cacti'" }
+		39 = { "%dth Infantry Regiment 'Fighting Falcons'" }
+		65 = { "%dth Infantry Regiment 'Borinqueneers'" }
+		112 = { "%dth Regimental Combat Team (Arawe)" }
+		158 = { "%dth Regimental Combat Team 'Bushmasters'" }
+		164 = { "%dth Infantry Regiment (Guadalcanal)" }
+		298 = { "%dth Infantry Regiment (Hawaii)" }
+		299 = { "%dth Infantry Regiment (Hawaii)" }
+		369 = { "%dth Infantry Regiment 'Harlem Hellfighters'" }
+		442 = { "%dnd Regimental Combat Team 'Go for Broke'" }
 	}
 }
 
@@ -545,7 +599,7 @@ USA_ACR_01 =
 # =============================================================================
 # Separate Tank Battalions
 # =============================================================================
-# Overrides vanilla USA_ARMORED_DETACHMENTS_01. Independent tank battalions attached to divisions.
+# Independent tank battalions attached to divisions.
 
 USA_ARMORED_DETACHMENTS_01 = 
 {
@@ -582,6 +636,96 @@ USA_ARMORED_DETACHMENTS_01 =
 		787 = { "%dth Tank Battalion 'Harz'" }
 		788 = { "%dth Tank Battalion 'Danube'" }
 		801 = { "%dst Tank Battalion 'Elbe'" }
+	}
+}
+
+# =============================================================================
+# Tank Destroyer Battalions
+# =============================================================================
+# Players only (is_ai = no). Typed as armor, so the gate keeps the automatic choice from giving AI armored templates TD names.
+# Real battalion numbers with one battle or attachment each; own number series.
+
+USA_TD_01 = 
+{
+	name = "Tank Destroyer Battalions"
+
+	for_countries = { USA }
+
+	can_use = { is_ai = no }
+
+	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
+
+	fallback_name = "%d Tank Destroyer Battalion"
+
+	ordered =
+	{
+		1 = { "1st Provisional SPM Group (Bataan)" }
+		2 = { "2nd Provisional SPM Group (Bataan)" }
+		601 = { "%dst Tank Destroyer Battalion (El Guettar)" }
+		609 = { "%dth Tank Destroyer Battalion (10th Armored Division)" }
+		612 = { "%dth Tank Destroyer Battalion (Honsfeld)" }
+		614 = { "%dth Tank Destroyer Battalion (Climbach)" }
+		630 = { "%dth Tank Destroyer Battalion (28th Infantry Division)" }
+		632 = { "%dnd Tank Destroyer Battalion (New Guinea)" }
+		636 = { "%dth Tank Destroyer Battalion (Salerno)" }
+		637 = { "%dth Tank Destroyer Battalion (Luzon)" }
+		640 = { "%dth Tank Destroyer Battalion (Bismarck Archipelago)" }
+		644 = { "%dth Tank Destroyer Battalion (99th Infantry Division)" }
+		645 = { "%dth Tank Destroyer Battalion (Anzio)" }
+		701 = { "%dst Tank Destroyer Battalion (Sidi Bou Zid)" }
+		702 = { "%dnd Tank Destroyer Battalion (2nd Armored Division)" }
+		703 = { "%drd Tank Destroyer Battalion (3rd Armored Division)" }
+		704 = { "%dth Tank Destroyer Battalion (4th Armored Division)" }
+		705 = { "%dth Tank Destroyer Battalion (Bastogne)" }
+		776 = { "%dth Tank Destroyer Battalion (Maknassy)" }
+		814 = { "%dth Tank Destroyer Battalion (St. Vith)" }
+		823 = { "%drd Tank Destroyer Battalion (Mortain)" }
+		827 = { "%dth Tank Destroyer Battalion (Colmar Pocket)" }
+		893 = { "%drd Tank Destroyer Battalion (Hürtgen Forest)" }
+		899 = { "%dth Tank Destroyer Battalion (Normandy)" }
+	}
+}
+
+# =============================================================================
+# Field Artillery Brigades
+# =============================================================================
+# Players only (is_ai = no). Typed as armor like GER_PANZERARTILLERIE_DIVISION_01: the line artillery battalions are not valid tokens here.
+# Brigades, groups, corps artillery and heritage regiments under their real numbers; own number series.
+
+USA_ART_01 = 
+{
+	name = "Field Artillery Brigades"
+
+	for_countries = { USA }
+
+	can_use = { is_ai = no }
+
+	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
+
+	fallback_name = "%d Field Artillery Brigade"
+
+	ordered =
+	{
+		5 = { "%dth Field Artillery 'Alexander Hamilton Battery'" }
+		23 = { "%drd Field Artillery (Philippine Scouts)" }
+		24 = { "%dth Field Artillery (Philippine Scouts)" }
+		32 = { "%dnd Field Artillery Brigade" }
+		33 = { "%drd Field Artillery Brigade" }
+		34 = { "%dth Field Artillery Brigade" }
+		35 = { "%dth Field Artillery Group" }
+		36 = { "%dth Field Artillery Group" }
+		71 = { "%dst Field Artillery Brigade" }
+		111 = { "%dth Field Artillery 'Richmond Howitzers'" }
+		131 = { "%dst Field Artillery 'Lost Battalion' (Java)" }
+		141 = { "%dst Field Artillery 'Washington Artillery'" }
+		202 = { "II Corps Artillery (Tunisia)" }
+		205 = { "V Corps Artillery (Omaha Beach)" }
+		207 = { "VII Corps Artillery (Utah Beach)" }
+		208 = { "VIII Corps Artillery (Brest)" }
+		220 = { "XX Corps Artillery (Metz)" }
+		224 = { "XXIV Corps Artillery (Okinawa)" }
+		333 = { "%drd Field Artillery Battalion (Ardennes)" }
+		969 = { "%dth Field Artillery Battalion (Bastogne)" }
 	}
 }
 
@@ -732,6 +876,49 @@ USA_MAR_BGD_01 =
 }
 
 # =============================================================================
+# Amtrac Battalions
+# =============================================================================
+# Marine Corps and Army amphibian tractor, amphibian tank and armored amphibian battalions of the Pacific War, one landing each; own number series.
+
+USA_AMT_01 = 
+{
+	name = "Amtrac Battalions"
+
+	for_countries = { USA }
+
+	can_use = { always = yes }
+
+	division_types = { "amphibious_armor" "amphibious_mechanized" }
+
+	fallback_name = "%d Amphibian Tractor Battalion"
+
+	ordered =
+	{
+		1 = { "%dst Amphibian Tractor Battalion (Guadalcanal)" }
+		2 = { "%dnd Amphibian Tractor Battalion (Tarawa)" }
+		3 = { "%drd Amphibian Tractor Battalion (Iwo Jima)" }
+		4 = { "%dth Amphibian Tractor Battalion (Roi-Namur)" }
+		5 = { "%dth Amphibian Tractor Battalion (Iwo Jima)" }
+		6 = { "%dth Amphibian Tractor Battalion (Peleliu)" }
+		8 = { "%dth Amphibian Tractor Battalion (Peleliu)" }
+		9 = { "%dth Amphibian Tractor Battalion (Okinawa)" }
+		10 = { "%dth Amphibian Tractor Battalion (Saipan)" }
+		32 = { "2nd Armored Amphibian Battalion (Iwo Jima)" }
+		33 = { "3rd Armored Amphibian Battalion (Peleliu)" }
+		534 = { "%dth Amphibian Tractor Battalion (Saipan)" }
+		536 = { "%dth Amphibian Tractor Battalion (Okinawa)" }
+		672 = { "%dnd Amphibian Tractor Battalion (Los Baños)" }
+		708 = { "%dth Amphibian Tank Battalion (Saipan)" }
+		715 = { "%dth Amphibian Tractor Battalion (Tinian)" }
+		728 = { "%dth Amphibian Tractor Battalion (Tsugen Shima)" }
+		773 = { "%drd Amphibian Tractor Battalion (Tinian)" }
+		776 = { "%dth Amphibian Tank Battalion (Okinawa)" }
+		780 = { "%dth Amphibian Tank Battalion (Leyte)" }
+		826 = { "%dth Amphibian Tractor Battalion (Ormoc)" }
+	}
+}
+
+# =============================================================================
 # Mountain Divisions
 # =============================================================================
 # Overrides vanilla USA_MNT_01. 10th Mountain Division and American mountain range series.
@@ -787,7 +974,7 @@ USA_MNT_01 =
 # =============================================================================
 # Ranger Battalions
 # =============================================================================
-# Overrides vanilla USA_RANGER_FORCE_01. Darby's Rangers, Special Service Force, and Alamo Scouts.
+# Darby's Rangers, Special Service Force, and Alamo Scouts.
 
 USA_RANGER_FORCE_01 = 
 {
@@ -835,7 +1022,7 @@ USA_RANGER_FORCE_01 =
 # =============================================================================
 # Provisional Task Forces
 # =============================================================================
-# Overrides vanilla USA_COMPOSITE_UNITS_01. Historical ad-hoc combined-arms task forces.
+# Historical ad-hoc combined-arms task forces.
 
 USA_COMPOSITE_UNITS_01 = 
 {
@@ -878,7 +1065,7 @@ USA_COMPOSITE_UNITS_01 =
 # =============================================================================
 # State Defense Forces
 # =============================================================================
-# Overrides vanilla USA_DEF_01. 38 verified WWII state guards and territorial forces.
+# 38 verified WWII state guards and territorial forces.
 
 USA_DEF_01 = 
 {
@@ -980,9 +1167,96 @@ USA_COAST_01 =
 }
 
 # =============================================================================
+# Overseas Garrisons
+# =============================================================================
+# Overseas departments, defense and base commands of 1936-1945 and the Philippine Scout regiments.
+
+USA_OVS_01 = 
+{
+	name = "Overseas Garrisons"
+
+	for_countries = { USA }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%d Base Command"
+
+	ordered =
+	{
+		1 = { "Hawaiian Department" }
+		2 = { "Hawaiian Division" }
+		3 = { "Philippine Department" }
+		4 = { "Philippine Division" }
+		5 = { "Panama Canal Department" }
+		6 = { "Caribbean Defense Command" }
+		7 = { "Puerto Rican Department" }
+		8 = { "Antilles Department" }
+		9 = { "Trinidad Sector and Base Command" }
+		10 = { "Bermuda Base Command" }
+		11 = { "Newfoundland Base Command" }
+		12 = { "Greenland Base Command" }
+		13 = { "Iceland Base Command" }
+		14 = { "Alaska Defense Command" }
+		15 = { "Alaskan Department" }
+		16 = { "Persian Gulf Command" }
+		17 = { "Central Pacific Base Command" }
+		18 = { "South Pacific Base Command" }
+		19 = { "Guam Insular Force Guard" }
+		26 = { "26th Cavalry (Philippine Scouts)" }
+		43 = { "43rd Infantry (Philippine Scouts)" }
+		45 = { "45th Infantry (Philippine Scouts)" }
+		57 = { "57th Infantry (Philippine Scouts)" }
+	}
+}
+
+# =============================================================================
+# United States Constabulary (1946-1952)
+# =============================================================================
+# Occupation force of the US Zone of Germany and of Austria; brigades, regiments and squadrons with their garrison towns.
+
+USA_CONST_01 = 
+{
+	name = "Constabulary Regiments"
+
+	for_countries = { USA }
+
+	can_use = { always = yes }
+
+	division_types = { "cavalry" "motorized" "light_armor" }
+
+	fallback_name = "%d Constabulary Regiment"
+
+	ordered =
+	{
+		1 = { "%dst Constabulary Regiment (Kassel)" }
+		2 = { "%dnd Constabulary Regiment (Freising)" }
+		3 = { "%drd Constabulary Regiment (Wetzlar)" }
+		4 = { "%dth Constabulary Regiment (Austria)" }
+		5 = { "%dth Constabulary Regiment (Augsburg)" }
+		6 = { "%dth Constabulary Regiment (Bayreuth)" }
+		10 = { "%dth Constabulary Regiment (Stuttgart-Möhringen)" }
+		11 = { "%dth Constabulary Regiment (Regensburg)" }
+		14 = { "%dth Constabulary Regiment (Kitzingen)" }
+		15 = { "%dth Constabulary Regiment (Weinheim)" }
+		100 = { "United States Constabulary 'Circle C Cowboys'" }
+		101 = { "1st Constabulary Brigade (Wiesbaden)" }
+		102 = { "2nd Constabulary Brigade (Munich)" }
+		103 = { "3rd Constabulary Brigade (Stuttgart)" }
+		211 = { "11th Constabulary Squadron (Kassel)" }
+		216 = { "16th Constabulary Squadron (Berlin)" }
+		224 = { "24th Constabulary Squadron (Bad Hersfeld)" }
+		225 = { "25th Constabulary Squadron (Regensburg)" }
+		274 = { "74th Constabulary Squadron (Augsburg)" }
+		294 = { "94th Constabulary Squadron (Weiden)" }
+	}
+}
+
+# =============================================================================
 # State Militias
 # =============================================================================
-# Overrides vanilla USA_MIL_01. Volunteer home guards and state militias.
+# Volunteer home guards and state militias.
 
 USA_MIL_01 = 
 {
@@ -1025,7 +1299,7 @@ USA_MIL_01 =
 # =============================================================================
 # Assault Divisions
 # =============================================================================
-# Overrides vanilla USA_SHOCK_01. Heavy breakthrough combat commands.
+# Heavy breakthrough combat commands.
 
 USA_SHOCK_01 = 
 {
@@ -1068,7 +1342,7 @@ USA_SHOCK_01 =
 # =============================================================================
 # Workers' Red Guards (Communist)
 # =============================================================================
-# Overrides vanilla USA_COM_GUARD_01. American socialist and labor heritage formations.
+# American socialist and labor heritage formations.
 
 USA_COM_GUARD_01 = 
 {
@@ -1202,7 +1476,7 @@ USA_COM_ARM_01 =
 # =============================================================================
 # Silver Legions (Fascist)
 # =============================================================================
-# Overrides vanilla USA_FASCIST_01. William Dudley Pelley's Silver Legion and Bund formations.
+# William Dudley Pelley's Silver Legion and Bund formations.
 
 USA_FASCIST_01 = 
 {
@@ -1245,7 +1519,7 @@ USA_FASCIST_01 =
 # =============================================================================
 # Nationalist Militias (Fascist)
 # =============================================================================
-# Overrides vanilla USA_PARAMILITARY_01. Christian Front and Black Legion units.
+# Christian Front and Black Legion units.
 
 USA_PARAMILITARY_01 = 
 {
@@ -1373,5 +1647,219 @@ USA_JUNTA_01 =
 		18 = { "%dth Emergency Defense Division" }
 		19 = { "%dth Emergency Defense Division" }
 		20 = { "%dth Emergency Defense Division" }
+	}
+}
+
+# =============================================================================
+# Continental Army Divisions (Neutrality)
+# =============================================================================
+# Alternate history: the federal Continental Army of Secretary of War Lindley Garrison's 1915-16 plan, raised in place of the National Guard.
+
+USA_CONT_01 = 
+{
+	name = "Continental Army Divisions"
+
+	for_countries = { USA }
+
+	can_use = { has_government = neutrality }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%d Continental Division"
+
+	ordered =
+	{
+		1 = { "%dst Continental Division 'Pennsylvania Line'" }
+		2 = { "%dnd Continental Division 'New Jersey Line'" }
+		3 = { "%drd Continental Division 'Virginia Line'" }
+		4 = { "%dth Continental Division 'Maryland Line'" }
+		5 = { "%dth Continental Division 'Connecticut Line'" }
+		6 = { "%dth Continental Division 'Delaware Regiment'" }
+		7 = { "%dth Continental Division 'Green Mountain Boys'" }
+		8 = { "%dth Continental Division 'Commander-in-Chief's Guard'" }
+		9 = { "%dth Continental Division 'Morgan's Riflemen'" }
+		10 = { "%dth Continental Division 'Marblehead Regiment'" }
+		11 = { "%dth Continental Division 'Maryland 400'" }
+		12 = { "%dth Continental Division 'Wayne's Light Infantry'" }
+		13 = { "%dth Continental Division 'Legion of the United States'" }
+		14 = { "%dth Continental Division 'Bunker Hill'" }
+		15 = { "%dth Continental Division 'Trenton'" }
+		16 = { "%dth Continental Division 'Saratoga'" }
+		17 = { "%dth Continental Division 'Valley Forge'" }
+		18 = { "%dth Continental Division 'Monmouth'" }
+		19 = { "%dth Continental Division 'Cowpens'" }
+		20 = { "%dth Continental Division 'Yorktown'" }
+	}
+}
+
+# =============================================================================
+# Union Divisions (Democratic Civil War)
+# =============================================================================
+# Union Army heritage for a democratic United States; counterpart of USA_CONFED_01.
+
+USA_UNION_01 = 
+{
+	name = "Union Divisions"
+
+	for_countries = { USA }
+
+	can_use = { has_government = democratic }
+
+	division_types = { "infantry" "cavalry" }
+
+	fallback_name = "%d Union Division"
+
+	ordered =
+	{
+		1 = { "%dst 'Army of the Potomac' Division" }
+		2 = { "%dnd 'Iron Brigade' Division" }
+		3 = { "%drd 'Army of the Cumberland' Division" }
+		4 = { "%dth 'Army of the Tennessee' Division" }
+		5 = { "%dth 'Irish Brigade' Division" }
+		6 = { "%dth 'Excelsior Brigade' Division" }
+		7 = { "%dth 'Pennsylvania Reserves' Division" }
+		8 = { "%dth 'Bucktails' Division" }
+		9 = { "%dth 'Philadelphia Brigade' Division" }
+		10 = { "%dth 'Vermont Brigade' Division" }
+		11 = { "%dth 'Army of the James' Division" }
+		12 = { "%dth 'Army of the Shenandoah' Division" }
+		13 = { "%dth 'Army of the Ohio' Division" }
+		14 = { "%dth 'Army of the Gulf' Division" }
+		15 = { "%dth 'Army of the Frontier' Division" }
+		16 = { "%dth 'Lightning Brigade' Division" }
+		17 = { "%dth 'Berdan's Sharpshooters' Division" }
+		18 = { "%dth 'Fire Zouaves' Division" }
+		19 = { "%dth 'Corps d'Afrique' Division" }
+		20 = { "%dth 'Wolverines' Division" }
+		21 = { "%dst 'Grierson's Raiders' Division" }
+		22 = { "%dnd 'Lincoln Cavalry' Division" }
+		23 = { "%drd 'Harvard Regiment' Division" }
+		24 = { "%dth 'Garibaldi Guard' Division" }
+		25 = { "%dth 'Kearny's Red Diamond' Division" }
+		26 = { "%dth 'Grand Army of the Republic' Division" }
+	}
+}
+
+# =============================================================================
+# Conservation Corps Brigades (Democratic)
+# =============================================================================
+# Alternate history: the Civilian Conservation Corps (1933-1942) under arms, one brigade per Army Corps Area.
+
+USA_CCC_01 = 
+{
+	name = "Conservation Corps Brigades"
+
+	for_countries = { USA }
+
+	can_use = { has_government = democratic }
+
+	division_types = { "infantry" "militia" }
+
+	fallback_name = "%d Conservation Brigade"
+
+	ordered =
+	{
+		1 = { "%dst Conservation Brigade (New England)" }
+		2 = { "%dnd Conservation Brigade (New York & New Jersey)" }
+		3 = { "%drd Conservation Brigade (Pennsylvania & Virginia)" }
+		4 = { "%dth Conservation Brigade (Southeast)" }
+		5 = { "%dth Conservation Brigade (Ohio Valley)" }
+		6 = { "%dth Conservation Brigade (Great Lakes)" }
+		7 = { "%dth Conservation Brigade (Great Plains)" }
+		8 = { "%dth Conservation Brigade (Southwest)" }
+		9 = { "%dth Conservation Brigade (Far West)" }
+		10 = { "%dth Conservation Brigade 'Roosevelt's Tree Army'" }
+		11 = { "%dth Conservation Brigade 'Robert Fechner'" }
+		12 = { "%dth Conservation Brigade 'James McEntee'" }
+		13 = { "%dth Conservation Brigade (Indian Division)" }
+		14 = { "%dth Conservation Brigade 'Camp Roosevelt'" }
+		15 = { "%dth Conservation Brigade 'John Muir'" }
+		16 = { "%dth Conservation Brigade 'Gifford Pinchot'" }
+		17 = { "%dth Conservation Brigade 'Johnny Appleseed'" }
+		18 = { "%dth Conservation Brigade 'Paul Bunyan'" }
+	}
+}
+
+# =============================================================================
+# Volunteer Legions (Democratic / Non-Aligned)
+# =============================================================================
+# Alternate history: legions for divisions sent abroad as volunteers, named after the foreign friends of the Revolution and American volunteer precedents.
+
+USA_VOL_01 = 
+{
+	name = "Volunteer Legions"
+
+	for_countries = { USA }
+
+	can_use = { OR = { has_government = democratic has_government = neutrality } }
+
+	division_types = { "infantry" "motorized" }
+
+	fallback_name = "%d Volunteer Legion"
+
+	ordered =
+	{
+		1 = { "%dst Volunteer Legion 'Lafayette Escadrille'" }
+		2 = { "%dnd Volunteer Legion 'Kosciuszko'" }
+		3 = { "%drd Volunteer Legion 'Pulaski'" }
+		4 = { "%dth Volunteer Legion 'von Steuben'" }
+		5 = { "%dth Volunteer Legion 'de Kalb'" }
+		6 = { "%dth Volunteer Legion 'Rochambeau'" }
+		7 = { "%dth Volunteer Legion 'Armand'" }
+		8 = { "%dth Volunteer Legion 'Lauzun'" }
+		9 = { "%dth Volunteer Legion 'Gálvez'" }
+		10 = { "%dth Volunteer Legion 'Flying Tigers'" }
+		11 = { "%dth Volunteer Legion 'Eagle Squadron'" }
+		12 = { "%dth Volunteer Legion 'Finnish American'" }
+		13 = { "%dth Volunteer Legion 'American Field Service'" }
+		14 = { "%dth Volunteer Legion 'Four Freedoms'" }
+		15 = { "%dth Volunteer Legion 'Atlantic Charter'" }
+		16 = { "%dth Volunteer Legion 'Arsenal of Democracy'" }
+		17 = { "%dth Volunteer Legion 'Good Neighbor'" }
+	}
+}
+
+# =============================================================================
+# Color Plan Expeditionary Forces (Democratic / Non-Aligned)
+# =============================================================================
+# Alternate history: forces named after the interwar color-coded war plans (target in parentheses) and the Rainbow plans.
+
+USA_PLAN_01 = 
+{
+	name = "Expeditionary Forces"
+
+	for_countries = { USA }
+
+	can_use = { OR = { has_government = democratic has_government = neutrality } }
+
+	division_types = { "infantry" "motorized" "mechanized" "marine" }
+
+	fallback_name = "%d Expeditionary Force"
+
+	ordered =
+	{
+		1 = { "Black Force (Germany)" }
+		2 = { "Orange Force (Japan)" }
+		3 = { "Red Force (British Empire)" }
+		4 = { "Crimson Force (Canada)" }
+		5 = { "Scarlet Force (Australia)" }
+		6 = { "Garnet Force (New Zealand)" }
+		7 = { "Ruby Force (India)" }
+		8 = { "Emerald Force (Irish Free State)" }
+		9 = { "Green Force (Mexico)" }
+		10 = { "Gold Force (France)" }
+		11 = { "Gray Force (Azores)" }
+		12 = { "Brown Force (Philippines)" }
+		13 = { "Tan Force (Cuba)" }
+		14 = { "Yellow Force (China)" }
+		15 = { "Purple Force (South America)" }
+		16 = { "Violet Force (Latin America)" }
+		17 = { "White Force (Domestic Emergency)" }
+		18 = { "Indigo Force (Iceland)" }
+		21 = { "Rainbow One Force" }
+		22 = { "Rainbow Two Force" }
+		23 = { "Rainbow Three Force" }
+		24 = { "Rainbow Four Force" }
+		25 = { "Rainbow Five Force" }
 	}
 }

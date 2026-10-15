@@ -18,7 +18,7 @@
 | [United Kingdom](United-Kingdom) | `ENG` | 28 | `zz_INEX_ENG_names_divisions.txt` |
 | [France](France) | `FRA` | 20 | `zz_INEX_FRA_names_divisions.txt` |
 | [Italy](Italy) | `ITA` | 43 | `zz_INEX_ITA_names_divisions.txt` |
-| [United States](United-States) | `USA` | 25 | `zz_INEX_USA_names_divisions.txt` |
+| [United States](United-States) | `USA` | 36 | `zz_INEX_USA_names_divisions.txt` |
 | [Poland](Poland) | `POL` | 34 | `zz_INEX_POL_names_divisions.txt` |
 | [Finland](Finland) | `FIN` | 27 | `zz_INEX_FIN_names_divisions.txt` |
 | [Sweden](Sweden) | `SWE` | 29 | `zz_INEX_SWE_names_divisions.txt` |
