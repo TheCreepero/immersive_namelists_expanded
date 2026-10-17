@@ -489,11 +489,12 @@ TST_MEC_03 = {
         $g.Flags | Should -Contain 'LOW_DEPTH'
     }
 
-    It "Keeps placeholder flags on a group with ordered entries even when a named sibling shares its numbering" {
+    It "Exempts a plain variant whose entries only repeat its fallback (written over vanilla's keys)" {
         $g = & $script:AuditGroup 'TST_MEC_03'
-        $g.PlainVariantOf | Should -BeNullOrEmpty
-        $g.Flags | Should -Contain 'PLACEHOLDER_ENTRIES'
-        $g.Flags | Should -Contain 'LOW_DEPTH'
+        $g.OrderedCount | Should -Be 2
+        $g.AuthoredCount | Should -Be 0
+        $g.PlainVariantOf | Should -Not -BeNullOrEmpty
+        $g.Flags.Count | Should -Be 0
     }
 }
 

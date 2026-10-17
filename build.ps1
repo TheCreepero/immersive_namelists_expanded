@@ -1072,10 +1072,10 @@ function Get-NamelistAuditData {
         })
     }
 
-    # Plain variant: a fallback-only group kept beside a nicknamed sibling of the same
-    # division type that shares its numbering (directly or through a common anchor)
+    # Plain variant: a group with no authored names (fallback-only, or writing its fallback over vanilla's keys)
+    # kept beside a nicknamed sibling of the same division type that shares its numbering (directly or through a common anchor)
     foreach ($g in $groups) {
-        if ($g.OrderedCount -gt 0) { continue }
+        if ($g.AuthoredCount -gt 0) { continue }
         $sibling = $groups | Where-Object {
             $h = $_
             $h.Tag -ne $g.Tag -and $h.AuthoredCount -gt 0 -and
