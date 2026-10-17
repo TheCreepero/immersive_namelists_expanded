@@ -19,6 +19,41 @@ GRE_INF_01 =
 	division_types = { "infantry" }
 
 	fallback_name = "%di Merarchía Pezikoú"
+
+	ordered =
+	{
+		# Vanilla keys written again (vanilla group merges in)
+		1 = { "%di Merarchía Pezikoú" }
+		2 = { "%di Merarchía Pezikoú" }
+		3 = { "%di Merarchía Pezikoú" }
+		4 = { "%di Merarchía Pezikoú" }
+		5 = { "%di Merarchía Pezikoú" }
+		6 = { "%di Merarchía Pezikoú" }
+		7 = { "%di Merarchía Pezikoú" }
+		8 = { "%di Merarchía Pezikoú" }
+		9 = { "%di Merarchía Pezikoú" }
+		10 = { "%di Merarchía Pezikoú" }
+		11 = { "%di Merarchía Pezikoú" }
+		12 = { "%di Merarchía Pezikoú" }
+		13 = { "%di Merarchía Pezikoú" }
+		14 = { "%di Merarchía Pezikoú" }
+		15 = { "%di Merarchía Pezikoú" }
+		16 = { "%di Merarchía Pezikoú" }
+		17 = { "%di Merarchía Pezikoú" }
+		18 = { "%di Merarchía Pezikoú" }
+		19 = { "%di Merarchía Pezikoú" }
+		20 = { "%di Merarchía Pezikoú" }
+		21 = { "%di Merarchía Pezikoú" }
+		22 = { "%di Merarchía Pezikoú" }
+		23 = { "%di Merarchía Pezikoú" }
+		24 = { "%di Merarchía Pezikoú" }
+		25 = { "%di Merarchía Pezikoú" }
+		26 = { "%di Merarchía Pezikoú" }
+		27 = { "%di Merarchía Pezikoú" }
+		28 = { "%di Merarchía Pezikoú" }
+		29 = { "%di Merarchía Pezikoú" }
+		30 = { "%di Merarchía Pezikoú" }
+	}
 }
 
 # Overrides vanilla GRE_CAV_01. The 1940 Cavalry Division (Larissa, Trikala, Elassona; 1st and 3rd Cavalry
@@ -70,6 +105,22 @@ GRE_MOT_01 =
 	link_numbering_with = { GRE_INF_01 }
 
 	fallback_name = "%di Michanokíniti Merarchía"
+
+	ordered =
+	{
+		# Vanilla keys written again (vanilla group merges in)
+		1 = { "%di Michanokíniti Merarchía" }
+		2 = { "%di Michanokíniti Merarchía" }
+		3 = { "%di Michanokíniti Merarchía" }
+		4 = { "%di Michanokíniti Merarchía" }
+		5 = { "%di Michanokíniti Merarchía" }
+		6 = { "%di Michanokíniti Merarchía" }
+		7 = { "%di Michanokíniti Merarchía" }
+		8 = { "%di Michanokíniti Merarchía" }
+		9 = { "%di Michanokíniti Merarchía" }
+		10 = { "%di Michanokíniti Merarchía" }
+		19 = { "%di Michanokíniti Merarchía" }
+	}
 }
 
 # Plain variant of vanilla GRE_MEC_01. Michanopoiiméni (mechanized) was swapped with Michanokíniti in vanilla.
@@ -87,6 +138,22 @@ GRE_MEC_01 =
 	link_numbering_with = { GRE_MOT_01 }
 
 	fallback_name = "%di Michanopoiiméni Merarchía"
+
+	ordered =
+	{
+		# Vanilla keys written again (vanilla group merges in)
+		1 = { "%di Michanopoiiméni Merarchía" }
+		2 = { "%di Michanopoiiméni Merarchía" }
+		3 = { "%di Michanopoiiméni Merarchía" }
+		4 = { "%di Michanopoiiméni Merarchía" }
+		5 = { "%di Michanopoiiméni Merarchía" }
+		6 = { "%di Michanopoiiméni Merarchía" }
+		7 = { "%di Michanopoiiméni Merarchía" }
+		8 = { "%di Michanopoiiméni Merarchía" }
+		9 = { "%di Michanopoiiméni Merarchía" }
+		10 = { "%di Michanopoiiméni Merarchía" }
+		19 = { "%di Michanopoiiméni Merarchía" }
+	}
 }
 
 # Plain variant of vanilla GRE_ARM_01. Greece fielded almost no armor before 1941; postwar Tethorakisméni
@@ -104,6 +171,22 @@ GRE_ARM_01 =
 	link_numbering_with = { GRE_INF_01 }
 
 	fallback_name = "%di Tethorakisméni Merarchía"
+
+	ordered =
+	{
+		# Vanilla keys written again (vanilla group merges in)
+		1 = { "%di Tethorakisméni Merarchía" }
+		2 = { "%di Tethorakisméni Merarchía" }
+		3 = { "%di Tethorakisméni Merarchía" }
+		4 = { "%di Tethorakisméni Merarchía" }
+		5 = { "%di Tethorakisméni Merarchía" }
+		6 = { "%di Tethorakisméni Merarchía" }
+		7 = { "%di Tethorakisméni Merarchía" }
+		8 = { "%di Tethorakisméni Merarchía" }
+		9 = { "%di Tethorakisméni Merarchía" }
+		10 = { "%di Tethorakisméni Merarchía" }
+		20 = { "%di Tethorakisméni Merarchía" }
+	}
 }
 
 # Overrides vanilla GRE_PAR_01. Alexiptotistón (of parachutists) takes its stress mark. Greece had no
@@ -203,6 +286,17 @@ GRE_MNT_01 =
 		18 = { "%di Oreiní Merarchía Tymfrístou" }
 		19 = { "%di Oreiní Merarchía Smólika" }
 		20 = { "%di Oreiní Merarchía Varnoúnta" }
+		# Vanilla keys written again (vanilla group merges in)
+		21 = { "%di Oreiní Merarchía" }
+		22 = { "%di Oreiní Merarchía" }
+		23 = { "%di Oreiní Merarchía" }
+		24 = { "%di Oreiní Merarchía" }
+		25 = { "%di Oreiní Merarchía" }
+		26 = { "%di Oreiní Merarchía" }
+		27 = { "%di Oreiní Merarchía" }
+		28 = { "%di Oreiní Merarchía" }
+		29 = { "%di Oreiní Merarchía" }
+		30 = { "%di Oreiní Merarchía" }
 	}
 }
 
@@ -252,6 +346,10 @@ GRE_GAR_01 =
 		25 = { "%do Tágma Ethnofylakís Amýnis" }
 		26 = { "%do Tágma Ochýrosis Aerodromíon" }
 		27 = { "%do Tmíma Asfáleias Aerodromíou" }
+		# Vanilla keys written again (vanilla group merges in)
+		28 = { "%di Merarchía Frourás" }
+		29 = { "%di Merarchía Frourás" }
+		30 = { "%di Merarchía Frourás" }
 	}
 }
 
