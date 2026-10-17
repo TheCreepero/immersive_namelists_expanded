@@ -818,7 +818,15 @@ POL_CAV_01 =
 		145 = { "Górnośląska Brygada Kawalerii" }		
 		146 = { "Tarnopolska Brygada Kawalerii" }		
 		147 = { "Stanisławowska Brygada Kawalerii" }
-			
+		# Vanilla keys written again (vanilla group merges in)
+		112 = { "%d Brygada Kawalerii" }
+		113 = { "%d Brygada Kawalerii" }
+		114 = { "%d Brygada Kawalerii" }
+		115 = { "%d Brygada Kawalerii" }
+		116 = { "%d Brygada Kawalerii" }
+		117 = { "%d Brygada Kawalerii" }
+		118 = { "%d Brygada Kawalerii" }
+		119 = { "%d Brygada Kawalerii" }
 	}
 }
 
@@ -1072,6 +1080,11 @@ POL_MNT_01 =
 		26 = { "26 Beskidzka Dywizja Piechoty Górskiej" }
 		27 = { "27 Huculska Dywizja Piechoty Górskiej" }
 		28 = { "28 Tatrzańska Dywizja Piechoty Górskiej" }
+		# Vanilla keys written again (vanilla group merges in)
+		13 = { "%d Dywizja Piechoty Górskiej" }
+		14 = { "%d Dywizja Piechoty Górskiej" }
+		15 = { "%d Dywizja Piechoty Górskiej" }
+		30 = { "%d Dywizja Piechoty Górskiej" }
 	}
 }
 
@@ -1099,8 +1112,19 @@ POL_GAR_01 =
 		3 = { "Brygada KOP „Podole”" }
 		4 = { "Brygada KOP „Polesie”" }	
 		5 = { "Brygada KOP „Wilno”" }	
-		6 = { "Brygada KOP „Wołyń”" }	
-
+		6 = { "Brygada KOP „Wołyń”" }
+		# Vanilla keys written again (vanilla group merges in)
+		7 = { "%d Brygada KOP" }
+		8 = { "%d Brygada KOP" }
+		9 = { "%d Brygada KOP" }
+		10 = { "%d Brygada KOP" }
+		11 = { "%d Brygada KOP" }
+		12 = { "%d Brygada KOP" }
+		13 = { "%d Brygada KOP" }
+		14 = { "%d Brygada KOP" }
+		15 = { "%d Brygada KOP" }
+		16 = { "%d Brygada KOP" }
+		17 = { "%d Brygada KOP" }
 	}
 }
 
