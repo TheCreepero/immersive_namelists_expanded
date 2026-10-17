@@ -1,6 +1,8 @@
 # Division template historical names system for Japan (JAP).
 # Immersive Namelists Expanded (INEX)
 
+# Plain variant on vanilla's tag. Vanilla JAP_INF_01 merges into this group, so every vanilla key is written
+# again with the plain fallback: vanilla's nicknames and its '%d Hohei Shidan' form do not show. Nicknames: JAP_INF_02.
 JAP_INF_01 =
 {
 	name = "Infantry Divisions"
@@ -12,6 +14,179 @@ JAP_INF_01 =
 	division_types = { "infantry" }
 
 	fallback_name = "Dai-%d Shidan"
+
+	ordered =
+	{
+		# Vanilla keys written again with the fallback (vanilla group merges in)
+		1 = { "Dai-%d Shidan" }
+		2 = { "Dai-%d Shidan" }
+		3 = { "Dai-%d Shidan" }
+		4 = { "Dai-%d Shidan" }
+		5 = { "Dai-%d Shidan" }
+		6 = { "Dai-%d Shidan" }
+		7 = { "Dai-%d Shidan" }
+		8 = { "Dai-%d Shidan" }
+		9 = { "Dai-%d Shidan" }
+		10 = { "Dai-%d Shidan" }
+		11 = { "Dai-%d Shidan" }
+		12 = { "Dai-%d Shidan" }
+		13 = { "Dai-%d Shidan" }
+		14 = { "Dai-%d Shidan" }
+		15 = { "Dai-%d Shidan" }
+		16 = { "Dai-%d Shidan" }
+		17 = { "Dai-%d Shidan" }
+		18 = { "Dai-%d Shidan" }
+		19 = { "Dai-%d Shidan" }
+		20 = { "Dai-%d Shidan" }
+		21 = { "Dai-%d Shidan" }
+		22 = { "Dai-%d Shidan" }
+		23 = { "Dai-%d Shidan" }
+		24 = { "Dai-%d Shidan" }
+		25 = { "Dai-%d Shidan" }
+		26 = { "Dai-%d Shidan" }
+		27 = { "Dai-%d Shidan" }
+		28 = { "Dai-%d Shidan" }
+		29 = { "Dai-%d Shidan" }
+		30 = { "Dai-%d Shidan" }
+		31 = { "Dai-%d Shidan" }
+		32 = { "Dai-%d Shidan" }
+		33 = { "Dai-%d Shidan" }
+		34 = { "Dai-%d Shidan" }
+		35 = { "Dai-%d Shidan" }
+		36 = { "Dai-%d Shidan" }
+		37 = { "Dai-%d Shidan" }
+		38 = { "Dai-%d Shidan" }
+		39 = { "Dai-%d Shidan" }
+		40 = { "Dai-%d Shidan" }
+		41 = { "Dai-%d Shidan" }
+		42 = { "Dai-%d Shidan" }
+		43 = { "Dai-%d Shidan" }
+		44 = { "Dai-%d Shidan" }
+		46 = { "Dai-%d Shidan" }
+		47 = { "Dai-%d Shidan" }
+		48 = { "Dai-%d Shidan" }
+		49 = { "Dai-%d Shidan" }
+		50 = { "Dai-%d Shidan" }
+		51 = { "Dai-%d Shidan" }
+		52 = { "Dai-%d Shidan" }
+		53 = { "Dai-%d Shidan" }
+		54 = { "Dai-%d Shidan" }
+		55 = { "Dai-%d Shidan" }
+		56 = { "Dai-%d Shidan" }
+		57 = { "Dai-%d Shidan" }
+		58 = { "Dai-%d Shidan" }
+		59 = { "Dai-%d Shidan" }
+		60 = { "Dai-%d Shidan" }
+		61 = { "Dai-%d Shidan" }
+		62 = { "Dai-%d Shidan" }
+		63 = { "Dai-%d Shidan" }
+		64 = { "Dai-%d Shidan" }
+		65 = { "Dai-%d Shidan" }
+		66 = { "Dai-%d Shidan" }
+		68 = { "Dai-%d Shidan" }
+		69 = { "Dai-%d Shidan" }
+		70 = { "Dai-%d Shidan" }
+		71 = { "Dai-%d Shidan" }
+		72 = { "Dai-%d Shidan" }
+		73 = { "Dai-%d Shidan" }
+		77 = { "Dai-%d Shidan" }
+		79 = { "Dai-%d Shidan" }
+		81 = { "Dai-%d Shidan" }
+		84 = { "Dai-%d Shidan" }
+		86 = { "Dai-%d Shidan" }
+		88 = { "Dai-%d Shidan" }
+		89 = { "Dai-%d Shidan" }
+		91 = { "Dai-%d Shidan" }
+		93 = { "Dai-%d Shidan" }
+		94 = { "Dai-%d Shidan" }
+		96 = { "Dai-%d Shidan" }
+		100 = { "Dai-%d Shidan" }
+		101 = { "Dai-%d Shidan" }
+		102 = { "Dai-%d Shidan" }
+		103 = { "Dai-%d Shidan" }
+		104 = { "Dai-%d Shidan" }
+		105 = { "Dai-%d Shidan" }
+		106 = { "Dai-%d Shidan" }
+		107 = { "Dai-%d Shidan" }
+		108 = { "Dai-%d Shidan" }
+		109 = { "Dai-%d Shidan" }
+		110 = { "Dai-%d Shidan" }
+		111 = { "Dai-%d Shidan" }
+		112 = { "Dai-%d Shidan" }
+		114 = { "Dai-%d Shidan" }
+		115 = { "Dai-%d Shidan" }
+		116 = { "Dai-%d Shidan" }
+		117 = { "Dai-%d Shidan" }
+		118 = { "Dai-%d Shidan" }
+		119 = { "Dai-%d Shidan" }
+		120 = { "Dai-%d Shidan" }
+		121 = { "Dai-%d Shidan" }
+		122 = { "Dai-%d Shidan" }
+		123 = { "Dai-%d Shidan" }
+		124 = { "Dai-%d Shidan" }
+		125 = { "Dai-%d Shidan" }
+		127 = { "Dai-%d Shidan" }
+		128 = { "Dai-%d Shidan" }
+		129 = { "Dai-%d Shidan" }
+		130 = { "Dai-%d Shidan" }
+		131 = { "Dai-%d Shidan" }
+		132 = { "Dai-%d Shidan" }
+		133 = { "Dai-%d Shidan" }
+		134 = { "Dai-%d Shidan" }
+		135 = { "Dai-%d Shidan" }
+		136 = { "Dai-%d Shidan" }
+		137 = { "Dai-%d Shidan" }
+		138 = { "Dai-%d Shidan" }
+		139 = { "Dai-%d Shidan" }
+		140 = { "Dai-%d Shidan" }
+		142 = { "Dai-%d Shidan" }
+		143 = { "Dai-%d Shidan" }
+		144 = { "Dai-%d Shidan" }
+		145 = { "Dai-%d Shidan" }
+		146 = { "Dai-%d Shidan" }
+		147 = { "Dai-%d Shidan" }
+		148 = { "Dai-%d Shidan" }
+		149 = { "Dai-%d Shidan" }
+		150 = { "Dai-%d Shidan" }
+		151 = { "Dai-%d Shidan" }
+		152 = { "Dai-%d Shidan" }
+		153 = { "Dai-%d Shidan" }
+		154 = { "Dai-%d Shidan" }
+		155 = { "Dai-%d Shidan" }
+		156 = { "Dai-%d Shidan" }
+		157 = { "Dai-%d Shidan" }
+		158 = { "Dai-%d Shidan" }
+		160 = { "Dai-%d Shidan" }
+		161 = { "Dai-%d Shidan" }
+		168 = { "Dai-%d Shidan" }
+		201 = { "Dai-%d Shidan" }
+		202 = { "Dai-%d Shidan" }
+		205 = { "Dai-%d Shidan" }
+		206 = { "Dai-%d Shidan" }
+		209 = { "Dai-%d Shidan" }
+		212 = { "Dai-%d Shidan" }
+		214 = { "Dai-%d Shidan" }
+		216 = { "Dai-%d Shidan" }
+		221 = { "Dai-%d Shidan" }
+		222 = { "Dai-%d Shidan" }
+		224 = { "Dai-%d Shidan" }
+		225 = { "Dai-%d Shidan" }
+		229 = { "Dai-%d Shidan" }
+		230 = { "Dai-%d Shidan" }
+		231 = { "Dai-%d Shidan" }
+		234 = { "Dai-%d Shidan" }
+		303 = { "Dai-%d Shidan" }
+		308 = { "Dai-%d Shidan" }
+		312 = { "Dai-%d Shidan" }
+		316 = { "Dai-%d Shidan" }
+		320 = { "Dai-%d Shidan" }
+		321 = { "Dai-%d Shidan" }
+		322 = { "Dai-%d Shidan" }
+		344 = { "Dai-%d Shidan" }
+		351 = { "Dai-%d Shidan" }
+		354 = { "Dai-%d Shidan" }
+		355 = { "Dai-%d Shidan" }
+	}
 }
 
 # ==============================================================================
@@ -81,8 +256,9 @@ JAP_INF_02 =
 	}
 }
 
-# Plain variant; overrides vanilla JAP_MOT_01. The IJA fielded no motorized divisions: the form follows its
-# branch-first pattern (extrapolated). Anchor of the mobile family.
+# Plain variant; vanilla JAP_MOT_01 merges in, so every vanilla key is written again with the plain form.
+# The IJA fielded no motorized divisions: the form follows its branch-first pattern (extrapolated).
+# Anchor of the mobile family.
 JAP_MOT_01 = 
 {
 	name = "Motorized Divisions"
@@ -96,6 +272,173 @@ JAP_MOT_01 =
 	link_numbering_with = { JAP_INF_01 }
 
 	fallback_name = "Jidōsha Dai-%d Shidan"
+
+	ordered =
+	{
+		# Vanilla keys written again with the fallback (vanilla group merges in)
+		1 = { "Jidōsha Dai-%d Shidan" }
+		2 = { "Jidōsha Dai-%d Shidan" }
+		3 = { "Jidōsha Dai-%d Shidan" }
+		4 = { "Jidōsha Dai-%d Shidan" }
+		5 = { "Jidōsha Dai-%d Shidan" }
+		6 = { "Jidōsha Dai-%d Shidan" }
+		7 = { "Jidōsha Dai-%d Shidan" }
+		8 = { "Jidōsha Dai-%d Shidan" }
+		9 = { "Jidōsha Dai-%d Shidan" }
+		10 = { "Jidōsha Dai-%d Shidan" }
+		11 = { "Jidōsha Dai-%d Shidan" }
+		12 = { "Jidōsha Dai-%d Shidan" }
+		13 = { "Jidōsha Dai-%d Shidan" }
+		14 = { "Jidōsha Dai-%d Shidan" }
+		15 = { "Jidōsha Dai-%d Shidan" }
+		16 = { "Jidōsha Dai-%d Shidan" }
+		17 = { "Jidōsha Dai-%d Shidan" }
+		18 = { "Jidōsha Dai-%d Shidan" }
+		19 = { "Jidōsha Dai-%d Shidan" }
+		20 = { "Jidōsha Dai-%d Shidan" }
+		21 = { "Jidōsha Dai-%d Shidan" }
+		22 = { "Jidōsha Dai-%d Shidan" }
+		23 = { "Jidōsha Dai-%d Shidan" }
+		24 = { "Jidōsha Dai-%d Shidan" }
+		25 = { "Jidōsha Dai-%d Shidan" }
+		26 = { "Jidōsha Dai-%d Shidan" }
+		27 = { "Jidōsha Dai-%d Shidan" }
+		28 = { "Jidōsha Dai-%d Shidan" }
+		29 = { "Jidōsha Dai-%d Shidan" }
+		30 = { "Jidōsha Dai-%d Shidan" }
+		31 = { "Jidōsha Dai-%d Shidan" }
+		32 = { "Jidōsha Dai-%d Shidan" }
+		33 = { "Jidōsha Dai-%d Shidan" }
+		34 = { "Jidōsha Dai-%d Shidan" }
+		35 = { "Jidōsha Dai-%d Shidan" }
+		36 = { "Jidōsha Dai-%d Shidan" }
+		37 = { "Jidōsha Dai-%d Shidan" }
+		38 = { "Jidōsha Dai-%d Shidan" }
+		39 = { "Jidōsha Dai-%d Shidan" }
+		40 = { "Jidōsha Dai-%d Shidan" }
+		41 = { "Jidōsha Dai-%d Shidan" }
+		42 = { "Jidōsha Dai-%d Shidan" }
+		43 = { "Jidōsha Dai-%d Shidan" }
+		44 = { "Jidōsha Dai-%d Shidan" }
+		46 = { "Jidōsha Dai-%d Shidan" }
+		47 = { "Jidōsha Dai-%d Shidan" }
+		48 = { "Jidōsha Dai-%d Shidan" }
+		49 = { "Jidōsha Dai-%d Shidan" }
+		50 = { "Jidōsha Dai-%d Shidan" }
+		51 = { "Jidōsha Dai-%d Shidan" }
+		52 = { "Jidōsha Dai-%d Shidan" }
+		53 = { "Jidōsha Dai-%d Shidan" }
+		54 = { "Jidōsha Dai-%d Shidan" }
+		55 = { "Jidōsha Dai-%d Shidan" }
+		56 = { "Jidōsha Dai-%d Shidan" }
+		57 = { "Jidōsha Dai-%d Shidan" }
+		58 = { "Jidōsha Dai-%d Shidan" }
+		59 = { "Jidōsha Dai-%d Shidan" }
+		60 = { "Jidōsha Dai-%d Shidan" }
+		61 = { "Jidōsha Dai-%d Shidan" }
+		62 = { "Jidōsha Dai-%d Shidan" }
+		63 = { "Jidōsha Dai-%d Shidan" }
+		64 = { "Jidōsha Dai-%d Shidan" }
+		65 = { "Jidōsha Dai-%d Shidan" }
+		66 = { "Jidōsha Dai-%d Shidan" }
+		68 = { "Jidōsha Dai-%d Shidan" }
+		69 = { "Jidōsha Dai-%d Shidan" }
+		70 = { "Jidōsha Dai-%d Shidan" }
+		71 = { "Jidōsha Dai-%d Shidan" }
+		72 = { "Jidōsha Dai-%d Shidan" }
+		73 = { "Jidōsha Dai-%d Shidan" }
+		77 = { "Jidōsha Dai-%d Shidan" }
+		79 = { "Jidōsha Dai-%d Shidan" }
+		81 = { "Jidōsha Dai-%d Shidan" }
+		84 = { "Jidōsha Dai-%d Shidan" }
+		86 = { "Jidōsha Dai-%d Shidan" }
+		88 = { "Jidōsha Dai-%d Shidan" }
+		89 = { "Jidōsha Dai-%d Shidan" }
+		91 = { "Jidōsha Dai-%d Shidan" }
+		93 = { "Jidōsha Dai-%d Shidan" }
+		94 = { "Jidōsha Dai-%d Shidan" }
+		96 = { "Jidōsha Dai-%d Shidan" }
+		100 = { "Jidōsha Dai-%d Shidan" }
+		101 = { "Jidōsha Dai-%d Shidan" }
+		102 = { "Jidōsha Dai-%d Shidan" }
+		103 = { "Jidōsha Dai-%d Shidan" }
+		104 = { "Jidōsha Dai-%d Shidan" }
+		105 = { "Jidōsha Dai-%d Shidan" }
+		106 = { "Jidōsha Dai-%d Shidan" }
+		107 = { "Jidōsha Dai-%d Shidan" }
+		108 = { "Jidōsha Dai-%d Shidan" }
+		109 = { "Jidōsha Dai-%d Shidan" }
+		110 = { "Jidōsha Dai-%d Shidan" }
+		111 = { "Jidōsha Dai-%d Shidan" }
+		112 = { "Jidōsha Dai-%d Shidan" }
+		114 = { "Jidōsha Dai-%d Shidan" }
+		115 = { "Jidōsha Dai-%d Shidan" }
+		116 = { "Jidōsha Dai-%d Shidan" }
+		117 = { "Jidōsha Dai-%d Shidan" }
+		118 = { "Jidōsha Dai-%d Shidan" }
+		119 = { "Jidōsha Dai-%d Shidan" }
+		120 = { "Jidōsha Dai-%d Shidan" }
+		121 = { "Jidōsha Dai-%d Shidan" }
+		122 = { "Jidōsha Dai-%d Shidan" }
+		123 = { "Jidōsha Dai-%d Shidan" }
+		124 = { "Jidōsha Dai-%d Shidan" }
+		125 = { "Jidōsha Dai-%d Shidan" }
+		127 = { "Jidōsha Dai-%d Shidan" }
+		128 = { "Jidōsha Dai-%d Shidan" }
+		129 = { "Jidōsha Dai-%d Shidan" }
+		130 = { "Jidōsha Dai-%d Shidan" }
+		131 = { "Jidōsha Dai-%d Shidan" }
+		132 = { "Jidōsha Dai-%d Shidan" }
+		133 = { "Jidōsha Dai-%d Shidan" }
+		134 = { "Jidōsha Dai-%d Shidan" }
+		135 = { "Jidōsha Dai-%d Shidan" }
+		136 = { "Jidōsha Dai-%d Shidan" }
+		137 = { "Jidōsha Dai-%d Shidan" }
+		138 = { "Jidōsha Dai-%d Shidan" }
+		139 = { "Jidōsha Dai-%d Shidan" }
+		140 = { "Jidōsha Dai-%d Shidan" }
+		142 = { "Jidōsha Dai-%d Shidan" }
+		143 = { "Jidōsha Dai-%d Shidan" }
+		144 = { "Jidōsha Dai-%d Shidan" }
+		145 = { "Jidōsha Dai-%d Shidan" }
+		146 = { "Jidōsha Dai-%d Shidan" }
+		147 = { "Jidōsha Dai-%d Shidan" }
+		148 = { "Jidōsha Dai-%d Shidan" }
+		149 = { "Jidōsha Dai-%d Shidan" }
+		150 = { "Jidōsha Dai-%d Shidan" }
+		151 = { "Jidōsha Dai-%d Shidan" }
+		152 = { "Jidōsha Dai-%d Shidan" }
+		153 = { "Jidōsha Dai-%d Shidan" }
+		154 = { "Jidōsha Dai-%d Shidan" }
+		155 = { "Jidōsha Dai-%d Shidan" }
+		156 = { "Jidōsha Dai-%d Shidan" }
+		157 = { "Jidōsha Dai-%d Shidan" }
+		158 = { "Jidōsha Dai-%d Shidan" }
+		160 = { "Jidōsha Dai-%d Shidan" }
+		161 = { "Jidōsha Dai-%d Shidan" }
+		167 = { "Jidōsha Dai-%d Shidan" }
+		201 = { "Jidōsha Dai-%d Shidan" }
+		202 = { "Jidōsha Dai-%d Shidan" }
+		205 = { "Jidōsha Dai-%d Shidan" }
+		206 = { "Jidōsha Dai-%d Shidan" }
+		209 = { "Jidōsha Dai-%d Shidan" }
+		212 = { "Jidōsha Dai-%d Shidan" }
+		214 = { "Jidōsha Dai-%d Shidan" }
+		216 = { "Jidōsha Dai-%d Shidan" }
+		221 = { "Jidōsha Dai-%d Shidan" }
+		222 = { "Jidōsha Dai-%d Shidan" }
+		224 = { "Jidōsha Dai-%d Shidan" }
+		225 = { "Jidōsha Dai-%d Shidan" }
+		229 = { "Jidōsha Dai-%d Shidan" }
+		230 = { "Jidōsha Dai-%d Shidan" }
+		231 = { "Jidōsha Dai-%d Shidan" }
+		234 = { "Jidōsha Dai-%d Shidan" }
+		303 = { "Jidōsha Dai-%d Shidan" }
+		308 = { "Jidōsha Dai-%d Shidan" }
+		312 = { "Jidōsha Dai-%d Shidan" }
+		316 = { "Jidōsha Dai-%d Shidan" }
+		320 = { "Jidōsha Dai-%d Shidan" }
+	}
 }
 
 # Named variant; reuses the infantry tsushogo keyed to the shared division number (extrapolated pairing).
@@ -159,8 +502,9 @@ JAP_MOT_02 =
 	}
 }
 
-# Plain variant; overrides vanilla JAP_MEC_01. Kikaika (mechanization) is period vocabulary; the division
-# form is extrapolated from the 1930s Kwantung mechanized brigade experiment.
+# Plain variant; vanilla JAP_MEC_01 merges in, so every vanilla key is written again with the plain form.
+# Kikaika (mechanization) is period vocabulary; the division form is extrapolated from the 1930s Kwantung
+# mechanized brigade experiment.
 JAP_MEC_01 = 
 {
 	name = "Mechanized Divisions"
@@ -174,6 +518,173 @@ JAP_MEC_01 =
 	link_numbering_with = { JAP_MOT_01 }
 
 	fallback_name = "Kikaika Dai-%d Shidan"
+
+	ordered =
+	{
+		# Vanilla keys written again with the fallback (vanilla group merges in)
+		1 = { "Kikaika Dai-%d Shidan" }
+		2 = { "Kikaika Dai-%d Shidan" }
+		3 = { "Kikaika Dai-%d Shidan" }
+		4 = { "Kikaika Dai-%d Shidan" }
+		5 = { "Kikaika Dai-%d Shidan" }
+		6 = { "Kikaika Dai-%d Shidan" }
+		7 = { "Kikaika Dai-%d Shidan" }
+		8 = { "Kikaika Dai-%d Shidan" }
+		9 = { "Kikaika Dai-%d Shidan" }
+		10 = { "Kikaika Dai-%d Shidan" }
+		11 = { "Kikaika Dai-%d Shidan" }
+		12 = { "Kikaika Dai-%d Shidan" }
+		13 = { "Kikaika Dai-%d Shidan" }
+		14 = { "Kikaika Dai-%d Shidan" }
+		15 = { "Kikaika Dai-%d Shidan" }
+		16 = { "Kikaika Dai-%d Shidan" }
+		17 = { "Kikaika Dai-%d Shidan" }
+		18 = { "Kikaika Dai-%d Shidan" }
+		19 = { "Kikaika Dai-%d Shidan" }
+		20 = { "Kikaika Dai-%d Shidan" }
+		21 = { "Kikaika Dai-%d Shidan" }
+		22 = { "Kikaika Dai-%d Shidan" }
+		23 = { "Kikaika Dai-%d Shidan" }
+		24 = { "Kikaika Dai-%d Shidan" }
+		25 = { "Kikaika Dai-%d Shidan" }
+		26 = { "Kikaika Dai-%d Shidan" }
+		27 = { "Kikaika Dai-%d Shidan" }
+		28 = { "Kikaika Dai-%d Shidan" }
+		29 = { "Kikaika Dai-%d Shidan" }
+		30 = { "Kikaika Dai-%d Shidan" }
+		31 = { "Kikaika Dai-%d Shidan" }
+		32 = { "Kikaika Dai-%d Shidan" }
+		33 = { "Kikaika Dai-%d Shidan" }
+		34 = { "Kikaika Dai-%d Shidan" }
+		35 = { "Kikaika Dai-%d Shidan" }
+		36 = { "Kikaika Dai-%d Shidan" }
+		37 = { "Kikaika Dai-%d Shidan" }
+		38 = { "Kikaika Dai-%d Shidan" }
+		39 = { "Kikaika Dai-%d Shidan" }
+		40 = { "Kikaika Dai-%d Shidan" }
+		41 = { "Kikaika Dai-%d Shidan" }
+		42 = { "Kikaika Dai-%d Shidan" }
+		43 = { "Kikaika Dai-%d Shidan" }
+		44 = { "Kikaika Dai-%d Shidan" }
+		46 = { "Kikaika Dai-%d Shidan" }
+		47 = { "Kikaika Dai-%d Shidan" }
+		48 = { "Kikaika Dai-%d Shidan" }
+		49 = { "Kikaika Dai-%d Shidan" }
+		50 = { "Kikaika Dai-%d Shidan" }
+		51 = { "Kikaika Dai-%d Shidan" }
+		52 = { "Kikaika Dai-%d Shidan" }
+		53 = { "Kikaika Dai-%d Shidan" }
+		54 = { "Kikaika Dai-%d Shidan" }
+		55 = { "Kikaika Dai-%d Shidan" }
+		56 = { "Kikaika Dai-%d Shidan" }
+		57 = { "Kikaika Dai-%d Shidan" }
+		58 = { "Kikaika Dai-%d Shidan" }
+		59 = { "Kikaika Dai-%d Shidan" }
+		60 = { "Kikaika Dai-%d Shidan" }
+		61 = { "Kikaika Dai-%d Shidan" }
+		62 = { "Kikaika Dai-%d Shidan" }
+		63 = { "Kikaika Dai-%d Shidan" }
+		64 = { "Kikaika Dai-%d Shidan" }
+		65 = { "Kikaika Dai-%d Shidan" }
+		66 = { "Kikaika Dai-%d Shidan" }
+		68 = { "Kikaika Dai-%d Shidan" }
+		69 = { "Kikaika Dai-%d Shidan" }
+		70 = { "Kikaika Dai-%d Shidan" }
+		71 = { "Kikaika Dai-%d Shidan" }
+		72 = { "Kikaika Dai-%d Shidan" }
+		73 = { "Kikaika Dai-%d Shidan" }
+		77 = { "Kikaika Dai-%d Shidan" }
+		79 = { "Kikaika Dai-%d Shidan" }
+		81 = { "Kikaika Dai-%d Shidan" }
+		84 = { "Kikaika Dai-%d Shidan" }
+		86 = { "Kikaika Dai-%d Shidan" }
+		88 = { "Kikaika Dai-%d Shidan" }
+		89 = { "Kikaika Dai-%d Shidan" }
+		91 = { "Kikaika Dai-%d Shidan" }
+		93 = { "Kikaika Dai-%d Shidan" }
+		94 = { "Kikaika Dai-%d Shidan" }
+		96 = { "Kikaika Dai-%d Shidan" }
+		100 = { "Kikaika Dai-%d Shidan" }
+		101 = { "Kikaika Dai-%d Shidan" }
+		102 = { "Kikaika Dai-%d Shidan" }
+		103 = { "Kikaika Dai-%d Shidan" }
+		104 = { "Kikaika Dai-%d Shidan" }
+		105 = { "Kikaika Dai-%d Shidan" }
+		106 = { "Kikaika Dai-%d Shidan" }
+		107 = { "Kikaika Dai-%d Shidan" }
+		108 = { "Kikaika Dai-%d Shidan" }
+		109 = { "Kikaika Dai-%d Shidan" }
+		110 = { "Kikaika Dai-%d Shidan" }
+		111 = { "Kikaika Dai-%d Shidan" }
+		112 = { "Kikaika Dai-%d Shidan" }
+		114 = { "Kikaika Dai-%d Shidan" }
+		115 = { "Kikaika Dai-%d Shidan" }
+		116 = { "Kikaika Dai-%d Shidan" }
+		117 = { "Kikaika Dai-%d Shidan" }
+		118 = { "Kikaika Dai-%d Shidan" }
+		119 = { "Kikaika Dai-%d Shidan" }
+		120 = { "Kikaika Dai-%d Shidan" }
+		121 = { "Kikaika Dai-%d Shidan" }
+		122 = { "Kikaika Dai-%d Shidan" }
+		123 = { "Kikaika Dai-%d Shidan" }
+		124 = { "Kikaika Dai-%d Shidan" }
+		125 = { "Kikaika Dai-%d Shidan" }
+		127 = { "Kikaika Dai-%d Shidan" }
+		128 = { "Kikaika Dai-%d Shidan" }
+		129 = { "Kikaika Dai-%d Shidan" }
+		130 = { "Kikaika Dai-%d Shidan" }
+		131 = { "Kikaika Dai-%d Shidan" }
+		132 = { "Kikaika Dai-%d Shidan" }
+		133 = { "Kikaika Dai-%d Shidan" }
+		134 = { "Kikaika Dai-%d Shidan" }
+		135 = { "Kikaika Dai-%d Shidan" }
+		136 = { "Kikaika Dai-%d Shidan" }
+		137 = { "Kikaika Dai-%d Shidan" }
+		138 = { "Kikaika Dai-%d Shidan" }
+		139 = { "Kikaika Dai-%d Shidan" }
+		140 = { "Kikaika Dai-%d Shidan" }
+		142 = { "Kikaika Dai-%d Shidan" }
+		143 = { "Kikaika Dai-%d Shidan" }
+		144 = { "Kikaika Dai-%d Shidan" }
+		145 = { "Kikaika Dai-%d Shidan" }
+		146 = { "Kikaika Dai-%d Shidan" }
+		147 = { "Kikaika Dai-%d Shidan" }
+		148 = { "Kikaika Dai-%d Shidan" }
+		149 = { "Kikaika Dai-%d Shidan" }
+		150 = { "Kikaika Dai-%d Shidan" }
+		151 = { "Kikaika Dai-%d Shidan" }
+		152 = { "Kikaika Dai-%d Shidan" }
+		153 = { "Kikaika Dai-%d Shidan" }
+		154 = { "Kikaika Dai-%d Shidan" }
+		155 = { "Kikaika Dai-%d Shidan" }
+		156 = { "Kikaika Dai-%d Shidan" }
+		157 = { "Kikaika Dai-%d Shidan" }
+		158 = { "Kikaika Dai-%d Shidan" }
+		160 = { "Kikaika Dai-%d Shidan" }
+		161 = { "Kikaika Dai-%d Shidan" }
+		167 = { "Kikaika Dai-%d Shidan" }
+		201 = { "Kikaika Dai-%d Shidan" }
+		202 = { "Kikaika Dai-%d Shidan" }
+		205 = { "Kikaika Dai-%d Shidan" }
+		206 = { "Kikaika Dai-%d Shidan" }
+		209 = { "Kikaika Dai-%d Shidan" }
+		212 = { "Kikaika Dai-%d Shidan" }
+		214 = { "Kikaika Dai-%d Shidan" }
+		216 = { "Kikaika Dai-%d Shidan" }
+		221 = { "Kikaika Dai-%d Shidan" }
+		222 = { "Kikaika Dai-%d Shidan" }
+		224 = { "Kikaika Dai-%d Shidan" }
+		225 = { "Kikaika Dai-%d Shidan" }
+		229 = { "Kikaika Dai-%d Shidan" }
+		230 = { "Kikaika Dai-%d Shidan" }
+		231 = { "Kikaika Dai-%d Shidan" }
+		234 = { "Kikaika Dai-%d Shidan" }
+		303 = { "Kikaika Dai-%d Shidan" }
+		308 = { "Kikaika Dai-%d Shidan" }
+		312 = { "Kikaika Dai-%d Shidan" }
+		316 = { "Kikaika Dai-%d Shidan" }
+		320 = { "Kikaika Dai-%d Shidan" }
+	}
 }
 
 # Named variant; reuses the infantry tsushogo keyed to the shared division number (extrapolated pairing).
@@ -237,8 +748,9 @@ JAP_MEC_02 =
 	}
 }
 
-# Plain variant; overrides vanilla JAP_ARM_01 (vanilla put 'Taku' into every ordinal). The branch comes first:
-# Sensha Dai-N Shidan. Tank-division numbering is independent of the infantry family.
+# Plain variant; vanilla JAP_ARM_01 merges in, so keys 1-4 are written again (vanilla's nicknames live on in
+# JAP_ARM_02). The branch comes first: Sensha Dai-N Shidan. Tank-division numbering is independent of the
+# infantry family.
 JAP_ARM_01 = 
 {
 	name = "Armored Divisions"
@@ -250,6 +762,15 @@ JAP_ARM_01 =
 	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
 
 	fallback_name = "Sensha Dai-%d Shidan"
+
+	ordered =
+	{
+		# Vanilla keys written again with the fallback (vanilla group merges in)
+		1 = { "Sensha Dai-%d Shidan" }
+		2 = { "Sensha Dai-%d Shidan" }
+		3 = { "Sensha Dai-%d Shidan" }
+		4 = { "Sensha Dai-%d Shidan" }
+	}
 }
 
 # Named variant. Keys 1-4 are the real tank divisions with their tsushogo (Taku, Geki, Taki, Hagane);
@@ -334,8 +855,8 @@ JAP_CAV_01 =
 	}
 }
 
-# Overrides vanilla JAP_PAR_01. The Army's airborne arm was the Teishin Shudan (Raiding Group); Teishin = raiding.
-# Vanilla '%d Kutei Shidan' lacked the macron and was never an IJA form.
+# Vanilla JAP_PAR_01 merges in; its '%d Kutei Shidan' stubs (keys 9-20, no macron, never an IJA form) are
+# written again with the fallback. The Army's airborne arm was the Teishin Shudan (Raiding Group); Teishin = raiding.
 JAP_PAR_01 = 
 {
 	name = "Paratrooper Divisions"
@@ -358,6 +879,19 @@ JAP_PAR_01 =
 		6 = { "Kaoru Kūteitai" }
 		7 = { "Ran Heidan" }
 		8 = { "Teishin Kūtei Dan" }
+		# Vanilla keys written again with the fallback (vanilla group merges in)
+		9 = { "Teishin Dai-%d Dan" }
+		10 = { "Teishin Dai-%d Dan" }
+		11 = { "Teishin Dai-%d Dan" }
+		12 = { "Teishin Dai-%d Dan" }
+		13 = { "Teishin Dai-%d Dan" }
+		14 = { "Teishin Dai-%d Dan" }
+		15 = { "Teishin Dai-%d Dan" }
+		16 = { "Teishin Dai-%d Dan" }
+		17 = { "Teishin Dai-%d Dan" }
+		18 = { "Teishin Dai-%d Dan" }
+		19 = { "Teishin Dai-%d Dan" }
+		20 = { "Teishin Dai-%d Dan" }
 	}
 }
 
@@ -468,9 +1002,9 @@ JAP_AMP_01 =
 	}
 }
 
-# Overrides vanilla JAP_MNT_01 (English fallback, 'Asahigawa'). The IJA fielded no mountain divisions; the names
-# are extrapolated from the cold-region garrison cities (7th Asahikawa, 8th Hirosaki, 2nd Sendai) and the
-# Japanese Alps.
+# Vanilla JAP_MNT_01 merges in; the vanilla keys INEX does not name are written again with the fallback.
+# The IJA fielded no mountain divisions; the names are extrapolated from the cold-region garrison cities
+# (7th Asahikawa, 8th Hirosaki, 2nd Sendai) and the Japanese Alps.
 JAP_MNT_01 = 
 {
 	name = "Mountain Divisions"
@@ -509,6 +1043,21 @@ JAP_MNT_01 =
 		22 = { "Sangaku Dai-%d Shidan 'Kanazawa'" }
 		23 = { "Sangaku Dai-%d Shidan 'Takada'" }
 		24 = { "Sangaku Dai-%d Shidan 'Matsumoto'" }
+		# Vanilla keys written again with the fallback (vanilla group merges in)
+		27 = { "Sangaku Dai-%d Shidan" }
+		29 = { "Sangaku Dai-%d Shidan" }
+		32 = { "Sangaku Dai-%d Shidan" }
+		33 = { "Sangaku Dai-%d Shidan" }
+		34 = { "Sangaku Dai-%d Shidan" }
+		35 = { "Sangaku Dai-%d Shidan" }
+		36 = { "Sangaku Dai-%d Shidan" }
+		37 = { "Sangaku Dai-%d Shidan" }
+		38 = { "Sangaku Dai-%d Shidan" }
+		39 = { "Sangaku Dai-%d Shidan" }
+		40 = { "Sangaku Dai-%d Shidan" }
+		41 = { "Sangaku Dai-%d Shidan" }
+		52 = { "Sangaku Dai-%d Shidan" }
+		104 = { "Sangaku Dai-%d Shidan" }
 	}
 }
 
@@ -516,8 +1065,9 @@ JAP_MNT_01 =
 # 3. GARRISON AND TERRITORIAL FORCES
 # ==============================================================================
 
-# Overrides vanilla JAP_GAR_01 (its 'Tokubetsu Keibitai' form is not attested). Shubitai = garrison unit;
-# the regional list follows the army districts and overseas commands (extrapolated).
+# Vanilla JAP_GAR_01 merges in; its 'Tokubetsu Keibitai' keys (form not attested) are written again with the
+# fallback. Shubitai = garrison unit; the regional list follows the army districts and overseas commands
+# (extrapolated).
 JAP_GAR_01 = 
 {
 	name = "Garrison Units"
@@ -553,6 +1103,48 @@ JAP_GAR_01 =
 		19 = { "Kyūshū Shubitai" }
 		20 = { "Kantōgun Shubitai" }
 		21 = { "Shina Hakengun Shubitai" }
+		# Vanilla keys written again with the fallback (vanilla group merges in)
+		30 = { "Dai-%d Shubitai" }
+		31 = { "Dai-%d Shubitai" }
+		46 = { "Dai-%d Shubitai" }
+		47 = { "Dai-%d Shubitai" }
+		49 = { "Dai-%d Shubitai" }
+		61 = { "Dai-%d Shubitai" }
+		62 = { "Dai-%d Shubitai" }
+		63 = { "Dai-%d Shubitai" }
+		64 = { "Dai-%d Shubitai" }
+		65 = { "Dai-%d Shubitai" }
+		66 = { "Dai-%d Shubitai" }
+		68 = { "Dai-%d Shubitai" }
+		69 = { "Dai-%d Shubitai" }
+		70 = { "Dai-%d Shubitai" }
+		71 = { "Dai-%d Shubitai" }
+		72 = { "Dai-%d Shubitai" }
+		73 = { "Dai-%d Shubitai" }
+		77 = { "Dai-%d Shubitai" }
+		81 = { "Dai-%d Shubitai" }
+		84 = { "Dai-%d Shubitai" }
+		86 = { "Dai-%d Shubitai" }
+		91 = { "Dai-%d Shubitai" }
+		93 = { "Dai-%d Shubitai" }
+		94 = { "Dai-%d Shubitai" }
+		96 = { "Dai-%d Shubitai" }
+		100 = { "Dai-%d Shubitai" }
+		102 = { "Dai-%d Shubitai" }
+		103 = { "Dai-%d Shubitai" }
+		105 = { "Dai-%d Shubitai" }
+		107 = { "Dai-%d Shubitai" }
+		108 = { "Dai-%d Shubitai" }
+		109 = { "Dai-%d Shubitai" }
+		111 = { "Dai-%d Shubitai" }
+		112 = { "Dai-%d Shubitai" }
+		114 = { "Dai-%d Shubitai" }
+		115 = { "Dai-%d Shubitai" }
+		117 = { "Dai-%d Shubitai" }
+		118 = { "Dai-%d Shubitai" }
+		119 = { "Dai-%d Shubitai" }
+		120 = { "Dai-%d Shubitai" }
+		167 = { "Dai-%d Shubitai" }
 	}
 }
 
@@ -614,8 +1206,8 @@ JAP_FOR_01 =
 	}
 }
 
-# Overrides vanilla JAP_IMB_01. Dokuritsu Konsei Ryodan were numbered only (126 brigades, 1937-45), so the plain
-# fallback is the historical form; vanilla's 129 stub entries are dropped.
+# Vanilla JAP_IMB_01 merges in. Dokuritsu Konsei Ryodan were numbered only (126 brigades, 1937-45), so every
+# vanilla key, its named 201-204 included, is written again with the historical numbered form.
 JAP_IMB_01 = 
 {
 	name = "Independent Mixed Brigades"
@@ -627,6 +1219,140 @@ JAP_IMB_01 =
 	division_types = { "infantry" }
 
 	fallback_name = "Dokuritsu Konsei Dai-%d Ryodan"
+
+	ordered =
+	{
+		# Vanilla keys written again with the fallback (vanilla group merges in)
+		1 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		2 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		3 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		4 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		5 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		6 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		7 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		8 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		9 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		10 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		11 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		12 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		13 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		14 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		15 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		16 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		17 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		18 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		19 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		20 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		21 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		22 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		23 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		24 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		25 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		26 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		27 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		28 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		29 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		30 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		31 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		32 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		33 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		34 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		35 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		36 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		37 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		38 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		39 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		40 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		43 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		44 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		45 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		46 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		47 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		48 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		49 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		50 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		51 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		52 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		53 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		54 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		55 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		56 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		57 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		58 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		59 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		60 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		61 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		62 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		64 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		65 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		66 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		67 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		68 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		69 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		70 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		71 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		72 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		73 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		75 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		76 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		77 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		78 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		79 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		80 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		81 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		82 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		83 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		84 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		85 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		86 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		87 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		88 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		89 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		90 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		91 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		92 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		95 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		96 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		97 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		98 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		100 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		101 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		102 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		103 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		105 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		107 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		108 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		109 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		112 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		113 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		114 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		115 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		116 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		117 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		118 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		119 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		120 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		121 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		122 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		123 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		124 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		125 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		126 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		127 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		128 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		129 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		130 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		131 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		132 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		133 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		134 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		135 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		136 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		201 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		202 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		203 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+		204 = { "Dokuritsu Konsei Dai-%d Ryodan" }
+	}
 }
 
 # Kwantung Army border garrison units (Kokkyo Shubitai) along the Soviet frontier, named for their fortified
@@ -783,8 +1509,9 @@ JAP_MIL_01 =
 	}
 }
 
-# Overrides vanilla JAP_RGR_01 (generic Betsudotai stubs). Gokyotai were the Okinawa home-guerilla units;
-# Yugekitai = guerilla/raiding unit. Regional pairings are extrapolated.
+# Vanilla JAP_RGR_01 merges in; its generic Betsudotai stubs (keys 15-20) are written again with the fallback.
+# Gokyotai were the Okinawa home-guerilla units; Yugekitai = guerilla/raiding unit. Regional pairings are
+# extrapolated.
 JAP_RGR_01 = 
 {
 	name = "Ranger Units"
@@ -813,11 +1540,19 @@ JAP_RGR_01 =
 		12 = { "Karafuto Yūgekitai" }
 		13 = { "Chishima Yūgekitai" }
 		14 = { "Kantōgun Yūgekitai" }
+		# Vanilla keys written again with the fallback (vanilla group merges in)
+		15 = { "Dai-%d Yūgekitai" }
+		16 = { "Dai-%d Yūgekitai" }
+		17 = { "Dai-%d Yūgekitai" }
+		18 = { "Dai-%d Yūgekitai" }
+		19 = { "Dai-%d Yūgekitai" }
+		20 = { "Dai-%d Yūgekitai" }
 	}
 }
 
-# Overrides vanilla JAP_BIC_01. Ginrin Butai ('silver wheel' units) were the bicycle infantry of the Malaya
-# campaign (Konoe, 5th and 18th Divisions); the other divisions are extrapolated.
+# Vanilla JAP_BIC_01 merges in; its Ginrinbutai stubs (keys 16-20) are written again with the fallback.
+# Ginrin Butai ('silver wheel' units) were the bicycle infantry of the Malaya campaign (Konoe, 5th and 18th
+# Divisions); the other divisions are extrapolated.
 JAP_BIC_01 = 
 {
 	name = "Bicycle Units"
@@ -847,6 +1582,12 @@ JAP_BIC_01 =
 		13 = { "Nishiki Ginrin Butai" }
 		14 = { "Ken Ginrin Butai" }
 		15 = { "Kagami Ginrin Butai" }
+		# Vanilla keys written again with the fallback (vanilla group merges in)
+		16 = { "Dai-%d Ginrin Daitai" }
+		17 = { "Dai-%d Ginrin Daitai" }
+		18 = { "Dai-%d Ginrin Daitai" }
+		19 = { "Dai-%d Ginrin Daitai" }
+		20 = { "Dai-%d Ginrin Daitai" }
 	}
 }
 
