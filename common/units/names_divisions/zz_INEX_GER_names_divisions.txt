@@ -25,8 +25,8 @@
 # 1. INFANTRY (Heer)
 # ==============================================================================
 
-# Plain variant (un-nicknamed). Overrides vanilla GER_Inf_01 (referenced by vanilla focuses);
-# numbering anchor for every Heer infantry-type list.
+# Plain variant (un-nicknamed) on vanilla GER_Inf_01 (referenced by vanilla focuses), which merges in: its other
+# keys are written again with the fallback. Numbering anchor for every Heer infantry-type list.
 GER_Inf_01 = {
 	name = "Infantry Divisions"
 
@@ -294,6 +294,61 @@ GER_Inf_01 = {
 		160 = { "%d. Infanterie-Division" }
 		166 = { "%d. Infanterie-Division" }
 		156 = { "%d. Infanterie-Division" }
+		# Vanilla keys written again with the fallback (vanilla group merges in)
+		97 = { "%d. Infanterie-Division" }
+		99 = { "%d. Infanterie-Division" }
+		100 = { "%d. Infanterie-Division" }
+		101 = { "%d. Infanterie-Division" }
+		153 = { "%d. Infanterie-Division" }
+		303 = { "%d. Infanterie-Division" }
+		309 = { "%d. Infanterie-Division" }
+		324 = { "%d. Infanterie-Division" }
+		541 = { "%d. Infanterie-Division" }
+		544 = { "%d. Infanterie-Division" }
+		545 = { "%d. Infanterie-Division" }
+		547 = { "%d. Infanterie-Division" }
+		548 = { "%d. Infanterie-Division" }
+		549 = { "%d. Infanterie-Division" }
+		551 = { "%d. Infanterie-Division" }
+		553 = { "%d. Infanterie-Division" }
+		558 = { "%d. Infanterie-Division" }
+		559 = { "%d. Infanterie-Division" }
+		561 = { "%d. Infanterie-Division" }
+		562 = { "%d. Infanterie-Division" }
+		563 = { "%d. Infanterie-Division" }
+		900 = { "%d. Infanterie-Division" }
+		901 = { "%d. Infanterie-Division" }
+		902 = { "%d. Infanterie-Division" }
+		903 = { "%d. Infanterie-Division" }
+		904 = { "%d. Infanterie-Division" }
+		905 = { "%d. Infanterie-Division" }
+		906 = { "%d. Infanterie-Division" }
+		907 = { "%d. Infanterie-Division" }
+		909 = { "%d. Infanterie-Division" }
+		910 = { "%d. Infanterie-Division" }
+		911 = { "%d. Infanterie-Division" }
+		912 = { "%d. Infanterie-Division" }
+		913 = { "%d. Infanterie-Division" }
+		914 = { "%d. Infanterie-Division" }
+		915 = { "%d. Infanterie-Division" }
+		916 = { "%d. Infanterie-Division" }
+		917 = { "%d. Infanterie-Division" }
+		918 = { "%d. Infanterie-Division" }
+		919 = { "%d. Infanterie-Division" }
+		920 = { "%d. Infanterie-Division" }
+		921 = { "%d. Infanterie-Division" }
+		922 = { "%d. Infanterie-Division" }
+		923 = { "%d. Infanterie-Division" }
+		924 = { "%d. Infanterie-Division" }
+		925 = { "%d. Infanterie-Division" }
+		926 = { "%d. Infanterie-Division" }
+		927 = { "%d. Infanterie-Division" }
+		928 = { "%d. Infanterie-Division" }
+		929 = { "%d. Infanterie-Division" }
+		930 = { "%d. Infanterie-Division" }
+		947 = { "%d. Infanterie-Division" }
+		948 = { "%d. Infanterie-Division" }
+		949 = { "%d. Infanterie-Division" }
 	}
 }
 
@@ -451,8 +506,8 @@ GER_INF_02 = {
 	}
 }
 
-# Air-landing, assault, naval and named divisions; Volksgrenadier divisions have their own list
-# in the ADDITIONAL file.
+# Air-landing, assault, naval and named divisions. Vanilla GER_ALTINF_01 merges in; its Volksgrenadier keys are
+# written again with the fallback (Volksgrenadier divisions have their own list in the ADDITIONAL file).
 GER_ALTINF_01 = {
 	name = "Special Infantry Divisions"
 
@@ -492,6 +547,62 @@ GER_ALTINF_01 = {
 		970 = { "Infanterie-Division Bärwalde" }
 		971 = { "Infanterie-Division Breslau" }
 		972 = { "Infanterie-Division Dresden" }
+		# Vanilla keys written again with the fallback (vanilla group merges in)
+		6 = { "%d. Infanterie-Division" }
+		9 = { "%d. Infanterie-Division" }
+		12 = { "%d. Infanterie-Division" }
+		16 = { "%d. Infanterie-Division" }
+		18 = { "%d. Infanterie-Division" }
+		19 = { "%d. Infanterie-Division" }
+		26 = { "%d. Infanterie-Division" }
+		31 = { "%d. Infanterie-Division" }
+		36 = { "%d. Infanterie-Division" }
+		45 = { "%d. Infanterie-Division" }
+		46 = { "%d. Infanterie-Division" }
+		47 = { "%d. Infanterie-Division" }
+		61 = { "%d. Infanterie-Division" }
+		62 = { "%d. Infanterie-Division" }
+		79 = { "%d. Infanterie-Division" }
+		98 = { "%d. Infanterie-Division" }
+		167 = { "%d. Infanterie-Division" }
+		183 = { "%d. Infanterie-Division" }
+		211 = { "%d. Infanterie-Division" }
+		212 = { "%d. Infanterie-Division" }
+		246 = { "%d. Infanterie-Division" }
+		256 = { "%d. Infanterie-Division" }
+		257 = { "%d. Infanterie-Division" }
+		271 = { "%d. Infanterie-Division" }
+		272 = { "%d. Infanterie-Division" }
+		276 = { "%d. Infanterie-Division" }
+		277 = { "%d. Infanterie-Division" }
+		278 = { "%d. Infanterie-Division" }
+		320 = { "%d. Infanterie-Division" }
+		326 = { "%d. Infanterie-Division" }
+		334 = { "%d. Infanterie-Division" }
+		337 = { "%d. Infanterie-Division" }
+		340 = { "%d. Infanterie-Division" }
+		347 = { "%d. Infanterie-Division" }
+		349 = { "%d. Infanterie-Division" }
+		352 = { "%d. Infanterie-Division" }
+		361 = { "%d. Infanterie-Division" }
+		363 = { "%d. Infanterie-Division" }
+		462 = { "%d. Infanterie-Division" }
+		541 = { "%d. Infanterie-Division" }
+		542 = { "%d. Infanterie-Division" }
+		544 = { "%d. Infanterie-Division" }
+		545 = { "%d. Infanterie-Division" }
+		547 = { "%d. Infanterie-Division" }
+		548 = { "%d. Infanterie-Division" }
+		549 = { "%d. Infanterie-Division" }
+		551 = { "%d. Infanterie-Division" }
+		553 = { "%d. Infanterie-Division" }
+		558 = { "%d. Infanterie-Division" }
+		559 = { "%d. Infanterie-Division" }
+		560 = { "%d. Infanterie-Division" }
+		561 = { "%d. Infanterie-Division" }
+		562 = { "%d. Infanterie-Division" }
+		563 = { "%d. Infanterie-Division" }
+		708 = { "%d. Infanterie-Division" }
 	}
 }
 
@@ -582,7 +693,8 @@ GER_MOT_01 = {
 	}
 }
 
-# Named variant. Overrides vanilla GER_MOT_02 (its fascist-only plain duplicate).
+# Named variant on vanilla GER_MOT_02, which merges in; its Großdeutschland key is written again with the fallback
+# (the honour titles are fascist-only, in GER_ELI_01).
 GER_MOT_02 = {
 	name = "Motorized Divisions (Named)"
 
@@ -641,10 +753,13 @@ GER_MOT_02 = {
 		44 = { "%d. Infanterie-Division (mot.) 'Hoch- und Deutschmeister'" }
 		45 = { "%d. Infanterie-Division (mot.) 'Linz'" }
 		46 = { "%d. Infanterie-Division (mot.) 'Springender Hirsch'" }
+		# Vanilla keys written again with the fallback (vanilla group merges in)
+		932 = { "%d. Infanterie-Division (mot.)" }
 	}
 }
 
-# Plain variant (un-nicknamed). Overrides vanilla GER_MEC_01.
+# Plain variant (un-nicknamed) on vanilla GER_MEC_01, which merges in: its honour-title keys are written again
+# with the fallback (the titles are fascist-only, in GER_ELI_01).
 GER_MEC_01 = {
 	name = "Panzergrenadier Divisions"
 
@@ -669,6 +784,13 @@ GER_MEC_01 = {
 		90 = { "%d. Panzergrenadier-Division" }
 		15 = { "%d. Panzergrenadier-Division" }
 		20 = { "%d. Panzergrenadier-Division" }
+		# Vanilla keys written again with the fallback (vanilla group merges in)
+		60 = { "%d. Panzergrenadier-Division" }
+		931 = { "%d. Panzergrenadier-Division" }
+		933 = { "%d. Panzergrenadier-Division" }
+		934 = { "%d. Panzergrenadier-Division" }
+		935 = { "%d. Panzergrenadier-Division" }
+		936 = { "%d. Panzergrenadier-Division" }
 	}
 }
 
@@ -739,7 +861,8 @@ GER_MEC_02 = {
 # 3. PANZER, LIGHT AND CAVALRY DIVISIONS
 # ==============================================================================
 
-# Plain variant (un-nicknamed). Overrides vanilla GER_Arm_01; numbering anchor for the Panzer lists.
+# Plain variant (un-nicknamed) on vanilla GER_Arm_01, which merges in: its named keys are written again with the
+# fallback (named Panzer divisions are in GER_Arm_02, honour titles in GER_ELI_01). Numbering anchor for the Panzer lists.
 GER_Arm_01 = {
 	name = "Panzer Divisions"
 
@@ -782,6 +905,14 @@ GER_Arm_01 = {
 		27 = { "%d. Panzer-Division" }
 		116 = { "%d. Panzer-Division" }
 		232 = { "%d. Panzer-Division" }
+		# Vanilla keys written again with the fallback (vanilla group merges in)
+		60 = { "%d. Panzer-Division" }
+		61 = { "%d. Panzer-Division" }
+		85 = { "%d. Panzer-Division" }
+		88 = { "%d. Panzer-Division" }
+		130 = { "%d. Panzer-Division" }
+		233 = { "%d. Panzer-Division" }
+		693 = { "%d. Panzer-Division" }
 	}
 }
 
@@ -911,7 +1042,8 @@ GER_LTARM_01 = {
 	}
 }
 
-# Overrides vanilla GER_Cav_01 (referenced by a vanilla focus).
+# On vanilla GER_Cav_01 (referenced by a vanilla focus), which merges in; its unverified 'Kavallerie-Division Nord'
+# key is written again with the fallback.
 GER_Cav_01 = {
 	name = "Cavalry Divisions"
 
@@ -949,6 +1081,8 @@ GER_Cav_01 = {
 		18 = { "%d. Kavallerie-Division 'Rastenburg'" }
 		19 = { "%d. Kavallerie-Division 'Wickrath'" }
 		20 = { "%d. Kavallerie-Division 'Schwaiganger'" }
+		# Vanilla keys written again with the fallback (vanilla group merges in)
+		900 = { "%d. Kavallerie-Division" }
 	}
 }
 
@@ -1109,7 +1243,8 @@ GER_MAR_01 = {
 # 5. GARRISON AND SECURITY DIVISIONS
 # ==============================================================================
 
-# Reserve and Festung divisions live in their own lists in the ADDITIONAL file.
+# Vanilla GER_GAR_01 merges in; its Reserve and Festung keys are written again with the fallback (Reserve and
+# Festung divisions live in their own lists in the ADDITIONAL file).
 GER_GAR_01 = {
 	name = "Garrison Divisions"
 
@@ -1181,6 +1316,35 @@ GER_GAR_01 = {
 		464 = { "Ausbildungs-Division 464" }
 		158 = { "%d. Feldausbildungs-Division" }
 		619 = { "Division z.b.V. 619" }
+		# Vanilla keys written again with the fallback (vanilla group merges in)
+		8 = { "%d. Sicherungs-Division" }
+		16 = { "%d. Sicherungs-Division" }
+		26 = { "%d. Sicherungs-Division" }
+		41 = { "%d. Sicherungs-Division" }
+		42 = { "%d. Sicherungs-Division" }
+		47 = { "%d. Sicherungs-Division" }
+		48 = { "%d. Sicherungs-Division" }
+		49 = { "%d. Sicherungs-Division" }
+		68 = { "%d. Sicherungs-Division" }
+		70 = { "%d. Sicherungs-Division" }
+		133 = { "%d. Sicherungs-Division" }
+		143 = { "%d. Sicherungs-Division" }
+		148 = { "%d. Sicherungs-Division" }
+		151 = { "%d. Sicherungs-Division" }
+		154 = { "%d. Sicherungs-Division" }
+		159 = { "%d. Sicherungs-Division" }
+		160 = { "%d. Sicherungs-Division" }
+		166 = { "%d. Sicherungs-Division" }
+		173 = { "%d. Sicherungs-Division" }
+		182 = { "%d. Sicherungs-Division" }
+		188 = { "%d. Sicherungs-Division" }
+		189 = { "%d. Sicherungs-Division" }
+		363 = { "%d. Sicherungs-Division" }
+		950 = { "%d. Sicherungs-Division" }
+		951 = { "%d. Sicherungs-Division" }
+		952 = { "%d. Sicherungs-Division" }
+		953 = { "%d. Sicherungs-Division" }
+		954 = { "%d. Sicherungs-Division" }
 	}
 }
 
@@ -1226,8 +1390,8 @@ GER_ELI_01 = {
 # 7. IMPERIAL AND GUARD DIVISIONS (neutrality / democratic)
 # ==============================================================================
 
-# Overrides vanilla GER_MEC_01_MONARNCHIST (a focus-locked duplicate of the Panzergrenadier list);
-# now the monarchist guard, gated by government only.
+# On vanilla GER_MEC_01_MONARNCHIST (a focus-locked duplicate of the Panzergrenadier list), gated by government only:
+# the monarchist guard. Vanilla's entries merge in and are written again with the fallback.
 GER_MEC_01_MONARNCHIST = {
 	name = "Guard Divisions"
 
@@ -1282,10 +1446,19 @@ GER_MEC_01_MONARNCHIST = {
 		13 = { "%d. Garde-Division 'Roter Adler'" }
 		14 = { "%d. Garde-Division 'Pour le Mérite'" }
 		15 = { "%d. Garde-Division 'Eisernes Kreuz'" }
+		# Vanilla keys written again with the fallback (vanilla group merges in)
+		16 = { "%d. Garde-Division" }
+		18 = { "%d. Garde-Division" }
+		20 = { "%d. Garde-Division" }
+		25 = { "%d. Garde-Division" }
+		29 = { "%d. Garde-Division" }
+		60 = { "%d. Garde-Division" }
+		90 = { "%d. Garde-Division" }
 	}
 }
 
-# Overrides vanilla GER_MONINF_01 without its focus lock. Guard and Leib regiments moved to the Guard list.
+# On vanilla GER_MONINF_01, without its focus lock. Guard and Leib regiments moved to the Guard list; vanilla's
+# Guard and Leib keys, which merge in, are written again with the fallback.
 GER_MONINF_01 = {
 	name = "Imperial Infantry Divisions"
 
@@ -1504,6 +1677,16 @@ GER_MONINF_01 = {
 		180 = { "%d. Württembergische Division" }
 		181 = { "%d. Kgl. Sächs. Division" }
 		182 = { "%d. Kgl. Sächs. Division" }
+		# Vanilla keys written again with the fallback (vanilla group merges in)
+		100 = { "%d. Division" }
+		109 = { "%d. Division" }
+		115 = { "%d. Division" }
+		117 = { "%d. Division" }
+		119 = { "%d. Division" }
+		901 = { "%d. Division" }
+		902 = { "%d. Division" }
+		903 = { "%d. Division" }
+		904 = { "%d. Division" }
 	}
 }
 
@@ -1644,7 +1827,8 @@ GER_MONMOB_01 = {
 # 8. REPUBLICAN DIVISIONS (democratic)
 # ==============================================================================
 
-# Overrides vanilla GER_Arm_01_ANTIFASCIST (a duplicate Panzer list); now the republican army.
+# On vanilla GER_Arm_01_ANTIFASCIST (a duplicate Panzer list); now the republican army. Vanilla's Panzer keys,
+# which merge in, are written again with the fallback.
 GER_Arm_01_ANTIFASCIST = {
 	name = "Republican Divisions"
 
@@ -1686,6 +1870,12 @@ GER_Arm_01_ANTIFASCIST = {
 		26 = { "%d. Reichswehr-Division 'Clausewitz'" }
 		27 = { "%d. Reichswehr-Division 'Nationalversammlung'" }
 		28 = { "%d. Reichswehr-Division 'Verfassung'" }
+		# Vanilla keys written again with the fallback (vanilla group merges in)
+		116 = { "%d. Reichswehr-Division" }
+		130 = { "%d. Reichswehr-Division" }
+		232 = { "%d. Reichswehr-Division" }
+		233 = { "%d. Reichswehr-Division" }
+		693 = { "%d. Reichswehr-Division" }
 	}
 }
 
@@ -1693,7 +1883,8 @@ GER_Arm_01_ANTIFASCIST = {
 # 9. RED ARMY DIVISIONS (communism)
 # ==============================================================================
 
-# Overrides vanilla GER_MEC_01_COMMUNIST (a duplicate Panzergrenadier list); now the communist army.
+# On vanilla GER_MEC_01_COMMUNIST (a duplicate Panzergrenadier list); now the communist army. Vanilla's keys,
+# which merge in, are written again with the fallback (their honour names are in the list in INEX form).
 GER_MEC_01_COMMUNIST = {
 	name = "Red Army Divisions"
 
@@ -1739,5 +1930,11 @@ GER_MEC_01_COMMUNIST = {
 		27 = { "%d. Rote Division 'Heinrich Rau'" }
 		28 = { "%d. Rote Division 'Wilhelm Pieck'" }
 		29 = { "%d. Rote Division 'Walter Ulbricht'" }
+		# Vanilla keys written again with the fallback (vanilla group merges in)
+		60 = { "%d. Rote Division" }
+		90 = { "%d. Rote Division" }
+		931 = { "%d. Rote Division" }
+		932 = { "%d. Rote Division" }
+		933 = { "%d. Rote Division" }
 	}
 }
