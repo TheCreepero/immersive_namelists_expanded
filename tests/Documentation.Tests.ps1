@@ -249,12 +249,12 @@ Describe "Plan hand-off: planning skills stop, the implement skill only executes
         $text | Should -Match 'the user runs the upload' -Because "SteamCMD may prompt, and publishing is outward-facing"
     }
 
-    It "Rules and skills describe same-tag replacement, with no advice to drop vanilla copies" {
+    It "Rules and skills describe the same-tag merge, with no advice to drop vanilla copies" {
         $rules = [System.IO.File]::ReadAllText((Join-Path $script:RepoRoot 'CLAUDE.md'), [System.Text.Encoding]::UTF8)
-        $rules | Should -Match 'replaces the vanilla group whole' -Because "the in-game test of 2026-10-09 showed that omitted vanilla keys are gone"
+        $rules | Should -Match 'merged into the vanilla group' -Because "a launch of 2026-10-15 showed the vanilla keys a group leaves out staying in the game (NAM-020)"
         foreach ($name in 'hoi4-inex-namelist-authoring', 'hoi4-inex-namelist-audit') {
             $text = & $script:ReadSkill $name
-            $text | Should -Not -Match 'VANILLA_COPY' -Because "copied vanilla entries are the only copy the game reads"
+            $text | Should -Not -Match 'VANILLA_COPY' -Because "copied vanilla entries change no name in the game"
             $text | Should -Not -Match 'without changing any name'
             $text | Should -Match 'tooling-backlog\.md' -Because "$name records tooling problems in one place"
         }

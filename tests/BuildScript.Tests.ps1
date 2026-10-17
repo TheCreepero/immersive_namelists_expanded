@@ -1310,7 +1310,7 @@ TST_MIL_03 = {
             $o.ContainsKey('TST_EN_01') | Should -BeFalse
         }
 
-        It "Lists the vanilla names a same-tag group leaves out (the group replaces vanilla's)" {
+        It "Lists the vanilla names a same-tag group leaves out (they stay in the game beside the group's)" {
             $o = Get-VanillaOverlap -Groups $script:LintData.Groups -Key 'TST' -Hoi4Dir $script:FakeHoi4
             $o['TST_FR_01'].LeftOutNames | Should -Be @('6=Sixieme')
             $o['TST_FR_01'].LeftOutNumbers.Count | Should -Be 0
@@ -1336,7 +1336,7 @@ TST_MIL_03 = {
             $o['TST_INF_01'].LeftOutNames | Should -Be @("2=Dywizja 'Podlaska'")
         }
 
-        It "Raises no flag for entries copied from vanilla: they are the only copy the game reads" {
+        It "Raises no flag for entries copied from vanilla: they change no name in the game" {
             $script:BuildContent | Should -Not -Match "Flags\.Add\('VANILLA_COPY'\)"
         }
 

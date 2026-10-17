@@ -99,7 +99,8 @@
     -Add also accepts "# Header" items to create several comment-headed sections in one call.
 
 .PARAMETER ClearOrdered
-    With -EditNames: delete the whole ordered block, leaving a fallback-only (plain) group. Needs fallback_name.
+    With -EditNames: delete the whole ordered block, leaving a fallback-only (plain) group in the file; vanilla's
+    entries under the same tag stay in the game. Needs fallback_name.
 
 .PARAMETER RemoveGroup
     With -EditNames: delete the whole group (and the comment lines directly above it). Refused while another group's
@@ -2806,8 +2807,8 @@ function Invoke-SyncWiki {
 
 # --- Action: Audit namelist quality ---
 # --- Helper: How each group relates to the vanilla group with the same tag ---
-# A group that reuses a vanilla tag replaces the vanilla group whole (in-game test, 2026-10-09): its entries are the
-# only ones the game reads, and every vanilla key it leaves out is gone.
+# A group that reuses a vanilla tag is merged into the vanilla group (NAM-020, launch of 2026-10-15): a key it writes
+# replaces vanilla's text for that key, and every vanilla key it leaves out stays in the game.
 # Returns tag -> @{ Matches; Total; LeftOutNames; LeftOutNumbers; KeptElsewhere }. Empty when HOI4 is not installed
 # or the vanilla file has no such group.
 #   Matches / Total   entries identical to vanilla in key and name / entries in the INEX group
@@ -2815,7 +2816,7 @@ function Invoke-SyncWiki {
 #   KeptElsewhere     how many more left-out vanilla names carry a quoted identity that another entry of the file has
 #                     (moved to a Named variant or an ideology list, so not lost)
 #   LeftOutNumbers    keys of left-out vanilla fallback stubs that lie past the first gap in vanilla's key series:
-#                     those numbers were historical, and a fallback counts on without the gap
+#                     those numbers were historical, and they stay in the game, so the numbering keeps the gap
 function Get-VanillaOverlap {
     param(
         [object[]]$Groups,
@@ -3032,15 +3033,15 @@ function Invoke-NamelistAudit {
         Write-Host "  Ordered:  $($g.OrderedCount) entries, $($g.AuthoredCount) authored" -ForegroundColor Gray
         $o = $overlap[$g.Tag]
         if ($o -and $o.Matches -gt 0) {
-            Write-Host "  Vanilla:  $($o.Matches)/$($o.Total) entries identical to vanilla $($g.Tag) (same key and name); the game reads only this copy" -ForegroundColor Gray
+            Write-Host "  Vanilla:  $($o.Matches)/$($o.Total) entries identical to vanilla $($g.Tag) (same key and name); vanilla has them as well" -ForegroundColor Gray
         }
         if ($o -and ($o.LeftOutNames.Count -gt 0 -or $o.KeptElsewhere -gt 0)) {
             $moved = if ($o.KeptElsewhere -gt 0) { " ($($o.KeptElsewhere) more keep their identity in another list)" } else { '' }
             $listed = if ($o.LeftOutNames.Count -gt 0) { ": $(Format-CappedList -Items $o.LeftOutNames)" } else { '' }
-            Write-Host "  Vanilla:  leaves out $($o.LeftOutNames.Count) vanilla name(s), gone in game$moved$listed" -ForegroundColor Gray
+            Write-Host "  Vanilla:  leaves out $($o.LeftOutNames.Count) vanilla name(s), still in game$moved$listed" -ForegroundColor Gray
         }
         if ($o -and $o.LeftOutNumbers.Count -gt 0) {
-            Write-Host "  Vanilla:  leaves out $($o.LeftOutNumbers.Count) numbered key(s) past a gap in vanilla's series (the fallback counts on without the gap): $(Format-CappedList -Items $o.LeftOutNumbers -Max 15)" -ForegroundColor Gray
+            Write-Host "  Vanilla:  leaves out $($o.LeftOutNumbers.Count) numbered key(s) past a gap in vanilla's series (still in game, so the numbering keeps the gap): $(Format-CappedList -Items $o.LeftOutNumbers -Max 15)" -ForegroundColor Gray
         }
         if ($g.PlainVariantOf) {
             Write-Host "  Variant:  plain (un-nicknamed) counterpart of $($g.PlainVariantOf)" -ForegroundColor Gray

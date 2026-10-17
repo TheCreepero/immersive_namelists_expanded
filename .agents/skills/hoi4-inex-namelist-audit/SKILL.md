@@ -50,7 +50,7 @@ This skill produces one file, `docs/superpowers/plans/YYYY-MM-DD-<country>-audit
 3. **Keep file-level conventions:** `for_countries`, the German three-file split, and any group referenced by vanilla scripts (see `-InspectVanilla`).
 4. **Nothing reaches the plan's batch without approval.** The audit report is a checkpoint; the batch holds only the items the user approves.
 5. **Commit and wiki push are outward-facing.** The plan lists them as its last step, the ship step, which runs only on the user's word.
-6. **A group replaces the vanilla group of the same tag** (`CLAUDE.md` §6, [NAM-002]). Its entries are the only copy the game reads: `"removeAll"` and `"clearOrdered"` delete names from the game, so use them only on entries that repeat the fallback in a 1..N run, or when the batch writes the names back. A vanilla entry the group leaves out is gone; `-Audit` lists those per group.
+6. **A group is merged into the vanilla group of the same tag** (`CLAUDE.md` §6, [NAM-020]). `"removeAll"` and `"clearOrdered"` delete names from the INEX file only: a vanilla entry under the same number stays in the game. Every vanilla entry the group does not rewrite stays in the game beside INEX's names; `-Audit` lists those per group. Replacing a vanilla name means writing another name under its number.
 7. **Never retain focus-locked namelists (`has_completed_focus`).** Namelists must never be locked behind national focuses. Convert any legacy focus locks to pure government type checks (`has_government = <ideology>`), war state triggers (`has_war = yes`), or country tags to maximize compatibility with mods like *Road to 56* and overhaul focus trees.
 
 ---
@@ -70,8 +70,8 @@ A modernized file meets all of these (reference implementation: `zz_INEX_PER_nam
 | R7 | Motorized/mechanized groups `link_numbering_with` field infantry where the nation's doctrine plausibly shared numbering. | `UNLINKED_MOBILE` |
 | R8 | No dead commented self-links, TODO notes, "barely any info" or leftover "fictional divisions start here" comments. | `DEAD_SELF_LINK_COMMENT`, `TODO_COMMENT`, `STALE_COMMENT` |
 | R9 | Wiki page, README row, and workshop cross-reference/BBCode describe the file as it now is. The nation's `[b]<Country>[/b]` block has 2-3 bullets and at least two `[i]` examples; the description has no emojis and stays under 17,000 characters. | `Docs:` warnings in `-Audit` and `-Check` for the workshop block; prose is manual |
-| R10 | Nicknamed infantry, motorized, mechanized, and armor lists keep a plain (un-nicknamed) variant: the existing/vanilla tag becomes the plain group, and the nicknames move to a new `"<Selector> (Named)"` tag that shares its numbering through `link_numbering_with = { <plain tag> }` (authoring skill §3). The plain group is fallback-only, or keeps its numbered entries where the keys are historical numbers with gaps. Not needed if vanilla already nicknames those divisions (e.g. USA). | (manual; `-Audit` shows `Variant: plain` and exempts it from R4/R5; without the link it cannot pair the two) |
-| R12 | Every vanilla name or historical number that a reused tag leaves out is left out on purpose. | (manual; `Vanilla: leaves out ...` lines in `-Audit`) |
+| R10 | Nicknamed infantry, motorized, mechanized, and armor lists keep a plain (un-nicknamed) variant: the existing/vanilla tag becomes the plain group, and the nicknames move to a new `"<Selector> (Named)"` tag that shares its numbering through `link_numbering_with = { <plain tag> }` (authoring skill §3). The plain group writes no names, or repeats vanilla's numbered entries where the keys are historical numbers with gaps; vanilla's entries stay in the game either way (non-negotiable 6), so a vanilla entry whose text differs from the plain fallback is written again with the plain text. Not needed if vanilla already nicknames those divisions (e.g. USA). | (manual; `-Audit` shows `Variant: plain` and exempts it from R4/R5; without the link it cannot pair the two) |
+| R12 | Every vanilla name that a reused tag does not rewrite is meant to stay: it shows in the game under its number. One that should not show is replaced with another name under that number. | (manual; `Vanilla: leaves out ...` lines in `-Audit`) |
 | R11 | Ideology-gated groups use `has_government` and never lock behind national focuses (`has_completed_focus`), decisions, or event flags. Political names do not sit in a group every government may use. | `FOCUS_LOCKED`, `UNGATED_POLITICAL`, `POLITICAL_ENTRY` |
 
 More informational lints:
@@ -84,9 +84,9 @@ More informational lints:
 - `ORDINAL_MISMATCH`: a fixed ordinal after `%d` at a key where it reads wrong (French `%dère` at key 5 renders "5ère"; English `%dth` at key 1 or `%dst` at key 2). Fix the entry with `"set"`.
 
 `Vanilla:` lines (single-file `-Audit` with HOI4 installed) are facts, not flags:
-- `N/M entries identical to vanilla`: entries copied from vanilla. They are the only copy the game reads, so they stay unless the batch replaces them.
-- `leaves out N vanilla name(s), gone in game`: vanilla entries with an identity that the group does not carry, listed as `key=name`. Entries whose quoted identity lives on in another group of the file are only counted. Decide each one: restore it in the batch, or record it under "Kept on judgment" as dropped on purpose.
-- `leaves out N numbered key(s) past a gap`: vanilla numbered its divisions historically and the group falls back to counting 1, 2, 3. Restore the numbered entries unless the plain count is intended.
+- `N/M entries identical to vanilla`: entries copied from vanilla. The game has them from vanilla as well, and each copy adds an `Adding a duplicate ORDERED division name` line to `error.log`; they change no name.
+- `leaves out N vanilla name(s), still in game`: vanilla entries with an identity that the group does not rewrite, listed as `key=name`; the game shows them under their numbers. Entries whose quoted identity lives on in another group of the file are only counted. Decide each one: keep it, or replace it in the batch with another name under its number.
+- `leaves out N numbered key(s) past a gap`: vanilla numbered its divisions historically. Those entries stay in the game, so the numbering keeps vanilla's gaps whether or not the group repeats them.
 
 Lint flags are **heuristics**. Treat them as leads, confirm by reading the group, and override with a stated reason where history justifies it.
 
@@ -181,7 +181,7 @@ Each fenced block is one operation object or an array of them; the keys are the 
 - Operations run in order across all blocks, all or nothing: a failed operation leaves the file untouched and names the operation.
 - `"addGroup"` creates a new group (named variant, new category) in the file template layout, at the end of the file or after `"after": "<group>"`. It needs a selector, at least one division type and a fallback, refuses a tag used anywhere in the mod, and carries its names in its own `"add"`.
 - Rewrite a whole list: `"removeAll": true` with `"add": ["# Section A", "1=...", "2=...", "# Section B", "40=..."]` (a `# Header` item starts a comment-headed section). Use it to replace vanilla stubs with authored names; get the keys of what stays from `-NamesOnly -Keys`.
-- `"clearOrdered"` turns a group into the fallback-only plain variant (R10); the group's entries are deleted from the game (non-negotiable 6). `"comment"` replaces the comment above a group (`\n` splits lines; add a banner plus a blank line for a section banner).
+- `"clearOrdered"` deletes the group's `ordered` block from the INEX file, for the plain variant (R10); vanilla's entries under the same tag stay in the game (non-negotiable 6). `"comment"` replaces the comment above a group (`\n` splits lines; add a banner plus a blank line for a section banner).
 - The file header (R1) is not a batch key: give `powershell -File .\build.ps1 -SetHeader <TAG> -HeaderText "<text>"` its own implementation step.
 - `"removeGroup"` is refused while another group links to it; see non-negotiable 1 before using it.
 - Indentation, numbering and line endings are preserved; section headers that removals leave empty are dropped; duplicate names and invalid indices are reported.

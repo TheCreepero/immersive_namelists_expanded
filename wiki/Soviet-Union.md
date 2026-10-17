@@ -43,7 +43,7 @@ The Red Army underwent the most radical organizational transformation of any bel
 | `SOV_WHT_01` | White Volunteer Divisions | infantry | `%d-ya Dobrovolcheskaya Diviziya` |
 | `SOV_REP_01` | Republican Shock Divisions | infantry | `%d-ya Udarnaya Diviziya` |
 
-> Groups on vanilla tags replace the vanilla group whole. `SOV_MEC_02`, `SOV_MAR_02`, `SOV_UR_01`, `SOV_NAT_01`, `SOV_NKVD_01`, `SOV_AIR_01`, `SOV_ART_01` and the four government-gated groups are new tags. Vanilla's `SOV_INF_02`, `SOV_INF_03` and `SOV_JAP_INF`, which focuses and scripted effects use, stay as vanilla defines them.
+> Groups on vanilla tags are merged into the vanilla groups: a vanilla name that INEX does not replace under its number stays in the game. `SOV_MEC_02`, `SOV_MAR_02`, `SOV_UR_01`, `SOV_NAT_01`, `SOV_NKVD_01`, `SOV_AIR_01`, `SOV_ART_01` and the four government-gated groups are new tags. Vanilla's `SOV_INF_02`, `SOV_INF_03` and `SOV_JAP_INF`, which focuses and scripted effects use, stay as vanilla defines them.
 
 ---
 

@@ -31,7 +31,7 @@ An entry says what happens, where it was seen, the workaround, and what a fix wo
 - **The Workshop description grows about 530 characters per nation**: 10,443 of 17,000 with 18 nations (2026-10-09), so the limit test fails around 12 nations from now. Decide on a shorter per-nation form before then.
 
 ## Follow-ups from the engine correction of 2026-10-09
-A group that reuses a vanilla tag replaces the vanilla group whole (`CLAUDE.md` §6). Work done before that was known may have left vanilla names out without meaning to. `-Audit <KEY>` now lists them as `Vanilla: leaves out ...` lines. Totals on 2026-10-09:
+The correction of 2026-10-09 was itself wrong: a group that reuses a vanilla tag is merged into the vanilla group, not put in its place (`CLAUDE.md` §6, [NAM-020], launch of 2026-10-15). A vanilla name the INEX group leaves out is therefore still in the game, under its number, beside INEX's names. `-Audit <KEY>` lists them as `Vanilla: leaves out ...` lines. Totals on 2026-10-09:
 
 | File | Vanilla names left out | Groups | Identity kept in another list | Numbered keys past a gap |
 |:---|---:|---:|---:|---:|
@@ -51,4 +51,4 @@ A group that reuses a vanilla tag replaces the vanilla group whole (`CLAUDE.md` 
 
 `BRA`, `EST`, `LAT`, `LIT`, `MEX`, `GER_SS` and `GER_ADDITIONAL` leave nothing out.
 
-Many of these are deliberate: Germany's were decided in its 2026-09-30 overhaul and confirmed in the 2026-10-09 audit, and a renamed designation counts as left out. Each of the other files gets the decision in its next audit (audit skill, R12). The report is a heuristic: it compares names by pattern, so a respelled vanilla name also shows as left out.
+Germany's were meant to be dropped in its 2026-09-30 overhaul and the 2026-10-09 audit, and a renamed designation counts as left out; all of them still show in the game. Dropping a vanilla name takes another name under its number. Each file gets the decision in its next audit (audit skill, R12). The report is a heuristic: it compares names by pattern, so a respelled vanilla name also shows as left out.
