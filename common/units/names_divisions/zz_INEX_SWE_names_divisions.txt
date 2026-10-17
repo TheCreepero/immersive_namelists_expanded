@@ -500,6 +500,27 @@ SWE_MOT_01 =
 	link_numbering_with = { SWE_INF_01 }
 
 	fallback_name = "%s. Motoriserade arméfördelningen"
+
+	ordered =
+	{
+		# Vanilla keys written again (vanilla group merges in)
+		1 = { "%s. Motoriserade arméfördelningen" }
+		2 = { "%s. Motoriserade arméfördelningen" }
+		3 = { "%s. Motoriserade arméfördelningen" }
+		4 = { "%s. Motoriserade arméfördelningen" }
+		5 = { "%s. Motoriserade arméfördelningen" }
+		6 = { "%s. Motoriserade arméfördelningen" }
+		7 = { "%s. Motoriserade arméfördelningen" }
+		8 = { "%s. Motoriserade arméfördelningen" }
+		9 = { "%s. Motoriserade arméfördelningen" }
+		10 = { "%s. Motoriserade arméfördelningen" }
+		11 = { "%s. Motoriserade arméfördelningen" }
+		12 = { "%s. Motoriserade arméfördelningen" }
+		13 = { "%s. Motoriserade arméfördelningen" }
+		14 = { "%s. Motoriserade arméfördelningen" }
+		15 = { "%s. Motoriserade arméfördelningen" }
+		16 = { "%s. Motoriserade arméfördelningen" }
+	}
 }
 
 # Named variant; identities are infantry regiments (extrapolated pairing).
@@ -556,6 +577,26 @@ SWE_MEC_01 =
 	link_numbering_with = { SWE_MOT_01 }
 
 	fallback_name = "%s. Mekaniserade fördelningen"
+
+	ordered =
+	{
+		# Vanilla keys written again (vanilla group merges in)
+		1 = { "%s. Mekaniserade fördelningen" }
+		2 = { "%s. Mekaniserade fördelningen" }
+		3 = { "%s. Mekaniserade fördelningen" }
+		4 = { "%s. Mekaniserade fördelningen" }
+		5 = { "%s. Mekaniserade fördelningen" }
+		6 = { "%s. Mekaniserade fördelningen" }
+		7 = { "%s. Mekaniserade fördelningen" }
+		8 = { "%s. Mekaniserade fördelningen" }
+		9 = { "%s. Mekaniserade fördelningen" }
+		10 = { "%s. Mekaniserade fördelningen" }
+		11 = { "%s. Mekaniserade fördelningen" }
+		12 = { "%s. Mekaniserade fördelningen" }
+		13 = { "%s. Mekaniserade fördelningen" }
+		14 = { "%s. Mekaniserade fördelningen" }
+		15 = { "%s. Mekaniserade fördelningen" }
+	}
 }
 
 # Named variant; cavalry heritage identities (extrapolated pairing).
@@ -745,6 +786,19 @@ SWE_MNT_01 =
 		13 = { "%s. Fältjägarfördelningen 'Ångermanälven'" }
 		14 = { "%s. Fältjägarfördelningen 'Indalsälven'" }
 		15 = { "%s. Fältjägarfördelningen 'Härjedalen'" }
+		# Vanilla keys written again (vanilla group merges in)
+		31 = { "%s. Fältjägarfördelningen" }
+		32 = { "%s. Fältjägarfördelningen" }
+		33 = { "%s. Fältjägarfördelningen" }
+		34 = { "%s. Fältjägarfördelningen" }
+		35 = { "%s. Fältjägarfördelningen" }
+		36 = { "%s. Fältjägarfördelningen" }
+		37 = { "%s. Fältjägarfördelningen" }
+		38 = { "%s. Fältjägarfördelningen" }
+		39 = { "%s. Fältjägarfördelningen" }
+		40 = { "%s. Fältjägarfördelningen" }
+		41 = { "%s. Fältjägarfördelningen" }
+		42 = { "%s. Fältjägarfördelningen" }
 	}
 }
 
@@ -803,6 +857,9 @@ SWE_BS_01 =
 		8 = { "Göteborgs Stormavdelning" }
 		9 = { "Malmös Stormavdelning" }
 		10 = { "Norrlands Stormavdelning" }
+		# Vanilla keys written again (vanilla group merges in)
+		11 = { "%s. Stormavdelningen" }
+		12 = { "%s. Stormavdelningen" }
 	}
 }
 
