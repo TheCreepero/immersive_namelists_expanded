@@ -134,6 +134,7 @@
 
 .PARAMETER Add
     With -EditNames: names to add ("A; B" or "15=Name"). Appended at the end of the ordered block, or after -After or in -Section.
+    A fallback-only group gets an ordered block for them, so it can write names over vanilla's merged entries.
 
 .PARAMETER Remove
     With -EditNames: names or index numbers to remove ("A; B" or "15; 16").
@@ -1478,6 +1479,15 @@ function Edit-NamelistGroupText {
 
     $hasOrderedEdits = ($Add.Count -gt 0 -or $Remove.Count -gt 0 -or $Rename.Count -gt 0 -or $Set.Count -gt 0 -or $RenameSection.Count -gt 0 -or $RemoveAll)
     if ($hasOrderedEdits -and ($uStart -lt 0 -or $uEnd -lt 0)) {
+        # A fallback-only group (a plain variant after -ClearOrdered) gets an empty ordered block for -Add, so it can
+        # write names over the vanilla entries that merge into it (NAM-020); same layout as -AddGroup
+        if ($Add.Count -gt 0 -and $Remove.Count -eq 0 -and $Rename.Count -eq 0 -and $Set.Count -eq 0 -and $RenameSection.Count -eq 0) {
+            $withBlock = $Text.Substring(0, $blockEnd).TrimEnd() + "$nl$nl`tordered =$nl`t{$nl`t}$nl" + $Text.Substring($blockEnd)
+            $again = @{}
+            foreach ($p in $PSBoundParameters.Keys) { $again[$p] = $PSBoundParameters[$p] }
+            $again['Text'] = $withBlock
+            return Edit-NamelistGroupText @again
+        }
         throw "Group $GroupTag has no ordered = { } block"
     }
 

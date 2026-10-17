@@ -1099,6 +1099,25 @@ TST_NOFB_01 = {
             { Edit-NamelistGroupText -Text $script:Structural -GroupTag 'TST_NOFB_01' -ClearOrdered } | Should -Throw '*fallback_name*'
             { Edit-NamelistGroupText -Text $script:Structural -GroupTag 'TST_INF_01' -ClearOrdered -Add @('9=9. X') } | Should -Throw '*cannot be combined*'
         }
+
+        It "Gives a fallback-only group a new ordered block for -Add, in a section" {
+            $plain = Edit-NamelistGroupText -Text $script:Structural -GroupTag 'TST_INF_01' -ClearOrdered
+            $edited = Edit-NamelistGroupText -Text $plain -GroupTag 'TST_INF_01' -Add @('3=%d. Divisioona', '7=%d. Divisioona') -Section 'Vanilla keys'
+            $block = [regex]::Match($edited, '(?s)TST_INF_01 = \{.*?\n\}').Value
+            $block | Should -Match '(?s)fallback_name = "%d\. Divisioona".*ordered =\s*\{.*# Vanilla keys.*3 = \{ "%d\. Divisioona" \}.*7 = \{ "%d\. Divisioona" \}'
+            $edited | Should -Match 'TST_CAV_01 = \{'
+            $tmp = [System.IO.Path]::GetTempFileName()
+            try {
+                [System.IO.File]::WriteAllText($tmp, $edited, (New-Object System.Text.UTF8Encoding($false)))
+                ((Get-NamelistAuditData -Path $tmp).Groups | Where-Object { $_.Tag -eq 'TST_INF_01' }).OrderedCount | Should -Be 2
+            } finally { Remove-Item -Force $tmp }
+        }
+
+        It "Still refuses removals and renames in a fallback-only group" {
+            $plain = Edit-NamelistGroupText -Text $script:Structural -GroupTag 'TST_INF_01' -ClearOrdered
+            { Edit-NamelistGroupText -Text $plain -GroupTag 'TST_INF_01' -Remove @('1') } | Should -Throw '*no ordered*'
+            { Edit-NamelistGroupText -Text $plain -GroupTag 'TST_INF_01' -Add @('3=X') -Rename @('A=B') } | Should -Throw '*no ordered*'
+        }
     }
 
     Context "-RemoveGroup" {
