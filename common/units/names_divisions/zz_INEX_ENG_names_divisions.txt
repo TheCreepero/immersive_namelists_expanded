@@ -67,6 +67,12 @@ ENG_INF_01 = {
 		58 = { "%dth (2/1st London) Infantry Division" }
 		# Guards Division
 		31 = { "Guards Infantry Division" }
+		# Vanilla keys written again (vanilla group merges in)
+		11 = { "%dth Infantry Division" }
+		81 = { "%dst Infantry Division" }
+		82 = { "%dnd Infantry Division" }
+		801 = { "%dst Infantry Division" }
+		812 = { "%dth Infantry Division" }
 	}
 }
 
@@ -225,6 +231,15 @@ ENG_MOT_01 = {
 		56 = { "%dth (London) Motorised Division" }
 		59 = { "%dth (Staffordshire) Motorised Division" }
 		78 = { "%dth Motorised Division 'Battleaxe'" }
+		# Vanilla keys written again (vanilla group merges in)
+		9 = { "%dth Infantry Division" }
+		12 = { "%dth Infantry Division" }
+		15 = { "%dth Infantry Division" }
+		23 = { "%drd Infantry Division" }
+		38 = { "%dth Infantry Division" }
+		57 = { "%dth Infantry Division" }
+		58 = { "%dth Infantry Division" }
+		801 = { "%dst Infantry Division" }
 	}
 }
 
@@ -298,6 +313,15 @@ ENG_MEC_01 = {
 		56 = { "%dth (London) Mechanised Division" }
 		59 = { "%dth (Staffordshire) Mechanised Division" }
 		78 = { "%dth Mechanised Division 'Battleaxe'" }
+		# Vanilla keys written again (vanilla group merges in)
+		9 = { "%dth Infantry Division" }
+		12 = { "%dth Infantry Division" }
+		15 = { "%dth Infantry Division" }
+		23 = { "%drd Infantry Division" }
+		38 = { "%dth Infantry Division" }
+		57 = { "%dth Infantry Division" }
+		58 = { "%dth Infantry Division" }
+		801 = { "%dst Infantry Division" }
 	}
 }
 
@@ -374,6 +398,18 @@ ENG_ARM_02 = {
 		32 = { "%dnd Army Tank Brigade" }
 		33 = { "%drd Armoured Brigade" }
 		34 = { "%dth Army Tank Brigade" }
+		# Vanilla keys written again (vanilla group merges in)
+		5 = { "%dth Armoured Brigade" }
+		10 = { "%dth Armoured Brigade" }
+		11 = { "%dth Armoured Brigade" }
+		12 = { "%dth Armoured Brigade" }
+		13 = { "%dth Armoured Brigade" }
+		14 = { "%dth Armoured Brigade" }
+		15 = { "%dth Armoured Brigade" }
+		16 = { "%dth Armoured Brigade" }
+		17 = { "%dth Armoured Brigade" }
+		18 = { "%dth Armoured Brigade" }
+		19 = { "%dth Armoured Brigade" }
 	}
 }
 
@@ -457,6 +493,30 @@ ENG_PAR_02 = {
 		5 = { "%dth Parachute Brigade" }
 		6 = { "1st Airlanding Brigade" }
 		7 = { "6th Airlanding Brigade" }
+		# Vanilla keys written again (vanilla group merges in)
+		8 = { "%dth Parachute Brigade" }
+		9 = { "%dth Parachute Brigade" }
+		10 = { "%dth Parachute Brigade" }
+		11 = { "%dth Parachute Brigade" }
+		12 = { "%dth Parachute Brigade" }
+		13 = { "%dth Parachute Brigade" }
+		14 = { "%dth Parachute Brigade" }
+		15 = { "%dth Parachute Brigade" }
+		16 = { "%dth Parachute Brigade" }
+		17 = { "%dth Parachute Brigade" }
+		18 = { "%dth Parachute Brigade" }
+		19 = { "%dth Parachute Brigade" }
+		20 = { "%dth Parachute Brigade" }
+		21 = { "%dst Parachute Brigade" }
+		22 = { "%dnd Parachute Brigade" }
+		23 = { "%drd Parachute Brigade" }
+		24 = { "%dth Parachute Brigade" }
+		25 = { "%dth Parachute Brigade" }
+		26 = { "%dth Parachute Brigade" }
+		27 = { "%dth Parachute Brigade" }
+		28 = { "%dth Parachute Brigade" }
+		29 = { "%dth Parachute Brigade" }
+		30 = { "%dth Parachute Brigade" }
 	}
 }
 
@@ -518,6 +578,20 @@ ENG_MNT_01 = {
 		3 = { "%drd Mountain Division" }
 		4 = { "%dth Mountain Division" }
 		5 = { "%dth Mountain Division" }
+		# Vanilla keys written again (vanilla group merges in)
+		12 = { "%dth Infantry Division" }
+		38 = { "%dth Infantry Division" }
+		42 = { "%dnd Infantry Division" }
+		43 = { "%drd Infantry Division" }
+		44 = { "%dth Infantry Division" }
+		46 = { "%dth Infantry Division" }
+		48 = { "%dth Infantry Division" }
+		49 = { "%dth Infantry Division" }
+		53 = { "%drd Infantry Division" }
+		54 = { "%dth Infantry Division" }
+		64 = { "%dth Infantry Division" }
+		65 = { "%dth Infantry Division" }
+		801 = { "%dst Infantry Division" }
 	}
 }
 
@@ -595,6 +669,58 @@ ENG_GAR_01 = {
 		307 = { "Falkland Islands Defence Force" }
 		308 = { "Cyprus Garrison" }
 		309 = { "Ceylon Garrison" }
+		# Vanilla keys written again (vanilla group merges in)
+		100 = { "%dth Garrison Division" }
+		101 = { "%dst Garrison Division" }
+		102 = { "%dnd Garrison Division" }
+		103 = { "%drd Garrison Division" }
+		104 = { "%dth Garrison Division" }
+		105 = { "%dth Garrison Division" }
+		106 = { "%dth Garrison Division" }
+		107 = { "%dth Garrison Division" }
+		108 = { "%dth Garrison Division" }
+		109 = { "%dth Garrison Division" }
+		110 = { "%dth Garrison Division" }
+		111 = { "%dth Garrison Division" }
+		112 = { "%dth Garrison Division" }
+		113 = { "%dth Garrison Division" }
+		114 = { "%dth Garrison Division" }
+		115 = { "%dth Garrison Division" }
+		116 = { "%dth Garrison Division" }
+		117 = { "%dth Garrison Division" }
+		118 = { "%dth Garrison Division" }
+		119 = { "%dth Garrison Division" }
+		120 = { "%dth Garrison Division" }
+		121 = { "%dst Garrison Division" }
+		122 = { "%dnd Garrison Division" }
+		123 = { "%drd Garrison Division" }
+		124 = { "%dth Garrison Division" }
+		125 = { "%dth Garrison Division" }
+		126 = { "%dth Garrison Division" }
+		127 = { "%dth Garrison Division" }
+		128 = { "%dth Garrison Division" }
+		129 = { "%dth Garrison Division" }
+		130 = { "%dth Garrison Division" }
+		131 = { "%dst Garrison Division" }
+		132 = { "%dnd Garrison Division" }
+		133 = { "%drd Garrison Division" }
+		134 = { "%dth Garrison Division" }
+		135 = { "%dth Garrison Division" }
+		136 = { "%dth Garrison Division" }
+		137 = { "%dth Garrison Division" }
+		138 = { "%dth Garrison Division" }
+		139 = { "%dth Garrison Division" }
+		140 = { "%dth Garrison Division" }
+		141 = { "%dst Garrison Division" }
+		142 = { "%dnd Garrison Division" }
+		143 = { "%drd Garrison Division" }
+		144 = { "%dth Garrison Division" }
+		145 = { "%dth Garrison Division" }
+		146 = { "%dth Garrison Division" }
+		147 = { "%dth Garrison Division" }
+		148 = { "%dth Garrison Division" }
+		149 = { "%dth Garrison Division" }
+		150 = { "%dth Garrison Division" }
 	}
 }
 
@@ -651,6 +777,48 @@ ENG_COL_01 = {
 		122 = { "%dnd Burma Rifles" }
 		131 = { "%dst Malay Regiment" }
 		141 = { "Hong Kong Volunteer Defence Corps" }
+		# Vanilla keys written again (vanilla group merges in)
+		84 = { "%dth (Colonial) Division" }
+		85 = { "%dth (Colonial) Division" }
+		86 = { "%dth (Colonial) Division" }
+		87 = { "%dth (Colonial) Division" }
+		88 = { "%dth (Colonial) Division" }
+		89 = { "%dth (Colonial) Division" }
+		501 = { "%dst (Colonial) Division" }
+		502 = { "%dnd (Colonial) Division" }
+		503 = { "%drd (Colonial) Division" }
+		504 = { "%dth (Colonial) Division" }
+		505 = { "%dth (Colonial) Division" }
+		506 = { "%dth (Colonial) Division" }
+		521 = { "%dst (Colonial) Division" }
+		522 = { "%dnd (Colonial) Division" }
+		523 = { "%drd (Colonial) Division" }
+		524 = { "%dth (Colonial) Division" }
+		541 = { "%dst (Colonial) Division" }
+		542 = { "%dnd (Colonial) Division" }
+		543 = { "%drd (Colonial) Division" }
+		544 = { "%dth (Colonial) Division" }
+		545 = { "%dth (Colonial) Division" }
+		561 = { "%dst (Colonial) Division" }
+		562 = { "%dnd (Colonial) Division" }
+		563 = { "%drd (Colonial) Division" }
+		564 = { "%dth (Colonial) Division" }
+		581 = { "%dst (Colonial) Division" }
+		582 = { "%dnd (Colonial) Division" }
+		583 = { "%drd (Colonial) Division" }
+		584 = { "%dth (Colonial) Division" }
+		585 = { "%dth (Colonial) Division" }
+		586 = { "%dth (Colonial) Division" }
+		587 = { "%dth (Colonial) Division" }
+		588 = { "%dth (Colonial) Division" }
+		589 = { "%dth (Colonial) Division" }
+		590 = { "%dth (Colonial) Division" }
+		591 = { "%dst (Colonial) Division" }
+		592 = { "%dnd (Colonial) Division" }
+		593 = { "%drd (Colonial) Division" }
+		594 = { "%dth (Colonial) Division" }
+		595 = { "%dth (Colonial) Division" }
+		812 = { "%dth (Colonial) Division" }
 	}
 }
 
