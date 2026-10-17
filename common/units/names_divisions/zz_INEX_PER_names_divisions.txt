@@ -387,6 +387,12 @@ PER_GAR_01 = {
 		23 = { "Zhandarmeri-ye Arak" }
 		24 = { "Zhandarmeri-ye Qom" }
 		25 = { "Tip-e %d-e Amniyeh" }
+		# Vanilla keys written again (vanilla group merges in)
+		26 = { "Tip-e %d-e Amniyeh" }
+		27 = { "Tip-e %d-e Amniyeh" }
+		28 = { "Tip-e %d-e Amniyeh" }
+		29 = { "Tip-e %d-e Amniyeh" }
+		30 = { "Tip-e %d-e Amniyeh" }
 	}
 }
 
