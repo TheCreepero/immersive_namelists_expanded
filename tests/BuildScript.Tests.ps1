@@ -1428,14 +1428,6 @@ Describe "build.ps1 -Audit -Keys and -EditNames CLI safety" {
         $output | Should -Match 'link_numbering_with'
         [System.IO.File]::ReadAllText($path) | Should -Be $before
     }
-
-    It "Fails -ClearOrdered on a group that is already fallback-only, leaving the file untouched" {
-        $path = Join-Path $script:RepoRoot 'common\units\names_divisions\zz_INEX_FRA_names_divisions.txt'
-        $before = [System.IO.File]::ReadAllText($path)
-        $null = & powershell -NoProfile -File $script:BuildScriptPath -EditNames FRA -Group INF_01 -ClearOrdered 2>&1 | Out-String
-        $LASTEXITCODE | Should -Be 1
-        [System.IO.File]::ReadAllText($path) | Should -Be $before
-    }
 }
 
 Describe "build.ps1: valid division_types list" {
@@ -1957,6 +1949,17 @@ TST_CAV_01 =
         $script:CliOutput | Should -Match 'op 2'
         $script:CliOutput | Should -Match 'Missing Name'
         [System.IO.File]::ReadAllBytes($script:CliFile) | Should -Be $before
+    }
+
+    It "Fails -ClearOrdered on a group that is already fallback-only, leaving the file untouched" {
+        # On the fixture: a real plain variant may gain an ordered block (written over vanilla's merged keys),
+        # and -ClearOrdered would then succeed on the repository file
+        $extra = Join-Path $script:CliNamelistDir 'zz_INEX_TST_EXTRA_names_divisions.txt'
+        $before = [System.IO.File]::ReadAllBytes($extra)
+        Invoke-CliBuild -EditNames TST_EXTRA -Group TST_MIL_01 -ClearOrdered
+        $script:CliExit | Should -Be 1
+        $script:CliOutput | Should -Match 'TST_MIL_01'
+        [System.IO.File]::ReadAllBytes($extra) | Should -Be $before
     }
 
     It "Rejects a batch file that is missing or is not JSON" {
