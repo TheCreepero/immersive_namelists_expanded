@@ -279,6 +279,12 @@ FIN_MOT_01 = {
 	division_types = { "motorized" }
 
 	fallback_name = "%d. Jääkäridivisioona"
+
+	ordered =
+	{
+		# Vanilla keys written again (vanilla group merges in)
+		1 = { "%d. Jääkäridivisioona" }
+	}
 }
 
 FIN_MOT_02 = {
@@ -322,6 +328,12 @@ FIN_ARM_01 = {
 	link_numbering_with = { FIN_MOT_01 }
 
 	fallback_name = "%d. Panssaridivisioona"
+
+	ordered =
+	{
+		# Vanilla keys written again (vanilla group merges in)
+		1 = { "%d. Panssaridivisioona" }
+	}
 }
 
 FIN_ARM_02 = {
@@ -365,6 +377,44 @@ FIN_MEC_01 = {
 	link_numbering_with = { FIN_MOT_01 }
 
 	fallback_name = "%d. Panssarijääkäridivisioona"
+
+	ordered =
+	{
+		# Vanilla keys written again (vanilla group merges in)
+		1 = { "%d. Panssarijääkäridivisioona" }
+		2 = { "%d. Panssarijääkäridivisioona" }
+		3 = { "%d. Panssarijääkäridivisioona" }
+		4 = { "%d. Panssarijääkäridivisioona" }
+		5 = { "%d. Panssarijääkäridivisioona" }
+		6 = { "%d. Panssarijääkäridivisioona" }
+		7 = { "%d. Panssarijääkäridivisioona" }
+		8 = { "%d. Panssarijääkäridivisioona" }
+		9 = { "%d. Panssarijääkäridivisioona" }
+		10 = { "%d. Panssarijääkäridivisioona" }
+		11 = { "%d. Panssarijääkäridivisioona" }
+		12 = { "%d. Panssarijääkäridivisioona" }
+		13 = { "%d. Panssarijääkäridivisioona" }
+		14 = { "%d. Panssarijääkäridivisioona" }
+		15 = { "%d. Panssarijääkäridivisioona" }
+		16 = { "%d. Panssarijääkäridivisioona" }
+		17 = { "%d. Panssarijääkäridivisioona" }
+		18 = { "%d. Panssarijääkäridivisioona" }
+		19 = { "%d. Panssarijääkäridivisioona" }
+		20 = { "%d. Panssarijääkäridivisioona" }
+		21 = { "%d. Panssarijääkäridivisioona" }
+		22 = { "%d. Panssarijääkäridivisioona" }
+		23 = { "%d. Panssarijääkäridivisioona" }
+		24 = { "%d. Panssarijääkäridivisioona" }
+		25 = { "%d. Panssarijääkäridivisioona" }
+		26 = { "%d. Panssarijääkäridivisioona" }
+		27 = { "%d. Panssarijääkäridivisioona" }
+		28 = { "%d. Panssarijääkäridivisioona" }
+		29 = { "%d. Panssarijääkäridivisioona" }
+		30 = { "%d. Panssarijääkäridivisioona" }
+		31 = { "%d. Panssarijääkäridivisioona" }
+		32 = { "%d. Panssarijääkäridivisioona" }
+		33 = { "%d. Panssarijääkäridivisioona" }
+	}
 }
 
 FIN_MEC_02 = {
@@ -446,6 +496,29 @@ FIN_GAR_01 = {
 		28 = { "%d. Varsinais-Suomen Paikallisjoukot" }
 		29 = { "%d. Pirkanmaan Paikallisjoukot" }
 		30 = { "%d. Etelä-Savon Paikallisjoukot" }
+		# Vanilla keys written again (vanilla group merges in)
+		31 = { "%d. Paikallisjoukot" }
+		32 = { "%d. Paikallisjoukot" }
+		33 = { "%d. Paikallisjoukot" }
+		34 = { "%d. Paikallisjoukot" }
+		35 = { "%d. Paikallisjoukot" }
+		36 = { "%d. Paikallisjoukot" }
+		37 = { "%d. Paikallisjoukot" }
+		38 = { "%d. Paikallisjoukot" }
+		39 = { "%d. Paikallisjoukot" }
+		40 = { "%d. Paikallisjoukot" }
+		41 = { "%d. Paikallisjoukot" }
+		42 = { "%d. Paikallisjoukot" }
+		43 = { "%d. Paikallisjoukot" }
+		44 = { "%d. Paikallisjoukot" }
+		45 = { "%d. Paikallisjoukot" }
+		46 = { "%d. Paikallisjoukot" }
+		47 = { "%d. Paikallisjoukot" }
+		48 = { "%d. Paikallisjoukot" }
+		49 = { "%d. Paikallisjoukot" }
+		51 = { "%d. Paikallisjoukot" }
+		52 = { "%d. Paikallisjoukot" }
+		53 = { "%d. Paikallisjoukot" }
 	}
 }
 
@@ -687,6 +760,27 @@ FIN_MAR_01 = {
 		8 = { "8. Rannikkojääkäridivisioona 'Utö'" }
 		9 = { "9. Rannikkojääkäridivisioona 'Örö'" }
 		10 = { "10. Rannikkojääkäridivisioona 'Kotka'" }
+		# Vanilla keys written again (vanilla group merges in)
+		11 = { "%d. Rannikkojääkäridivisioona" }
+		12 = { "%d. Rannikkojääkäridivisioona" }
+		13 = { "%d. Rannikkojääkäridivisioona" }
+		14 = { "%d. Rannikkojääkäridivisioona" }
+		15 = { "%d. Rannikkojääkäridivisioona" }
+		16 = { "%d. Rannikkojääkäridivisioona" }
+		17 = { "%d. Rannikkojääkäridivisioona" }
+		18 = { "%d. Rannikkojääkäridivisioona" }
+		19 = { "%d. Rannikkojääkäridivisioona" }
+		20 = { "%d. Rannikkojääkäridivisioona" }
+		21 = { "%d. Rannikkojääkäridivisioona" }
+		22 = { "%d. Rannikkojääkäridivisioona" }
+		23 = { "%d. Rannikkojääkäridivisioona" }
+		24 = { "%d. Rannikkojääkäridivisioona" }
+		25 = { "%d. Rannikkojääkäridivisioona" }
+		26 = { "%d. Rannikkojääkäridivisioona" }
+		27 = { "%d. Rannikkojääkäridivisioona" }
+		28 = { "%d. Rannikkojääkäridivisioona" }
+		29 = { "%d. Rannikkojääkäridivisioona" }
+		30 = { "%d. Rannikkojääkäridivisioona" }
 	}
 }
 
@@ -829,6 +923,27 @@ FIN_PAR_01 = {
 		8 = { "8. Laskuvarjojääkäridivisioona 'Rissala'" }
 		9 = { "9. Laskuvarjojääkäridivisioona 'Pori'" }
 		10 = { "10. Laskuvarjojääkäridivisioona 'Onttola'" }
+		# Vanilla keys written again (vanilla group merges in)
+		11 = { "%d. Laskuvarjojääkäridivisioona" }
+		12 = { "%d. Laskuvarjojääkäridivisioona" }
+		13 = { "%d. Laskuvarjojääkäridivisioona" }
+		14 = { "%d. Laskuvarjojääkäridivisioona" }
+		15 = { "%d. Laskuvarjojääkäridivisioona" }
+		16 = { "%d. Laskuvarjojääkäridivisioona" }
+		17 = { "%d. Laskuvarjojääkäridivisioona" }
+		18 = { "%d. Laskuvarjojääkäridivisioona" }
+		19 = { "%d. Laskuvarjojääkäridivisioona" }
+		20 = { "%d. Laskuvarjojääkäridivisioona" }
+		21 = { "%d. Laskuvarjojääkäridivisioona" }
+		22 = { "%d. Laskuvarjojääkäridivisioona" }
+		23 = { "%d. Laskuvarjojääkäridivisioona" }
+		24 = { "%d. Laskuvarjojääkäridivisioona" }
+		25 = { "%d. Laskuvarjojääkäridivisioona" }
+		26 = { "%d. Laskuvarjojääkäridivisioona" }
+		27 = { "%d. Laskuvarjojääkäridivisioona" }
+		28 = { "%d. Laskuvarjojääkäridivisioona" }
+		29 = { "%d. Laskuvarjojääkäridivisioona" }
+		30 = { "%d. Laskuvarjojääkäridivisioona" }
 	}
 }
 
