@@ -138,7 +138,9 @@ ITA_INF_02 = {
 		10 = { "Divisione CC.NN. 'Penne Nere'" }
 		# Extrapolated from MVSN legion names
 		11 = { "%da Divisione CC.NN. 'Tagliamento'" }
-		12 = { "%da Divisione CC.NN. 'Leonessa'" }
+		12 = { "%da Divisione CC.NN. 'Leonessa'" }
+		# Vanilla keys written again (vanilla group merges in)
+		14 = { "%da Divisione CC.NN." }
 	}
 }
 
@@ -527,7 +529,36 @@ ITA_COL_01 = {
 		32 = { "2a Divisione Eritrea" }
 		# Somali divisions (1940-41)
 		101 = { "101a Divisione Somala" }
-		102 = { "102a Divisione Somala" }
+		102 = { "102a Divisione Somala" }
+		# Vanilla keys written again (vanilla group merges in)
+		3 = { "%da Divisione Coloniale" }
+		4 = { "%da Divisione Coloniale" }
+		5 = { "%da Divisione Coloniale" }
+		6 = { "%da Divisione Coloniale" }
+		7 = { "%da Divisione Coloniale" }
+		8 = { "%da Divisione Coloniale" }
+		9 = { "%da Divisione Coloniale" }
+		10 = { "%da Divisione Coloniale" }
+		11 = { "%da Divisione Coloniale" }
+		12 = { "%da Divisione Coloniale" }
+		13 = { "%da Divisione Coloniale" }
+		14 = { "%da Divisione Coloniale" }
+		15 = { "%da Divisione Coloniale" }
+		16 = { "%da Divisione Coloniale" }
+		17 = { "%da Divisione Coloniale" }
+		18 = { "%da Divisione Coloniale" }
+		19 = { "%da Divisione Coloniale" }
+		20 = { "%da Divisione Coloniale" }
+		21 = { "%da Divisione Coloniale" }
+		22 = { "%da Divisione Coloniale" }
+		23 = { "%da Divisione Coloniale" }
+		24 = { "%da Divisione Coloniale" }
+		25 = { "%da Divisione Coloniale" }
+		26 = { "%da Divisione Coloniale" }
+		27 = { "%da Divisione Coloniale" }
+		28 = { "%da Divisione Coloniale" }
+		29 = { "%da Divisione Coloniale" }
+		30 = { "%da Divisione Coloniale" }
 	}
 }
 
@@ -545,6 +576,25 @@ ITA_COL_02 = {
 	ordered = {
 		1 = { "%d° Gruppo Bande Irregolari 'Uollo Ambassel'" }
 		2 = { "%d° Gruppo Bande Irregolari 'Kai Bandera'" }
+		# Vanilla keys written again (vanilla group merges in)
+		3 = { "%d° Gruppo Bande Irregolari" }
+		4 = { "%d° Gruppo Bande Irregolari" }
+		5 = { "%d° Gruppo Bande Irregolari" }
+		6 = { "%d° Gruppo Bande Irregolari" }
+		7 = { "%d° Gruppo Bande Irregolari" }
+		8 = { "%d° Gruppo Bande Irregolari" }
+		9 = { "%d° Gruppo Bande Irregolari" }
+		10 = { "%d° Gruppo Bande Irregolari" }
+		11 = { "%d° Gruppo Bande Irregolari" }
+		12 = { "%d° Gruppo Bande Irregolari" }
+		13 = { "%d° Gruppo Bande Irregolari" }
+		14 = { "%d° Gruppo Bande Irregolari" }
+		15 = { "%d° Gruppo Bande Irregolari" }
+		16 = { "%d° Gruppo Bande Irregolari" }
+		17 = { "%d° Gruppo Bande Irregolari" }
+		18 = { "%d° Gruppo Bande Irregolari" }
+		19 = { "%d° Gruppo Bande Irregolari" }
+		20 = { "%d° Gruppo Bande Irregolari" }
 	}
 }
 
@@ -641,6 +691,14 @@ ITA_CAV_04 = {
 	division_types = { "cavalry" }
 
 	fallback_name = "%d° Gruppo Squadroni Savari"
+
+	ordered =
+	{
+		# Vanilla keys written again (vanilla group merges in)
+		1 = { "%d° Gruppo Squadroni Savari" }
+		2 = { "%d° Gruppo Squadroni Savari" }
+		3 = { "%d° Gruppo Squadroni Savari" }
+	}
 }
 
 # Fallback-only: Spahis squadrons were numbered, not named
@@ -654,6 +712,14 @@ ITA_CAV_05 = {
 	division_types = { "cavalry" "camelry" }
 
 	fallback_name = "%d° Gruppo Squadroni Spahis"
+
+	ordered =
+	{
+		# Vanilla keys written again (vanilla group merges in)
+		1 = { "%d° Gruppo Squadroni Spahis" }
+		2 = { "%d° Gruppo Squadroni Spahis" }
+		3 = { "%d° Gruppo Squadroni Spahis" }
+	}
 }
 
 ITA_CAV_06 = {
