@@ -21,6 +21,53 @@ FRA_INF_01 =
 	division_types = { "infantry" }
 
 	fallback_name = "%dème Division d'Infanterie"
+
+	ordered =
+	{
+		# Vanilla keys written again (vanilla group merges in)
+		17 = { "%dème Division d'Infanterie" }
+		59 = { "%dème Division d'Infanterie" }
+		81 = { "%dème Division d'Infanterie" }
+		82 = { "%dème Division d'Infanterie" }
+		83 = { "%dème Division d'Infanterie" }
+		84 = { "%dème Division d'Infanterie" }
+		85 = { "%dème Division d'Infanterie" }
+		86 = { "%dème Division d'Infanterie" }
+		87 = { "%dème Division d'Infanterie" }
+		88 = { "%dème Division d'Infanterie" }
+		89 = { "%dème Division d'Infanterie" }
+		90 = { "%dème Division d'Infanterie" }
+		180 = { "%dème Division d'Infanterie" }
+		181 = { "%dème Division d'Infanterie" }
+		182 = { "%dème Division d'Infanterie" }
+		183 = { "%dème Division d'Infanterie" }
+		184 = { "%dème Division d'Infanterie" }
+		185 = { "%dème Division d'Infanterie" }
+		186 = { "%dème Division d'Infanterie" }
+		187 = { "%dème Division d'Infanterie" }
+		188 = { "%dème Division d'Infanterie" }
+		189 = { "%dème Division d'Infanterie" }
+		190 = { "%dème Division d'Infanterie" }
+		191 = { "%dème Division d'Infanterie" }
+		192 = { "%dème Division d'Infanterie" }
+		193 = { "%dème Division d'Infanterie" }
+		194 = { "%dème Division d'Infanterie" }
+		195 = { "%dème Division d'Infanterie" }
+		196 = { "%dème Division d'Infanterie" }
+		197 = { "%dème Division d'Infanterie" }
+		198 = { "%dème Division d'Infanterie" }
+		199 = { "%dème Division d'Infanterie" }
+		200 = { "%dème Division d'Infanterie" }
+		235 = { "%dème Division d'Infanterie" }
+		236 = { "%dème Division d'Infanterie" }
+		237 = { "%dème Division d'Infanterie" }
+		238 = { "%dème Division d'Infanterie" }
+		239 = { "%dème Division d'Infanterie" }
+		240 = { "%dème Division d'Infanterie" }
+		241 = { "%dème Division d'Infanterie" }
+		303 = { "%dème Division d'Infanterie" }
+		353 = { "%dème Division d'Infanterie" }
+	}
 }
 
 # Named variant; shares numbering with FRA_INF_01 (key = division number).
@@ -342,6 +389,8 @@ FRA_PAR_01 =
 		11 = { "11ème Division Légère d'Intervention" }
 		24 = { "25ème Division Aéroportée" }
 		25 = { "25ème Division Parachutiste" }
+		# Vanilla keys written again (vanilla group merges in)
+		801 = { "%dème Division Parachutiste" }
 	}
 }
 
@@ -417,7 +466,6 @@ FRA_GAR_01 =
 
 	division_types = { "infantry" }
 
-	# Number reservation system will tie to another group.
 	link_numbering_with = { FRA_INF_01 }
 
 	fallback_name = "%dème Division de Forteresse"
@@ -452,6 +500,56 @@ FRA_GAR_01 =
 		127 = { "Division de Forteresse du Dauphiné" }
 		128 = { "Division de Forteresse de Savoie" }
 		129 = { "Division de Forteresse des Alpes-Maritimes" }
+		# Vanilla keys written again (vanilla group merges in)
+		106 = { "%dème Division de Forteresse" }
+		107 = { "%dème Division de Forteresse" }
+		108 = { "%dème Division de Forteresse" }
+		109 = { "%dème Division de Forteresse" }
+		110 = { "%dème Division de Forteresse" }
+		141 = { "%dème Division de Forteresse" }
+		142 = { "%dème Division de Forteresse" }
+		143 = { "%dème Division de Forteresse" }
+		144 = { "%dème Division de Forteresse" }
+		145 = { "%dème Division de Forteresse" }
+		146 = { "%dème Division de Forteresse" }
+		147 = { "%dème Division de Forteresse" }
+		148 = { "%dème Division de Forteresse" }
+		149 = { "%dème Division de Forteresse" }
+		150 = { "%dème Division de Forteresse" }
+		201 = { "%dème Division de Forteresse" }
+		202 = { "%dème Division de Forteresse" }
+		203 = { "%dème Division de Forteresse" }
+		204 = { "%dème Division de Forteresse" }
+		205 = { "%dème Division de Forteresse" }
+		206 = { "%dème Division de Forteresse" }
+		207 = { "%dème Division de Forteresse" }
+		208 = { "%dème Division de Forteresse" }
+		209 = { "%dème Division de Forteresse" }
+		210 = { "%dème Division de Forteresse" }
+		211 = { "%dème Division de Forteresse" }
+		212 = { "%dème Division de Forteresse" }
+		213 = { "%dème Division de Forteresse" }
+		214 = { "%dème Division de Forteresse" }
+		215 = { "%dème Division de Forteresse" }
+		216 = { "%dème Division de Forteresse" }
+		217 = { "%dème Division de Forteresse" }
+		218 = { "%dème Division de Forteresse" }
+		219 = { "%dème Division de Forteresse" }
+		220 = { "%dème Division de Forteresse" }
+		221 = { "%dème Division de Forteresse" }
+		222 = { "%dème Division de Forteresse" }
+		223 = { "%dème Division de Forteresse" }
+		224 = { "%dème Division de Forteresse" }
+		225 = { "%dème Division de Forteresse" }
+		226 = { "%dème Division de Forteresse" }
+		227 = { "%dème Division de Forteresse" }
+		228 = { "%dème Division de Forteresse" }
+		229 = { "%dème Division de Forteresse" }
+		230 = { "%dème Division de Forteresse" }
+		231 = { "%dème Division de Forteresse" }
+		232 = { "%dème Division de Forteresse" }
+		233 = { "%dème Division de Forteresse" }
+		234 = { "%dème Division de Forteresse" }
 	}
 }
 
