@@ -17,6 +17,63 @@ ROM_INF_01 =
 	division_types = { "infantry" }
 
 	fallback_name = "Divizia %d Infanterie"
+
+	ordered =
+	{
+		# Vanilla keys written again (vanilla group merges in)
+		1 = { "Divizia %d Infanterie" }
+		2 = { "Divizia %d Infanterie" }
+		3 = { "Divizia %d Infanterie" }
+		4 = { "Divizia %d Infanterie" }
+		5 = { "Divizia %d Infanterie" }
+		6 = { "Divizia %d Infanterie" }
+		7 = { "Divizia %d Infanterie" }
+		8 = { "Divizia %d Infanterie" }
+		9 = { "Divizia %d Infanterie" }
+		10 = { "Divizia %d Infanterie" }
+		11 = { "Divizia %d Infanterie" }
+		12 = { "Divizia %d Infanterie" }
+		13 = { "Divizia %d Infanterie" }
+		14 = { "Divizia %d Infanterie" }
+		15 = { "Divizia %d Infanterie" }
+		16 = { "Divizia %d Infanterie" }
+		17 = { "Divizia %d Infanterie" }
+		18 = { "Divizia %d Infanterie" }
+		19 = { "Divizia %d Infanterie" }
+		20 = { "Divizia %d Infanterie" }
+		21 = { "Divizia %d Infanterie" }
+		22 = { "Divizia %d Infanterie" }
+		23 = { "Divizia %d Infanterie" }
+		24 = { "Divizia %d Infanterie" }
+		25 = { "Divizia %d Infanterie" }
+		26 = { "Divizia %d Infanterie" }
+		27 = { "Divizia %d Infanterie" }
+		28 = { "Divizia %d Infanterie" }
+		29 = { "Divizia %d Infanterie" }
+		30 = { "Divizia %d Infanterie" }
+		31 = { "Divizia %d Infanterie" }
+		32 = { "Divizia %d Infanterie" }
+		36 = { "Divizia %d Infanterie" }
+		37 = { "Divizia %d Infanterie" }
+		38 = { "Divizia %d Infanterie" }
+		39 = { "Divizia %d Infanterie" }
+		40 = { "Divizia %d Infanterie" }
+		41 = { "Divizia %d Infanterie" }
+		42 = { "Divizia %d Infanterie" }
+		43 = { "Divizia %d Infanterie" }
+		44 = { "Divizia %d Infanterie" }
+		45 = { "Divizia %d Infanterie" }
+		46 = { "Divizia %d Infanterie" }
+		47 = { "Divizia %d Infanterie" }
+		48 = { "Divizia %d Infanterie" }
+		49 = { "Divizia %d Infanterie" }
+		50 = { "Divizia %d Infanterie" }
+		51 = { "Divizia %d Infanterie" }
+		52 = { "Divizia %d Infanterie" }
+		53 = { "Divizia %d Infanterie" }
+		54 = { "Divizia %d Infanterie" }
+		55 = { "Divizia %d Infanterie" }
+	}
 }
 
 # Named variant of ROM_INF_01; shares its numbering. Interwar Romanian divisions carried no honorifics, so the titles are extrapolated: garrison towns of the numbered divisions, regimental patrons, battles of 1916-17, rulers and provinces.
@@ -95,6 +152,44 @@ ROM_MOT_01 =
 	link_numbering_with = { ROM_INF_01 }
 
 	fallback_name = "Divizia %d Motorizată"
+
+	ordered =
+	{
+		# Vanilla keys written again (vanilla group merges in)
+		1 = { "Divizia %d Motorizată" }
+		2 = { "Divizia %d Motorizată" }
+		3 = { "Divizia %d Motorizată" }
+		4 = { "Divizia %d Motorizată" }
+		5 = { "Divizia %d Motorizată" }
+		6 = { "Divizia %d Motorizată" }
+		7 = { "Divizia %d Motorizată" }
+		8 = { "Divizia %d Motorizată" }
+		9 = { "Divizia %d Motorizată" }
+		10 = { "Divizia %d Motorizată" }
+		11 = { "Divizia %d Motorizată" }
+		12 = { "Divizia %d Motorizată" }
+		13 = { "Divizia %d Motorizată" }
+		14 = { "Divizia %d Motorizată" }
+		15 = { "Divizia %d Motorizată" }
+		16 = { "Divizia %d Motorizată" }
+		17 = { "Divizia %d Motorizată" }
+		18 = { "Divizia %d Motorizată" }
+		19 = { "Divizia %d Motorizată" }
+		20 = { "Divizia %d Motorizată" }
+		21 = { "Divizia %d Motorizată" }
+		22 = { "Divizia %d Motorizată" }
+		23 = { "Divizia %d Motorizată" }
+		24 = { "Divizia %d Motorizată" }
+		25 = { "Divizia %d Motorizată" }
+		26 = { "Divizia %d Motorizată" }
+		27 = { "Divizia %d Motorizată" }
+		28 = { "Divizia %d Motorizată" }
+		29 = { "Divizia %d Motorizată" }
+		30 = { "Divizia %d Motorizată" }
+		31 = { "Divizia %d Motorizată" }
+		32 = { "Divizia %d Motorizată" }
+		33 = { "Divizia %d Motorizată" }
+	}
 }
 
 # Named variant of ROM_MOT_01; shares its numbering. Extrapolated: Romania fielded one motorized division before 1941. Rivers, towns and provinces of the plains.
@@ -145,6 +240,44 @@ ROM_MEC_01 =
 	link_numbering_with = { ROM_MOT_01 }
 
 	fallback_name = "Divizia %d Mecanizată"
+
+	ordered =
+	{
+		# Vanilla keys written again (vanilla group merges in)
+		1 = { "Divizia %d Mecanizată" }
+		2 = { "Divizia %d Mecanizată" }
+		3 = { "Divizia %d Mecanizată" }
+		4 = { "Divizia %d Mecanizată" }
+		5 = { "Divizia %d Mecanizată" }
+		6 = { "Divizia %d Mecanizată" }
+		7 = { "Divizia %d Mecanizată" }
+		8 = { "Divizia %d Mecanizată" }
+		9 = { "Divizia %d Mecanizată" }
+		10 = { "Divizia %d Mecanizată" }
+		11 = { "Divizia %d Mecanizată" }
+		12 = { "Divizia %d Mecanizată" }
+		13 = { "Divizia %d Mecanizată" }
+		14 = { "Divizia %d Mecanizată" }
+		15 = { "Divizia %d Mecanizată" }
+		16 = { "Divizia %d Mecanizată" }
+		17 = { "Divizia %d Mecanizată" }
+		18 = { "Divizia %d Mecanizată" }
+		19 = { "Divizia %d Mecanizată" }
+		20 = { "Divizia %d Mecanizată" }
+		21 = { "Divizia %d Mecanizată" }
+		22 = { "Divizia %d Mecanizată" }
+		23 = { "Divizia %d Mecanizată" }
+		24 = { "Divizia %d Mecanizată" }
+		25 = { "Divizia %d Mecanizată" }
+		26 = { "Divizia %d Mecanizată" }
+		27 = { "Divizia %d Mecanizată" }
+		28 = { "Divizia %d Mecanizată" }
+		29 = { "Divizia %d Mecanizată" }
+		30 = { "Divizia %d Mecanizată" }
+		31 = { "Divizia %d Mecanizată" }
+		32 = { "Divizia %d Mecanizată" }
+		33 = { "Divizia %d Mecanizată" }
+	}
 }
 
 # Named variant of ROM_MEC_01; shares the mobile numbering. Extrapolated: battles of 1917, frontier rivers and provinces.
@@ -193,6 +326,44 @@ ROM_ARM_01 =
 	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
 
 	fallback_name = "Divizia %d Blindată"
+
+	ordered =
+	{
+		# Vanilla keys written again (vanilla group merges in)
+		1 = { "Divizia %d Blindată" }
+		2 = { "Divizia %d Blindată" }
+		3 = { "Divizia %d Blindată" }
+		4 = { "Divizia %d Blindată" }
+		5 = { "Divizia %d Blindată" }
+		6 = { "Divizia %d Blindată" }
+		7 = { "Divizia %d Blindată" }
+		8 = { "Divizia %d Blindată" }
+		9 = { "Divizia %d Blindată" }
+		10 = { "Divizia %d Blindată" }
+		11 = { "Divizia %d Blindată" }
+		12 = { "Divizia %d Blindată" }
+		13 = { "Divizia %d Blindată" }
+		14 = { "Divizia %d Blindată" }
+		15 = { "Divizia %d Blindată" }
+		16 = { "Divizia %d Blindată" }
+		17 = { "Divizia %d Blindată" }
+		18 = { "Divizia %d Blindată" }
+		19 = { "Divizia %d Blindată" }
+		20 = { "Divizia %d Blindată" }
+		21 = { "Divizia %d Blindată" }
+		22 = { "Divizia %d Blindată" }
+		23 = { "Divizia %d Blindată" }
+		24 = { "Divizia %d Blindată" }
+		25 = { "Divizia %d Blindată" }
+		26 = { "Divizia %d Blindată" }
+		27 = { "Divizia %d Blindată" }
+		28 = { "Divizia %d Blindată" }
+		29 = { "Divizia %d Blindată" }
+		30 = { "Divizia %d Blindată" }
+		31 = { "Divizia %d Blindată" }
+		32 = { "Divizia %d Blindată" }
+		33 = { "Divizia %d Blindată" }
+	}
 }
 
 # Named variant of ROM_ARM_01; shares its numbering. Key 1 is the real 1st Armoured Division 'România Mare' (1944); the rest is extrapolated, since no second armoured division existed.
@@ -258,6 +429,48 @@ ROM_CAV_01 =
 		10 = { "Divizia %d Cavalerie 'Transilvania'" }
 		11 = { "Divizia %d Cavalerie 'Bucovina'" }
 		12 = { "Divizia %d Cavalerie 'Crișana'" }
+		# Vanilla keys written again (vanilla group merges in)
+		13 = { "Divizia %d Cavalerie" }
+		14 = { "Divizia %d Cavalerie" }
+		15 = { "Divizia %d Cavalerie" }
+		16 = { "Divizia %d Cavalerie" }
+		17 = { "Divizia %d Cavalerie" }
+		18 = { "Divizia %d Cavalerie" }
+		19 = { "Divizia %d Cavalerie" }
+		20 = { "Divizia %d Cavalerie" }
+		21 = { "Divizia %d Cavalerie" }
+		22 = { "Divizia %d Cavalerie" }
+		23 = { "Divizia %d Cavalerie" }
+		24 = { "Divizia %d Cavalerie" }
+		25 = { "Divizia %d Cavalerie" }
+		26 = { "Divizia %d Cavalerie" }
+		27 = { "Divizia %d Cavalerie" }
+		28 = { "Divizia %d Cavalerie" }
+		29 = { "Divizia %d Cavalerie" }
+		30 = { "Divizia %d Cavalerie" }
+		31 = { "Divizia %d Cavalerie" }
+		32 = { "Divizia %d Cavalerie" }
+		33 = { "Divizia %d Cavalerie" }
+		34 = { "Divizia %d Cavalerie" }
+		35 = { "Divizia %d Cavalerie" }
+		36 = { "Divizia %d Cavalerie" }
+		37 = { "Divizia %d Cavalerie" }
+		38 = { "Divizia %d Cavalerie" }
+		39 = { "Divizia %d Cavalerie" }
+		40 = { "Divizia %d Cavalerie" }
+		41 = { "Divizia %d Cavalerie" }
+		42 = { "Divizia %d Cavalerie" }
+		43 = { "Divizia %d Cavalerie" }
+		44 = { "Divizia %d Cavalerie" }
+		45 = { "Divizia %d Cavalerie" }
+		46 = { "Divizia %d Cavalerie" }
+		47 = { "Divizia %d Cavalerie" }
+		48 = { "Divizia %d Cavalerie" }
+		49 = { "Divizia %d Cavalerie" }
+		50 = { "Divizia %d Cavalerie" }
+		51 = { "Divizia %d Cavalerie" }
+		52 = { "Divizia %d Cavalerie" }
+		53 = { "Divizia %d Cavalerie" }
 	}
 }
 
@@ -361,6 +574,50 @@ ROM_MTN_01 =
 		8 = { "Brigada %d Mixtă Munte 'Ceahlău'" }
 		9 = { "Brigada %d Mixtă Munte 'Cindrel'" }
 		10 = { "Brigada %d Mixtă Munte 'Vrancea'" }
+		# Vanilla keys written again (vanilla group merges in)
+		11 = { "Brigada %d Mixtă Munte" }
+		12 = { "Brigada %d Mixtă Munte" }
+		13 = { "Brigada %d Mixtă Munte" }
+		14 = { "Brigada %d Mixtă Munte" }
+		15 = { "Brigada %d Mixtă Munte" }
+		16 = { "Brigada %d Mixtă Munte" }
+		17 = { "Brigada %d Mixtă Munte" }
+		18 = { "Brigada %d Mixtă Munte" }
+		19 = { "Brigada %d Mixtă Munte" }
+		20 = { "Brigada %d Mixtă Munte" }
+		21 = { "Brigada %d Mixtă Munte" }
+		22 = { "Brigada %d Mixtă Munte" }
+		23 = { "Brigada %d Mixtă Munte" }
+		24 = { "Brigada %d Mixtă Munte" }
+		25 = { "Brigada %d Mixtă Munte" }
+		26 = { "Brigada %d Mixtă Munte" }
+		27 = { "Brigada %d Mixtă Munte" }
+		28 = { "Brigada %d Mixtă Munte" }
+		29 = { "Brigada %d Mixtă Munte" }
+		30 = { "Brigada %d Mixtă Munte" }
+		31 = { "Brigada %d Mixtă Munte" }
+		32 = { "Brigada %d Mixtă Munte" }
+		33 = { "Brigada %d Mixtă Munte" }
+		34 = { "Brigada %d Mixtă Munte" }
+		35 = { "Brigada %d Mixtă Munte" }
+		36 = { "Brigada %d Mixtă Munte" }
+		37 = { "Brigada %d Mixtă Munte" }
+		38 = { "Brigada %d Mixtă Munte" }
+		39 = { "Brigada %d Mixtă Munte" }
+		40 = { "Brigada %d Mixtă Munte" }
+		41 = { "Brigada %d Mixtă Munte" }
+		42 = { "Brigada %d Mixtă Munte" }
+		43 = { "Brigada %d Mixtă Munte" }
+		44 = { "Brigada %d Mixtă Munte" }
+		45 = { "Brigada %d Mixtă Munte" }
+		46 = { "Brigada %d Mixtă Munte" }
+		47 = { "Brigada %d Mixtă Munte" }
+		48 = { "Brigada %d Mixtă Munte" }
+		49 = { "Brigada %d Mixtă Munte" }
+		50 = { "Brigada %d Mixtă Munte" }
+		51 = { "Brigada %d Mixtă Munte" }
+		52 = { "Brigada %d Mixtă Munte" }
+		53 = { "Brigada %d Mixtă Munte" }
 	}
 }
 
@@ -424,6 +681,26 @@ ROM_MAR_01 =
 		9 = { "Regimentul %d Infanterie Marină 'Delta Dunării'" }
 		10 = { "Regimentul %d Infanterie Marină 'Mircea cel Bătrân'" }
 		11 = { "Batalionul 1 Infanterie Marină" }
+		# Vanilla keys written again (vanilla group merges in)
+		12 = { "Regimentul %d Infanterie Marină" }
+		13 = { "Regimentul %d Infanterie Marină" }
+		14 = { "Regimentul %d Infanterie Marină" }
+		15 = { "Regimentul %d Infanterie Marină" }
+		16 = { "Regimentul %d Infanterie Marină" }
+		17 = { "Regimentul %d Infanterie Marină" }
+		18 = { "Regimentul %d Infanterie Marină" }
+		19 = { "Regimentul %d Infanterie Marină" }
+		20 = { "Regimentul %d Infanterie Marină" }
+		21 = { "Regimentul %d Infanterie Marină" }
+		22 = { "Regimentul %d Infanterie Marină" }
+		23 = { "Regimentul %d Infanterie Marină" }
+		24 = { "Regimentul %d Infanterie Marină" }
+		25 = { "Regimentul %d Infanterie Marină" }
+		26 = { "Regimentul %d Infanterie Marină" }
+		27 = { "Regimentul %d Infanterie Marină" }
+		28 = { "Regimentul %d Infanterie Marină" }
+		29 = { "Regimentul %d Infanterie Marină" }
+		30 = { "Regimentul %d Infanterie Marină" }
 	}
 }
 
@@ -452,6 +729,27 @@ ROM_PAR_01 =
 		8 = { "Batalionul %d Parașutiști 'Regele Mihai I'" }
 		9 = { "Batalionul %d Parașutiști 'Moldova'" }
 		10 = { "Batalionul %d Parașutiști 'Transilvania'" }
+		# Vanilla keys written again (vanilla group merges in)
+		11 = { "Batalionul %d Parașutiști" }
+		12 = { "Batalionul %d Parașutiști" }
+		13 = { "Batalionul %d Parașutiști" }
+		14 = { "Batalionul %d Parașutiști" }
+		15 = { "Batalionul %d Parașutiști" }
+		16 = { "Batalionul %d Parașutiști" }
+		17 = { "Batalionul %d Parașutiști" }
+		18 = { "Batalionul %d Parașutiști" }
+		19 = { "Batalionul %d Parașutiști" }
+		20 = { "Batalionul %d Parașutiști" }
+		21 = { "Batalionul %d Parașutiști" }
+		22 = { "Batalionul %d Parașutiști" }
+		23 = { "Batalionul %d Parașutiști" }
+		24 = { "Batalionul %d Parașutiști" }
+		25 = { "Batalionul %d Parașutiști" }
+		26 = { "Batalionul %d Parașutiști" }
+		27 = { "Batalionul %d Parașutiști" }
+		28 = { "Batalionul %d Parașutiști" }
+		29 = { "Batalionul %d Parașutiști" }
+		30 = { "Batalionul %d Parașutiști" }
 	}
 }
 
@@ -486,6 +784,41 @@ ROM_GAR_01 =
 		12 = { "Divizia %d Pază 'Craiova'" }
 		13 = { "Divizia 1 Instrucție" }
 		14 = { "Divizia 35 Rezervă" }
+		# Vanilla keys written again (vanilla group merges in)
+		15 = { "Divizia %d Pază" }
+		16 = { "Divizia %d Pază" }
+		17 = { "Divizia %d Pază" }
+		18 = { "Divizia %d Pază" }
+		19 = { "Divizia %d Pază" }
+		20 = { "Divizia %d Pază" }
+		21 = { "Divizia %d Pază" }
+		22 = { "Divizia %d Pază" }
+		23 = { "Divizia %d Pază" }
+		24 = { "Divizia %d Pază" }
+		25 = { "Divizia %d Pază" }
+		26 = { "Divizia %d Pază" }
+		27 = { "Divizia %d Pază" }
+		28 = { "Divizia %d Pază" }
+		29 = { "Divizia %d Pază" }
+		30 = { "Divizia %d Pază" }
+		31 = { "Divizia %d Pază" }
+		32 = { "Divizia %d Pază" }
+		36 = { "Divizia %d Pază" }
+		37 = { "Divizia %d Pază" }
+		38 = { "Divizia %d Pază" }
+		39 = { "Divizia %d Pază" }
+		40 = { "Divizia %d Pază" }
+		41 = { "Divizia %d Pază" }
+		42 = { "Divizia %d Pază" }
+		43 = { "Divizia %d Pază" }
+		44 = { "Divizia %d Pază" }
+		45 = { "Divizia %d Pază" }
+		46 = { "Divizia %d Pază" }
+		47 = { "Divizia %d Pază" }
+		48 = { "Divizia %d Pază" }
+		49 = { "Divizia %d Pază" }
+		50 = { "Divizia %d Pază" }
+		51 = { "Divizia %d Pază" }
 	}
 }
 
