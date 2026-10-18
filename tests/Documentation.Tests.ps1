@@ -121,12 +121,19 @@ Describe "Agent Skill Mirrors: .claude/skills and .agents/skills" {
 }
 
 Describe "Agent Rule Files: CLAUDE.md and GEMINI.md" {
-    It "CLAUDE.md and GEMINI.md must exist and be byte-identical" {
+    It "CLAUDE.md imports GEMINI.md so both agents share one rule set" {
         $claudePath = Join-Path $script:RepoRoot "CLAUDE.md"
         $geminiPath = Join-Path $script:RepoRoot "GEMINI.md"
         (Test-Path $claudePath) | Should -BeTrue -Because "CLAUDE.md must exist at repo root"
         (Test-Path $geminiPath) | Should -BeTrue -Because "GEMINI.md must exist at repo root"
-        (Get-FileHash $claudePath).Hash | Should -Be (Get-FileHash $geminiPath).Hash -Because "CLAUDE.md and GEMINI.md must remain byte-identical"
+        [System.IO.File]::ReadAllText($claudePath) | Should -Match '(?m)^@GEMINI\.md\s*$' -Because "the rules exist once, in GEMINI.md; CLAUDE.md imports them"
+    }
+
+    It "GEMINI.md points to the agent guide and the Manager's shared rules" {
+        $rules = [System.IO.File]::ReadAllText((Join-Path $script:RepoRoot 'GEMINI.md'), [System.Text.Encoding]::UTF8)
+        $rules | Should -Match 'docs/inex-agent-guide\.md'
+        $rules | Should -Match '\.\./\.\./GEMINI\.md'
+        (Test-Path (Join-Path $script:RepoRoot 'docs\inex-agent-guide.md')) | Should -BeTrue
     }
 }
 
@@ -250,7 +257,7 @@ Describe "Plan hand-off: planning skills stop, the implement skill only executes
     }
 
     It "Rules and skills describe the same-tag merge, with no advice to drop vanilla copies" {
-        $rules = [System.IO.File]::ReadAllText((Join-Path $script:RepoRoot 'CLAUDE.md'), [System.Text.Encoding]::UTF8)
+        $rules = [System.IO.File]::ReadAllText((Join-Path $script:RepoRoot 'GEMINI.md'), [System.Text.Encoding]::UTF8)
         $rules | Should -Match 'merged into the vanilla group' -Because "a launch of 2026-10-15 showed the vanilla keys a group leaves out staying in the game (NAM-020)"
         foreach ($name in 'hoi4-inex-namelist-authoring', 'hoi4-inex-namelist-audit') {
             $text = & $script:ReadSkill $name
