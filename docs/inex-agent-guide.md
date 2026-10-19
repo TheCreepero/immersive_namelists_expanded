@@ -1,9 +1,9 @@
 # Immersive Namelists Expanded (INEX) - Agent Guide
 
-Moved here from `GEMINI.md` on 2026-10-18, when the rule file was reduced to the rules that always apply; `GEMINI.md` says when to read which section.
+Moved here from `GEMINI.md` on 2026-10-18, when the rule file was reduced to the rules that always apply; `AGENTS.md` says when to read which section.
 
 ## 1. Workspace & Architecture
-- **Single-Root**: Root directly hosts `.git/`, `descriptor.mod`, `thumbnail.png`, `build.ps1`, `common/`, `tests/`, `wiki/`, `.github/`, docs (`README.md`, `WORKSHOP_DESCRIPTION_GUIDELINES.md`), and agent configs (`CLAUDE.md`, `.claude/` for Claude Code; `GEMINI.md`, `.agents/` for Google Antigravity).
+- **Single-Root**: Root directly hosts `.git/`, `descriptor.mod`, `thumbnail.png`, `build.ps1`, `common/`, `tests/`, `wiki/`, `.github/`, docs (`README.md`, `WORKSHOP_DESCRIPTION_GUIDELINES.md`), and agent configs (`AGENTS.md`, `CLAUDE.md`, `.claude/` for Claude Code; `GEMINI.md`, `.agents/` for Google Antigravity).
 - **Artifacts**: Releases -> `artifacts/` (`build.ps1 -Package`). Temp files -> `scratch/` (gitignored: research dossiers `<tag>_dossier.md` and ad hoc batches; nothing an implementer needs lives only there).
 - **Per-Nation Plans**: `docs/superpowers/plans/YYYY-MM-DD-<country>-audit.md` (for audits, skeleton from `-AuditPlan`) or `<country>-namelist.md` (for authoring, copied from `TEMPLATE-namelist.md`). A plan is the hand-off between planning and implementation and is self-contained: final decisions, the group suite, numbered implementation steps with exact commands, verbatim docs text, and every name as `` ```json batch `` blocks under `## Edit batch`. Its `Status:` line runs `PLANNING` -> `READY` -> `IN PROGRESS` -> `DONE`.
 - **Two Stages**: Planning (policy questions, research subagents, design, every name, proofread) ends with a report to the user and stops. Implementation starts only on the user's word: `hoi4-inex-namelist-implement` hands the plan to the `inex-implementer` subagent, which works in a fresh context from the plan file alone (no research, no naming decisions, no repeat of a planning phase), and the dispatching session verifies the result with `-Check` and `git status`.
@@ -69,7 +69,7 @@ All four live in `.claude/skills/` and `.agents/skills/`. The first two are plan
 
 ## 8. Agent Config Mirrors
 Claude Code and Google Antigravity use mirrored configs:
-- `CLAUDE.md` is the single line `@GEMINI.md`: the rules exist once, in `GEMINI.md` (the short form) and in this guide (the long form).
+- `CLAUDE.md` and `GEMINI.md` are the single line `@AGENTS.md`: the rules exist once, in `AGENTS.md` (the short form) and in this guide (the long form).
 - `.claude/skills/<skill>/SKILL.md` ⇄ `.agents/skills/<skill>/SKILL.md`, for every skill in §7 (byte-identical).
 - The subagent briefs exist once, in `.claude/agents/`. Claude dispatches them as named agents; Antigravity passes their path to `invoke_subagent`.
   - `inex-historical-researcher.md`: full OOB dossier for authoring, raw input to the plan, written to `scratch/<tag>_dossier.md` with a summary of at most 200 words returned (Sonnet, web tools plus Write, about 40 web calls, `maxTurns: 50`).

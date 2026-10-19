@@ -2221,7 +2221,7 @@ Describe "build.ps1 Helper: Sync-AgentMirrors" {
     It "Copies the Claude side over stale or missing mirrors, byte for byte, and then reports nothing" {
         $updated = Sync-AgentMirrors -Root $script:MirrorRoot
         $updated | Should -Be @('.agents/skills/one/SKILL.md')
-        [System.IO.File]::ReadAllText((Join-Path $script:MirrorRoot 'GEMINI.md')) | Should -Be "old rules`n" -Because 'the rule file is not a mirror any more; CLAUDE.md imports it'
+        [System.IO.File]::ReadAllText((Join-Path $script:MirrorRoot 'GEMINI.md')) | Should -Be "old rules`n" -Because 'the rule file is not a mirror any more; CLAUDE.md and GEMINI.md import AGENTS.md'
         (Get-FileHash (Join-Path $script:MirrorRoot '.agents\skills\one\SKILL.md')).Hash | Should -Be (Get-FileHash (Join-Path $script:MirrorRoot '.claude\skills\one\SKILL.md')).Hash
         (Sync-AgentMirrors -Root $script:MirrorRoot).Count | Should -Be 0
     }

@@ -120,19 +120,22 @@ Describe "Agent Skill Mirrors: .claude/skills and .agents/skills" {
     }
 }
 
-Describe "Agent Rule Files: CLAUDE.md and GEMINI.md" {
-    It "CLAUDE.md imports GEMINI.md so both agents share one rule set" {
+Describe "Agent Rule Files: AGENTS.md, CLAUDE.md and GEMINI.md" {
+    It "CLAUDE.md and GEMINI.md import AGENTS.md so all agents share one rule set" {
+        $agentsPath = Join-Path $script:RepoRoot "AGENTS.md"
         $claudePath = Join-Path $script:RepoRoot "CLAUDE.md"
         $geminiPath = Join-Path $script:RepoRoot "GEMINI.md"
+        (Test-Path $agentsPath) | Should -BeTrue -Because "AGENTS.md must exist at repo root"
         (Test-Path $claudePath) | Should -BeTrue -Because "CLAUDE.md must exist at repo root"
         (Test-Path $geminiPath) | Should -BeTrue -Because "GEMINI.md must exist at repo root"
-        [System.IO.File]::ReadAllText($claudePath) | Should -Match '(?m)^@GEMINI\.md\s*$' -Because "the rules exist once, in GEMINI.md; CLAUDE.md imports them"
+        [System.IO.File]::ReadAllText($claudePath) | Should -Match '(?m)^@AGENTS\.md\s*$' -Because "the rules exist once, in AGENTS.md; CLAUDE.md imports them"
+        [System.IO.File]::ReadAllText($geminiPath) | Should -Match '(?m)^@AGENTS\.md\s*$' -Because "the rules exist once, in AGENTS.md; GEMINI.md imports them"
     }
 
-    It "GEMINI.md points to the agent guide and the Manager's shared rules" {
-        $rules = [System.IO.File]::ReadAllText((Join-Path $script:RepoRoot 'GEMINI.md'), [System.Text.Encoding]::UTF8)
+    It "AGENTS.md points to the agent guide and the Manager's shared rules" {
+        $rules = [System.IO.File]::ReadAllText((Join-Path $script:RepoRoot 'AGENTS.md'), [System.Text.Encoding]::UTF8)
         $rules | Should -Match 'docs/inex-agent-guide\.md'
-        $rules | Should -Match '\.\./\.\./GEMINI\.md'
+        $rules | Should -Match '\.\./\.\./AGENTS\.md'
         (Test-Path (Join-Path $script:RepoRoot 'docs\inex-agent-guide.md')) | Should -BeTrue
     }
 }
@@ -257,7 +260,7 @@ Describe "Plan hand-off: planning skills stop, the implement skill only executes
     }
 
     It "Rules and skills describe the same-tag merge, with no advice to drop vanilla copies" {
-        $rules = [System.IO.File]::ReadAllText((Join-Path $script:RepoRoot 'GEMINI.md'), [System.Text.Encoding]::UTF8)
+        $rules = [System.IO.File]::ReadAllText((Join-Path $script:RepoRoot 'AGENTS.md'), [System.Text.Encoding]::UTF8)
         $rules | Should -Match 'merged into the vanilla group' -Because "a launch of 2026-10-15 showed the vanilla keys a group leaves out staying in the game (NAM-020)"
         foreach ($name in 'hoi4-inex-namelist-authoring', 'hoi4-inex-namelist-audit') {
             $text = & $script:ReadSkill $name
