@@ -177,7 +177,7 @@ POL_MOT_02 =
 		17 = { "17 Wielkopolska Dywizja Motorowa" }
 		23 = { "23 Górnośląska Dywizja Motorowa" }
 		30 = { "30 Poleska Dywizja Motorowa" }
-		101 = { "Warszawska Dywizja Pancerno-Motorowa" }
+		101 = { "Warszawska Brygada Pancerno-Motorowa" }
 	}
 }
 
@@ -249,7 +249,7 @@ POL_ARM_01 =
 		8 = { "8 Dywizja Pancerna" }
 		9 = { "9 Dywizja Pancerna" }
 		10 = { "10 Sudecka Dywizja Pancerna" }
-		11 = { "11 Drezdeńska Dywizja Pancerna" }
+		11 = { "11 Lubuska Dywizja Kawalerii Pancernej" }
 		12 = { "12 Dywizja Pancerna" }
 		13 = { "13 Dywizja Pancerna" }
 		14 = { "14 Dywizja Pancerna" }
@@ -377,6 +377,7 @@ POL_PSZ_01 =
 		4 = { "4 Dywizja Piechoty" }
 		5 = { "1 Samodzielna Brygada Spadochronowa" }
 		6 = { "Samodzielna Brygada Strzelców Podhalańskich" }
+		101 = { "1 Samodzielna Brygada Strzelców" }
 	}
 }
 
@@ -392,19 +393,18 @@ POL_PSZ_02 =
 	division_types = { "infantry" }
 
 
-	fallback_name = "%d Dywizja Piechoty (USSR)"
+	fallback_name = "%d Dywizja Piechoty (PSZ w ZSRR)"
 
 	# Names with numbers (only one number per entry). 
 	# It's okay to have gaps in numbering.
 	ordered =
-	{	
-		1 = { "4 Dywizja Strzelców" }
-		2 = { "5 Wileńska Dywizja Piechoty" }
-		3 = { "6 Lwowska Dywizja Piechoty" }
-		4 = { "7 Dywizja Piechoty" }
-		5 = { "8 Dywizja Piechoty" }
-		6 = { "9 Dywizja Piechoty" }
-		7 = { "10 Dywizja Piechoty" }
+	{
+		5 = { "5 Wileńska Dywizja Piechoty" }
+		6 = { "6 Lwowska Dywizja Piechoty" }
+		7 = { "7 Dywizja Piechoty" }
+		8 = { "8 Dywizja Piechoty" }
+		9 = { "9 Dywizja Piechoty" }
+		10 = { "10 Dywizja Piechoty" }
 	}
 }
 
@@ -420,15 +420,16 @@ POL_PSZ_03 =
 	division_types = { "infantry" }
 
 
-	fallback_name = "%d Dywizja Piechoty (P2C)"
+	fallback_name = "%d Dywizja Piechoty (2 Korpus Polski)"
 
 	# Names with numbers (only one number per entry). 
 	# It's okay to have gaps in numbering.
 	ordered =
-	{	
-		1 = { "3 Dywizja Strzelców Karpackich" }
-		2 = { "5 Kresowa Dywizja Piechoty" }
-		3 = { "2 Warszawska Brygada Pancerna" }
+	{
+		2 = { "2 Warszawska Brygada Pancerna" }
+		3 = { "3 Dywizja Strzelców Karpackich" }
+		5 = { "5 Kresowa Dywizja Piechoty" }
+		14 = { "14 Wielkopolska Brygada Pancerna" }
 	}
 }
 
@@ -437,7 +438,7 @@ POL_PSZ_03 =
 # Gwardia Ludowa (GL) and Armia Ludowa (AL) resistance divisions
 POL_LWP_01 = 
 {
-	name = "Gwardia Ludowa Divisions"
+	name = "LWP Infantry Divisions"
 
 	for_countries = { POL }
 
@@ -473,7 +474,7 @@ POL_LWP_01 =
 # Gwardia Ludowa / LWP cavalry formations
 POL_LWP_02 = 
 {
-	name = "Gwardia Ludowa Cavalry"
+	name = "LWP Cavalry Divisions"
 
 	for_countries = { POL }
 
@@ -482,13 +483,14 @@ POL_LWP_02 =
 	division_types = { "cavalry" }
 
 
-	fallback_name = "%d Dywizja Piechoty (LWP)"
+	fallback_name = "%d Dywizja Kawalerii (LWP)"
 
 	# Names with numbers (only one number per entry). 
 	# It's okay to have gaps in numbering.
 	ordered =
 	{	
 		1 = { "1 Warszawska Dywizja Kawalerii" }
+		101 = { "1 Warszawska Samodzielna Brygada Kawalerii" }
 	}
 }
 
@@ -501,20 +503,18 @@ POL_LWP_03 =
 
 	can_use = { has_government = communism }
 
-	division_types = { "artillery" }
+	division_types = { "anti_air" }
 
 
-	fallback_name = "%d Dywizja Piechoty (LWP)"
+	fallback_name = "%d Dywizja Artylerii Przeciwlotniczej"
 
 	# Names with numbers (only one number per entry). 
 	# It's okay to have gaps in numbering.
 	ordered =
-	{	
+	{
 		1 = { "1 Dywizja Artylerii Przeciwlotniczej" }
-		2 = { "2 Łużycka Dywizja Artylerii" }
-		3 = { "3 Dywizja Artylerii Przeciwlotniczej" }
+		3 = { "3 Łużycka Dywizja Artylerii Przeciwlotniczej" }
 		4 = { "4 Dywizja Artylerii Przeciwlotniczej" }
-		5 = { "5 Dywizja Artylerii" }
 	}
 }
 
@@ -535,13 +535,13 @@ POL_AWL_03 =
 	# Names with numbers (only one number per entry). 
 	# It's okay to have gaps in numbering.
 	ordered =
-	{	
+	{
 		1 = { "1 Dywizja Artylerii" }
 		2 = { "2 Łużycka Dywizja Artylerii" }
-		3 = { "6 Dywizja Artylerii Przełamania" }
-		4 = { "8 Dywizja Artylerii Przełamania" }
 		5 = { "5 Dywizja Artylerii Armat" }
-		6 = { "10 Dywizja Artylerii Armat" }
+		6 = { "6 Dywizja Artylerii Przełamania" }
+		8 = { "8 Dywizja Artylerii Przełamania" }
+		10 = { "10 Dywizja Artylerii Armat" }
 	}
 }
 
@@ -563,36 +563,36 @@ POL_LWP_00 =
 	# Names with numbers (only one number per entry). 
 	# It's okay to have gaps in numbering.
 	ordered =
-	{	
-		1 = { "1 Warszawska Dywizja Piechoty im.Tadeusza Kościuszki" }
-		2 = { "1 Szkolna Dywizja Piechoty" }
-		3 = { "2 Warszawska Dywizja Piechoty im. Henryka Dąbrowskiego" }
-		4 = { "3 Pomorska Dywizja Piechoty im. Romualda Traugutta" }
-		5 = { "4 Pomorska Dywizja Piechoty im. Jana Kilińskiego" }
-		6 = { "5 Saska Dywizja Piechoty" }
-		7 = { "6 Pomorska Dywizja Piechoty" }
-		8 = { "7 Łużycka Dywizja Piechoty" }
-		9 = { "8 Drezdeńska Dywizja Piechoty" }
-		10 = { "9 Drezdeńska Dywizja Piechoty" }
-		11 = { "10 Sudecka Dywizja Piechoty" }
-		12 = { "11 Dywizja Piechoty" }
-		13 = { "12 Dywizja Piechoty" }
-		14 = { "13 Dywizja Piechoty" }
-		15 = { "14 Dywizja Piechoty" }
-		16 = { "15 Dywizja Piechoty" }
-		17 = { "16 Kaszubska Dywizja Piechoty" }
+	{
+		1 = { "1 Warszawska Dywizja Piechoty im. Tadeusza Kościuszki" }
+		2 = { "2 Warszawska Dywizja Piechoty im. Henryka Dąbrowskiego" }
+		3 = { "3 Pomorska Dywizja Piechoty im. Romualda Traugutta" }
+		4 = { "4 Pomorska Dywizja Piechoty im. Jana Kilińskiego" }
+		5 = { "5 Saska Dywizja Piechoty" }
+		6 = { "6 Pomorska Dywizja Piechoty" }
+		7 = { "7 Łużycka Dywizja Piechoty" }
+		8 = { "8 Drezdeńska Dywizja Piechoty" }
+		9 = { "9 Drezdeńska Dywizja Piechoty" }
+		10 = { "10 Sudecka Dywizja Piechoty" }
+		11 = { "11 Dywizja Piechoty" }
+		12 = { "12 Dywizja Piechoty" }
+		13 = { "13 Dywizja Piechoty" }
+		14 = { "14 Dywizja Piechoty" }
+		15 = { "15 Dywizja Piechoty" }
+		16 = { "16 Kaszubska Dywizja Piechoty" }
 		18 = { "18 Dywizja Piechoty" }
-		19 = { "21 Dywizja Piechoty" }
-		20 = { "22 Dywizja Piechoty" }
-		21 = { "23 Dywizja Piechoty" }
-		22 = { "24 Dywizja Piechoty" }
-		23 = { "25 Dywizja Piechoty" }
-		24 = { "27 Dywizja Piechoty" }
-		25 = { "29 Dywizja Piechoty" }
-		26 = { "30 Dywizja Piechoty" }
-		27 = { "34 Dywizja Piechoty czasu „W”" }
-		28 = { "37 Dywizja Piechoty czasu „W”" }
-		29 = { "40 Dywizja Piechoty czasu „W”" }
+		21 = { "21 Dywizja Piechoty" }
+		22 = { "22 Dywizja Piechoty" }
+		23 = { "23 Dywizja Piechoty" }
+		24 = { "24 Dywizja Piechoty" }
+		25 = { "25 Dywizja Piechoty" }
+		27 = { "27 Dywizja Piechoty" }
+		29 = { "29 Dywizja Piechoty" }
+		30 = { "30 Dywizja Piechoty" }
+		34 = { "34 Dywizja Piechoty czasu „W”" }
+		37 = { "37 Dywizja Piechoty czasu „W”" }
+		40 = { "40 Dywizja Piechoty czasu „W”" }
+		101 = { "1 Szkolna Dywizja Piechoty" }
 	}
 }
 
@@ -613,33 +613,26 @@ POL_LWZ_00 =
 	# Names with numbers (only one number per entry). 
 	# It's okay to have gaps in numbering.
 	ordered =
-	{	
+	{
 		1 = { "1 Warszawska Dywizja Zmechanizowana" }
 		2 = { "2 Warszawska Dywizja Zmechanizowana" }
-		3 = { "2 Pomorska Dywizja Zmechanizowana" }
-		4 = { "3 Pomorska Dywizja Zmechanizowana" }
-		5 = { "4 Pomorska Dywizja Zmechanizowana im. Jana Kilińskiego" }
-		6 = { "4 Lubuska Dywizja Zmechanizowana" }
-		7 = { "5 Kresowa Dywizja Zmechanizowana" }
+		3 = { "3 Pomorska Dywizja Zmechanizowana" }
+		4 = { "4 Pomorska Dywizja Zmechanizowana im. Jana Kilińskiego" }
+		5 = { "5 Kresowa Dywizja Zmechanizowana" }
 		8 = { "8 Drezdeńska Dywizja Zmechanizowana" }
-		9 = { "8 Bałtycka Dywizja Obrony Wybrzeża" }
-		10 = { "9 Drezdeńska Dywizja Zmechanizowana" }
-		11 = { "10 Sudecka Dywizja Zmechanizowana" }
-		12 = { "11 Dywizja Zmechanizowana" }
-		13 = { "12 Dywizja Zmechanizowana" }
-		14 = { "12 Szczecińska Dywizja Zmechanizowana" }
-		15 = { "15 Dywizja Zmechanizowana" }
-		16 = { "15 Warmińsko-Mazurska Dywizja Zmechanizowana" }
-		17 = { "16 Pomorska Dywizja Zmechanizowana" }
-		18 = { "19 Dywizja Zmechanizowana" }
-		19 = { "20 Dywizja Zmechanizowana" }
-		20 = { "26 Zapasowa Dywizja Zmechanizowana" }
-		21 = { "26 Rezerwowa Dywizja Zmechanizowana" }
-		22 = { "28 Zapasowa Dywizja Zmechanizowana" }
-		23 = { "28 Rezerwowa Dywizja Zmechanizowana" }
-		24 = { "30 Rezerwowa Dywizja Zmechanizowana" }
-		25 = { "31 Rezerwowa Dywizja Zmechanizowana" }
-		26 = { "32 Rezerwowa Dywizja Zmechanizowana" }
+		9 = { "9 Drezdeńska Dywizja Zmechanizowana" }
+		10 = { "10 Sudecka Dywizja Zmechanizowana" }
+		11 = { "11 Dywizja Zmechanizowana" }
+		12 = { "12 Szczecińska Dywizja Zmechanizowana" }
+		15 = { "15 Warmińsko-Mazurska Dywizja Zmechanizowana" }
+		16 = { "16 Pomorska Dywizja Zmechanizowana" }
+		19 = { "19 Dywizja Zmechanizowana" }
+		20 = { "20 Dywizja Zmechanizowana" }
+		26 = { "26 Rezerwowa Dywizja Zmechanizowana" }
+		28 = { "28 Rezerwowa Dywizja Zmechanizowana" }
+		30 = { "30 Rezerwowa Dywizja Zmechanizowana" }
+		31 = { "31 Rezerwowa Dywizja Zmechanizowana" }
+		32 = { "32 Rezerwowa Dywizja Zmechanizowana" }
 	}
 }
 
@@ -653,23 +646,22 @@ POL_LDP_00 =
 
 	can_use = { has_government = communism }
 
-	division_types = { "light_armor" }
+	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
 
 	#link_numbering_with = { POL_LWP_00 }
 
-	fallback_name = "%d Ludowa Dywizja Zmechanizowana"
+	fallback_name = "%d Ludowa Dywizja Pancerna"
 
 	# Names with numbers (only one number per entry). 
 	# It's okay to have gaps in numbering.
 	ordered =
-	{	
-		1 = { "5 Saska Dywizja Pancerna im. gen. Aleksandra Waszkiewicza" }
-		2 = { "10 Sudecka Dywizja Pancerna" }
-		3 = { "11 Drezdeńska Dywizja Pancerna" }
-		4 = { "16 Kaszubska Dywizja Pancerna" }
-		5 = { "19 Dywizja Pancerna" }
-		6 = { "20 Dywizja Pancerna" }
-		7 = { "11 Lubuska Dywizja Kawalerii Pancernej" }
+	{
+		5 = { "5 Saska Dywizja Pancerna" }
+		10 = { "10 Sudecka Dywizja Pancerna" }
+		11 = { "11 Drezdeńska Dywizja Pancerna" }
+		16 = { "16 Kaszubska Dywizja Pancerna" }
+		19 = { "19 Dywizja Pancerna" }
+		20 = { "20 Dywizja Pancerna" }
 	}
 }
 
@@ -715,29 +707,28 @@ POL_AK_01 =
 	# Names with numbers (only one number per entry). 
 	# It's okay to have gaps in numbering.
 	ordered =
-	{	
-		1 = { "2 Dywizja Piechoty Legionów AK „Pogoń”" }
-		2 = { "3 Dywizja Piechoty Legionów AK" }	
-		3 = { "5 Dywizja Piechoty AK „Dzieci Lwowskich”" }	
-		4 = { "6 Dywizja Piechoty AK Ziemi Krakowskiej „Odwet”" }	
-		5 = { "7 Dywizja Piechoty AK „Orzeł”" }	
-		6 = { "8 Dywizja Piechoty AK im. Romualda Traugutta" }
-		7 = { "9 Podlaska Dywizja Piechoty AK" }
-		8 = { "10 Dywizja Piechoty AK im. Macieja Rataja" }
-		9 = { "11 Karpacka Dywizja Piechoty AK" }
-		10 = { "12 Dywizja Piechoty AK" }
-		11 = { "21 Dywizja Piechoty AK" }
-		12 = { "22 Dywizja Piechoty AK" }
-		13 = { "24 Dywizja Piechoty AK" }
-		14 = { "25 Dywizja Piechoty AK" }
-		15 = { "26 Dywizja Piechoty AK" }
-		16 = { "27 Wołyńska Dywizja Piechoty" }
-		17 = { "28 Dywizja Piechoty AK im. Stefana Okrzei" }
-		18 = { "29 Dywizja Piechoty AK" }
-		19 = { "30 Dywizja Piechoty AK" } 
-		106 = { "106 Dywizja Piechoty AK" } 
-
-
+	{
+		2 = { "2 Dywizja Piechoty Legionów AK „Pogoń”" }
+		3 = { "3 Dywizja Piechoty Legionów AK" }
+		5 = { "5 Dywizja Piechoty AK „Dzieci Lwowskich”" }
+		6 = { "6 Dywizja Piechoty AK Ziemi Krakowskiej „Odwet”" }
+		7 = { "7 Dywizja Piechoty AK „Orzeł”" }
+		8 = { "8 Dywizja Piechoty AK im. Romualda Traugutta" }
+		9 = { "9 Podlaska Dywizja Piechoty AK" }
+		10 = { "10 Dywizja Piechoty AK im. Macieja Rataja" }
+		11 = { "11 Karpacka Dywizja Piechoty AK" }
+		12 = { "12 Dywizja Piechoty AK" }
+		21 = { "21 Dywizja Piechoty AK" }
+		22 = { "22 Dywizja Piechoty AK" }
+		23 = { "23 Dywizja Piechoty AK" }
+		24 = { "24 Dywizja Piechoty AK" }
+		25 = { "25 Dywizja Piechoty AK" }
+		26 = { "26 Dywizja Piechoty AK" }
+		27 = { "27 Wołyńska Dywizja Piechoty AK" }
+		28 = { "28 Dywizja Piechoty AK im. Stefana Okrzei" }
+		29 = { "29 Dywizja Piechoty AK" }
+		30 = { "30 Dywizja Piechoty AK" }
+		106 = { "106 Dywizja Piechoty AK" }
 	}
 }
 
@@ -827,6 +818,7 @@ POL_CAV_01 =
 		117 = { "%d Brygada Kawalerii" }
 		118 = { "%d Brygada Kawalerii" }
 		119 = { "%d Brygada Kawalerii" }
+		136 = { "Brygada Kawalerii „Plis”" }
 	}
 }
 
@@ -1223,5 +1215,232 @@ POL_BSKRZ_01 = {
 		12 = { "Batalion NOW-AK „Antoni”" }
 		13 = { "Zgrupowanie Partyzanckie NSZ „Bartka”" }
 		14 = { "Oddział Partyzancki NOW „Ojca Jana”" }
+	}
+}
+
+# ===== Volunteers, fortresses, Royal Guard and insurgents =====
+
+# Volunteer and expeditionary formations, 1914-1920: Polish rifle divisions in France and Russia, the Legions, the 1920 Volunteer Army.
+POL_VOL_01 = 
+{
+	name = "Volunteer Divisions"
+
+	for_countries = { POL }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" "cavalry" "motorized" }
+
+	fallback_name = "%d Dywizja Ochotnicza"
+
+	ordered =
+	{
+		# Polish rifle divisions in France and Russia (1917-1920)
+		1 = { "1 Dywizja Strzelców Polskich" }
+		2 = { "2 Dywizja Strzelców Polskich" }
+		3 = { "3 Dywizja Strzelców Polskich" }
+		4 = { "4 Dywizja Strzelców Polskich" }
+		5 = { "5 Dywizja Strzelców Polskich „Syberyjska”" }
+		6 = { "6 Dywizja Strzelców Polskich" }
+		7 = { "7 Dywizja Strzelców Polskich" }
+		# Volunteer Army (1920)
+		101 = { "Dywizja Ochotnicza" }
+		102 = { "Dywizja Instrukcyjna" }
+		# Legions and volunteer corps (1914-1918)
+		104 = { "I Brygada Legionów Polskich" }
+		105 = { "II Brygada Legionów Polskich „Karpacka”" }
+		106 = { "III Brygada Legionów Polskich" }
+		107 = { "Polski Korpus Posiłkowy" }
+		108 = { "Legion Wschodni" }
+		109 = { "Legion Zachodni" }
+		110 = { "Legion Puławski" }
+		111 = { "Bajończycy" }
+		# Volunteer cavalry and armour
+		112 = { "1 Dywizja Ułanów" }
+		113 = { "1 Pułk Ułanów Legionów Polskich" }
+		114 = { "1 Pułk Czołgów" }
+		# Plausible volunteer formations
+		116 = { "Ochotnicza Dywizja Strzelców" }
+		118 = { "Zmotoryzowana Dywizja Ochotnicza" }
+		# Volunteer Army regiments (1920)
+		201 = { "201 Ochotniczy Pułk Piechoty" }
+		202 = { "202 Ochotniczy Pułk Piechoty" }
+		205 = { "205 Ochotniczy Pułk Piechoty" }
+	}
+}
+
+# Dąbrowszczacy: Polish volunteers of the Spanish Civil War; communist governments only.
+POL_VOL_02 = 
+{
+	name = "International Brigades"
+
+	for_countries = { POL }
+
+	can_use = { has_government = communism }
+
+	division_types = { "infantry" "cavalry" "motorized" }
+
+	fallback_name = "%d Brygada Międzynarodowa"
+
+	ordered =
+	{
+		# Spanish Civil War (1936-1939)
+		13 = { "XIII Brygada Międzynarodowa im. Jarosława Dąbrowskiego" }
+		150 = { "150 Brygada Międzynarodowa" }
+		101 = { "Batalion im. Jarosława Dąbrowskiego" }
+		102 = { "Batalion im. Adama Mickiewicza" }
+		103 = { "Batalion Palafox" }
+		104 = { "Kompania im. Naftalego Botwina" }
+		105 = { "Kompania im. Tarasa Szewczenki" }
+		106 = { "Kompania im. Ludwika Waryńskiego" }
+		# Plausible volunteer divisions
+		107 = { "Dywizja Dąbrowszczaków" }
+		108 = { "Dywizja Ochotnicza im. Jarosława Dąbrowskiego" }
+		109 = { "Dywizja Ochotnicza im. Ludwika Waryńskiego" }
+		110 = { "Dywizja Ochotnicza im. Adama Mickiewicza" }
+		111 = { "Dywizja Ochotnicza im. Karola Świerczewskiego" }
+		112 = { "Dywizja Ochotnicza im. Naftalego Botwina" }
+		113 = { "Dywizja Ochotnicza im. Tarasa Szewczenki" }
+		114 = { "Dywizja Ochotnicza im. Róży Luksemburg" }
+		115 = { "Dywizja Ochotnicza im. Juliana Marchlewskiego" }
+		116 = { "Brygada „Za Wolność Naszą i Waszą”" }
+	}
+}
+
+# Fortified areas, fortresses and city defence commands. Westerplatte is in POL_MAR_01.
+POL_FORT_01 = 
+{
+	name = "Fortress Garrisons"
+
+	for_countries = { POL }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%d Batalion Forteczny"
+
+	ordered =
+	{
+		# Coast
+		101 = { "Rejon Umocniony Hel" }
+		102 = { "Ośrodek Oporu Jastarnia" }
+		# Silesia (1939)
+		103 = { "Obszar Warowny „Śląsk”" }
+		104 = { "Odcinek „Mikołów”" }
+		112 = { "Grupa Bojowa „Wesoła”" }
+		113 = { "Grupa Bojowa „Brzeziny”" }
+		114 = { "Grupa Bojowa „Wirek”" }
+		# Narew and the eastern border
+		105 = { "Odcinek Umocniony Wizna" }
+		115 = { "Pododcinek „Giełczyn”" }
+		106 = { "Rejon Umocniony Sarny" }
+		107 = { "Batalion Forteczny KOP „Sarny”" }
+		# Cities
+		108 = { "Dowództwo Obrony Warszawy" }
+		109 = { "Twierdza Modlin" }
+		110 = { "Obrona Lwowa" }
+		111 = { "Orlęta Lwowskie" }
+		# Plausible fortress garrisons
+		116 = { "Twierdza Brześć" }
+		117 = { "Twierdza Przemyśl" }
+		118 = { "Twierdza Dęblin" }
+		119 = { "Twierdza Grudziądz" }
+		120 = { "Twierdza Osowiec" }
+		121 = { "Batalion Forteczny „Hel”" }
+		122 = { "Batalion Forteczny „Mława”" }
+	}
+}
+
+# Royal Guard for a restored Polish monarchy (vanilla focus POL_kings_guard); neutrality and fascist governments.
+POL_GUA_01 = 
+{
+	name = "Royal Guard Divisions"
+
+	for_countries = { POL }
+
+	can_use = { OR = { has_government = neutrality has_government = fascism } }
+
+	division_types = { "infantry" "cavalry" "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
+
+	fallback_name = "%d Dywizja Gwardii Królewskiej"
+
+	ordered =
+	{
+		# Royal guards of the Commonwealth
+		101 = { "Gwardia Piesza Koronna" }
+		102 = { "Regiment Gwardii Konnej Koronnej" }
+		103 = { "Oddział Gwardii Królewskiej" }
+		# Regiments with royal patrons (1919-1939)
+		104 = { "17 Pułk Ułanów Wielkopolskich im. Króla Bolesława Chrobrego" }
+		105 = { "20 Pułk Ułanów im. Króla Jana III Sobieskiego" }
+		106 = { "27 Pułk Ułanów im. Króla Stefana Batorego" }
+		107 = { "81 Pułk Strzelców Grodzieńskich im. Króla Stefana Batorego" }
+		108 = { "1 Pułk Pancerny im. Króla Bolesława Chrobrego" }
+		# Guard infantry
+		109 = { "Dywizja Gwardii Pieszej Koronnej" }
+		111 = { "Dywizja Grenadierów Gwardii" }
+		112 = { "Dywizja Piechoty Gwardii im. Króla Jana III Sobieskiego" }
+		113 = { "Dywizja Piechoty Gwardii im. Króla Bolesława Chrobrego" }
+		114 = { "Dywizja Piechoty Gwardii im. Króla Stefana Batorego" }
+		115 = { "Dywizja Piechoty Gwardii im. Króla Kazimierza Wielkiego" }
+		116 = { "Dywizja Piechoty Gwardii im. Króla Władysława Jagiełły" }
+		117 = { "Dywizja Piechoty Gwardii im. Królowej Jadwigi" }
+		# Guard cavalry
+		110 = { "Dywizja Gwardii Konnej Koronnej" }
+		118 = { "Dywizja Husarii im. Króla Jana III Sobieskiego" }
+		119 = { "Dywizja Kawalerii Gwardii im. Króla Zygmunta Augusta" }
+		120 = { "Dywizja Szwoleżerów Gwardii" }
+		# Guard armour
+		121 = { "Dywizja Pancerna Gwardii Królewskiej" }
+		122 = { "Dywizja Pancerna Gwardii im. Króla Władysława IV Wazy" }
+		123 = { "Pancerna Dywizja Husarska" }
+	}
+}
+
+# Greater Poland Uprising (1918-1919) and Silesian Uprisings (1919-1921); any government.
+POL_POW_01 = 
+{
+	name = "Uprising Regiments"
+
+	for_countries = { POL }
+
+	can_use = { always = yes }
+
+	division_types = { "militia" "infantry" }
+
+	fallback_name = "%d Pułk Powstańczy"
+
+	ordered =
+	{
+		# Greater Poland Uprising (1918-1919)
+		1 = { "1 Pułk Strzelców Wielkopolskich" }
+		2 = { "2 Pułk Strzelców Wielkopolskich" }
+		3 = { "3 Pułk Strzelców Wielkopolskich" }
+		101 = { "1 Dywizja Strzelców Wielkopolskich" }
+		102 = { "2 Dywizja Strzelców Wielkopolskich" }
+		103 = { "3 Dywizja Strzelców Wielkopolskich" }
+		104 = { "Armia Wielkopolska" }
+		105 = { "Front Wielkopolski" }
+		106 = { "Grupa „Leszno”" }
+		107 = { "Toruński Pułk Strzelców" }
+		108 = { "Kaszubski Pułk Strzelców" }
+		109 = { "I Brygada Jazdy Wielkopolskiej" }
+		# Third Silesian Uprising (1921)
+		110 = { "Grupa „Wschód”" }
+		111 = { "Grupa „Południe”" }
+		112 = { "Grupa „Północ”" }
+		113 = { "Grupa „Środek”" }
+		114 = { "Samodzielny Oddział Szturmowy" }
+		115 = { "Grupa Destrukcyjna Wawelberga" }
+		116 = { "Polska Organizacja Wojskowa Górnego Śląska" }
+		# Uprising regiments by district
+		117 = { "Katowicki Pułk Powstańców" }
+		118 = { "Zabrski Pułk Powstańców" }
+		119 = { "Rybnicki Pułk Powstańców" }
+		120 = { "Tarnogórski Pułk Powstańców" }
+		121 = { "Pszczyński Pułk Powstańców" }
+		# Polish Military Organisation (1914-1918)
+		122 = { "Polska Organizacja Wojskowa" }
 	}
 }

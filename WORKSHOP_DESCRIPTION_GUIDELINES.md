@@ -70,7 +70,7 @@ This document serves as an instruction and reference guide for maintaining and u
 | `zz_INEX_FRA_names_divisions.txt` | France | `FRA` | Included (1940 order of battle, Nicknames, National Guard, Metropolitan, Milice, FTP, Armistice Army) |
 | `zz_INEX_ENG_names_divisions.txt` | United Kingdom | `ENG` | Included (Regular & Territorial Army, Armoured divisions & tank brigades, Household Division, Airborne, Commandos, Anti-Aircraft Command, County Garrisons, Colonial KAR/RWAFF, Home Guard, Blackshirt & Workers' defense suites) |
 | `zz_INEX_FIN_names_divisions.txt` | Finland | `FIN` | Included (Wartime divisions & JR 1–70 regiments, Prikaati brigades, Separate battalions (ErP), Light detachments (KevOs), Suojeluskunta, Ryhmä groups, Frontier & Coastal brigades, Blackshirt legions, Heimojoukot, Red Guards, People's Army, Royal Guards, Penal battalions, Swedish Volunteers SFK) |
-| `zz_INEX_POL_names_divisions.txt` | Poland | `POL` | Included (1939 divisions with regional titles, Maczek's armor, KOP Border Guards, Obrona Narodowa, Armia Krajowa, PSZ exile corps, Communist LWP & GL, Nationalist NSZ) |
+| `zz_INEX_POL_names_divisions.txt` | Poland | `POL` | Included (1939 divisions with regional titles, Maczek's armor, KOP Border Guards, Obrona Narodowa, Armia Krajowa, PSZ exile corps, Communist LWP, Nationalist NSZ, Royal Guard, volunteer corps, fortresses, uprisings) |
 | `zz_INEX_ITA_names_divisions.txt` | Italy | `ITA` | Included (Historical numbering, Blackshirts & specialist militias, RSI, Black Brigades, Royal Army, Republican volunteers, Red Guards, Party-gated Partisans, Bersaglieri, Carabinieri, Guardia di Finanza, Frontier Guard, Colonial divisions & battalions, Fiume & Albanian irredentists, Legione Romana) |
 | `zz_INEX_SOV_names_divisions.txt` | USSR | `SOV` | Included (Rifle & Guards honors on historical numbers, National divisions, Fortified regions, Guards Tank & Mech Corps, Airborne, Naval brigades, Breakthrough Artillery, Opolcheniye, Cossacks, NKVD, Penal units, Partisans, Imperial Guard, Whites, Republican shock units) |
 | `zz_INEX_MEX_names_divisions.txt` | Mexico | `MEX` | Included (Cristero, Imperial Guard, Sinarquistas, Gold Shirts, CTM & Agrarian Militias, Anáhuac, Regular Army) |
@@ -164,8 +164,8 @@ This is not a complete list of included namelists! Just some examples.
 
 [b]Poland[/b]
 - Regular forces on 1939 numbers with historical regional & honorary titles ([i]1 Dywizja Piechoty Legionów Józefa Piłsudskiego[/i], [i]1 Dywizja Pancerna[/i], [i]21 Dywizja Piechoty Górskiej[/i], [i]1 Samodzielna Brygada Spadochronowa[/i])
-- Second Republic territorial defence, border protection, and cavalry brigades ([i]Krakowska Brygada Kawalerii[/i], [i]Brygada KOP 'Grodno'[/i], [i]Warszawska Brygada Obrony Narodowej[/i])
-- Resistance, exile & ideological suites: Armia Krajowa ([i]27 Wołyńska Dywizja Piechoty AK[/i]), PSZ in the West ([i]3 Dywizja Strzelców Karpackich[/i]), Communist LWP & GL ([i]1 Warszawska Dywizja Piechoty im. T. Kościuszki[/i]), and Nationalist NSZ ([i]Brygada Świętokrzyska[/i])
+- Second Republic territorial defence, fortresses, border protection, cavalry and uprising regiments ([i]Krakowska Brygada Kawalerii[/i], [i]Brygada KOP 'Grodno'[/i], [i]Rejon Umocniony Hel[/i], [i]1 Pułk Strzelców Wielkopolskich[/i])
+- Resistance, exile & ideological suites: Armia Krajowa ([i]27 Wołyńska Dywizja Piechoty AK[/i]), PSZ in the West ([i]3 Dywizja Strzelców Karpackich[/i]), Communist LWP ([i]1 Warszawska Dywizja Piechoty im. T. Kościuszki[/i]), Nationalist NSZ ([i]Brygada Świętokrzyska[/i]), a monarchist Royal Guard ([i]Gwardia Piesza Koronna[/i]) and volunteer corps from the Legions to the Dąbrowszczacy
 
 [b]Italy[/b]
 - Regio Esercito divisions on their real numbers, shared across infantry, motorized and armored lists ([i]9a Divisione 'Pasubio'[/i], [i]132a Divisione Corazzata 'Ariete'[/i])
