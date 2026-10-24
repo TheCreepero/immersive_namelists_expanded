@@ -244,7 +244,7 @@ Under the vanilla file names, so each replaces the vanilla file. A name list mod
 ## What INEX does with this
 
 - **File names**: `common/units/names_divisions/zz_INEX_<TAG>_names_divisions.txt`. The `zz_` prefix is there for the load order, so that an INEX file comes after the vanilla file of its nation and after another mod's copy of it.
-- **Vanilla tags**: a group on a vanilla tag is written out in full, since it replaces the vanilla group whole. A vanilla tag is redefined only to change it.
+- **Vanilla tags**: a group on a vanilla tag is merged into the vanilla group, not put in its place [NAM-020]: the numbers it writes show its text, the numbers it leaves out keep vanilla's. A vanilla tag is redefined only to change it, and a vanilla name that should not show is replaced under its number.
 - **New tags**: `<TAG>_<CATEGORY>_<NUMBER>`, unique across the mod.
 - **Conditions**: a group is gated by government (`can_use = { has_government = fascism }`), never by a focus, a decision or a flag. A focus lock breaks with mods that replace focus trees.
 - **Ordered blocks**: unique integer keys, and no empty `ordered = { }` block. The second is a rule of this mod.

@@ -12,14 +12,14 @@ description: >-
 
 Plans how one existing `zz_INEX_<KEY>_names_divisions.txt` file is brought up to current project standards without breaking players' saved templates.
 
-Entries that meet the standard stay untouched; only reported gaps are fixed. The project rules are in `CLAUDE.md` (Antigravity: `GEMINI.md`) §2-6 and are not repeated here. The script does the mechanical checking; keep your context for judgment.
+Entries that meet the standard stay untouched; only reported gaps are fixed. The project rules are in `AGENTS.md` and, in long form, `docs/inex-agent-guide.md` (the guide) §2-6; they are not repeated here. The script does the mechanical checking; keep your context for judgment.
 
 `<KEY>` is the part of the filename between `zz_INEX_` and `_names_divisions` (e.g. `LIT`, `GER_SS`, `GER_ADDITIONAL`). Audit **one file per run**.
 
 > A plan whose `Status:` is `READY` or `IN PROGRESS` is past this skill: use `hoi4-inex-namelist-implement` and do not repeat any phase below.
 
 ## The contract
-This skill produces one file, `docs/superpowers/plans/YYYY-MM-DD-<country>-audit.md`, and stops. The plan is carried out by the `inex-implementer` subagent, a cheap model in a fresh context, so it must be complete with nothing else: no conversation, no research, no naming decisions.
+This skill produces one file, `docs/plans/YYYY-MM-DD-<country>-audit.md`, and stops. The plan is carried out by the `inex-implementer` subagent, a cheap model in a fresh context, so it must be complete with nothing else: no conversation, no research, no naming decisions.
 
 - **Every edit is written here.** The plan's `## Edit batch` holds all changes as `build.ps1` operations. The implementer applies it with one command and never types a name.
 - **Every decision is final** and recorded, including what the user dropped at the checkpoint.
@@ -50,7 +50,7 @@ This skill produces one file, `docs/superpowers/plans/YYYY-MM-DD-<country>-audit
 3. **Keep file-level conventions:** `for_countries`, the German three-file split, and any group referenced by vanilla scripts (see `-InspectVanilla`).
 4. **Nothing reaches the plan's batch without approval.** The audit report is a checkpoint; the batch holds only the items the user approves.
 5. **Commit and wiki push are outward-facing.** The plan lists them as its last step, the ship step, which runs only on the user's word.
-6. **A group is merged into the vanilla group of the same tag** (`CLAUDE.md` §6, [NAM-020]). `"removeAll"` and `"clearOrdered"` delete names from the INEX file only: a vanilla entry under the same number stays in the game. Every vanilla entry the group does not rewrite stays in the game beside INEX's names; `-Audit` lists those per group. Replacing a vanilla name means writing another name under its number.
+6. **A group is merged into the vanilla group of the same tag** (guide §6, [NAM-020]). `"removeAll"` and `"clearOrdered"` delete names from the INEX file only: a vanilla entry under the same number stays in the game. Every vanilla entry the group does not rewrite stays in the game beside INEX's names; `-Audit` lists those per group. Replacing a vanilla name means writing another name under its number.
 7. **Never retain focus-locked namelists (`has_completed_focus`).** Namelists must never be locked behind national focuses. Convert any legacy focus locks to pure government type checks (`has_government = <ideology>`), war state triggers (`has_war = yes`), or country tags to maximize compatibility with mods like *Road to 56* and overhaul focus trees.
 
 ---
@@ -71,8 +71,8 @@ A modernized file meets all of these (reference implementation: `zz_INEX_PER_nam
 | R8 | No dead commented self-links, TODO notes, "barely any info" or leftover "fictional divisions start here" comments. | `DEAD_SELF_LINK_COMMENT`, `TODO_COMMENT`, `STALE_COMMENT` |
 | R9 | Wiki page, README row, and workshop cross-reference/BBCode describe the file as it now is. The nation's `[b]<Country>[/b]` block has 2-3 bullets and at least two `[i]` examples; the description has no emojis and stays under 17,000 characters. | `Docs:` warnings in `-Audit` and `-Check` for the workshop block; prose is manual |
 | R10 | Nicknamed infantry, motorized, mechanized, and armor lists keep a plain (un-nicknamed) variant: the existing/vanilla tag becomes the plain group, and the nicknames move to a new `"<Selector> (Named)"` tag that shares its numbering through `link_numbering_with = { <plain tag> }` (authoring skill §3). The plain group writes no names, or repeats vanilla's numbered entries where the keys are historical numbers with gaps; vanilla's entries stay in the game either way (non-negotiable 6), so a vanilla entry whose text differs from the plain fallback is written again with the plain text. Not needed if vanilla already nicknames those divisions (e.g. USA). | (manual; `-Audit` shows `Variant: plain` and exempts it from R4/R5; without the link it cannot pair the two) |
-| R12 | Every vanilla name that a reused tag does not rewrite is meant to stay: it shows in the game under its number. One that should not show is replaced with another name under that number. | (manual; `Vanilla: leaves out ...` lines in `-Audit`) |
 | R11 | Ideology-gated groups use `has_government` and never lock behind national focuses (`has_completed_focus`), decisions, or event flags. Political names do not sit in a group every government may use. | `FOCUS_LOCKED`, `UNGATED_POLITICAL`, `POLITICAL_ENTRY` |
+| R12 | Every vanilla name that a reused tag does not rewrite is meant to stay: it shows in the game under its number. One that should not show is replaced with another name under that number. | (manual; `Vanilla: leaves out ...` lines in `-Audit`) |
 
 More informational lints:
 - `DUPLICATE_NAME`: the same literal name twice in one group; `-Audit` lists the names. Remove one by index (`-NamesOnly -Keys` shows the keys).
@@ -106,7 +106,7 @@ Phase 5  Hand-off                  report and STOP
 ### Phase 0: Triage & Audit Plan
 1. If the user has not named a file, run `powershell -File .\build.ps1 -Audit ALL` and suggest the top candidates.
 2. `powershell -File .\build.ps1 -Audit <KEY>`: per-group metrics and rubric flags.
-3. `powershell -File .\build.ps1 -AuditPlan <KEY>`: creates the plan skeleton (`docs/superpowers/plans/YYYY-MM-DD-<country>-audit.md`) with `Status: PLANNING`, the initial report, TODO sections, the standard implementation steps and an empty change table.
+3. `powershell -File .\build.ps1 -AuditPlan <KEY>`: creates the plan skeleton (`docs/plans/YYYY-MM-DD-<country>-audit.md`) with `Status: PLANNING`, the initial report, TODO sections, the standard implementation steps and an empty change table.
 4. Only for a fallback finding or a `Vanilla: leaves out` line: `powershell -File .\build.ps1 -InspectVanilla <TAG> -Group <GROUP>` (the vanilla group's entries and scripted `division_names_group` references; skip if HOI4 is not installed and note it in the report).
 5. Read flagged groups with `powershell -File .\build.ps1 -Audit <KEY> -Group <GROUP> -NamesOnly -Sections`. Never dump the full file.
 6. Check for linguistic problems the lint cannot see: wrong case, missing diacritics, machine-translated words, copy-paste selectors.
@@ -130,7 +130,7 @@ Scorecard: <groups> groups, <authored>/<ordered> authored entries, <n> lint flag
 
 ### Critical  (broken language, wrong names, invariant risks)
 - [TAG] problem -> proposed fix
-### Important (rubric R1-R9 violations)
+### Important (rubric R1-R12 violations)
 - [TAG] problem -> proposed fix
 ### Minor (cosmetic, comments, formatting)
 - ...
@@ -151,7 +151,7 @@ Only what the user approved goes in.
 4. **Kept on judgment**: every flag `-Check` will still show after the batch, with its reason, so the implementer can tell an expected flag from a new one.
 
 ### Phase 4: Gate
-1. **Proofread** before hand-off, so the implementer never has to judge a name. When the batch adds 25 or more authored names in a language other than English, or the user asks, dispatch `inex-code-reviewer` (`.claude/agents/inex-code-reviewer.md`; the brief sets its model and budget) with the added and changed names per group pasted from the batch (numbered fallback patterns can be left out), the language they are written in, and the "Author confirmation" list. It has web tools only, and answers with problems only (`GROUP: entry -> issue -> suggested fix -> source`) or `No issues found`. Apply what it found to the batch and record the findings and what you did with each under `Review`. Do not dispatch it a second time for a data-only fix. Otherwise run the self-check and write "Self-check" with its result under `Review`:
+1. **Proofread** before hand-off, so the implementer never has to judge a name. When the batch adds 25 or more authored names in a language other than English, or the user asks, dispatch `inex-proofreader` (`.claude/agents/inex-proofreader.md`; the brief sets its model and budget) with the added and changed names per group pasted from the batch (numbered fallback patterns can be left out), the language they are written in, and the "Author confirmation" list. It has web tools only, and answers with problems only (`GROUP: entry -> issue -> suggested fix -> source`) or `No issues found`. Apply what it found to the batch and record the findings and what you did with each under `Review`. Do not dispatch it a second time for a data-only fix. Otherwise run the self-check and write "Self-check" with its result under `Review`:
    - every added name is in "Verified formations & commanders" or "Author confirmation";
    - every extrapolated name (a plausible formation the army never fielded) is named as such in the Rationale.
 2. Set `Status: READY`, then run `powershell -File .\build.ps1 -EditNames <TAG> -Batch <plan path> -DryRun`. It applies the batch in memory and writes nothing. It must end with `Dry run OK` and print no `[WARN] Plan:` line (a planner `<!-- TODO:` section left unfilled, or the status). Fix the plan and repeat until it does.

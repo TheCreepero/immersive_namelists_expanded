@@ -1,7 +1,7 @@
 ---
 name: hoi4-inex-namelist-implement
 description: >-
-  Use when carrying out a finished Immersive Namelists Expanded (INEX) plan file from docs/superpowers/plans
+  Use when carrying out a finished Immersive Namelists Expanded (INEX) plan file from docs/plans
   (Status READY or IN PROGRESS): "implement", "apply", "continue" or "ship" a namelist or audit plan, or a plan
   path given as the argument. Dispatches the inex-implementer subagent, verifies its result and ships on the
   user's word. Does no research and makes no naming decisions; for those use hoi4-inex-namelist-authoring or
@@ -16,18 +16,18 @@ Carries out one plan file written by `hoi4-inex-namelist-authoring` or `hoi4-ine
 - **The plan is the only source.** This skill decides nothing and composes nothing: no new names, no respellings, no regrouping, no rewording of docs text, no research. A plan that looks wrong or incomplete goes back to its planner (§4).
 - **The namelist file changes only through the `build.ps1` commands the plan gives**, run by the implementer.
 - **Read the plan only up to `## Edit batch`.** The batch is applied by the script from the file.
-- `build.ps1`, tests, skill files, `CLAUDE.md` and `GEMINI.md` are not edited.
+- `build.ps1`, the tests, the skill files, `AGENTS.md`, `CLAUDE.md`, `GEMINI.md` and `docs/inex-agent-guide.md` are not edited.
 - Commit and wiki push are outward-facing: they run only in §5, on the user's word.
 
 ## 1. Find the plan
-1. Take the plan path from the request. With no path, `Grep -n '^Status:'` across `docs/superpowers/plans/` for `READY` or `IN PROGRESS`; with more than one or none, ask the user which plan to run.
+1. Take the plan path from the request. With no path, `Grep -n '^Status:'` across `docs/plans/` for `READY` or `IN PROGRESS`; with more than one or none, ask the user which plan to run.
 2. Act on its `Status:` line:
    - `PLANNING`: stop. Tell the user the plan is unfinished and belongs back with the planning skill.
    - `READY` or `IN PROGRESS`: continue with §2. The implementer starts at the first unticked step.
    - `DONE`: skip to §3. Only the ship step may remain.
 
 ## 2. Dispatch the implementer
-Dispatch `inex-implementer` (`.claude/agents/inex-implementer.md`; the brief sets its model and holds the whole runbook). The prompt is the plan path and nothing else: `Carry out docs/superpowers/plans/<file>.md`. One plan per dispatch. Wait for its report.
+Dispatch `inex-implementer` (`.claude/agents/inex-implementer.md`; the brief sets its model and holds the whole runbook). The prompt is the plan path and nothing else: `Carry out docs/plans/<file>.md`. One plan per dispatch. Wait for its report.
 
 Antigravity: pass the brief's path to `invoke_subagent`. Where no subagent can be dispatched, read the brief and follow it yourself.
 
@@ -48,7 +48,8 @@ Report to the user: the `-Check` summary, the files changed, any deviation the i
 
 On the user's word, one confirmation covers the plan's whole ship step:
 1. Tick the ship box in the plan, so the commit carries the finished plan.
-2. Commit the files from §3.3 with the commit message the ship step gives.
-3. Run the ship step's wiki push command. If it fails, report the output; the commit stands.
+2. `git mv docs/plans/<plan>.md docs/plans/archive/`: finished plans live in the archive, and `docs/plans/` holds only the template and the plans in progress.
+3. Commit the files from §3.3, with the plan at its archived path, with the commit message the ship step gives.
+4. Run the ship step's wiki push command. If it fails, report the output; the commit stands.
 
 Publishing to the Steam Workshop is a separate decision: `hoi4-inex-release`.

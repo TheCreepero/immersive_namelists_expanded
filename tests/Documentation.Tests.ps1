@@ -142,7 +142,7 @@ Describe "Agent Rule Files: AGENTS.md, CLAUDE.md and GEMINI.md" {
 
 Describe "Subagent Config & Budgeting" {
     It "Subagent briefs exist in .claude/agents" {
-        $requiredAgents = @('inex-audit-researcher.md', 'inex-historical-researcher.md', 'inex-code-reviewer.md', 'inex-implementer.md')
+        $requiredAgents = @('inex-audit-researcher.md', 'inex-historical-researcher.md', 'inex-proofreader.md', 'inex-implementer.md')
         foreach ($agent in $requiredAgents) {
             $path = Join-Path $script:RepoRoot ".claude\agents\$agent"
             (Test-Path $path) | Should -BeTrue -Because "subagent brief '$agent' must exist in .claude/agents/"
@@ -162,8 +162,7 @@ Describe "Subagent Config & Budgeting" {
     }
 
     It "Proofreader stays narrow (web-only tools, turn cap, no project rules, small call budget, problems-only output)" {
-        # inex-code-reviewer.md keeps its file name, but is a proofreader of pasted names: mechanical checks are lints
-        $text = [System.IO.File]::ReadAllText((Join-Path $script:RepoRoot '.claude\agents\inex-code-reviewer.md'), [System.Text.Encoding]::UTF8)
+        $text = [System.IO.File]::ReadAllText((Join-Path $script:RepoRoot '.claude\agents\inex-proofreader.md'), [System.Text.Encoding]::UTF8)
         $front = [regex]::Match($text, '(?s)^---\r?\n(.*?)\r?\n---').Groups[1].Value
         $front | Should -Match '(?m)^effort:\s*(low|medium)\s*$'
         $turns = [regex]::Match($front, '(?m)^maxTurns:\s*(\d+)\s*$')
@@ -189,7 +188,7 @@ Describe "Subagent Config & Budgeting" {
         $front | Should -Match '(?m)^omitClaudeMd:\s*true\s*$' -Because "the brief carries everything the implementer needs"
         $tools = [regex]::Match($front, '(?m)^tools:\s*(.+)$').Groups[1].Value
         $tools | Should -Not -Match '\b(WebSearch|WebFetch|Agent|Task)\b' -Because "the implementer neither researches nor delegates"
-        $text | Should -Not -Match 'inex-(historical|audit)-researcher|inex-code-reviewer|-InspectVanilla' -Because "a cheap model follows what it reads; research must not be on the page"
+        $text | Should -Not -Match 'inex-(historical|audit)-researcher|inex-proofreader|-InspectVanilla' -Because "a cheap model follows what it reads; research must not be on the page"
         $text | Should -Match '## Edit batch'
         $text | Should -Match 'IN PROGRESS'
         $text | Should -Match 'RESULT: DONE \| STOPPED' -Because "the dispatching session verifies a fixed report form"
@@ -272,7 +271,7 @@ Describe "Plan hand-off: planning skills stop, the implement skill only executes
     }
 
     It "Authoring template and audit skeleton share the hand-off sections" {
-        $template = [System.IO.File]::ReadAllText((Join-Path $script:RepoRoot 'docs\superpowers\plans\TEMPLATE-namelist.md'), [System.Text.Encoding]::UTF8)
+        $template = [System.IO.File]::ReadAllText((Join-Path $script:RepoRoot 'docs\plans\TEMPLATE-namelist.md'), [System.Text.Encoding]::UTF8)
         $build = [System.IO.File]::ReadAllText((Join-Path $script:RepoRoot 'build.ps1'), [System.Text.Encoding]::UTF8)
         $template | Should -Match '(?m)^Status: PLANNING\r?$'
         foreach ($h in 'For the implementer', 'Author confirmation', 'Kept on judgment', 'Implementation steps', 'Docs payload', 'Stop conditions', 'Review', 'Outcome', 'Edit batch') {
@@ -282,5 +281,45 @@ Describe "Plan hand-off: planning skills stop, the implement skill only executes
         $headings = @([regex]::Matches($template, '(?m)^## (.+?)\r?$') | ForEach-Object { $_.Groups[1].Value })
         $headings[-1] | Should -Be 'Edit batch' -Because "the implementer reads the plan only up to this heading"
         $template | Should -Match '(?m)^```json batch\r?$'
+    }
+}
+
+Describe "Docs point at the current rule files, plan folder and engine rule" {
+    BeforeAll {
+        $script:AgentDocs = @(
+            @(Get-ChildItem -Path (Join-Path $script:RepoRoot '.claude\skills') -Filter 'SKILL.md' -Recurse) +
+            @(Get-ChildItem -Path (Join-Path $script:RepoRoot '.claude\agents') -Filter '*.md') +
+            @('AGENTS.md', 'README.md', 'docs\inex-agent-guide.md', 'docs\tooling-backlog.md', 'docs\plans\TEMPLATE-namelist.md', 'wiki\Contributing.md', 'wiki\Engine-Mechanics.md', 'build.ps1' | ForEach-Object { Get-Item (Join-Path $script:RepoRoot $_) })
+        )
+    }
+
+    It "No agent-facing doc cites a section of CLAUDE.md or GEMINI.md: the sections live in docs/inex-agent-guide.md" {
+        foreach ($doc in $script:AgentDocs) {
+            $text = [System.IO.File]::ReadAllText($doc.FullName, [System.Text.Encoding]::UTF8)
+            $text | Should -Not -Match 'CLAUDE\.md\s*(\u00A7|Rule)|GEMINI\.md\s*(\u00A7|Rule)|CLAUDE\.md / GEMINI\.md|CLAUDE\.md imports GEMINI\.md' -Because "$($doc.Name) must point at AGENTS.md or the guide"
+        }
+    }
+
+    It "No doc names the old plan folder docs/superpowers/plans" {
+        foreach ($doc in $script:AgentDocs) {
+            $text = [System.IO.File]::ReadAllText($doc.FullName, [System.Text.Encoding]::UTF8)
+            $text | Should -Not -Match 'docs[/\\]superpowers' -Because "$($doc.Name): plans live under docs/plans, finished ones under docs/plans/archive"
+        }
+        (Test-Path (Join-Path $script:RepoRoot 'docs\plans\archive')) | Should -BeTrue
+        (Test-Path (Join-Path $script:RepoRoot 'docs\superpowers')) | Should -BeFalse
+    }
+
+    It "No doc says a reused tag replaces the vanilla group whole (disproved: the group is merged, NAM-020)" {
+        foreach ($doc in $script:AgentDocs) {
+            $text = [System.IO.File]::ReadAllText($doc.FullName, [System.Text.Encoding]::UTF8)
+            $text | Should -Not -Match 'replaces the vanilla group whole' -Because "$($doc.Name) must describe the merge of NAM-020"
+        }
+    }
+
+    It "The proofreader brief is dispatched under its current name everywhere" {
+        foreach ($doc in $script:AgentDocs) {
+            $text = [System.IO.File]::ReadAllText($doc.FullName, [System.Text.Encoding]::UTF8)
+            $text | Should -Not -Match 'inex-code-reviewer' -Because "$($doc.Name) must name inex-proofreader"
+        }
     }
 }

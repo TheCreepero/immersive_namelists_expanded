@@ -4,7 +4,7 @@
 *.tar.gz
 artifacts/
 scratch/
-Files/
+tests/test-results.xml
 
 # Launcher and Workshop files
 *.mod

@@ -37,7 +37,7 @@ This document serves as an instruction and reference guide for maintaining and u
 ## Structure of the Description
 
 1. **Header / Introduction**:
-   - Short introductory pitch mentioning GPT-4 assistance for research/translations.
+   - Short introductory pitch mentioning that AI helped with research and translations.
    - Call to action pointing to the discussion thread for ideas/feedback.
    - *(Note: Author quote block omitted to conserve character limit).*
 2. **[h1]Info:[/h1]**:

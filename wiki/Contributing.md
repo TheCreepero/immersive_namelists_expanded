@@ -58,7 +58,7 @@ Only define a group in INEX if you are actively authoring custom names for it. O
 
 ### Step 3 — Write the Namelist
 
-Follow the standard syntax (see [Engine Mechanics](Engine-Mechanics) for the full reference):
+A namelist file changes only through the build script, never by hand. `build.ps1 -EditNames <TAG> -AddGroup -Group <TAG>_<CAT>_<NN> -Selector "..." -AddType infantry -Fallback "%d. ..."` creates a group, `-EditNames <TAG> -Group <GROUP> -Add "1=..."` adds names, and `-EditNames <TAG> -Batch <file.json>` applies many operations at once (`-DryRun` previews them); `Get-Help .\build.ps1 -Parameter EditNames` lists every switch. The script writes each group in the layout below (see [Engine Mechanics](Engine-Mechanics) for what each key does):
 
 ```
 TAG_CATEGORY_NUM = 
@@ -77,8 +77,6 @@ TAG_CATEGORY_NUM =
     {
         1  = { "First Specific Name" }
         2  = { "Second Specific Name" }
-        ...
-        26 = { "%d. Unit Name" }
     }
 }
 ```
@@ -95,9 +93,10 @@ TAG_CATEGORY_NUM =
 
 ```powershell
 powershell -File .\build.ps1 -ValidateOnly
+powershell -File .\build.ps1 -Check <TAG>
 ```
 
-The validator checks:
+`-Check` runs the validator, the tests, the quality audit and a name diff in one pass and must end with `Check passed`. The validator checks:
 - Bracket balance `{}`
 - Quote balance
 - Duplicate `ordered` keys within each group
@@ -110,9 +109,9 @@ Fix all reported errors before proceeding.
 
 Whenever a nation is added or significantly expanded, update:
 
-1. **`README.md`** — add the country tag, name, and source file to the **Included Nations Summary** table
+1. **`README.md`**, **`wiki/Home.md`** and **`wiki/_Sidebar.md`** — `build.ps1 -SyncWiki <TAG> -Country "<Name>"` adds a new nation's rows and sidebar line and keeps the wiki page's group rows current
 2. **`WORKSHOP_DESCRIPTION_GUIDELINES.md`** — add the nation under `[h1]Included nations:[/h1]` (2–3 concise bullets) and update the cross-reference table
-3. **This wiki** — add or update the nation's wiki page
+3. **This wiki** — add or update the nation's page (`wiki/<Name>.md`); `-SyncWiki` fills its group table from the file
 
 ---
 
@@ -141,10 +140,11 @@ powershell -File .\build.ps1 -InspectVanilla <TAG> -Group <GROUP_TAG>
 powershell -File .\build.ps1 -Audit ALL
 powershell -File .\build.ps1 -Audit <KEY>
 
-# Publish to Steam Workshop via SteamCMD
-powershell -File .\build.ps1 -PublishSteam -DryRun
-powershell -File .\build.ps1 -PublishSteam -ChangeNote "Add new division namelists"
+# One pass before a change is complete: validation, tests, audit summary, name diff
+powershell -File .\build.ps1 -Check <TAG>
 ```
+
+Publishing to the Steam Workshop is done by the maintainer.
 
 ---
 
@@ -152,7 +152,7 @@ powershell -File .\build.ps1 -PublishSteam -ChangeNote "Add new division namelis
 
 ### Language & Diacritics
 - Always use the **target language** for unit names, not English translations.
-- Preserve all native diacritics (ä, ö, ü, ą, ę, ū, ā, č, š, ž, ő, ő, etc.). Test that your editor saves in UTF-8 without BOM.
+- Preserve all native diacritics (ä, ö, ü, ą, ę, ū, ā, č, š, ž, ő, etc.). Test that your editor saves in UTF-8 without BOM.
 - Use the correct grammatical case — typically **nominative** for unit names, not genitive/partitive (a common vanilla error).
 
 ### Ordinal Format

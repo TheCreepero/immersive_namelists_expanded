@@ -16,7 +16,7 @@ The knowledge audit row must also show an empty sweep queue: a WARN for doc file
 
 ## 2. In-game check (replaces shared step 2)
 1. `powershell -File .\build.ps1` deploys the mod to the launcher's mod directory.
-2. Ask the user to start the game with INEX enabled and go as far as the main menu (namelists are read at load). For each nation changed since the last release, ask them to load it, open a division template, and open its name list. Wait for their answer.
+2. Ask the user to start the game with INEX enabled and go as far as the main menu. For each nation changed since the last release, ask them to load it, open a division template, and open its name list. Wait for their answer.
 3. `powershell -File .\build.ps1 -GameLog` prints `0 line(s) name INEX files` and no `[WARN]`.
    - A listed line is a defect in a namelist file: stop the release and report the lines. The fix goes through `-EditNames`, then this skill starts again.
    - `[WARN] The log is older than ...` means the game ran before the last change: repeat from 1.
@@ -26,4 +26,4 @@ The knowledge audit row must also show an empty sweep queue: a WARN for doc file
 The note names the nations and what was done (`Audit the German namelists; add Romania`).
 
 ## 4. Workshop description (extends shared step 4)
-When `WORKSHOP_DESCRIPTION_GUIDELINES.md` changed since the last tag, either add `-UpdateDescription` to the upload, or print the guide's `bbcode` block for the user to paste into the Workshop page (`CLAUDE.md` §4.5; Antigravity: `GEMINI.md`). Ask the user which.
+When `WORKSHOP_DESCRIPTION_GUIDELINES.md` changed since the last tag, either add `-UpdateDescription` to the upload, or print the guide's `bbcode` block for the user to paste into the Workshop page (`docs/inex-agent-guide.md` §4, item 5). Ask the user which.

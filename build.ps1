@@ -168,7 +168,7 @@
     With -DiffNames, -AuditPlan or -Check: git revision to compare the working-tree file against (default HEAD).
 
 .PARAMETER AuditPlan
-    Create docs/superpowers/plans/<today>-<country>-audit.md (e.g. -AuditPlan LAT): the initial -Audit report, TODO
+    Create docs/plans/<today>-<country>-audit.md (e.g. -AuditPlan LAT): the initial -Audit report, TODO
     sections to fill, and a per-group change table generated from -DiffNames between markers. Run again to refresh
     the table (today's plan, or the one with uncommitted changes); the rest of the plan is left untouched.
     -Audit reports unfilled TODOs as PlanTodo.
@@ -184,7 +184,7 @@
 
 .PARAMETER SyncMirrors
     Copy the Claude Code skills over their Antigravity mirrors: every SKILL.md under the .claude/skills folder to the
-    same path under .agents/skills. Edit the Claude side, then run this. CLAUDE.md imports GEMINI.md and is not mirrored.
+    same path under .agents/skills. Edit the Claude side, then run this (the PostToolUse hook runs it after an edit under .claude/skills). CLAUDE.md and GEMINI.md are @AGENTS.md and are not mirrored.
 
 .PARAMETER GameLog
     Scan the game's error.log for lines that name this mod's files (e.g. lexer errors in a namelist). Run it after
@@ -513,7 +513,7 @@ function Invoke-Validation {
     foreach ($file in $namelistFiles) {
         $fileHasError = $false
 
-        # Check UTF-8 BOM (GEMINI.md Rule 1: UTF-8 without BOM)
+        # Check UTF-8 BOM (Manager AGENTS.md: UTF-8 without BOM [ENC-001])
         $bytes = [System.IO.File]::ReadAllBytes($file.FullName)
         if ($bytes.Length -ge 3 -and $bytes[0] -eq 0xEF -and $bytes[1] -eq 0xBB -and $bytes[2] -eq 0xBF) {
             Write-Err "$($file.Name): UTF-8 BOM detected! Files must be saved as UTF-8 without BOM."
@@ -2456,7 +2456,7 @@ function New-AuditPlanText {
 # --- Helper: The audit plan a refresh targets: today's, else the one with uncommitted changes (an audit that ran past midnight) ---
 function Get-ActiveAuditPlanPath {
     param([string]$Slug)
-    $plansDir = Join-Path $RepoDir 'docs\superpowers\plans'
+    $plansDir = Join-Path $RepoDir 'docs\plans'
     $today = Join-Path $plansDir "$((Get-Date).ToString('yyyy-MM-dd'))-$Slug-audit.md"
     if (Test-Path $today) { return $today }
     # Under 'Stop', PowerShell 5.1 turns native stderr into a terminating error (see Get-GitFileText)
@@ -2464,7 +2464,7 @@ function Get-ActiveAuditPlanPath {
     $ErrorActionPreference = 'Continue'
     $dirty = @()
     try {
-        $dirty = @(& git -C $RepoDir status --porcelain -uall -- 'docs/superpowers/plans' 2>$null | ForEach-Object {
+        $dirty = @(& git -C $RepoDir status --porcelain -uall -- 'docs/plans' 2>$null | ForEach-Object {
             if ("$_" -match "(\d{4}-\d{2}-\d{2}-$([regex]::Escape($Slug))-audit\.md)") { $matches[1] }
         })
     } catch {
@@ -2491,7 +2491,7 @@ function Invoke-AuditPlan {
     $table = Format-PlanChangeTable -Diff $result.Diff -Tag $Tag
     $changedCount = @($result.Diff | Where-Object { $_.Status -ne 'unchanged' }).Count
 
-    $plansDir = Join-Path $RepoDir 'docs\superpowers\plans'
+    $plansDir = Join-Path $RepoDir 'docs\plans'
     $date = (Get-Date).ToString('yyyy-MM-dd')
     $slug = $country.ToLower() -replace ' ', '-'
     $path = Get-ActiveAuditPlanPath -Slug $slug
@@ -2500,7 +2500,7 @@ function Invoke-AuditPlan {
         $path = Join-Path $plansDir "$date-$slug-audit.md"
     }
     if (-not (Test-Path $plansDir)) { New-Item -ItemType Directory -Force $plansDir | Out-Null }
-    $rel = "docs/superpowers/plans/$(Split-Path $path -Leaf)"
+    $rel = "docs/plans/$(Split-Path $path -Leaf)"
     $utf8 = New-Object System.Text.UTF8Encoding $false
 
     if (Test-Path $path) {
@@ -3088,7 +3088,7 @@ function Invoke-NamelistAudit {
     $countryName = Get-CountryName -Tag $Key
     if ($countryName) {
         $slug = $countryName.ToLower() -replace ' ', '-'
-        $planFile = Get-ChildItem -Path (Join-Path $RepoDir 'docs\superpowers\plans') -Filter "*-$slug-audit.md" -ErrorAction SilentlyContinue | Select-Object -First 1
+        $planFile = Get-ChildItem -Path (Join-Path $RepoDir 'docs\plans') -Filter "*-$slug-audit.md" -ErrorAction SilentlyContinue | Select-Object -First 1
         if ($planFile) {
             $planContent = [System.IO.File]::ReadAllText($planFile.FullName, [System.Text.Encoding]::UTF8)
             $todos = ([regex]::Matches($planContent, '<!-- TODO')).Count
@@ -3127,7 +3127,7 @@ function Invoke-NamelistAudit {
 }
 
 # --- Helper: Copy the Claude Code skills over their Antigravity mirrors (the Claude side is the source) ---
-# .claude/skills/<skill>/SKILL.md -> .agents/skills/<skill>/SKILL.md, byte for byte. CLAUDE.md imports GEMINI.md and needs no mirror.
+# .claude/skills/<skill>/SKILL.md -> .agents/skills/<skill>/SKILL.md, byte for byte. CLAUDE.md and GEMINI.md are @AGENTS.md and need no mirror.
 # Returns the mirrors that changed, as repo-relative paths.
 function Sync-AgentMirrors {
     param([string]$Root)

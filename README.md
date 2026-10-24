@@ -55,10 +55,18 @@ powershell -File .\build.ps1 -InspectVanilla SOV -Group SOV_INF_02
 powershell -File .\build.ps1 -Audit ALL
 powershell -File .\build.ps1 -Audit LIT
 
-# Publish update to Steam Workshop via SteamCMD (supports -DryRun)
-powershell -File .\build.ps1 -PublishSteam -DryRun
-powershell -File .\build.ps1 -PublishSteam -ChangeNote "Add new division namelists"
+# Change a namelist file (the only way its content changes): one edit, or a plan's batch previewed with -DryRun
+powershell -File .\build.ps1 -EditNames FIN -Group FIN_INF_01 -Add "12=12. Divisioona 'Kollaa'"
+powershell -File .\build.ps1 -EditNames FIN -Batch docs\plans\2026-10-25-finland-audit.md -DryRun
+
+# One pass before a namelist task is complete: validation, tests, audit summary and diff counts; ends with "Check passed"
+powershell -File .\build.ps1 -Check FIN
+
+# Bring the wiki page's group rows and the Home group count in step with the file
+powershell -File .\build.ps1 -SyncWiki FIN
 ```
+
+Releases run through the Hearts of Iron IV Modding Manager, which carries this repository under `mods/`: `Scripts\Publish-Mod.ps1 "Immersive Namelists Expanded" -DryRun -ChangeNote "<note>"` previews the upload. Agents working in this repository read `AGENTS.md`; the long form of its conventions is `docs/inex-agent-guide.md`.
 
 ---
 

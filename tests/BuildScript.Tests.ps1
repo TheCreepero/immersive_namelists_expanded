@@ -2040,8 +2040,8 @@ TST_CAV_01 =
         $withAdded = $script:CliNamelist -replace '(1 = \{ "Uudenmaan Ratsuprikaati" \})', "`$1`r`n`t`t2 = { `"Karjalan Ratsuprikaati`" }"
         [System.IO.File]::WriteAllText($script:CliFile, $withAdded + "`r`n", $script:Utf8NoBom)
         Invoke-CliBuild -Check TST
-        $script:CliOutput | Should -Match 'Refreshed change table in docs/superpowers/plans/\d{4}-\d{2}-\d{2}-testland-audit\.md: 1 changed group\(s\) vs HEAD; \d+ TODO section\(s\) left'
-        $plan = Get-ChildItem (Join-Path $script:CliDir 'docs\superpowers\plans') -Filter '*-testland-audit.md' | Select-Object -First 1
+        $script:CliOutput | Should -Match 'Refreshed change table in docs/plans/\d{4}-\d{2}-\d{2}-testland-audit\.md: 1 changed group\(s\) vs HEAD; \d+ TODO section\(s\) left'
+        $plan = Get-ChildItem (Join-Path $script:CliDir 'docs\plans') -Filter '*-testland-audit.md' | Select-Object -First 1
         [System.IO.File]::ReadAllText($plan.FullName, [System.Text.Encoding]::UTF8) | Should -Match '\| CAV_01 \| 1 -> 2 \| Karjalan Ratsuprikaati \|'
 
         # Once the audit is committed the diff is empty; a refresh must not wipe the recorded table

@@ -16,7 +16,7 @@ Planning and research are finished once Status is READY. Run this plan with the 
 <!-- TODO: the user's policy answers (verified only or extrapolation, ideology suites, plain/named pairs) and every design decision (script and transliteration, ordinal format, gating, merges). All final: nothing "to be settled later" -->
 
 ## Vanilla findings (`-InspectVanilla <TAG>`)
-<!-- TODO: table of vanilla tag, vanilla state (entry count, fallback, scripted references), action taken in the batch. A reused tag replaces the vanilla group whole: say which vanilla names and numbers the batch carries over and which it drops on purpose -->
+<!-- TODO: table of vanilla tag, vanilla state (entry count, fallback, scripted references), action taken in the batch. A reused tag is merged into the vanilla group [NAM-020]: the numbers the batch does not write keep vanilla's text, so say which vanilla names and numbers the batch rewrites and which it leaves in place on purpose -->
 
 ## Group suite
 <!-- TODO: the final groups, one row each, matching the batch exactly -->
