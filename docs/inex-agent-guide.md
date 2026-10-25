@@ -28,7 +28,7 @@ When adding, expanding, or modifying namelists:
 3. `powershell -File .\build.ps1 -SyncWiki <TAG>` writes what a script can derive: the wiki page's group rows and headings and the `wiki/Home.md` group count. For a new nation add `-Country "<Name>"`: it also adds the `README.md` row, the `wiki/Home.md` row and the `wiki/_Sidebar.md` line.
 4. **Steam Standards**: No emojis. Max ~17k chars (omit `[quote=author]` blocks). Concise tone. Correct diacritics/grammar (`1ère`, `Ryhmä`, `Ziemi Łomżyńskiej`). BBCode: `[h1]`, `[b]`, `[i]`, `[url]`, standard `- ` bullets.
 5. **In-Chat Description**: On request, output full ready-to-copy Steam BBCode description + summary of changes.
-6. The wiki push (`powershell -File .\wiki\push-wiki.ps1`) is outward-facing: it runs in a plan's ship step, on the user's word.
+6. The wiki push (`powershell -File .\wiki\push-wiki.ps1`) is outward-facing: it runs in a plan's ship step, on the user's word. A commit that changes `wiki/` for any other reason (tooling, rules, a docs fix) also ends with the push, on the user's word; otherwise the next nation's push publishes those pages unannounced.
 
 ## 5. Build & Validation Protocol
 Every command is `powershell -File .\build.ps1 <switch>`. `Get-Help .\build.ps1 -Parameter <Name>` prints a switch's full description; the batch format is in the planning skills.

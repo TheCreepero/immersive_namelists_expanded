@@ -12,6 +12,7 @@ BeforeDiscovery {
         @{ Name = 'sed -i on a namelist file'; Tool = 'Bash'; ToolInput = @{ command = "sed -i 's/Old/New/' common/units/names_divisions/zz_INEX_TST_names_divisions.txt" }; Reason = 'shell write' }
         @{ Name = 'a redirect into the namelist folder'; Tool = 'Bash'; ToolInput = @{ command = 'cat scratch/new.txt > common/units/names_divisions/zz_INEX_TST_names_divisions.txt' }; Reason = 'shell write' }
         @{ Name = 'WriteAllText on a namelist file'; Tool = 'PowerShell'; ToolInput = @{ command = '[System.IO.File]::WriteAllText("$root\common\units\names_divisions\zz_INEX_TST_names_divisions.txt", $text)' }; Reason = 'shell write' }
+        @{ Name = 'a Copy-Item into the namelist folder after a harmless command'; Tool = 'PowerShell'; ToolInput = @{ command = 'git status; Copy-Item scratch\x.txt common\units\names_divisions\zz_INEX_TST_names_divisions.txt' }; Reason = 'shell write' }
     )
     $script:AllowCases = @(
         @{ Name = 'Edit of a plan'; Tool = 'Edit'; ToolInput = @{ file_path = 'docs\plans\2026-10-25-testland-audit.md' } }
@@ -23,6 +24,8 @@ BeforeDiscovery {
         @{ Name = 'a read of the namelist folder'; Tool = 'Bash'; ToolInput = @{ command = 'git status --short -- common/units/names_divisions 2>$null' } }
         @{ Name = 'the -Audit command'; Tool = 'PowerShell'; ToolInput = @{ command = 'powershell -File .\build.ps1 -Audit TST -NamesOnly' } }
         @{ Name = 'a Read of a namelist file'; Tool = 'Read'; ToolInput = @{ file_path = 'common\units\names_divisions\zz_INEX_TST_names_divisions.txt' } }
+        @{ Name = 'git mv of a plan beside git add of a namelist file'; Tool = 'PowerShell'; ToolInput = @{ command = 'git mv docs/plans/a.md docs/plans/archive/; git add common/units/names_divisions/zz_INEX_TST_names_divisions.txt' } }
+        @{ Name = 'git add of a namelist file'; Tool = 'Bash'; ToolInput = @{ command = 'git add -- common/units/names_divisions/zz_INEX_TST_names_divisions.txt' } }
     )
 }
 

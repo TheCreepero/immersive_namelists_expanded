@@ -48,7 +48,7 @@ Report to the user: the `-Check` summary, the files changed, any deviation the i
 
 On the user's word, one confirmation covers the plan's whole ship step:
 1. Tick the ship box in the plan, so the commit carries the finished plan.
-2. `git mv docs/plans/<plan>.md docs/plans/archive/`: finished plans live in the archive, and `docs/plans/` holds only the template and the plans in progress.
+2. Move the plan into `docs/plans/archive/` and stage it at its archived path: `git mv` when the plan is tracked, `Move-Item` and `git add` when it is new (an authoring plan is usually first committed here). Finished plans live in the archive, and `docs/plans/` holds only the template and the plans in progress.
 3. Commit the files from §3.3, with the plan at its archived path, with the commit message the ship step gives.
 4. Run the ship step's wiki push command. If it fails, report the output; the commit stands.
 
