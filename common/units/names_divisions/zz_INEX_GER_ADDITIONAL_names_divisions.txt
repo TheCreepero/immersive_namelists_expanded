@@ -1,17 +1,18 @@
 # Division template historical names system for Germany (GER): additional formations.
 # Immersive Namelists Expanded (INEX)
 #
-# Numbered series, specialised units, garrisons and fortresses, Kampfgruppen, militias and
-# foreign legions. Period German spelling and 1939-45 exonyms (Reval, Wilna, Kiew, Charkow);
-# identities appended to a designation go in single quotes, historical proper names do not.
+# Numbered series, specialised units, garrisons and fortresses, Kampfgruppen, militias, foreign
+# legions and the Imperial series. Period German spelling and 1939-45 exonyms (Reval, Wilna, Kiew,
+# Charkow); identities appended to a designation go in single quotes, historical proper names do not.
 #
 # Numbering: Reserve, Volksgrenadier and Grenadier divisions link to GER_Inf_01 and sit on their
 # real numbers (one Heer number series). Luftwaffe field divisions, Flak divisions, battalions,
-# brigades, garrisons and militias run their own series.
+# brigades, garrisons, militias and the Imperial lists run their own series.
 #
 # Ideology gating: Volkssturm, SA and foreign legions are fascist-only; Freikorps (neutrality),
-# Reichsbanner (democratic) and Red Front Fighters (communism) cover the other paths.
-# Overrides vanilla GER_MIL_01, GER_MIL_02 and GER_MIL_03 (all created by vanilla focuses).
+# Reichsbanner (democratic) and Red Front Fighters (communism) cover the other paths. The Imperial
+# Sturm-Bataillone, Reserve and Landwehr divisions serve neutrality and democratic governments.
+# Overrides vanilla GER_PEN_01, GER_MIL_01, GER_MIL_02 and GER_MIL_03 (all created by vanilla focuses).
 
 # ==============================================================================
 # 1. HEAVY BATTALIONS, BRIGADES AND ARTILLERY
@@ -118,6 +119,17 @@ GER_ARM_03 = {
 		113 = { "Panzer-Brigade %d" }
 		150 = { "Panzer-Brigade %d" }
 		901 = { "Panzer-Brigade 'Norwegen'" }
+		# Historical: the Panzer-Brigaden of 1935-43 and the captured-tank brigade of 1941
+		1 = { "%d. Panzer-Brigade" }
+		2 = { "%d. Panzer-Brigade" }
+		3 = { "%d. Panzer-Brigade" }
+		4 = { "%d. Panzer-Brigade" }
+		5 = { "%d. Panzer-Brigade" }
+		6 = { "%d. Panzer-Brigade" }
+		8 = { "%d. Panzer-Brigade" }
+		18 = { "%d. Panzer-Brigade" }
+		21 = { "%d. Panzer-Brigade" }
+		100 = { "%d. Panzer-Brigade" }
 	}
 }
 
@@ -361,6 +373,7 @@ GER_VOLKSGRENADIER_01 = {
 		334 = { "%d. Volksgrenadier-Division" }
 		347 = { "%d. Volksgrenadier-Division" }
 		48 = { "%d. Volksgrenadier-Division" }
+		264 = { "%d. Volksgrenadier-Division" }
 	}
 }
 
@@ -456,9 +469,9 @@ GER_FLAK_DIVISION_01 = {
 		2 = { "%d. Flak-Division 'Leipzig'" }
 		3 = { "%d. Flak-Division 'Hamburg'" }
 		4 = { "%d. Flak-Division 'Düsseldorf'" }
-		5 = { "%d. Flak-Division" }
+		5 = { "%d. Flak-Division 'Darmstadt'" }
 		6 = { "%d. Flak-Division" }
-		7 = { "%d. Flak-Division" }
+		7 = { "%d. Flak-Division 'Köln'" }
 		8 = { "%d. Flak-Division 'Bremen'" }
 		9 = { "%d. Flak-Division 'Stalingrad'" }
 		10 = { "%d. Flak-Division" }
@@ -472,7 +485,7 @@ GER_FLAK_DIVISION_01 = {
 		18 = { "%d. Flak-Division" }
 		19 = { "%d. Flak-Division" }
 		20 = { "%d. Flak-Division" }
-		21 = { "%d. Flak-Division" }
+		21 = { "%d. Flak-Division 'Wiesbaden'" }
 		22 = { "%d. Flak-Division 'Dortmund'" }
 		23 = { "%d. Flak-Division" }
 		24 = { "%d. Flak-Division 'Wien'" }
@@ -1345,6 +1358,86 @@ GER_STURM_01 =
 		16 = { "Sturm-Bataillon Nr. %d" }
 		17 = { "Sturm-Bataillon Nr. %d" }
 		18 = { "Sturm-Bataillon Nr. %d" }
+	}
+}
+
+# Reserve-Divisionen of 1914-18 on their real numbers, then the Bavarian series and the Ersatz-Divisionen. Own number series.
+GER_MONRES_01 = 
+{
+	name = "Imperial Reserve Divisions"
+
+	for_countries = { GER }
+
+	can_use = { OR = { has_government = neutrality has_government = democratic } }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%d. Reserve-Division"
+
+	ordered =
+	{
+		# Reserve-Divisionen of 1914-18 on their real numbers
+		1 = { "%d. Reserve-Division" }
+		3 = { "%d. Reserve-Division" }
+		5 = { "%d. Reserve-Division" }
+		6 = { "%d. Reserve-Division" }
+		7 = { "%d. Reserve-Division" }
+		9 = { "%d. Reserve-Division" }
+		10 = { "%d. Reserve-Division" }
+		11 = { "%d. Reserve-Division" }
+		12 = { "%d. Reserve-Division" }
+		13 = { "%d. Reserve-Division" }
+		14 = { "%d. Reserve-Division" }
+		15 = { "%d. Reserve-Division" }
+		16 = { "%d. Reserve-Division" }
+		17 = { "%d. Reserve-Division" }
+		18 = { "%d. Reserve-Division" }
+		19 = { "%d. Reserve-Division" }
+		21 = { "%d. Reserve-Division" }
+		22 = { "%d. Reserve-Division" }
+		23 = { "%d. Reserve-Division (1. Königlich Sächsische)" }
+		24 = { "%d. Reserve-Division (2. Königlich Sächsische)" }
+		25 = { "%d. Reserve-Division" }
+		26 = { "%d. (Württembergische) Reserve-Division" }
+		28 = { "%d. Reserve-Division" }
+		33 = { "%d. Reserve-Division" }
+		35 = { "%d. Reserve-Division" }
+		36 = { "%d. Reserve-Division" }
+		43 = { "%d. Reserve-Division" }
+		44 = { "%d. Reserve-Division" }
+		45 = { "%d. Reserve-Division" }
+		46 = { "%d. Reserve-Division" }
+		47 = { "%d. Reserve-Division" }
+		48 = { "%d. Reserve-Division" }
+		49 = { "%d. Reserve-Division" }
+		50 = { "%d. Reserve-Division" }
+		51 = { "%d. Reserve-Division" }
+		52 = { "%d. Reserve-Division" }
+		53 = { "%d. Reserve-Division" }
+		54 = { "%d. Reserve-Division" }
+		75 = { "%d. Reserve-Division" }
+		76 = { "%d. Reserve-Division" }
+		77 = { "%d. Reserve-Division" }
+		78 = { "%d. Reserve-Division" }
+		79 = { "%d. Reserve-Division" }
+		80 = { "%d. Reserve-Division" }
+		81 = { "%d. Reserve-Division" }
+		82 = { "%d. Reserve-Division" }
+		# Royal Bavarian Reserve-Divisionen (their own number series)
+		901 = { "1. Kgl. Bayer. Reserve-Division" }
+		902 = { "5. Kgl. Bayer. Reserve-Division" }
+		903 = { "6. Kgl. Bayer. Reserve-Division" }
+		904 = { "8. Kgl. Bayer. Reserve-Division" }
+		905 = { "9. Kgl. Bayer. Reserve-Division" }
+		906 = { "30. Kgl. Bayer. Reserve-Division" }
+		907 = { "39. Kgl. Bayer. Reserve-Division" }
+		# Ersatz-Divisionen of 1914-18
+		911 = { "4. Ersatz-Division" }
+		912 = { "5. Ersatz-Division" }
+		913 = { "8. Ersatz-Division" }
+		914 = { "10. Ersatz-Division" }
+		915 = { "19. Ersatz-Division" }
+		916 = { "Kgl. Bayer. Ersatz-Division" }
 	}
 }
 

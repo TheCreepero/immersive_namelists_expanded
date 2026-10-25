@@ -230,7 +230,6 @@ FRA_MOT_01 =
 
 	division_types = { "motorized" }
 
-	# Number reservation system will tie to another group.
 	link_numbering_with = { FRA_INF_01 }
 
 	fallback_name = "%dème Div. d'Infanterie Motorisée"
@@ -240,7 +239,13 @@ FRA_MOT_01 =
 	ordered =
 	{
 		# Divisions d'Infanterie Motorisée
-		1 = { "1ère Division Motorisée d'Infanterie" }
+		1 = { "1ère Division d'Infanterie Motorisée" }
+		3 = { "3ème Division d'Infanterie Motorisée" }
+		5 = { "5ème Division d'Infanterie Motorisée" }
+		9 = { "9ème Division d'Infanterie Motorisée" }
+		12 = { "12ème Division d'Infanterie Motorisée" }
+		15 = { "15ème Division d'Infanterie Motorisée" }
+		25 = { "25ème Division d'Infanterie Motorisée" }
 	}
 }
 
@@ -418,6 +423,7 @@ FRA_MAR_01 =
 		4 = { "Division d'Infanterie de Marine de Lorient" }
 		5 = { "Division d'Infanterie de Marine de Rochefort" }
 		9 = { "9ème Division d'Infanterie de Marine" }
+		6 = { "Division Bleue" }
 	}
 }
 
@@ -483,7 +489,7 @@ FRA_GAR_01 =
 		# Secteurs fortifiés
 		111 = { "Division de Forteresse de Maubeuge" }
 		112 = { "Division de Forteresse de Montmédy" }
-		113 = { "Division de Forteresse de Crusnes" }
+		113 = { "Division de Forteresse de la Crusnes" }
 		114 = { "Division de Forteresse de Thionville" }
 		115 = { "Division de Forteresse de Boulay" }
 		116 = { "Division de Forteresse de Faulquemont" }
@@ -498,8 +504,13 @@ FRA_GAR_01 =
 		125 = { "Division de Forteresse du Jura" }
 		126 = { "Division de Forteresse de l'Escaut" }
 		127 = { "Division de Forteresse du Dauphiné" }
-		128 = { "Division de Forteresse de Savoie" }
+		128 = { "Division de Forteresse de la Savoie" }
 		129 = { "Division de Forteresse des Alpes-Maritimes" }
+		130 = { "Division de Forteresse des Flandres" }
+		131 = { "Division de Forteresse de Lille" }
+		132 = { "Division de Forteresse de Montbéliard" }
+		133 = { "Division de Forteresse du Rhône" }
+		134 = { "Division de Forteresse de la Lauter" }
 		# Vanilla keys written again (vanilla group merges in)
 		106 = { "%dème Division de Forteresse" }
 		107 = { "%dème Division de Forteresse" }
@@ -555,7 +566,8 @@ FRA_GAR_01 =
 
 # ===== Colonial and African forces =====
 
-# Overrides vanilla FRA_COL_01.
+# Troupes coloniales. Overrides vanilla FRA_COL_01; the Armée d'Afrique is in FRA_AFR_01.
+# Vanilla's entries merge in, so its North African keys are written again with colonial names or the fallback text.
 FRA_COL_01 = 
 {
 	name = "Colonial Divisions"
@@ -572,86 +584,181 @@ FRA_COL_01 =
 	# It's okay to have gaps in numbering.
 	ordered =
 	{
-		41 = { "1ère Div. d'Inf. Nord-Africaine" }
-		42 = { "2ème Div. d'Inf. Nord-Africaine" }
-		43 = { "3ème Div. d'Inf. Nord-Africaine" }
-		44 = { "4ème Div. d'Inf. Nord-Africaine" }
-		1 = { "%dère Div. d'Infanterie Coloniale" }
-		2 = { "%dème Div. d'Infanterie Coloniale" }
-		3 = { "%dème Div. d'Infanterie Coloniale" }
-		4 = { "%dème Div. d'Infanterie Coloniale" }
-		91 = { "Division du Tonkin" }
-		92 = { "Division de Cochinchine-Cambodge" }
-		93 = { "Division de Tunisie" }
-		94 = { "Division de Sousse" }
-		95 = { "Division de Casablanca" }
-		96 = { "Division de Fès" }
-		97 = { "Division de Marrakech" }
-		98 = { "Division de Meknès" }
-		45 = { "5ème Div. d'Inf. Nord-Africaine" }
-		5 = { "%dème Div. d'Infanterie Coloniale" }
-		6 = { "%dème Div. d'Infanterie Coloniale" }
-		7 = { "%dème Div. d'Infanterie Coloniale" }
-		61 = { "1ère Division Marocaine" }
-		62 = { "2ème Division Marocaine" }
-		63 = { "3ème Division Marocaine" }
-		46 = { "6ème Div. d'Inf. Nord-Africaine" }
-		47 = { "7ème Div. d'Inf. Nord-Africaine" }
-		8 = { "%dème Div. d'Infanterie Coloniale" }
-		9 = { "%dème Div. d'Infanterie Coloniale" }			# post-invasion divisions start here, raised haphazardly
-		101 = { "1ère Div. Légère d'Inf. Nord-Africaine" }
-		102 = { "2ème Div. Légère d'Inf. Coloniale" }
-		108 = { "8ème Div. Légère d'Inf. Coloniale" }
-		10 = { "%dème Div. d'Infanterie Coloniale" }		# fictional divisions start here
-		64 = { "4ème Division Marocaine" }
-		65 = { "5ème Division Marocaine" }
-		11 = { "%dème Div. d'Infanterie Coloniale" }
-		12 = { "%dème Div. d'Infanterie Coloniale" }
-		48 = { "8ème Div. d'Inf. Nord-Africaine" }
-		49 = { "9ème Div. d'Inf. Nord-Africaine" }
-		50 = { "10ème Div. d'Inf. Nord-Africaine" }
-		81 = { "1ère Div. d'Infanterie Algérienne" }
-		82 = { "2ème Div. d'Infanterie Algérienne" }
-		83 = { "3ème Div. d'Infanterie Algérienne" }
-		84 = { "4ème Div. d'Infanterie Algérienne" }
-		66 = { "6ème Division Marocaine" }
-		99 = { "Division du Levant" }
-		13 = { "%dème Div. d'Infanterie Coloniale" }
-		14 = { "%dème Div. d'Infanterie Coloniale" }
-		15 = { "%dème Div. d'Infanterie Coloniale" }
-		16 = { "%dème Div. d'Infanterie Coloniale" }
-		51 = { "11ème Div. d'Inf. Nord-Africaine" }
-		52 = { "12ème Div. d'Inf. Nord-Africaine" }
-		53 = { "13ème Div. d'Inf. Nord-Africaine" }
-		85 = { "5ème Div. d'Infanterie Algérienne" }
-		86 = { "6ème Div. d'Infanterie Algérienne" }
-		87 = { "7ème Div. d'Infanterie Algérienne" }
-		17 = { "%dème Div. d'Infanterie Coloniale" }
-		18 = { "%dème Div. d'Infanterie Coloniale" }
-		19 = { "%dème Div. d'Infanterie Coloniale" }
-		20 = { "%dème Div. d'Infanterie Coloniale" }
-		67 = { "7ème Division Marocaine" }
-		68 = { "8ème Division Marocaine" }
-		54 = { "14ème Div. d'Inf. Nord-Africaine" }
-		55 = { "15ème Div. d'Inf. Nord-Africaine" }
-		21 = { "%dème Div. d'Infanterie Coloniale" }
-		22 = { "%dème Div. d'Infanterie Coloniale" }
-		23 = { "%dème Div. d'Infanterie Coloniale" }
-		24 = { "%dème Div. d'Infanterie Coloniale" }
-		56 = { "16ème Div. d'Inf. Nord-Africaine" }
-		57 = { "17ème Div. d'Inf. Nord-Africaine" }
-		25 = { "%dème Div. d'Infanterie Coloniale" }
-		26 = { "%dème Div. d'Infanterie Coloniale" }
-		27 = { "%dème Div. d'Infanterie Coloniale" }
-		69 = { "9ème Division Marocaine" }
-		70 = { "10ème Division Marocaine" }
-		28 = { "%dème Div. d'Infanterie Coloniale" }
-		29 = { "%dème Div. d'Infanterie Coloniale" }
-		30 = { "%dème Div. d'Infanterie Coloniale" }
-		# Afrique noire
-		109 = { "Division de Tirailleurs Sénégalais" }
-		110 = { "Division de l'Afrique-Occidentale Française" }
-		111 = { "Division de l'Afrique-Équatoriale Française" }
+		# Indochine et Extrême-Orient
+		41 = { "Division du Tonkin" }
+		42 = { "Division de Cochinchine-Cambodge" }
+		43 = { "Division Annam-Tonkin" }
+		44 = { "1ère Brigade du Tonkin" }
+		45 = { "2ème Brigade du Tonkin" }
+		46 = { "1ère Division Coloniale d'Extrême-Orient" }
+		47 = { "2ème Division Coloniale d'Extrême-Orient" }
+		# Divisions Légères d'Infanterie Coloniale (1940)
+		102 = { "2ème Division Légère d'Infanterie Coloniale" }
+		108 = { "8ème Division Légère d'Infanterie Coloniale" }
+		# Vanilla keys written again (vanilla group merges in)
+		1 = { "%dère Division d'Infanterie Coloniale" }
+		2 = { "%dème Division d'Infanterie Coloniale" }
+		3 = { "%dème Division d'Infanterie Coloniale" }
+		4 = { "%dème Division d'Infanterie Coloniale" }
+		5 = { "%dème Division d'Infanterie Coloniale" }
+		6 = { "%dème Division d'Infanterie Coloniale" }
+		7 = { "%dème Division d'Infanterie Coloniale" }
+		8 = { "%dème Division d'Infanterie Coloniale" }
+		9 = { "%dème Division d'Infanterie Coloniale" }
+		10 = { "%dème Division d'Infanterie Coloniale" }
+		11 = { "%dème Division d'Infanterie Coloniale" }
+		12 = { "%dème Division d'Infanterie Coloniale" }
+		13 = { "%dème Division d'Infanterie Coloniale" }
+		14 = { "%dème Division d'Infanterie Coloniale" }
+		15 = { "%dème Division d'Infanterie Coloniale" }
+		16 = { "%dème Division d'Infanterie Coloniale" }
+		17 = { "%dème Division d'Infanterie Coloniale" }
+		18 = { "%dème Division d'Infanterie Coloniale" }
+		19 = { "%dème Division d'Infanterie Coloniale" }
+		20 = { "%dème Division d'Infanterie Coloniale" }
+		21 = { "%dème Division d'Infanterie Coloniale" }
+		22 = { "%dème Division d'Infanterie Coloniale" }
+		23 = { "%dème Division d'Infanterie Coloniale" }
+		24 = { "%dème Division d'Infanterie Coloniale" }
+		25 = { "%dème Division d'Infanterie Coloniale" }
+		26 = { "%dème Division d'Infanterie Coloniale" }
+		27 = { "%dème Division d'Infanterie Coloniale" }
+		28 = { "%dème Division d'Infanterie Coloniale" }
+		29 = { "%dème Division d'Infanterie Coloniale" }
+		30 = { "%dème Division d'Infanterie Coloniale" }
+		48 = { "%dème Division d'Infanterie Coloniale" }
+		49 = { "%dème Division d'Infanterie Coloniale" }
+		50 = { "%dème Division d'Infanterie Coloniale" }
+		51 = { "%dème Division d'Infanterie Coloniale" }
+		52 = { "%dème Division d'Infanterie Coloniale" }
+		53 = { "%dème Division d'Infanterie Coloniale" }
+		54 = { "%dème Division d'Infanterie Coloniale" }
+		55 = { "%dème Division d'Infanterie Coloniale" }
+		56 = { "%dème Division d'Infanterie Coloniale" }
+		57 = { "%dème Division d'Infanterie Coloniale" }
+		61 = { "%dème Division d'Infanterie Coloniale" }
+		62 = { "%dème Division d'Infanterie Coloniale" }
+		63 = { "%dème Division d'Infanterie Coloniale" }
+		64 = { "%dème Division d'Infanterie Coloniale" }
+		65 = { "%dème Division d'Infanterie Coloniale" }
+		66 = { "%dème Division d'Infanterie Coloniale" }
+		67 = { "%dème Division d'Infanterie Coloniale" }
+		68 = { "%dème Division d'Infanterie Coloniale" }
+		69 = { "%dème Division d'Infanterie Coloniale" }
+		70 = { "%dème Division d'Infanterie Coloniale" }
+		81 = { "%dème Division d'Infanterie Coloniale" }
+		82 = { "%dème Division d'Infanterie Coloniale" }
+		83 = { "%dème Division d'Infanterie Coloniale" }
+		84 = { "%dème Division d'Infanterie Coloniale" }
+		85 = { "%dème Division d'Infanterie Coloniale" }
+		86 = { "%dème Division d'Infanterie Coloniale" }
+		87 = { "%dème Division d'Infanterie Coloniale" }
+		91 = { "%dème Division d'Infanterie Coloniale" }
+		92 = { "%dème Division d'Infanterie Coloniale" }
+		93 = { "%dème Division d'Infanterie Coloniale" }
+		94 = { "%dème Division d'Infanterie Coloniale" }
+		95 = { "%dème Division d'Infanterie Coloniale" }
+		96 = { "%dème Division d'Infanterie Coloniale" }
+		97 = { "%dème Division d'Infanterie Coloniale" }
+		98 = { "%dème Division d'Infanterie Coloniale" }
+		99 = { "%dème Division d'Infanterie Coloniale" }
+		101 = { "%dème Division d'Infanterie Coloniale" }
+	}
+}
+
+# Armée d'Afrique: North African divisions 1914-1945. Own numbering, not linked to infantry.
+FRA_AFR_01 = 
+{
+	name = "Army of Africa Divisions"
+
+	for_countries = { FRA }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%dème Div. d'Infanterie Nord-Africaine"
+
+	ordered =
+	{
+		# Divisions d'Infanterie Nord-Africaine (1939-1940)
+		1 = { "1ère Division d'Infanterie Nord-Africaine" }
+		2 = { "2ème Division d'Infanterie Nord-Africaine" }
+		3 = { "3ème Division d'Infanterie Nord-Africaine" }
+		4 = { "4ème Division d'Infanterie Nord-Africaine" }
+		5 = { "5ème Division d'Infanterie Nord-Africaine" }
+		6 = { "6ème Division d'Infanterie Nord-Africaine" }
+		7 = { "7ème Division d'Infanterie Nord-Africaine" }
+		8 = { "1ère Division Légère d'Infanterie Nord-Africaine" }
+		# Divisions Marocaines
+		9 = { "Division Marocaine" }
+		10 = { "1ère Division Marocaine" }
+		11 = { "2ème Division Marocaine" }
+		12 = { "3ème Division Marocaine" }
+		# Divisions d'Infanterie d'Afrique (1939-1940)
+		13 = { "81ème Division d'Infanterie d'Afrique" }
+		14 = { "82ème Division d'Infanterie d'Afrique" }
+		15 = { "83ème Division d'Infanterie d'Afrique" }
+		16 = { "84ème Division d'Infanterie d'Afrique" }
+		17 = { "85ème Division d'Infanterie d'Afrique" }
+		18 = { "86ème Division d'Infanterie d'Afrique" }
+		19 = { "87ème Division d'Infanterie d'Afrique" }
+		20 = { "88ème Division d'Infanterie d'Afrique" }
+		21 = { "180ème Division d'Infanterie d'Afrique" }
+		22 = { "181ème Division d'Infanterie d'Afrique" }
+		23 = { "182ème Division d'Infanterie d'Afrique" }
+		24 = { "183ème Division d'Infanterie d'Afrique" }
+		# Armée d'Afrique (1942-1945)
+		25 = { "Division de Marche d'Alger" }
+		26 = { "Division de Marche de Constantine" }
+		27 = { "Division de Marche d'Oran" }
+		28 = { "1ère Division de Marche du Maroc" }
+		29 = { "2ème Division d'Infanterie Marocaine" }
+		30 = { "3ème Division d'Infanterie Algérienne" }
+		31 = { "8ème Division d'Infanterie Algérienne" }
+		# Divisions territoriales
+		32 = { "Division d'Alger" }
+		33 = { "Division d'Oran" }
+		34 = { "Division de Constantine" }
+		35 = { "Division d'Occupation de Tunisie" }
+		36 = { "Division de Casablanca" }
+		37 = { "Division de Fès" }
+		38 = { "Division de Meknès" }
+		39 = { "Division de Marrakech" }
+	}
+}
+
+# Forces Françaises Libres and the Liberation. Democratic governments only (Free France is FRA under the FRA_FREE cosmetic tag).
+FRA_FFL_01 = 
+{
+	name = "Free French Divisions"
+
+	for_countries = { FRA }
+
+	can_use = { has_government = democratic }
+
+	division_types = { "infantry" "motorized" }
+
+	fallback_name = "%dème Division Française Libre"
+
+	ordered =
+	{
+		# Forces Françaises Libres (1940-1943)
+		1 = { "1ère Division Française Libre" }
+		2 = { "2ème Division Française Libre" }
+		3 = { "1ère Division Motorisée d'Infanterie" }
+		4 = { "1ère Division Légère Française Libre" }
+		5 = { "2ème Division Légère Française Libre" }
+		6 = { "1ère Brigade Française Libre" }
+		7 = { "2ème Brigade Française Libre" }
+		8 = { "4ème Brigade Française Libre" }
+		9 = { "Brigade Française Libre d'Orient" }
+		10 = { "Corps Expéditionnaire Français Libre" }
+		11 = { "Colonne Leclerc" }
+		# Libération et Extrême-Orient (1943-1945)
+		12 = { "Brigade Indépendante Alsace-Lorraine" }
+		13 = { "Corps Léger d'Intervention" }
+		14 = { "Groupement de Marche de la 2ème DB" }
 	}
 }
 
@@ -792,6 +899,11 @@ FRA_MIL_FAS_01 =
 		18 = { "%dème Division de la Milice Française 'Perpignan'" }
 		19 = { "%dème Division de la Milice Française 'Poitiers'" }
 		20 = { "%dème Division de la Milice Française 'Tours'" }
+		# Légions et Franc-Garde (1941-1944)
+		21 = { "Légion des Volontaires Français contre le Bolchevisme" }
+		22 = { "Légion Tricolore" }
+		23 = { "Phalange Africaine" }
+		24 = { "Division de la Franc-Garde" }
 	}
 }
 
@@ -835,38 +947,35 @@ FRA_MIL_COM_01 =
 	}
 }
 
-# Neutral or authoritarian governments: Armée de l'Armistice, by military region and colonial command.
+# Armée de l'Armistice (1940-1942): the free zone's divisions militaires under their own numbers.
+# Fascist or neutral governments: vanilla's Vichy France is a dynamic FRA country with a fascist government.
 FRA_MIL_NEU_01 =
 {
 	name = "Armistice Army Divisions"
 
 	for_countries = { FRA }
 
-	can_use = { has_government = neutrality }
+	can_use = { OR = { has_government = fascism has_government = neutrality } }
 
 	division_types = { "infantry" "militia" }
 
-	fallback_name = "%dème Division de l'Armée de l'Armistice"
+	fallback_name = "%dème Division Militaire"
 
 	# Names with numbers (only one number per entry).
 	# It's okay to have gaps in numbering.
 	ordered =
 	{
-		1 = { "%dère Division de l'Armée de l'Armistice 'Vichy'" }
-		2 = { "%dème Division de l'Armée de l'Armistice 'Lyon'" }
-		3 = { "%dème Division de l'Armée de l'Armistice 'Marseille'" }
-		4 = { "%dème Division de l'Armée de l'Armistice 'Toulouse'" }
-		5 = { "%dème Division de l'Armée de l'Armistice 'Montpellier'" }
-		6 = { "%dème Division de l'Armée de l'Armistice 'Limoges'" }
-		7 = { "%dème Division de l'Armée de l'Armistice 'Clermont-Ferrand'" }
-		8 = { "%dème Division de l'Armée de l'Armistice 'Perpignan'" }
-		9 = { "%dème Division de l'Armée de l'Armistice 'Grenoble'" }
-		10 = { "%dème Division de l'Armée de l'Armistice 'Alger'" }
-		11 = { "%dème Division de l'Armée de l'Armistice 'Oran'" }
-		12 = { "%dème Division de l'Armée de l'Armistice 'Constantine'" }
-		13 = { "%dème Division de l'Armée de l'Armistice 'Tunis'" }
-		14 = { "%dème Division de l'Armée de l'Armistice 'Casablanca'" }
-		15 = { "%dème Division de l'Armée de l'Armistice 'Rabat'" }
-		16 = { "%dème Division de l'Armée de l'Armistice 'Dakar'" }
+		# Groupes de Divisions Militaires
+		1 = { "1er Groupe de Divisions Militaires (Avignon)" }
+		2 = { "2ème Groupe de Divisions Militaires (Clermont-Ferrand)" }
+		# Divisions Militaires de la zone libre
+		7 = { "7ème Division Militaire (Bourg-en-Bresse)" }
+		9 = { "9ème Division Militaire (Châteauroux)" }
+		12 = { "12ème Division Militaire (Limoges)" }
+		13 = { "13ème Division Militaire (Clermont-Ferrand)" }
+		14 = { "14ème Division Militaire (Lyon)" }
+		15 = { "15ème Division Militaire (Marseille)" }
+		16 = { "16ème Division Militaire (Montpellier)" }
+		17 = { "17ème Division Militaire (Toulouse)" }
 	}
 }

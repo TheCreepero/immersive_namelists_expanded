@@ -6,7 +6,7 @@
 
 ## Historical Overview
 
-France's *Armée de Terre* entered WWII with a large but doctrinally constrained force structure. After the 1940 defeat, French military identity split between Vichy France, Free French Forces (*Forces Françaises Libres*), and eventually the *Forces Françaises de l'Intérieur* (FFI). INEX covers the pre-war and 1940 order of battle (infantry, cavalry, *Divisions Légères Mécaniques*, *Divisions Cuirassées de Réserve*, Maginot fortress divisions, Alpine troops), the colonial and North African formations, the 1943-46 *Divisions Blindées*, post-war airborne units, and government-gated militia lists for democratic, fascist, communist and neutral France. All French names use proper French diacritics (*1ère Division d'Infanterie*, *Chasseurs Alpins*). Ordinals follow the vanilla style (*1ère*, *2ème*).
+France's *Armée de Terre* entered WWII with a large but doctrinally constrained force structure. After the 1940 defeat, French military identity split between Vichy France, Free French Forces (*Forces Françaises Libres*), and eventually the *Forces Françaises de l'Intérieur* (FFI). INEX covers the pre-war and 1940 order of battle (infantry, cavalry, *Divisions Légères Mécaniques*, *Divisions Cuirassées de Réserve*, Maginot fortress divisions, Alpine troops), the colonial troops and the *Armée d'Afrique*, the Free French and Liberation formations, the 1943-46 *Divisions Blindées*, post-war airborne units, the *Armée de l'Armistice* of 1940-42, and government-gated militia lists for democratic, fascist, communist and neutral France. In vanilla, Vichy France is a new country split off from FRA with a fascist government, and Free France is FRA itself under a democratic government; the gates below follow that. All French names use proper French diacritics (*1ère Division d'Infanterie*, *Chasseurs Alpins*). Ordinals follow the vanilla style (*1ère*, *2ème*).
 
 Where history offers little, a group is kept short and falls back to its numbered fallback name rather than being padded.
 
@@ -31,11 +31,13 @@ Where history offers little, a group is kept short and falls back to its numbere
 | `FRA_MNT_01` | Mountain Divisions | mountaineers | `%dème Division d'Infanterie Alpine` |
 | `FRA_GAR_01` | Garrison Divisions | infantry | `%dème Division de Forteresse` |
 | `FRA_COL_01` | Colonial Divisions | infantry | `%dème Division d'Infanterie Coloniale` |
+| `FRA_AFR_01` | Army of Africa Divisions | infantry | `%dème Div. d'Infanterie Nord-Africaine` |
+| `FRA_FFL_01` | Free French Divisions | infantry, motorized | `%dème Division Française Libre` |
 | `FRA_DEF_01` | Defense Divisions | militia | `%dème Division de la Défense Nationale` |
 | `FRA_INF_METRO_01` | Metropolitan Infantry | infantry | `%dème Division d'Infanterie Métropolitaine` |
 | `FRA_MIL_FAS_01` | Milice Divisions | infantry, militia | `%dème Division de la Milice Française` |
 | `FRA_MIL_COM_01` | Francs-Tireurs Divisions | infantry, militia | `%dème Division des Francs-Tireurs et Partisans` |
-| `FRA_MIL_NEU_01` | Armistice Army Divisions | infantry, militia | `%dème Division de l'Armée de l'Armistice` |
+| `FRA_MIL_NEU_01` | Armistice Army Divisions | infantry, militia | `%dème Division Militaire` |
 
 ---
 
@@ -54,7 +56,7 @@ Republican *Garde Nationale* divisions named after 30 regional centres. Availabl
 The pre-1940 *Divisions de Cavalerie* (1ère-5ème) plus the 1ère-3ème *Brigades de Spahis* and the *Brigades de Cavalerie*.
 
 ### `FRA_MOT_01` — Motorized Divisions
-*Divisions d'Infanterie Motorisées*. Only the 1ère *Division Motorisée d'Infanterie* (the renamed 1ère DFL, August 1943) is authored; everything else uses the numbered fallback. Shares numbering with `FRA_INF_01`.
+The seven *Divisions d'Infanterie Motorisée* of 1940 (1ère, 3ème, 5ème, 9ème, 12ème, 15ème and 25ème) under their own numbers; other numbers use the fallback. Shares numbering with `FRA_INF_01`. The 1943 *1ère Division Motorisée d'Infanterie* (the renamed 1ère DFL) is in `FRA_FFL_01`.
 
 ### `FRA_MEC_01` — Light Mechanized Divisions
 The *Divisions Légères Mécaniques*: 1ère, 2ème, 3ème, 4ème and 7ème DLM. The 5ème, 6ème and 8ème were never formed. DLM numbering was a series of its own, so the list is deliberately not linked to infantry.
@@ -71,18 +73,22 @@ The 1ère-6ème *Divisions Légères de Cavalerie* (1940). Sources disagree on w
 Post-war airborne: the 25ème *Division Aéroportée* (1946), the 10ème and 25ème *Divisions Parachutistes* (1956) and the 11ème *Division Légère d'Intervention* (1961).
 
 ### `FRA_MAR_01` — Marine Divisions
-*Infanterie de Marine* divisions named after the naval bases (Toulon, Brest, Cherbourg, Lorient, Rochefort), plus the 9ème *Division d'Infanterie de Marine*. The base titles are a plausible extrapolation.
+*Infanterie de Marine* divisions named after the naval bases (Toulon, Brest, Cherbourg, Lorient, Rochefort), plus the 9ème *Division d'Infanterie de Marine* and the *Division Bleue* of Bazeilles (1870). The base titles are a plausible extrapolation.
 
 ### `FRA_MNT_01` — Mountain Divisions
 The 27e-31e *Divisions d'Infanterie Alpine*, the 64e-66e *Divisions d'Infanterie de Montagne*, the 4ème *Division Marocaine de Montagne* and the 1940 *Brigade de Haute Montagne*. Shares numbering with `FRA_INF_01`.
 
 ### `FRA_GAR_01` — Garrison Divisions
-The 101e-105e *Divisions d'Infanterie de Forteresse* (March 1940) and *Divisions de Forteresse* named after the Maginot and Alpine fortified sectors (Maubeuge, Thionville, Haguenau, Colmar, Dauphiné, Savoie, Alpes-Maritimes and others). Shares numbering with `FRA_INF_01`.
+The 101e-105e *Divisions d'Infanterie de Forteresse* (March 1940) and *Divisions de Forteresse* named after the Maginot and Alpine fortified sectors (Flandres, Maubeuge, la Crusnes, Thionville, Haguenau, Colmar, Dauphiné, la Savoie, Alpes-Maritimes and others), the *secteurs défensifs* of Altkirch, Montbéliard and the Rhône, and the *région fortifiée* of the Lauter. Shares numbering with `FRA_INF_01`.
 
 ### `FRA_COL_01` — Colonial Divisions
-- *Division d'Infanterie Coloniale* (DIC), numbered by key
-- *Divisions d'Infanterie Nord-Africaine* (DINA), *Divisions Marocaines* and *Divisions d'Infanterie Algérienne*
-- Territorial garrisons (*Division du Tonkin*, *Division du Levant*, *Division de Casablanca*) and West and Equatorial African titles
+The *troupes coloniales*: the numbered *Divisions d'Infanterie Coloniale* (DIC), the Indochina formations (*Division du Tonkin*, *Division de Cochinchine-Cambodge*, *Division Annam-Tonkin*, the 1ère and 2ème *Brigades du Tonkin*), the 1944-45 *Divisions Coloniales d'Extrême-Orient*, and the 2ème and 8ème *Divisions Légères d'Infanterie Coloniale* of June 1940. The North African formations are in `FRA_AFR_01`.
+
+### `FRA_AFR_01` — Army of Africa Divisions
+The *Armée d'Afrique*: the 1ère-7ème *Divisions d'Infanterie Nord-Africaine* and the *Divisions Marocaines* of 1939-40, the *Divisions d'Infanterie d'Afrique* (81ème-88ème, 180ème-183ème), the 1942-45 *Divisions de Marche* of Alger, Constantine, Oran and Morocco, the 2ème DIM, the 3ème and 8ème *Divisions d'Infanterie Algérienne*, and the territorial divisions of Algeria, Tunisia and Morocco. Its own numbering, not linked to infantry.
+
+### `FRA_FFL_01` — Free French Divisions
+The *Forces Françaises Libres* and the Liberation: the 1ère and 2ème *Divisions Françaises Libres*, the 1941 light divisions, the Free French brigades, the *Colonne Leclerc*, the *Brigade Indépendante Alsace-Lorraine*, the *Corps Léger d'Intervention* and the *Groupement de Marche de la 2ème DB*. Democratic governments only.
 
 ### `FRA_DEF_01` — Defense Divisions
 *Divisions de la Défense Nationale*, named after 30 cities, in the tradition of the 1870 *Gouvernement de la Défense Nationale*. Democratic governments only.
@@ -91,10 +97,10 @@ The 101e-105e *Divisions d'Infanterie de Forteresse* (March 1940) and *Divisions
 The post-liberation *Divisions d'Infanterie Métropolitaine* (1ère-40ème). Democratic governments only.
 
 ### `FRA_MIL_FAS_01` — Milice Divisions
-*Milice Française* divisions by regional seat (Vichy, Lyon, Marseille...). Alt-history extrapolation: the Milice never formed divisions. Fascist governments only.
+*Milice Française* divisions by regional seat (Vichy, Lyon, Marseille...). Alt-history extrapolation: the Milice never formed divisions. Also the collaborationist *Légion des Volontaires Français contre le Bolchevisme*, *Légion Tricolore* and *Phalange Africaine*, and the Milice's *Franc-Garde*. Fascist governments only.
 
 ### `FRA_MIL_COM_01` — Francs-Tireurs Divisions
 *Francs-Tireurs et Partisans* (FTP) divisions by region of the resistance, plus the *Commune de Paris*. Alt-history extrapolation: the FTP never formed divisions. Communist governments only.
 
 ### `FRA_MIL_NEU_01` — Armistice Army Divisions
-*Armée de l'Armistice* divisions by military region and colonial command (Lyon, Alger, Dakar...). Alt-history extrapolation of the 1940-42 Vichy army. Neutrality governments only.
+The *Armée de l'Armistice* of the 1940-42 free zone: the 1er and 2ème *Groupes de Divisions Militaires* and the eight *Divisions Militaires* (7ème Bourg-en-Bresse, 9ème Châteauroux, 12ème Limoges, 13ème Clermont-Ferrand, 14ème Lyon, 15ème Marseille, 16ème Montpellier, 17ème Toulouse) under their own numbers; other numbers use the fallback. Fascist and neutral governments, so that vanilla's Vichy France, which is fascist, sees it.

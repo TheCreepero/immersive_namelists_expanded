@@ -13,18 +13,18 @@
 |:---|:---|:---|:---|
 | [Germany (Wehrmacht)](Germany) | `GER` | 33 | `zz_INEX_GER_names_divisions.txt` |
 | [Germany (Waffen-SS)](Germany-Waffen-SS) | `GER` | 10 | `zz_INEX_GER_SS_names_divisions.txt` |
-| [Germany (Additional)](Germany-Additional) | `GER` | 24 | `zz_INEX_GER_ADDITIONAL_names_divisions.txt` |
-| [Soviet Union](Soviet-Union) | `SOV` | 28 | `zz_INEX_SOV_names_divisions.txt` |
-| [United Kingdom](United-Kingdom) | `ENG` | 28 | `zz_INEX_ENG_names_divisions.txt` |
-| [France](France) | `FRA` | 20 | `zz_INEX_FRA_names_divisions.txt` |
+| [Germany (Additional)](Germany-Additional) | `GER` | 25 | `zz_INEX_GER_ADDITIONAL_names_divisions.txt` |
+| [Soviet Union](Soviet-Union) | `SOV` | 30 | `zz_INEX_SOV_names_divisions.txt` |
+| [United Kingdom](United-Kingdom) | `ENG` | 30 | `zz_INEX_ENG_names_divisions.txt` |
+| [France](France) | `FRA` | 22 | `zz_INEX_FRA_names_divisions.txt` |
 | [Italy](Italy) | `ITA` | 43 | `zz_INEX_ITA_names_divisions.txt` |
 | [United States](United-States) | `USA` | 36 | `zz_INEX_USA_names_divisions.txt` |
 | [Poland](Poland) | `POL` | 39 | `zz_INEX_POL_names_divisions.txt` |
 | [Finland](Finland) | `FIN` | 30 | `zz_INEX_FIN_names_divisions.txt` |
 | [Sweden](Sweden) | `SWE` | 29 | `zz_INEX_SWE_names_divisions.txt` |
 | [Japan](Japan) | `JAP` | 32 | `zz_INEX_JAP_names_divisions.txt` |
-| [Estonia](Estonia) | `EST` | 4 | `zz_INEX_EST_names_divisions.txt` |
-| [Latvia](Latvia) | `LAT` | 7 | `zz_INEX_LAT_names_divisions.txt` |
+| [Estonia](Estonia) | `EST` | 18 | `zz_INEX_EST_names_divisions.txt` |
+| [Latvia](Latvia) | `LAT` | 19 | `zz_INEX_LAT_names_divisions.txt` |
 | [Lithuania](Lithuania) | `LIT` | 19 | `zz_INEX_LIT_names_divisions.txt` |
 | [Mexico](Mexico) | `MEX` | 23 | `zz_INEX_MEX_names_divisions.txt` |
 | [Brazil](Brazil) | `BRA` | 36 | `zz_INEX_BRA_names_divisions.txt` |

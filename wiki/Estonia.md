@@ -6,9 +6,13 @@
 
 ## Historical Overview
 
-The Estonian Defence Forces (*Eesti Kaitsevägi*) were organized around 10 peacetime infantry regiments (*Jalaväerügement*), designed to mobilize into wartime divisions. Unique to Estonia is a rich tradition of named elite battalions (the Kuperjanovi and Sakala *Partisanide Rügement*), a volunteer defence league (the *Kaitseliit* with its 15 county and urban *malevad*), an armored heritage rooted in legendary named armored trains and armored cars from the 1918–20 War of Independence, and coastal fortress batteries defending Tallinn Bay.
+The Estonian Army fought the War of Independence (1918-1920) with three divisions (*1.*, *2.* and *3. diviis*), nine infantry regiments (*1. jalaväepolk* to *9. jalaväepolk*), partisan and volunteer battalions (*Kuperjanovi partisanide pataljon*, *Sakala partisanide pataljon*, *Kalevlaste Maleva polk*, *Scoutspolk*), county defence battalions and the Armoured Train Division (*Soomusrongide diviis*) with its named trains and armoured cars (*Kapten Irw*, *Wahur*, *Toonela*, *Pisuhänd*). In peace it kept three divisions (HQ Rakvere, Tartu and Tallinn) of regiments and independent battalions (*üksik jalaväepataljon*), a cavalry regiment (*Ratsarügement*), the *Auto-tankirügement* and the coastal commands of Aegna, Naissaar and Suuropi; a 4th Division followed in February 1940. Behind it stood the Defence League (*Kaitseliit*), one *malev* per county.
 
-All Estonian names use the correct **nominative case** (e.g., *Jalaväediviis*, not the vanilla error *diviisi*) and proper Estonian diacritics (õ, ä, ö, ü).
+Estonian writes the ordinal with a full stop (*1. jalaväepolk*) and common nouns in lower case. The divisions carried no honorifics, so the Named lists are extensions: the ancient counties and the battles of the War of Independence for infantry (*1. jalaväediviis 'Virumaa'*), the 1919 armoured cars and train wagons for armour (*1. soomusdiviis 'Kapten Irw'*), the islands for marines. Nicknames stand in straight single quotes because the game's map font has no Estonian quotation marks; the 1919 vehicles keep their period spelling (*Wahur*, *Wibulane*).
+
+INEX replaces all nine vanilla lists, whose names were Roman numerals in the genitive case (*III Jalaväediviisi*). Every vanilla number is written over, so none of vanilla's texts show. `EST_INF_01` also names the Anti-Soviet and Baltic Entente divisions of the vanilla focus tree.
+
+Estonia starts in 1936 under Päts (`neutrality`). The Ancient Freedom (`neutrality`), Veterans' League (`fascism`), Red Rifle (`communism`) and Freedom Fighter (`democratic`) lists are gated by government type only and never mix traditions. No formation raised under the German occupation of 1941-1944 is used.
 
 ---
 
@@ -16,82 +20,89 @@ All Estonian names use the correct **nominative case** (e.g., *Jalaväediviis*, 
 
 | Group Tag | UI Name | Division Types | Fallback Name |
 |:---|:---|:---|:---|
-| `EST_REG_01` | Infantry Regiment | infantry | `%d. Jalaväerügement` |
-| `EST_KL_01` | Defense Formations (Kaitseliit) | infantry | `%d. Kaitseliidu Malev` |
-| `EST_ARM_02` | Armored & Mobile Divisions | light_armor, medium_armor, heavy_armor, modern_armor, motorized, mechanized | `%d. Soomusdiviis` |
-| `EST_MAR_02` | Coastal Defense & Marines | marine | `%d. Meredessantrügement` |
+| `EST_REG_01` | Infantry Regiments | infantry | `%d. jalaväerügement` |
+| `EST_INF_01` | Infantry Divisions | infantry | `%d. jalaväediviis` |
+| `EST_INF_02` | Infantry Divisions (Named) | infantry | `%d. jalaväediviis` |
+| `EST_CAV_01` | Cavalry Regiments | cavalry | `%d. ratsapolk` |
+| `EST_KL_01` | Defence League Malevs | infantry, militia | `Kaitseliidu %d. malev` |
+| `EST_MOT_01` | Motorized Divisions | motorized | `%d. motoriseeritud jalaväediviis` |
+| `EST_MEC_01` | Mechanized Divisions | mechanized | `%d. mehhaniseeritud jalaväediviis` |
+| `EST_ARM_01` | Armored Divisions | light_armor, medium_armor, heavy_armor, modern_armor | `%d. tankidiviis` |
+| `EST_ARM_02` | Armored & Mobile (Named) | light_armor, medium_armor, heavy_armor, modern_armor, motorized, mechanized | `%d. soomusdiviis` |
+| `EST_PAR_01` | Paratrooper Divisions | paratrooper | `%d. õhudessantdiviis` |
+| `EST_MAR_01` | Marine Divisions | marine | `%d. merejalaväediviis` |
+| `EST_MAR_02` | Coastal Defense & Marines | marine | `%d. merejalaväediviis` |
+| `EST_MNT_01` | Mountain Divisions | mountaineers | `%d. mägijalaväediviis` |
+| `EST_GAR_01` | Garrisons & Border Guards | infantry | `%d. garnisonidiviis` |
+| `EST_MUI_01` | Ancient Freedom Divisions | infantry, cavalry | `%d. diviis` |
+| `EST_VAPS_01` | Veterans' League Divisions | infantry, militia | `%d. vabadussõjalaste diviis` |
+| `EST_RED_01` | Red Rifle Divisions | infantry, motorized | `%d. Eesti laskurdiviis` |
+| `EST_MV_01` | Freedom Fighters | infantry, militia | `%d. vabadusvõitlejate diviis` |
 
 ---
 
 ## Group Details
 
-### `EST_REG_01` — Infantry Regiments (Jalaväerügement)
-The Estonian Army's 10 peacetime infantry regiments plus the famous elite and volunteer formations:
+### Regular army
 
-**Historical peacetime regiments (1–10):**
-1.–10. *Jalaväerügement*
+### `EST_REG_01` — Infantry Regiments
+The nine regiments of the War of Independence (*1. jalaväepolk* to *9. jalaväepolk*), the peacetime *10. üksik jalaväepataljon* and *Kalevi üksik jalaväepataljon*, the partisan, volunteer and guard units (*Kuperjanovi partisanide pataljon*, *Sakala partisanide pataljon*, *Kalevlaste Maleva polk*, *Scoutspolk*, *Vahipataljon*, *Ingeri polk*, *Balti pataljon*), and the county defence battalions of 1918-1919 (*Viljandi kaitsepataljon*, *Tallinna 1. kaitsepataljon*). Every name is attested.
 
-**Elite and volunteer formations (11–25):**
-| # | Name | Notes |
-|:--|:---|:---|
-| 11 | *Kuperjanovi Partisanide Rügement* | Famous partisan regiment of the War of Independence |
-| 12 | *Sakala Partisanide Rügement* | Partisan regiment named for historic Sakalland region |
-| 13 | *Kalevlaste Maleva Jalaväerügement* | Kalevlaste (Sons of Kalev) volunteer regiment |
-| 14 | *Scoutsrügement* | Elite scout/ranger regiment |
-| 15 | *Tallinna Vahirügement* | Tallinn Guard Regiment |
-| 16 | *Ingeri Jalaväepolk* | Ingrian Finnish volunteer regiment |
-| 17 | *Balti Pataljon* | Baltic German volunteer battalion |
-| 18–25 | Regional defence battalions | *Peipsi*, *Viljandi*, *Järvamaa*, *Tartu*, *Pärnu*, *Saaremaa*, *Narva*, *Võru Kaitsepataljon* |
+### `EST_INF_01` — Infantry Divisions
+Plain numbered divisions (*1. jalaväediviis*), the default for templates without a nickname. It writes over vanilla's 20 numbers.
 
-**Fallback:** `%d. Jalaväerügement` (Arabic numeral, period-separated — matching Estonian military convention)
+### `EST_INF_02` — Infantry Divisions (Named)
+Shares its numbering with `EST_INF_01`. The 1st to 4th Divisions of 1940 after the ancient county of their HQ region (*'Virumaa'*, *'Ugandi'*, *'Rävala'*, *'Sakala'*), then the other ancient counties and the battles of Paju, Võnnu, Krivasoo, Utria and Laagna. The nicknames are extensions.
 
-### `EST_KL_01` — Kaitseliit (Defence League) Formations
-The *Kaitseliit* was Estonia's national volunteer defence organization, structured into 15 county and city *malevad* (league formations) plus specialized urban companies (*malevkonnad*).
+### `EST_CAV_01` — Cavalry Regiments
+The *1.* and *2. ratsapolk* of the War of Independence, further numbered regiments, the peacetime *Ratsarügement* and the squadrons of 1919 (*Tallinna üksik eskadron*, *Balti pataljoni eskadron*).
 
-**County and city malevad (1–15):**
-*Tallinna malev*, *Tartu malev*, *Narva malev*, *Pärnu malev*, *Harju malev*, *Järva malev*, *Viru malev*, *Lääne malev*, *Saaremaa malev*, *Sakalamaa malev*, *Pärnumaa malev*, *Tartumaa malev*, *Valgamaa malev*, *Võrumaa malev*, *Petserimaa malev*
+### Defence League
 
-**Urban and specialized malevkonnad (16–25):**
-*Toompea malevkond*, *Raudtee malevkond* (Railway), *Sadama malevkond* (Port), *Nõmme malevkond*, *Põhja malevkond* (North), *Lõuna malevkond* (South), *Ida malevkond* (East), *Tehniline malevkond* (Technical), *Õppurmalevkond* (Student), *Alutaguse malev*
+### `EST_KL_01` — Defence League Malevs
+The fourteen county and town *malevad* of the Kaitseliit before 1940 (*Kaitseliidu Sakalamaa malev*), the naval *Merekaitseliit* and the Tallinn *malevkonnad* (*Kaitseliidu Toompea malevkond*). Ungated, as the League served every interwar government.
 
-**Fallback:** `%d. Kaitseliidu Malev`
+### Mobile and armour
 
-### `EST_ARM_02` — Armored & Mechanized Formations (Soomusdiviis)
-Estonian armor draws on the rich tradition of named armored trains and armored cars from the 1918–20 War of Independence. Vehicles and trains were given individual names that became symbols of national military pride.
+### `EST_MOT_01` — Motorized Divisions
+Plain numbered divisions (*1. motoriseeritud jalaväediviis*); writes over vanilla's 10 numbers.
 
-**Armored divisions and brigades (named vehicles and formations):**
-| # | Name | Notes |
-|:--|:---|:---|
-| 1 | *Soomusdiviis 'Kapten Irv'* | Named armored train commander |
-| 2 | *Soomusbrigaad 'Suur Tõll'* | Legendary armored car — giant from Estonian mythology |
-| 3 | *Soomusbrigaad 'Tasuja'* | "The Avenger" — armored car |
-| 4 | *Soomusbrigaad 'Kalevipoeg'* | Mythological Estonian hero |
-| 5 | *Soomusbrigaad 'Estonia'* | National name |
-| 6–10 | Soomuskolonn | *Vanapagan*, *Wahur*, *Toonela*, *Pisuhänd*, *Wibulane* — all mythological creatures |
-| 11 | *Auto-tankirügement* | Tank regiment |
-| 12 | *Soomusrongirügement* | Armored train regiment |
-| 13–18 | *Laiarööpmeline Soomusrong* | Broad-gauge armored trains 1–6 |
-| 19–23 | *Kitsarööpmeline Soomusrong* | Narrow-gauge armored trains 1–5 |
-| 24–25 | *Tankipataljon* | Tank battalions |
+### `EST_MEC_01` — Mechanized Divisions
+Plain numbered divisions (*1. mehhaniseeritud jalaväediviis*); writes over vanilla's 10 numbers.
 
-**Fallback:** `%d. Soomusdiviis`
+### `EST_ARM_01` — Armored Divisions
+Plain numbered divisions (*1. tankidiviis*), the plain variant of `EST_ARM_02`.
 
-### `EST_MAR_02` — Coastal Defense & Marines (Meredessant)
-Covers Estonian coastal fortress batteries, naval assault troops, and marine formations:
+### `EST_ARM_02` — Armored & Mobile (Named)
+Shares its numbering with `EST_ARM_01` and also serves motorized and mechanized templates. The armoured train *Kapten Irw*, the armoured cars and trucks of 1919 (*Suur Tõll*, *Tasuja*, *Kalevipoeg*, *Wahur*, *Puuk*) and the artillery wagons of the armoured trains (*Hävitaja*, *Müristaja*) as nicknames (*1. soomusdiviis 'Kapten Irw'*), and the formations themselves (*Soomusrongide diviis*, *Soomusautode kolonn*, *Auto-tankirügement*, *Soomusrongirügement*).
 
-**Coastal fortresses:**
-- *Aegna Merekindlus* — Aegna Island fortress, Tallinn Bay
-- *Naissaare Merekindlus* — Naissaar Island fortress
-- *Suuropi Merekindlus* — Suurupi fortress
+### Specialists
 
-**Marine assault:**
-- *Eesti Meredessantpataljon* — Estonian naval assault battalion
-- *Meredessantrügement* 1–7 — Marine assault regiments
-- *Saaremaa Rannakaitsepataljon*, *Hiiumaa Rannakaitsepataljon* — Island coastal defence
-- *Peipsi Laevastiku Dessantpataljon* — Lake Peipus fleet assault battalion
+### `EST_PAR_01` — Paratrooper Divisions
+Plain numbered divisions (*1. õhudessantdiviis*); Estonia had no airborne tradition.
 
-**Coastal batteries:**
-*Viimsi*, *Kakumäe*, *Sõrve*, *Tahkuna Rannakaitsepatarei* — named batteries at key positions
+### `EST_MAR_01` — Marine Divisions
+Plain numbered divisions (*1. merejalaväediviis*), the plain variant of `EST_MAR_02`.
 
-**Fallback:** `%d. Meredessantrügement`
+### `EST_MAR_02` — Coastal Defense & Marines
+Shares its numbering with `EST_MAR_01`. Marine divisions after the islands (*1. merejalaväediviis 'Saaremaa'*, *'Hiiumaa'*, *'Muhu'*), then the landing battalion of 1919 (*Meredessantpataljon*), the coastal commands (*Aegna*, *Naissaare* and *Suuropi komandantuur*) and the Lake Peipus flotilla (*Peipsi laevastiku divisjon*).
 
+### `EST_MNT_01` — Mountain Divisions
+Estonia has no mountains; the uplands and highest hills stand in (*1. mägijalaväediviis 'Haanja'*, *'Suur Munamägi'*). The nicknames are extensions.
+
+### `EST_GAR_01` — Garrisons & Border Guards
+The garrison towns of the 1939 army (*Tallinna garnison*, *Rakvere garnison*), other county towns, and the *Viru piirivalvepataljon*.
+
+### Ideology suites
+
+### `EST_MUI_01` — Ancient Freedom Divisions (neutrality)
+The ancient fight for freedom of 1208-1227 that the Päts era celebrated: the elders *Lembitu* and *Meeme*, the strongholds (*Varbola*, *Otepää*, *Valjala*), the battles of Ümera and St Matthew's Day, and the St George's Night rising of 1343 (*15. diviis 'Jüriöö'*). The division names are extensions.
+
+### `EST_VAPS_01` — Veterans' League Divisions (fascism)
+The War of Independence Veterans' League (*vapsid*), with the Finnic lands of the vanilla Finno-Ugric union focuses as nicknames (*1. vabadussõjalaste diviis 'Karjala'*, *'Ingerimaa'*, *'Aunus'*), and the League's own *korrapidajate üksus*. The divisions are extensions; no leader is a patron.
+
+### `EST_RED_01` — Red Rifle Divisions (communism)
+The 22nd Territorial Rifle Corps of 1940-1941 with its 180th and 182nd Divisions (*'Põhja'*, *'Lõuna'*), the 8th Estonian Rifle Corps with the 7th and 249th Divisions and their regiments, and the Guards titles of 1945 (*118. kaardiväe Eesti Tallinna punalipuline laskurdiviis*), each on its own number.
+
+### `EST_MV_01` — Freedom Fighters (democratic)
+The Finnish Boys of JR 200 (*Soome jalaväerügement 200*), the defence of the Tief government in September 1944 (*Löögirühm Admiral Pitka*, the battle of Keila) and the Forest Brothers of 1944-1953 (*Relvastatud Võitluse Liit*, *Võrumaa metsavennad*, the battles of Saika and Puutlipalu).

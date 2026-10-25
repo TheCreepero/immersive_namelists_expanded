@@ -94,7 +94,6 @@ ITA_INF_01 = {
 		103 = { "%da Divisione di Fanteria 'Piacenza'" }
 		104 = { "%da Divisione di Fanteria 'Mantova'" }
 		105 = { "%da Divisione di Fanteria 'Rovigo'" }
-		136 = { "%da Divisione 'Giovani Fascisti'" }
 		# Occupation divisions (1941-43)
 		151 = { "%da Divisione di Fanteria 'Perugia'" }
 		152 = { "%da Divisione di Fanteria 'Piceno'" }
@@ -141,6 +140,8 @@ ITA_INF_02 = {
 		12 = { "%da Divisione CC.NN. 'Leonessa'" }
 		# Vanilla keys written again (vanilla group merges in)
 		14 = { "%da Divisione CC.NN." }
+		# Giovani Fascisti, GIL volunteers (1941-43)
+		136 = { "%da Divisione 'Giovani Fascisti'" }
 	}
 }
 
@@ -524,9 +525,10 @@ ITA_COL_01 = {
 		# Libyan divisions (1940)
 		1 = { "%da Divisione Libica 'Sibille'" }
 		2 = { "%da Divisione Libica 'Pescatori'" }
-		# Eritrean divisions (1935-36)
+		# Ethiopian war divisions (1935-36)
 		31 = { "1a Divisione Eritrea" }
 		32 = { "2a Divisione Eritrea" }
+		33 = { "Divisione Coloniale 'Libia'" }
 		# Somali divisions (1940-41)
 		101 = { "101a Divisione Somala" }
 		102 = { "102a Divisione Somala" }
@@ -934,11 +936,15 @@ ITA_FAV_01 = {
 		1 = { "Divisione Fiamme Verdi 'Tito Speri'" }
 		2 = { "Divisione Fiamme Verdi 'Astolfo Lunardi'" }
 		3 = { "Brigata Fiamme Verdi 'Schivardi'" }
-		4 = { "Brigata Fiamme Verdi 'Tosetti'" }
-		5 = { "Brigata Fiamme Verdi 'Lorenzini'" }
-		6 = { "Brigata Fiamme Verdi 'Perlasca'" }
-		7 = { "Brigata Fiamme Verdi 'Margheriti'" }
-		8 = { "Brigata Fiamme Verdi 'Dieci Giornate'" }
+		4 = { "Brigata Fiamme Verdi 'Tarzan'" }
+		5 = { "Brigata Fiamme Verdi 'Ferruccio Lorenzini'" }
+		6 = { "Brigata Fiamme Verdi 'Giacomo Perlasca'" }
+		7 = { "Brigata Fiamme Verdi 'Ermanno Margheriti'" }
+		8 = { "Brigata Fiamme Verdi 'Dieci Giornate'" }
+		9 = { "Brigata Fiamme Verdi 'Giacomo Cappellini'" }
+		10 = { "Brigata Fiamme Verdi 'Antonio Lorenzetti'" }
+		11 = { "284a Brigata Fiamme Verdi 'Italo'" }
+		12 = { "Brigata Mantovana Fiamme Verdi" }
 	}
 }
 
@@ -956,11 +962,17 @@ ITA_ALT_01 = {
 
 	ordered = {
 		1 = { "Brigata Maiella" }
-		2 = { "Divisione Osoppo-Friuli" }
+		2 = { "Brigate Osoppo-Friuli" }
 		3 = { "Fronte Militare Clandestino" }
-		4 = { "Brigata Risorgimento" }
-		5 = { "Divisione Italia" }
-		6 = { "Brigata 'Damiano Chiesa'" }
+		4 = { "Divisione 'Val Toce'" }
+		5 = { "1a Divisione Osoppo Carnia" }
+		6 = { "Brigata 'Damiano Chiesa'" }
+		7 = { "1a Brigata Osoppo Prealpi" }
+		8 = { "2a Brigata Osoppo" }
+		9 = { "3a Brigata Osoppo" }
+		10 = { "5a Brigata Osoppo" }
+		11 = { "Brigata Osoppo 'Martelli'" }
+		12 = { "Brigata Alpina d'Assalto 'Filippo Beltrami'" }
 	}
 }
 
@@ -1001,7 +1013,7 @@ ITA_MOT_01 = {
 		103 = { "%da Divisione Autotrasportabile 'Piacenza'" }
 		104 = { "%da Divisione Autotrasportabile 'Mantova'" }
 		105 = { "%da Divisione Autotrasportabile 'Rovigo'" }
-		# Fictional
+		# Plausible expansion
 		106 = { "%da Divisione Motorizzata 'Rubicone'" }
 		107 = { "%da Divisione Motorizzata 'Volturno'" }
 		108 = { "%da Divisione Motorizzata 'Sila'" }
@@ -1074,7 +1086,7 @@ ITA_ARM_01 = {
 		135 = { "%da Divisione Corazzata 'Ariete II'" }
 		136 = { "%da Divisione Corazzata 'Centauro II'" }
 		138 = { "1a Divisione Corazzata CC.NN. 'M'" }
-		# Fictional (postwar cavalry brigade)
+		# Plausible expansion (postwar cavalry brigade)
 		137 = { "%da Divisione Corazzata 'Pozzuolo del Friuli'" }
 		# Plausible expansion (postwar brigades and cavalry traditions)
 		139 = { "%da Divisione Corazzata 'Curtatone'" }
@@ -1125,6 +1137,18 @@ ITA_MAR_02 = {
 		3 = { "%da Divisione Fanteria di Marina 'Napoli'" }
 		4 = { "%da Divisione Fanteria di Marina 'Genova'" }
 		5 = { "%da Divisione Fanteria di Marina 'Palermo'" }
+		# Great War battles of the Reggimento Marina (1915-18)
+		6 = { "%da Divisione Fanteria di Marina 'Grado'" }
+		7 = { "%da Divisione Fanteria di Marina 'Cortellazzo'" }
+		8 = { "%da Divisione Fanteria di Marina 'Capo Sile'" }
+		9 = { "%da Divisione Fanteria di Marina 'Caimani del Piave'" }
+		10 = { "%da Divisione Fanteria di Marina 'Andrea Bafile'" }
+		# Naval tradition
+		11 = { "%da Divisione Fanteria di Marina 'Lepanto'" }
+		12 = { "%da Divisione Fanteria di Marina 'Amalfi'" }
+		13 = { "%da Divisione Fanteria di Marina 'Gaeta'" }
+		14 = { "%da Divisione Fanteria di Marina 'Brindisi'" }
+		15 = { "%da Divisione Fanteria di Marina 'Pola'" }
 	}
 }
 
@@ -1208,6 +1232,11 @@ ITA_RGR_01 = {
 		5 = { "%da Divisione Bersaglieri 'Luciano Manara'" }
 		6 = { "%da Divisione Bersaglieri 'Enrico Toti'" }
 		7 = { "%da Divisione Bersaglieri 'Sciara Sciat'" }
+		10 = { "%da Divisione Bersaglieri 'Santa Lucia'" }
+		11 = { "%da Divisione Bersaglieri 'Castelfidardo'" }
+		12 = { "%da Divisione Bersaglieri 'Giacomo Pagliari'" }
+		13 = { "%da Divisione Bersaglieri 'Monte Fior'" }
+		14 = { "%da Divisione Bersaglieri 'Col del Rosso'" }
 		# Corps traditions
 		8 = { "%da Divisione Bersaglieri 'Fiamme Cremisi'" }
 		9 = { "%da Divisione Bersaglieri 'Piumetto'" }
@@ -1233,6 +1262,11 @@ ITA_ARD_01 = {
 		3 = { "%da Divisione d'Assalto 'Col Moschin'" }
 		4 = { "%da Divisione d'Assalto 'San Gabriele'" }
 		5 = { "%da Divisione d'Assalto 'Grave di Papadopoli'" }
+		6 = { "%da Divisione d'Assalto 'Monte Valbella'" }
+		7 = { "%da Divisione d'Assalto 'Col d'Echele'" }
+		8 = { "%da Divisione d'Assalto 'Monte Asolone'" }
+		9 = { "%da Divisione d'Assalto 'Fagarè'" }
+		10 = { "%da Divisione d'Assalto 'Monte Pertica'" }
 		# Historical units (1940-43)
 		21 = { "10° Reggimento Arditi" }
 		22 = { "1° Battaglione Speciale Arditi" }

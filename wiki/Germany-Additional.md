@@ -15,14 +15,14 @@ This file holds formations that sit outside the core division series:
 - **Penal units:** the Bewährungstruppe 500 and Division 999.
 - **Paramilitaries:** one militia list per ideology.
 - **Foreign legions.**
-- **Imperial series:** the Sturm-Bataillone of 1916–18 and the Landwehr divisions of 1914–18.
+- **Imperial series:** the Sturm-Bataillone of 1916–18 and the Reserve, Ersatz and Landwehr divisions of 1914–18.
 
 Reserve, Volksgrenadier and Grenadier divisions share the Heer numbering (`GER_Inf_01`) and sit on their real numbers. All other groups run their own series.
 
 Ideology gating:
 - **Fascist:** Volkssturm, SA and Foreign Legions.
 - **Neutrality:** Freikorps.
-- **Neutrality and democratic:** Imperial Storm Battalions and Imperial Landwehr Divisions.
+- **Neutrality and democratic:** Imperial Storm Battalions, Imperial Reserve Divisions and Imperial Landwehr Divisions.
 - **Democratic:** Reichsbanner.
 - **Communism:** Red Front Fighters.
 - **Schutztruppe:** keeps its vanilla gating.
@@ -56,6 +56,7 @@ Ideology gating:
 | `GER_MIL_03` | Red Front Fighters | militia | `%d. RFB-Gau` |
 | `GER_LEG_01` | Foreign Legions | infantry, cavalry, mountaineers | `%d. Freiwilligen-Division` |
 | `GER_STURM_01` | Imperial Storm Battalions | infantry, ranger_battalion | `Sturm-Bataillon Nr. %d` |
+| `GER_MONRES_01` | Imperial Reserve Divisions | infantry | `%d. Reserve-Division` |
 | `GER_LANDWEHR_01` | Imperial Landwehr Divisions | infantry, militia | `%d. Landwehr-Division` |
 
 > **Note:** `GER_SCHWERE_PANZERABTEILUNG_01` and `_02` are linked (`link_numbering_with`), so the long and abbreviated forms share one number series.
@@ -72,7 +73,7 @@ Ideology gating:
 The Tiger battalions *schwere Panzer-Abteilung 501–510* and their 1945 renumberings (511, 424). Also the radio-control battalion *(Fkl) 301* and the heavy tank destroyer battalions *653*, *654* and *512*. The second group gives the abbreviated forms (*s.Pz.Abt. 501*, *s.Pz.Jg.Abt. 653*).
 
 ### `GER_ARM_03` — Panzer Brigades
-*Panzer-Brigade 10* (Kursk), the 1944 *Panzer-Brigaden 101–113* and *150*, and *Panzer-Brigade 'Norwegen'*, for small armoured templates.
+The brigade staffs of the Panzer divisions of 1935–42 (*1.*–*6.* and *8. Panzer-Brigade*), the *18.* and *21.*, and the *100. Panzer-Brigade* of 1941 with captured French tanks. Then *Panzer-Brigade 10* (Kursk), the 1944 *Panzer-Brigaden 101–113* and *150*, and *Panzer-Brigade 'Norwegen'*. For small armoured templates.
 
 ### `GER_STUG_01` — Assault Gun Brigades
 The Sturmartillerie of the Heer on its real numbers, *Sturmgeschütz-Brigade 177* to *914*. The independent Sturmgeschütz-Abteilungen were renamed brigades on 14 February 1944 and stayed at battalion strength (31 guns, later 45). The brigades given an escort grenadier battery later in 1944 appear as *Heeres-Sturmartillerie-Brigaden* (*236*, *239*, *667*), and *184* and *185* as *Heeres-Sturmgeschütz-Brigaden*. The list closes with *Sturmgeschütz-Lehr-Brigade 920*, *Sturmartillerie-Lehr-Brigade 111* and *Sturmgeschütz-Brigade 'Schill'*, the Luftwaffe's *Fallschirm-Sturmgeschütz-Brigaden 11*, *12* and *21*, and the *Sturmpanzer-Abteilungen 216–219*.
@@ -90,7 +91,7 @@ The Volksgrenadier divisions in raising order, led by the *78. Volks-Sturm-Divis
 *Luftwaffen-Division Meindl* and *Luftwaffen-Feld-Division 1–21*, in the Luftwaffe's own usage before the Heer took them over. The group runs its own number series.
 
 ### `GER_FLAK_DIVISION_01` — Flak Divisions
-*1.–31. Flak-Division* and the two Flakscheinwerfer divisions. A home is noted where verified (*1. 'Berlin'*, *3. 'Hamburg'*, *26. 'München'*, *29. 'Oslo'*), and *9. 'Stalingrad'* marks the division destroyed there.
+*1.–31. Flak-Division* and the two Flakscheinwerfer divisions. A home is noted where verified (*1. 'Berlin'*, *3. 'Hamburg'*, *7. 'Köln'*, *26. 'München'*, *29. 'Oslo'*), and *9. 'Stalingrad'* marks the division destroyed there.
 
 ### `GER_GAR_02` — City Garrisons
 *Wehrmachtkommandantur Berlin*, *Kommandant von Groß-Paris* and the *Stadtkommandanturen* of occupied and allied capitals and major cities, using German names of the period (*Reval*, *Wilna*, *Agram*, *Laibach*). Overflow uses the numbered *Feldkommandantur*.
@@ -140,6 +141,14 @@ The foreign divisions and legions in German service:
 
 ### `GER_STURM_01` — Imperial Storm Battalions (neutrality/democratic)
 The army-level assault battalions of 1916–18, *Sturm-Bataillon Nr. 1* to *Nr. 18*, with *Sturm-Bataillon Nr. 5 (Rohr)*, *Jäger-Sturm-Bataillon Nr. 3* and the Bavarian *Nr. 6* and *Nr. 15*. Number 13 never grew beyond a company and is left to the overflow.
+
+### `GER_MONRES_01` — Imperial Reserve Divisions (neutrality/democratic)
+The Reserve divisions of 1914–18 on their real numbers (*1.* to *82. Reserve-Division*), for the Imperial path:
+- The Saxon *23.* and *24.* and the *26. (Württembergische) Reserve-Division* with their state names.
+- The seven Bavarian Reserve divisions in their own series (*1. Kgl. Bayer. Reserve-Division* to *39.*).
+- The Ersatz divisions (*4.*, *5.*, *8.*, *10.* and *19. Ersatz-Division*, and the *Kgl. Bayer. Ersatz-Division*).
+
+The Guard Reserve divisions are in the Guard list of the [Heer](Germany) file.
 
 ### `GER_LANDWEHR_01` — Imperial Landwehr Divisions (neutrality/democratic)
 The Landwehr divisions of 1914–18 on their real numbers (*1.* to *85. Landwehr-Division*), a second-line list for the Imperial path:

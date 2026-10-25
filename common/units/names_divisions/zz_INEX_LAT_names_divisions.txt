@@ -1,18 +1,14 @@
 # Division template historical names system for Latvia (LAT).
 # Immersive Namelists Expanded (INEX)
-#
-# Covers:
-# 1. LAT_INF_01: Infantry Divisions (1.–4. Historical Regional Divisions, 5.–12. Mobilization Regional Divisions, 13.–30. Numbered Divisions)
-# 2. LAT_REG_01: Infantry Regiments & Elite Battalions (1.–12. Peacetime Regiments, Kalpaka, Studentu, Partisans, 1.–8. Latviešu strēlnieki, Border Guards)
-# 3. LAT_AIZ_01: Aizsargi Territorial Formations (All 19 County/City Aizsargu Regiments, Dzelzceļu, Aviācijas, Jūras detachments)
-# 4. LAT_ARM_02: Armored & Mobile Divisions (Armored cars "Lāčplēsis", "Imanta", etc., Autotanku pulks, Armored trains "Kalpaks", "Komandieris", Tank battalions)
-# 5. LAT_MAR_02: Coastal Defense & Marines (Naval Fortresses Daugavgrīva, Mangaļsala, Liepāja, Bolderāja, Jūras kājnieku pulki)
-# 6. LAT_CAV_01: Cavalry Regiments (1. Jātnieku pulks, Regional Cavalry Regiments)
-# 7. LAT_CAV_02: Cavalry Squadrons & Partisans (Historical independent squadrons, volunteer horse detachments, partisan cavalry)
+# Latvian names as the army of 1919-1940 wrote them: an Arabic ordinal with a full stop (1. Kurzemes kājnieku divīzija), lower-case common nouns, place names in the genitive before the noun. Nicknames stand in straight single quotes; the map font has no Latvian quotation marks.
+# Overrides all nine vanilla LAT groups (INF, CAV, MOT, MEC, ARM, PAR, MAR, MNT, GAR) and writes over every vanilla number. LAT_INF_01 is the group of the vanilla Ugunskrusts and Baltic Entente focus templates.
 
+# ===== Field army =====
+
+# Vanilla tag, used by the vanilla Ugunskrusts and Baltic Entente focus templates. Plain variant: keys 1-20 write over vanilla's regional and title-cased entries.
 LAT_INF_01 = 
 {
-	name = "Infantry Division"
+	name = "Infantry Divisions"
 
 	for_countries = { LAT }
 
@@ -20,19 +16,56 @@ LAT_INF_01 =
 
 	division_types = { "infantry" }
 
-	# Number reservation system will tie to another group.
-	#link_numbering_with = { LAT_INF_01 }
+	fallback_name = "%d. kājnieku divīzija"
 
-	fallback_name = "%d. Kājnieku divīzija"
-
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
 	ordered =
 	{
+		1 = { "1. kājnieku divīzija" }
+		2 = { "2. kājnieku divīzija" }
+		3 = { "3. kājnieku divīzija" }
+		4 = { "4. kājnieku divīzija" }
+		5 = { "5. kājnieku divīzija" }
+		6 = { "6. kājnieku divīzija" }
+		7 = { "7. kājnieku divīzija" }
+		8 = { "8. kājnieku divīzija" }
+		9 = { "9. kājnieku divīzija" }
+		10 = { "10. kājnieku divīzija" }
+		11 = { "11. kājnieku divīzija" }
+		12 = { "12. kājnieku divīzija" }
+		13 = { "13. kājnieku divīzija" }
+		14 = { "14. kājnieku divīzija" }
+		15 = { "15. kājnieku divīzija" }
+		16 = { "16. kājnieku divīzija" }
+		17 = { "17. kājnieku divīzija" }
+		18 = { "18. kājnieku divīzija" }
+		19 = { "19. kājnieku divīzija" }
+		20 = { "20. kājnieku divīzija" }
+	}
+}
+
+# Named variant of LAT_INF_01: the four divisions of 1919-1940 in their 1934-1940 form, then regions, the ancient lands and towns in the genitive on the same pattern.
+LAT_INF_02 = 
+{
+	name = "Infantry Divisions (Named)"
+
+	for_countries = { LAT }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	link_numbering_with = { LAT_INF_01 }
+
+	fallback_name = "%d. kājnieku divīzija"
+
+	ordered =
+	{
+		# Divisions of 1919-1940
 		1 = { "1. Kurzemes kājnieku divīzija" }
 		2 = { "2. Vidzemes kājnieku divīzija" }
 		3 = { "3. Latgales kājnieku divīzija" }
 		4 = { "4. Zemgales kājnieku divīzija" }
+		# Regions and the 1919 brigades
 		5 = { "5. Rīgas kājnieku divīzija" }
 		6 = { "6. Sēlijas kājnieku divīzija" }
 		7 = { "7. Ziemeļlatvijas kājnieku divīzija" }
@@ -41,30 +74,27 @@ LAT_INF_01 =
 		10 = { "10. Augškurzemes kājnieku divīzija" }
 		11 = { "11. Liepājas kājnieku divīzija" }
 		12 = { "12. Daugavpils kājnieku divīzija" }
-		13 = { "%d. Kājnieku divīzija" }
-		14 = { "%d. Kājnieku divīzija" }
-		15 = { "%d. Kājnieku divīzija" }
-		16 = { "%d. Kājnieku divīzija" }
-		17 = { "%d. Kājnieku divīzija" }
-		18 = { "%d. Kājnieku divīzija" }
-		19 = { "%d. Kājnieku divīzija" }
-		20 = { "%d. Kājnieku divīzija" }
-		21 = { "%d. Kājnieku divīzija" }
-		22 = { "%d. Kājnieku divīzija" }
-		23 = { "%d. Kājnieku divīzija" }
-		24 = { "%d. Kājnieku divīzija" }
-		25 = { "%d. Kājnieku divīzija" }
-		26 = { "%d. Kājnieku divīzija" }
-		27 = { "%d. Kājnieku divīzija" }
-		28 = { "%d. Kājnieku divīzija" }
-		29 = { "%d. Kājnieku divīzija" }
-		30 = { "%d. Kājnieku divīzija" }
+		# Ancient lands
+		13 = { "13. Tālavas kājnieku divīzija" }
+		14 = { "14. Jersikas kājnieku divīzija" }
+		15 = { "15. Kokneses kājnieku divīzija" }
+		16 = { "16. Atzeles kājnieku divīzija" }
+		17 = { "17. Idumejas kājnieku divīzija" }
+		18 = { "18. Metsepoles kājnieku divīzija" }
+		# Regions and towns
+		19 = { "19. Piebalgas kājnieku divīzija" }
+		20 = { "20. Jelgavas kājnieku divīzija" }
+		21 = { "21. Cēsu kājnieku divīzija" }
+		22 = { "22. Valmieras kājnieku divīzija" }
+		23 = { "23. Rēzeknes kājnieku divīzija" }
+		24 = { "24. Ventspils kājnieku divīzija" }
 	}
 }
 
+# Regiment-sized templates: the army's twelve regiments, the units of the War of Independence, the Latvian Riflemen of 1915-1917 and the border guard battalions. Numbers inside a name are the unit's own, not its key.
 LAT_REG_01 = 
 {
-	name = "Infantry Regiment"
+	name = "Infantry Regiments"
 
 	for_countries = { LAT }
 
@@ -72,15 +102,11 @@ LAT_REG_01 =
 
 	division_types = { "infantry" }
 
-	# Number reservation system will tie to another group.
-	#link_numbering_with = { LAT_REG_01 }
+	fallback_name = "%d. kājnieku pulks"
 
-	fallback_name = "%d. Kājnieku pulks"
-
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
 	ordered =
 	{
+		# Peacetime regiments (1919-1940)
 		1 = { "1. Liepājas kājnieku pulks" }
 		2 = { "2. Ventspils kājnieku pulks" }
 		3 = { "3. Jelgavas kājnieku pulks" }
@@ -93,14 +119,16 @@ LAT_REG_01 =
 		10 = { "10. Aizputes kājnieku pulks" }
 		11 = { "11. Dobeles kājnieku pulks" }
 		12 = { "12. Bauskas kājnieku pulks" }
+		# War of Independence (1919-1920)
 		13 = { "Kalpaka bataljons" }
 		14 = { "Atsevišķais studentu bataljons" }
-		15 = { "Cēsu rotu pulks" }
-		16 = { "Neatkarības bataljons" }
+		15 = { "Cēsu bataljons" }
+		16 = { "Latvijas Neatkarības bataljons" }
 		17 = { "Ziemeļlatvijas partizānu pulks" }
 		18 = { "Latgales partizānu pulks" }
 		19 = { "Augškurzemes partizānu pulks" }
-		20 = { "Kara skolas kadetu bataljons" }
+		20 = { "Kara skolas kadetu rota" }
+		# Latvian Riflemen (1915-1917)
 		21 = { "1. Daugavgrīvas latviešu strēlnieku pulks" }
 		22 = { "2. Rīgas latviešu strēlnieku pulks" }
 		23 = { "3. Kurzemes latviešu strēlnieku pulks" }
@@ -109,31 +137,69 @@ LAT_REG_01 =
 		26 = { "6. Tukuma latviešu strēlnieku pulks" }
 		27 = { "7. Bauskas latviešu strēlnieku pulks" }
 		28 = { "8. Valmieras latviešu strēlnieku pulks" }
-		29 = { "1. Dagdas robežsargu pulks" }
-		30 = { "2. Zilupes robežsargu pulks" }
-		31 = { "3. Abrenes robežsargu pulks" }
-		32 = { "4. Krāslavas robežsargu pulks" }
-		33 = { "%d. Kājnieku pulks" }
-		34 = { "%d. Kājnieku pulks" }
-		35 = { "%d. Kājnieku pulks" }
-		36 = { "%d. Kājnieku pulks" }
-		37 = { "%d. Kājnieku pulks" }
-		38 = { "%d. Kājnieku pulks" }
-		39 = { "%d. Kājnieku pulks" }
-		40 = { "%d. Kājnieku pulks" }
-		41 = { "%d. Kājnieku pulks" }
-		42 = { "%d. Kājnieku pulks" }
-		43 = { "%d. Kājnieku pulks" }
-		44 = { "%d. Kājnieku pulks" }
-		45 = { "%d. Kājnieku pulks" }
-		46 = { "%d. Kājnieku pulks" }
-		47 = { "%d. Kājnieku pulks" }
-		48 = { "%d. Kājnieku pulks" }
-		49 = { "%d. Kājnieku pulks" }
-		50 = { "%d. Kājnieku pulks" }
+		# Border guards (1935-1940)
+		29 = { "1. Dagdas robežsargu bataljons" }
+		30 = { "2. Zilupes robežsargu bataljons" }
+		31 = { "3. Abrenes robežsargu bataljons" }
+		# Further units (1915-1922)
+		32 = { "13. Tukuma kājnieku pulks" }
+		33 = { "Piebalgas bataljons" }
+		34 = { "Malienas bataljons" }
+		35 = { "Latviešu skolnieku bataljons" }
+		36 = { "2. Cēsu pulka skolnieku rota" }
+		37 = { "Ziemeļlatvijas rezerves bataljons" }
+		38 = { "Bauskas atsevišķais bataljons" }
+		39 = { "1. partizānu pulks" }
+		40 = { "Rezerves latviešu strēlnieku pulks" }
 	}
 }
 
+# ===== Garrisons and territorial defence =====
+
+# Overrides vanilla LAT_GAR_01 ('%d. Garnizona Pulks', keys 11-20). Vanilla links it to LAT_INF_01, so the towns start at 11; the Border Guard Brigade sits on 101.
+LAT_GAR_01 = 
+{
+	name = "Garrisons & Border Guards"
+
+	for_countries = { LAT }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	link_numbering_with = { LAT_INF_01 }
+
+	fallback_name = "%d. garnizona divīzija"
+
+	ordered =
+	{
+		# Garrison towns
+		11 = { "Rīgas garnizons" }
+		12 = { "Liepājas garnizons" }
+		13 = { "Daugavpils garnizons" }
+		14 = { "Jelgavas garnizons" }
+		15 = { "Ventspils garnizons" }
+		16 = { "Rēzeknes garnizons" }
+		17 = { "Valmieras garnizons" }
+		18 = { "Cēsu garnizons" }
+		19 = { "Aizputes garnizons" }
+		20 = { "Dobeles garnizons" }
+		21 = { "Bauskas garnizons" }
+		22 = { "Siguldas garnizons" }
+		23 = { "Alūksnes garnizons" }
+		24 = { "Gulbenes garnizons" }
+		25 = { "Ludzas garnizons" }
+		26 = { "Abrenes garnizons" }
+		27 = { "Kuldīgas garnizons" }
+		28 = { "Tukuma garnizons" }
+		29 = { "Jēkabpils garnizons" }
+		30 = { "Krustpils garnizons" }
+		# Border guards
+		101 = { "Robežsargu brigāde" }
+	}
+}
+
+# Aizsargi (Aizsardzības organizācija, 1919-1940): the 19 county regiments under their 1939-1940 numbers; the special units sit on 101 and up, so the fallback fills the free numbers.
 LAT_AIZ_01 = 
 {
 	name = "Aizsargi Formations"
@@ -142,58 +208,131 @@ LAT_AIZ_01 =
 
 	can_use = { always = yes }
 
-	division_types = { "infantry" }
+	division_types = { "infantry" "militia" }
 
-	# Number reservation system will tie to another group.
-	#link_numbering_with = { LAT_AIZ_01 }
+	fallback_name = "%d. aizsargu pulks"
 
-	fallback_name = "%d. Aizsargu pulks"
-
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
 	ordered =
 	{
+		# County regiments (1939-1940)
 		1 = { "1. Talsu aizsargu pulks" }
 		2 = { "2. Ventspils aizsargu pulks" }
-		3 = { "3. Kuldīgas aizsargu pulks" }
-		4 = { "4. Liepājas aizsargu pulks" }
+		3 = { "3. Ludzas aizsargu pulks" }
+		4 = { "4. Jēkabpils aizsargu pulks" }
 		5 = { "5. Rīgas aizsargu pulks" }
-		6 = { "6. Jelgavas aizsargu pulks" }
-		7 = { "7. Bauskas aizsargu pulks" }
+		6 = { "6. Aizputes aizsargu pulks" }
+		7 = { "7. Valkas aizsargu pulks" }
 		8 = { "8. Valmieras aizsargu pulks" }
-		9 = { "9. Cēsu aizsargu pulks" }
-		10 = { "10. Valkas aizsargu pulks" }
-		11 = { "11. Madonas aizsargu pulks" }
+		9 = { "9. Madonas aizsargu pulks" }
+		10 = { "10. Cēsu aizsargu pulks" }
+		11 = { "11. Tukuma aizsargu pulks" }
 		12 = { "12. Ilūkstes aizsargu pulks" }
-		13 = { "13. Jēkabpils aizsargu pulks" }
-		14 = { "14. Abrenes aizsargu pulks" }
-		15 = { "15. Ludzas aizsargu pulks" }
-		16 = { "16. Rēzeknes aizsargu pulks" }
-		17 = { "17. Daugavpils aizsargu pulks" }
-		18 = { "18. Tukuma aizsargu pulks" }
-		19 = { "19. Rīgas pilsētas aizsargu pulks" }
-		20 = { "Dzelzceļu aizsargu pulks" }
-		21 = { "Aizsargu aviācijas pulks" }
-		22 = { "Aizsargu motorizētais pulks" }
-		23 = { "Jūras aizsargu divizions" }
-		24 = { "Aizsargu sakaru bataljons" }
-		25 = { "%d. Aizsargu pulks" }
-		26 = { "%d. Aizsargu pulks" }
-		27 = { "%d. Aizsargu pulks" }
-		28 = { "%d. Aizsargu pulks" }
-		29 = { "%d. Aizsargu pulks" }
-		30 = { "%d. Aizsargu pulks" }
-		31 = { "%d. Aizsargu pulks" }
-		32 = { "%d. Aizsargu pulks" }
-		33 = { "%d. Aizsargu pulks" }
-		34 = { "%d. Aizsargu pulks" }
-		35 = { "%d. Aizsargu pulks" }
+		13 = { "13. Bauskas aizsargu pulks" }
+		14 = { "14. Kuldīgas aizsargu pulks" }
+		15 = { "15. Liepājas aizsargu pulks" }
+		16 = { "16. Jelgavas aizsargu pulks" }
+		17 = { "17. Rēzeknes aizsargu pulks" }
+		18 = { "18. Daugavpils aizsargu pulks" }
+		19 = { "19. Abrenes aizsargu pulks" }
+		# Special units
+		101 = { "Dzelzceļu aizsargu pulks" }
+		102 = { "Aizsargu aviācijas pulks" }
+		103 = { "Aizsargu jūras divizions" }
 	}
 }
 
+# ===== Motorized, mechanized and armour =====
+
+# Overrides vanilla LAT_MOT_01 ('Motorizēto Strēlnieku Pulks', keys 1-10) as a plain list and anchors the mobile numbering.
+LAT_MOT_01 = 
+{
+	name = "Motorized Divisions"
+
+	for_countries = { LAT }
+
+	can_use = { always = yes }
+
+	division_types = { "motorized" }
+
+	fallback_name = "%d. motorizētā kājnieku divīzija"
+
+	ordered =
+	{
+		1 = { "1. motorizētā kājnieku divīzija" }
+		2 = { "2. motorizētā kājnieku divīzija" }
+		3 = { "3. motorizētā kājnieku divīzija" }
+		4 = { "4. motorizētā kājnieku divīzija" }
+		5 = { "5. motorizētā kājnieku divīzija" }
+		6 = { "6. motorizētā kājnieku divīzija" }
+		7 = { "7. motorizētā kājnieku divīzija" }
+		8 = { "8. motorizētā kājnieku divīzija" }
+		9 = { "9. motorizētā kājnieku divīzija" }
+		10 = { "10. motorizētā kājnieku divīzija" }
+	}
+}
+
+# Overrides vanilla LAT_MEC_01 ('Mehanizēto Strēlnieku Pulks', keys 1-10) as a plain list; shares numbering with LAT_MOT_01.
+LAT_MEC_01 = 
+{
+	name = "Mechanized Divisions"
+
+	for_countries = { LAT }
+
+	can_use = { always = yes }
+
+	division_types = { "mechanized" }
+
+	link_numbering_with = { LAT_MOT_01 }
+
+	fallback_name = "%d. mehanizētā kājnieku divīzija"
+
+	ordered =
+	{
+		1 = { "1. mehanizētā kājnieku divīzija" }
+		2 = { "2. mehanizētā kājnieku divīzija" }
+		3 = { "3. mehanizētā kājnieku divīzija" }
+		4 = { "4. mehanizētā kājnieku divīzija" }
+		5 = { "5. mehanizētā kājnieku divīzija" }
+		6 = { "6. mehanizētā kājnieku divīzija" }
+		7 = { "7. mehanizētā kājnieku divīzija" }
+		8 = { "8. mehanizētā kājnieku divīzija" }
+		9 = { "9. mehanizētā kājnieku divīzija" }
+		10 = { "10. mehanizētā kājnieku divīzija" }
+	}
+}
+
+# Overrides vanilla LAT_ARM_01 ('Autotanku Pulks', keys 1-10) as the plain variant of LAT_ARM_02.
+LAT_ARM_01 = 
+{
+	name = "Armored Divisions"
+
+	for_countries = { LAT }
+
+	can_use = { always = yes }
+
+	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
+
+	fallback_name = "%d. tanku divīzija"
+
+	ordered =
+	{
+		1 = { "1. tanku divīzija" }
+		2 = { "2. tanku divīzija" }
+		3 = { "3. tanku divīzija" }
+		4 = { "4. tanku divīzija" }
+		5 = { "5. tanku divīzija" }
+		6 = { "6. tanku divīzija" }
+		7 = { "7. tanku divīzija" }
+		8 = { "8. tanku divīzija" }
+		9 = { "9. tanku divīzija" }
+		10 = { "10. tanku divīzija" }
+	}
+}
+
+# Named variant of LAT_ARM_01: the armoured cars, AA guns and tanks of the 1919-1940 army and characters of the Lāčplēsis epic as nicknames; the armour units themselves on 101 and up.
 LAT_ARM_02 = 
 {
-	name = "Armored & Mobile Divisions"
+	name = "Armored & Mobile (Named)"
 
 	for_countries = { LAT }
 
@@ -201,53 +340,97 @@ LAT_ARM_02 =
 
 	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" "motorized" "mechanized" }
 
-	# Number reservation system will tie to another group.
-	#link_numbering_with = { LAT_ARM_02 }
+	link_numbering_with = { LAT_ARM_01 }
 
-	fallback_name = "%d. Bruņudivīzija"
+	fallback_name = "%d. bruņotā divīzija"
 
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
 	ordered =
 	{
-		1 = { "Bruņudivīzija 'Lāčplēsis'" }
-		2 = { "Bruņubrigāde 'Imanta'" }
-		3 = { "Bruņubrigāde 'Kurzemnieks'" }
-		4 = { "Bruņubrigāde 'Viesturs'" }
-		5 = { "Bruņubrigāde 'Zemgalietis'" }
-		6 = { "Bruņubrigāde 'Tālivaldis'" }
-		7 = { "Bruņukolonna 'Sargs'" }
-		8 = { "Bruņukolonna 'Latvietis'" }
-		9 = { "Bruņukolonna 'Staburags'" }
-		10 = { "Bruņukolonna 'Pērkons'" }
-		11 = { "Autotanku pulks" }
-		12 = { "Bruņuvilcienu pulks" }
-		13 = { "Bruņuvilciens 'Kalpaks'" }
-		14 = { "Bruņuvilciens 'Komandieris'" }
-		15 = { "Bruņuvilciens 'Krišjānis Barons'" }
-		16 = { "Bruņuvilciens 'Pirmās'" }
-		17 = { "1. Tanku bataljons" }
-		18 = { "2. Tanku bataljons" }
-		19 = { "Motorizētais kājnieku pulks" }
-		20 = { "Mehanizētais izlūku bataljons" }
-		21 = { "%d. Bruņudivīzija" }
-		22 = { "%d. Bruņudivīzija" }
-		23 = { "%d. Bruņudivīzija" }
-		24 = { "%d. Bruņudivīzija" }
-		25 = { "%d. Bruņudivīzija" }
-		26 = { "%d. Bruņudivīzija" }
-		27 = { "%d. Bruņudivīzija" }
-		28 = { "%d. Bruņudivīzija" }
-		29 = { "%d. Bruņudivīzija" }
-		30 = { "%d. Bruņudivīzija" }
-		31 = { "%d. Bruņudivīzija" }
-		32 = { "%d. Bruņudivīzija" }
-		33 = { "%d. Bruņudivīzija" }
-		34 = { "%d. Bruņudivīzija" }
-		35 = { "%d. Bruņudivīzija" }
+		# Vehicles of the 1919-1940 army
+		1 = { "1. bruņotā divīzija 'Lāčplēsis'" }
+		2 = { "2. bruņotā divīzija 'Kurzemnieks'" }
+		3 = { "3. bruņotā divīzija 'Zemgalietis'" }
+		4 = { "4. bruņotā divīzija 'Imanta'" }
+		5 = { "5. bruņotā divīzija 'Staburags'" }
+		6 = { "6. bruņotā divīzija 'Sargs'" }
+		7 = { "7. bruņotā divīzija 'Latgalietis'" }
+		8 = { "8. bruņotā divīzija 'Vidzemnieks'" }
+		9 = { "9. bruņotā divīzija 'Pērkons'" }
+		# The Lāčplēsis epic
+		10 = { "10. bruņotā divīzija 'Koknesis'" }
+		11 = { "11. bruņotā divīzija 'Laimdota'" }
+		12 = { "12. bruņotā divīzija 'Spīdola'" }
+		13 = { "13. bruņotā divīzija 'Aizkrauklis'" }
+		14 = { "14. bruņotā divīzija 'Burtnieks'" }
+		15 = { "15. bruņotā divīzija 'Staburadze'" }
+		# Armour units (1919-1940)
+		101 = { "Autotanku pulks" }
+		102 = { "Autotanku brigāde" }
+		103 = { "Bruņoto vilcienu pulks" }
+		104 = { "Bruņuvilciens Nr. 5 'Kalpaks'" }
+		105 = { "Tehniskā divīzija" }
 	}
 }
 
+# ===== Specialist troops =====
+
+# Overrides vanilla LAT_PAR_01 (keys 1-10, fallback 'Aviodesanta divizija') as a plain list: Latvia had no airborne troops.
+LAT_PAR_01 = 
+{
+	name = "Paratrooper Divisions"
+
+	for_countries = { LAT }
+
+	can_use = { always = yes }
+
+	division_types = { "paratrooper" }
+
+	fallback_name = "%d. gaisa desanta divīzija"
+
+	ordered =
+	{
+		1 = { "1. gaisa desanta divīzija" }
+		2 = { "2. gaisa desanta divīzija" }
+		3 = { "3. gaisa desanta divīzija" }
+		4 = { "4. gaisa desanta divīzija" }
+		5 = { "5. gaisa desanta divīzija" }
+		6 = { "6. gaisa desanta divīzija" }
+		7 = { "7. gaisa desanta divīzija" }
+		8 = { "8. gaisa desanta divīzija" }
+		9 = { "9. gaisa desanta divīzija" }
+		10 = { "10. gaisa desanta divīzija" }
+	}
+}
+
+# Overrides vanilla LAT_MAR_01 ('Jūras Kājnieku Divīzija', keys 1-10) as the plain variant of LAT_MAR_02.
+LAT_MAR_01 = 
+{
+	name = "Marine Divisions"
+
+	for_countries = { LAT }
+
+	can_use = { always = yes }
+
+	division_types = { "marine" }
+
+	fallback_name = "%d. jūras kājnieku divīzija"
+
+	ordered =
+	{
+		1 = { "1. jūras kājnieku divīzija" }
+		2 = { "2. jūras kājnieku divīzija" }
+		3 = { "3. jūras kājnieku divīzija" }
+		4 = { "4. jūras kājnieku divīzija" }
+		5 = { "5. jūras kājnieku divīzija" }
+		6 = { "6. jūras kājnieku divīzija" }
+		7 = { "7. jūras kājnieku divīzija" }
+		8 = { "8. jūras kājnieku divīzija" }
+		9 = { "9. jūras kājnieku divīzija" }
+		10 = { "10. jūras kājnieku divīzija" }
+	}
+}
+
+# Named variant of LAT_MAR_01: towns of the Baltic and Gulf of Riga coast as nicknames; the coastal defence units of the interwar army on 101 and up.
 LAT_MAR_02 = 
 {
 	name = "Coastal Defense & Marines"
@@ -258,46 +441,67 @@ LAT_MAR_02 =
 
 	division_types = { "marine" }
 
-	# Number reservation system will tie to another group.
-	#link_numbering_with = { LAT_MAR_02 }
+	link_numbering_with = { LAT_MAR_01 }
 
-	fallback_name = "%d. Jūras kājnieku pulks"
+	fallback_name = "%d. jūras kājnieku divīzija"
 
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
 	ordered =
 	{
-		1 = { "Daugavgrīvas krasta cietoksnis" }
-		2 = { "Mangaļsalas krasta nocietinājumi" }
-		3 = { "Liepājas krasta cietoksnis" }
-		4 = { "Bolderājas jūras garnizons" }
-		5 = { "Ventspils krasta garnizons" }
-		6 = { "1. Jūras kājnieku pulks" }
-		7 = { "2. Jūras kājnieku pulks" }
-		8 = { "Kolkas krasta aizsardzības bataljons" }
-		9 = { "Ainažu krasta aizsardzības bataljons" }
-		10 = { "Jūras krastu apsardzības pulks" }
-		11 = { "%d. Jūras kājnieku pulks" }
-		12 = { "%d. Jūras kājnieku pulks" }
-		13 = { "%d. Jūras kājnieku pulks" }
-		14 = { "%d. Jūras kājnieku pulks" }
-		15 = { "%d. Jūras kājnieku pulks" }
-		16 = { "%d. Jūras kājnieku pulks" }
-		17 = { "%d. Jūras kājnieku pulks" }
-		18 = { "%d. Jūras kājnieku pulks" }
-		19 = { "%d. Jūras kājnieku pulks" }
-		20 = { "%d. Jūras kājnieku pulks" }
-		21 = { "%d. Jūras kājnieku pulks" }
-		22 = { "%d. Jūras kājnieku pulks" }
-		23 = { "%d. Jūras kājnieku pulks" }
-		24 = { "%d. Jūras kājnieku pulks" }
-		25 = { "%d. Jūras kājnieku pulks" }
+		# Coast
+		1 = { "1. jūras kājnieku divīzija 'Kolka'" }
+		2 = { "2. jūras kājnieku divīzija 'Ainaži'" }
+		3 = { "3. jūras kājnieku divīzija 'Pāvilosta'" }
+		4 = { "4. jūras kājnieku divīzija 'Salacgrīva'" }
+		5 = { "5. jūras kājnieku divīzija 'Roja'" }
+		6 = { "6. jūras kājnieku divīzija 'Engure'" }
+		7 = { "7. jūras kājnieku divīzija 'Mērsrags'" }
+		8 = { "8. jūras kājnieku divīzija 'Skulte'" }
+		9 = { "9. jūras kājnieku divīzija 'Užava'" }
+		10 = { "10. jūras kājnieku divīzija 'Jūrkalne'" }
+		# Coastal defence (1919-1940)
+		101 = { "Daugavgrīvas cietoksnis" }
+		102 = { "Mangaļsalas nocietinājumi" }
+		103 = { "Krastu artilērijas pulks" }
 	}
 }
 
+# Overrides vanilla LAT_MNT_01 ('Kalnu Kājnieku Divīzija', keys 1-10) with Latvia's uplands and highest hills; vanilla links it to LAT_INF_01.
+LAT_MNT_01 = 
+{
+	name = "Mountain Divisions"
+
+	for_countries = { LAT }
+
+	can_use = { always = yes }
+
+	division_types = { "mountaineers" }
+
+	link_numbering_with = { LAT_INF_01 }
+
+	fallback_name = "%d. kalnu kājnieku divīzija"
+
+	ordered =
+	{
+		# Uplands and hills
+		1 = { "1. kalnu kājnieku divīzija 'Gaiziņkalns'" }
+		2 = { "2. kalnu kājnieku divīzija 'Vidzemes augstiene'" }
+		3 = { "3. kalnu kājnieku divīzija 'Latgales augstiene'" }
+		4 = { "4. kalnu kājnieku divīzija 'Alūksnes augstiene'" }
+		5 = { "5. kalnu kājnieku divīzija 'Augšzemes augstiene'" }
+		6 = { "6. kalnu kājnieku divīzija 'Rietumkursas augstiene'" }
+		7 = { "7. kalnu kājnieku divīzija 'Austrumkursas augstiene'" }
+		8 = { "8. kalnu kājnieku divīzija 'Lielais Liepukalns'" }
+		9 = { "9. kalnu kājnieku divīzija 'Vidzemes Šveice'" }
+		10 = { "10. kalnu kājnieku divīzija 'Kurzemes Šveice'" }
+	}
+}
+
+# ===== Cavalry =====
+
+# Vanilla tag. The army had one cavalry regiment (1921-1940, Daugavpils); keys 2-10 write over vanilla's title-cased entries.
 LAT_CAV_01 = 
 {
-	name = "Cavalry Regiment"
+	name = "Cavalry Regiments"
 
 	for_countries = { LAT }
 
@@ -305,41 +509,27 @@ LAT_CAV_01 =
 
 	division_types = { "cavalry" }
 
-	# Number reservation system will tie to another group.
-	#link_numbering_with = { LAT_CAV_01 }
+	fallback_name = "%d. jātnieku pulks"
 
-	fallback_name = "%d. Jātnieku pulks"
-
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
 	ordered =
 	{
-		1 = { "1. Jātnieku pulks" }
-		2 = { "2. Latgales jātnieku pulks" }
-		3 = { "3. Kurzemes jātnieku pulks" }
-		4 = { "4. Vidzemes jātnieku pulks" }
-		5 = { "5. Zemgales jātnieku pulks" }
-		6 = { "6. Sēlijas jātnieku pulks" }
-		7 = { "%d. Jātnieku pulks" }
-		8 = { "%d. Jātnieku pulks" }
-		9 = { "%d. Jātnieku pulks" }
-		10 = { "%d. Jātnieku pulks" }
-		11 = { "%d. Jātnieku pulks" }
-		12 = { "%d. Jātnieku pulks" }
-		13 = { "%d. Jātnieku pulks" }
-		14 = { "%d. Jātnieku pulks" }
-		15 = { "%d. Jātnieku pulks" }
-		16 = { "%d. Jātnieku pulks" }
-		17 = { "%d. Jātnieku pulks" }
-		18 = { "%d. Jātnieku pulks" }
-		19 = { "%d. Jātnieku pulks" }
-		20 = { "%d. Jātnieku pulks" }
+		1 = { "Latvijas 1. jātnieku pulks" }
+		2 = { "2. jātnieku pulks" }
+		3 = { "3. jātnieku pulks" }
+		4 = { "4. jātnieku pulks" }
+		5 = { "5. jātnieku pulks" }
+		6 = { "6. jātnieku pulks" }
+		7 = { "7. jātnieku pulks" }
+		8 = { "8. jātnieku pulks" }
+		9 = { "9. jātnieku pulks" }
+		10 = { "10. jātnieku pulks" }
 	}
 }
 
+# Squadron-sized templates: the squadrons and divizioni of 1919-1921, from which the 1st Cavalry Regiment was formed, and the regiment's own divizioni.
 LAT_CAV_02 = 
 {
-	name = "Cavalry Squadrons & Partisans"
+	name = "Cavalry Squadrons"
 
 	for_countries = { LAT }
 
@@ -347,35 +537,171 @@ LAT_CAV_02 =
 
 	division_types = { "cavalry" }
 
-	# Number reservation system will tie to another group.
-	#link_numbering_with = { LAT_CAV_02 }
+	fallback_name = "%d. atsevišķais jātnieku eskadrons"
 
-	fallback_name = "%d. Atsevišķais jātnieku eskadrons"
-
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
 	ordered =
 	{
-		1 = { "Atsevišķais jātnieku divizions" }
-		2 = { "Kalpaka jātnieku eskadrons" }
-		3 = { "Studentu jātnieku eskadrons" }
-		4 = { "Ziemeļlatvijas jātnieku eskadrons" }
-		5 = { "Latgales partizānu jātnieku eskadrons" }
-		6 = { "Augškurzemes partizānu jātnieku eskadrons" }
-		7 = { "Cēsu jātnieku eskadrons" }
-		8 = { "Rīgas garnizona jātnieku eskadrons" }
-		9 = { "Liepājas jātnieku eskadrons" }
-		10 = { "Daugavpils jātnieku eskadrons" }
-		11 = { "Jelgavas jātnieku eskadrons" }
-		12 = { "Valmieras jātnieku eskadrons" }
-		13 = { "Ventspils jātnieku eskadrons" }
-		14 = { "Aizsargu jātnieku eskadrons" }
-		15 = { "%d. Atsevišķais jātnieku eskadrons" }
-		16 = { "%d. Atsevišķais jātnieku eskadrons" }
-		17 = { "%d. Atsevišķais jātnieku eskadrons" }
-		18 = { "%d. Atsevišķais jātnieku eskadrons" }
-		19 = { "%d. Atsevišķais jātnieku eskadrons" }
-		20 = { "%d. Atsevišķais jātnieku eskadrons" }
+		# War of Independence (1919-1921)
+		1 = { "Latviešu atsevišķā jātnieku nodaļa" }
+		2 = { "1. jātnieku divizions" }
+		3 = { "Kurzemes jātnieku eskadrons" }
+		4 = { "Vidzemes jātnieku eskadrons" }
+		5 = { "Latgales jātnieku eskadrons" }
+		6 = { "Zemgales jātnieku eskadrons" }
+		7 = { "13. Tukuma kājnieku pulka eskadrons" }
+		8 = { "Latgales partizānu pulka eskadrons" }
+		9 = { "Ziemeļlatvijas brigādes 1. kavalērijas eskadrons" }
+		10 = { "Ziemeļlatvijas brigādes 2. kavalērijas eskadrons" }
+		11 = { "Ziemeļlatvijas brigādes atsevišķais eskadrons" }
+		# Latvijas 1. jātnieku pulks (1921-1940)
+		12 = { "1. jātnieku pulka I divizions" }
+		13 = { "1. jātnieku pulka II divizions" }
+		14 = { "1. jātnieku pulka ložmetēju eskadrons" }
 	}
 }
 
+# ===== Ideology suites =====
+
+# Ulmanis era (neutrality): the ancient Latvian fight against the crusaders that the regime celebrated, by its chieftains, hillforts and battles. No Ulmanis-era honour unit existed; all are extrapolated.
+LAT_SEN_01 = 
+{
+	name = "Heritage Divisions"
+
+	for_countries = { LAT }
+
+	can_use = { has_government = neutrality }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%d. kājnieku divīzija"
+
+	ordered =
+	{
+		# Chieftains
+		1 = { "1. kājnieku divīzija 'Viesturs'" }
+		2 = { "2. kājnieku divīzija 'Namejs'" }
+		3 = { "3. kājnieku divīzija 'Visvaldis'" }
+		4 = { "4. kājnieku divīzija 'Tālivaldis'" }
+		5 = { "5. kājnieku divīzija 'Rūsiņš'" }
+		6 = { "6. kājnieku divīzija 'Varidots'" }
+		7 = { "7. kājnieku divīzija 'Vetseke'" }
+		# Hillforts
+		8 = { "8. kājnieku divīzija 'Tērvete'" }
+		9 = { "9. kājnieku divīzija 'Mežotne'" }
+		10 = { "10. kājnieku divīzija 'Dobele'" }
+		11 = { "11. kājnieku divīzija 'Sidrabene'" }
+		12 = { "12. kājnieku divīzija 'Satekle'" }
+		13 = { "13. kājnieku divīzija 'Autine'" }
+		14 = { "14. kājnieku divīzija 'Daugmale'" }
+		# Battles
+		15 = { "15. kājnieku divīzija 'Saule'" }
+		16 = { "16. kājnieku divīzija 'Durbe'" }
+		17 = { "17. kājnieku divīzija 'Aizkraukle'" }
+	}
+}
+
+# Pērkonkrusts (fascism; the vanilla Ugunskrusts path): its five apgabali and its trieciengrupas, then its symbols as nicknames. The movement fielded no military units, so all are extrapolated; its slogans and its leader are not used.
+LAT_PK_01 = 
+{
+	name = "Thunder Cross Divisions"
+
+	for_countries = { LAT }
+
+	can_use = { has_government = fascism }
+
+	division_types = { "infantry" "militia" }
+
+	fallback_name = "%d. pērkonkrustiešu divīzija"
+
+	ordered =
+	{
+		# Apgabali
+		1 = { "Pērkonkrusta Rīgas apgabala divīzija" }
+		2 = { "Pērkonkrusta Kurzemes apgabala divīzija" }
+		3 = { "Pērkonkrusta Vidzemes apgabala divīzija" }
+		4 = { "Pērkonkrusta Latgales apgabala divīzija" }
+		5 = { "Pērkonkrusta Zemgales apgabala divīzija" }
+		# Trieciengrupas
+		6 = { "Pērkonkrusta trieciengrupu divīzija" }
+		# Symbols
+		7 = { "7. pērkonkrustiešu divīzija 'Ugunskrusts'" }
+		8 = { "8. pērkonkrustiešu divīzija 'Māras krusts'" }
+		9 = { "9. pērkonkrustiešu divīzija 'Zibens'" }
+		10 = { "10. pērkonkrustiešu divīzija 'Auseklis'" }
+		11 = { "11. pērkonkrustiešu divīzija 'Jumis'" }
+	}
+}
+
+# Latvian formations of the Red Army (communism): the 24th Territorial Rifle Corps of 1940-1941 and the 130th Latvian Rifle Corps of 1944-1945, with their divisions and regiments, each on its own number.
+LAT_RED_01 = 
+{
+	name = "Red Rifle Divisions"
+
+	for_countries = { LAT }
+
+	can_use = { has_government = communism }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%d. latviešu strēlnieku divīzija"
+
+	ordered =
+	{
+		1 = { "1. atsevišķais latviešu strēlnieku rezerves pulks" }
+		24 = { "24. teritoriālais strēlnieku korpuss" }
+		43 = { "43. gvardes Rīgas latviešu strēlnieku divīzija" }
+		92 = { "92. strēlnieku pulks" }
+		121 = { "121. gvardes strēlnieku pulks" }
+		122 = { "122. strēlnieku pulks" }
+		123 = { "123. gvardes strēlnieku pulks" }
+		125 = { "125. gvardes strēlnieku pulks" }
+		130 = { "130. latviešu strēlnieku korpuss" }
+		181 = { "181. strēlnieku divīzija" }
+		183 = { "183. strēlnieku divīzija" }
+		186 = { "186. strēlnieku pulks" }
+		191 = { "191. strēlnieku pulks" }
+		195 = { "195. strēlnieku pulks" }
+		201 = { "201. latviešu strēlnieku divīzija" }
+		227 = { "227. strēlnieku pulks" }
+		243 = { "243. strēlnieku pulks" }
+		285 = { "285. strēlnieku pulks" }
+		295 = { "295. strēlnieku pulks" }
+		308 = { "308. latviešu strēlnieku divīzija" }
+		319 = { "319. strēlnieku pulks" }
+		323 = { "323. strēlnieku pulks" }
+		355 = { "355. strēlnieku pulks" }
+	}
+}
+
+# Latvian national partisans of 1944-1956 (democratic), who fought for the republic that the Latvian Central Council's declaration of 8 September 1944 restored: their organisations, then their battles as nicknames.
+LAT_NP_01 = 
+{
+	name = "National Partisans"
+
+	for_countries = { LAT }
+
+	can_use = { has_government = democratic }
+
+	division_types = { "infantry" "militia" }
+
+	fallback_name = "%d. nacionālo partizānu divīzija"
+
+	ordered =
+	{
+		# Organisations
+		1 = { "Latvijas Nacionālo partizānu apvienība" }
+		2 = { "Tēvzemes Sargu partizānu apvienība" }
+		3 = { "Latvijas Nacionālo partizānu organizācija" }
+		4 = { "Ziemeļkurzemes partizānu organizācija" }
+		5 = { "Latviešu nacionālo partizānu apvienība 'Kurzeme'" }
+		6 = { "Ilūkstes partizānu pulks" }
+		7 = { "Partizānu vienība 'Kārlis Krauja'" }
+		# Battles
+		8 = { "8. nacionālo partizānu divīzija 'Stompaki'" }
+		9 = { "9. nacionālo partizānu divīzija 'Kabile'" }
+		10 = { "10. nacionālo partizānu divīzija 'Gostiņi'" }
+		11 = { "11. nacionālo partizānu divīzija 'Īle'" }
+		12 = { "12. nacionālo partizānu divīzija 'Usma'" }
+		13 = { "13. nacionālo partizānu divīzija 'Viļaka'" }
+	}
+}

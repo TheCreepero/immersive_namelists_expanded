@@ -1,15 +1,14 @@
 # Division template historical names system for Estonia (EST).
 # Immersive Namelists Expanded (INEX)
-#
-# Covers:
-# 1. EST_REG_01: Historical Infantry Regiments & Elite Battalions (1.–10. Jalaväerügement, Kuperjanovi, Sakala, Kalevlaste Maleva, Scoutsrügement, Vahirügement)
-# 2. EST_KL_01: Kaitseliit Territorial Malevad (All 15 county and city Defence League formations, plus specialized urban malevkonnad)
-# 3. EST_ARM_02: Armored & Mechanized Formations (Armored trains "Kapten Irv" & LRSR 1–6, legendary armored cars "Suur Tõll", "Tasuja", "Kalevipoeg", Auto-tankirügement)
-# 4. EST_MAR_02: Coastal Defense & Marines (Naval Fortresses Aegna, Naissaare, Suuropi, and Eesti Meredessantpataljon)
+# Estonian names as the army wrote them: an Arabic ordinal with a full stop (1. jalaväepolk, 7. Eesti laskurdiviis), lower-case common nouns, proper names and Eesti capitalised. Nicknames stand in the nominative in straight single quotes; the map font has no Estonian quotation marks. Period spellings of the 1919 vehicles are kept (Kapten Irw, Wahur, Wibulane, Suuropi).
+# Overrides all nine vanilla EST groups (INF, CAV, MOT, MEC, ARM, PAR, MAR, MNT, GAR) and writes over every vanilla number.
 
+# ===== Regular army =====
+
+# Infantry regiments and battalions of the War of Independence (1918-1920) and the peacetime army.
 EST_REG_01 = 
 {
-	name = "Infantry Regiment"
+	name = "Infantry Regiments"
 
 	for_countries = { EST }
 
@@ -17,128 +16,312 @@ EST_REG_01 =
 
 	division_types = { "infantry" }
 
-	# Number reservation system will tie to another group.
-	#link_numbering_with = { EST_REG_01 }
+	fallback_name = "%d. jalaväerügement"
 
-	fallback_name = "%d. Jalaväerügement"
-
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
 	ordered =
 	{
-		1 = { "1. Jalaväerügement" }
-		2 = { "2. Jalaväerügement" }
-		3 = { "3. Jalaväerügement" }
-		4 = { "4. Jalaväerügement" }
-		5 = { "5. Jalaväerügement" }
-		6 = { "6. Jalaväerügement" }
-		7 = { "7. Jalaväerügement" }
-		8 = { "8. Jalaväerügement" }
-		9 = { "9. Jalaväerügement" }
-		10 = { "10. Jalaväerügement" }
-		11 = { "Kuperjanovi Partisanide Rügement" }
-		12 = { "Sakala Partisanide Rügement" }
-		13 = { "Kalevlaste Maleva Jalaväerügement" }
-		14 = { "Scoutsrügement" }
-		15 = { "Tallinna Vahirügement" }
-		16 = { "Ingeri Jalaväepolk" }
-		17 = { "Balti Pataljon" }
-		18 = { "Peipsi Rannakaitsepataljon" }
-		19 = { "Viljandi Kaitsepataljon" }
-		20 = { "Järvamaa Kaitsepataljon" }
-		21 = { "Tartu Kaitsepataljon" }
-		22 = { "Pärnu Kaitsepataljon" }
-		23 = { "Saaremaa Kaitsepataljon" }
-		24 = { "Narva Kaitsepataljon" }
-		25 = { "Võru Kaitsepataljon" }
-		26 = { "%d. Jalaväerügement" }
-		27 = { "%d. Jalaväerügement" }
-		28 = { "%d. Jalaväerügement" }
-		29 = { "%d. Jalaväerügement" }
-		30 = { "%d. Jalaväerügement" }
-		31 = { "%d. Jalaväerügement" }
-		32 = { "%d. Jalaväerügement" }
-		33 = { "%d. Jalaväerügement" }
-		34 = { "%d. Jalaväerügement" }
-		35 = { "%d. Jalaväerügement" }
-		36 = { "%d. Jalaväerügement" }
-		37 = { "%d. Jalaväerügement" }
-		38 = { "%d. Jalaväerügement" }
-		39 = { "%d. Jalaväerügement" }
-		40 = { "%d. Jalaväerügement" }
-		41 = { "%d. Jalaväerügement" }
-		42 = { "%d. Jalaväerügement" }
-		43 = { "%d. Jalaväerügement" }
-		44 = { "%d. Jalaväerügement" }
-		45 = { "%d. Jalaväerügement" }
-		46 = { "%d. Jalaväerügement" }
-		47 = { "%d. Jalaväerügement" }
-		48 = { "%d. Jalaväerügement" }
-		49 = { "%d. Jalaväerügement" }
-		50 = { "%d. Jalaväerügement" }
+		# War of Independence regiments
+		1 = { "1. jalaväepolk" }
+		2 = { "2. jalaväepolk" }
+		3 = { "3. jalaväepolk" }
+		4 = { "4. jalaväepolk" }
+		5 = { "5. jalaväepolk" }
+		6 = { "6. jalaväepolk" }
+		7 = { "7. jalaväepolk" }
+		8 = { "8. jalaväepolk" }
+		9 = { "9. jalaväepolk" }
+		# Peacetime battalion
+		10 = { "10. üksik jalaväepataljon" }
+		# Partisan, volunteer and guard units
+		11 = { "Kuperjanovi partisanide pataljon" }
+		12 = { "Sakala partisanide pataljon" }
+		13 = { "Kalevlaste Maleva polk" }
+		14 = { "Scoutspolk" }
+		15 = { "Vahipataljon" }
+		16 = { "Ingeri polk" }
+		17 = { "Balti pataljon" }
+		18 = { "Peipsi rannakaitsepataljon" }
+		# County defence battalions, 1918-1919
+		19 = { "Viljandi kaitsepataljon" }
+		20 = { "Järvamaa kaitsepataljon" }
+		21 = { "Tartu kaitsepataljon" }
+		22 = { "Pärnu kaitsepataljon" }
+		23 = { "Saaremaa kaitsepataljon" }
+		24 = { "Narva kaitsepataljon" }
+		25 = { "Võru kaitsepataljon" }
+		26 = { "Tallinna 1. kaitsepataljon" }
+		27 = { "Tallinna 2. kaitsepataljon" }
+		28 = { "Tallinna 3. kaitsepataljon" }
+		29 = { "Viljandi 2. kaitsepataljon" }
+		30 = { "Pärnu 2. kaitsepataljon" }
+		# Other units
+		31 = { "Tallinna 1. löögipataljon" }
+		32 = { "Katšanovi üksikpataljon" }
+		33 = { "Pankjavitsa pataljon" }
+		34 = { "Tartu kooliõpilaste pataljon" }
+		35 = { "Pihkva vabatahtlik korpus" }
+		36 = { "Kalevi üksik jalaväepataljon" }
 	}
 }
 
+# Overrides vanilla EST_INF_01 as the plain (un-nicknamed) variant; keys 1-20 are written so that vanilla's '%s Jalaväediviisi' texts do not show. The vanilla focuses EST_anti_communist_militia and EST_baltic_stronger_together name their templates from this group.
+EST_INF_01 = 
+{
+	name = "Infantry Divisions"
+
+	for_countries = { EST }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%d. jalaväediviis"
+
+	ordered =
+	{
+		1 = { "1. jalaväediviis" }
+		2 = { "2. jalaväediviis" }
+		3 = { "3. jalaväediviis" }
+		4 = { "4. jalaväediviis" }
+		5 = { "5. jalaväediviis" }
+		6 = { "6. jalaväediviis" }
+		7 = { "7. jalaväediviis" }
+		8 = { "8. jalaväediviis" }
+		9 = { "9. jalaväediviis" }
+		10 = { "10. jalaväediviis" }
+		11 = { "11. jalaväediviis" }
+		12 = { "12. jalaväediviis" }
+		13 = { "13. jalaväediviis" }
+		14 = { "14. jalaväediviis" }
+		15 = { "15. jalaväediviis" }
+		16 = { "16. jalaväediviis" }
+		17 = { "17. jalaväediviis" }
+		18 = { "18. jalaväediviis" }
+		19 = { "19. jalaväediviis" }
+		20 = { "20. jalaväediviis" }
+	}
+}
+
+# Named variant; shares numbering with EST_INF_01. The 1st-4th Divisions of 1940 after the ancient county of their HQ region, then the other ancient counties and battles of the War of Independence.
+EST_INF_02 = 
+{
+	name = "Infantry Divisions (Named)"
+
+	for_countries = { EST }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	link_numbering_with = { EST_INF_01 }
+
+	fallback_name = "%d. jalaväediviis"
+
+	ordered =
+	{
+		# Divisions of 1940
+		1 = { "1. jalaväediviis 'Virumaa'" }
+		2 = { "2. jalaväediviis 'Ugandi'" }
+		3 = { "3. jalaväediviis 'Rävala'" }
+		4 = { "4. jalaväediviis 'Sakala'" }
+		# Ancient counties
+		5 = { "5. jalaväediviis 'Harjumaa'" }
+		6 = { "6. jalaväediviis 'Järvamaa'" }
+		7 = { "7. jalaväediviis 'Läänemaa'" }
+		8 = { "8. jalaväediviis 'Alempois'" }
+		9 = { "9. jalaväediviis 'Mõhu'" }
+		10 = { "10. jalaväediviis 'Nurmekund'" }
+		11 = { "11. jalaväediviis 'Vaiga'" }
+		12 = { "12. jalaväediviis 'Jogentagana'" }
+		13 = { "13. jalaväediviis 'Soopoolitse'" }
+		14 = { "14. jalaväediviis 'Pärnumaa'" }
+		15 = { "15. jalaväediviis 'Tartumaa'" }
+		16 = { "16. jalaväediviis 'Võrumaa'" }
+		17 = { "17. jalaväediviis 'Valgamaa'" }
+		18 = { "18. jalaväediviis 'Petserimaa'" }
+		# Battles of the War of Independence
+		19 = { "19. jalaväediviis 'Paju'" }
+		20 = { "20. jalaväediviis 'Võnnu'" }
+		21 = { "21. jalaväediviis 'Krivasoo'" }
+		22 = { "22. jalaväediviis 'Utria'" }
+		23 = { "23. jalaväediviis 'Laagna'" }
+	}
+}
+
+# Overrides vanilla EST_CAV_01; keys 1-10 are written so that vanilla's '%s Ratsaväediviisi' texts do not show. Linked to EST_INF_01, as in vanilla.
+EST_CAV_01 = 
+{
+	name = "Cavalry Regiments"
+
+	for_countries = { EST }
+
+	can_use = { always = yes }
+
+	division_types = { "cavalry" }
+
+	link_numbering_with = { EST_INF_01 }
+
+	fallback_name = "%d. ratsapolk"
+
+	ordered =
+	{
+		# War of Independence regiments
+		1 = { "1. ratsapolk" }
+		2 = { "2. ratsapolk" }
+		# Further regiments
+		3 = { "3. ratsapolk" }
+		4 = { "4. ratsapolk" }
+		5 = { "5. ratsapolk" }
+		6 = { "6. ratsapolk" }
+		7 = { "7. ratsapolk" }
+		8 = { "8. ratsapolk" }
+		9 = { "9. ratsapolk" }
+		10 = { "10. ratsapolk" }
+		# Peacetime regiment and squadrons
+		101 = { "Ratsarügement" }
+		102 = { "Tallinna üksik eskadron" }
+		103 = { "Balti pataljoni eskadron" }
+		104 = { "Soomusrongide diviisi eskadron" }
+		105 = { "Kaitseliidu ratsaosakond" }
+	}
+}
+
+# ===== Defence League =====
+
+# The Kaitseliit malevad of 1940; ungated, as the League served every interwar government.
 EST_KL_01 = 
 {
-	name = "Defense Formations"
+	name = "Defence League Malevs"
 
 	for_countries = { EST }
 
 	can_use = { always = yes }
 
-	division_types = { "infantry" }
+	division_types = { "infantry" "militia" }
 
-	# Number reservation system will tie to another group.
-	#link_numbering_with = { EST_KL_01 }
+	fallback_name = "Kaitseliidu %d. malev"
 
-	fallback_name = "%d. Kaitseliidu Malev"
-
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
 	ordered =
 	{
+		# Malevad
 		1 = { "Kaitseliidu Tallinna malev" }
-		2 = { "Kaitseliidu Tartu malev" }
-		3 = { "Kaitseliidu Narva malev" }
-		4 = { "Kaitseliidu Pärnu malev" }
-		5 = { "Kaitseliidu Harju malev" }
-		6 = { "Kaitseliidu Järva malev" }
-		7 = { "Kaitseliidu Viru malev" }
-		8 = { "Kaitseliidu Lääne malev" }
-		9 = { "Kaitseliidu Saaremaa malev" }
-		10 = { "Kaitseliidu Sakalamaa malev" }
-		11 = { "Kaitseliidu Pärnumaa malev" }
-		12 = { "Kaitseliidu Tartumaa malev" }
-		13 = { "Kaitseliidu Valgamaa malev" }
-		14 = { "Kaitseliidu Võrumaa malev" }
-		15 = { "Kaitseliidu Petserimaa malev" }
+		2 = { "Kaitseliidu Harju malev" }
+		3 = { "Kaitseliidu Lääne malev" }
+		4 = { "Kaitseliidu Saaremaa malev" }
+		5 = { "Kaitseliidu Pärnumaa malev" }
+		6 = { "Kaitseliidu Sakalamaa malev" }
+		7 = { "Kaitseliidu Järva malev" }
+		8 = { "Kaitseliidu Viru malev" }
+		9 = { "Kaitseliidu Narva malev" }
+		10 = { "Kaitseliidu Tartu malev" }
+		11 = { "Kaitseliidu Tartumaa malev" }
+		12 = { "Kaitseliidu Valgamaa malev" }
+		13 = { "Kaitseliidu Võrumaa malev" }
+		14 = { "Kaitseliidu Petserimaa malev" }
+		15 = { "Merekaitseliit" }
+		# Tallinn malevkonnad
 		16 = { "Kaitseliidu Toompea malevkond" }
-		17 = { "Kaitseliidu Raudtee malevkond" }
-		18 = { "Kaitseliidu Sadama malevkond" }
-		19 = { "Kaitseliidu Nõmme malevkond" }
-		20 = { "Kaitseliidu Põhja malevkond" }
-		21 = { "Kaitseliidu Lõuna malevkond" }
-		22 = { "Kaitseliidu Ida malevkond" }
-		23 = { "Kaitseliidu Tehniline malevkond" }
-		24 = { "Kaitseliidu Õppurmalevkond" }
-		25 = { "Kaitseliidu Alutaguse malev" }
-		26 = { "%d. Kaitseliidu Malev" }
-		27 = { "%d. Kaitseliidu Malev" }
-		28 = { "%d. Kaitseliidu Malev" }
-		29 = { "%d. Kaitseliidu Malev" }
-		30 = { "%d. Kaitseliidu Malev" }
-		31 = { "%d. Kaitseliidu Malev" }
-		32 = { "%d. Kaitseliidu Malev" }
-		33 = { "%d. Kaitseliidu Malev" }
-		34 = { "%d. Kaitseliidu Malev" }
-		35 = { "%d. Kaitseliidu Malev" }
+		17 = { "Kaitseliidu Sadama malevkond" }
+		18 = { "Kaitseliidu Põhja malevkond" }
 	}
 }
 
+# ===== Mobile and armour =====
+
+# Overrides vanilla EST_MOT_01 as a plain list; keys 1-10 are written so that vanilla's '%s Motoriseeritud diviisi' texts do not show. EST_ARM_02 holds the named mobile and armour names.
+EST_MOT_01 = 
+{
+	name = "Motorized Divisions"
+
+	for_countries = { EST }
+
+	can_use = { always = yes }
+
+	division_types = { "motorized" }
+
+	link_numbering_with = { EST_INF_01 }
+
+	fallback_name = "%d. motoriseeritud jalaväediviis"
+
+	ordered =
+	{
+		1 = { "1. motoriseeritud jalaväediviis" }
+		2 = { "2. motoriseeritud jalaväediviis" }
+		3 = { "3. motoriseeritud jalaväediviis" }
+		4 = { "4. motoriseeritud jalaväediviis" }
+		5 = { "5. motoriseeritud jalaväediviis" }
+		6 = { "6. motoriseeritud jalaväediviis" }
+		7 = { "7. motoriseeritud jalaväediviis" }
+		8 = { "8. motoriseeritud jalaväediviis" }
+		9 = { "9. motoriseeritud jalaväediviis" }
+		10 = { "10. motoriseeritud jalaväediviis" }
+	}
+}
+
+# Overrides vanilla EST_MEC_01 as a plain list; keys 1-10 are written so that vanilla's '%s Mehhaniseeritud diviisi' texts do not show.
+EST_MEC_01 = 
+{
+	name = "Mechanized Divisions"
+
+	for_countries = { EST }
+
+	can_use = { always = yes }
+
+	division_types = { "mechanized" }
+
+	link_numbering_with = { EST_INF_01 }
+
+	fallback_name = "%d. mehhaniseeritud jalaväediviis"
+
+	ordered =
+	{
+		1 = { "1. mehhaniseeritud jalaväediviis" }
+		2 = { "2. mehhaniseeritud jalaväediviis" }
+		3 = { "3. mehhaniseeritud jalaväediviis" }
+		4 = { "4. mehhaniseeritud jalaväediviis" }
+		5 = { "5. mehhaniseeritud jalaväediviis" }
+		6 = { "6. mehhaniseeritud jalaväediviis" }
+		7 = { "7. mehhaniseeritud jalaväediviis" }
+		8 = { "8. mehhaniseeritud jalaväediviis" }
+		9 = { "9. mehhaniseeritud jalaväediviis" }
+		10 = { "10. mehhaniseeritud jalaväediviis" }
+	}
+}
+
+# Overrides vanilla EST_ARM_01 as the plain (un-nicknamed) variant; keys 1-10 are written so that vanilla's '%s Tankidiviisi' texts do not show. EST_ARM_02 is its named variant.
+EST_ARM_01 = 
+{
+	name = "Armored Divisions"
+
+	for_countries = { EST }
+
+	can_use = { always = yes }
+
+	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
+
+	link_numbering_with = { EST_INF_01 }
+
+	fallback_name = "%d. tankidiviis"
+
+	ordered =
+	{
+		1 = { "1. tankidiviis" }
+		2 = { "2. tankidiviis" }
+		3 = { "3. tankidiviis" }
+		4 = { "4. tankidiviis" }
+		5 = { "5. tankidiviis" }
+		6 = { "6. tankidiviis" }
+		7 = { "7. tankidiviis" }
+		8 = { "8. tankidiviis" }
+		9 = { "9. tankidiviis" }
+		10 = { "10. tankidiviis" }
+	}
+}
+
+# Named variant of EST_ARM_01 (link set in step 2) for armour and mobile templates: the armoured train, cars and trucks of 1919 and the artillery wagons of the armoured trains; the formations on 101 and up.
 EST_ARM_02 = 
 {
-	name = "Armored & Mobile Divisions"
+	name = "Armored & Mobile (Named)"
 
 	for_countries = { EST }
 
@@ -146,53 +329,109 @@ EST_ARM_02 =
 
 	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" "motorized" "mechanized" }
 
-	# Number reservation system will tie to another group.
-	#link_numbering_with = { EST_ARM_02 }
+	link_numbering_with = { EST_ARM_01 }
 
-	fallback_name = "%d. Soomusdiviis"
+	fallback_name = "%d. soomusdiviis"
 
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
 	ordered =
 	{
-		1 = { "Soomusdiviis 'Kapten Irv'" }
-		2 = { "Soomusbrigaad 'Suur Tõll'" }
-		3 = { "Soomusbrigaad 'Tasuja'" }
-		4 = { "Soomusbrigaad 'Kalevipoeg'" }
-		5 = { "Soomusbrigaad 'Estonia'" }
-		6 = { "Soomuskolonn 'Vanapagan'" }
-		7 = { "Soomuskolonn 'Wahur'" }
-		8 = { "Soomuskolonn 'Toonela'" }
-		9 = { "Soomuskolonn 'Pisuhänd'" }
-		10 = { "Soomuskolonn 'Wibulane'" }
-		11 = { "Auto-tankirügement" }
-		12 = { "Soomusrongirügement" }
-		13 = { "1. Laiarööpmeline Soomusrong 'Kapten Irv'" }
-		14 = { "2. Laiarööpmeline Soomusrong" }
-		15 = { "3. Laiarööpmeline Soomusrong" }
-		16 = { "4. Laiarööpmeline Soomusrong" }
-		17 = { "5. Laiarööpmeline Soomusrong" }
-		18 = { "6. Laiarööpmeline Soomusrong" }
-		19 = { "1. Kitsarööpmeline Soomusrong" }
-		20 = { "2. Kitsarööpmeline Soomusrong" }
-		21 = { "3. Kitsarööpmeline Soomusrong" }
-		22 = { "4. Kitsarööpmeline Soomusrong" }
-		23 = { "5. Kitsarööpmeline Soomusrong" }
-		24 = { "1. Tankipataljon" }
-		25 = { "2. Tankipataljon" }
-		26 = { "%d. Soomusdiviis" }
-		27 = { "%d. Soomusdiviis" }
-		28 = { "%d. Soomusdiviis" }
-		29 = { "%d. Soomusdiviis" }
-		30 = { "%d. Soomusdiviis" }
-		31 = { "%d. Soomusdiviis" }
-		32 = { "%d. Soomusdiviis" }
-		33 = { "%d. Soomusdiviis" }
-		34 = { "%d. Soomusdiviis" }
-		35 = { "%d. Soomusdiviis" }
+		# Armoured train, cars and trucks of 1919
+		1 = { "1. soomusdiviis 'Kapten Irw'" }
+		2 = { "2. soomusdiviis 'Suur Tõll'" }
+		3 = { "3. soomusdiviis 'Tasuja'" }
+		4 = { "4. soomusdiviis 'Kalevipoeg'" }
+		5 = { "5. soomusdiviis 'Estonia'" }
+		6 = { "6. soomusdiviis 'Vanapagan'" }
+		7 = { "7. soomusdiviis 'Wahur'" }
+		8 = { "8. soomusdiviis 'Toonela'" }
+		9 = { "9. soomusdiviis 'Pisuhänd'" }
+		10 = { "10. soomusdiviis 'Wibulane'" }
+		11 = { "11. soomusdiviis 'Puuk'" }
+		12 = { "12. soomusdiviis 'Sorts'" }
+		# Armoured train wagons
+		13 = { "13. soomusdiviis 'Hävitaja'" }
+		14 = { "14. soomusdiviis 'Maru'" }
+		15 = { "15. soomusdiviis 'Vapper'" }
+		16 = { "16. soomusdiviis 'Võitleja'" }
+		17 = { "17. soomusdiviis 'Tont'" }
+		18 = { "18. soomusdiviis 'Taara'" }
+		19 = { "19. soomusdiviis 'Uku'" }
+		20 = { "20. soomusdiviis 'Pikker'" }
+		21 = { "21. soomusdiviis 'Kõu'" }
+		22 = { "22. soomusdiviis 'Kalev'" }
+		23 = { "23. soomusdiviis 'Müristaja'" }
+		24 = { "24. soomusdiviis 'Tapper'" }
+		# Formations
+		101 = { "Soomusrongide diviis" }
+		102 = { "Soomusautode kolonn" }
+		103 = { "Auto-tankirügement" }
+		104 = { "Soomusrongirügement" }
 	}
 }
 
+# ===== Specialists =====
+
+# Overrides vanilla EST_PAR_01 as a plain list; keys 1-10 are written so that vanilla's '%s Õhudessantdiviisi' texts do not show.
+EST_PAR_01 = 
+{
+	name = "Paratrooper Divisions"
+
+	for_countries = { EST }
+
+	can_use = { always = yes }
+
+	division_types = { "paratrooper" }
+
+	link_numbering_with = { EST_INF_01 }
+
+	fallback_name = "%d. õhudessantdiviis"
+
+	ordered =
+	{
+		1 = { "1. õhudessantdiviis" }
+		2 = { "2. õhudessantdiviis" }
+		3 = { "3. õhudessantdiviis" }
+		4 = { "4. õhudessantdiviis" }
+		5 = { "5. õhudessantdiviis" }
+		6 = { "6. õhudessantdiviis" }
+		7 = { "7. õhudessantdiviis" }
+		8 = { "8. õhudessantdiviis" }
+		9 = { "9. õhudessantdiviis" }
+		10 = { "10. õhudessantdiviis" }
+	}
+}
+
+# Overrides vanilla EST_MAR_01 as the plain variant; keys 1-10 are written so that vanilla's '%s Merejalaväediviisi' texts do not show. EST_MAR_02 is its named variant.
+EST_MAR_01 = 
+{
+	name = "Marine Divisions"
+
+	for_countries = { EST }
+
+	can_use = { always = yes }
+
+	division_types = { "marine" }
+
+	link_numbering_with = { EST_INF_01 }
+
+	fallback_name = "%d. merejalaväediviis"
+
+	ordered =
+	{
+		1 = { "1. merejalaväediviis" }
+		2 = { "2. merejalaväediviis" }
+		3 = { "3. merejalaväediviis" }
+		4 = { "4. merejalaväediviis" }
+		5 = { "5. merejalaväediviis" }
+		6 = { "6. merejalaväediviis" }
+		7 = { "7. merejalaväediviis" }
+		8 = { "8. merejalaväediviis" }
+		9 = { "9. merejalaväediviis" }
+		10 = { "10. merejalaväediviis" }
+	}
+}
+
+# Named variant of EST_MAR_01 (link set in step 2): the islands, then the coastal units of 1919-1940 on 101 and up.
 EST_MAR_02 = 
 {
 	name = "Coastal Defense & Marines"
@@ -203,45 +442,247 @@ EST_MAR_02 =
 
 	division_types = { "marine" }
 
-	# Number reservation system will tie to another group.
-	#link_numbering_with = { EST_MAR_02 }
+	link_numbering_with = { EST_MAR_01 }
 
-	fallback_name = "%d. Meredessantrügement"
+	fallback_name = "%d. merejalaväediviis"
 
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
 	ordered =
 	{
-		1 = { "Aegna Merekindlus" }
-		2 = { "Naissaare Merekindlus" }
-		3 = { "Suuropi Merekindlus" }
-		4 = { "Eesti Meredessantpataljon" }
-		5 = { "1. Meredessantrügement" }
-		6 = { "2. Meredessantrügement" }
-		7 = { "Saaremaa Rannakaitsepataljon" }
-		8 = { "Hiiumaa Rannakaitsepataljon" }
-		9 = { "Peipsi Laevastiku Dessantpataljon" }
-		10 = { "Viimsi Rannakaitsepatarei" }
-		11 = { "Kakumäe Rannakaitsepatarei" }
-		12 = { "Sõrve Rannakaitsepatarei" }
-		13 = { "Tahkuna Rannakaitsepatarei" }
-		14 = { "Ruhnu Rannakaitsekomando" }
-		15 = { "Pakri Rannakaitsekomando" }
-		16 = { "3. Meredessantrügement" }
-		17 = { "4. Meredessantrügement" }
-		18 = { "5. Meredessantrügement" }
-		19 = { "6. Meredessantrügement" }
-		20 = { "7. Meredessantrügement" }
-		21 = { "%d. Meredessantrügement" }
-		22 = { "%d. Meredessantrügement" }
-		23 = { "%d. Meredessantrügement" }
-		24 = { "%d. Meredessantrügement" }
-		25 = { "%d. Meredessantrügement" }
-		26 = { "%d. Meredessantrügement" }
-		27 = { "%d. Meredessantrügement" }
-		28 = { "%d. Meredessantrügement" }
-		29 = { "%d. Meredessantrügement" }
-		30 = { "%d. Meredessantrügement" }
+		# Islands
+		1 = { "1. merejalaväediviis 'Saaremaa'" }
+		2 = { "2. merejalaväediviis 'Hiiumaa'" }
+		3 = { "3. merejalaväediviis 'Muhu'" }
+		4 = { "4. merejalaväediviis 'Vormsi'" }
+		5 = { "5. merejalaväediviis 'Kihnu'" }
+		6 = { "6. merejalaväediviis 'Ruhnu'" }
+		7 = { "7. merejalaväediviis 'Prangli'" }
+		8 = { "8. merejalaväediviis 'Osmussaar'" }
+		9 = { "9. merejalaväediviis 'Abruka'" }
+		10 = { "10. merejalaväediviis 'Vilsandi'" }
+		11 = { "11. merejalaväediviis 'Manija'" }
+		12 = { "12. merejalaväediviis 'Piirissaar'" }
+		# Coastal units
+		101 = { "Meredessantpataljon" }
+		102 = { "Aegna komandantuur" }
+		103 = { "Naissaare komandantuur" }
+		104 = { "Suuropi komandantuur" }
+		105 = { "Peipsi laevastiku divisjon" }
+	}
+}
+
+# Overrides vanilla EST_MNT_01; keys 1-10 are written so that vanilla's '%s Mägidiviisi' texts do not show. Estonia's uplands and highest hills.
+EST_MNT_01 = 
+{
+	name = "Mountain Divisions"
+
+	for_countries = { EST }
+
+	can_use = { always = yes }
+
+	division_types = { "mountaineers" }
+
+	link_numbering_with = { EST_INF_01 }
+
+	fallback_name = "%d. mägijalaväediviis"
+
+	ordered =
+	{
+		1 = { "1. mägijalaväediviis 'Haanja'" }
+		2 = { "2. mägijalaväediviis 'Pandivere'" }
+		3 = { "3. mägijalaväediviis 'Karula'" }
+		4 = { "4. mägijalaväediviis 'Vooremaa'" }
+		5 = { "5. mägijalaväediviis 'Suur Munamägi'" }
+		6 = { "6. mägijalaväediviis 'Vällamägi'" }
+		7 = { "7. mägijalaväediviis 'Emumägi'" }
+		8 = { "8. mägijalaväediviis 'Kuutsemägi'" }
+		9 = { "9. mägijalaväediviis 'Ebavere'" }
+		10 = { "10. mägijalaväediviis 'Rõuge'" }
+	}
+}
+
+# Overrides vanilla EST_GAR_01; keys 1-20 are written so that vanilla's '%s Jalaväediviisi' texts do not show. Garrison towns of the 1939 army, then other towns; the border guard on 101.
+EST_GAR_01 = 
+{
+	name = "Garrisons & Border Guards"
+
+	for_countries = { EST }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	link_numbering_with = { EST_INF_01 }
+
+	fallback_name = "%d. garnisonidiviis"
+
+	ordered =
+	{
+		# Garrisons of the 1939 army
+		1 = { "Tallinna garnison" }
+		2 = { "Tartu garnison" }
+		3 = { "Narva garnison" }
+		4 = { "Rakvere garnison" }
+		5 = { "Pärnu garnison" }
+		6 = { "Viljandi garnison" }
+		7 = { "Võru garnison" }
+		8 = { "Valga garnison" }
+		9 = { "Petseri garnison" }
+		10 = { "Haapsalu garnison" }
+		11 = { "Jõhvi garnison" }
+		12 = { "Tapa garnison" }
+		# Other towns
+		13 = { "Kuressaare garnison" }
+		14 = { "Paide garnison" }
+		15 = { "Paldiski garnison" }
+		16 = { "Kärdla garnison" }
+		17 = { "Rapla garnison" }
+		18 = { "Türi garnison" }
+		19 = { "Põltsamaa garnison" }
+		20 = { "Jõgeva garnison" }
+		# Border guard
+		101 = { "Viru piirivalvepataljon" }
+	}
+}
+
+# ===== Ideology suites =====
+
+# Neutrality (the Päts era, which celebrated the ancient fight for freedom): the elders, strongholds and battles of 1208-1227 and the rising of 1343.
+EST_MUI_01 = 
+{
+	name = "Ancient Freedom Divisions"
+
+	for_countries = { EST }
+
+	can_use = { has_government = neutrality }
+
+	division_types = { "infantry" "cavalry" }
+
+	fallback_name = "%d. diviis"
+
+	ordered =
+	{
+		# Elders
+		1 = { "1. diviis 'Lembitu'" }
+		2 = { "2. diviis 'Meeme'" }
+		3 = { "3. diviis 'Vesse'" }
+		# Strongholds
+		4 = { "4. diviis 'Otepää'" }
+		5 = { "5. diviis 'Varbola'" }
+		6 = { "6. diviis 'Lõhavere'" }
+		7 = { "7. diviis 'Viljandi'" }
+		8 = { "8. diviis 'Valjala'" }
+		9 = { "9. diviis 'Soontagana'" }
+		10 = { "10. diviis 'Tarbatu'" }
+		11 = { "11. diviis 'Kaarma'" }
+		12 = { "12. diviis 'Keava'" }
+		# Battles and risings
+		13 = { "13. diviis 'Ümera'" }
+		14 = { "14. diviis 'Madisepäev'" }
+		15 = { "15. diviis 'Jüriöö'" }
+	}
+}
+
+# Fascism: the War of Independence Veterans' League (vapsid), with the Finnic lands of the vanilla Finno-Ugric union focuses as nicknames. No leader is a patron.
+EST_VAPS_01 = 
+{
+	name = "Veterans' League Divisions"
+
+	for_countries = { EST }
+
+	can_use = { has_government = fascism }
+
+	division_types = { "infantry" "militia" }
+
+	fallback_name = "%d. vabadussõjalaste diviis"
+
+	ordered =
+	{
+		# Finnic lands
+		1 = { "1. vabadussõjalaste diviis 'Karjala'" }
+		2 = { "2. vabadussõjalaste diviis 'Ingerimaa'" }
+		3 = { "3. vabadussõjalaste diviis 'Aunus'" }
+		4 = { "4. vabadussõjalaste diviis 'Viena'" }
+		5 = { "5. vabadussõjalaste diviis 'Vepsamaa'" }
+		6 = { "6. vabadussõjalaste diviis 'Vadjamaa'" }
+		7 = { "7. vabadussõjalaste diviis 'Liivimaa'" }
+		8 = { "8. vabadussõjalaste diviis 'Lapimaa'" }
+		9 = { "9. vabadussõjalaste diviis 'Komimaa'" }
+		10 = { "10. vabadussõjalaste diviis 'Marimaa'" }
+		11 = { "11. vabadussõjalaste diviis 'Udmurdimaa'" }
+		12 = { "12. vabadussõjalaste diviis 'Mordva'" }
+		# The Veterans' League
+		101 = { "Vabadussõjalaste korrapidajate üksus" }
+		102 = { "Vabadussõjalaste Liidu Jõgeva osakond" }
+	}
+}
+
+# Communism: the 22nd Territorial Rifle Corps of 1940-41 and the Estonian Rifle Corps of 1941-45 with their divisions and regiments, each on its own number. No unit of 1918-19 is used.
+EST_RED_01 = 
+{
+	name = "Red Rifle Divisions"
+
+	for_countries = { EST }
+
+	can_use = { has_government = communism }
+
+	division_types = { "infantry" "motorized" }
+
+	fallback_name = "%d. Eesti laskurdiviis"
+
+	ordered =
+	{
+		1 = { "1. Eesti üksik tagavaralaskurpolk" }
+		7 = { "7. Eesti laskurdiviis" }
+		8 = { "8. Eesti laskurkorpus" }
+		21 = { "21. laskurpolk" }
+		22 = { "22. Eesti territoriaalne laskurkorpus" }
+		27 = { "27. laskurpolk" }
+		41 = { "41. kaardiväe Eesti Tallinna laskurkorpus" }
+		42 = { "42. laskurpolk" }
+		118 = { "118. kaardiväe Eesti Tallinna punalipuline laskurdiviis" }
+		122 = { "122. kaardiväe Eesti Tallinna punalipuline laskurdiviis" }
+		140 = { "140. laskurpolk" }
+		171 = { "171. laskurpolk" }
+		180 = { "180. Eesti laskurdiviis 'Põhja'" }
+		182 = { "182. Eesti laskurdiviis 'Lõuna'" }
+		221 = { "221. tankipolk 'Nõukogude Eesti eest'" }
+		232 = { "232. laskurpolk" }
+		249 = { "249. Eesti laskurdiviis" }
+		300 = { "300. laskurpolk" }
+		354 = { "354. laskurpolk" }
+		917 = { "917. laskurpolk" }
+		921 = { "921. laskurpolk" }
+		925 = { "925. laskurpolk" }
+	}
+}
+
+# Democratic: the Finnish Boys of JR 200, the defence of the Tief government in September 1944 and the Forest Brothers of 1944-53. No formation of 1941-44 is used.
+EST_MV_01 = 
+{
+	name = "Freedom Fighters"
+
+	for_countries = { EST }
+
+	can_use = { has_government = democratic }
+
+	division_types = { "infantry" "militia" }
+
+	fallback_name = "%d. vabadusvõitlejate diviis"
+
+	ordered =
+	{
+		# Battles
+		1 = { "1. vabadusvõitlejate diviis 'Keila'" }
+		2 = { "2. vabadusvõitlejate diviis 'Saika'" }
+		3 = { "3. vabadusvõitlejate diviis 'Puutlipalu'" }
+		4 = { "4. vabadusvõitlejate diviis 'Osula'" }
+		5 = { "5. vabadusvõitlejate diviis 'Vastseliina'" }
+		6 = { "6. vabadusvõitlejate diviis 'Soomepoisid'" }
+		# Units
+		101 = { "Löögirühm Admiral Pitka" }
+		102 = { "Soome jalaväerügement 200" }
+		103 = { "Relvastatud Võitluse Liit" }
+		104 = { "Võrumaa metsavennad" }
 	}
 }
 

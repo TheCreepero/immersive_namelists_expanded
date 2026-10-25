@@ -1,6 +1,6 @@
 # Germany-Additional (GER_ADDITIONAL) Namelist Audit - 2026-10-25
 
-Status: READY
+Status: DONE
 
 File: `common/units/names_divisions/zz_INEX_GER_ADDITIONAL_names_divisions.txt`
 
@@ -117,14 +117,14 @@ After the batch, `-Check GER_ADDITIONAL` shows `GROUPS=25 AUTHORED=561/987 FLAGS
 New against the 2026-10-09 plan: the PLACEHOLDER_ENTRIES and LOW_DEPTH flags of the new `GER_MONRES_01`. The Workshop description stays well under the 17,000-character limit (12,640 before the docs edits, which add about 30 characters).
 
 ## Implementation steps
-- [ ] 1. Set `Status: IN PROGRESS`, then apply the batch: `powershell -File .\build.ps1 -EditNames GER_ADDITIONAL -Batch <this file>`. Expect one line per operation (four: `GER_MONRES_01` added, `GER_ARM_03`, `GER_FLAK_DIVISION_01`, `GER_VOLKSGRENADIER_01`) and no `[ERROR]`.
-- [ ] 2. Replace the file header (ADD-5), run exactly as written on one line:
+- [x] 1. Set `Status: IN PROGRESS`, then apply the batch: `powershell -File .\build.ps1 -EditNames GER_ADDITIONAL -Batch <this file>`. Expect one line per operation (four: `GER_MONRES_01` added, `GER_ARM_03`, `GER_FLAK_DIVISION_01`, `GER_VOLKSGRENADIER_01`) and no `[ERROR]`.
+- [x] 2. Replace the file header (ADD-5), run exactly as written on one line:
   `powershell -File .\build.ps1 -SetHeader GER_ADDITIONAL -HeaderText "Division template historical names system for Germany (GER): additional formations.\nImmersive Namelists Expanded (INEX)\n\nNumbered series, specialised units, garrisons and fortresses, Kampfgruppen, militias, foreign\nlegions and the Imperial series. Period German spelling and 1939-45 exonyms (Reval, Wilna, Kiew,\nCharkow); identities appended to a designation go in single quotes, historical proper names do not.\n\nNumbering: Reserve, Volksgrenadier and Grenadier divisions link to GER_Inf_01 and sit on their\nreal numbers (one Heer number series). Luftwaffe field divisions, Flak divisions, battalions,\nbrigades, garrisons, militias and the Imperial lists run their own series.\n\nIdeology gating: Volkssturm, SA and foreign legions are fascist-only; Freikorps (neutrality),\nReichsbanner (democratic) and Red Front Fighters (communism) cover the other paths. The Imperial\nSturm-Bataillone, Reserve and Landwehr divisions serve neutrality and democratic governments.\nOverrides vanilla GER_PEN_01, GER_MIL_01, GER_MIL_02 and GER_MIL_03 (all created by vanilla focuses)."`
   Expect a line confirming the header was replaced and no `[ERROR]`.
-- [ ] 3. `powershell -File .\build.ps1 -SyncWiki GER_ADDITIONAL`, then make the seven edits listed under "Docs payload".
-- [ ] 4. `powershell -File .\build.ps1 -Check GER_ADDITIONAL`. Expect `Check passed`; the remaining flags must match "Kept on judgment".
-- [ ] 5. Fill "Outcome", set `Status: DONE`, report the `-Check` result.
-- [ ] 6. Ship, on the user's word: commit with the message `Audit GER_ADDITIONAL: add Imperial Reserve divisions, early Panzer-Brigaden and Flak stations`, then `powershell -File .\wiki\push-wiki.ps1 -CommitMessage "Audit GER_ADDITIONAL: add Imperial Reserve divisions, early Panzer-Brigaden and Flak stations"`.
+- [x] 3. `powershell -File .\build.ps1 -SyncWiki GER_ADDITIONAL`, then make the eight edits listed under "Docs payload". The first run prints `no row in wiki table (add by hand): GER_MONRES_01` and either `wiki/Home.md: GER_ADDITIONAL group count 24 -> 25` or, because an earlier run of this step already wrote that count, `wiki/Home.md: GER_ADDITIONAL group count 25 (unchanged)`; both are expected. Edit 8 adds that row. Other sessions may have uncommitted edits in `WORKSHOP_DESCRIPTION_GUIDELINES.md` and `wiki/Home.md`; change only the lines this plan names.
+- [x] 4. `powershell -File .\build.ps1 -Check GER_ADDITIONAL`. Expect `Check passed`; the remaining flags must match "Kept on judgment".
+- [x] 5. Fill "Outcome", set `Status: DONE`, report the `-Check` result.
+- [x] 6. Ship, on the user's word: commit with the message `Audit GER_ADDITIONAL: add Imperial Reserve divisions, early Panzer-Brigaden and Flak stations`, then `powershell -File .\wiki\push-wiki.ps1 -CommitMessage "Audit GER_ADDITIONAL: add Imperial Reserve divisions, early Panzer-Brigaden and Flak stations"`.
 
 ## Docs payload
 README.md: no change. `-SyncWiki GER_ADDITIONAL` writes the wiki table row for `GER_MONRES_01` and the `wiki/Home.md` group count. Make these prose edits with Edit, matching the current text exactly.
@@ -174,6 +174,12 @@ README.md: no change. `-SyncWiki GER_ADDITIONAL` writes the wiki table row for `
    Replace with:
    `Sturm-Bataillone, Reserve & Landwehr divisions, Freikorps ([i]5. Kampfwagen-Division 'Mephisto'[/i])`
 
+**`wiki/Germany-Additional.md`, group table** (`-SyncWiki` updates existing rows only and reports `no row in wiki table (add by hand): GER_MONRES_01`)
+
+8. Insert this row directly after the row that begins ``| `GER_STURM_01` | Imperial Storm Battalions |``:
+   ``| `GER_MONRES_01` | Imperial Reserve Divisions | infantry | `%d. Reserve-Division` |``
+   Then run `powershell -File .\build.ps1 -SyncWiki GER_ADDITIONAL` once more. Expect `Germany-Additional.md: 0 row(s) updated` with no `no row in wiki table` line.
+
 ## Stop conditions
 Stop and report to the user, without researching or improvising, when: the batch fails; `-Check` fails after one retry of a fix this plan describes; a step has no command for what it asks; a name in the output looks wrong; a flag appears that "Kept on judgment" does not list.
 
@@ -185,7 +191,11 @@ Self-check (the batch adds 70 names, almost all numbered designation patterns, s
 - Preview on a scratch copy: the batch applied (`Added GER_MONRES_01 ... 59 name(s)`, `GER_ARM_03 +10`, `GER_FLAK_DIVISION_01 ~3`, `GER_VOLKSGRENADIER_01 +1`), and `-ValidateOnly` passed all 21 namelist files.
 
 ## Outcome
-<!-- TODO(implementer): date, the -Check summary, deviations from this plan with the reason -->
+Date: 2026-10-25.
+
+-Check summary: `Check GER_ADDITIONAL: Validate OK; Tests 475 Passed, 0 Failed, 0 Skipped; AUDIT SUMMARY GER_ADDITIONAL: GROUPS=25 AUTHORED=561/987 FLAGS=27; Flags: PLACEHOLDER_ENTRIES x14, LOW_DEPTH x12, POLITICAL_ENTRY x1; Diff vs HEAD: 4 group(s) changed, +72 -0 name(s); Check passed`. All 27 flags are listed under "Kept on judgment".
+
+Deviations from this plan: none. Step 3's sync printed the `(unchanged)` variant of the Home.md line, which the plan lists as expected. The `-Check` run refreshed the change table at the bottom of this file, as the script does.
 
 ## Edit batch
 Applied by `build.ps1 -EditNames GER_ADDITIONAL -Batch <this file>`: every fenced block whose opening line is `` ```json batch ``, in order. Never typed out again or read back.
@@ -234,5 +244,12 @@ Applied by `build.ps1 -EditNames GER_ADDITIONAL -Batch <this file>`: every fence
 
 ## Per-group changes
 <!-- BEGIN CHANGE TABLE: generated by build.ps1 -AuditPlan; rerun it to refresh, never edit by hand -->
-No name changes versus the base revision.
+| Group | Count | Added | Removed | Other |
+|---|---|---|---|---|
+| GER_ARM_03 | 16 -> 26 | %d. Panzer-Brigade (x10) | - | - |
+| GER_VOLKSGRENADIER_01 | 57 -> 58 | - | - | - |
+| GER_FLAK_DIVISION_01 | 33 -> 33 | %d. Flak-Division 'Darmstadt', %d. Flak-Division 'Köln', %d. Flak-Division 'Wiesbaden' | - | - |
+| GER_MONRES_01 | new, 59 | %d. Reserve-Division (x43), %d. Reserve-Division (1. Königlich Sächsische), %d. Reserve-Division (2. Königlich Sächsische), %d. (Württembergische) Reserve-Division, 1. Kgl. Bayer. Reserve-Division, 5. Kgl. Bayer. Reserve-Division, 6. Kgl. Bayer. Reserve-Division, 8. Kgl. Bayer. Reserve-Division, 9. Kgl. Bayer. Reserve-Division, 30. Kgl. Bayer. Reserve-Division, 39. Kgl. Bayer. Reserve-Division, 4. Ersatz-Division, 5. Ersatz-Division, 8. Ersatz-Division, 10. Ersatz-Division, 19. Ersatz-Division, Kgl. Bayer. Ersatz-Division | - | - |
+
+Unchanged: GER_SCHWERE_PANZERABTEILUNG_01, GER_SCHWERE_PANZERABTEILUNG_02, GER_STUG_01, GER_PANZERARTILLERIE_DIVISION_01, GER_RESERVE_DIVISION_01, GER_GRENADIER_DIVISION_01, GER_LUFTWAFFEN_FELD_DIVISION_01, GER_GAR_02, GER_FORT_01, GER_KAMPFGRUPPE_01, GER_BRIG_01, GER_PEN_01, GER_VOLKSSTURM_BATAILLONS_01, GER_SA_01, GER_MIL_01, GER_MIL_02, GER_MIL_04, GER_MIL_03, GER_LEG_01, GER_STURM_01, GER_LANDWEHR_01
 <!-- END CHANGE TABLE -->

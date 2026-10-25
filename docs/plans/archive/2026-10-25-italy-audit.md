@@ -1,6 +1,6 @@
 # Italy (ITA) Namelist Audit - 2026-10-25
 
-Status: READY
+Status: DONE
 
 File: `common/units/names_divisions/zz_INEX_ITA_names_divisions.txt`
 
@@ -76,11 +76,11 @@ Expected `-Check ITA` flags after the batch (19, compared with 26 before; `AUDIT
 - `Vanilla:` lines unchanged: `ITA_INF_01` leaves out 6 names (kept by the 2026-10-17 audit), `ITA_INF_02` `13=%da Divisione CC.NN. 'Biscaccianti'`.
 
 ## Implementation steps
-- [ ] 1. Set `Status: IN PROGRESS`, then apply the batch: `powershell -File .\build.ps1 -EditNames ITA -Batch docs/plans/2026-10-25-italy-audit.md`. Expect 11 `Edited` lines and no `[ERROR]`: ITA_INF_01 `+0 -1 ~0`, ITA_INF_02 `+1 -0 ~0`, ITA_MOT_01 `+0 -0 ~0`, ITA_ARM_01 `+0 -0 ~0`, ITA_COL_01 `+1 -0 ~0`, ITA_FAV_01 `+4 -0 ~4`, ITA_ALT_01 `+6 -0 ~3`, ITA_RGR_01 `+5 -0 ~0`, ITA_ARD_01 `+5 -0 ~0`, ITA_MAR_02 `+5 -0 ~0` twice. The file then holds 43 groups and 993 names.
-- [ ] 2. `powershell -File .\build.ps1 -SyncWiki ITA`. Expect `Italy.md: 0 row(s) updated` and `wiki/Home.md: ITA group count 43 (unchanged)`. Then replace the nine lines of `wiki/Italy.md` listed under "Docs payload", each whole, with Edit.
-- [ ] 3. `powershell -File .\build.ps1 -Check ITA`. Expect `Check passed` and `AUDIT SUMMARY ITA: GROUPS=43 AUTHORED=837/993 FLAGS=19` (LOW_DEPTH x12, PLACEHOLDER_ENTRIES x5, IDENTITY_REPEAT x1, TODO_COMMENT x1), matching "Kept on judgment". No `STALE_COMMENT` or `POLITICAL_ENTRY` may remain.
-- [ ] 4. Fill "Outcome", set `Status: DONE`, report the `-Check` result. Other nations' plans and files may show in `git status` (SOV, EST, LAT plans, ROADMAP, guide, skills, tooling backlog): leave them alone.
-- [ ] 5. Ship, on the user's word: move this plan to `docs/plans/archive/`, stage only `common/units/names_divisions/zz_INEX_ITA_names_divisions.txt`, `wiki/Italy.md` and the plan (its old and archive paths), commit with the message `Deepen ITA partisan, colonial and corps namelists; gate Giovani Fascisti`, then `powershell -File .\wiki\push-wiki.ps1 -CommitMessage "Deepen ITA partisan, colonial and corps namelists; gate Giovani Fascisti"`.
+- [x] 1. Set `Status: IN PROGRESS`, then apply the batch: `powershell -File .\build.ps1 -EditNames ITA -Batch docs/plans/2026-10-25-italy-audit.md`. Expect 11 `Edited` lines and no `[ERROR]`: ITA_INF_01 `+0 -1 ~0`, ITA_INF_02 `+1 -0 ~0`, ITA_MOT_01 `+0 -0 ~0`, ITA_ARM_01 `+0 -0 ~0`, ITA_COL_01 `+1 -0 ~0`, ITA_FAV_01 `+4 -0 ~4`, ITA_ALT_01 `+6 -0 ~3`, ITA_RGR_01 `+5 -0 ~0`, ITA_ARD_01 `+5 -0 ~0`, ITA_MAR_02 `+5 -0 ~0` twice. The file then holds 43 groups and 993 names.
+- [x] 2. `powershell -File .\build.ps1 -SyncWiki ITA`. Expect `Italy.md: 0 row(s) updated` and `wiki/Home.md: ITA group count 43 (unchanged)`. Then replace the nine lines of `wiki/Italy.md` listed under "Docs payload", each whole, with Edit.
+- [x] 3. `powershell -File .\build.ps1 -Check ITA`. Expect `Check passed` and `AUDIT SUMMARY ITA: GROUPS=43 AUTHORED=837/993 FLAGS=19` (LOW_DEPTH x12, PLACEHOLDER_ENTRIES x5, IDENTITY_REPEAT x1, TODO_COMMENT x1), matching "Kept on judgment". No `STALE_COMMENT` or `POLITICAL_ENTRY` may remain.
+- [x] 4. Fill "Outcome", set `Status: DONE`, report the `-Check` result. Other nations' plans and files may show in `git status` (SOV, EST, LAT plans, ROADMAP, guide, skills, tooling backlog): leave them alone.
+- [x] 5. Ship, on the user's word: move this plan to `docs/plans/archive/`, stage only `common/units/names_divisions/zz_INEX_ITA_names_divisions.txt`, `wiki/Italy.md` and the plan (its old and archive paths), commit with the message `Deepen ITA partisan, colonial and corps namelists; gate Giovani Fascisti`, then `powershell -File .\wiki\push-wiki.ps1 -CommitMessage "Deepen ITA partisan, colonial and corps namelists; gate Giovani Fascisti"`.
 
 ## Docs payload
 `README.md` and `WORKSHOP_DESCRIPTION_GUIDELINES.md`: no change (their wording still describes the file). `wiki/Italy.md`: replace each line below whole, after `-SyncWiki`. Each "Current" line is unique in the file.
@@ -124,7 +124,11 @@ Stop and report to the user, without researching or improvising, when: the batch
 It confirmed 'Giacomo Pagliari' independently (Giornale di Brescia, 14 Sept 2021). The batch is unchanged. A rehearsal on an export of HEAD applied the batch, renamed the three section headers, and gave the flags under "Kept on judgment" and the step outputs above.
 
 ## Outcome
-<!-- TODO(implementer): date, the -Check summary, deviations from this plan with the reason -->
+Date: 2026-10-25.
+
+`-Check ITA` summary: `AUDIT SUMMARY ITA: GROUPS=43 AUTHORED=837/993 FLAGS=19` (LOW_DEPTH x12, PLACEHOLDER_ENTRIES x5, IDENTITY_REPEAT x1, TODO_COMMENT x1), tests 475 passed, 0 failed, `Check passed`. The flags match "Kept on judgment"; no STALE_COMMENT or POLITICAL_ENTRY remains. Diff vs HEAD: 8 groups changed, +39 -8 names.
+
+Deviations: none from the plan's steps and batch. Note: the `-SyncWiki ITA` run printed an extra review line not in step 2 (`L119: Divisione Osoppo-Friuli (removed from ALT_01)`). It pointed at the `wiki/Italy.md` line that Docs payload item 5 already replaces, so the step was carried out as written and the line was replaced.
 
 ## Edit batch
 Applied by `build.ps1 -EditNames ITA -Batch <this file>`: every fenced block whose opening line is `` ```json batch ``, in order. Never typed out again or read back.
@@ -181,5 +185,16 @@ Applied by `build.ps1 -EditNames ITA -Batch <this file>`: every fenced block who
 
 ## Per-group changes
 <!-- BEGIN CHANGE TABLE: generated by build.ps1 -AuditPlan; rerun it to refresh, never edit by hand -->
-No name changes versus the base revision.
+| Group | Count | Added | Removed | Other |
+|---|---|---|---|---|
+| INF_01 | 71 -> 70 | - | %da Divisione 'Giovani Fascisti' (to INF_02) | - |
+| INF_02 | 13 -> 14 | %da Divisione 'Giovani Fascisti' (from INF_01) | - | - |
+| COL_01 | 34 -> 35 | Divisione Coloniale 'Libia' | - | - |
+| FAV_01 | 8 -> 12 | Brigata Fiamme Verdi 'Tarzan', Brigata Fiamme Verdi 'Ferruccio Lorenzini', Brigata Fiamme Verdi 'Giacomo Perlasca', Brigata Fiamme Verdi 'Ermanno Margheriti', Brigata Fiamme Verdi 'Giacomo Cappellini', Brigata Fiamme Verdi 'Antonio Lorenzetti', 284a Brigata Fiamme Verdi 'Italo', Brigata Mantovana Fiamme Verdi | Brigata Fiamme Verdi 'Tosetti', Brigata Fiamme Verdi 'Lorenzini', Brigata Fiamme Verdi 'Perlasca', Brigata Fiamme Verdi 'Margheriti' | - |
+| ALT_01 | 6 -> 12 | Brigate Osoppo-Friuli, Divisione 'Val Toce', 1a Divisione Osoppo Carnia, 1a Brigata Osoppo Prealpi, 2a Brigata Osoppo, 3a Brigata Osoppo, 5a Brigata Osoppo, Brigata Osoppo 'Martelli', Brigata Alpina d'Assalto 'Filippo Beltrami' | Divisione Osoppo-Friuli, Brigata Risorgimento, Divisione Italia | - |
+| MAR_02 | 5 -> 15 | %da Divisione Fanteria di Marina 'Grado', %da Divisione Fanteria di Marina 'Cortellazzo', %da Divisione Fanteria di Marina 'Capo Sile', %da Divisione Fanteria di Marina 'Caimani del Piave', %da Divisione Fanteria di Marina 'Andrea Bafile', %da Divisione Fanteria di Marina 'Lepanto', %da Divisione Fanteria di Marina 'Amalfi', %da Divisione Fanteria di Marina 'Gaeta', %da Divisione Fanteria di Marina 'Brindisi', %da Divisione Fanteria di Marina 'Pola' | - | - |
+| RGR_01 | 9 -> 14 | %da Divisione Bersaglieri 'Santa Lucia', %da Divisione Bersaglieri 'Castelfidardo', %da Divisione Bersaglieri 'Giacomo Pagliari', %da Divisione Bersaglieri 'Monte Fior', %da Divisione Bersaglieri 'Col del Rosso' | - | - |
+| ARD_01 | 8 -> 13 | %da Divisione d'Assalto 'Monte Valbella', %da Divisione d'Assalto 'Col d'Echele', %da Divisione d'Assalto 'Monte Asolone', %da Divisione d'Assalto 'Fagarè', %da Divisione d'Assalto 'Monte Pertica' | - | - |
+
+Unchanged: LEG_01, RSI_01, BRN_01, MONCH_01, COM_01, COL_02, COL_03, CAV_01, CAV_02, CAV_03, CAV_04, CAV_05, CAV_06, GAL_01, GEL_01, MAT_01, AUT_01, MOT_01, MEC_01, MEC_02, ARM_01, MAR_01, MNT_01, PAR_01, FES_01, GAR_01, GAF_01, CAR_01, ROM_01, MIL_01, GDF_01, COL_04, REP_01, RED_01, IRR_01
 <!-- END CHANGE TABLE -->

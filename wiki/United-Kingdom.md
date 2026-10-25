@@ -15,6 +15,7 @@ The British Army's divisional system drew on a rich tradition of regional county
 | Group Tag | UI Name | Division Types | Fallback Name |
 |:---|:---|:---|:---|
 | `ENG_INF_01` | Infantry Divisions | infantry | `%d Infantry Division` |
+| `ENG_INF_04` | Infantry Divisions (Named) | infantry, motorized, mechanized | `%d Infantry Division` |
 | `ENG_INF_02` | Infantry Brigades | infantry | `%d Infantry Brigade` |
 | `ENG_INF_03` | Light Divisions | infantry, mechanized | `%d (Light) Division` |
 | `ENG_CAV_01` | Cavalry Divisions | cavalry | `%d Cavalry Division` |
@@ -23,6 +24,7 @@ The British Army's divisional system drew on a rich tradition of regional county
 | `ENG_MOT_02` | Motor Divisions | motorized | `%d Motor Division` |
 | `ENG_MEC_01` | Mechanised Divisions | mechanized | `%d Infantry Division` |
 | `ENG_ARM_01` | Armoured Divisions | light_armor, medium_armor, heavy_armor, modern_armor | `%d Armoured Division` |
+| `ENG_ARM_04` | Armoured Divisions (Named) | light_armor, medium_armor, heavy_armor, modern_armor | `%d Armoured Division` |
 | `ENG_ARM_02` | Armoured & Tank Brigades | light_armor, medium_armor, modern_armor | `%d Armoured Brigade` |
 | `ENG_ARM_03` | Heavy Armoured Brigades | heavy_armor | `%d Heavy Armoured Brigade` |
 | `ENG_PAR_01` | Airborne Divisions | paratrooper | `%d Airborne Division` |
@@ -47,48 +49,49 @@ The British Army's divisional system drew on a rich tradition of regional county
 
 ## Group Details
 
-### `ENG_INF_01` — Infantry Divisions
-The main British infantry division series. Historical entries cover all active British infantry divisions including the Guards Division, Scottish, Welsh, and English county-based formations. The numbered series spans 1st–82nd plus wartime expanded entries. Note the large historical gaps in the sequence, which the file preserves faithfully.
+### `ENG_INF_01` / `ENG_INF_04` — Infantry Divisions (plain and named)
+`ENG_INF_01` is the plain series: the Regular Army (1st–8th), the first-line Territorial Army (42nd–56th), the second-line and wartime divisions (9th (Highland) to 80th (Reserve)), the deception divisions (40th, 57th, 58th) and the Guards Division, each under its regional title and without nicknames. Numbers the Army left unused in 1939–45 revive the titles they carried in 1914–18: 10th and 16th (Irish), 13th and 19th (Western), 17th (Northern), 60th (2/2nd London) to 69th (2nd East Anglian), and 74th (Yeomanry). Vanilla's numbered entries fill the gaps.
 
-Selected named entries include:
-- 1st Infantry Division (*1 Division*)
-- 2nd Infantry Division (*2 Division*)
+`ENG_INF_04` (Named) holds the same divisions with their nicknames and formation signs, shares numbering with `ENG_INF_01`, and also serves motorised and mechanised templates. Examples:
 - 3rd Infantry Division (*Iron Division*)
-- 4th, 5th, 6th Infantry Divisions
-- 42nd–55th Infantry Divisions (Territorial Army)
-- 7th, 8th, 9th, 12th, 15th (Scottish), 18th, 23rd, 38th (Welsh), 43rd (Wessex), 46th, 50th (Northumbrian), 51st (Highland), 52nd (Lowland), 56th (London)
+- 5th Infantry Division (*Globetrotters*)
+- 43rd (Wessex) Infantry Division (*Wyverns*)
+- 49th (West Riding) Infantry Division (*Polar Bears*)
+- 50th (Northumbrian) Infantry Division (*Tyne-Tees*)
+- 51st (Highland) Infantry Division (*Highway Decorators*)
+- 56th (London) Infantry Division (*Black Cats*)
+- 78th Infantry Division (*Battleaxe*)
 
 ### `ENG_INF_02` / `ENG_INF_03` — Infantry Brigade & Light Division
-Brigade-sized and light division formations for players using smaller templates.
+Brigade-sized formations for smaller templates. `ENG_INF_02` carries the Territorial Army brigades under their regional titles (*125th (Lancashire Fusiliers)*, *150th (York and Durham)*, *152nd (1st Highland)*, *167th (1st London)*), the Guards brigades and the *231st (Malta) Infantry Brigade*. `ENG_INF_03` keeps vanilla's light divisions, whose 14th and 20th (Light) match the 1914–18 titles.
 
 ### `ENG_CAV_01` / `ENG_CAV_02` — Cavalry
-British cavalry divisions and brigades. By WWII most had converted to armour, but the lists include historic cavalry designations for the early war period and alternate-history paths.
+British cavalry divisions and brigades. By 1939 only the yeomanry 1st Cavalry Division in Palestine remained, so the lists draw on the First World War: the 1st–5th Cavalry Divisions, the Yeomanry Mounted Division and the 1st–4th Mounted Divisions in `ENG_CAV_01`, and the fourteen Territorial Force mounted brigades of 1908 (*Highland*, *Notts and Derby*, *1st South Western*) and the Scottish Horse in `ENG_CAV_02`.
 
 ### `ENG_MOT_01` / `ENG_MOT_02` — Motorised Divisions
-British motorized infantry. `ENG_MOT_01` and `ENG_MOT_02` share numbering with `ENG_INF_01` via `link_numbering_with` to preserve consistent divisional numbering across infantry and motorized types.
+British motorized infantry. `ENG_MOT_01` and `ENG_MOT_02` share numbering with `ENG_INF_01` via `link_numbering_with` to preserve consistent divisional numbering across infantry and motorized types. `ENG_MOT_02` holds the four Motor Divisions of September 1939: 50th (Northumbrian), 55th (West Lancashire), and 1st and 2nd London.
 
-### `ENG_ARM_01` — Armoured Divisions
-Historical British armoured divisions including:
-- 1st and 2nd Armoured Divisions
+### `ENG_ARM_01` / `ENG_ARM_04` — Armoured Divisions (plain and named)
+`ENG_ARM_01` is the plain series: the 1st, 2nd and 6th to 11th Armoured Divisions, the 42nd, 79th and Guards Armoured Divisions, the notional 5th Armoured of Operation Fortitude, the 1937 *Mobile Division*, the 1938 *Mobile Division (Egypt)*, and three extrapolated (Yeomanry) armoured divisions. `ENG_ARM_04` (Named) holds the same divisions with their nicknames and formation signs and shares numbering with `ENG_ARM_01`:
+- 1st Armoured Division (*Rhino*)
 - 6th Armoured Division (*Mailed Fist*)
 - 7th Armoured Division (*Desert Rats*)
-- 8th, 9th, 10th Armoured Divisions
+- 9th Armoured Division (*Panda*) and 10th Armoured Division (*Fox's Mask*)
 - 11th Armoured Division (*Black Bull*)
-- 42nd Armoured Division
 - 79th Armoured Division (*Hobart's Funnies*)
-- Guards Armoured Division
+- Guards Armoured Division (*Ever-Open Eye*)
 
 ### `ENG_ARM_02` / `ENG_ARM_03` — Tank Brigades / Heavy Armoured Brigades
-Independent tank brigades and army tank brigades used for infantry support.
+Armoured brigades and army tank brigades under their real numbers (*4th Armoured Brigade 'Black Rats'*, *5th Guards Armoured Brigade*, *6th Guards Tank Brigade*, the 35th and 36th Army Tank Brigades). `ENG_ARM_03` keeps vanilla's numbered heavy brigades.
 
 ### `ENG_PAR_01` — Airborne Divisions
 British airborne: 1st Airborne Division (*Red Devils* — Arnhem) and 6th Airborne Division (D-Day landings). Extended numbered series for alt-history airborne expansion.
 
 ### `ENG_PAR_02` — Parachute Brigades
-Parachute and airlanding brigade formations: 1st through 5th Parachute Brigades, plus 1st and 6th Airlanding Brigades.
+Parachute and airlanding brigade formations: 1st through 5th Parachute Brigades (the 2nd as the *2nd Independent Parachute Brigade* of Italy and Greece), the 1st and 6th Airlanding Brigades, and the *16th Independent Parachute Brigade Group* of 1948.
 
 ### `ENG_MAR_01` — Royal Marines
-Royal Marines formations, covering the historical Royal Marine Division and Royal Marine Commandos (Nos. 40 through 48 RM Commando).
+Royal Marines formations: the Royal Marine Division and its 101st–103rd Royal Marine Brigades, the Mobile Naval Base Defence Organisations I and II, the 116th and 117th Infantry Brigades Royal Marines of 1945, the Royal Marine Commandos (Nos. 40 through 48), and the *63rd (Royal Naval) Division* of 1914–18.
 
 ### `ENG_MNT_01` — Mountain Divisions
 Mountain and highland infantry. `ENG_MNT_01` links numbering with motorized/mechanized lists.
@@ -100,13 +103,19 @@ Gurkha formations — the famous Nepalese light infantry regiments of the Britis
 Anti-invasion County Divisions (Devon & Cornwall, Dorset, Durham & North Riding, Essex, Hampshire, Lincolnshire, Norfolk, Northumberland, West Sussex, Yorkshire) and strategic overseas fortress garrisons (Gibraltar, Malta, Singapore, Hong Kong).
 
 ### `ENG_COL_01` — Colonial Divisions
-Formations from British colonial territories and protectorates: East Africa, West Africa, Sudan, Somaliland, Transjordan, Burma, Malaya, and Hong Kong, including the King's African Rifles (KAR) and the Royal West African Frontier Force (RWAFF).
+Formations from British colonial territories and protectorates: the 11th (East Africa), 12th (African), 81st and 82nd (West Africa) Divisions; the King's African Rifles (KAR) and the Royal West African Frontier Force (RWAFF); the Sudan Defence Force, Somaliland Camel Corps, Arab Legion, Transjordan Frontier Force, Palestine Regiment and Aden Protectorate Levies; the Burma Rifles, Malay Regiment and Hong Kong Volunteer Defence Corps; and the Cyprus, King's Own Malta, Caribbean and Fiji regiments.
 
 ### `ENG_HOMEGUARD_01` — Home Guard
 The British Home Guard (*Dad's Army*) — territorial defence formations organized by county to defend the British Isles against invasion. 40 named county formations.
 
 ### `ENG_ROYAL_GUARD_01` — Household Divisions
 Household Division formations: Grenadier, Coldstream, Scots, Irish, and Welsh Guards, Household Cavalry, Life Guards, Royal Horse Guards (*The Blues*), and King's Guard formations.
+
+### `ENG_AIR_01` — Anti-Aircraft Divisions
+The twelve divisions of Anti-Aircraft Command (1939–1942), each with the area it defended (*1st (London)*, *3rd (Scotland & Northern Ireland)*, *8th (South West England)*).
+
+### `ENG_INDEPENDENT_BRIGADES_01` — Independent Brigades
+The 1st Independent Brigade Group (Guards), the 20th Independent Infantry Brigade (Guards), and the 201st–225th Independent Infantry Brigades (Home), raised for static coastal defence in 1940–41.
 
 ### `ENG_SSB_01` — Special Service Brigades (Commandos / SAS)
 Special Service brigades: 1st through 4th Special Service Brigades (later Commando Brigades), including Lord Lovat's commandos.

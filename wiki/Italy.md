@@ -65,10 +65,10 @@ Ideology-gated lists: the MVSN Blackshirt divisions, legions and specialist mili
 ## Group Details
 
 ### `ITA_INF_01` — Infantry Divisions
-The 1935–43 infantry divisions on their real numbers, from *1a Divisione di Fanteria 'Superga'* to *65a 'Granatieri di Savoia'*, plus the 151–159 occupation divisions (*'Perugia'*, *'Zara'*, *'Veneto'*). Key 136 is *'Giovani Fascisti'*, which shares its number with the armored *'Centauro II'*.
+The 1935–43 infantry divisions on their real numbers, from *1a Divisione di Fanteria 'Superga'* to *65a 'Granatieri di Savoia'*, plus the 151–159 occupation divisions (*'Perugia'*, *'Zara'*, *'Veneto'*) and the *8a Divisione di Marcia* (1942–43). The *136a 'Giovani Fascisti'* is in `ITA_INF_02`, fascism only.
 
 ### `ITA_INF_02` — Blackshirt Divisions
-MVSN *Camicie Nere* divisions, fascism only: the seven 1935–43 divisions (*'23 Marzo'*, *'28 Ottobre'*, *'Tevere'*, *'Cirene'*), the Spanish CTV divisions (*'Dio lo Vuole'*, *'Fiamme Nere'*, *'Penne Nere'*) and two extrapolations from MVSN legion names.
+MVSN *Camicie Nere* divisions, fascism only: the seven 1935–43 divisions (*'23 Marzo'*, *'28 Ottobre'*, *'Tevere'*, *'Cirene'*), the Spanish CTV divisions (*'Dio lo Vuole'*, *'Fiamme Nere'*, *'Penne Nere'*), two extrapolations from MVSN legion names, and the *136a Divisione 'Giovani Fascisti'* of GIL volunteers (1941–43).
 
 ### `ITA_LEG_01` — Blackshirt Legions
 Fascism only. The MVSN's numbered *Legioni CC.NN.* on their real numbers, from *1a Legione CC.NN. 'Sabauda'* (Turin) through *63a 'Tagliamento'* and *112a 'Dell'Urbe'* (Rome) to *201a 'Conte Verde'* (Rhodes).
@@ -86,7 +86,7 @@ Neutrality or democratic. The Co-Belligerent Army's *Gruppi di Combattimento* (*
 Communism only. Revolutionary titles plus Italian labour-movement traditions: *'Arditi del Popolo'*, *'Antonio Gramsci'*, *'Ordine Nuovo'*, *'Biennio Rosso'*, *'Guadalajara'*.
 
 ### `ITA_COL_01` — Colonial Divisions
-*1a Divisione Libica 'Sibille'* and *2a 'Pescatori'* (1940), the 1935–36 Eritrean divisions, and the *101a* and *102a Divisione Somala* (1940–41).
+*1a Divisione Libica 'Sibille'* and *2a 'Pescatori'* (1940), the 1935–36 Eritrean divisions and *Divisione Coloniale 'Libia'*, and the *101a* and *102a Divisione Somala* (1940–41). The numbered colonial divisions of East Africa (*21a*–*26a Divisione Coloniale*, 1940–41) carried numbers only.
 
 ### `ITA_COL_02` / `ITA_COL_03` — Irregular Bands / Dubat Bands
 East African *bande*: *'Uollo Ambassel'* and *'Kai Bandera'*. The Somali Dubat bands were numbered rather than named, so `ITA_COL_03` uses its fallback only.
@@ -113,19 +113,19 @@ PSIUP formations (democratic or communist) named after Giacomo Matteotti: *'Brun
 Military and non-party formations (neutrality or democratic), led by Mauri's *1° Gruppo Divisioni Alpine*: *1a* and *2a 'Langhe'*, *5a 'Monferrato'*, *12a 'Bra'*, *103a Brigata 'Amendola'*.
 
 ### `ITA_FAV_01` — Fiamme Verdi Formations (Green Flames)
-Catholic formations of Brescia (neutrality or democratic): *Divisione 'Tito Speri'*, *Divisione 'Astolfo Lunardi'* and their brigades (*'Dieci Giornate'*, *'Perlasca'*).
+Catholic formations, mostly of Brescia (neutrality or democratic): *Divisione 'Tito Speri'*, *Divisione 'Astolfo Lunardi'* and their brigades (*'Ferruccio Lorenzini'*, *'Giacomo Perlasca'*, *'Tarzan'*), plus the Reggio Emilia *284a Brigata 'Italo'* and Mazzolari's *Brigata Mantovana*.
 
 ### `ITA_ALT_01` — Other Partisan Formations
-Formations outside the party networks, available to any non-fascist government: *Brigata Maiella*, *Divisione Osoppo-Friuli*, *Fronte Militare Clandestino*.
+Formations outside the party networks, available to any non-fascist government: *Brigata Maiella*, the Friulian *Brigate Osoppo-Friuli* and their brigades, Di Dio's *Divisione 'Val Toce'*, *Fronte Militare Clandestino*.
 
 ### `ITA_MOT_01` / `ITA_MEC_01` / `ITA_MEC_02` — Motorized and Mechanized Divisions
-Autotrasportabile and motorized divisions on their infantry numbers (*9a 'Pasubio'*, *101a Motorizzata 'Trieste'*); 106–108 are fictional. `ITA_MEC_01` is the plain mechanized list; `ITA_MEC_02` carries postwar names (*'Granatieri di Sardegna'*, *'Folgore'*, *'Goito'*).
+Autotrasportabile and motorized divisions on their infantry numbers (*9a 'Pasubio'*, *101a Motorizzata 'Trieste'*); 106–108 are plausible extrapolations. `ITA_MEC_01` is the plain mechanized list; `ITA_MEC_02` carries postwar names (*'Granatieri di Sardegna'*, *'Folgore'*, *'Goito'*).
 
 ### `ITA_ARM_01` — Armored Divisions (Divisioni Corazzate)
 *131a 'Centauro'*, *132a 'Ariete'*, *133a 'Littorio'*, the abortive *134a 'Freccia'*, *135a 'Ariete II'*, *136a 'Centauro II'* and the CC.NN. *'M'* division; *'Pozzuolo del Friuli'*, *'Curtatone'*, *'Mameli'* (postwar brigade names) and *'Nizza'*, *'Genova'*, *'Novara'* (cavalry traditions) are plausible extrapolations.
 
 ### `ITA_MAR_01` / `ITA_MAR_02` — Marines
-The *'San Marco'* regiment and a postwar-style *Reggimento Lagunari 'Serenissima'*; fictional *Divisioni Fanteria di Marina*.
+The *'San Marco'* regiment and a postwar-style *Reggimento Lagunari 'Serenissima'*; plausible *Divisioni Fanteria di Marina* named after port cities, the Marina regiment's Great War battles on the lower Piave (*'Grado'*, *'Cortellazzo'*, *'Capo Sile'*) and naval tradition (*'Lepanto'*, *'Andrea Bafile'*).
 
 ### `ITA_MNT_01` — Mountain Divisions (Divisioni Alpine)
 *'Taurinense'*, *'Tridentina'*, *'Julia'*, *'Cuneense'*, *'Pusteria'*, *'Alpi Graie'*, plus the postwar *'Orobica'* and *'Cadore'*. A plausible expansion names further divisions after famous Alpini battalions (*'Monte Cervino'*, *'Edolo'*, *'Mondovì'*).
@@ -134,10 +134,10 @@ The *'San Marco'* regiment and a postwar-style *Reggimento Lagunari 'Serenissima
 *80a Divisione Fanteria Aviotrasportabile 'La Spezia'* and the paratrooper divisions *183a 'Ciclone'*, *184a 'Nembo'*, *185a 'Folgore'*.
 
 ### `ITA_RGR_01` — Bersaglieri Divisions
-Overrides vanilla's placeholder list. Plausible Bersaglieri divisions named after the corps' founder, heroes and honours (*'Alessandro La Marmora'*, *'Enrico Toti'*, *'Cernaia'*, *'Porta Pia'*) and its *Fiamme Cremisi* tradition.
+Overrides vanilla's placeholder list. Plausible Bersaglieri divisions named after the corps' founder, heroes and honours (*'Alessandro La Marmora'*, *'Enrico Toti'*, *'Cernaia'*, *'Porta Pia'*, *'Col del Rosso'*) and its *Fiamme Cremisi* tradition.
 
 ### `ITA_ARD_01` — Arditi Assault Units
-The *10° Reggimento Arditi* and *1° Battaglione Speciale Arditi* (1942), plus plausible assault divisions named after Great War Arditi traditions (*'Col Moschin'*, *'Sdricca di Manzano'*, *'Giuseppe Bassi'*).
+The *10° Reggimento Arditi* and *1° Battaglione Speciale Arditi* (1942), plus plausible assault divisions named after the Great War Arditi's school, founder and actions (*'Sdricca di Manzano'*, *'Giuseppe Bassi'*, *'Col Moschin'*, *'Monte Valbella'*, *'Fagarè'*).
 
 ### `ITA_FES_01` / `ITA_GAR_01` — Defence Brigades and Coastal Divisions
 Fictional city defence brigades (*'Roma'*, *'Trieste'*, *'Zara'*) and the historical coastal divisions 201–231, which carried numbers only.

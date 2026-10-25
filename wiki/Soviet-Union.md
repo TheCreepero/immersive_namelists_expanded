@@ -20,7 +20,9 @@ The Red Army underwent the most radical organizational transformation of any bel
 | `SOV_MEC_01` | Mechanized Divisions | mechanized, motorized | `%d-ya Mekhanizirovannaya Diviziya` |
 | `SOV_MEC_02` | Mechanized Corps | mechanized, motorized | `%d-y Mekhanizirovannyy Korpus` |
 | `SOV_ARM_01` | Tank Divisions | light_armor, medium_armor, heavy_armor, modern_armor | `%d-ya Tankovaya Diviziya` |
+| `SOV_ARM_06` | Tank Divisions (Named) | light_armor, medium_armor, heavy_armor, modern_armor | `%d-ya Tankovaya Diviziya` |
 | `SOV_ARM_02` | Tank Corps | light_armor, medium_armor, heavy_armor, modern_armor | `%d-y Tankovyy Korpus` |
+| `SOV_ARM_05` | Tank Corps (Named) | light_armor, medium_armor, heavy_armor, modern_armor | `%d-y Tankovyy Korpus` |
 | `SOV_ARM_03` | Guards Tank Corps | light_armor, medium_armor, heavy_armor, modern_armor | `%d-y Gvardeyskiy Tankovyy Korpus` |
 | `SOV_ARM_04` | Tank Brigades | light_armor, medium_armor, heavy_armor, modern_armor | `%d-ya Tankovaya Brigada` |
 | `SOV_PAR_01` | Airborne Divisions | paratrooper | `%d-ya Vozdushno-Desantnaya Diviziya` |
@@ -43,14 +45,14 @@ The Red Army underwent the most radical organizational transformation of any bel
 | `SOV_WHT_01` | White Volunteer Divisions | infantry | `%d-ya Dobrovolcheskaya Diviziya` |
 | `SOV_REP_01` | Republican Shock Divisions | infantry | `%d-ya Udarnaya Diviziya` |
 
-> Groups on vanilla tags are merged into the vanilla groups: a vanilla name that INEX does not replace under its number stays in the game. `SOV_MEC_02`, `SOV_MAR_02`, `SOV_UR_01`, `SOV_NAT_01`, `SOV_NKVD_01`, `SOV_AIR_01`, `SOV_ART_01` and the four government-gated groups are new tags. Vanilla's `SOV_INF_02`, `SOV_INF_03` and `SOV_JAP_INF`, which focuses and scripted effects use, stay as vanilla defines them.
+> Groups on vanilla tags are merged into the vanilla groups: a vanilla name that INEX does not replace under its number stays in the game. `SOV_MEC_02`, `SOV_ARM_05`, `SOV_ARM_06`, `SOV_MAR_02`, `SOV_UR_01`, `SOV_NAT_01`, `SOV_NKVD_01`, `SOV_AIR_01`, `SOV_ART_01` and the four government-gated groups are new tags. Vanilla's `SOV_INF_02`, `SOV_INF_03` and `SOV_JAP_INF`, which focuses and scripted effects use, stay as vanilla defines them.
 
 ---
 
 ## Group Details
 
 ### `SOV_INF_01` — Rifle Divisions (*Strelkovaya Diviziya*)
-The backbone of the Red Army, in vanilla's historical numbering: the list skips the numbers of the mountain and motorized divisions that share its pool, so they keep theirs. Pre-war and Civil War honorifics sit on their own divisions (*Moskovskaya Proletarskaya*, *Chapayevskaya*, *Samaro-Ulyanovskaya*, *imeni Proletariata Donbassa*); every other number is plain.
+The backbone of the Red Army, in vanilla's historical numbering: the list skips the numbers of the mountain and motorized divisions that share its pool, so they keep theirs. Pre-war and Civil War honorifics sit on their own divisions (*Moskovskaya Proletarskaya*, *Chapayevskaya*, *Samaro-Ulyanovskaya*, *imeni Proletariata Donbassa*), and some 240 more numbers carry the city or battle honour their division held in 1945 (*171-ya Idritsko-Berlinskaya*, *230-ya Stalinskaya*, *300-ya Kharbinskaya*). Numbers whose division held no honorific stay plain.
 
 ### `SOV_CAV_01` — Cavalry Divisions (*Kavaleriyskaya Diviziya*)
 Red Army cavalry in vanilla's historical numbering (*Chernigovskaya*, *Bessarabskaya*, *imeni Blinova*), the Central Asian and Transcaucasian mountain cavalry, the national cavalry divisions of 1941–42 (*Kalmytskaya*, *Bashkirskaya*, *Kabardino-Balkarskaya*) and the 1st–17th Guards Cavalry Divisions (*Rovenskaya*, *Mozyrskaya*).
@@ -61,9 +63,9 @@ The motorized divisions of 1939–41 on their historical numbers, sharing number
 ### `SOV_MEC_02` — Mechanized Corps (*Mekhanizirovannyy Korpus*)
 The mechanized corps of 1940–45. Only three stayed non-Guards and earned an honorific (*Krasnogradskiy*, *Novoukrainsko-Khinganskiy*, *Kiyevsko-Zhitomirskiy*); the other numbers take the fallback, and the Guards corps are in `SOV_GMC_01`.
 
-### `SOV_ARM_01` / `SOV_ARM_02` / `SOV_ARM_04` — Tank Formations
-- **Tank Divisions (`SOV_ARM_01`)** — the 1940–41 tank divisions, a plain fallback-only list.
-- **Tank Corps (`SOV_ARM_02`)** — every non-Guards tank corps that held a battle honour in 1945 (*Insterburgskiy*, *Dvinskiy*, *Bobruysko-Berlinskiy*, *Vislenskiy*).
+### `SOV_ARM_01` / `SOV_ARM_06` / `SOV_ARM_02` / `SOV_ARM_05` / `SOV_ARM_04` — Tank Formations
+- **Tank Divisions (`SOV_ARM_01`)** — the 1940–41 tank divisions, a plain fallback-only list. `SOV_ARM_06` is the named variant and shares its numbering: the tank divisions of 1945–46, which kept the number and honour of the tank corps they were formed from (*1-ya Insterburgskaya*, *9-ya Bobruysko-Berlinskaya*).
+- **Tank Corps (`SOV_ARM_02`)** — the plain variant, numbers only. `SOV_ARM_05` is the named variant and shares its numbering: every non-Guards tank corps that held a battle honour in 1945 (*Insterburgskiy*, *Dvinskiy*, *Bobruysko-Berlinskiy*, *Vislenskiy*).
 - **Tank Brigades (`SOV_ARM_04`)** — independent tank brigades, a plain fallback-only list.
 
 ### `SOV_ARM_03` — Guards Tank Corps (*Gvardeyskiy Tankovyy Korpus*)
@@ -97,7 +99,7 @@ NKVD border, railway protection and rifle divisions, the 1941 volunteer *Narodno
 The fortified regions of the Stalin Line, the 1940–41 frontier (Molotov Line), Leningrad and Karelia, the Transcaucasus and the Far East on their June 1941 numbers (*Karelskiy*, *Kiyevskiy*, *Brestskiy*, *Grodekovskiy*), and the field fortified regions of 1941 (*Mozhayskiy*, *Volokolamskiy*).
 
 ### `SOV_GRD_01` — Guards Rifle Divisions (*Gvardeyskaya Strelkovaya Diviziya*)
-Guards rifle divisions with the battle honour each held (*Panfilovskaya*, *Poltavskaya*, *Yelninskaya*, *Svirskaya*), including the Latvian 43rd *Rizhskaya* and the Estonian 118th *Tallinnskaya*.
+Guards rifle divisions with the battle honour each held in 1945, about a hundred of the 129 (*Panfilovskaya*, *Yelninskaya*, *Dukhovshchinsko-Khinganskaya*, *Belgorodsko-Kharkovskaya*), including the Latvian 43rd *Rizhskaya* and the Estonian 118th *Tallinnskaya*. Numbers whose division held no honorific stay plain.
 
 ### `SOV_NAT_01` — National Rifle Divisions
 Rifle divisions raised in the Union republics in 1941–45, on their real numbers and sharing numbering with `SOV_INF_01`: Latvian, Lithuanian (*16-ya Klaypedskaya*), Estonian, Armenian (*89-ya Tamanskaya*), Azerbaijani (*416-ya Taganrogskaya*), Georgian, Karelo-Finnish and Kazakh.
