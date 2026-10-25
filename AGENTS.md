@@ -23,6 +23,7 @@ Shared rules for every mod in this tree (file encodings, build commands, engine 
 ## Read when
 | Task | Read |
 |---|---|
+| Choosing the next nation or rework | `ROADMAP.md` |
 | Starting or continuing a nation | the nation's newest plan under `docs/plans/` (its `Status:` line; finished plans are under `docs/plans/archive/`), then guide sections 1 to 4 |
 | Authoring a new namelist (planning) | skill `hoi4-inex-namelist-authoring` |
 | Modernising an existing namelist (planning) | skill `hoi4-inex-namelist-audit` |
