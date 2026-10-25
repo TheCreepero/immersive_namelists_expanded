@@ -51,10 +51,10 @@ A low authored share is not a problem in itself: long numbered runs (JAP, USA, G
 | 1 | ~~LIT~~ | Shipped 2026-10-25 | M | authoring |
 | 2 | ~~EST~~ | Shipped 2026-10-25 | M | audit |
 | 3 | ~~LAT~~ | Shipped 2026-10-25 | S | audit |
-| 4 | SOV | Depth | L | audit |
-| 5 | ENG | Depth | M | audit |
-| 6 | GER_ADDITIONAL | Depth | M | audit |
-| 7 | ITA | Cleanup | S | audit |
+| 4 | ~~SOV~~ | Shipped 2026-10-25 | L | audit |
+| 5 | ~~ENG~~ | Shipped 2026-10-25 | M | audit |
+| 6 | ~~GER_ADDITIONAL~~ | Shipped 2026-10-25 | M | audit |
+| 7 | ~~ITA~~ | Shipped 2026-10-25 | S | audit |
 | 8 | ~~FRA~~ | Shipped 2026-10-25 | M | audit |
 | 9 | POL, JAP | Low | S | audit |
 
@@ -63,10 +63,10 @@ A low authored share is not a problem in itself: long numbered runs (JAP, USA, G
 3. ~~**LAT, Latvia.**~~ Shipped 2026-10-25 as an audit with the full Baltic suite (plan in docs/plans/archive/2026-10-25-latvia-audit.md). Before it, 7 groups. Marines and cavalry are LOW_DEPTH, `LAT_CAV_02` mixes partisan names in ungated (`UNGATED_POLITICAL`), three selectors are singular, and the Workshop block has no `[i]` examples (a docs warning in `-Check`).
 
    **Baltic program:** do 1 to 3 together. The three nations share the `baltic_shared` focus tree, so their suites (defence leagues, ideology groups, Baltic Entente paths) should match, and one research pass covers all three.
-4. **SOV, Soviet Union.** Broad (28 groups) but thin: 373/1706 authored. `SOV_ARM_01` (Tank Divisions) and `SOV_ARM_03` (Guards Tank Corps) have no authored entries, and the file has 17 PLACEHOLDER, 12 LOW_DEPTH and 9 NAME_LONG flags. The work is honorific titles (Guards, city and battle honours) over the numbered runs. Large, but the most-played nation after GER.
-5. **ENG, United Kingdom.** 271/561 authored, 18 LOW_DEPTH groups (cavalry divisions 5 entries, armoured divisions 12). Deepen the British groups only: the Dominions get files of their own (section B, Commonwealth program), not more ENG groups.
-6. **GER_ADDITIONAL, Germany (numbered series, Festung, militias).** 13 PLACEHOLDER and 11 LOW_DEPTH. Last touched 2026-10-11, while the main GER file was reworked on 2026-10-25; bring it level with that.
-7. **ITA, Italy.** Cleanup pass: 16 LOW_DEPTH, 2 STALE_COMMENT, a TODO_COMMENT, one POLITICAL_ENTRY.
+4. ~~**SOV, Soviet Union.**~~ Shipped 2026-10-25 as a depth audit (plan in docs/plans/archive/2026-10-25-soviet-union-audit.md). Before it, broad (28 groups) but thin: 373/1706 authored. `SOV_ARM_01` (Tank Divisions) and `SOV_ARM_03` (Guards Tank Corps) have no authored entries, and the file has 17 PLACEHOLDER, 12 LOW_DEPTH and 9 NAME_LONG flags. The work is honorific titles (Guards, city and battle honours) over the numbered runs. Large, but the most-played nation after GER.
+5. ~~**ENG, United Kingdom.**~~ Shipped 2026-10-25 as a depth audit (plan in docs/plans/archive/2026-10-25-united-kingdom-audit.md). Before it, 271/561 authored, 18 LOW_DEPTH groups (cavalry divisions 5 entries, armoured divisions 12). Deepen the British groups only: the Dominions get files of their own (section B, Commonwealth program), not more ENG groups.
+6. ~~**GER_ADDITIONAL, Germany (numbered series, Festung, militias).**~~ Shipped 2026-10-25 as a depth audit (plan in docs/plans/archive/2026-10-25-germany-additional-audit.md). Before it, 13 PLACEHOLDER and 11 LOW_DEPTH. Last touched 2026-10-11, while the main GER file was reworked on 2026-10-25; bring it level with that.
+7. ~~**ITA, Italy.**~~ Shipped 2026-10-25 as a cleanup audit (plan in docs/plans/archive/2026-10-25-italy-audit.md). Before it, a cleanup pass: 16 LOW_DEPTH, 2 STALE_COMMENT, a TODO_COMMENT, one POLITICAL_ENTRY.
 8. ~~**FRA, France.**~~ Shipped 2026-10-25 as an expansion audit (plan in docs/plans/archive/2026-10-25-france-audit.md): Army of Africa and Free French groups added, the colonial list rewritten, the Armistice Army reworked and gated for Vichy. Before it, the smallest major: 20 groups against 43 for ITA and 38 for SPR, and its Workshop block has only 2 `[i]` examples. Let the audit scope an expansion: colonial and North African formations, and what the Vichy and Free French tags see.
 9. **POL and JAP.** Low priority. POL's 21 LOW_DEPTH flags mostly mark short historical groups (audited 2026-10-20), and JAP's low authored share comes from long numbered runs.
 
