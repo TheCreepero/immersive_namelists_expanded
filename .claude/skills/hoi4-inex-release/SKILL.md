@@ -5,6 +5,7 @@ description: >-
   "release", "publish", "upload to Steam", "update the Workshop". Adds the INEX in-game check with -GameLog
   and the INEX change note to the shared hoi4-mod-release skill. Namelist changes themselves belong to the
   planning skills and hoi4-inex-namelist-implement.
+disable-model-invocation: true
 ---
 
 # INEX Release

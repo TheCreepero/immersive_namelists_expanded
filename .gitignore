@@ -11,6 +11,10 @@ tests/test-results.xml
 !descriptor.mod
 .steam_username
 
+# Personal agent files
+CLAUDE.local.md
+.claude/settings.local.json
+
 # OS and Editor files
 .DS_Store
 Thumbs.db

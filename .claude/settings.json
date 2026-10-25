@@ -14,6 +14,8 @@
       "PowerShell(powershell -File .\\build.ps1 -SyncMirrors*)",
       "PowerShell(powershell -File .\\build.ps1 -GameLog*)",
       "PowerShell(powershell -File .\\build.ps1 -Package*)",
+      "PowerShell(powershell -File .\\tests\\Run-Tests.ps1*)",
+      "PowerShell(Get-Help .\\build.ps1*)",
       "PowerShell(*Test-HoiKnowledge.ps1*)",
       "PowerShell(git status*)",
       "PowerShell(git diff*)",
@@ -27,12 +29,21 @@
       "Bash(powershell*build.ps1 -DiffNames*)",
       "Bash(powershell*build.ps1 -SyncWiki*)",
       "Bash(powershell*build.ps1 -SyncMirrors*)",
+      "Bash(powershell*build.ps1 -InspectVanilla*)",
+      "Bash(powershell*build.ps1 -SetHeader*)",
+      "Bash(powershell*build.ps1 -AuditPlan*)",
+      "Bash(powershell*build.ps1 -GameLog*)",
+      "Bash(powershell*build.ps1 -Package*)",
+      "Bash(powershell*Run-Tests.ps1*)",
       "Bash(*Test-HoiKnowledge.ps1*)",
       "Bash(git status*)",
       "Bash(git diff*)",
       "Bash(git log*)"
     ],
     "ask": [
+      "Read(./build.ps1)",
+      "Read(./tools/HoiModBuild.ps1)",
+      "Read(./tests/BuildScript.Tests.ps1)",
       "PowerShell(*build.ps1*-PublishSteam*)",
       "PowerShell(*build.ps1*-InstallSteamCmd*)",
       "PowerShell(*build.ps1*-Deploy*)",
@@ -59,6 +70,18 @@
           {
             "type": "command",
             "command": "powershell -NoProfile -ExecutionPolicy Bypass -File \"$CLAUDE_PROJECT_DIR/.claude/hooks/Protect-ProjectFiles.ps1\"",
+            "timeout": 15
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "powershell -NoProfile -ExecutionPolicy Bypass -File \"$CLAUDE_PROJECT_DIR/.claude/hooks/Show-PlanState.ps1\"",
             "timeout": 15
           }
         ]

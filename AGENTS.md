@@ -17,7 +17,8 @@ Shared rules for every mod in this tree (file encodings, build commands, engine 
 - The wiki push runs in a plan's ship step, on the user's word.
 
 ## Commands beyond build.ps1
-- `build.ps1` carries the mod's own switches (`-Check`, `-Audit`, `-InspectVanilla`, `-EditNames`, `-DiffNames`, `-AuditPlan`, `-SyncWiki`, `-SyncMirrors`, `-GameLog`); guide section 5 lists them and `Get-Help .\build.ps1 -Parameter <Name>` prints one.
+- `build.ps1` carries the mod's own switches (`-Check`, `-Audit`, `-InspectVanilla`, `-EditNames`, `-DiffNames`, `-AuditPlan`, `-SyncWiki`, `-SyncMirrors`, `-GameLog`); guide section 5 lists them and `Get-Help .\build.ps1 -Parameter <Name>` prints one. Learn a switch from `Get-Help`, not from the source: `build.ps1`, `tools/HoiModBuild.ps1` and `tests/BuildScript.Tests.ps1` are opened only in a tooling-backlog session, and a Read of them asks first.
+- One test suite: `powershell -File .\tests\Run-Tests.ps1 -Suite <Name>`, where `<Name>` is a `tests/<Name>.Tests.ps1` file (`Namelists`, `Documentation`, `Hooks`, `BuildScript`); `-Check` runs them all.
 
 ## Read when
 | Task | Read |
@@ -26,7 +27,7 @@ Shared rules for every mod in this tree (file encodings, build commands, engine 
 | Authoring a new namelist (planning) | skill `hoi4-inex-namelist-authoring` |
 | Modernising an existing namelist (planning) | skill `hoi4-inex-namelist-audit` |
 | Carrying out a `READY` plan | skill `hoi4-inex-namelist-implement` |
-| Releasing to the Workshop | skill `hoi4-inex-release` |
+| Releasing to the Workshop | skill `hoi4-inex-release`, which only the user starts (`/hoi4-inex-release` in Claude Code) |
 | Writing Workshop text | `WORKSHOP_DESCRIPTION_GUIDELINES.md` (rules at the top), guide section 4 |
 | A tooling problem in `build.ps1`, the tests or the skills | `docs/tooling-backlog.md`: add an entry, fix it in a session of its own |
 | Editing skills or agent briefs | guide section 8 (skill mirrors, `-SyncMirrors`) |

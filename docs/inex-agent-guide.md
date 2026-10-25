@@ -65,7 +65,7 @@ All four live in `.claude/skills/` and `.agents/skills/`. The first two are plan
 - **Authoring (planning)**: `hoi4-inex-namelist-authoring` plans new/expanded namelists via the Historical Research subagent and a conditional proofread.
 - **Audit (planning)**: `hoi4-inex-namelist-audit` plans the modernization of an existing namelist starting from `build.ps1 -Audit <TAG>`, with a user approval checkpoint.
 - **Implementation**: `hoi4-inex-namelist-implement <plan path>` dispatches the `inex-implementer` subagent for a `READY` or `IN PROGRESS` plan (it applies the batch, syncs docs, runs `-Check`), verifies the result, and ships (commit and wiki push) on the user's word. Nothing in it researches or decides; when the plan does not cover something, it stops and reports.
-- **Release**: `hoi4-inex-release` publishes what is committed: preflight, the in-game check with `-GameLog`, the change note, and the Workshop upload the user runs.
+- **Release**: `hoi4-inex-release` publishes what is committed: preflight, the in-game check with `-GameLog`, the change note, and the Workshop upload the user runs. Its `disable-model-invocation: true` means only the user starts it (`/hoi4-inex-release`).
 
 ## 8. Agent Config Mirrors
 Claude Code and Google Antigravity use mirrored configs:
@@ -82,4 +82,5 @@ Edit the Claude side of the skills (`.claude/skills/`); the PostToolUse hook the
 **Hooks** (`.claude/settings.json`; scripts in `.claude/hooks/`, tests in `tests/Hooks.Tests.ps1`):
 - `Protect-ProjectFiles.ps1` (PreToolUse on Edit, Write, MultiEdit, Bash and PowerShell) refuses an edit of a namelist file under `common/units/names_divisions/` (the file changes through `-EditNames`), of the five Manager-synced copies (`tools/`, `tests/BuildEngine.Tests.ps1`, `tests/Run-Tests.ps1`, `tests/Knowledge.Tests.ps1`, `.github/workflows/ci.yml`) and of `.agents/skills/`, and a shell command that writes into `common/units/names_divisions/`.
 - `Sync-SkillMirrors.ps1` (PostToolUse on Edit, Write, MultiEdit) runs `-SyncMirrors` after an edit under `.claude/skills/`.
-- The settings' `ask` list covers the outward-facing commands: `-PublishSteam`, `-InstallSteamCmd`, `-Deploy`, `-DevLink`, `-Clean`, SteamCMD, `git push` and `push-wiki.ps1`.
+- `Show-PlanState.ps1` (SessionStart, matcher `compact`) prints each plan's `Status:` line and first unticked step, and `git status --short`, after a compaction.
+- The settings' `ask` list covers the outward-facing commands: `-PublishSteam`, `-InstallSteamCmd`, `-Deploy`, `-DevLink`, `-Clean`, SteamCMD, `git push` and `push-wiki.ps1`. It also covers a Read of the three large tool sources (`build.ps1`, `tools/HoiModBuild.ps1`, `tests/BuildScript.Tests.ps1`), which only a tooling-backlog session opens.
