@@ -105,6 +105,9 @@ Fit the suite to the nation's real military organization and to what a player ca
 **Ideology-gated formations**
 Where history or an alternate path gives a nation political wings (Waffen-SS, Blackshirts, Red Guards, royal or imperial guards, republican defense corps), give each ideology its own groups, gated with `can_use = { has_government = <ideology> }`. Never mix opposing traditions in one list, never gate by focus, decision, idea or flag, and do not cap the suite size (guide §2 and §6). `-Audit` flags a political group or entry that every government may use.
 
+**Groups shared with other nations**
+Check the nation's `ROADMAP.md` entry and the INEX files of its neighbours for joint formations. A group goes to several tags only under guide §2 (Shared Groups); otherwise give the nation its own mirrored group. A shared group that another file owns is not authored again here: the nation's wiki page and Workshop block mention it.
+
 **Plain and named variants (infantry, motorized, mechanized, armor)**
 When these lists get nicknames or identity names (`12. Divisioona 'Kollaa'`), keep an un-nicknamed variant beside them so players can choose plain numbering:
 - The **plain variant keeps the vanilla tag** (`<TAG>_INF_01`, or whatever vanilla uses) with the plain selector (`"Infantry Divisions"`) and a plain `fallback_name`. Define it in INEX so vanilla's errors are fixed and the pairing is visible; templates already on that tag keep plain names.
