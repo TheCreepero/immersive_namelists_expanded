@@ -66,7 +66,7 @@ This document serves as an instruction and reference guide for maintaining and u
 | `zz_INEX_ROM_names_divisions.txt` | Romania | `ROM` | Included (Plain & Named Divizia infantry, motorized, mechanized and armored lists, Cavalry divisions, brigades & regiments, Mountain brigades & divisions, Marine, Paratrooper, garrison, fortified sectors, Border Guard, Gendarmerie, Royal Guard & Straja Țării, fascist Iron Guard, communist People's divisions & Patriotic Guards, democratic Volunteer & National Guard) |
 | `zz_INEX_EST_names_divisions.txt` | Estonia | `EST` | Included (Historical & elite regiments, Kaitseliit malevad, Armored trains/cars, Coastal fortresses) |
 | `zz_INEX_LAT_names_divisions.txt` | Latvia | `LAT` | Included (Historical divisions & regiments, Aizsargu pulki, Armored cars/trains, Coastal fortresses, Cavalry) |
-| `zz_INEX_LIT_names_divisions.txt` | Lithuania | `LIT` | Included (Grand Duke/Royal regiments, Iron Wolf cavalry, AA/Armored teams) |
+| `zz_INEX_LIT_names_divisions.txt` | Lithuania | `LIT` | Included (Plain & Named infantry, motorized, mechanized and armored divisions, Grand Duke infantry regiments, hussar, uhlan & dragoon regiments, Riflemen's Union, garrisons & border guards, marines, paratroopers, mountain, Royal Guard, Iron Wolf, Red Rifle divisions, Freedom Fighters) |
 | `zz_INEX_FRA_names_divisions.txt` | France | `FRA` | Included (1940 order of battle, Nicknames, National Guard, Metropolitan, Milice, FTP, Armistice Army) |
 | `zz_INEX_ENG_names_divisions.txt` | United Kingdom | `ENG` | Included (Regular & Territorial Army, Armoured divisions & tank brigades, Household Division, Airborne, Commandos, Anti-Aircraft Command, County Garrisons, Colonial KAR/RWAFF, Home Guard, Blackshirt & Workers' defense suites) |
 | `zz_INEX_FIN_names_divisions.txt` | Finland | `FIN` | Included (Wartime divisions & JR 1–70 regiments, Prikaati brigades, Separate battalions (ErP), Light detachments (KevOs), Suojeluskunta, Ryhmä groups, Frontier & Coastal brigades, Blackshirt legions, Heimojoukot, Red Guards, People's Army, Royal Guards, Penal battalions, Swedish Volunteers SFK) |
@@ -137,8 +137,9 @@ This is not a complete list of included namelists! Just some examples.
 - Ideology suites: Royal Guard & Straja Țării (neutrality), Iron Guard (fascist), Tudor Vladimirescu & Patriotic Guards (communist), and Volunteer & National Guard (democratic)
 
 [b]Lithuania[/b]
-- Grand Duke infantry regiments ([i]Gedimino[/i], [i]Vytauto[/i], [i]Algirdo[/i]) & [i]Geležinio Vilko[/i] cavalry
-- Armored & anti-air teams, artillery regiments, border garrisons, and territorial units
+- Plain & Named infantry, motorized, mechanized and armored divisions with regional, river, battle and ruler identities ([i]3-ioji pėstininkų Žemaitijos divizija[/i], [i]1-oji tankų divizija 'Gediminas'[/i]), and the interwar regiments with their Grand Duke patrons ([i]5-asis pėstininkų Didžiojo Lietuvos kunigaikščio Kęstučio pulkas[/i])
+- Hussar, uhlan and dragoon regiments, Riflemen's Union rinktinės ([i]XX Klaipėdos rinktinė[/i]), garrisons and border guards, marines, paratroopers and mountain troops
+- Ideology suites: Royal Guard (neutrality), Iron Wolf (fascist), Red Rifle divisions (communist) and Freedom Fighters (democratic)
 
 [b]Estonia[/b]
 - Historic infantry regiments (1.–10.) and elite battalions ([i]Kuperjanovi[/i], [i]Scouts[/i])

@@ -1,38 +1,14 @@
-# Division template historical names system. Is a new method of naming the divisions based on the names-group assigned to it's template.
-# If we run out of all historical names, the names will be assigned in the old way.
-#
-# Each group has a made up tag. Use it if you want to append more, or replace existing names with the extra txt files (modding).
-#
-# for_countries - lists all countries that can use it. If empty, or entire tag is missing, all countries in the world can use it.
-#
-# can_use - is a trigger that locks/unlocks the group under specific circumstances. The trigger is in a country scope.
-#
-# division_types - is a list of tokens to corresponding unit types. A player can in fact use any group of names for a div.template
-#                  however this tag is a helper for an automated choice (for AI, or if the group must switch on it's own, because
-#                  for example the current one is no longer available due to the can_use trigger saying so).
-#                  In automated choice, the division template must have at least 1 of the following types for it to be chosen.
-#
-# fallback_name - Is going to be used if we run out of the scripted historical names. If you want to use the old division naming
-#                 mechanics to be used for fallbacks, then just skip this option.
-#
-# unordered - It's a list of historical division names that did not have a number. Regardless if such names happened in history or not
-#             this option is available here mainly for a mods.
-#
-# ordered - Is a list of all historical names. 
-#           Numbers must start from 1 and up. 
-#           Numbers can't repeat in one scope.
-#           If you script the name for this group, at the same number (for example in a mod in another file), the name will be override.
-#           All arguments between the brackets must be separated by spaces. Each argument is wrapped in "quotas".
-#           1st argument = The name. It must contain either: 
-#                          %d (for decimal number placement)
-#                          %s (for string number placement - ROMAN numbers like XIV).
-#           2nd argument is optional = A localizable text describing this historical division. The text will be visible in the tooltip
-#                                      where you choose the historical division name.
-#           3rd argument is optional = An URL preferably pointing to the WIKI. It's a future feature that is not currently working in
-#                                      the current game version.
+# Division template historical names system for Lithuania (LIT).
+# Immersive Namelists Expanded (INEX)
+# Lithuanian names as the interwar army wrote them: an Arabic ordinal with a gendered definite ending (1-oji divizija, 3-iasis pulkas), lower-case common nouns, honorifics in the genitive before the noun. Nicknames stand in straight single quotes; the map font has no Lithuanian quotation marks. Riflemen's Union units keep their Roman numerals.
+# Overrides all nine vanilla LIT groups (INF, CAV, MOT, MEC, ARM, PAR, MAR, MNT, GAR) and writes over every vanilla number.
+
+# ===== Field army =====
+
+# Overrides vanilla LIT_INF_01 as the plain (un-nicknamed) variant. Keys 1-40 are written so that vanilla's '%s. Divizija' texts (keys 1-20) do not show and 23 and 33 take the -ioji ending.
 LIT_INF_01 = 
 {
-	name = "Infantry Division"
+	name = "Infantry Divisions"
 
 	for_countries = { LIT }
 
@@ -40,73 +16,157 @@ LIT_INF_01 =
 
 	division_types = { "infantry" }
 
-	# Number reservation system will tie to another group.
-	#link_numbering_with = { LIT_INF_01 }
+	fallback_name = "%d-oji pėstininkų divizija"
 
-	fallback_name = "%s. Divizija"
-
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
 	ordered =
 	{
-		1 = { "%s. Divizija" }
-		2 = { "%s. Divizija" }
-		3 = { "%s. Divizija" }
-		4 = { "%s. Divizija" }
-		5 = { "%s. Divizija" }
-		6 = { "%s. Divizija" }
-		7 = { "%s. Divizija" }
-		8 = { "%s. Divizija" }
-		9 = { "%s. Divizija" }
-		10 = { "%s. Divizija" }
-		11 = { "%s. Divizija" }
-		12 = { "%s. Divizija" }
-		13 = { "%s. Divizija" }
-		14 = { "%s. Divizija" }
-		15 = { "%s. Divizija" }
-		16 = { "%s. Divizija" }
-		17 = { "%s. Divizija" }
-		18 = { "%s. Divizija" }
-		19 = { "%s. Divizija" }
-		20 = { "%s. Divizija" }		
+		# Plain numbering (keys 1-40)
+		1 = { "1-oji pėstininkų divizija" }
+		2 = { "2-oji pėstininkų divizija" }
+		3 = { "3-ioji pėstininkų divizija" }
+		4 = { "4-oji pėstininkų divizija" }
+		5 = { "5-oji pėstininkų divizija" }
+		6 = { "6-oji pėstininkų divizija" }
+		7 = { "7-oji pėstininkų divizija" }
+		8 = { "8-oji pėstininkų divizija" }
+		9 = { "9-oji pėstininkų divizija" }
+		10 = { "10-oji pėstininkų divizija" }
+		11 = { "11-oji pėstininkų divizija" }
+		12 = { "12-oji pėstininkų divizija" }
+		13 = { "13-oji pėstininkų divizija" }
+		14 = { "14-oji pėstininkų divizija" }
+		15 = { "15-oji pėstininkų divizija" }
+		16 = { "16-oji pėstininkų divizija" }
+		17 = { "17-oji pėstininkų divizija" }
+		18 = { "18-oji pėstininkų divizija" }
+		19 = { "19-oji pėstininkų divizija" }
+		20 = { "20-oji pėstininkų divizija" }
+		21 = { "21-oji pėstininkų divizija" }
+		22 = { "22-oji pėstininkų divizija" }
+		23 = { "23-ioji pėstininkų divizija" }
+		24 = { "24-oji pėstininkų divizija" }
+		25 = { "25-oji pėstininkų divizija" }
+		26 = { "26-oji pėstininkų divizija" }
+		27 = { "27-oji pėstininkų divizija" }
+		28 = { "28-oji pėstininkų divizija" }
+		29 = { "29-oji pėstininkų divizija" }
+		30 = { "30-oji pėstininkų divizija" }
+		31 = { "31-oji pėstininkų divizija" }
+		32 = { "32-oji pėstininkų divizija" }
+		33 = { "33-ioji pėstininkų divizija" }
+		34 = { "34-oji pėstininkų divizija" }
+		35 = { "35-oji pėstininkų divizija" }
+		36 = { "36-oji pėstininkų divizija" }
+		37 = { "37-oji pėstininkų divizija" }
+		38 = { "38-oji pėstininkų divizija" }
+		39 = { "39-oji pėstininkų divizija" }
+		40 = { "40-oji pėstininkų divizija" }
 	}
 }
 
-LIT_CAV_01 = 
+# Named variant of LIT_INF_01: a regional identity in the genitive before the noun, as in the interwar 10-asis pėstininkų Marijampolės pulkas.
+LIT_INF_02 = 
 {
-	name = "Cavalry Division"
+	name = "Infantry Divisions (Named)"
 
 	for_countries = { LIT }
 
 	can_use = { always = yes }
 
-	division_types = { "cavalry" }
+	division_types = { "infantry" }
 
-	# Number reservation system will tie to another group.
-	#link_numbering_with = { LIT_INF_01 }
+	link_numbering_with = { LIT_INF_01 }
 
-	fallback_name = "%s. Kavalerija Divizija"
+	fallback_name = "%d-oji pėstininkų divizija"
 
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
 	ordered =
 	{
-		1 = { "%s. Kavalerija Divizija" }
-		2 = { "%s. Kavalerija Divizija" }
-		3 = { "%s. Kavalerija Divizija" }
-		4 = { "%s. Kavalerija Divizija" }
-		5 = { "%s. Kavalerija Divizija" }
-		6 = { "%s. Kavalerija Divizija" }
-		7 = { "%s. Kavalerija Divizija" }
-		8 = { "%s. Kavalerija Divizija" }
-		9 = { "%s. Kavalerija Divizija" }
-		10 = { "%s. Kavalerija Divizija" }
+		# The three interwar divisions, by their 1940 areas
+		1 = { "1-oji pėstininkų Vilniaus divizija" }
+		2 = { "2-oji pėstininkų Kauno divizija" }
+		3 = { "3-ioji pėstininkų Žemaitijos divizija" }
+		# Ethnographic regions and cities
+		4 = { "4-oji pėstininkų Aukštaitijos divizija" }
+		5 = { "5-oji pėstininkų Dzūkijos divizija" }
+		6 = { "6-oji pėstininkų Suvalkijos divizija" }
+		7 = { "7-oji pėstininkų Klaipėdos divizija" }
+		8 = { "8-oji pėstininkų Šiaulių divizija" }
+		9 = { "9-oji pėstininkų Panevėžio divizija" }
+		10 = { "10-oji pėstininkų Mažosios Lietuvos divizija" }
+		11 = { "11-oji pėstininkų Vilnijos divizija" }
+		12 = { "12-oji pėstininkų Sėlos divizija" }
+		# Lands of the medieval Grand Duchy
+		13 = { "13-oji pėstininkų Deltuvos divizija" }
+		14 = { "14-oji pėstininkų Nalšios divizija" }
+		15 = { "15-oji pėstininkų Upytės divizija" }
+		16 = { "16-oji pėstininkų Karšuvos divizija" }
+		17 = { "17-oji pėstininkų Medininkų divizija" }
+		18 = { "18-oji pėstininkų Nadruvos divizija" }
+		19 = { "19-oji pėstininkų Skalvos divizija" }
+		20 = { "20-oji pėstininkų Jotvos divizija" }
+		# County towns
+		21 = { "21-oji pėstininkų Alytaus divizija" }
+		22 = { "22-oji pėstininkų Utenos divizija" }
+		23 = { "23-ioji pėstininkų Telšių divizija" }
+		24 = { "24-oji pėstininkų Tauragės divizija" }
+		25 = { "25-oji pėstininkų Ukmergės divizija" }
 	}
 }
 
+# Regiment-sized templates. Keys 1-10, 12 and 13 are the army's own regiments with their official patrons (the 5th is Kęstutis); 11 and 14-27 are extrapolated on the same pattern.
+LIT_REG_01 = 
+{
+	name = "Infantry Regiments"
+
+	for_countries = { LIT }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%d-asis pėstininkų pulkas"
+
+	ordered =
+	{
+		# Peacetime and 1919-1924 regiments
+		1 = { "1-asis pėstininkų Lietuvos didžiojo kunigaikščio Gedimino pulkas" }
+		2 = { "2-asis pėstininkų Didžiojo Lietuvos kunigaikščio Algirdo pulkas" }
+		3 = { "3-iasis pėstininkų Didžiojo Lietuvos kunigaikščio Vytauto pulkas" }
+		4 = { "4-asis pėstininkų Lietuvos karaliaus Mindaugo pulkas" }
+		5 = { "5-asis pėstininkų Didžiojo Lietuvos kunigaikščio Kęstučio pulkas" }
+		6 = { "6-asis pėstininkų Pilėnų kunigaikščio Margio pulkas" }
+		7 = { "7-asis pėstininkų Žemaičių kunigaikščio Butegeidžio pulkas" }
+		8 = { "8-asis pėstininkų Kauno kunigaikščio Vaidoto pulkas" }
+		9 = { "9-asis pėstininkų Lietuvos kunigaikščio Vytenio pulkas" }
+		10 = { "10-asis pėstininkų Marijampolės pulkas" }
+		11 = { "11-asis pėstininkų Lietuvos kunigaikščio Traidenio pulkas" }
+		12 = { "12-asis Kauno pėstininkų pulkas" }
+		13 = { "13-asis pėstininkų savanorių pulkas" }
+		# Extrapolated: dukes of the Grand Duchy
+		14 = { "14-asis pėstininkų Lietuvos kunigaikščio Pukuvero pulkas" }
+		15 = { "15-asis pėstininkų Lietuvos kunigaikščio Jaunučio pulkas" }
+		16 = { "16-asis pėstininkų Žemaičių kunigaikščio Vykinto pulkas" }
+		17 = { "17-asis pėstininkų Lietuvos kunigaikščio Živinbudo pulkas" }
+		18 = { "18-asis pėstininkų Nalšios kunigaikščio Daumanto pulkas" }
+		19 = { "19-asis pėstininkų Lietuvos kunigaikščio Narimanto pulkas" }
+		20 = { "20-asis pėstininkų Lietuvos kunigaikščio Liubarto pulkas" }
+		21 = { "21-asis pėstininkų kunigaikščio Žygimanto Kęstutaičio pulkas" }
+		22 = { "22-asis pėstininkų Lietuvos kunigaikščio Skirgailos pulkas" }
+		23 = { "23-iasis pėstininkų kunigaikščio Švitrigailos pulkas" }
+		# Extrapolated: heroes of the independence wars
+		24 = { "24-asis pėstininkų karininko Antano Juozapavičiaus pulkas" }
+		25 = { "25-asis pėstininkų savanorio Povilo Lukšio pulkas" }
+		26 = { "26-asis pėstininkų generolo Silvestro Žukausko pulkas" }
+		27 = { "27-asis pėstininkų generolo Kazio Ladigos pulkas" }
+	}
+}
+
+# ===== Motorized and mechanized =====
+
+# Overrides vanilla LIT_MOT_01 as the plain variant and anchors the mobile numbering. Keys 1-25 replace vanilla's 'Motorizavimas Divizija' texts (keys 1-10).
 LIT_MOT_01 = 
 {
-	name = "Motorized Division"
+	name = "Motorized Divisions"
 
 	for_countries = { LIT }
 
@@ -114,31 +174,42 @@ LIT_MOT_01 =
 
 	division_types = { "motorized" }
 
-	# Number reservation system will tie to another group.
-	#link_numbering_with = { LIT_INF_01 }
+	fallback_name = "%d-oji motorizuotoji pėstininkų divizija"
 
-	fallback_name = "%s. Motorizavimas Divizija"
-
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
 	ordered =
 	{
-		1 = { "%s. Motorizavimas Divizija" }
-		2 = { "%s. Motorizavimas Divizija" }
-		3 = { "%s. Motorizavimas Divizija" }
-		4 = { "%s. Motorizavimas Divizija" }
-		5 = { "%s. Motorizavimas Divizija" }
-		6 = { "%s. Motorizavimas Divizija" }
-		7 = { "%s. Motorizavimas Divizija" }
-		8 = { "%s. Motorizavimas Divizija" }
-		9 = { "%s. Motorizavimas Divizija" }
-		10 = { "%s. Motorizavimas Divizija" }
+		1 = { "1-oji motorizuotoji pėstininkų divizija" }
+		2 = { "2-oji motorizuotoji pėstininkų divizija" }
+		3 = { "3-ioji motorizuotoji pėstininkų divizija" }
+		4 = { "4-oji motorizuotoji pėstininkų divizija" }
+		5 = { "5-oji motorizuotoji pėstininkų divizija" }
+		6 = { "6-oji motorizuotoji pėstininkų divizija" }
+		7 = { "7-oji motorizuotoji pėstininkų divizija" }
+		8 = { "8-oji motorizuotoji pėstininkų divizija" }
+		9 = { "9-oji motorizuotoji pėstininkų divizija" }
+		10 = { "10-oji motorizuotoji pėstininkų divizija" }
+		11 = { "11-oji motorizuotoji pėstininkų divizija" }
+		12 = { "12-oji motorizuotoji pėstininkų divizija" }
+		13 = { "13-oji motorizuotoji pėstininkų divizija" }
+		14 = { "14-oji motorizuotoji pėstininkų divizija" }
+		15 = { "15-oji motorizuotoji pėstininkų divizija" }
+		16 = { "16-oji motorizuotoji pėstininkų divizija" }
+		17 = { "17-oji motorizuotoji pėstininkų divizija" }
+		18 = { "18-oji motorizuotoji pėstininkų divizija" }
+		19 = { "19-oji motorizuotoji pėstininkų divizija" }
+		20 = { "20-oji motorizuotoji pėstininkų divizija" }
+		21 = { "21-oji motorizuotoji pėstininkų divizija" }
+		22 = { "22-oji motorizuotoji pėstininkų divizija" }
+		23 = { "23-ioji motorizuotoji pėstininkų divizija" }
+		24 = { "24-oji motorizuotoji pėstininkų divizija" }
+		25 = { "25-oji motorizuotoji pėstininkų divizija" }
 	}
 }
 
+# Overrides vanilla LIT_MEC_01 as the plain variant. Keys 1-25 replace vanilla's 'Mechanizavimas Divizija' texts (keys 1-10).
 LIT_MEC_01 = 
 {
-	name = "Mechanized Division"
+	name = "Mechanized Divisions"
 
 	for_countries = { LIT }
 
@@ -146,31 +217,126 @@ LIT_MEC_01 =
 
 	division_types = { "mechanized" }
 
-	# Number reservation system will tie to another group.
-	#link_numbering_with = { LIT_INF_01 }
+	link_numbering_with = { LIT_MOT_01 }
 
-	fallback_name = "%s. Mechanizavimas Divizija"
+	fallback_name = "%d-oji mechanizuotoji pėstininkų divizija"
 
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
 	ordered =
 	{
-		1 = { "%s. Mechanizavimas Divizija" }
-		2 = { "%s. Mechanizavimas Divizija" }
-		3 = { "%s. Mechanizavimas Divizija" }
-		4 = { "%s. Mechanizavimas Divizija" }
-		5 = { "%s. Mechanizavimas Divizija" }
-		6 = { "%s. Mechanizavimas Divizija" }
-		7 = { "%s. Mechanizavimas Divizija" }
-		8 = { "%s. Mechanizavimas Divizija" }
-		9 = { "%s. Mechanizavimas Divizija" }
-		10 = { "%s. Mechanizavimas Divizija" }
+		1 = { "1-oji mechanizuotoji pėstininkų divizija" }
+		2 = { "2-oji mechanizuotoji pėstininkų divizija" }
+		3 = { "3-ioji mechanizuotoji pėstininkų divizija" }
+		4 = { "4-oji mechanizuotoji pėstininkų divizija" }
+		5 = { "5-oji mechanizuotoji pėstininkų divizija" }
+		6 = { "6-oji mechanizuotoji pėstininkų divizija" }
+		7 = { "7-oji mechanizuotoji pėstininkų divizija" }
+		8 = { "8-oji mechanizuotoji pėstininkų divizija" }
+		9 = { "9-oji mechanizuotoji pėstininkų divizija" }
+		10 = { "10-oji mechanizuotoji pėstininkų divizija" }
+		11 = { "11-oji mechanizuotoji pėstininkų divizija" }
+		12 = { "12-oji mechanizuotoji pėstininkų divizija" }
+		13 = { "13-oji mechanizuotoji pėstininkų divizija" }
+		14 = { "14-oji mechanizuotoji pėstininkų divizija" }
+		15 = { "15-oji mechanizuotoji pėstininkų divizija" }
+		16 = { "16-oji mechanizuotoji pėstininkų divizija" }
+		17 = { "17-oji mechanizuotoji pėstininkų divizija" }
+		18 = { "18-oji mechanizuotoji pėstininkų divizija" }
+		19 = { "19-oji mechanizuotoji pėstininkų divizija" }
+		20 = { "20-oji mechanizuotoji pėstininkų divizija" }
+		21 = { "21-oji mechanizuotoji pėstininkų divizija" }
+		22 = { "22-oji mechanizuotoji pėstininkų divizija" }
+		23 = { "23-ioji mechanizuotoji pėstininkų divizija" }
+		24 = { "24-oji mechanizuotoji pėstininkų divizija" }
+		25 = { "25-oji mechanizuotoji pėstininkų divizija" }
 	}
 }
 
+# Named variant: rivers, on the pattern of the modern brigades 'Žemaitija' and 'Aukštaitija'.
+LIT_MOT_02 = 
+{
+	name = "Motorized Divisions (Named)"
+
+	for_countries = { LIT }
+
+	can_use = { always = yes }
+
+	division_types = { "motorized" }
+
+	link_numbering_with = { LIT_MOT_01 }
+
+	fallback_name = "%d-oji motorizuotoji pėstininkų divizija"
+
+	ordered =
+	{
+		1 = { "1-oji motorizuotoji pėstininkų divizija 'Nemunas'" }
+		2 = { "2-oji motorizuotoji pėstininkų divizija 'Neris'" }
+		3 = { "3-ioji motorizuotoji pėstininkų divizija 'Nevėžis'" }
+		4 = { "4-oji motorizuotoji pėstininkų divizija 'Dubysa'" }
+		5 = { "5-oji motorizuotoji pėstininkų divizija 'Šešupė'" }
+		6 = { "6-oji motorizuotoji pėstininkų divizija 'Venta'" }
+		7 = { "7-oji motorizuotoji pėstininkų divizija 'Minija'" }
+		8 = { "8-oji motorizuotoji pėstininkų divizija 'Merkys'" }
+		9 = { "9-oji motorizuotoji pėstininkų divizija 'Šventoji'" }
+		10 = { "10-oji motorizuotoji pėstininkų divizija 'Jūra'" }
+		11 = { "11-oji motorizuotoji pėstininkų divizija 'Mūša'" }
+		12 = { "12-oji motorizuotoji pėstininkų divizija 'Žeimena'" }
+		13 = { "13-oji motorizuotoji pėstininkų divizija 'Lėvuo'" }
+		14 = { "14-oji motorizuotoji pėstininkų divizija 'Šušvė'" }
+		15 = { "15-oji motorizuotoji pėstininkų divizija 'Mituva'" }
+		16 = { "16-oji motorizuotoji pėstininkų divizija 'Verknė'" }
+		17 = { "17-oji motorizuotoji pėstininkų divizija 'Akmena'" }
+		18 = { "18-oji motorizuotoji pėstininkų divizija 'Bartuva'" }
+		19 = { "19-oji motorizuotoji pėstininkų divizija 'Virvytė'" }
+		20 = { "20-oji motorizuotoji pėstininkų divizija 'Ūla'" }
+	}
+}
+
+# Named variant: battles, on the pattern of the modern brigade 'Žalgiris'.
+LIT_MEC_02 = 
+{
+	name = "Mechanized Divisions (Named)"
+
+	for_countries = { LIT }
+
+	can_use = { always = yes }
+
+	division_types = { "mechanized" }
+
+	link_numbering_with = { LIT_MOT_01 }
+
+	fallback_name = "%d-oji mechanizuotoji pėstininkų divizija"
+
+	ordered =
+	{
+		# Battles of the Grand Duchy
+		1 = { "1-oji mechanizuotoji pėstininkų divizija 'Saulė'" }
+		2 = { "2-oji mechanizuotoji pėstininkų divizija 'Durbė'" }
+		3 = { "3-ioji mechanizuotoji pėstininkų divizija 'Pilėnai'" }
+		4 = { "4-oji mechanizuotoji pėstininkų divizija 'Mėlynieji Vandenys'" }
+		5 = { "5-oji mechanizuotoji pėstininkų divizija 'Žalgiris'" }
+		6 = { "6-oji mechanizuotoji pėstininkų divizija 'Orša'" }
+		7 = { "7-oji mechanizuotoji pėstininkų divizija 'Salaspilis'" }
+		8 = { "8-oji mechanizuotoji pėstininkų divizija 'Klušinas'" }
+		# Battles of the independence wars, 1919-1920
+		9 = { "9-oji mechanizuotoji pėstininkų divizija 'Giedraičiai'" }
+		10 = { "10-oji mechanizuotoji pėstininkų divizija 'Širvintos'" }
+		11 = { "11-oji mechanizuotoji pėstininkų divizija 'Radviliškis'" }
+		12 = { "12-oji mechanizuotoji pėstininkų divizija 'Seda'" }
+		13 = { "13-oji mechanizuotoji pėstininkų divizija 'Jieznas'" }
+		14 = { "14-oji mechanizuotoji pėstininkų divizija 'Griva'" }
+		15 = { "15-oji mechanizuotoji pėstininkų divizija 'Rykantai'" }
+		16 = { "16-oji mechanizuotoji pėstininkų divizija 'Luokė'" }
+		17 = { "17-oji mechanizuotoji pėstininkų divizija 'Daugpilis'" }
+		18 = { "18-oji mechanizuotoji pėstininkų divizija 'Musninkai'" }
+	}
+}
+
+# ===== Armour =====
+
+# Overrides vanilla LIT_ARM_01 as the plain variant. Keys 1-25 replace vanilla's 'Apsisarvavimas Divizija' texts (keys 1-10).
 LIT_ARM_01 = 
 {
-	name = "Armored Division"
+	name = "Armored Divisions"
 
 	for_countries = { LIT }
 
@@ -178,239 +344,83 @@ LIT_ARM_01 =
 
 	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
 
-	# Number reservation system will tie to another group.
-	#link_numbering_with = { LIT_INF_01 }
+	fallback_name = "%d-oji tankų divizija"
 
-	fallback_name = "%s. Apsisarvavimas Divizija"
-
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
 	ordered =
 	{
-		1 = { "%s. Apsisarvavimas Divizija" }
-		2 = { "%s. Apsisarvavimas Divizija" }
-		3 = { "%s. Apsisarvavimas Divizija" }
-		4 = { "%s. Apsisarvavimas Divizija" }
-		5 = { "%s. Apsisarvavimas Divizija" }
-		6 = { "%s. Apsisarvavimas Divizija" }
-		7 = { "%s. Apsisarvavimas Divizija" }
-		8 = { "%s. Apsisarvavimas Divizija" }
-		9 = { "%s. Apsisarvavimas Divizija" }
-		10 = { "%s. Apsisarvavimas Divizija" }
+		1 = { "1-oji tankų divizija" }
+		2 = { "2-oji tankų divizija" }
+		3 = { "3-ioji tankų divizija" }
+		4 = { "4-oji tankų divizija" }
+		5 = { "5-oji tankų divizija" }
+		6 = { "6-oji tankų divizija" }
+		7 = { "7-oji tankų divizija" }
+		8 = { "8-oji tankų divizija" }
+		9 = { "9-oji tankų divizija" }
+		10 = { "10-oji tankų divizija" }
+		11 = { "11-oji tankų divizija" }
+		12 = { "12-oji tankų divizija" }
+		13 = { "13-oji tankų divizija" }
+		14 = { "14-oji tankų divizija" }
+		15 = { "15-oji tankų divizija" }
+		16 = { "16-oji tankų divizija" }
+		17 = { "17-oji tankų divizija" }
+		18 = { "18-oji tankų divizija" }
+		19 = { "19-oji tankų divizija" }
+		20 = { "20-oji tankų divizija" }
+		21 = { "21-oji tankų divizija" }
+		22 = { "22-oji tankų divizija" }
+		23 = { "23-ioji tankų divizija" }
+		24 = { "24-oji tankų divizija" }
+		25 = { "25-oji tankų divizija" }
 	}
 }
 
-LIT_PAR_01 = 
+# Named variant: Grand Dukes in the nominative, after the armoured trains Gediminas, Kęstutis and Algirdas.
+LIT_ARM_02 = 
 {
-	name = "Paratrooper Division"
+	name = "Armored Divisions (Named)"
 
 	for_countries = { LIT }
 
 	can_use = { always = yes }
 
-	division_types = { "paratrooper" }
+	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
 
-	# Number reservation system will tie to another group.
-	#link_numbering_with = { LIT_INF_01 }
+	link_numbering_with = { LIT_ARM_01 }
 
-	fallback_name = "%s. Gabenamas Divizija"
+	fallback_name = "%d-oji tankų divizija"
 
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
 	ordered =
 	{
-		1 = { "%s. Gabenamas Divizija" }
-		2 = { "%s. Gabenamas Divizija" }
-		3 = { "%s. Gabenamas Divizija" }
-		4 = { "%s. Gabenamas Divizija" }
-		5 = { "%s. Gabenamas Divizija" }
-		6 = { "%s. Gabenamas Divizija" }
-		7 = { "%s. Gabenamas Divizija" }
-		8 = { "%s. Gabenamas Divizija" }
-		9 = { "%s. Gabenamas Divizija" }
-		10 = { "%s. Gabenamas Divizija" }
+		# Armoured trains of 1920-1935, then rulers
+		1 = { "1-oji tankų divizija 'Gediminas'" }
+		2 = { "2-oji tankų divizija 'Kęstutis'" }
+		3 = { "3-ioji tankų divizija 'Algirdas'" }
+		4 = { "4-oji tankų divizija 'Vytautas'" }
+		5 = { "5-oji tankų divizija 'Mindaugas'" }
+		6 = { "6-oji tankų divizija 'Treniota'" }
+		7 = { "7-oji tankų divizija 'Vaišvilkas'" }
+		8 = { "8-oji tankų divizija 'Tautvila'" }
+		9 = { "9-oji tankų divizija 'Lengvenis'" }
+		10 = { "10-oji tankų divizija 'Kaributas'" }
+		11 = { "11-oji tankų divizija 'Vygantas'" }
+		# Myth and weather
+		12 = { "12-oji tankų divizija 'Perkūnas'" }
+		13 = { "13-oji tankų divizija 'Slibinas'" }
+		14 = { "14-oji tankų divizija 'Žaibas'" }
+		15 = { "15-oji tankų divizija 'Griausmas'" }
+		# Interwar armoured unit
+		101 = { "Šarvuočių rinktinė" }
 	}
 }
 
-LIT_MAR_01 = 
+# ===== Cavalry =====
+
+# Overrides vanilla LIT_CAV_01 ('Kavalerija Divizija', keys 1-10). The army's cavalry stood as regiments, so the list names regiments.
+LIT_CAV_01 = 
 {
-	name = "Marine Division"
-
-	for_countries = { LIT }
-
-	can_use = { always = yes }
-
-	division_types = { "marine" }
-
-	# Number reservation system will tie to another group.
-	#link_numbering_with = { LIT_INF_01 }
-
-	fallback_name = "%s. Juras Peizazas Divizija"
-
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
-	ordered =
-	{
-		1 = { "%s. Juras Peizazas Divizija" }
-		2 = { "%s. Juras Peizazas Divizija" }
-		3 = { "%s. Juras Peizazas Divizija" }
-		4 = { "%s. Juras Peizazas Divizija" }
-		5 = { "%s. Juras Peizazas Divizija" }
-		6 = { "%s. Juras Peizazas Divizija" }
-		7 = { "%s. Juras Peizazas Divizija" }
-		8 = { "%s. Juras Peizazas Divizija" }
-		9 = { "%s. Juras Peizazas Divizija" }
-		10 = { "%s. Juras Peizazas Divizija" }
-	}
-}
-
-LIT_MNT_01 = 
-{
-	name = "Mountain Division"
-
-	for_countries = { LIT }
-
-	can_use = { always = yes }
-
-	division_types = { "mountaineers" }
-
-	# Number reservation system will tie to another group.
-	link_numbering_with = { LIT_INF_01 }
-
-	fallback_name = "%s Bjeshkë Divizija"
-
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
-	ordered =
-	{
-		1 = { "%s. Divizija" }
-		2 = { "%s. Divizija" }
-		3 = { "%s. Divizija" }
-		4 = { "%s. Divizija" }
-		5 = { "%s. Divizija" }
-		6 = { "%s. Divizija" }
-		7 = { "%s. Divizija" }
-		8 = { "%s. Divizija" }
-		9 = { "%s. Divizija" }
-		10 = { "%s. Divizija" }
-	}
-}
-
-LIT_GAR_01 = 
-{
-	name = "Garrison Division"
-
-	for_countries = { LIT }
-
-	can_use = { always = yes }
-
-	division_types = { "infantry" }
-
-	# Number reservation system will tie to another group.
-	link_numbering_with = { LIT_INF_01 }
-
-	fallback_name = "%s. Divizija"
-
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
-	ordered =
-	{
-		1 = { "%s. Divizija" }
-		2 = { "%s. Divizija" }
-		3 = { "%s. Divizija" }
-		4 = { "%s. Divizija" }
-		5 = { "%s. Divizija" }
-		6 = { "%s. Divizija" }
-		7 = { "%s. Divizija" }
-		8 = { "%s. Divizija" }
-		9 = { "%s. Divizija" }
-		10 = { "%s. Divizija" }
-		11 = { "%s. Divizija" }
-		12 = { "%s. Divizija" }
-		13 = { "%s. Divizija" }
-		14 = { "%s. Divizija" }
-		15 = { "%s. Divizija" }
-		16 = { "%s. Divizija" }
-		17 = { "%s. Divizija" }
-		18 = { "%s. Divizija" }
-		19 = { "%s. Divizija" }
-		20 = { "%s. Divizija" }		
-	}
-}
-
-LIT_GAR_02 = 
-{
-	name = "District Garrison Division"
-
-	for_countries = { LIT }
-
-	can_use = { always = yes }
-
-	division_types = { "infantry" }
-
-	# Number reservation system will tie to another group.
-	#link_numbering_with = { LIT_GAR_02 }
-
-	fallback_name = "%s. District"
-
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
-	ordered =
-	{
-		1 = { "District 'Kaunas'" }
-		2 = { "District 'Klaipėda'" }
-		3 = { "District 'Utenos'" }
-		4 = { "District 'Telšių'" }
-		5 = { "District 'Tauragė'" }
-		6 = { "District 'Panevėžys'" }
-		7 = { "District 'Šiauliai'" }
-		8 = { "District 'Alytus'" }
-		9 = { "District 'Birštonas'" }
-		10 = { "District 'Palanga'" }
-		11 = { "District 'Neringa'" }
-		12 = { "District 'Marijampolė'" }
-		13 = { "District 'Vilnius'" }
-		14 = { "District 'Nemenčinė'" }
-		15 = { "District 'Kėdainiai'" }
-		16 = { "District 'Plungė'" }
-		17 = { "District 'Mažeikiai'" }
-		18 = { "District 'Jurbarkas'" }
-		19 = { "District 'Švenčionys'" }
-	}
-}
-LIT_REG_01 = 
-{
-	name = "Infantry Regiment"
-
-	for_countries = { LIT }
-
-	can_use = { always = yes }
-
-	division_types = { "infantry" }
-
-	# Number reservation system will tie to another group.
-	#link_numbering_with = { LIT_REG_01 }
-
-	fallback_name = "%s. Pėstininkų Pulkas"
-
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
-	ordered =
-	{
-		1 = { "%s. Pėstininkų Lietuvos Didžiojo Kunigaikščio Gedimino Pulkas" }
-		2 = { "%s. Pėstininkų Lietuvos Didžiojo Kunigaikščio Algirdo Pulkas" }
-		3 = { "%s. Pėstininkų Lietuvos Didžiojo Kunigaikščio Vytauto Pulkas" }
-		4 = { "%s. Pėstininkų Lietuvos Karaliaus Mindaugo Pulkas" }
-		5 = { "%s. Pėstininkų Lietuvos Karaliaus Mindaugo Pulkas" }
-		6 = { "%s. Pėstininkų Pilėnų Kunigaikščio Margio Pulkas" }
-		7 = { "%s. Pėstininkų Žemaičių Kunigaikščio Butegeidžio Pulkas" }
-		8 = { "%s. Pėstininkų Kauno Kunigaikščio Vaidoto Pulkas" }
-		9 = { "%s. Pėstininkų Lietuvos Kunigaikščio Vytenio Pulkas" }
-	}
-}
-LIT_REG_02 = 
-{
-	name = "Cavalry Regiment"
+	name = "Cavalry Regiments"
 
 	for_countries = { LIT }
 
@@ -418,94 +428,131 @@ LIT_REG_02 =
 
 	division_types = { "cavalry" }
 
-	# Number reservation system will tie to another group.
-	#link_numbering_with = { LIT_REG_02 }
+	fallback_name = "%d-asis kavalerijos pulkas"
 
-	fallback_name = "%s. Kavalerija Pulkas"
-
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
 	ordered =
 	{
-		1 = { "%s. Husarų Lietuvos Didžiojo Etmono Jonušo Radvilos Pulkas" }
-		2 = { "%s. Ulonų Lietuvos Kunigaikštienės Birutės Pulkas" }
-		3 = { "%s. Dragūnų Geležinio Vilko Pulkas" }
+		# The three interwar regiments
+		1 = { "1-asis husarų kunigaikščio Jonušo Radvilos pulkas" }
+		2 = { "2-asis ulonų Lietuvos didžiosios kunigaikštienės Birutės pulkas" }
+		3 = { "3-iasis dragūnų Geležinio Vilko pulkas" }
+		# Extrapolated: hussars after hetmans, uhlans after grand duchesses and queens, dragoons after legendary princes
+		4 = { "4-asis husarų etmono Konstantino Ostrogiškio pulkas" }
+		5 = { "5-asis ulonų kunigaikštienės Onos Vytautienės pulkas" }
+		6 = { "6-asis dragūnų kunigaikščio Palemono pulkas" }
+		7 = { "7-asis husarų etmono Jurgio Radvilos pulkas" }
+		8 = { "8-asis ulonų kunigaikštienės Julijonos pulkas" }
+		9 = { "9-asis dragūnų kunigaikščio Kūno pulkas" }
+		10 = { "10-asis husarų etmono Kristupo Radvilos Perkūno pulkas" }
+		11 = { "11-asis ulonų karalienės Aldonos pulkas" }
+		12 = { "12-asis dragūnų kunigaikščio Šventaragio pulkas" }
+		13 = { "13-asis husarų etmono Jono Karolio Chodkevičiaus pulkas" }
+		14 = { "14-asis ulonų karalienės Barboros Radvilaitės pulkas" }
+		15 = { "15-asis dragūnų kunigaikščio Kukovaičio pulkas" }
+		16 = { "16-asis husarų etmono Kazimiero Jono Sapiegos pulkas" }
+		17 = { "17-asis ulonų kunigaikštytės Živilės pulkas" }
+		18 = { "18-asis dragūnų kunigaikščio Ringaudo pulkas" }
+		19 = { "19-asis husarų etmono Mykolo Kazimiero Paco pulkas" }
 	}
 }
-LIT_REG_03 = 
+
+# ===== Specialist troops =====
+
+# Overrides vanilla LIT_PAR_01 ('Gabenamas Divizija', keys 1-10). Lithuania had no airborne troops; the list honours its aviators and aircraft.
+LIT_PAR_01 = 
 {
-	name = "Artillery Regiment"
+	name = "Paratrooper Divisions"
 
 	for_countries = { LIT }
 
 	can_use = { always = yes }
 
-	division_types = { "artillery" }
+	division_types = { "paratrooper" }
 
-	# Number reservation system will tie to another group.
-	#link_numbering_with = { LIT_REG_03 }
+	fallback_name = "%d-oji oro desanto divizija"
 
-	fallback_name = "%s. Artilerijos Pulkas"
-
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
 	ordered =
 	{
-		1 = { "%s. Artilerijos Pulkas" }
-		2 = { "%s. Artilerijos Pulkas" }
-		3 = { "%s. Artilerijos Pulkas" }
-		4 = { "%s. Artilerijos Pulkas" }
+		1 = { "1-oji oro desanto divizija 'Lituanica'" }
+		2 = { "2-oji oro desanto divizija 'Lituanica II'" }
+		3 = { "3-ioji oro desanto divizija 'Steponas Darius'" }
+		4 = { "4-oji oro desanto divizija 'Stasys Girėnas'" }
+		5 = { "5-oji oro desanto divizija 'Feliksas Vaitkus'" }
+		6 = { "6-oji oro desanto divizija 'Antanas Gustaitis'" }
+		7 = { "7-oji oro desanto divizija 'ANBO'" }
+		8 = { "8-oji oro desanto divizija 'Aitvaras'" }
+		9 = { "9-oji oro desanto divizija 'Jurgis Dobkevičius'" }
+		10 = { "10-oji oro desanto divizija 'Romualdas Marcinkus'" }
 	}
 }
-LIT_REG_04 = 
+
+# Overrides vanilla LIT_MAR_01 ('Juras Peizazas Divizija', keys 1-10) with places of the Klaipėda coast and the Curonian Spit.
+LIT_MAR_01 = 
 {
-	name = "Armored Team"
+	name = "Marine Divisions"
 
 	for_countries = { LIT }
 
 	can_use = { always = yes }
 
-	division_types = { "light_armor" }
+	division_types = { "marine" }
 
-	# Number reservation system will tie to another group.
-	#link_numbering_with = { LIT_REG_04 }
+	fallback_name = "%d-oji jūrų pėstininkų divizija"
 
-	fallback_name = "%s. Šarvuočių Rinktinė"
-
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
 	ordered =
 	{
-		1 = { "Šarvuočių Rinktinė" }
+		1 = { "1-oji jūrų pėstininkų divizija 'Klaipėda'" }
+		2 = { "2-oji jūrų pėstininkų divizija 'Palanga'" }
+		3 = { "3-ioji jūrų pėstininkų divizija 'Nida'" }
+		4 = { "4-oji jūrų pėstininkų divizija 'Juodkrantė'" }
+		5 = { "5-oji jūrų pėstininkų divizija 'Neringa'" }
+		6 = { "6-oji jūrų pėstininkų divizija 'Smiltynė'" }
+		7 = { "7-oji jūrų pėstininkų divizija 'Melnragė'" }
+		8 = { "8-oji jūrų pėstininkų divizija 'Giruliai'" }
+		9 = { "9-oji jūrų pėstininkų divizija 'Karklė'" }
+		10 = { "10-oji jūrų pėstininkų divizija 'Rusnė'" }
+		11 = { "11-oji jūrų pėstininkų divizija 'Ventė'" }
+		12 = { "12-oji jūrų pėstininkų divizija 'Kuršių nerija'" }
 	}
 }
 
-LIT_AA_01 = 
+# Overrides vanilla LIT_MNT_01 (Albanian 'Bjeshkë' fallback, keys 1-10) with Lithuania's highest hills and hillforts. Vanilla links it to LIT_INF_01, and the link stays [NAM-020].
+LIT_MNT_01 = 
 {
-	name = "Anti-Air Protection Team"
+	name = "Mountain Divisions"
 
 	for_countries = { LIT }
 
 	can_use = { always = yes }
 
-	division_types = { "anti_air" "infantry" }
+	division_types = { "mountaineers" }
 
-	# Number reservation system will tie to another group.
-	#link_numbering_with = { LIT_AA_01 }
+	link_numbering_with = { LIT_INF_01 }
 
-	fallback_name = "%s. Priešlėktuvinės Apsaugos Rinktinė"
+	fallback_name = "%d-oji kalnų pėstininkų divizija"
 
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
 	ordered =
 	{
-		1 = { "Priešlėktuvinės Apsaugos Rinktinė" }
+		1 = { "1-oji kalnų pėstininkų divizija 'Aukštojas'" }
+		2 = { "2-oji kalnų pėstininkų divizija 'Juozapinė'" }
+		3 = { "3-ioji kalnų pėstininkų divizija 'Medvėgalis'" }
+		4 = { "4-oji kalnų pėstininkų divizija 'Šatrija'" }
+		5 = { "5-oji kalnų pėstininkų divizija 'Girgždūtė'" }
+		6 = { "6-oji kalnų pėstininkų divizija 'Rambynas'" }
+		7 = { "7-oji kalnų pėstininkų divizija 'Gedimino kalnas'" }
+		8 = { "8-oji kalnų pėstininkų divizija 'Kernavė'" }
+		9 = { "9-oji kalnų pėstininkų divizija 'Apuolė'" }
+		10 = { "10-oji kalnų pėstininkų divizija 'Impiltis'" }
+		11 = { "11-oji kalnų pėstininkų divizija 'Kruopinė'" }
 	}
 }
 
-LIT_INF_BRG_01 = 
+# ===== Garrisons and territorial defence =====
+
+# Overrides vanilla LIT_GAR_01 ('%s. Divizija', keys 1-20). Vanilla links it to LIT_INF_01, and the link stays [NAM-020].
+LIT_GAR_01 = 
 {
-	name = "Infantry Brigade"
+	name = "Garrisons & Border Guards"
 
 	for_countries = { LIT }
 
@@ -513,17 +560,237 @@ LIT_INF_BRG_01 =
 
 	division_types = { "infantry" }
 
-	# Number reservation system will tie to another group.
-	#link_numbering_with = { LIT_INF_BRG_01 }
+	link_numbering_with = { LIT_INF_01 }
 
-	fallback_name = "%s. Pėstininkų brigada"
+	fallback_name = "%d-oji įgulos divizija"
 
-	# Names with numbers (only one number per entry). 
-	# It's okay to have gaps in numbering.
 	ordered =
 	{
-		1 = { "%s. Pėstininkų brigada" }
-		2 = { "%s. Pėstininkų brigada" }
-		3 = { "%s. Pėstininkų brigada" }
+		# Garrison towns of the interwar army
+		1 = { "Kauno tvirtovės įgula" }
+		2 = { "Vilniaus įgula" }
+		3 = { "Klaipėdos įgula" }
+		4 = { "Šiaulių įgula" }
+		5 = { "Panevėžio įgula" }
+		6 = { "Ukmergės įgula" }
+		7 = { "Kėdainių įgula" }
+		8 = { "Raseinių įgula" }
+		9 = { "Tauragės įgula" }
+		10 = { "Telšių įgula" }
+		11 = { "Plungės įgula" }
+		12 = { "Marijampolės įgula" }
+		13 = { "Vilkaviškio įgula" }
+		14 = { "Alytaus įgula" }
+		15 = { "Radviliškio įgula" }
+		16 = { "Prienų įgula" }
+		17 = { "Kupiškio įgula" }
+		18 = { "Jonavos įgula" }
+		19 = { "Varnių įgula" }
+		20 = { "Šančių įgula" }
+		# Border guard formations, 1919-1924
+		101 = { "Pasienio sargybų divizija" }
+		102 = { "Pasienio apsaugos brigada" }
+		103 = { "1-asis parubežinis pulkas" }
+		104 = { "2-asis pasienio pulkas" }
+		105 = { "3-iasis pasienio pulkas" }
+		106 = { "4-asis pasienio pulkas" }
+	}
+}
+
+# Lithuanian Riflemen's Union (Lietuvos šaulių sąjunga): one rinktinė per county, numbered in Roman numerals and written as the Union wrote them (XX Klaipėdos rinktinė). Unnumbered rinktinės sit on keys 101 and up, so the fallback fills the free numbers.
+LIT_SAU_01 = 
+{
+	name = "Riflemen's Union"
+
+	for_countries = { LIT }
+
+	can_use = { always = yes }
+
+	division_types = { "militia" "infantry" }
+
+	fallback_name = "%s šaulių rinktinė"
+
+	ordered =
+	{
+		# Rinktinės known by their numbers
+		2 = { "II Utenos rinktinė" }
+		5 = { "V Trakų rinktinė" }
+		12 = { "XII Panevėžio rinktinė" }
+		13 = { "XIII Mažeikių rinktinė" }
+		14 = { "XIV Marijampolės rinktinė" }
+		15 = { "XV Kretingos rinktinė" }
+		19 = { "XIX Alytaus rinktinė" }
+		20 = { "XX Klaipėdos rinktinė" }
+		22 = { "XXII Geležinkelių rinktinė" }
+		23 = { "XXIII Vilniaus rinktinė" }
+		# County rinktinės whose numbers are not known
+		101 = { "Kauno rinktinė" }
+		102 = { "Ukmergės rinktinė" }
+		103 = { "Rokiškio rinktinė" }
+		104 = { "Telšių rinktinė" }
+		105 = { "Šiaulių rinktinė" }
+		106 = { "Tauragės rinktinė" }
+		107 = { "Raseinių rinktinė" }
+		108 = { "Kėdainių rinktinė" }
+		109 = { "Biržų rinktinė" }
+		110 = { "Zarasų rinktinė" }
+		111 = { "Vilkaviškio rinktinė" }
+		112 = { "Šakių rinktinė" }
+		113 = { "Švenčionėlių rinktinė" }
+		114 = { "Seinų rinktinė" }
+	}
+}
+
+# ===== Ideology suites =====
+
+# Monarchy (the vanilla focus 'Institute Royal Guards'): neutrality. The 1918 king Mindaugas II, the kings of the union with Poland, and the guard regiments of the Grand Duchy (LDK).
+LIT_GUA_01 = 
+{
+	name = "Royal Guard Divisions"
+
+	for_countries = { LIT }
+
+	can_use = { has_government = neutrality }
+
+	division_types = { "infantry" "cavalry" "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
+
+	fallback_name = "%d-oji gvardijos divizija"
+
+	ordered =
+	{
+		# Extrapolated: guard divisions after the kings
+		1 = { "1-oji karaliaus Mindaugo II gvardijos divizija" }
+		2 = { "2-oji karaliaus Jogailos gvardijos divizija" }
+		3 = { "3-ioji karaliaus Kazimiero Jogailaičio gvardijos divizija" }
+		4 = { "4-oji karaliaus Aleksandro Jogailaičio gvardijos divizija" }
+		5 = { "5-oji karaliaus Žygimanto Senojo gvardijos divizija" }
+		6 = { "6-oji karaliaus Žygimanto Augusto gvardijos divizija" }
+		7 = { "7-oji karaliaus Stepono Batoro gvardijos divizija" }
+		8 = { "8-oji karaliaus Žygimanto Vazos gvardijos divizija" }
+		9 = { "9-oji karaliaus Vladislovo Vazos gvardijos divizija" }
+		10 = { "10-oji karaliaus Jono Kazimiero Vazos gvardijos divizija" }
+		11 = { "11-oji karaliaus Mykolo Višnioveckio gvardijos divizija" }
+		12 = { "12-oji karaliaus Jono Sobieskio gvardijos divizija" }
+		13 = { "13-oji karaliaus Augusto Stipriojo gvardijos divizija" }
+		14 = { "14-oji karaliaus Stanislovo Augusto gvardijos divizija" }
+		# Guard and vanguard regiments of the Grand Duchy
+		101 = { "Karališkosios gvardijos divizija" }
+		102 = { "LDK pėstininkų gvardijos regimentas" }
+		103 = { "LDK raitosios gvardijos pulkas" }
+		104 = { "Karališkųjų dragūnų leibregimentas" }
+		105 = { "LDK karabinierių leibregimentas" }
+		106 = { "1-asis Lietuvos priešakinės sargybos pulkas" }
+		107 = { "4-asis Lietuvos priešakinės sargybos pulkas" }
+		108 = { "7-asis Lietuvos totorių pulkas" }
+	}
+}
+
+# Voldemaras's Iron Wolf (Geležinis Vilkas): fascism. Only the organisation's own county groups; no 1941 formation is used.
+LIT_GV_01 = 
+{
+	name = "Iron Wolf Divisions"
+
+	for_countries = { LIT }
+
+	can_use = { has_government = fascism }
+
+	division_types = { "infantry" "militia" }
+
+	fallback_name = "%d-oji Geležinio Vilko divizija"
+
+	ordered =
+	{
+		# County groups of the Iron Wolf, 1927-1930
+		1 = { "Geležinio Vilko Kauno grupė" }
+		2 = { "Geležinio Vilko Panevėžio grupė" }
+		3 = { "Geležinio Vilko Raseinių grupė" }
+		4 = { "Geležinio Vilko Vilniaus krašto grupė" }
+		5 = { "Geležinio Vilko Pagėgių grupė" }
+		6 = { "Geležinio Vilko Šilutės grupė" }
+		7 = { "Geležinio Vilko Klaipėdos grupė" }
+		# Extrapolated: further county groups
+		8 = { "Geležinio Vilko Šiaulių grupė" }
+		9 = { "Geležinio Vilko Ukmergės grupė" }
+		10 = { "Geležinio Vilko Marijampolės grupė" }
+		11 = { "Geležinio Vilko Alytaus grupė" }
+		12 = { "Geležinio Vilko Telšių grupė" }
+		13 = { "Geležinio Vilko Utenos grupė" }
+		14 = { "Geležinio Vilko Biržų grupė" }
+		15 = { "Geležinio Vilko Kėdainių grupė" }
+		16 = { "Geležinio Vilko Tauragės grupė" }
+		17 = { "Geležinio Vilko Rokiškio grupė" }
+		18 = { "Geležinio Vilko Zarasų grupė" }
+		19 = { "Geležinio Vilko Mažeikių grupė" }
+		20 = { "Geležinio Vilko Kretingos grupė" }
+	}
+}
+
+# Communism: the 16th Lithuanian Rifle Division (Klaipėda honorific of 1945), the 29th Territorial Rifle Corps of 1940-41 and its divisions, and the 1919 Lithuanian Division. Unnumbered names sit on keys 201 and up.
+LIT_RED_01 = 
+{
+	name = "Red Rifle Divisions"
+
+	for_countries = { LIT }
+
+	can_use = { has_government = communism }
+
+	division_types = { "infantry" "motorized" }
+
+	fallback_name = "%d-oji lietuviškoji šaulių divizija"
+
+	ordered =
+	{
+		# Red Army formations on their own numbers
+		16 = { "16-oji lietuviškoji šaulių divizija" }
+		29 = { "29-asis teritorinis šaulių korpusas" }
+		179 = { "179-oji šaulių divizija" }
+		184 = { "184-oji šaulių divizija" }
+		# 1919 and extrapolated
+		201 = { "Lietuvos divizija" }
+		202 = { "Lietuvos-Baltarusijos raudonoji divizija" }
+		203 = { "Vilniaus raudonoji divizija" }
+		204 = { "Kauno raudonoji divizija" }
+		205 = { "Šiaulių raudonoji divizija" }
+		206 = { "Panevėžio raudonoji divizija" }
+		207 = { "Vinco Kapsuko divizija" }
+		208 = { "Zigmo Angariečio divizija" }
+		209 = { "Lietuvos raudonųjų šaulių divizija" }
+	}
+}
+
+# Democratic: the armed resistance whose 1949 declaration set a democratic republic as its aim.
+LIT_LLK_01 = 
+{
+	name = "Freedom Fighters"
+
+	for_countries = { LIT }
+
+	can_use = { has_government = democratic }
+
+	division_types = { "infantry" "militia" }
+
+	fallback_name = "%d-oji laisvės kovotojų divizija"
+
+	ordered =
+	{
+		# Districts of the Union of Lithuanian Freedom Fighters (LLKS)
+		1 = { "Vyčio apygarda" }
+		2 = { "Didžiosios Kovos apygarda" }
+		3 = { "Tauro apygarda" }
+		4 = { "Vytauto apygarda" }
+		5 = { "Žemaičių apygarda" }
+		6 = { "Algimanto apygarda" }
+		7 = { "Kęstučio apygarda" }
+		8 = { "Prisikėlimo apygarda" }
+		9 = { "Dainavos apygarda" }
+		# Regions of the 1949 declaration
+		10 = { "Nemuno sritis" }
+		11 = { "Kalnų sritis" }
+		12 = { "Jūros sritis" }
+		# Other resistance formations
+		13 = { "Šarūno rinktinė" }
+		14 = { "Lietuvos laisvės armija" }
+		15 = { "Vanagų rinktinė" }
+		16 = { "Lietuvos laisvės kovos sąjūdžio divizija" }
 	}
 }

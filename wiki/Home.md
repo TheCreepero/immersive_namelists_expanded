@@ -25,7 +25,7 @@
 | [Japan](Japan) | `JAP` | 32 | `zz_INEX_JAP_names_divisions.txt` |
 | [Estonia](Estonia) | `EST` | 4 | `zz_INEX_EST_names_divisions.txt` |
 | [Latvia](Latvia) | `LAT` | 7 | `zz_INEX_LAT_names_divisions.txt` |
-| [Lithuania](Lithuania) | `LIT` | 13 | `zz_INEX_LIT_names_divisions.txt` |
+| [Lithuania](Lithuania) | `LIT` | 19 | `zz_INEX_LIT_names_divisions.txt` |
 | [Mexico](Mexico) | `MEX` | 23 | `zz_INEX_MEX_names_divisions.txt` |
 | [Brazil](Brazil) | `BRA` | 36 | `zz_INEX_BRA_names_divisions.txt` |
 | [Greece](Greece) | `GRE` | 28 | `zz_INEX_GRE_names_divisions.txt` |

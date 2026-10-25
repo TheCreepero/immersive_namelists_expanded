@@ -48,7 +48,7 @@ A low authored share is not a problem in itself: long numbered runs (JAP, USA, G
 
 | # | Key | Kind | Size | Skill |
 |---|---|---|---|---|
-| 1 | LIT | Full re-author | M | authoring |
+| 1 | ~~LIT~~ | Shipped 2026-10-25 | M | authoring |
 | 2 | EST | Expansion | M | audit |
 | 3 | LAT | Expansion | S | audit |
 | 4 | SOV | Depth | L | audit |
@@ -58,7 +58,7 @@ A low authored share is not a problem in itself: long numbered runs (JAP, USA, G
 | 8 | FRA | Expansion | M | audit |
 | 9 | POL, JAP | Low | S | audit |
 
-1. **LIT, Lithuania.** The weakest file in the mod, with nothing worth keeping. Every one of the 16 groups has only placeholder entries (0 authored in the core groups), and the fallbacks are machine translations, some in the wrong language: "Juras Peizazas Divizija" (literally "sea landscape") for marines, the Albanian "Bjeshkë" for mountain troops, "Apsisarvavimas Divizija" for armour. The selectors are singular and the file has a boilerplate header. Re-author it from scratch: the 1st to 3rd Infantry Divisions, regiments named after Grand Dukes, Hussar and Uhlan regiments, the Riflemen's Union (Šaulių sąjunga).
+1. ~~**LIT, Lithuania.**~~ Shipped 2026-10-25 as a full re-author (plan in docs/plans/archive/2026-10-25-lithuania-namelist.md). Before it, the weakest file in the mod, with nothing worth keeping. Every one of the 16 groups has only placeholder entries (0 authored in the core groups), and the fallbacks are machine translations, some in the wrong language: "Juras Peizazas Divizija" (literally "sea landscape") for marines, the Albanian "Bjeshkë" for mountain troops, "Apsisarvavimas Divizija" for armour. The selectors are singular and the file has a boilerplate header. Re-author it from scratch: the 1st to 3rd Infantry Divisions, regiments named after Grand Dukes, Hussar and Uhlan regiments, the Riflemen's Union (Šaulių sąjunga).
 2. **EST, Estonia.** Only 4 groups: regiments, Defence League (Kaitseliit) malevs, an armour/mobile catch-all and marines. There is no division-level or cavalry group, `EST_REG_01` has a singular selector, and partisan names sit ungated in it (`POLITICAL_ENTRY`: Kuperjanovi, Sakala). Bring it up to the depth of FIN and LAT.
 3. **LAT, Latvia.** 7 groups. Marines and cavalry are LOW_DEPTH, `LAT_CAV_02` mixes partisan names in ungated (`UNGATED_POLITICAL`), three selectors are singular, and the Workshop block has no `[i]` examples (a docs warning in `-Check`).
 
