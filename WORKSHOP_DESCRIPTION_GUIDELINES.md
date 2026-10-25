@@ -56,7 +56,7 @@ This document serves as an instruction and reference guide for maintaining and u
 | File | Nation | Tag | Status in Description |
 | :--- | :--- | :--- | :--- |
 | `zz_INEX_USA_names_divisions.txt` | United States | `USA` | Included (Infantry, Regimental Combat Teams, Armor, Armored Cavalry Regiments, Separate Tank & Tank Destroyer Bns, Field Artillery, National Guard, Airborne, Marines, Marine Raiders, Amtracs, Rangers, Harbor Defenses, Overseas Garrisons, Constabulary, State Defense Forces, Red Guards & Lincoln Brigades, Silver Legions & Confederate, MacArthur Emergency Forces & Continental Army, Union & Conservation Corps, Volunteer Legions & Color Plan Forces) |
-| `zz_INEX_GER_names_divisions.txt` | Germany | `GER` | Included (Plain & Named infantry, motorized, Panzergrenadier and Panzer lists with garrison identities and nicknames, Jäger, Gebirgs, Fallschirmjäger, Marine, Cavalry, fascist Elite Formations, Imperial & Guard, Republican, Red Army) |
+| `zz_INEX_GER_names_divisions.txt` | Germany | `GER` | Included (Plain & Named infantry, motorized, Panzergrenadier and Panzer lists with garrison identities and nicknames, Jäger, Gebirgs, Fallschirmjäger, Marine, Cavalry, Coastal Defense & Border Guard, fascist Elite Formations, Imperial & Guard with Jäger, Kampfwagen & Seebataillon lists, Republican, Reichswehr, Volkswehr & Republican Panzer, Red Army, Workers', Red Panzer & Red Sailor) |
 | `zz_INEX_GER_SS_names_divisions.txt` | Germany (SS) | `GER` | Included (Fascist-only Waffen-SS divisions 1-41 by type incl. mountain & cavalry, shared honour-name expansion, heavy battalions, SS Kampfgruppen, Standarten) |
 | `zz_INEX_GER_ADDITIONAL_names_divisions.txt` | Germany (Extra) | `GER` | Included (Heavy battalions, Panzer, infantry & Sturmgeschütz brigades, Volksgrenadier/Reserve/Grenadier series, Luftwaffe field & Flak, Festungen, Kampfgruppen, penal units, Volkssturm, SA, Freikorps, Schutztruppe, Reichsbanner, Red Front, Foreign Legions, Imperial Sturm-Bataillone & Landwehr) |
 | `zz_INEX_SWE_names_divisions.txt` | Sweden | `SWE` | Included (Plain & Named arméfördelningar, motorized, mechanized and armored divisions, Cavalry, Marine, Mountain and Paratrooper divisions, provincial brigades, Ski/Arctic, Home Guard & Landstorm, Royal & Carolean Guards, fascist Stormtroopers & Legions, communist Red Guards, Volunteers) |
@@ -108,8 +108,8 @@ This is not a complete list of included namelists! Just some examples.
 
 [b]Germany[/b]
 - Plain and Named Heer lists in historical raising order, with nicknames and home garrisons ([i]7. Panzer-Division 'Gespenster'[/i], [i]97. Jäger-Division 'Spielhahnjäger'[/i])
-- Festungen, Kampfgruppen, Volksgrenadier, Luftwaffe field & Flak divisions, heavy battalions, Panzer, infantry and Sturmgeschütz brigades ([i]Heeres-Sturmartillerie-Brigade 667[/i]), and penal units ([i]Afrika-Division 999[/i])
-- Ideology suites: Waffen-SS, SA & Volkssturm (fascist), Imperial Guard, Sturm-Bataillone, Landwehr & Freikorps ([i]Sturm-Bataillon Nr. 5 (Rohr)[/i]), Reichsbanner, and Red Army & Red Front
+- Coastal defense and Grenzwacht border divisions ([i]716. (bodenständige) Infanterie-Division[/i]), Festungen, Kampfgruppen, Volksgrenadier, Luftwaffe field & Flak divisions, heavy battalions, Panzer, infantry and Sturmgeschütz brigades, and penal units ([i]Afrika-Division 999[/i])
+- Ideology suites: Waffen-SS, SA & Volkssturm (fascist), Imperial Guard, Jäger, A7V Kampfwagen divisions, Sturm-Bataillone, Landwehr & Freikorps ([i]5. Kampfwagen-Division 'Mephisto'[/i]), Reichswehr, Volkswehr & Reichsbanner, and Red Army, Workers', Red Panzer & Red Front
 
 [b]Sweden[/b]
 - Plain and Named Roman-numbered Arméfördelningar, plus motorized, mechanized and armored divisions ([i]II. Arméfördelningen 'Jämtlands'[/i], [i]Pansarfördelningen 'Skaraborgs pansarregemente'[/i])

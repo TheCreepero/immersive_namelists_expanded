@@ -1348,6 +1348,117 @@ GER_GAR_01 = {
 	}
 }
 
+# Coastal defence on the model of the WWI Oberkommando der Küstenverteidigung and the static (bodenständige) divisions of the Atlantic Wall and Norway; own number series.
+GER_COAST_01 = 
+{
+	name = "Coastal Defense Divisions"
+
+	for_countries = { GER }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%d. Küstenverteidigungs-Division"
+
+	ordered =
+	{
+		# Static (bodenständige) divisions on the coasts of France, the Low Countries, the Channel Islands and Norway
+		1 = { "716. (bodenständige) Infanterie-Division" }
+		2 = { "709. (bodenständige) Infanterie-Division" }
+		3 = { "711. (bodenständige) Infanterie-Division" }
+		4 = { "702. (bodenständige) Infanterie-Division" }
+		5 = { "319. (bodenständige) Infanterie-Division" }
+		6 = { "332. (bodenständige) Infanterie-Division" }
+		7 = { "344. (bodenständige) Infanterie-Division" }
+		8 = { "347. (bodenständige) Infanterie-Division" }
+		9 = { "243. (bodenständige) Infanterie-Division" }
+		# North Sea coast sectors, from the Danish border to the Ems
+		10 = { "%d. Küstenverteidigungs-Division 'Sylt'" }
+		11 = { "%d. Küstenverteidigungs-Division 'Föhr'" }
+		12 = { "%d. Küstenverteidigungs-Division 'Nordfriesland'" }
+		13 = { "%d. Küstenverteidigungs-Division 'Eiderstedt'" }
+		14 = { "%d. Küstenverteidigungs-Division 'Dithmarschen'" }
+		15 = { "%d. Küstenverteidigungs-Division 'Elbmündung'" }
+		16 = { "%d. Küstenverteidigungs-Division 'Cuxhaven'" }
+		17 = { "%d. Küstenverteidigungs-Division 'Wesermündung'" }
+		18 = { "%d. Küstenverteidigungs-Division 'Jadebusen'" }
+		19 = { "%d. Küstenverteidigungs-Division 'Wangerooge'" }
+		20 = { "%d. Küstenverteidigungs-Division 'Norderney'" }
+		21 = { "%d. Küstenverteidigungs-Division 'Borkum'" }
+		22 = { "%d. Küstenverteidigungs-Division 'Ostfriesland'" }
+		23 = { "%d. Küstenverteidigungs-Division 'Emsmündung'" }
+		# Baltic coast sectors, from Flensburg to the Kurische Nehrung
+		24 = { "%d. Küstenverteidigungs-Division 'Flensburger Förde'" }
+		25 = { "%d. Küstenverteidigungs-Division 'Eckernförder Bucht'" }
+		26 = { "%d. Küstenverteidigungs-Division 'Fehmarn'" }
+		27 = { "%d. Küstenverteidigungs-Division 'Lübecker Bucht'" }
+		28 = { "%d. Küstenverteidigungs-Division 'Wismarbucht'" }
+		29 = { "%d. Küstenverteidigungs-Division 'Rostock'" }
+		30 = { "%d. Küstenverteidigungs-Division 'Darß'" }
+		31 = { "%d. Küstenverteidigungs-Division 'Rügen'" }
+		32 = { "%d. Küstenverteidigungs-Division 'Usedom'" }
+		33 = { "%d. Küstenverteidigungs-Division 'Pommersche Bucht'" }
+		34 = { "%d. Küstenverteidigungs-Division 'Frische Nehrung'" }
+		35 = { "%d. Küstenverteidigungs-Division 'Samland'" }
+		36 = { "%d. Küstenverteidigungs-Division 'Kurische Nehrung'" }
+	}
+}
+
+# Border guard on the model of the 1939 Grenzwacht of the Westwall and the Grenzschutz commands of the eastern border; own number series.
+GER_BORDER_01 = 
+{
+	name = "Border Guard Divisions"
+
+	for_countries = { GER }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%d. Grenzwacht-Division"
+
+	ordered =
+	{
+		# Border commands of 1939 that became divisions or corps
+		1 = { "Grenzwacht-Abschnittskommando 9" }
+		2 = { "Grenzschutz-Abschnittskommando 1" }
+		3 = { "Grenzschutz-Abschnittskommando Freiburg" }
+		4 = { "Grenzkommandantur Küstrin" }
+		# Grenzwacht of the western border, from the Ems to Lake Constance
+		5 = { "%d. Grenzwacht-Division 'Emsland'" }
+		6 = { "%d. Grenzwacht-Division 'Bentheim'" }
+		7 = { "%d. Grenzwacht-Division 'Selfkant'" }
+		8 = { "%d. Grenzwacht-Division 'Mosel'" }
+		9 = { "%d. Grenzwacht-Division 'Saar'" }
+		10 = { "%d. Grenzwacht-Division 'Bienwald'" }
+		11 = { "%d. Grenzwacht-Division 'Pfälzerwald'" }
+		12 = { "%d. Grenzwacht-Division 'Oberrhein'" }
+		13 = { "%d. Grenzwacht-Division 'Kaiserstuhl'" }
+		14 = { "%d. Grenzwacht-Division 'Markgräflerland'" }
+		15 = { "%d. Grenzwacht-Division 'Hochrhein'" }
+		16 = { "%d. Grenzwacht-Division 'Hegau'" }
+		# Grenzschutz of the eastern and southern border, from East Prussia to the Alps
+		17 = { "%d. Grenzschutz-Division 'Elchniederung'" }
+		18 = { "%d. Grenzschutz-Division 'Masuren'" }
+		19 = { "%d. Grenzschutz-Division 'Johannisburger Heide'" }
+		20 = { "%d. Grenzschutz-Division 'Weichsel'" }
+		21 = { "%d. Grenzschutz-Division 'Netze'" }
+		22 = { "%d. Grenzschutz-Division 'Grenzmark'" }
+		23 = { "%d. Grenzschutz-Division 'Glatzer Bergland'" }
+		24 = { "%d. Grenzschutz-Division 'Isergebirge'" }
+		25 = { "%d. Grenzschutz-Division 'Zittauer Gebirge'" }
+		26 = { "%d. Grenzschutz-Division 'Oberlausitz'" }
+		27 = { "%d. Grenzschutz-Division 'Vogtland'" }
+		28 = { "%d. Grenzschutz-Division 'Fichtelgebirge'" }
+		29 = { "%d. Grenzschutz-Division 'Oberpfalz'" }
+		30 = { "%d. Grenzschutz-Division 'Bayerischer Wald'" }
+		31 = { "%d. Grenzschutz-Division 'Inntal'" }
+		32 = { "%d. Grenzschutz-Division 'Chiemgau'" }
+		33 = { "%d. Grenzschutz-Division 'Berchtesgadener Land'" }
+	}
+}
+
 # ==============================================================================
 # 6. ELITE FORMATIONS (fascism)
 # ==============================================================================
@@ -1823,6 +1934,141 @@ GER_MONMOB_01 = {
 	}
 }
 
+# The Imperial Jäger-Bataillone Nr. 1-15 raised to divisions on their numbers, with their titles, then the Bavarian Jäger and the Alpenkorps.
+GER_MONJAG_01 = 
+{
+	name = "Imperial Jäger Divisions"
+
+	for_countries = { GER }
+
+	can_use = { OR = { has_government = neutrality has_government = democratic } }
+
+	division_types = { "infantry" "ranger_battalion" "mountaineers" }
+
+	fallback_name = "%d. Jäger-Division"
+
+	ordered =
+	{
+		# Jäger-Bataillone Nr. 1-15 of the Prussian, Saxon and Mecklenburg contingents
+		1 = { "%d. Jäger-Division 'Graf Yorck von Wartenburg'" }
+		2 = { "%d. Pommersche Jäger-Division 'Fürst Bismarck'" }
+		3 = { "%d. Brandenburgische Jäger-Division" }
+		4 = { "%d. Magdeburgische Jäger-Division" }
+		5 = { "%d. Jäger-Division 'von Neumann'" }
+		6 = { "%d. Schlesische Jäger-Division" }
+		7 = { "%d. Westfälische Jäger-Division" }
+		8 = { "%d. Rheinische Jäger-Division" }
+		9 = { "%d. Lauenburgische Jäger-Division" }
+		10 = { "%d. Hannoversche Jäger-Division" }
+		11 = { "%d. Kurhessische Jäger-Division" }
+		12 = { "%d. Kgl. Sächs. Jäger-Division" }
+		13 = { "%d. Kgl. Sächs. Jäger-Division" }
+		14 = { "%d. Großherzoglich Mecklenburgische Jäger-Division" }
+		15 = { "%d. Kgl. Sächs. Jäger-Division 'Wurzen'" }
+		# Bavarian Jäger (own series), the Alpenkorps and Württemberg
+		16 = { "1. Kgl. Bayer. Jäger-Division" }
+		17 = { "2. Kgl. Bayer. Jäger-Division" }
+		18 = { "Deutsches Alpenkorps" }
+		19 = { "Kgl. Bayer. Schneeschuh-Division" }
+		20 = { "Württembergische Gebirgs-Division" }
+		21 = { "%d. Jäger-Division 'Schwarze Jäger'" }
+		# The Alpenkorps' commander and battles
+		22 = { "%d. Jäger-Division 'Krafft von Dellmensingen'" }
+		23 = { "%d. Jäger-Division 'Dolomiten'" }
+		24 = { "%d. Jäger-Division 'Hermannstadt'" }
+		25 = { "%d. Jäger-Division 'Fleury'" }
+		26 = { "%d. Jäger-Division 'Karfreit'" }
+		27 = { "%d. Jäger-Division 'Matajur'" }
+		28 = { "%d. Jäger-Division 'Kemmel'" }
+	}
+}
+
+# An Imperial tank arm grown from the Sturm-Panzer-Kraftwagen-Abteilungen of 1918: divisions named after the A7V tanks and their actions.
+GER_MONPZ_01 = 
+{
+	name = "Imperial Panzer Divisions"
+
+	for_countries = { GER }
+
+	can_use = { OR = { has_government = neutrality has_government = democratic } }
+
+	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
+
+	fallback_name = "%d. Kampfwagen-Division"
+
+	ordered =
+	{
+		# The A7V Sturmpanzerwagen of 1918
+		1 = { "%d. Kampfwagen-Division 'Gretchen'" }
+		2 = { "%d. Kampfwagen-Division 'Faust'" }
+		3 = { "%d. Kampfwagen-Division 'Schnuck'" }
+		4 = { "%d. Kampfwagen-Division 'Baden I'" }
+		5 = { "%d. Kampfwagen-Division 'Mephisto'" }
+		6 = { "%d. Kampfwagen-Division 'Cyklop'" }
+		7 = { "%d. Kampfwagen-Division 'Lotti'" }
+		8 = { "%d. Kampfwagen-Division 'Hagen'" }
+		9 = { "%d. Kampfwagen-Division 'Nixe'" }
+		10 = { "%d. Kampfwagen-Division 'Heiland'" }
+		11 = { "%d. Kampfwagen-Division 'Elfriede'" }
+		12 = { "%d. Kampfwagen-Division 'Alter Fritz'" }
+		13 = { "%d. Kampfwagen-Division 'Herkules'" }
+		14 = { "%d. Kampfwagen-Division 'Prinz Oskar'" }
+		15 = { "%d. Kampfwagen-Division 'Prinz Eitel Friedrich'" }
+		16 = { "%d. Kampfwagen-Division 'Prinz August Wilhelm'" }
+		17 = { "%d. Kampfwagen-Division 'Kronprinz Wilhelm'" }
+		18 = { "%d. Kampfwagen-Division 'Adalbert'" }
+		19 = { "%d. Kampfwagen-Division 'Bulle'" }
+		# The tank actions of 1918
+		20 = { "%d. Kampfwagen-Division 'St. Quentin'" }
+		21 = { "%d. Kampfwagen-Division 'Villers-Bretonneux'" }
+		22 = { "%d. Kampfwagen-Division 'Reims'" }
+		23 = { "%d. Kampfwagen-Division 'Frémicourt'" }
+		24 = { "%d. Kampfwagen-Division 'Iwuy'" }
+		25 = { "%d. Kampfwagen-Division 'Séranvillers'" }
+	}
+}
+
+# The Kaiserliche Marine's naval infantry: the Seebataillone, the expeditionary corps and the Marinekorps Flandern, then divisions named after their stations and battles.
+GER_MONMAR_01 = 
+{
+	name = "Imperial Marine Divisions"
+
+	for_countries = { GER }
+
+	can_use = { OR = { has_government = neutrality has_government = democratic } }
+
+	division_types = { "marine" }
+
+	fallback_name = "%d. Marine-Division"
+
+	ordered =
+	{
+		# Seebataillone and naval infantry formations, 1852-1918
+		1 = { "I. Seebataillon" }
+		2 = { "II. Seebataillon" }
+		3 = { "III. Seebataillon" }
+		4 = { "Marine-Expeditionskorps" }
+		5 = { "Mobile Marine-Division" }
+		6 = { "Marine-Infanterie-Brigade" }
+		7 = { "Marinekorps Flandern" }
+		# East Asia and Flanders
+		8 = { "%d. Marine-Division 'Tsingtau'" }
+		9 = { "%d. Marine-Division 'Taku'" }
+		10 = { "%d. Marine-Division 'Peking'" }
+		11 = { "%d. Marine-Division 'Brügge'" }
+		12 = { "%d. Marine-Division 'Ostende'" }
+		13 = { "%d. Marine-Division 'Middelkerke'" }
+		14 = { "%d. Marine-Division 'Nieuport'" }
+		15 = { "%d. Marine-Division 'Dixmuiden'" }
+		16 = { "%d. Marine-Division 'Yser'" }
+		17 = { "%d. Marine-Division 'Somme'" }
+		18 = { "%d. Marine-Division 'Arras'" }
+		# Commanders
+		19 = { "%d. Marine-Division 'von Schröder'" }
+		20 = { "%d. Marine-Division 'Glasenapp'" }
+	}
+}
+
 # ==============================================================================
 # 8. REPUBLICAN DIVISIONS (democratic)
 # ==============================================================================
@@ -1876,6 +2122,156 @@ GER_Arm_01_ANTIFASCIST = {
 		232 = { "%d. Reichswehr-Division" }
 		233 = { "%d. Reichswehr-Division" }
 		693 = { "%d. Reichswehr-Division" }
+	}
+}
+
+# The seven divisions of the 1921 Reichsheer on their numbers, then an expanded republican army raised by Land and Prussian province.
+GER_REPINF_01 = 
+{
+	name = "Reichswehr Divisions"
+
+	for_countries = { GER }
+
+	can_use = { has_government = democratic }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%d. Division"
+
+	ordered =
+	{
+		# The divisions of the 1921 Reichsheer (Königsberg, Stettin, Berlin, Dresden, Stuttgart, Münster, München)
+		1 = { "%d. (Preußische) Division" }
+		2 = { "%d. (Preußische) Division" }
+		3 = { "%d. (Preußische) Division" }
+		4 = { "%d. (Sächsische) Division" }
+		5 = { "%d. (Württembergische) Division" }
+		6 = { "%d. (Preußische) Division" }
+		7 = { "%d. (Bayerische) Division" }
+		# The other Länder of the Weimar Republic
+		8 = { "%d. (Badische) Division" }
+		9 = { "%d. (Hessische) Division" }
+		10 = { "%d. (Thüringische) Division" }
+		11 = { "%d. (Mecklenburgische) Division" }
+		12 = { "%d. (Oldenburgische) Division" }
+		13 = { "%d. (Braunschweigische) Division" }
+		14 = { "%d. (Anhaltische) Division" }
+		15 = { "%d. (Lippische) Division" }
+		16 = { "%d. (Hamburgische) Division" }
+		17 = { "%d. (Bremische) Division" }
+		18 = { "%d. (Lübeckische) Division" }
+		# The Prussian provinces
+		19 = { "%d. (Ostpreußische) Division" }
+		20 = { "%d. (Pommersche) Division" }
+		21 = { "%d. (Brandenburgische) Division" }
+		22 = { "%d. (Schlesische) Division" }
+		23 = { "%d. (Oberschlesische) Division" }
+		24 = { "%d. (Hannoversche) Division" }
+		25 = { "%d. (Westfälische) Division" }
+		26 = { "%d. (Rheinische) Division" }
+		27 = { "%d. (Schleswig-Holsteinische) Division" }
+		28 = { "%d. (Hessen-Nassauische) Division" }
+	}
+}
+
+# Defence forces of the Republic on the model of the 1918-19 Volkswehr and the Republikanische Soldatenwehr, named after the Länder and the Republic's defenders.
+GER_REPDEF_01 = 
+{
+	name = "Volkswehr Divisions"
+
+	for_countries = { GER }
+
+	can_use = { has_government = democratic }
+
+	division_types = { "infantry" "motorized" }
+
+	fallback_name = "%d. Volkswehr-Division"
+
+	ordered =
+	{
+		# The Republic's own armed bodies, 1918-33
+		1 = { "Republikanische Soldatenwehr" }
+		2 = { "Preußische Schutzpolizei" }
+		# The Länder
+		3 = { "%d. Volkswehr-Division 'Freistaat Preußen'" }
+		4 = { "%d. Volkswehr-Division 'Freistaat Bayern'" }
+		5 = { "%d. Volkswehr-Division 'Freistaat Sachsen'" }
+		6 = { "%d. Volkswehr-Division 'Volksstaat Württemberg'" }
+		7 = { "%d. Volkswehr-Division 'Republik Baden'" }
+		8 = { "%d. Volkswehr-Division 'Volksstaat Hessen'" }
+		# Defenders of the Republic
+		9 = { "%d. Volkswehr-Division 'Otto Braun'" }
+		10 = { "%d. Volkswehr-Division 'Albert Grzesinski'" }
+		11 = { "%d. Volkswehr-Division 'Bernhard Weiß'" }
+		12 = { "%d. Volkswehr-Division 'Johannes Hoffmann'" }
+		13 = { "%d. Volkswehr-Division 'Erhard Auer'" }
+		14 = { "%d. Volkswehr-Division 'Wilhelm Keil'" }
+		15 = { "%d. Volkswehr-Division 'Rudolf Hilferding'" }
+		16 = { "%d. Volkswehr-Division 'Hugo Sinzheimer'" }
+		17 = { "%d. Volkswehr-Division 'Gustav Radbruch'" }
+		18 = { "%d. Volkswehr-Division 'Friedrich Stampfer'" }
+		19 = { "%d. Volkswehr-Division 'Wilhelm Sollmann'" }
+		20 = { "%d. Volkswehr-Division 'Weimarer Koalition'" }
+		21 = { "%d. Volkswehr-Division 'Generalstreik'" }
+		22 = { "%d. Volkswehr-Division 'Reichstag'" }
+	}
+}
+
+# Panzer divisions of a democratic Germany, named after the revolution of 1848/49, the liberals of the Empire, the Weimar Republic and the democratic resistance.
+GER_REPPZ_01 = 
+{
+	name = "Republican Panzer Divisions"
+
+	for_countries = { GER }
+
+	can_use = { has_government = democratic }
+
+	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
+
+	fallback_name = "%d. Panzer-Division"
+
+	ordered =
+	{
+		# The revolution of 1848/49
+		1 = { "%d. Panzer-Division 'Franz Sigel'" }
+		2 = { "%d. Panzer-Division 'Lorenz Brentano'" }
+		3 = { "%d. Panzer-Division 'Georg Herwegh'" }
+		4 = { "%d. Panzer-Division 'Ludwig Blenker'" }
+		5 = { "%d. Panzer-Division 'Max Dortu'" }
+		6 = { "%d. Panzer-Division 'Gottfried Kinkel'" }
+		7 = { "%d. Panzer-Division 'Heinrich von Gagern'" }
+		8 = { "%d. Panzer-Division 'Gabriel Riesser'" }
+		9 = { "%d. Panzer-Division 'Rastatt'" }
+		10 = { "%d. Panzer-Division 'Offenburg'" }
+		11 = { "%d. Panzer-Division 'Heppenheim'" }
+		# Liberals and parliamentarians of the Empire
+		12 = { "%d. Panzer-Division 'Johann Jacoby'" }
+		13 = { "%d. Panzer-Division 'Eugen Richter'" }
+		14 = { "%d. Panzer-Division 'Ludwig Windthorst'" }
+		15 = { "%d. Panzer-Division 'Rudolf Virchow'" }
+		16 = { "%d. Panzer-Division 'Schulze-Delitzsch'" }
+		17 = { "%d. Panzer-Division 'Eduard Lasker'" }
+		18 = { "%d. Panzer-Division 'Ludwig Bamberger'" }
+		19 = { "%d. Panzer-Division 'Theodor Mommsen'" }
+		20 = { "%d. Panzer-Division 'Friedrich Naumann'" }
+		21 = { "%d. Panzer-Division 'Ludwig Quidde'" }
+		# The Weimar Republic
+		22 = { "%d. Panzer-Division 'Hermann Müller'" }
+		23 = { "%d. Panzer-Division 'Joseph Wirth'" }
+		24 = { "%d. Panzer-Division 'Wilhelm Marx'" }
+		25 = { "%d. Panzer-Division 'Erich Koch-Weser'" }
+		26 = { "%d. Panzer-Division 'Conrad Haußmann'" }
+		# The democratic resistance, 1933-45
+		27 = { "%d. Panzer-Division 'Julius Leber'" }
+		28 = { "%d. Panzer-Division 'Wilhelm Leuschner'" }
+		29 = { "%d. Panzer-Division 'Carl von Ossietzky'" }
+		30 = { "%d. Panzer-Division 'Carlo Mierendorff'" }
+		31 = { "%d. Panzer-Division 'Theodor Haubach'" }
+		32 = { "%d. Panzer-Division 'Adolf Reichwein'" }
+		33 = { "%d. Panzer-Division 'Dietrich Bonhoeffer'" }
+		34 = { "%d. Panzer-Division 'Geschwister Scholl'" }
+		35 = { "%d. Panzer-Division 'Weiße Rose'" }
+		36 = { "%d. Panzer-Division 'Kreisauer Kreis'" }
 	}
 }
 
@@ -1936,5 +2332,136 @@ GER_MEC_01_COMMUNIST = {
 		931 = { "%d. Rote Division" }
 		932 = { "%d. Rote Division" }
 		933 = { "%d. Rote Division" }
+	}
+}
+
+# Workers' divisions named after the towns of the Rote Ruhrarmee (1920), the Märzkämpfe (1921), the Hamburg rising (1923) and the KPD's strongholds.
+GER_REDINF_01 = 
+{
+	name = "Workers' Divisions"
+
+	for_countries = { GER }
+
+	can_use = { has_government = communism }
+
+	division_types = { "infantry" "militia" }
+
+	fallback_name = "%d. Arbeiter-Division"
+
+	ordered =
+	{
+		# The Rote Ruhrarmee, March-April 1920
+		1 = { "%d. Arbeiter-Division 'Essen'" }
+		2 = { "%d. Arbeiter-Division 'Dortmund'" }
+		3 = { "%d. Arbeiter-Division 'Bochum'" }
+		4 = { "%d. Arbeiter-Division 'Elberfeld'" }
+		5 = { "%d. Arbeiter-Division 'Barmen'" }
+		6 = { "%d. Arbeiter-Division 'Remscheid'" }
+		7 = { "%d. Arbeiter-Division 'Solingen'" }
+		8 = { "%d. Arbeiter-Division 'Mülheim an der Ruhr'" }
+		9 = { "%d. Arbeiter-Division 'Duisburg'" }
+		10 = { "%d. Arbeiter-Division 'Hamborn'" }
+		11 = { "%d. Arbeiter-Division 'Gelsenkirchen'" }
+		12 = { "%d. Arbeiter-Division 'Dinslaken'" }
+		13 = { "%d. Arbeiter-Division 'Wesel'" }
+		14 = { "%d. Arbeiter-Division 'Pelkum'" }
+		# The Märzkämpfe of 1921 and the Hamburg rising of 1923
+		15 = { "%d. Arbeiter-Division 'Eisleben'" }
+		16 = { "%d. Arbeiter-Division 'Merseburg'" }
+		17 = { "%d. Arbeiter-Division 'Barmbek'" }
+		18 = { "%d. Arbeiter-Division 'Schiffbek'" }
+		# KPD strongholds in Saxony, Thuringia and Berlin
+		19 = { "%d. Arbeiter-Division 'Zwickau'" }
+		20 = { "%d. Arbeiter-Division 'Freital'" }
+		21 = { "%d. Arbeiter-Division 'Falkenstein'" }
+		22 = { "%d. Arbeiter-Division 'Gotha'" }
+		23 = { "%d. Arbeiter-Division 'Suhl'" }
+		24 = { "%d. Arbeiter-Division 'Wedding'" }
+		25 = { "%d. Arbeiter-Division 'Neukölln'" }
+	}
+}
+
+# Red Panzer divisions named after revolutions and risings, the Peasants' War, the International Brigades and the communist resistance.
+GER_REDPZ_01 = 
+{
+	name = "Red Panzer Divisions"
+
+	for_countries = { GER }
+
+	can_use = { has_government = communism }
+
+	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
+
+	fallback_name = "%d. Rote Panzer-Division"
+
+	ordered =
+	{
+		# Revolutions and risings
+		1 = { "%d. Rote Panzer-Division 'Novemberrevolution'" }
+		2 = { "%d. Rote Panzer-Division 'Pariser Kommune'" }
+		3 = { "%d. Rote Panzer-Division 'Leuna'" }
+		4 = { "%d. Rote Panzer-Division 'Mansfelder Land'" }
+		5 = { "%d. Rote Panzer-Division 'Hamburger Aufstand'" }
+		# The Peasants' War and its forerunners
+		6 = { "%d. Rote Panzer-Division 'Bundschuh'" }
+		7 = { "%d. Rote Panzer-Division 'Armer Konrad'" }
+		8 = { "%d. Rote Panzer-Division 'Joß Fritz'" }
+		9 = { "%d. Rote Panzer-Division 'Jörg Ratgeb'" }
+		10 = { "%d. Rote Panzer-Division 'Jäcklein Rohrbach'" }
+		11 = { "%d. Rote Panzer-Division 'Pfeifer von Niklashausen'" }
+		# The International Brigades and the Bavarian Soviet Republic
+		12 = { "%d. Rote Panzer-Division 'Tschapaiew'" }
+		13 = { "%d. Rote Panzer-Division 'Ludwig Renn'" }
+		14 = { "%d. Rote Panzer-Division 'Artur Becker'" }
+		15 = { "%d. Rote Panzer-Division 'Max Levien'" }
+		# The communist resistance, 1933-45
+		16 = { "%d. Rote Panzer-Division 'Anton Saefkow'" }
+		17 = { "%d. Rote Panzer-Division 'Robert Uhrig'" }
+		18 = { "%d. Rote Panzer-Division 'Bernhard Bästlein'" }
+		19 = { "%d. Rote Panzer-Division 'Werner Seelenbinder'" }
+		20 = { "%d. Rote Panzer-Division 'John Sieg'" }
+		21 = { "%d. Rote Panzer-Division 'Herbert Baum'" }
+		22 = { "%d. Rote Panzer-Division 'Georg Schumann'" }
+		23 = { "%d. Rote Panzer-Division 'Theodor Neubauer'" }
+		24 = { "%d. Rote Panzer-Division 'Albert Kuntz'" }
+		25 = { "%d. Rote Panzer-Division 'Käthe Niederkirchner'" }
+		26 = { "%d. Rote Panzer-Division 'Liselotte Herrmann'" }
+		27 = { "%d. Rote Panzer-Division 'Hans Coppi'" }
+		28 = { "%d. Rote Panzer-Division 'Harro Schulze-Boysen'" }
+		29 = { "%d. Rote Panzer-Division 'Arvid Harnack'" }
+		30 = { "%d. Rote Panzer-Division 'Rote Kapelle'" }
+	}
+}
+
+# Red sailors' divisions named after the naval mutinies of 1917 and 1918 and the Volksmarinedivision of 1918-19.
+GER_REDMAR_01 = 
+{
+	name = "Red Sailor Divisions"
+
+	for_countries = { GER }
+
+	can_use = { has_government = communism }
+
+	division_types = { "marine" }
+
+	fallback_name = "%d. Matrosen-Division"
+
+	ordered =
+	{
+		# The naval mutiny of 1917
+		1 = { "%d. Matrosen-Division 'Max Reichpietsch'" }
+		2 = { "%d. Matrosen-Division 'Albin Köbis'" }
+		3 = { "%d. Matrosen-Division 'Willy Weber'" }
+		4 = { "%d. Matrosen-Division 'Wilhelm Sachse'" }
+		5 = { "%d. Matrosen-Division 'Hans Beckers'" }
+		# November 1918
+		6 = { "%d. Matrosen-Division 'Karl Artelt'" }
+		7 = { "%d. Matrosen-Division 'Schillig-Reede'" }
+		# The Volksmarinedivision, Berlin 1918-19
+		8 = { "%d. Matrosen-Division 'Paul Wieczorek'" }
+		9 = { "%d. Matrosen-Division 'Otto Tost'" }
+		10 = { "%d. Matrosen-Division 'Fritz Radtke'" }
+		11 = { "%d. Matrosen-Division 'Marstall'" }
+		12 = { "%d. Matrosen-Division 'Weihnachtskämpfe'" }
 	}
 }
