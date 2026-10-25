@@ -564,6 +564,117 @@ FRA_GAR_01 =
 	}
 }
 
+# Coastal defence: the Secteurs de Défense du Littoral of 1939-40 (the Dunkerque sector became the 68e DI), the 1944-45 Atlantic pockets,
+# the garde-côtes tradition and the coastal armies and camps of 1793-1805. Own numbering, not linked to infantry.
+FRA_COT_01 = 
+{
+	name = "Coastal Defense Divisions"
+
+	for_countries = { FRA }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%dème Division de Défense du Littoral"
+
+	ordered =
+	{
+		# Secteurs de Défense du Littoral (1939-1940)
+		1 = { "Division de Défense du Littoral de Dunkerque" }
+		2 = { "Division de Défense du Littoral de Boulogne-sur-Mer" }
+		3 = { "Division de Défense du Littoral du Havre" }
+		4 = { "Division de Défense du Littoral de Cherbourg" }
+		5 = { "Division de Défense du Littoral de Brest" }
+		6 = { "Division de Défense du Littoral de Lorient" }
+		7 = { "Division de Défense du Littoral de Rochefort" }
+		8 = { "Division de Défense du Littoral de Marseille" }
+		9 = { "Division de Défense du Littoral de Toulon" }
+		10 = { "Division de Défense du Littoral de Nice" }
+		11 = { "Groupement Littoral Nord" }
+		# Poches de l'Atlantique (1944-1945)
+		12 = { "Division Gironde" }
+		13 = { "Division de Défense du Littoral de Saint-Nazaire" }
+		14 = { "Division de Défense du Littoral de La Rochelle" }
+		15 = { "Division de Défense du Littoral de Royan" }
+		16 = { "Division de Défense du Littoral de la Pointe de Grave" }
+		# Autres secteurs (extrapolation)
+		17 = { "Division de Défense du Littoral de Calais" }
+		18 = { "Division de Défense du Littoral de Dieppe" }
+		19 = { "Division de Défense du Littoral de Saint-Malo" }
+		20 = { "Division de Défense du Littoral de Bayonne" }
+		21 = { "Division de Défense du Littoral de Sète" }
+		# Garde-côtes
+		22 = { "Division de Garde-Côtes de Normandie" }
+		23 = { "Division de Garde-Côtes de Bretagne" }
+		24 = { "Division de Garde-Côtes du Cotentin" }
+		25 = { "Division de Garde-Côtes de Provence" }
+		26 = { "Division de Garde-Côtes de Saint-Pol-de-Léon" }
+		27 = { "Division de Garde-Côtes de La Hougue" }
+		# Armées des côtes et camps (1793-1805)
+		28 = { "Division de l'Armée des Côtes de Brest" }
+		29 = { "Division de l'Armée des Côtes de Cherbourg" }
+		30 = { "Division de l'Armée des Côtes de La Rochelle" }
+		31 = { "Division de l'Armée des Côtes de l'Océan" }
+		32 = { "Division du Camp de Boulogne" }
+		33 = { "Division du Camp de Montreuil" }
+		34 = { "Division du Camp de Bruges" }
+		35 = { "Division du Camp de Saint-Omer" }
+	}
+}
+
+# Garrisons of Corsica, the Atlantic and Mediterranean islands and the overseas territories outside Indochina and North Africa.
+FRA_ILE_01 = 
+{
+	name = "Island & Overseas Garrisons"
+
+	for_countries = { FRA }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%dème Division de Garnison"
+
+	ordered =
+	{
+		# Corse
+		1 = { "Division de Défense du Littoral de la Corse" }
+		2 = { "Division de Garnison d'Ajaccio" }
+		3 = { "Division de Garnison de Bastia" }
+		4 = { "Division de Garnison de Bonifacio" }
+		5 = { "Division de Garnison de Corte" }
+		# Îles du Ponant et de la Méditerranée
+		6 = { "Division de Garnison d'Ouessant" }
+		7 = { "Division de Garnison de Belle-Île" }
+		8 = { "Division de Garnison de l'Île de Groix" }
+		9 = { "Division de Garnison de l'Île de Ré" }
+		10 = { "Division de Garnison de l'Île d'Oléron" }
+		11 = { "Division de Garnison des Îles d'Hyères" }
+		12 = { "Division de Garnison des Îles de Lérins" }
+		13 = { "Division de Garnison du Frioul" }
+		# Outre-mer
+		14 = { "Division de Garnison de la Martinique" }
+		15 = { "Division de Garnison de la Guadeloupe" }
+		16 = { "Division de Garnison de la Guyane" }
+		17 = { "Division de Garnison de Saint-Pierre-et-Miquelon" }
+		18 = { "Division de Garnison de La Réunion" }
+		19 = { "Division de Garnison de Madagascar" }
+		20 = { "Division de Garnison de Diego-Suarez" }
+		21 = { "Division de Garnison des Comores" }
+		22 = { "Division de Garnison de la Côte Française des Somalis" }
+		23 = { "Division de Garnison de la Nouvelle-Calédonie" }
+		24 = { "Division de Garnison de Tahiti" }
+		25 = { "Division de Garnison des Nouvelles-Hébrides" }
+		26 = { "Division de Garnison des Établissements Français de l'Inde" }
+		# Troupes locales
+		27 = { "Division du Pacifique" }
+		28 = { "Division Mixte Malgache" }
+		29 = { "Division de Tirailleurs Malgaches" }
+		30 = { "Division de Tirailleurs Somalis" }
+	}
+}
+
 # ===== Colonial and African forces =====
 
 # Troupes coloniales. Overrides vanilla FRA_COL_01; the Armée d'Afrique is in FRA_AFR_01.
@@ -977,5 +1088,595 @@ FRA_MIL_NEU_01 =
 		15 = { "15ème Division Militaire (Marseille)" }
 		16 = { "16ème Division Militaire (Montpellier)" }
 		17 = { "17ème Division Militaire (Toulouse)" }
+	}
+}
+
+# ===== Revolutionary traditions (1789-1799) =====
+
+# Democratic governments only (has_government = democratic).
+# Volontaires nationaux of 1791-93, by département under its 1790 name.
+FRA_REV_01 = 
+{
+	name = "Volunteer Divisions"
+
+	for_countries = { FRA }
+
+	can_use = { has_government = democratic }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%dème Division de Volontaires Nationaux"
+
+	ordered =
+	{
+		1 = { "%dère Division de Volontaires Nationaux 'Ain'" }
+		2 = { "%dème Division de Volontaires Nationaux 'Aisne'" }
+		3 = { "%dème Division de Volontaires Nationaux 'Allier'" }
+		4 = { "%dème Division de Volontaires Nationaux 'Basses-Alpes'" }
+		5 = { "%dème Division de Volontaires Nationaux 'Hautes-Alpes'" }
+		6 = { "%dème Division de Volontaires Nationaux 'Ardèche'" }
+		7 = { "%dème Division de Volontaires Nationaux 'Ardennes'" }
+		8 = { "%dème Division de Volontaires Nationaux 'Aube'" }
+		9 = { "%dème Division de Volontaires Nationaux 'Aude'" }
+		10 = { "%dème Division de Volontaires Nationaux 'Aveyron'" }
+		11 = { "%dème Division de Volontaires Nationaux 'Cantal'" }
+		12 = { "%dème Division de Volontaires Nationaux 'Charente'" }
+		13 = { "%dème Division de Volontaires Nationaux 'Corrèze'" }
+		14 = { "%dème Division de Volontaires Nationaux 'Côte-d'Or'" }
+		15 = { "%dème Division de Volontaires Nationaux 'Côtes-du-Nord'" }
+		16 = { "%dème Division de Volontaires Nationaux 'Creuse'" }
+		17 = { "%dème Division de Volontaires Nationaux 'Dordogne'" }
+		18 = { "%dème Division de Volontaires Nationaux 'Doubs'" }
+		19 = { "%dème Division de Volontaires Nationaux 'Drôme'" }
+		20 = { "%dème Division de Volontaires Nationaux 'Eure'" }
+		21 = { "%dème Division de Volontaires Nationaux 'Gers'" }
+		22 = { "%dème Division de Volontaires Nationaux 'Indre'" }
+		23 = { "%dème Division de Volontaires Nationaux 'Isère'" }
+		24 = { "%dème Division de Volontaires Nationaux 'Jura'" }
+		25 = { "%dème Division de Volontaires Nationaux 'Landes'" }
+		26 = { "%dème Division de Volontaires Nationaux 'Loiret'" }
+		27 = { "%dème Division de Volontaires Nationaux 'Haute-Marne'" }
+		28 = { "%dème Division de Volontaires Nationaux 'Meurthe'" }
+		29 = { "%dème Division de Volontaires Nationaux 'Meuse'" }
+		30 = { "%dème Division de Volontaires Nationaux 'Moselle'" }
+		31 = { "%dème Division de Volontaires Nationaux 'Nièvre'" }
+		32 = { "%dème Division de Volontaires Nationaux 'Oise'" }
+		33 = { "%dème Division de Volontaires Nationaux 'Orne'" }
+		34 = { "%dème Division de Volontaires Nationaux 'Puy-de-Dôme'" }
+		35 = { "%dème Division de Volontaires Nationaux 'Hautes-Pyrénées'" }
+		36 = { "%dème Division de Volontaires Nationaux 'Loir-et-Cher'" }
+		37 = { "%dème Division de Volontaires Nationaux 'Haut-Rhin'" }
+		38 = { "%dème Division de Volontaires Nationaux 'Bas-Rhin'" }
+		39 = { "%dème Division de Volontaires Nationaux 'Haute-Saône'" }
+		40 = { "%dème Division de Volontaires Nationaux 'Seine-Inférieure'" }
+		41 = { "%dème Division de Volontaires Nationaux 'Haute-Vienne'" }
+		42 = { "%dème Division de Volontaires Nationaux 'Vosges'" }
+		43 = { "%dème Division de Volontaires Nationaux 'Yonne'" }
+		44 = { "%dème Division de Volontaires Nationaux 'Mont-Blanc'" }
+		45 = { "%dème Division de Volontaires Nationaux 'Mont-Terrible'" }
+	}
+}
+
+# Democratic governments only (has_government = democratic).
+# Demi-brigades of the 1793 amalgame and the armies of the Republic.
+FRA_REV_02 = 
+{
+	name = "Republican Demi-Brigades"
+
+	for_countries = { FRA }
+
+	can_use = { has_government = democratic }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%dème Demi-Brigade de Bataille"
+
+	ordered =
+	{
+		# Victoires de la République
+		1 = { "%dère Demi-Brigade de Bataille 'Fleurus'" }
+		2 = { "%dème Demi-Brigade de Bataille 'Hondschoote'" }
+		3 = { "%dème Demi-Brigade de Bataille 'Wattignies'" }
+		4 = { "%dème Demi-Brigade de Bataille 'Geisberg'" }
+		5 = { "%dème Demi-Brigade de Bataille 'Le Boulou'" }
+		6 = { "%dème Demi-Brigade de Bataille 'Tourcoing'" }
+		7 = { "%dème Demi-Brigade de Bataille 'Loano'" }
+		8 = { "%dème Demi-Brigade de Bataille 'Neuwied'" }
+		9 = { "%dème Demi-Brigade de Bataille 'Bergen'" }
+		10 = { "%dème Demi-Brigade de Bataille 'Zurich'" }
+		11 = { "%dème Demi-Brigade de Bataille 'Hohenlinden'" }
+		# Généraux et martyrs de la République
+		12 = { "%dème Demi-Brigade de Bataille 'Dampierre'" }
+		13 = { "%dème Demi-Brigade de Bataille 'Dugommier'" }
+		14 = { "%dème Demi-Brigade de Bataille 'Beaurepaire'" }
+		15 = { "%dème Demi-Brigade de Bataille 'Joubert'" }
+		16 = { "%dème Demi-Brigade de Bataille 'Championnet'" }
+		17 = { "%dème Demi-Brigade de Bataille 'Carnot'" }
+		18 = { "%dème Demi-Brigade de Bataille 'Bara'" }
+		19 = { "%dème Demi-Brigade de Bataille 'Viala'" }
+		20 = { "%dème Demi-Brigade de Bataille 'Le Peletier'" }
+		# Mots d'ordre de 1789-1793
+		21 = { "%dème Demi-Brigade de Bataille 'Patrie en Danger'" }
+		22 = { "%dème Demi-Brigade de Bataille 'Levée en Masse'" }
+		23 = { "%dème Demi-Brigade de Bataille 'La Marseillaise'" }
+		24 = { "%dème Demi-Brigade de Bataille 'An II'" }
+		25 = { "%dème Demi-Brigade de Bataille 'Marianne'" }
+		26 = { "%dème Demi-Brigade de Bataille 'Jeu de Paume'" }
+		27 = { "%dème Demi-Brigade de Bataille 'Bastille'" }
+		28 = { "%dème Demi-Brigade de Bataille 'Fédération'" }
+		# Armées de la République (1791-1801)
+		29 = { "Division de l'Armée du Nord" }
+		30 = { "Division de l'Armée des Ardennes" }
+		31 = { "Division de l'Armée de la Moselle" }
+		32 = { "Division de l'Armée du Rhin" }
+		33 = { "Division de l'Armée des Alpes" }
+		34 = { "Division de l'Armée d'Italie" }
+		35 = { "Division de l'Armée des Pyrénées-Orientales" }
+		36 = { "Division de l'Armée des Pyrénées-Occidentales" }
+		37 = { "Division de l'Armée de Sambre-et-Meuse" }
+		38 = { "Division de l'Armée de Rhin-et-Moselle" }
+		39 = { "Division de l'Armée de Mayence" }
+		40 = { "Division de l'Armée du Danube" }
+		41 = { "Division de l'Armée d'Helvétie" }
+		42 = { "Division de l'Armée des Vosges" }
+		43 = { "Division de l'Armée du Centre" }
+		44 = { "Division de l'Armée des Grisons" }
+		45 = { "Division de l'Armée d'Allemagne" }
+		46 = { "Division de l'Armée de Naples" }
+	}
+}
+
+# Democratic governments only (has_government = democratic).
+# The free cavalry corps and legions of 1792-93.
+FRA_REV_CAV_01 = 
+{
+	name = "Republican Cavalry"
+
+	for_countries = { FRA }
+
+	can_use = { has_government = democratic }
+
+	division_types = { "cavalry" }
+
+	fallback_name = "%dème Division de Cavalerie Républicaine"
+
+	ordered =
+	{
+		# Corps francs et légions (1792-1793)
+		1 = { "Division des Hussards de la Mort" }
+		2 = { "Division des Hussards de la Liberté" }
+		3 = { "Division des Hussards Noirs" }
+		4 = { "Division des Hussards de la Montagne" }
+		5 = { "Division des Éclaireurs de Fabrefonds" }
+		6 = { "Division de la Légion des Allobroges" }
+		7 = { "Division de la Légion des Américains" }
+		8 = { "Division de la Légion Germanique" }
+		# Cavaliers de la République
+		9 = { "%dème Division de Cavalerie Républicaine 'Saint-Georges'" }
+		10 = { "%dème Division de Cavalerie Républicaine 'Général Dumas'" }
+		11 = { "%dème Division de Cavalerie Républicaine 'Texel'" }
+	}
+}
+
+# Communist governments only (has_government = communism).
+# The Jacobin and sans-culotte tradition: the armées révolutionnaires of 1793 and the sections of Paris.
+FRA_REV_COM_01 = 
+{
+	name = "Sans-Culotte Divisions"
+
+	for_countries = { FRA }
+
+	can_use = { has_government = communism }
+
+	division_types = { "infantry" "militia" }
+
+	fallback_name = "%dème Division de l'Armée Révolutionnaire"
+
+	ordered =
+	{
+		1 = { "Division de l'Armée Révolutionnaire Parisienne" }
+		# Montagnards et Égaux
+		2 = { "%dème Division de l'Armée Révolutionnaire 'Robespierre'" }
+		3 = { "%dème Division de l'Armée Révolutionnaire 'Saint-Just'" }
+		4 = { "%dème Division de l'Armée Révolutionnaire 'Couthon'" }
+		5 = { "%dème Division de l'Armée Révolutionnaire 'Marat'" }
+		6 = { "%dème Division de l'Armée Révolutionnaire 'Chalier'" }
+		7 = { "%dème Division de l'Armée Révolutionnaire 'Babeuf'" }
+		8 = { "%dème Division de l'Armée Révolutionnaire 'Buonarroti'" }
+		9 = { "%dème Division de l'Armée Révolutionnaire 'Ronsin'" }
+		10 = { "%dème Division de l'Armée Révolutionnaire 'Hanriot'" }
+		11 = { "%dème Division de l'Armée Révolutionnaire 'Jacques Roux'" }
+		# Sections de Paris
+		12 = { "%dème Division de l'Armée Révolutionnaire 'Piques'" }
+		13 = { "%dème Division de l'Armée Révolutionnaire 'Bonnet-Rouge'" }
+		14 = { "%dème Division de l'Armée Révolutionnaire 'Sans-Culottes'" }
+		15 = { "%dème Division de l'Armée Révolutionnaire 'La Montagne'" }
+		16 = { "%dème Division de l'Armée Révolutionnaire 'Gravilliers'" }
+		17 = { "%dème Division de l'Armée Révolutionnaire 'Quinze-Vingts'" }
+		18 = { "%dème Division de l'Armée Révolutionnaire 'Popincourt'" }
+		19 = { "%dème Division de l'Armée Révolutionnaire 'Finistère'" }
+		20 = { "%dème Division de l'Armée Révolutionnaire 'Mutius-Scævola'" }
+		21 = { "%dème Division de l'Armée Révolutionnaire 'Contrat-Social'" }
+		22 = { "%dème Division de l'Armée Révolutionnaire 'Guillaume-Tell'" }
+		23 = { "%dème Division de l'Armée Révolutionnaire 'Brutus'" }
+		24 = { "%dème Division de l'Armée Révolutionnaire 'Faubourg-du-Nord'" }
+		25 = { "%dème Division de l'Armée Révolutionnaire 'Bon-Conseil'" }
+		26 = { "%dème Division de l'Armée Révolutionnaire 'Homme-Armé'" }
+		27 = { "%dème Division de l'Armée Révolutionnaire 'Indivisibilité'" }
+		28 = { "%dème Division de l'Armée Révolutionnaire 'Unité'" }
+		# Symboles de 1793
+		29 = { "%dème Division de l'Armée Révolutionnaire 'Carmagnole'" }
+		30 = { "%dème Division de l'Armée Révolutionnaire 'Ça Ira'" }
+		31 = { "%dème Division de l'Armée Révolutionnaire 'Salut Public'" }
+		32 = { "%dème Division de l'Armée Révolutionnaire 'Égalité'" }
+		33 = { "%dème Division de l'Armée Révolutionnaire 'Égaux'" }
+	}
+}
+
+# ===== Bonapartist France (Third Empire) =====
+
+# Neutral governments only (has_government = neutrality): vanilla's Napoléon VI path.
+# The First Empire's Garde Impériale (1804-1815).
+FRA_GARDE_IMP_01 = 
+{
+	name = "Imperial Guard Divisions"
+
+	for_countries = { FRA }
+
+	can_use = { has_government = neutrality }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%dème Division de la Garde Impériale"
+
+	ordered =
+	{
+		# Vieille, Moyenne et Jeune Garde
+		1 = { "Division de la Vieille Garde" }
+		2 = { "Division de la Moyenne Garde" }
+		3 = { "1ère Division de la Jeune Garde" }
+		4 = { "2ème Division de la Jeune Garde" }
+		5 = { "3ème Division de la Jeune Garde" }
+		6 = { "4ème Division de la Jeune Garde" }
+		7 = { "5ème Division de la Jeune Garde" }
+		8 = { "6ème Division de la Jeune Garde" }
+		9 = { "Division de Grenadiers de la Garde" }
+		10 = { "Division de Chasseurs de la Garde" }
+		# Corps de la Garde
+		11 = { "Division des Grenadiers à Pied" }
+		12 = { "Division des Chasseurs à Pied" }
+		13 = { "Division des Fusiliers-Grenadiers" }
+		14 = { "Division des Fusiliers-Chasseurs" }
+		15 = { "Division des Tirailleurs de la Garde" }
+		16 = { "Division des Voltigeurs de la Garde" }
+		17 = { "Division des Flanqueurs-Grenadiers" }
+		18 = { "Division des Flanqueurs-Chasseurs" }
+		19 = { "Division des Pupilles de la Garde" }
+		20 = { "Division des Marins de la Garde" }
+		# Traditions et chefs de la Garde
+		21 = { "%dème Division de la Garde Impériale 'Les Grognards'" }
+		22 = { "%dème Division de la Garde Impériale 'Les Immortels'" }
+		23 = { "%dème Division de la Garde Impériale 'Vieux de la Vieille'" }
+		24 = { "%dème Division de la Garde Impériale 'Friant'" }
+		25 = { "%dème Division de la Garde Impériale 'Morand'" }
+		26 = { "%dème Division de la Garde Impériale 'Duhesme'" }
+		27 = { "%dème Division de la Garde Impériale 'Roguet'" }
+		28 = { "%dème Division de la Garde Impériale 'Cambronne'" }
+		29 = { "%dème Division de la Garde Impériale 'Curial'" }
+		30 = { "%dème Division de la Garde Impériale 'Drouot'" }
+		31 = { "%dème Division de la Garde Impériale 'Mortier'" }
+		32 = { "%dème Division de la Garde Impériale 'Lefebvre'" }
+		33 = { "%dème Division de la Garde Impériale 'Dorsenne'" }
+		34 = { "%dème Division de la Garde Impériale 'Dumoustier'" }
+	}
+}
+
+# Neutral governments only (has_government = neutrality).
+# Line divisions after the loyal marshals and the victories of 1796-1815. Key 9: the 9e léger; key 84: the 84e de ligne.
+FRA_GRA_01 = 
+{
+	name = "Grande Armée Divisions"
+
+	for_countries = { FRA }
+
+	can_use = { has_government = neutrality }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%dème Division de la Grande Armée"
+
+	ordered =
+	{
+		# Maréchaux d'Empire
+		1 = { "%dère Division de la Grande Armée 'Davout'" }
+		2 = { "%dème Division de la Grande Armée 'Masséna'" }
+		3 = { "%dème Division de la Grande Armée 'Lannes'" }
+		4 = { "%dème Division de la Grande Armée 'Ney'" }
+		5 = { "%dème Division de la Grande Armée 'Soult'" }
+		6 = { "%dème Division de la Grande Armée 'Suchet'" }
+		7 = { "%dème Division de la Grande Armée 'Brune'" }
+		# Victoires (1796-1815)
+		8 = { "%dème Division de la Grande Armée 'Lodi'" }
+		9 = { "%dème Division de la Grande Armée 'L'Incomparable'" }
+		10 = { "%dème Division de la Grande Armée 'Arcole'" }
+		11 = { "%dème Division de la Grande Armée 'Rivoli'" }
+		12 = { "%dème Division de la Grande Armée 'Castiglione'" }
+		13 = { "%dème Division de la Grande Armée 'Montenotte'" }
+		14 = { "%dème Division de la Grande Armée 'Pyramides'" }
+		15 = { "%dème Division de la Grande Armée 'Aboukir'" }
+		16 = { "%dème Division de la Grande Armée 'Mont-Thabor'" }
+		17 = { "%dème Division de la Grande Armée 'Montebello'" }
+		18 = { "%dème Division de la Grande Armée 'Ulm'" }
+		19 = { "%dème Division de la Grande Armée 'Elchingen'" }
+		20 = { "%dème Division de la Grande Armée 'Friedland'" }
+		21 = { "%dème Division de la Grande Armée 'Eckmühl'" }
+		22 = { "%dème Division de la Grande Armée 'Ratisbonne'" }
+		23 = { "%dème Division de la Grande Armée 'Raab'" }
+		24 = { "%dème Division de la Grande Armée 'Essling'" }
+		25 = { "%dème Division de la Grande Armée 'Smolensk'" }
+		26 = { "%dème Division de la Grande Armée 'La Moskova'" }
+		27 = { "%dème Division de la Grande Armée 'Lützen'" }
+		28 = { "%dème Division de la Grande Armée 'Bautzen'" }
+		29 = { "%dème Division de la Grande Armée 'Dresde'" }
+		30 = { "%dème Division de la Grande Armée 'Hanau'" }
+		31 = { "%dème Division de la Grande Armée 'Champaubert'" }
+		32 = { "%dème Division de la Grande Armée 'Montmirail'" }
+		33 = { "%dème Division de la Grande Armée 'Montereau'" }
+		34 = { "%dème Division de la Grande Armée 'Ligny'" }
+		35 = { "%dème Division de la Grande Armée 'Saalfeld'" }
+		36 = { "%dème Division de la Grande Armée 'Dantzig'" }
+		84 = { "%dème Division de la Grande Armée 'Un contre dix'" }
+	}
+}
+
+# Neutral governments only (has_government = neutrality).
+# Armored divisions in the tradition of the Empire's heavy cavalry. Shares numbering with FRA_ARM_01.
+FRA_GRA_ARM_01 = 
+{
+	name = "Cuirassier Divisions"
+
+	for_countries = { FRA }
+
+	can_use = { has_government = neutrality }
+
+	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
+
+	link_numbering_with = { FRA_ARM_01 }
+
+	fallback_name = "%dème Division de Cuirassiers"
+
+	ordered =
+	{
+		# Généraux de la grosse cavalerie
+		1 = { "%dère Division de Cuirassiers 'Nansouty'" }
+		2 = { "%dème Division de Cuirassiers 'd'Hautpoul'" }
+		3 = { "%dème Division de Cuirassiers 'Kellermann'" }
+		4 = { "%dème Division de Cuirassiers 'Milhaud'" }
+		5 = { "%dème Division de Cuirassiers 'Saint-Sulpice'" }
+		6 = { "%dème Division de Cuirassiers 'Caulaincourt'" }
+		7 = { "%dème Division de Cuirassiers 'Latour-Maubourg'" }
+		8 = { "%dème Division de Cuirassiers 'Montbrun'" }
+		9 = { "%dème Division de Cuirassiers 'Exelmans'" }
+		10 = { "%dème Division de Cuirassiers 'Klein'" }
+		11 = { "%dème Division de Cuirassiers 'Walther'" }
+		12 = { "%dème Division de Cuirassiers 'Sahuc'" }
+		13 = { "%dème Division de Cuirassiers 'Delort'" }
+		14 = { "%dème Division de Cuirassiers 'Lhéritier'" }
+		15 = { "%dème Division de Cuirassiers 'Letort'" }
+		16 = { "%dème Division de Cuirassiers 'Bessières'" }
+		# Charges
+		17 = { "%dème Division de Cuirassiers 'Eylau'" }
+		18 = { "%dème Division de Cuirassiers 'Reichshoffen'" }
+		# Cavalerie lourde de la Garde
+		19 = { "Division de Cavalerie Lourde de la Garde" }
+		20 = { "Division des Grenadiers à Cheval" }
+		21 = { "Division des Dragons de l'Impératrice" }
+		22 = { "Division des Carabiniers" }
+	}
+}
+
+# Neutral governments only (has_government = neutrality).
+# The Guard's light cavalry and the Empire's light cavalry generals.
+FRA_GRA_CAV_01 = 
+{
+	name = "Imperial Cavalry Divisions"
+
+	for_countries = { FRA }
+
+	can_use = { has_government = neutrality }
+
+	division_types = { "cavalry" }
+
+	fallback_name = "%dème Division de Cavalerie Légère"
+
+	ordered =
+	{
+		# Cavalerie légère de la Garde
+		1 = { "Division de Cavalerie Légère de la Garde" }
+		2 = { "Division des Chasseurs à Cheval de la Garde" }
+		3 = { "Division des Chevau-Légers Polonais" }
+		4 = { "Division des Lanciers Rouges" }
+		5 = { "Division des Mamelouks de la Garde" }
+		6 = { "Division des Éclaireurs de la Garde" }
+		7 = { "Division des Gardes d'Honneur" }
+		8 = { "Division de la Gendarmerie d'Élite" }
+		# Généraux de la cavalerie légère
+		9 = { "%dème Division de Cavalerie Légère 'Lasalle'" }
+		10 = { "%dème Division de Cavalerie Légère 'Pajol'" }
+		11 = { "%dème Division de Cavalerie Légère 'Colbert'" }
+		12 = { "%dème Division de Cavalerie Légère 'Subervie'" }
+		13 = { "%dème Division de Cavalerie Légère 'Jacquinot'" }
+		14 = { "%dème Division de Cavalerie Légère 'Domon'" }
+		15 = { "%dème Division de Cavalerie Légère 'Piré'" }
+		16 = { "%dème Division de Cavalerie Légère 'Marulaz'" }
+		17 = { "%dème Division de Cavalerie Légère 'Curély'" }
+		18 = { "%dème Division de Cavalerie Légère 'Somosierra'" }
+	}
+}
+
+# Neutral governments only (has_government = neutrality).
+# Napoleon III's army of 1852-1870: the Garde Impériale of 1854, the expeditions and the victories of Crimea and Italy.
+FRA_SEC_EMP_01 = 
+{
+	name = "Second Empire Divisions"
+
+	for_countries = { FRA }
+
+	can_use = { has_government = neutrality }
+
+	division_types = { "infantry" }
+
+	fallback_name = "%dème Division de Voltigeurs de la Garde"
+
+	ordered =
+	{
+		# Garde Impériale et expéditions
+		1 = { "1ère Division d'Infanterie de la Garde" }
+		2 = { "2ème Division d'Infanterie de la Garde" }
+		3 = { "Division des Zouaves de la Garde" }
+		4 = { "Division de l'Armée d'Orient" }
+		5 = { "Division du Corps Expéditionnaire du Mexique" }
+		6 = { "Division de l'Expédition de Chine" }
+		# Victoires (1854-1863)
+		7 = { "%dème Division de Voltigeurs de la Garde 'Alma'" }
+		8 = { "%dème Division de Voltigeurs de la Garde 'Inkerman'" }
+		9 = { "%dème Division de Voltigeurs de la Garde 'Malakoff'" }
+		10 = { "%dème Division de Voltigeurs de la Garde 'Sébastopol'" }
+		11 = { "%dème Division de Voltigeurs de la Garde 'Tchernaïa'" }
+		12 = { "%dème Division de Voltigeurs de la Garde 'Kinburn'" }
+		13 = { "%dème Division de Voltigeurs de la Garde 'Bomarsund'" }
+		14 = { "%dème Division de Voltigeurs de la Garde 'Magenta'" }
+		15 = { "%dème Division de Voltigeurs de la Garde 'Solférino'" }
+		16 = { "%dème Division de Voltigeurs de la Garde 'Palestro'" }
+		17 = { "%dème Division de Voltigeurs de la Garde 'Palikao'" }
+		18 = { "%dème Division de Voltigeurs de la Garde 'Camerone'" }
+		# Maréchaux et généraux
+		19 = { "%dème Division de Voltigeurs de la Garde 'Pélissier'" }
+		20 = { "%dème Division de Voltigeurs de la Garde 'Canrobert'" }
+		21 = { "%dème Division de Voltigeurs de la Garde 'Bosquet'" }
+		22 = { "%dème Division de Voltigeurs de la Garde 'Niel'" }
+		23 = { "%dème Division de Voltigeurs de la Garde 'Forey'" }
+		24 = { "%dème Division de Voltigeurs de la Garde 'Randon'" }
+		25 = { "%dème Division de Voltigeurs de la Garde 'Margueritte'" }
+	}
+}
+
+# ===== Paris Commune (1871) =====
+
+# Communist governments only (has_government = communism).
+# The Garde Nationale Fédérée, organised in légions by arrondissement.
+FRA_COMMUNE_01 = 
+{
+	name = "Federated Legions"
+
+	for_countries = { FRA }
+
+	can_use = { has_government = communism }
+
+	division_types = { "infantry" "militia" }
+
+	fallback_name = "%dème Légion Fédérée"
+
+	ordered =
+	{
+		# Corps francs de la Commune
+		1 = { "%dère Légion Fédérée 'Vengeurs de Flourens'" }
+		2 = { "%dème Légion Fédérée 'Tirailleurs de la Marseillaise'" }
+		# Quartiers et forts de 1871
+		3 = { "%dème Légion Fédérée 'Belleville'" }
+		4 = { "%dème Légion Fédérée 'Ménilmontant'" }
+		5 = { "%dème Légion Fédérée 'Montmartre'" }
+		6 = { "%dème Légion Fédérée 'La Villette'" }
+		7 = { "%dème Légion Fédérée 'Butte-aux-Cailles'" }
+		8 = { "%dème Légion Fédérée 'Batignolles'" }
+		9 = { "%dème Légion Fédérée 'Charonne'" }
+		10 = { "%dème Légion Fédérée 'Buttes-Chaumont'" }
+		11 = { "%dème Légion Fédérée 'Fort d'Issy'" }
+		12 = { "%dème Légion Fédérée 'Fort de Vanves'" }
+		13 = { "%dème Légion Fédérée 'Fort de Montrouge'" }
+		14 = { "%dème Légion Fédérée 'Fort de Bicêtre'" }
+		15 = { "%dème Légion Fédérée 'Fort de Vincennes'" }
+		# Mémoire de la Commune
+		16 = { "%dème Légion Fédérée '18 Mars'" }
+		17 = { "%dème Légion Fédérée 'Semaine Sanglante'" }
+		18 = { "%dème Légion Fédérée 'Mur des Fédérés'" }
+		# Communes de province (1870-1871)
+		19 = { "%dème Légion Fédérée 'Commune de Lyon'" }
+		20 = { "%dème Légion Fédérée 'Commune de Marseille'" }
+		21 = { "%dème Légion Fédérée 'Commune de Narbonne'" }
+		22 = { "%dème Légion Fédérée 'Commune du Creusot'" }
+		23 = { "%dème Légion Fédérée 'Ferré'" }
+		24 = { "%dème Légion Fédérée 'Crémieux'" }
+		25 = { "%dème Légion Fédérée 'Digeon'" }
+	}
+}
+
+# Communist governments only (has_government = communism).
+# Communards of the Internationale and the workers' movement. Shares numbering with FRA_MOT_01.
+FRA_COMMUNE_MOT_01 = 
+{
+	name = "Commune Motorized Divisions"
+
+	for_countries = { FRA }
+
+	can_use = { has_government = communism }
+
+	division_types = { "motorized" "mechanized" }
+
+	link_numbering_with = { FRA_MOT_01 }
+
+	fallback_name = "%dème Division Motorisée de la Commune"
+
+	ordered =
+	{
+		# Communards
+		1 = { "%dère Division Motorisée de la Commune 'Varlin'" }
+		2 = { "%dème Division Motorisée de la Commune 'Frankel'" }
+		3 = { "%dème Division Motorisée de la Commune 'Louise Michel'" }
+		4 = { "%dème Division Motorisée de la Commune 'Dmitrieff'" }
+		5 = { "%dème Division Motorisée de la Commune 'Blanqui'" }
+		6 = { "%dème Division Motorisée de la Commune 'Eugène Pottier'" }
+		7 = { "%dème Division Motorisée de la Commune 'Temps des Cerises'" }
+		# Mouvement ouvrier
+		8 = { "%dème Division Motorisée de la Commune 'Paul Lafargue'" }
+		9 = { "%dème Division Motorisée de la Commune 'Henri Barbusse'" }
+		10 = { "%dème Division Motorisée de la Commune 'Vaillant-Couturier'" }
+		11 = { "%dème Division Motorisée de la Commune 'Canuts'" }
+		12 = { "%dème Division Motorisée de la Commune 'Croix-Rousse'" }
+		13 = { "%dème Division Motorisée de la Commune 'Fourmies'" }
+		14 = { "%dème Division Motorisée de la Commune 'Premier Mai'" }
+	}
+}
+
+# Communist governments only (has_government = communism).
+# The Commune's generals and delegates and its anthems. Shares numbering with FRA_ARM_01.
+FRA_COMMUNE_ARM_01 = 
+{
+	name = "Commune Armored Divisions"
+
+	for_countries = { FRA }
+
+	can_use = { has_government = communism }
+
+	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
+
+	link_numbering_with = { FRA_ARM_01 }
+
+	fallback_name = "%dème Division Blindée de la Commune"
+
+	ordered =
+	{
+		# Généraux et délégués de la Commune
+		1 = { "%dère Division Blindée de la Commune 'Dombrowski'" }
+		2 = { "%dème Division Blindée de la Commune 'Wróblewski'" }
+		3 = { "%dème Division Blindée de la Commune 'Eudes'" }
+		4 = { "%dème Division Blindée de la Commune 'Duval'" }
+		5 = { "%dème Division Blindée de la Commune 'La Cécilia'" }
+		6 = { "%dème Division Blindée de la Commune 'Delescluze'" }
+		7 = { "%dème Division Blindée de la Commune 'Ranvier'" }
+		8 = { "%dème Division Blindée de la Commune 'Malon'" }
+		# Chants
+		9 = { "%dème Division Blindée de la Commune 'Internationale'" }
+		10 = { "%dème Division Blindée de la Commune 'Drapeau Rouge'" }
 	}
 }

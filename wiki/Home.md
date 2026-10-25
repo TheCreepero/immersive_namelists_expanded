@@ -16,7 +16,7 @@
 | [Germany (Additional)](Germany-Additional) | `GER` | 25 | `zz_INEX_GER_ADDITIONAL_names_divisions.txt` |
 | [Soviet Union](Soviet-Union) | `SOV` | 30 | `zz_INEX_SOV_names_divisions.txt` |
 | [United Kingdom](United-Kingdom) | `ENG` | 30 | `zz_INEX_ENG_names_divisions.txt` |
-| [France](France) | `FRA` | 22 | `zz_INEX_FRA_names_divisions.txt` |
+| [France](France) | `FRA` | 36 | `zz_INEX_FRA_names_divisions.txt` |
 | [Italy](Italy) | `ITA` | 43 | `zz_INEX_ITA_names_divisions.txt` |
 | [United States](United-States) | `USA` | 36 | `zz_INEX_USA_names_divisions.txt` |
 | [Poland](Poland) | `POL` | 39 | `zz_INEX_POL_names_divisions.txt` |
