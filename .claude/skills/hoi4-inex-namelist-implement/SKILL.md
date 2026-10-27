@@ -17,7 +17,7 @@ Carries out one plan file written by `hoi4-inex-namelist-authoring` or `hoi4-ine
 - **The namelist file changes only through the `build.ps1` commands the plan gives**, run by the implementer.
 - **Read the plan only up to `## Edit batch`.** The batch is applied by the script from the file.
 - `build.ps1`, the tests, the skill files, `AGENTS.md`, `CLAUDE.md`, `GEMINI.md` and `docs/inex-agent-guide.md` are not edited.
-- Commit and wiki push are outward-facing: they run only in §5, on the user's word.
+- The commit waits for the user's word: it and the wiki push run only in §5.
 
 ## 1. Find the plan
 1. Take the plan path from the request. With no path, `Grep -n '^Status:'` across `docs/plans/` for `READY` or `IN PROGRESS`; with more than one or none, ask the user which plan to run.

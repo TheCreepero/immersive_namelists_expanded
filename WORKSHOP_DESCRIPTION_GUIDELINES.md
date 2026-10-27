@@ -11,7 +11,7 @@ This document serves as an instruction and reference guide for maintaining and u
    - Steam Workshop descriptions have a strict character limit (~17,000 characters raw BBCode).
    - Keep bullet points concise and avoid lengthy narrative blocks.
    - Do NOT include the old author quote block (`[quote=author]...[/quote]`), as it consumed too many characters and was stripped to keep the description under the limit.
-   - Monitor the overall character count of the BBCode text when adding new nations.
+   - Monitor the overall character count of the BBCode text when adding new nations: each nation block has a budget of 450 characters (Structure, item 3).
 3. **Writing Style & Tone**:
    - Keep the tone concise, informative, direct, and enthusiastic, matching the author's original voice.
    - Use straightforward bullet points and structured section headings.
@@ -47,7 +47,7 @@ This document serves as an instruction and reference guide for maintaining and u
 3. **[h1]Included nations:[/h1]**:
    - Disclaimer noting that this is not an exhaustive list, just highlights/examples.
    - Grouped by nation in bold (`[b]Nation[/b]`).
-   - Highlighted division categories with brief descriptions or in-game examples in italics (maintain 2-3 concise bullets per nation to conserve character limit).
+   - Per-nation form (set 2026-10-27, when the description had reached 14,099 characters with 19 nations): `[b]Nation[/b]` and two bullets, at most 450 characters for the whole block, with 2-3 in-game examples in italics. The first bullet holds the regular and specialist forces, the second the government-gated suites. Name the lists, not every group; the wiki page carries the detail. `build.ps1 -Audit` and `-Check` warn about a block over 450 characters and a description over 16,000.
 
 ---
 
@@ -102,99 +102,80 @@ If you have any ideas for namelists, please leave them in the discussion thread!
 This is not a complete list of included namelists! Just some examples.
 
 [b]United States[/b]
-- Regular Army & Mobile: 1st–106th Infantry, Regimental Combat Teams ([i]442nd 'Go for Broke'[/i], [i]27th 'Wolfhounds'[/i]), Armored divisions ([i]1st 'Old Ironsides'[/i], [i]2nd 'Hell on Wheels'[/i]), Armored Cavalry Regiments ([i]11th 'Blackhorse'[/i]), Separate Tank and Tank Destroyer Battalions ([i]761st 'Black Panthers'[/i], [i]705th (Bastogne)[/i]), Field Artillery ([i]141st 'Washington Artillery'[/i]), and state National Guard divisions
-- Airborne, Marine & Special Forces: Airborne divisions ([i]82nd 'All-American'[/i], [i]101st 'Screaming Eagles'[/i]), 1st–6th Marines, Marine Raiders ([i]1st 'Edson's'[/i]), Amtrac Battalions ([i]2nd (Tarawa)[/i]), Rangers ([i]1st FSSF 'The Devil's Brigade'[/i], [i]Merrill's Marauders[/i]), Mountain ([i]10th 'Climb to Glory'[/i]), Harbor Defense Commands, Overseas Garrisons ([i]26th Cavalry (Philippine Scouts)[/i]) and the 1946–52 Constabulary
-- Territorial & Ideology Suites: 38 WWII State Defense Forces; Union Divisions ([i]'Iron Brigade'[/i]) and Conservation Corps (democratic); Volunteer Legions ([i]'Lafayette Escadrille'[/i]) and Color Plan forces ([i]Crimson Force (Canada)[/i]) (democratic or non-aligned); Continental Army ([i]'Pennsylvania Line'[/i]) and Federal Emergency Forces (non-aligned); Workers' Red Guards & Lincoln Brigades (communist); Silver Legions & Confederate Divisions (fascist)
+- Infantry, Armored and Airborne divisions with their nicknames ([i]2nd 'Hell on Wheels'[/i], [i]101st 'Screaming Eagles'[/i]), RCTs, Armored Cavalry, tank and tank destroyer battalions, Marines and Raiders, Rangers, Mountain, National Guard, harbor defenses and the Constabulary
+- 38 State Defense Forces; ideology suites from Union and Continental Army to Lincoln Brigades and Silver Legions ([i]'Iron Brigade'[/i])
 
 [b]Germany[/b]
-- Plain and Named Heer lists in historical raising order, with nicknames and home garrisons ([i]7. Panzer-Division 'Gespenster'[/i], [i]97. Jäger-Division 'Spielhahnjäger'[/i])
-- Coastal defense and Grenzwacht border divisions ([i]716. (bodenständige) Infanterie-Division[/i]), Festungen, Kampfgruppen, Volksgrenadier, Luftwaffe field & Flak divisions, heavy battalions, Panzer, infantry and Sturmgeschütz brigades, and penal units ([i]Afrika-Division 999[/i])
-- Ideology suites: Waffen-SS, SA & Volkssturm (fascist), Imperial Guard, Jäger, A7V Kampfwagen divisions, Sturm-Bataillone, Reserve & Landwehr divisions, Freikorps ([i]5. Kampfwagen-Division 'Mephisto'[/i]), Reichswehr, Volkswehr & Reichsbanner, and Red Army, Workers', Red Panzer & Red Front
+- Plain and Named Heer lists in raising order with nicknames ([i]7. Panzer-Division 'Gespenster'[/i]), Waffen-SS, coastal and border divisions, Festungen, Kampfgruppen, Volksgrenadier, Luftwaffe field and Flak, heavy battalions and penal units
+- Imperial Guard and Kampfwagen divisions ([i]5. Kampfwagen-Division 'Mephisto'[/i]), Freikorps, Reichswehr and Reichsbanner, SA and Volkssturm, and Red Army lists
 
 [b]Sweden[/b]
-- Plain and Named Roman-numbered Arméfördelningar, plus motorized, mechanized and armored divisions ([i]II. Arméfördelningen 'Jämtlands'[/i], [i]Pansarfördelningen 'Skaraborgs pansarregemente'[/i])
-- Provincial Infanteribrigader ([i]Gula brigaden[/i]), Pansar-, Cykel- and Kavalleribrigader, Fältjägare, Kustjägare and Fallskärmsjägare divisions
-- Ideology suites: Home Guard, Landstorm and Royal Guards (democratic and neutral), Carolean Guards, Stormtroopers & Fascist Legions, and communist Red Guards
+- Plain and Named Arméfördelningar and mobile divisions ([i]II. Arméfördelningen 'Jämtlands'[/i]), provincial brigades ([i]Gula brigaden[/i]), Fältjägare, Kustjägare and Fallskärmsjägare
+- Home Guard, Landstorm and Royal Guards; Carolean Guards and Stormtroopers; communist Red Guards
 
 [b]Japan[/b]
-- Plain and Named infantry, motorized and mechanized divisions with wartime tsūshōgō ([i]Dai-1 Shidan 'Tama'[/i], [i]Dai-7 Shidan 'Kuma'[/i]), Sensha armored divisions ([i]Sensha Dai-1 Shidan 'Taku'[/i]), and Cavalry Group lineages
-- Teishin airborne, Special Naval Landing Forces ([i]Yokosuka Dai-1 Tokubetsu Rikusentai[/i]), Konoe Guard, Kenpeitai, border and fortress garrisons, and prefectural Kokumin Giyū Sentōtai
-- Ideology suites: Kokutai Divisions & Yokusan Corps (fascist), Jieitai-style Defense Force (democratic), and Red Guards & People's Army (communist)
+- Plain and Named Shidan with wartime tsūshōgō ([i]Dai-7 Shidan 'Kuma'[/i]), Sensha armored divisions, cavalry, Teishin airborne, SNLF marines ([i]Yokosuka Dai-1 Tokubetsu Rikusentai[/i]), Konoe Guard and Kenpeitai
+- Kokutai and Yokusan (fascist), Jieitai-style Defense Force (democratic), Red Guards and People's Army (communist)
 
 [b]Brazil[/b]
-- Plain and Named infantry, motorized, mechanized and armored divisions with Army patrons ([i]1ª Divisão de Infantaria "Duque de Caxias"[/i]), plus Cavalry, Mechanized Cavalry, Paraquedista, Fuzileiros Navais, Mountain, and Field Artillery regiments ([i]3º RAC "Regimento Mallet"[/i])
-- Caçadores light infantry battalions ([i]1º BC "Petrópolis"[/i]), Riverine battalions ([i]1º BtlOpRib "Amazonas"[/i]), Forças Públicas, Guarda Nacional, Presidential Guard, frontier and jungle divisions, coastal artillery, and FEB Expeditionary divisions
-- Ideology suites: Integralist Divisions & Militia (fascist), Red Guards & People's Army (communist), 1932 Constitutionalist (democratic), and Imperial Guard & Voluntários da Pátria (neutrality)
+- Plain and Named divisions with Army patrons ([i]1ª Divisão de Infantaria "Duque de Caxias"[/i]), Caçadores ([i]1º BC "Petrópolis"[/i]), riverine battalions, Paraquedistas, Fuzileiros Navais, Forças Públicas and the FEB
+- Integralist, Red Guards, 1932 Constitutionalist, and Imperial Guard and Voluntários da Pátria suites
 
 [b]Greece[/b]
-- Plain and Named infantry, motorized, mechanized and armored Merarchíes with regional titles ([i]1i Merarchía Thessalías[/i], [i]8i Merarchía Ipeírou[/i]), plus Cavalry, Mountain, Evzone ([i]2/39 Evzonikó Sýntagma[/i]), Raider, Paratrooper and Marine lists
-- Island commands, Metaxas Line fortress sectors ([i]Tmíma Ochýrosis Roupel[/i]), Gendarmerie, Asia Minor Army divisions, and Middle East and Korea expeditionary brigades
-- Ideology suites: Royal Guard & Fourth of August (neutrality), EON youth (fascist), ELAS & Democratic Army (communist), and National Defence & Republican volunteers (democratic)
+- Plain and Named Merarchíes with regional titles ([i]8i Merarchía Ipeírou[/i]), Evzones ([i]2/39 Evzonikó Sýntagma[/i]), Raiders, Metaxas Line forts, island commands, Gendarmerie and the Asia Minor Army
+- Royal Guard and Fourth of August, EON, ELAS and Democratic Army, and Republican volunteers
 
 [b]Romania[/b]
-- Plain and Named infantry, motorized, mechanized and armored divisions with regional and royal honorifics ([i]Divizia 6 Infanterie 'Mărășești'[/i], [i]Divizia 1 Blindată 'România Mare'[/i]), plus Cavalry, Mountain brigades and divisions, Marine and Paratrooper lists
-- Gendarmerie legions, Border Guard brigades, fortified sectors ([i]Sectorul Fortificat 3 'Galați'[/i]), and garrison, training and reserve divisions
-- Ideology suites: Royal Guard & Straja Țării (neutrality), Iron Guard (fascist), Tudor Vladimirescu & Patriotic Guards (communist), and Volunteer & National Guard (democratic)
+- Plain and Named divisions with regional and royal honours ([i]Divizia 6 Infanterie 'Mărășești'[/i]), cavalry, mountain, marine and paratrooper lists, Gendarmerie, Border Guard and fortified sectors ([i]Sectorul Fortificat 3 'Galați'[/i])
+- Royal Guard and Straja Țării, Iron Guard, Tudor Vladimirescu and Patriotic Guards, and National Guard
 
 [b]Lithuania[/b]
-- Plain & Named infantry, motorized, mechanized and armored divisions with regional, river, battle and ruler identities ([i]3-ioji pėstininkų Žemaitijos divizija[/i], [i]1-oji tankų divizija 'Gediminas'[/i]), and the interwar regiments with their Grand Duke patrons ([i]5-asis pėstininkų Didžiojo Lietuvos kunigaikščio Kęstučio pulkas[/i])
-- Hussar, uhlan and dragoon regiments, Riflemen's Union rinktinės ([i]XX Klaipėdos rinktinė[/i]), garrisons and border guards, marines, paratroopers and mountain troops
-- Ideology suites: Royal Guard (neutrality), Iron Wolf (fascist), Red Rifle divisions (communist) and Freedom Fighters (democratic)
+- Plain and Named divisions with regional and ruler identities ([i]1-oji tankų divizija 'Gediminas'[/i]), interwar regiments with their Grand Duke patrons, hussars and uhlans, Riflemen's Union ([i]XX Klaipėdos rinktinė[/i])
+- Royal Guard, Iron Wolf, Red Rifle divisions and Freedom Fighters
 
 [b]Estonia[/b]
-- Plain & Named infantry, mobile and armored divisions with ancient-county, battle and 1919 armored-car identities ([i]1. jalaväediviis 'Virumaa'[/i], [i]1. soomusdiviis 'Kapten Irw'[/i]), and the War of Independence regiments and partisan battalions ([i]Kuperjanovi partisanide pataljon[/i])
-- Cavalry regiments, Kaitseliit malevad ([i]Kaitseliidu Sakalamaa malev[/i]), coastal commands and island marines, garrisons and border guards, paratroopers and mountain troops
-- Ideology suites: Ancient Freedom (neutrality), Veterans' League (fascist), Red Rifle divisions (communist) and Freedom Fighters (democratic)
+- Plain and Named divisions with ancient-county identities ([i]1. jalaväediviis 'Virumaa'[/i]), War of Independence regiments and partisans ([i]Kuperjanovi partisanide pataljon[/i]), Kaitseliit malevad and coastal commands
+- Ancient Freedom, Veterans' League, Red Rifle divisions and Freedom Fighters
 
 [b]Latvia[/b]
-- Plain & Named infantry and armored divisions with regional and armoured-car identities ([i]1. Kurzemes kājnieku divīzija[/i], [i]1. bruņotā divīzija 'Lāčplēsis'[/i]), the twelve interwar regiments and the Latvian Riflemen ([i]1. Daugavgrīvas latviešu strēlnieku pulks[/i])
-- Aizsargi county regiments, War of Independence battalions, cavalry squadrons, garrisons and border guards, marines, paratroopers and mountain troops
-- Ideology suites: Heritage (neutrality), Thunder Cross (fascist), Red Rifle divisions (communist) and National Partisans (democratic)
+- Plain and Named divisions with regional identities ([i]1. Kurzemes kājnieku divīzija[/i]), the interwar regiments and Latvian Riflemen ([i]1. Daugavgrīvas latviešu strēlnieku pulks[/i]), Aizsargi and cavalry squadrons
+- Heritage, Thunder Cross, Red Rifle divisions and National Partisans
 
 [b]France[/b]
-- 1940 order of battle: [i]11ème Division d'Infanterie 'de Fer'[/i], DLM, DCR, Maginot fortress, Alpine and coastal defence divisions ([i]Division de Défense du Littoral de Dunkerque[/i]), island and overseas garrisons, colonial troops and the Army of Africa
-- Democratic France: Free French ([i]1ère Division Française Libre[/i]), National Guard, the volunteers of 1792 and the Republic's demi-brigades ([i]1ère Demi-Brigade de Bataille 'Fleurus'[/i]); Bonapartist France: Imperial Guard, Grande Armée and Second Empire ([i]Division de la Vieille Garde[/i])
-- Communist France: sans-culottes, the Commune's legions with motorized and armored lists ([i]1ère Légion Fédérée 'Vengeurs de Flourens'[/i]) and the Francs-Tireurs et Partisans; plus the Milice, Vichy legions and Armistice Army
+- The 1940 order of battle ([i]11ème Division d'Infanterie 'de Fer'[/i]), DLM, DCR, Maginot, Alpine and coastal divisions, colonial troops and the Army of Africa
+- Free French, National Guard and the Republic's demi-brigades; Imperial Guard and Grande Armée ([i]Division de la Vieille Garde[/i]); the Commune, FTP, Milice and Armistice Army
 
 [b]United Kingdom[/b]
-- Regular & Territorial divisions on authentic titles, in plain and nicknamed lists ([i]7th Armoured Division 'Desert Rats'[/i], [i]51st (Highland) Infantry Division[/i], [i]3rd 'Iron Division'[/i], [i]Guards Armoured[/i])
-- Specialist & defensive forces: County Home Guard ([i]Upper Thames Patrol[/i]), Anti-Aircraft Command, 10 anti-invasion county divisions, [i]1st Airborne 'Red Devils'[/i], and Royal Marine Commandos
-- Colonial and ideology suites: King's African Rifles, RWAFF, [i]Arab Legion[/i], Blackshirt Brigades, Legion of St. George, and communist Workers' Defense Brigades
+- Regular and Territorial divisions on authentic titles, plain and nicknamed ([i]7th Armoured Division 'Desert Rats'[/i], [i]51st (Highland) Infantry Division[/i]), Airborne, Commandos and Anti-Aircraft Command
+- County Home Guard, King's African Rifles and RWAFF, Blackshirt Brigades and Workers' Defense Brigades
 
 [b]Finland[/b]
-- Numbered divisions, brigades & wartime regiments ([i]12. Divisioona 'Kollaa'[/i], [i]20. Prikaati 'Viipuri'[/i], [i]JR 7 'Tyrjän rykmentti'[/i]), separate battalions and Suojeluskunta districts
-- Frontier Jaegers, Coastal brigades ([i]Rannikkotykistörykmentti 1[/i]), Sissi rangers, [i]Panssaridivisioona 'Lagus'[/i], and Swedish Volunteers (SFK)
-- Ideology suites: Blackshirt legions ([i]Mustapaitojen Keskuslegioona[/i]), [i]Heimopataljoona 3[/i], 1918 Red Guards, [i]Suomen Kansanarmeija[/i], and Royal Guards ([i]Suomen Kaarti[/i])
+- Numbered divisions, brigades and wartime regiments ([i]12. Divisioona 'Kollaa'[/i], [i]JR 7 'Tyrjän rykmentti'[/i]), separate battalions, Suojeluskunta, frontier and coastal brigades, Sissi rangers and the SFK
+- Blackshirt legions, Heimojoukot, 1918 Red Guards, People's Army and Royal Guards ([i]Suomen Kaarti[/i])
 
 [b]Poland[/b]
-- Regular forces on 1939 numbers with historical regional & honorary titles ([i]1 Dywizja Piechoty Legionów Józefa Piłsudskiego[/i], [i]1 Dywizja Pancerna[/i], [i]21 Dywizja Piechoty Górskiej[/i], [i]1 Samodzielna Brygada Spadochronowa[/i])
-- Second Republic territorial defence, fortresses, border protection, cavalry and uprising regiments ([i]Krakowska Brygada Kawalerii[/i], [i]Brygada KOP 'Grodno'[/i], [i]Rejon Umocniony Hel[/i], [i]1 Pułk Strzelców Wielkopolskich[/i])
-- Resistance, exile & ideological suites: Armia Krajowa ([i]27 Wołyńska Dywizja Piechoty AK[/i]), PSZ in the West ([i]3 Dywizja Strzelców Karpackich[/i]), Communist LWP ([i]1 Warszawska Dywizja Piechoty im. T. Kościuszki[/i]), Nationalist NSZ ([i]Brygada Świętokrzyska[/i]), a monarchist Royal Guard ([i]Gwardia Piesza Koronna[/i]) and volunteer corps from the Legions to the Dąbrowszczacy
+- 1939 divisions with regional and honorary titles ([i]1 Dywizja Piechoty Legionów Józefa Piłsudskiego[/i]), Maczek's armour, KOP Border Guard, Obrona Narodowa, fortresses and uprising regiments
+- Armia Krajowa ([i]27 Wołyńska Dywizja Piechoty AK[/i]), PSZ in the West, LWP, NSZ, Royal Guard and volunteer corps
 
 [b]Italy[/b]
-- Regio Esercito divisions on their real numbers, shared across infantry, motorized and armored lists ([i]9a Divisione 'Pasubio'[/i], [i]132a Divisione Corazzata 'Ariete'[/i])
-- Government-gated lists: Blackshirt legions and specialist militias ([i]XLII Battaglione d'Assalto CC.NN. 'M'[/i]), the Social Republic and Black Brigades ([i]8a Brigata Nera 'Aldo Resega'[/i]), Royal Army ([i]Gruppo di Combattimento 'Cremona'[/i]), Republican volunteer legions (democratic), Communist Red Guards, and Garibaldi, GL, Matteotti, Autonome and Fiamme Verdi partisans
-- Bersaglieri, Arditi, Carabinieri, Guardia di Finanza, Frontier Guard sectors ([i]XII Settore di Copertura 'Valtellina'[/i]), Eritrean and Libyan colonial battalions ([i]IV Battaglione Eritreo 'Toselli'[/i]), and fascist-only Fiume and Albanian irredentist legions with Legione Romana
+- Regio Esercito divisions on their real numbers ([i]132a Divisione Corazzata 'Ariete'[/i]), Bersaglieri, Arditi, Carabinieri, Guardia di Finanza, Frontier Guard and colonial battalions
+- Blackshirts and the RSI ([i]8a Brigata Nera 'Aldo Resega'[/i]), Royal Army, Republican volunteers, Red Guards and partisan brigades
 
 [b]USSR[/b]
-- Red Army rifle divisions on their historical numbers, each with the honour it held ([i]1-ya 'Moskovskaya Proletarskaya'[/i], [i]25-ya 'Chapayevskaya'[/i]), Guards Rifles ([i]8-ya 'Panfilovskaya'[/i]), national divisions ([i]16-ya 'Klaypedskaya' Litovskaya[/i]), Opolcheniye and Stalin Line fortified regions
-- Armor & Mechanized Corps with WWII battle honors: plain and named tank corps and the tank divisions of 1945 ([i]9-ya 'Bobruysko-Berlinskaya'[/i]), Guards Tank Corps ([i]4-y 'Kantemirovskiy'[/i]), all 9 Guards Mechanized Corps ([i]1-y 'Venskiy'[/i]), Guards Airborne, Breakthrough Artillery, naval infantry brigades ([i]63-ya 'Kirkenesskaya'[/i]), Cossack cavalry and penal units
-- Government-gated suites: NKVD troops and partisans ([i]1-ya 'imeni Kovpaka' Ukrainskaya Partizanskaya Diviziya[/i]) for communists, the Imperial Guard ([i]'Preobrazhenskaya'[/i]) for monarchists, White volunteer divisions ([i]'Kornilovskaya' Udarnaya Diviziya[/i]) for fascists, and republican shock divisions for democrats
+- Rifle and Guards divisions on historical numbers with their honours ([i]25-ya 'Chapayevskaya'[/i]), national divisions, Opolcheniye, fortified regions, tank and mechanized corps ([i]4-y 'Kantemirovskiy'[/i]), naval brigades and Cossacks
+- NKVD and partisans, Imperial Guard, White volunteers and republican shock divisions
 
 [b]Mexico[/b]
-- Cristero National Guard & cavalry ([i]Los Altos[/i], [i]El Catorce[/i])
-- Sinarquistas, Gold Shirts, Imperial Guard, CTM & Agrarian worker militias
-- Regular army, heroes ([i]Zaragoza[/i]), mountain rangers & naval infantry
+- Regular army with its heroes ([i]Zaragoza[/i]), mountain rangers and naval infantry, and Cristero National Guard ([i]Los Altos[/i])
+- Sinarquistas, Gold Shirts, Imperial Guard, CTM and Agrarian worker militias
 
 [b]Iran[/b]
-- Garrison-city divisions ([i]Lashkar-e 15-e Piyadeh-ye Shiraz[/i]) and Shahnameh-named armor ([i]Rostam[/i], [i]Kaveh[/i])
-- Imperial & Immortal Guard ([i]Gard-e Javidan[/i]) and Persian Cossack atriads ([i]Hamadan[/i])
-- Tribal levies ([i]Bakhtiari[/i], [i]Qashqai[/i]), camel corps, gendarmerie, and Gulf marines
+- Garrison-city divisions ([i]Lashkar-e 15-e Piyadeh-ye Shiraz[/i]), Shahnameh-named armor ([i]Rostam[/i]), Imperial and Immortal Guard, Persian Cossack atriads
+- Tribal levies, camel corps, gendarmerie and Gulf marines
 
 [b]Spain[/b]
-- Both armies of the Civil War: People's Army divisions and Mixed Brigades ([i]11.ª División 'Líster'[/i], [i]XI Brigada Internacional 'Thälmann'[/i]), Nationalist divisions ([i]4.ª División de Navarra[/i]) and the 1936 regiments ([i]Regimiento de Infantería 'Wad-Ras' n.º 1[/i])
-- Army of Africa and Legion ([i]IV Bandera de La Legión 'Cristo de Lepanto'[/i]), Guardia Civil, Assault Guards, Carabineros, mountain, marine and paratrooper lists
-- Ideology suites: Requeté tercios ([i]Tercio de Montejurra[/i]) and royal regiments, Falange and División Azul, communist, POUM and anarchist militias ([i]Columna Durruti[/i]), Basque and Catalan forces
+- People's Army divisions and Mixed Brigades ([i]XI Brigada Internacional 'Thälmann'[/i]), Nationalist divisions, the 1936 regiments, Army of Africa and Legion, Guardia Civil and Assault Guards
+- Requeté tercios, Falange and División Azul, communist, POUM and anarchist militias ([i]Columna Durruti[/i]), Basque and Catalan forces
 
 If you enjoy the mod, please give it a thumbs up and favorite!
 ```

@@ -13,6 +13,7 @@ BeforeDiscovery {
         @{ Name = 'a redirect into the namelist folder'; Tool = 'Bash'; ToolInput = @{ command = 'cat scratch/new.txt > common/units/names_divisions/zz_INEX_TST_names_divisions.txt' }; Reason = 'shell write' }
         @{ Name = 'WriteAllText on a namelist file'; Tool = 'PowerShell'; ToolInput = @{ command = '[System.IO.File]::WriteAllText("$root\common\units\names_divisions\zz_INEX_TST_names_divisions.txt", $text)' }; Reason = 'shell write' }
         @{ Name = 'a Copy-Item into the namelist folder after a harmless command'; Tool = 'PowerShell'; ToolInput = @{ command = 'git status; Copy-Item scratch\x.txt common\units\names_divisions\zz_INEX_TST_names_divisions.txt' }; Reason = 'shell write' }
+        @{ Name = 'a Remove-Item of a namelist file by its absolute path'; Tool = 'PowerShell'; ToolInput = @{ command = 'Remove-Item "<repo>\common\units\names_divisions\zz_INEX_TST_names_divisions.txt"' }; Reason = 'shell write' }
     )
     $script:AllowCases = @(
         @{ Name = 'Edit of a plan'; Tool = 'Edit'; ToolInput = @{ file_path = 'docs\plans\2026-10-25-testland-audit.md' } }
@@ -26,6 +27,8 @@ BeforeDiscovery {
         @{ Name = 'a Read of a namelist file'; Tool = 'Read'; ToolInput = @{ file_path = 'common\units\names_divisions\zz_INEX_TST_names_divisions.txt' } }
         @{ Name = 'git mv of a plan beside git add of a namelist file'; Tool = 'PowerShell'; ToolInput = @{ command = 'git mv docs/plans/a.md docs/plans/archive/; git add common/units/names_divisions/zz_INEX_TST_names_divisions.txt' } }
         @{ Name = 'git add of a namelist file'; Tool = 'Bash'; ToolInput = @{ command = 'git add -- common/units/names_divisions/zz_INEX_TST_names_divisions.txt' } }
+        @{ Name = 'a Remove-Item in a rehearsal export outside the repository'; Tool = 'PowerShell'; ToolInput = @{ command = 'Remove-Item C:\Users\x\scratchpad\rehearsal\common\units\names_divisions\zz_INEX_HUN_names_divisions.txt' } }
+        @{ Name = 'an rm in a rehearsal export outside the repository, Git Bash path'; Tool = 'Bash'; ToolInput = @{ command = 'rm -f "/c/Users/x/scratchpad/rehearsal/common/units/names_divisions/zz_INEX_HUN_names_divisions.txt"' } }
     )
 }
 
@@ -44,6 +47,10 @@ Describe 'Protect-ProjectFiles hook' {
 
             if ($ToolInput.ContainsKey('file_path') -and -not [System.IO.Path]::IsPathRooted($ToolInput.file_path)) {
                 $ToolInput = @{ file_path = (Join-Path $script:FakeRepo $ToolInput.file_path) }
+            }
+            # <repo> in a command stands for the repository's absolute path
+            if ($ToolInput.ContainsKey('command')) {
+                $ToolInput = @{ command = $ToolInput.command.Replace('<repo>', $script:FakeRepo) }
             }
             $eventJson = ConvertTo-Json -Compress -Depth 5 -InputObject @{
                 hook_event_name = 'PreToolUse'
@@ -218,10 +225,17 @@ Describe 'Hook registration in .claude/settings.json' {
         }
     }
 
-    It 'asks before the outward-facing commands' {
+    It 'asks before the Steam Workshop commands only' {
         $ask = @($script:Settings.permissions.ask)
-        foreach ($command in '-PublishSteam', '-Deploy', '-DevLink', 'push-wiki.ps1', 'git push') {
-            @($ask | Where-Object { $_ -like "*$command*" }).Count | Should -BeGreaterThan 0 -Because "$command is outward-facing and runs on the user's word"
+        $allow = @($script:Settings.permissions.allow)
+        foreach ($toolName in 'Bash', 'PowerShell') {
+            foreach ($command in '-PublishSteam', '-InstallSteamCmd', 'steamcmd') {
+                @($ask | Where-Object { $_ -like "$toolName(*$command*" }).Count | Should -BeGreaterThan 0 -Because "$command reaches the Workshop and runs on the user's word"
+            }
+            foreach ($command in '-Deploy', '-DevLink', '-Clean', 'push-wiki.ps1', 'git push') {
+                @($ask | Where-Object { $_ -like "*$command*" }).Count | Should -Be 0 -Because "$command does not wait for the user's word"
+                @($allow | Where-Object { $_ -like "$toolName(*$command*" }).Count | Should -BeGreaterThan 0 -Because "$command runs without a prompt from the $toolName tool"
+            }
         }
     }
 

@@ -42,11 +42,23 @@ try {
         if (-not $command) { exit 0 }
         if ($command -notmatch 'names_divisions') { exit 0 }
         $writePattern = 'Set-Content|Add-Content|Out-File|WriteAllText|WriteAllLines|WriteAllBytes|sed\s+-i|Copy-Item|Move-Item|Remove-Item|New-Item|\bcp\s|\bmv\s|\brm\s|\btee\s|>\s*"?[^\s"]*names_divisions'
+        # A path in the repository: relative, built from a variable ("$root\common\..."), or absolute under the root.
+        # An absolute path elsewhere (a rehearsal export in the scratchpad) is not this mod's file.
+        $inRepo = {
+            param($token)
+            $p = $token.Trim('"', "'")
+            if ($p -match '^/([A-Za-z])/(.*)$') { $p = "$($matches[1]):\$($matches[2])" }
+            if ($p -notmatch '^([A-Za-z]:[\\/]|\\\\|/)') { return $true }
+            $full = $p.Replace('/', '\')
+            return $full.StartsWith($repoRootPath + '\', [System.StringComparison]::OrdinalIgnoreCase)
+        }
         # One sub-command at a time, so a write elsewhere in the line (git mv of a plan) does not count against a
         # namelist path in another sub-command. git commands stage, move or restore through the index, not an editor.
         foreach ($segment in ($command -split '&&|\|\||[;|\r\n]')) {
             $segment = $segment.Trim()
             if ($segment -notmatch 'names_divisions' -or $segment -match '^git\b') { continue }
+            $paths = @([regex]::Matches($segment, '[^\s<>|;&]*names_divisions[^\s<>|;&]*') | ForEach-Object { $_.Value })
+            if (@($paths | Where-Object { & $inRepo $_ }).Count -eq 0) { continue }
             if ($segment -match $writePattern) {
                 [Console]::Error.WriteLine('The command writes into common/units/names_divisions/: a namelist file changes only through build.ps1 -EditNames (-Batch <plan> after -DryRun), never through a shell write, which also corrupts diacritics. See AGENTS.md.')
                 exit 2

@@ -20,7 +20,7 @@ BeforeAll {
         . ([ScriptBlock]::Create($typesMatch.Value))
     }
 
-    foreach ($fn in 'Get-NamePatternKey', 'Test-FallbackStub', 'Get-NamelistAuditData', 'Get-OrderedEntryStats', 'Compare-NamelistAuditData', 'Get-GitFileText', 'Get-NameVariantKey', 'Resolve-GroupTag', 'Get-GroupSections', 'Format-EntryList', 'Get-OrphanHeaderLines', 'Set-NamelistGroupComment', 'Set-NamelistHeader', 'Edit-NamelistGroupText', 'Get-NamelistGroupEnd', 'Add-NamelistGroupText', 'ConvertTo-NamelistEditOp', 'Invoke-NamelistEditOps', 'Get-PlanBatchBlocks', 'Get-PlanReadinessWarnings', 'Read-NamelistEditBatch', 'Get-WorkshopDocStats', 'Get-VanillaOverlap', 'Find-WikiLinkMismatches', 'Compare-NamelistGroupSets', 'Format-NamelistDiff', 'Get-CountryName', 'Format-PlanChangeTable', 'Set-PlanChangeTable', 'New-AuditPlanText', 'Format-AuditSummaryLine', 'Update-WikiGroupRows', 'Find-WikiProseMentions', 'Format-CappedList', 'Add-MarkdownTableRow', 'Add-MarkdownListLine', 'Add-NationDocRows', 'Sync-AgentMirrors', 'Get-GameLogFindings') {
+    foreach ($fn in 'Get-NamePatternKey', 'Test-FallbackStub', 'ConvertFrom-RomanNumeral', 'ConvertTo-RomanNumeral', 'Get-SharedIdentities', 'Get-NamelistAuditData', 'Get-OrderedEntryStats', 'Compare-NamelistAuditData', 'Get-GitFileText', 'Get-NameVariantKey', 'Resolve-GroupTag', 'Get-GroupSections', 'Format-EntryList', 'Get-OrphanHeaderLines', 'Set-NamelistGroupComment', 'Set-NamelistHeader', 'Edit-NamelistGroupText', 'Get-NamelistGroupEnd', 'Add-NamelistGroupText', 'ConvertTo-NamelistEditOp', 'Invoke-NamelistEditOps', 'Get-PlanBatchBlocks', 'Get-PlanReadinessWarnings', 'Read-NamelistEditBatch', 'Get-WorkshopDocStats', 'Get-VanillaOverlap', 'Find-Hoi4Install', 'Add-VanillaSelectorFlags', 'Find-WikiLinkMismatches', 'Compare-NamelistGroupSets', 'Format-NamelistDiff', 'Get-CountryName', 'Format-PlanChangeTable', 'Set-PlanChangeTable', 'New-AuditPlanText', 'Format-AuditSummaryLine', 'Get-AuditFindingLines', 'Update-WikiGroupRows', 'Find-WikiProseMentions', 'Format-CappedList', 'Format-KeyRanges', 'Format-AuditFlagsLine', 'Get-LivePlanPaths', 'Add-MarkdownTableRow', 'Add-MarkdownListLine', 'Add-NationDocRows', 'Sync-AgentMirrors', 'Get-GameLogFindings', 'Read-SharedTextLines', 'Get-UnpushedWikiPages') {
         $fnMatch = [regex]::Match($script:BuildContent, "(?s)(function $fn\s*\{.*?\n\})")
         if ($fnMatch.Success) {
             . ([ScriptBlock]::Create($fnMatch.Groups[1].Value))
@@ -489,12 +489,231 @@ TST_MEC_03 = {
         $g.Flags | Should -Contain 'LOW_DEPTH'
     }
 
+    It "Lists file-level flags with the shared identities in an audit plan's initial report" {
+        $lines = Get-AuditFindingLines -Data $script:AuditData
+        $lines[0] | Should -Be 'File: HEADER_BOILERPLATE'
+        $lines | Should -Contain "File: IDENTITY_REPEAT: 'Karjala' (TST_MOT_02, TST_ARM_01)"
+        $lines[2] | Should -Match '^\[TST_INF_01\] flags: ' -Because 'group lines follow the file lines'
+    }
+
     It "Exempts a plain variant whose entries only repeat its fallback (written over vanilla's keys)" {
         $g = & $script:AuditGroup 'TST_MEC_03'
         $g.OrderedCount | Should -Be 2
         $g.AuthoredCount | Should -Be 0
         $g.PlainVariantOf | Should -Not -BeNullOrEmpty
         $g.Flags.Count | Should -Be 0
+    }
+}
+
+Describe "build.ps1 Helper: Get-NamelistAuditData depth, pairing and key-number lints" {
+    BeforeAll {
+        $script:DepthFixture = [System.IO.Path]::GetTempFileName()
+        $fixture = @'
+# Overrides the vanilla placeholder TST_RGR_01; the INEX list replaces it.
+
+TST_INF_01 = {
+	name = "Infantry Divisions"
+	for_countries = { TST }
+	division_types = { "infantry" }
+	fallback_name = "%dth Infantry Division"
+	ordered = {
+		1 = { "%dst (West Riding) Infantry Division" }
+		2 = { "%dnd (Highland) Infantry Division" }
+		3 = { "%drd (Lowland) Infantry Division" }
+	}
+}
+
+TST_INF_02 = {
+	name = "Infantry Brigades"
+	for_countries = { TST }
+	division_types = { "infantry" }
+	link_numbering_with = { TST_INF_01 }
+	fallback_name = "%dth Infantry Brigade"
+	ordered = {
+		1 = { "%dst Guards Brigade" }
+		2 = { "%dnd Rifle Brigade" }
+	}
+}
+
+TST_INF_04 = {
+	name = "Infantry Divisions (Named)"
+	for_countries = { TST }
+	division_types = { "infantry" }
+	link_numbering_with = { TST_INF_01 }
+	fallback_name = "%dth Infantry Division"
+	ordered = {
+		1 = { "%dst Infantry Division 'Red Rose'" }
+		2 = { "%dnd Infantry Division 'Thistle'" }
+	}
+}
+
+TST_GAR_01 = {
+	name = "Garrison Divisions"
+	for_countries = { TST }
+	division_types = { "infantry" }
+	link_numbering_with = { TST_INF_01 }
+	fallback_name = "%dth Garrison Division"
+}
+
+TST_GAR_02 = {
+	name = "Security Divisions"
+	for_countries = { TST }
+	division_types = { "infantry" }
+	fallback_name = "%d. Sicherungs-Division"
+	ordered = {
+		539 = { "Divisionsstab z.b.V. 539" }
+		540 = { "Divisionsstab z.b.V. 540" }
+		442 = { "Divisionsstab z.b.V. 442" }
+	}
+}
+
+TST_HVY_01 = {
+	name = "Heavy Battalions"
+	for_countries = { TST }
+	division_types = { "heavy_armor" }
+	fallback_name = "schwere Panzer-Abteilung %d"
+	ordered = {
+		101 = { "schwere Panzer-Abteilung %d" }
+		501 = { "schwere Panzer-Abteilung %d (I. Korps)" }
+		502 = { "schwere Panzer-Abteilung %d (II. Korps)" }
+		503 = { "schwere Panzer-Abteilung %d (III. Korps)" }
+	}
+}
+
+TST_RIF_01 = {
+	name = "Rifle Divisions"
+	for_countries = { TST }
+	division_types = { "infantry" }
+	fallback_name = "%d-ya Strelkovaya Diviziya"
+	ordered = {
+		1 = { "%d-ya 'Vitebskaya' Strelkovaya Diviziya" }
+		2 = { "%d-ya 'Vitebskaya' Strelkovaya Diviziya" }
+		3 = { "%d-ya 'Vitebskaya' Strelkovaya Diviziya" }
+		4 = { "%d-ya Strelkovaya Diviziya" }
+	}
+}
+
+TST_STB_01 = {
+	name = "Stub Divisions"
+	for_countries = { TST }
+	division_types = { "infantry" }
+	fallback_name = "%d. Jalkavakidivisioona"
+	ordered = {
+		1 = { "1. Divisioona" }
+		2 = { "2. Divisioona" }
+		3 = { "3. Divisioona" }
+	}
+}
+
+TST_AK_01 = {
+	name = "Home Army Divisions"
+	for_countries = { TST }
+	division_types = { "infantry" }
+	fallback_name = "%d Dywizja Piechoty AK"
+	ordered = {
+		1 = { "1 Dywizja Piechoty AK" }
+		2 = { "21 Dywizja Piechoty AK" }
+		3 = { "III. Korpus" }
+		4 = { "V Korpus Ochotniczy" }
+		5 = { "CC.NN. Legione" }
+		101 = { "7 Dywizja Piechoty AK" }
+	}
+}
+
+TST_AK_02 = {
+	name = "Corps"
+	for_countries = { TST }
+	division_types = { "infantry" }
+	fallback_name = "%s. Korpus"
+	ordered = {
+		1 = { "1st Corps 'Warszawa'" }
+		2 = { "VII. Korpus" }
+		4 = { "IV. Korpus 'Krakow'" }
+		9 = { "IX Korpus" }
+	}
+}
+
+TST_MEC_01_COMMUNIST = {
+	name = "Red Mechanised Divisions"
+	for_countries = { TST }
+	can_use = { has_government = communism }
+	division_types = { "mechanized" }
+	fallback_name = "%d. Punainen Divisioona"
+}
+
+TST_MOT_09 = {
+	name = "Motorised Divisions"
+	for_countries = { TST }
+	division_types = { "motorized" }
+	fallback_name = "%d. Moottoroitu"
+}
+'@
+        [System.IO.File]::WriteAllText($script:DepthFixture, $fixture, (New-Object System.Text.UTF8Encoding($false)))
+        $script:DepthData = Get-NamelistAuditData -Path $script:DepthFixture
+        $script:DepthGroup = { param($tag) $script:DepthData.Groups | Where-Object { $_.Tag -eq $tag } }
+    }
+
+    AfterAll {
+        if (Test-Path $script:DepthFixture) { Remove-Item -Force $script:DepthFixture }
+    }
+
+    It "Counts entries at historical, non-sequential keys as authored" {
+        $g = & $script:DepthGroup 'TST_GAR_02'
+        $g.AuthoredCount | Should -Be 3
+        $g.Flags | Should -Not -Contain 'PLACEHOLDER_ENTRIES'
+        $g.Flags | Should -Not -Contain 'LOW_DEPTH'
+    }
+
+    It "Counts a name whose identity is a Roman-numbered suffix as authored" {
+        $g = & $script:DepthGroup 'TST_HVY_01'
+        $g.AuthoredCount | Should -Be 3
+        $g.Flags | Should -Not -Contain 'PLACEHOLDER_ENTRIES'
+    }
+
+    It "Counts every entry of an honorific that several keys share" {
+        (& $script:DepthGroup 'TST_RIF_01').AuthoredCount | Should -Be 3
+    }
+
+    It "Still counts numbered stubs in another format as placeholders" {
+        $g = & $script:DepthGroup 'TST_STB_01'
+        $g.AuthoredCount | Should -Be 0
+        $g.Flags | Should -Contain 'PLACEHOLDER_ENTRIES'
+    }
+
+    It "Treats a group that a (Named) group links to as the plain variant, whatever its entries hold" {
+        $g = & $script:DepthGroup 'TST_INF_01'
+        $g.AuthoredCount | Should -Be 3
+        $g.PlainVariantOf | Should -Be 'TST_INF_04'
+        $g.Flags | Should -Not -Contain 'LOW_DEPTH'
+    }
+
+    It "Pairs a plain group with the (Named) group, not another linked list" {
+        (& $script:DepthGroup 'TST_GAR_01').PlainVariantOf | Should -Be 'TST_INF_04'
+    }
+
+    It "Does not pair an authored list that only shares the (Named) group's numbering" {
+        (& $script:DepthGroup 'TST_INF_02').PlainVariantOf | Should -BeNullOrEmpty
+    }
+
+    It "Flags a literal name that repeats the name its leading number shows from the fallback" {
+        $g = & $script:DepthGroup 'TST_AK_01'
+        $g.Flags | Should -Contain 'KEY_NUMBER_MISMATCH'
+        # Key 101 repeats the fallback at 7; "V Korpus Ochotniczy" names another formation than key 5 and stays
+        $g.FlagDetails['KEY_NUMBER_MISMATCH'] | Should -Be @('2=21 Dywizja Piechoty AK', '101=7 Dywizja Piechoty AK')
+    }
+
+    It "Reads a Roman leading number against a %s fallback and accepts numbers that match their key" {
+        $g = & $script:DepthGroup 'TST_AK_02'
+        $g.FlagDetails['KEY_NUMBER_MISMATCH'] | Should -Be @('2=VII. Korpus')
+    }
+
+    It "Does not flag an ideology series that carries a mobile tag" {
+        (& $script:DepthGroup 'TST_MEC_01_COMMUNIST').Flags | Should -Not -Contain 'UNLINKED_MOBILE'
+        (& $script:DepthGroup 'TST_MOT_09').Flags | Should -Contain 'UNLINKED_MOBILE'
+    }
+
+    It "Does not read the word placeholder in a file comment as a TODO note" {
+        $script:DepthData.FileFlags | Should -Not -Contain 'TODO_COMMENT'
     }
 }
 
@@ -900,6 +1119,26 @@ Describe "build.ps1 Helper: Update-WikiGroupRows and Find-WikiProseMentions" {
         $res.Stale | Should -Be @('TST_OLD_01')
     }
 
+    It "Adds a row for each new group in file order, as wide as the table" {
+        $wiki = "| Tag | Name | Type | Fallback | Examples |`n|---|---|---|---|---|`n| ``TST_INF_01`` | Infantry | infantry | ``%d. Div`` | 1. Div |`n| ``TST_CAV_01`` | Cavalry | cavalry | ``%d. Cav`` | x |`n`nProse."
+        $mk = { param($t, $s, $ty, $fb) [PSCustomObject]@{ Tag = $t; Selector = $s; DivisionTypes = @($ty); Fallback = $fb; Entries = @() } }
+        $groups = @(
+            (& $mk 'TST_GUA_01' 'Guards' 'infantry' '%d. Kaarti'),
+            (& $mk 'TST_INF_01' 'Infantry' 'infantry' '%d. Div'),
+            (& $mk 'TST_MOT_01' 'Motorized' 'motorized' '%d. Mot'),
+            (& $mk 'TST_MEC_01' 'Mechanized' 'mechanized' '%d. Mek'),
+            (& $mk 'TST_CAV_01' 'Cavalry' 'cavalry' '%d. Cav')
+        )
+        $res = Update-WikiGroupRows -WikiText $wiki -Groups $groups -Tag 'TST'
+        $rows = @($res.Text -split "`n" | Where-Object { $_ -match '^\| `' } | ForEach-Object { [regex]::Match($_, '`([A-Z_0-9]+)`').Groups[1].Value })
+        $rows | Should -Be @('TST_GUA_01', 'TST_INF_01', 'TST_MOT_01', 'TST_MEC_01', 'TST_CAV_01')
+        $res.Text | Should -Match ([regex]::Escape('| `TST_MOT_01` | Motorized | motorized | `%d. Mot` | |'))
+        $res.Missing.Count | Should -Be 0
+        $res.Changes | Should -Contain 'TST_MEC_01: row added'
+        # A page without a table for the nation keeps the group as missing
+        (Update-WikiGroupRows -WikiText '# Empty' -Groups $groups -Tag 'TST').Missing.Count | Should -Be 5
+    }
+
     It "Updates the row of a mixed-case tag" {
         $wiki = "| ``TST_Arm_01`` | Tanks | light_armor | ``%d. Old`` | x |"
         $groups = @([PSCustomObject]@{ Tag = 'TST_Arm_01'; Selector = 'Panzer Divisions'; DivisionTypes = @('light_armor'); Fallback = '%d. Panzer'; Entries = @() })
@@ -1152,6 +1391,15 @@ TST_NOFB_01 = {
             $edited | Should -Match '# ===== Infantry ====='
         }
 
+        It "Replaces a comment that a blank line separates from its group, keeping the banner above it" {
+            $text = "# ===== Infantry =====`n# Overrides vanilla TST_A.`n`nTST_A = {`n`tname = `"A`"`n}`n"
+            $edited = Set-NamelistGroupComment -Text $text -GroupTag 'TST_A' -Comment 'Plain variant.'
+            $edited | Should -Be "# ===== Infantry =====`n# Plain variant.`n`nTST_A = {`n`tname = `"A`"`n}`n"
+            # A banner alone above the blank line is a section banner, not the group's comment
+            $banner = "# ===== Infantry =====`n`nTST_A = {`n`tname = `"A`"`n}`n"
+            Set-NamelistGroupComment -Text $banner -GroupTag 'TST_A' -Comment 'Plain variant.' | Should -Be "# ===== Infantry =====`n`n# Plain variant.`nTST_A = {`n`tname = `"A`"`n}`n"
+        }
+
         It "Adds a comment (with a banner and a blank line) above an uncommented group" {
             $edited = Edit-NamelistGroupText -Text $script:Structural -GroupTag 'TST_CAV_01' -Comment '# ===== Cavalry =====\n\nOverrides vanilla TST_CAV_01.'
             $edited | Should -Match "(?s)\}\r?\n\r?\n# ===== Cavalry =====\r?\n\r?\n# Overrides vanilla TST_CAV_01\.\r?\nTST_CAV_01 = \{"
@@ -1356,6 +1604,40 @@ TST_MIL_03 = {
             $o['TST_INF_01'].LeftOutNames | Should -Be @("2=Dywizja 'Podlaska'")
         }
 
+        It "Lists left-out vanilla stubs in vanilla's format, which the game shows with vanilla's text" {
+            $own = @([PSCustomObject]@{ Tag = 'TST_INF_01'; Fallback = 'Dai-%d Shidan'; OrderedCount = 1; Entries = @("Dai-%d Shidan 'Tama'"); EntryKeys = @(1); PlainVariantOf = $null })
+            $dir = Join-Path $script:FakeHoi4 'common\units\names_divisions'
+            [System.IO.File]::WriteAllText((Join-Path $dir 'TSJ_names_divisions.txt'), "TST_INF_01 = {`n`tname = `"Infantry`"`n`tfallback_name = `"%d Hohei Shidan`"`n`tordered = {`n`t`t1 = { `"%d Hohei Shidan`" }`n`t`t2 = { `"%d Hohei Shidan`" }`n`t`t3 = { `"Dai-%d Shidan`" }`n`t`t9 = { `"%d Hohei Shidan`" }`n`t}`n}`n", (New-Object System.Text.UTF8Encoding($false)))
+            $o = Get-VanillaOverlap -Groups $own -Key 'TSJ' -Hoi4Dir $script:FakeHoi4
+            # Key 1 is written; key 3 already reads as the INEX fallback
+            $o['TST_INF_01'].LeftOutStubs | Should -Be @(2, 9)
+            $o['TST_INF_01'].LeftOutNumbers.Count | Should -Be 0
+            $o['TST_INF_01'].LeftOutNames.Count | Should -Be 0
+        }
+
+        It "Names the vanilla identities a plain variant keeps in another list" {
+            $own = @(
+                [PSCustomObject]@{ Tag = 'TST_INF_01'; Fallback = '%d. Dywizja'; OrderedCount = 0; Entries = @(); EntryKeys = @(); PlainVariantOf = 'TST_INF_02' },
+                [PSCustomObject]@{ Tag = 'TST_INF_02'; Fallback = '%d. Dywizja'; OrderedCount = 1; Entries = @("%d. Dywizja 'Kresowa'"); EntryKeys = @(1); PlainVariantOf = $null }
+            )
+            $o = Get-VanillaOverlap -Groups $own -Key 'TSU' -Hoi4Dir $script:FakeHoi4
+            $o['TST_INF_01'].KeptElsewhereNames | Should -Be @("1=Dywizja 'Kresowa'")
+        }
+
+        It "Flags an INEX selector that a vanilla group INEX leaves in place shows for the same division type" {
+            $dir = Join-Path $script:FakeHoi4 'common\units\names_divisions'
+            [System.IO.File]::WriteAllText((Join-Path $dir 'TSV_names_divisions.txt'), "TSV_MTN_02 = {`n`tname = `"Mountain Divisions`"`n`tdivision_types = { `"mountaineers`" }`n`tfallback_name = `"%d. Vuoristodivisioona`"`n}`nTSV_MTN_03 = {`n`tname = `"Mountain Divisions`"`n`tdivision_types = { `"infantry`" }`n`tfallback_name = `"%d. Divisioona`"`n}`nTSV_MTN_01 = {`n`tname = `"Mountain Divisions`"`n`tdivision_types = { `"mountaineers`" }`n`tfallback_name = `"%d. Divisioona`"`n}`n", (New-Object System.Text.UTF8Encoding($false)))
+            $modDir = Join-Path $script:FakeHoi4 'mod'
+            New-Item -ItemType Directory -Force -Path $modDir | Out-Null
+            [System.IO.File]::WriteAllText((Join-Path $modDir 'zz_INEX_TSV_names_divisions.txt'), "TSV_MTN_01 = {`n`tname = `"Mountain Divisions`"`n`tdivision_types = { `"mountaineers`" }`n`tfallback_name = `"%d. Vuoristodivisioona`"`n}`n", (New-Object System.Text.UTF8Encoding($false)))
+            $data = Get-NamelistAuditData -Path (Join-Path $modDir 'zz_INEX_TSV_names_divisions.txt')
+            Add-VanillaSelectorFlags -Data $data -Tag 'TSV' -Hoi4Dir $script:FakeHoi4 -NamelistDir $modDir
+            $g = $data.Groups[0]
+            # TSV_MTN_03 shares no division type; TSV_MTN_01 is the INEX group itself (merged, not a second group)
+            @($g.Flags | Where-Object { $_ -eq 'SELECTOR_DUPLICATE' }).Count | Should -Be 1
+            $g.FlagDetails['SELECTOR_DUPLICATE'] | Should -Be @('vanilla TSV_MTN_02')
+        }
+
         It "Raises no flag for entries copied from vanilla: they change no name in the game" {
             $script:BuildContent | Should -Not -Match "Flags\.Add\('VANILLA_COPY'\)"
         }
@@ -1436,6 +1718,14 @@ Describe "build.ps1: valid division_types list" {
         $ValidDivisionTypes | Should -Contain 'infantry'
         $ValidDivisionTypes | Should -Contain 'penal_battalion'
         $ValidDivisionTypes | Should -Not -Contain 'armor'
+    }
+
+    It "Accepts the line battalions vanilla defines and uses in its own name lists" {
+        foreach ($t in 'armored_car', 'bicycle_battalion', 'artillery_brigade', 'mot_artillery_brigade', 'anti_tank_brigade', 'medium_tank_destroyer_brigade', 'modern_tank_destroyer_brigade', 'medium_sp_artillery_brigade', 'super_heavy_sp_anti_air_brigade') {
+            $ValidDivisionTypes | Should -Contain $t
+        }
+        # Not a unit id in vanilla common/units (its ids are mot_rocket_artillery_brigade and motorized_rocket_brigade)
+        $ValidDivisionTypes | Should -Not -Contain 'motorized_rocket_artillery'
     }
 
     It "Names the valid tokens when -EditNames rejects one" {
@@ -1768,6 +2058,68 @@ TST_MOT_01 = {
         $op = ConvertTo-NamelistEditOp @{ addGroup = $true; group = 'MIL_01'; selector = 'Militia'; addType = 'militia'; fallback = '%d. Miliisi' }
         { Invoke-NamelistEditOps -Text $script:OpsBase -Tag 'TST' -Ops @($op) -TakenTags @('TST_MIL_01') } | Should -Throw '*TST_MIL_01*another namelist file*'
     }
+
+    It "Keeps a vanilla tag of the nation's file that has another prefix, and prefixes shorthand" {
+        $ops = @(
+            (ConvertTo-NamelistEditOp @{ addGroup = $true; group = 'TSA_INF_01'; selector = 'Rebel Infantry'; addType = 'infantry'; fallback = '%d. Kapinallinen' }),
+            (ConvertTo-NamelistEditOp @{ addGroup = $true; group = 'ARM_01'; selector = 'Armored Divisions'; addType = 'light_armor'; fallback = '%d. Panssari' })
+        )
+        $r = Invoke-NamelistEditOps -Text $script:OpsBase -Tag 'TST' -Ops $ops -VanillaTags @('TSA_INF_01', 'TST_INF_01')
+        @((Get-NamelistAuditData -Text $r.Text).Groups | ForEach-Object { $_.Tag }) | Should -Be @('TST_INF_01', 'TST_MOT_01', 'TSA_INF_01', 'TST_ARM_01')
+    }
+
+    It "Links an existing group to one or more groups, replacing its link, also from an 'A; B' string" {
+        $ops = @(
+            (ConvertTo-NamelistEditOp @{ addGroup = $true; group = 'CAV_01'; selector = 'Cavalry'; addType = 'cavalry'; fallback = '%d. Ratsu' }),
+            (ConvertTo-NamelistEditOp @{ group = 'MOT_01'; link = 'INF_01; CAV_01' }),
+            (ConvertTo-NamelistEditOp @{ group = 'CAV_01'; link = @('INF_01') })
+        )
+        $r = Invoke-NamelistEditOps -Text $script:OpsBase -Tag 'TST' -Ops $ops
+        $data = Get-NamelistAuditData -Text $r.Text
+        ($data.Groups | Where-Object { $_.Tag -eq 'TST_MOT_01' }).LinkTargets | Should -Be @('TST_INF_01', 'TST_CAV_01')
+        ($data.Groups | Where-Object { $_.Tag -eq 'TST_CAV_01' }).LinkTargets | Should -Be @('TST_INF_01')
+        $r.Text | Should -Match '(?s)TST_CAV_01 = .*division_types = \{ "cavalry" \}\n\n\tlink_numbering_with = \{ TST_INF_01 \}\n\n\tfallback_name'
+        $r.Summaries[1] | Should -Match "Link='TST_INF_01 TST_CAV_01'"
+        { Invoke-NamelistEditOps -Text $script:OpsBase -Tag 'TST' -Ops @(ConvertTo-NamelistEditOp @{ group = 'MOT_01'; link = 'MOT_01' }) } | Should -Throw '*itself*'
+    }
+
+    It "Turns a dead commented link into the link and leaves no double blank line" {
+        $text = "TST_INF_01 = {`n`tname = `"Infantry`"`n`tdivision_types = { `"infantry`" }`n`n`t# Number reservation system will tie to another group.`n`t#link_numbering_with = { TST_INF_01 }`n`n`tfallback_name = `"%d. D`"`n}`n`nTST_INF_02 = {`n`tname = `"Infantry (Named)`"`n`tdivision_types = { `"infantry`" }`n`tfallback_name = `"%d. D`"`n}`n"
+        $r = Invoke-NamelistEditOps -Text $text -Tag 'TST' -Ops @(ConvertTo-NamelistEditOp @{ group = 'INF_01'; link = 'INF_02' })
+        $r.Text | Should -Not -Match '#link_numbering_with'
+        $r.Text | Should -Match 'link_numbering_with = \{ TST_INF_02 \}'
+        $r.Text | Should -Not -Match '\n[ \t]*\n[ \t]*\n'
+        $r2 = Invoke-NamelistEditOps -Text $text -Tag 'TST' -Ops @(ConvertTo-NamelistEditOp @{ group = 'INF_01'; selector = 'Rifles' })
+        $r2.Text | Should -Not -Match '\n[ \t]*\n[ \t]*\n'
+    }
+
+    It "Adds tags to for_countries and refuses a tag the game does not define" {
+        $r = Invoke-NamelistEditOps -Text $script:OpsBase -Tag 'TST' -Ops @(ConvertTo-NamelistEditOp @{ group = 'INF_01'; countries = 'TST; TSB' }) -CountryTags @('TST', 'TSB')
+        $r.Text | Should -Match '(?s)TST_INF_01 = \{\n\tname = "Infantry Divisions"\n\tfor_countries = \{ TST TSB \}'
+        $r2 = Invoke-NamelistEditOps -Text $r.Text -Tag 'TST' -Ops @(ConvertTo-NamelistEditOp @{ group = 'INF_01'; countries = @('TSC') }) -CountryTags @('TST', 'TSB', 'TSC')
+        $r2.Text | Should -Match 'for_countries = \{ TST TSB TSC \}'
+        $r2.Summaries[0] | Should -Match '\+Countries: TSC'
+        { Invoke-NamelistEditOps -Text $script:OpsBase -Tag 'TST' -Ops @(ConvertTo-NamelistEditOp @{ group = 'INF_01'; countries = 'ZZZ' }) -CountryTags @('TST') } | Should -Throw "*ZZZ*"
+        { Invoke-NamelistEditOps -Text $script:OpsBase -Tag 'TST' -Ops @(ConvertTo-NamelistEditOp @{ group = 'INF_01'; countries = 'tst1' }) } | Should -Throw "*tst1*"
+    }
+
+    It "Starts an existing file afresh with newFile and replace, and sets the header of an existing file" {
+        $crlf = $script:OpsBase -replace "`n", "`r`n"
+        $ops = @(
+            (ConvertTo-NamelistEditOp @{ newFile = $true; replace = $true; header = 'Testland (TST)' }),
+            (ConvertTo-NamelistEditOp @{ addGroup = $true; group = 'INF_01'; selector = 'Infantry Divisions'; addType = 'infantry'; fallback = '%d. Divisioona'; add = @("1. Divisioona 'Karhu'") })
+        )
+        $r = Invoke-NamelistEditOps -Text $crlf -Tag 'TST' -Ops $ops
+        $r.Text | Should -Match '^# Testland \(TST\)\r\n\r\nTST_INF_01 = '
+        $r.Text | Should -Not -Match 'TST_MOT_01'
+        ([regex]::Matches($r.Text, "(?<!`r)`n")).Count | Should -Be 0
+        { Invoke-NamelistEditOps -Text $crlf -Tag 'TST' -Ops @(ConvertTo-NamelistEditOp @{ newFile = $true; header = 'H' }) } | Should -Throw '*already exists*replace*'
+
+        $h = Invoke-NamelistEditOps -Text "# old`n`n$($script:OpsBase)" -Tag 'TST' -Ops @(ConvertTo-NamelistEditOp @{ header = 'New header' })
+        $h.Text | Should -Match '^# New header\n\nTST_INF_01 = '
+        $h.Summaries[0] | Should -Be 'Set header of zz_INEX_TST_names_divisions.txt'
+        { Invoke-NamelistEditOps -Text $script:OpsBase -Tag 'TST' -Ops @(ConvertTo-NamelistEditOp @{ group = 'INF_01'; header = 'H' }) } | Should -Throw '*header*'
+    }
 }
 
 Describe "build.ps1 Helper: Get-WorkshopDocStats" {
@@ -1822,6 +2174,21 @@ $Block
     It "Warns when the description passes 17,000 characters" {
         $long = Get-WorkshopDocStats -GuideText (& $script:GuideFor ("[b]Testland[/b]`n- A ([i]x[/i], [i]y[/i])`n- " + ('B' * 17000))) -Key 'TST'
         ($long.Warnings -join '|') | Should -Match '17000'
+    }
+
+    It "Measures the nation's block and warns past its 450-character budget, three bullets or four examples" {
+        $ok = Get-WorkshopDocStats -GuideText (& $script:GuideFor "[b]Testland[/b]`n- A ([i]x[/i], [i]y[/i])`n- B") -Key 'TST'
+        $ok.BlockLength | Should -Be ("[b]Testland[/b]`n- A ([i]x[/i], [i]y[/i])`n- B").Length
+        $wide = Get-WorkshopDocStats -GuideText (& $script:GuideFor ("[b]Testland[/b]`n- A ([i]x[/i], [i]y[/i], [i]z[/i], [i]w[/i])`n- B`n- " + ('C' * 400))) -Key 'TST'
+        $w = $wide.Warnings -join '|'
+        $w | Should -Match '450'
+        $w | Should -Match '3 bullet\(s\) \(2 expected\)'
+        $w | Should -Match '4 \[i\] example\(s\) \(2-3 expected\)'
+    }
+
+    It "Warns when the description passes its 16,000-character budget" {
+        $near = Get-WorkshopDocStats -GuideText (& $script:GuideFor ("[b]Testland[/b]`n- A ([i]x[/i], [i]y[/i])`n- B`n`n" + ('C' * 16200))) -Key 'TST'
+        ($near.Warnings -join '|') | Should -Match '16000'
     }
 }
 
@@ -2011,9 +2378,23 @@ TST_CAV_01 =
         [System.IO.File]::WriteAllText($script:CliFile, $withOrdinal + "`r`n", $script:Utf8NoBom)
         Invoke-CliBuild -Audit TST
         $script:CliOutput | Should -Match 'DUPLICATE_NAME: Alpha Division'
-        $script:CliOutput | Should -Match 'Workshop: \[b\]Testland\[/b\] 1 bullet\(s\), 1 \[i\] example\(s\); description \d+/17000 chars'
+        $script:CliOutput | Should -Match 'Workshop: \[b\]Testland\[/b\] 1 bullet\(s\), 1 \[i\] example\(s\), \d+/450 chars; description \d+/17000 chars'
         $script:CliOutput | Should -Match '\[WARN\] Docs: .*1 bullet'
         $script:CliOutput | Should -Match 'ORDINAL_MISMATCH'
+    }
+
+    It "Lists honorifics that another file of the nation already uses in -Audit" {
+        Reset-CliNamelist
+        $extra = Join-Path $script:CliNamelistDir 'zz_INEX_TST_EXTRA_names_divisions.txt'
+        $before = [System.IO.File]::ReadAllText($extra, [System.Text.Encoding]::UTF8)
+        try {
+            [System.IO.File]::WriteAllText($extra, ($before -replace '(fallback_name = "%d\. Miliisi")', "`$1`r`n`tordered = {`r`n`t`t3 = { `"3. Miliisi 'Karhu'`" }`r`n`t}"), $script:Utf8NoBom)
+            Invoke-CliBuild -Audit TST
+            $script:CliOutput | Should -Match 'Identities shared with other files of TST \(TST_EXTRA\)'
+            $script:CliOutput | Should -Match "'Karhu': TST_INF_01, TST_MIL_01"
+        } finally {
+            [System.IO.File]::WriteAllText($extra, $before, $script:Utf8NoBom)
+        }
     }
 
     It "Summarizes validation, tests, audit, plan and diff in at most 15 lines with -Check" {
@@ -2051,6 +2432,27 @@ TST_CAV_01 =
         $script:CliOutput | Should -Match 'Kept the change table'
         [System.IO.File]::ReadAllText($plan.FullName, [System.Text.Encoding]::UTF8) | Should -Match '\| CAV_01 \| 1 -> 2 \| Karjalan Ratsuprikaati \|'
         Remove-Item -Recurse -Force (Join-Path $script:CliDir 'docs')
+    }
+
+    It "Leaves the change table alone while another plan for the nation is live, and names it" {
+        Reset-CliNamelist
+        Invoke-CliBuild -AuditPlan TST
+        $plan = Get-ChildItem (Join-Path $script:CliDir 'docs\plans') -Filter '*-testland-audit.md' | Select-Object -First 1
+        $before = [System.IO.File]::ReadAllText($plan.FullName, [System.Text.Encoding]::UTF8)
+        $plansDir = Join-Path $script:CliDir 'docs\plans'
+        [System.IO.File]::WriteAllText((Join-Path $plansDir '2026-10-20-testland-namelist.md'), "# Testland`n`nStatus: READY`n", $script:Utf8NoBom)
+        # A finished plan and the archive do not count
+        [System.IO.File]::WriteAllText((Join-Path $plansDir '2026-10-01-testland-namelist.md'), "# Testland`n`nStatus: DONE`n", $script:Utf8NoBom)
+        New-Item -ItemType Directory -Path (Join-Path $plansDir 'archive') -Force | Out-Null
+        [System.IO.File]::WriteAllText((Join-Path $plansDir 'archive\2026-09-01-testland-audit.md'), "# Testland`n`nStatus: DONE`n", $script:Utf8NoBom)
+        $withAdded = $script:CliNamelist -replace '(1 = \{ "Uudenmaan Ratsuprikaati" \})', "`$1`r`n`t`t2 = { `"Karjalan Ratsuprikaati`" }"
+        [System.IO.File]::WriteAllText($script:CliFile, $withAdded + "`r`n", $script:Utf8NoBom)
+        Invoke-CliBuild -Check TST
+        $script:CliExit | Should -Be 0 -Because $script:CliOutput
+        $script:CliOutput | Should -Match '\[WARN\] Plan: 2026-10-20-testland-namelist\.md is also live for TST; the change table would list its groups too\. Ship it first'
+        [System.IO.File]::ReadAllText($plan.FullName, [System.Text.Encoding]::UTF8) | Should -Be $before
+        Remove-Item -Recurse -Force (Join-Path $script:CliDir 'docs')
+        Reset-CliNamelist
     }
 
     It "Exits 1 from -Check and prints the validation error in full" {
@@ -2126,6 +2528,9 @@ ${fence}
         $script:CliExit | Should -Be 0 -Because $script:CliOutput
         $script:CliOutput | Should -Match 'Edited TST_CAV_01: \+1'
         $script:CliOutput | Should -Match 'Dry run OK: 1 operation\(s\); the file would hold 2 group\(s\), 6 name\(s\)\. Nothing written\.'
+        # The flags the batch leaves, so the planner can fill "Kept on judgment" without a rehearsal
+        $script:CliOutput | Should -Match 'AUDIT SUMMARY TST: GROUPS=2 AUTHORED=\d+/6 FLAGS=\d+'
+        $script:CliOutput | Should -Match 'Flags: .*DUPLICATE_NAME x1'
         $script:CliOutput | Should -Match '\[WARN\] Plan: Status is still PLANNING'
         $script:CliOutput | Should -Match '\[WARN\] Plan: 1 planner TODO section\(s\) left unfilled'
         [System.IO.File]::ReadAllBytes($script:CliFile) | Should -Be $before
@@ -2166,6 +2571,27 @@ ${fence}
         )
         { Invoke-NamelistEditOps -Text $script:CliNamelist -Tag 'TST' -Ops $ops } | Should -Throw '*must be the first operation*'
         { Invoke-NamelistEditOps -Text '' -Tag 'TST' -Ops @(ConvertTo-NamelistEditOp @{ newFile = $true }) } | Should -Throw '*needs "header"*'
+    }
+
+    It "Re-authors an existing file in one batch and warns only about tags that are gone at its end" {
+        Reset-CliNamelist
+        $json = Join-Path $script:CliDir 'reauthor.json'
+        [System.IO.File]::WriteAllText($json, '[ { "newFile": true, "replace": true, "header": "Testland (TST)" }, { "addGroup": true, "group": "INF_01", "selector": "Infantry Divisions", "addType": "infantry", "fallback": "%d. Divisioona", "add": ["1. Divisioona ''Karhu''"] } ]', $script:Utf8NoBom)
+        Invoke-CliBuild -EditNames TST -Batch $json
+        $script:CliExit | Should -Be 0 -Because $script:CliOutput
+        $script:CliOutput | Should -Match 'Started zz_INEX_TST_names_divisions\.txt afresh'
+        $script:CliOutput | Should -Match '\[WARN\] Removed group tags TST_CAV_01:'
+        $script:CliOutput | Should -Not -Match 'Removed group tags[^\r\n]*TST_INF_01'
+        $text = [System.IO.File]::ReadAllText($script:CliFile, [System.Text.Encoding]::UTF8)
+        $text | Should -Match '^# Testland \(TST\)\r\n\r\nTST_INF_01 = '
+        $text | Should -Not -Match 'Ratsuprikaati'
+
+        Reset-CliNamelist
+        [System.IO.File]::WriteAllText($json, '[ { "group": "CAV_01", "removeGroup": true }, { "addGroup": true, "group": "CAV_01", "selector": "Cavalry Brigades", "addType": "cavalry", "fallback": "%d. Ratsuprikaati" } ]', $script:Utf8NoBom)
+        Invoke-CliBuild -EditNames TST -Batch $json
+        $script:CliExit | Should -Be 0 -Because $script:CliOutput
+        $script:CliOutput | Should -Not -Match 'Removed group tags'
+        Reset-CliNamelist
     }
 }
 
@@ -2227,6 +2653,70 @@ Describe "build.ps1 Helper: Sync-AgentMirrors" {
     }
 }
 
+Describe "build.ps1 Helper: Get-UnpushedWikiPages" {
+    BeforeAll {
+        $script:WikiRepo = Join-Path $TestDrive 'repo'
+        $script:WikiClone = Join-Path $TestDrive 'clone'
+        New-Item -ItemType Directory -Path (Join-Path $script:WikiRepo 'wiki'), $script:WikiClone -Force | Out-Null
+        $utf8 = New-Object System.Text.UTF8Encoding($false)
+        [System.IO.File]::WriteAllText((Join-Path $script:WikiRepo 'wiki\Home.md'), "# Home`r`n", $utf8)
+        [System.IO.File]::WriteAllText((Join-Path $script:WikiRepo 'wiki\Testland.md'), "# Testland`nnew line`n", $utf8)
+        $prevEap = $ErrorActionPreference
+        $ErrorActionPreference = 'Continue'
+        & git -C $script:WikiRepo init -q 2>$null | Out-Null
+        & git -C $script:WikiRepo add -A 2>$null | Out-Null
+        & git -C $script:WikiRepo -c user.name=inex -c user.email=inex@example.invalid -c core.autocrlf=false commit -q -m wiki 2>$null | Out-Null
+        $ErrorActionPreference = $prevEap
+        # The clone holds what the last push sent: Home.md with other line endings, Testland.md before its change
+        [System.IO.File]::WriteAllText((Join-Path $script:WikiClone 'Home.md'), "# Home`n", $utf8)
+        [System.IO.File]::WriteAllText((Join-Path $script:WikiClone 'Testland.md'), "# Testland`n", $utf8)
+        # Work in progress is not committed, so it is not reported
+        [System.IO.File]::WriteAllText((Join-Path $script:WikiRepo 'wiki\Home.md'), "# Home edited`n", $utf8)
+    }
+
+    It "Lists committed pages whose text differs from the wiki clone" {
+        $pages = Get-UnpushedWikiPages -RepoPath $script:WikiRepo -CloneDir $script:WikiClone
+        $pages | Should -Be @('Testland.md')
+    }
+
+    It "Lists a committed page the clone does not have, and returns null without a clone" {
+        Remove-Item (Join-Path $script:WikiClone 'Home.md')
+        $pages = Get-UnpushedWikiPages -RepoPath $script:WikiRepo -CloneDir $script:WikiClone
+        $pages | Should -Be @('Home.md', 'Testland.md')
+        Get-UnpushedWikiPages -RepoPath $script:WikiRepo -CloneDir (Join-Path $TestDrive 'none') | Should -BeNullOrEmpty
+    }
+
+    It "Uses the clone folder of wiki/push-wiki.ps1" {
+        $push = [System.IO.File]::ReadAllText((Join-Path $script:RepoRoot 'wiki\push-wiki.ps1'), [System.Text.Encoding]::UTF8)
+        $push | Should -Match '"inex_wiki_push"'
+        $script:BuildContent | Should -Match "'inex_wiki_push'"
+    }
+}
+
+Describe "build.ps1 Helper: Get-CountryName" {
+    BeforeAll {
+        $script:NameRoot = Join-Path $TestDrive 'names'
+        New-Item -ItemType Directory -Path (Join-Path $script:NameRoot 'wiki') -Force | Out-Null
+        [System.IO.File]::WriteAllText((Join-Path $script:NameRoot 'README.md'), "| Tag | Nation | Source File |`n| :--- | :--- | :--- |`n| ``TST`` | Testland | ``zz_INEX_TST_names_divisions.txt``, ``zz_INEX_TST_GUARD_names_divisions.txt`` |`n| ``USA`` | United States | ``zz_INEX_USA_names_divisions.txt`` |`n", (New-Object System.Text.UTF8Encoding($false)))
+        [System.IO.File]::WriteAllText((Join-Path $script:NameRoot 'wiki\Home.md'), "| Nation | Tag | Groups | Source File(s) |`n| [Testland](Testland) | ``TST`` | 3 | ``zz_INEX_TST_names_divisions.txt`` |`n| [Testland (Guard)](Testland-Guard) | ``TST`` | 2 | ``zz_INEX_TST_GUARD_names_divisions.txt`` |`n", (New-Object System.Text.UTF8Encoding($false)))
+    }
+
+    It "Reads the nation from its README row" {
+        Get-CountryName -Tag 'USA' -Root $script:NameRoot | Should -Be 'United States'
+        Get-CountryName -Tag 'TST' -Root $script:NameRoot | Should -Be 'Testland'
+    }
+
+    It "Reads the page of a nation's second file from its wiki/Home.md row" {
+        Get-CountryName -Tag 'TST_GUARD' -Root $script:NameRoot | Should -Be 'Testland-Guard'
+        Get-CountryName -Tag 'zz_INEX_TST_GUARD_names_divisions.txt' -Root $script:NameRoot | Should -Be 'Testland-Guard'
+        Get-CountryName -Tag 'NOPE' -Root $script:NameRoot | Should -BeNullOrEmpty
+    }
+
+    It "Keeps no nation's pages in the code" {
+        $script:BuildContent | Should -Not -Match "return 'Germany"
+    }
+}
+
 Describe "build.ps1 Helper: Get-GameLogFindings" {
     It "Returns the lines that name a mod file, without timestamps, repeated lines once" {
         $log = @(
@@ -2243,5 +2733,19 @@ Describe "build.ps1 Helper: Get-GameLogFindings" {
     It "Returns nothing for a clean log or an empty file list" {
         (Get-GameLogFindings -LogLines @('[21:13:24][no_game_date][dlc.cpp:218]: other') -FileNames @('zz_INEX_TST_names_divisions.txt')).Count | Should -Be 0
         (Get-GameLogFindings -LogLines @('x zz_INEX_TST_names_divisions.txt') -FileNames @()).Count | Should -Be 0
+    }
+
+    It "Reads a log that the running game holds open for writing" {
+        $path = Join-Path $TestDrive 'error.log'
+        [System.IO.File]::WriteAllText($path, "first`r`nsecond`r`n", (New-Object System.Text.UTF8Encoding($false)))
+        # The game keeps error.log open for writing and shares it for reading only
+        $held = [System.IO.FileStream]::new($path, [System.IO.FileMode]::Open, [System.IO.FileAccess]::Write, [System.IO.FileShare]::Read)
+        try {
+            { [System.IO.File]::ReadAllLines($path) } | Should -Throw
+            $lines = Read-SharedTextLines -Path $path
+            $lines | Should -Be @('first', 'second')
+        } finally {
+            $held.Dispose()
+        }
     }
 }

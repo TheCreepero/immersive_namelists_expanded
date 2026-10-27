@@ -14,7 +14,7 @@ Shared rules for every mod in this tree (file encodings, build commands, engine 
 - Ideology gating only with `can_use = { has_government = ... }` [NAM-003], never a focus, decision, idea or flag.
 - `fallback_name` needs `%d` or `%s` [NAM-005]; `link_numbering_with` points to another group, never itself [NAM-007]; a backslash may only precede a quote or a backslash [NAM-008].
 - `build.ps1 -Check <TAG>` must end with `Check passed` before a namelist task is complete, and the docs sync of guide section 4 (Workshop text, wiki page, `-SyncWiki`) is part of the task.
-- The wiki push runs in a plan's ship step, on the user's word.
+- The wiki push runs in a plan's ship step, right after the commit; the commit waits for the user's word, the push does not.
 
 ## Commands beyond build.ps1
 - `build.ps1` carries the mod's own switches (`-Check`, `-Audit`, `-InspectVanilla`, `-EditNames`, `-DiffNames`, `-AuditPlan`, `-SyncWiki`, `-SyncMirrors`, `-GameLog`); guide section 5 lists them and `Get-Help .\build.ps1 -Parameter <Name>` prints one. Learn a switch from `Get-Help`, not from the source: `build.ps1`, `tools/HoiModBuild.ps1` and `tests/BuildScript.Tests.ps1` are opened only in a tooling-backlog session, and a Read of them asks first.

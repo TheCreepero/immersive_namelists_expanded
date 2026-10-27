@@ -25,7 +25,7 @@ This skill produces one file, `docs/plans/YYYY-MM-DD-<country>-namelist.md`, and
 - **No namelist or docs file is touched in this skill.** Only the plan, `scratch/` and entries in `docs/tooling-backlog.md` are written.
 
 ## Working rules
-- **One nation per session.**
+- **One nation per session**, and one live plan per nation: when `docs/plans/` holds a plan for the nation whose `Status:` is not `DONE`, ship it first. `-Check` skips the change-table refresh while two are live.
 - **Tooling problems are worked around and get one entry in `docs/tooling-backlog.md`; `build.ps1`, tests and skill text are not edited during planning.** A workaround the implementer must run (a one-off script, an extra command) is written into the plan's steps with its expected output.
 - For an existing file, do not read it whole. Inspect with `-Audit <TAG> -NamesOnly` (add `-Group <A>,<B> -Sections -Keys` for one group).
 - A plan applies to one file key: `-EditNames <KEY> -Batch` and `-Audit <KEY>` take the part of the file name between `zz_INEX_` and `_names_divisions` (`GER`, `GER_SS`, `GER_ADDITIONAL`). For a nation split over several files, put a new suite's groups in one file, or write one plan per file.
@@ -65,15 +65,15 @@ When the summary shows thin or `UNVERIFIED` areas that the design depends on, di
 ### Phase 2: Design and write the plan
 Research results in hand, settle everything and write it down. The dossier is raw input; what the implementer needs goes into the plan.
 
-1. **Group suite**: decide the final tags, selectors, `division_types`, `can_use`, links and fallbacks (§3). Merge thin lists now. Fill the "Group suite" table. Grep every new honorific across `common/units/names_divisions/zz_INEX_<TAG>*.txt` before the batch is final: `-Audit` compares identities within one file only, so a reuse in another file of the same nation goes unreported.
+1. **Group suite**: decide the final tags, selectors, `division_types`, `can_use`, links and fallbacks (§3). Merge thin lists now. Fill the "Group suite" table. Grep every new honorific across `common/units/names_divisions/zz_INEX_<TAG>*.txt` before the batch is final: `-Audit` lists the identities the nation's files already share, not the ones a batch would add.
 2. **Edit batch**: under `## Edit batch`, write fenced blocks whose opening line is `` ```json batch ``, in file order. Operations are the `-EditNames` batch format (guide §5):
-   - New nation: the first block is `{ "newFile": true, "header": "..." }`. An existing file needs no such block.
+   - New nation: the first block is `{ "newFile": true, "header": "..." }`. An existing file needs no such block; a full re-author of one starts with `{ "newFile": true, "replace": true, "header": "..." }` and adds every group again (tags it adds back keep players' templates). `{ "header": "..." }` alone replaces an existing file's header.
    - One block per group. A new group is `{ "addGroup": true, "group": ..., "selector": ..., "addType": ..., "fallback": ..., "canUse": ..., "link": ..., "comment": ..., "add": [...] }`; put its names in the same operation's `"add"`. `"add"` items are `"<key>=<name>"`, and `"# Header"` items start a comment-headed section.
-   - A plain variant is an `addGroup` (or, on an existing group, `"clearOrdered": true`) with no names; its named variant follows with `"link": "<plain tag>"` (§3).
+   - A plain variant is an `addGroup` (or, on an existing group, `"clearOrdered": true`) with no names; its named variant follows with `"link": "<plain tag>"` (§3). `"link"` also works on an existing group (it replaces the link or a dead commented one) and takes several groups (`"INF_01; GAR_01"`), each existing when its operation runs. `"countries"` adds tags to `for_countries` for a shared group (guide §2).
    - A section banner goes in the first group's `"comment"` (`"# ===== Cavalry =====\n\nOverrides vanilla ..."`).
    - Write the names with their final diacritics and case. Nothing in the batch is a placeholder.
-3. **Research record, Author confirmation, Kept on judgment**: sources and call counts; every extrapolated or unverified entry in the batch, per group; the audit flags you expect to remain (thin specialist lists) with the reason. `-DryRun` runs no audit, so take the flags from a rehearsal outside the repository: export HEAD into a scratchpad folder (`git archive HEAD | tar -x -C <folder>`), apply the batch there with `-EditNames <KEY> -Batch <plan>` and run `-Audit <KEY>`; replaying the docs payload there and running `-SyncWiki` gives the expected step outputs too. The repository's namelist and docs files stay untouched.
-4. **Docs payload**: the verbatim text a script cannot derive, each with the line it goes after: the workshop cross-reference row, the workshop block (2-3 bullets, italic examples, no emojis, concise) and the whole wiki page, with a group table whose rows match the suite. The `README.md` row, the `wiki/Home.md` row and the `wiki/_Sidebar.md` line are written by `-SyncWiki <TAG> -Country "<Name>"` in the plan's steps; `<Name>` is the README nation name and, with hyphens for spaces, the wiki page name.
+3. **Research record, Author confirmation, Kept on judgment**: sources and call counts; every extrapolated or unverified entry in the batch, per group; the audit flags you expect to remain (thin specialist lists) with the reason. The `-DryRun` of Phase 3 prints them: the `AUDIT SUMMARY` and `Flags:` lines of the batch's result. For the expected outputs of the docs steps (`-SyncWiki` counts, rows added), rehearse outside the repository: export HEAD into a scratchpad folder (`git archive HEAD | tar -x -C <folder>`), apply the batch there with `-EditNames <KEY> -Batch <plan>`, replay the docs payload and run `-SyncWiki`. The repository's namelist and docs files stay untouched.
+4. **Docs payload**: the verbatim text a script cannot derive, each with the line it goes after: the workshop cross-reference row, the workshop block (two bullets, 2-3 italic examples, at most 450 characters, no emojis; `WORKSHOP_DESCRIPTION_GUIDELINES.md`, Structure item 3) and the whole wiki page, with a group table whose rows match the suite. The `README.md` row, the `wiki/Home.md` row and the `wiki/_Sidebar.md` line are written by `-SyncWiki <TAG> -Country "<Name>"` in the plan's steps; `<Name>` is the README nation name and, with hyphens for spaces, the wiki page name.
 5. **Implementation steps**: adjust the template's steps to this nation. Each step is one action with its exact command and the output to expect. The last step is the ship step: write its commit message.
 
 ### Phase 3: Gate
@@ -81,7 +81,7 @@ Research results in hand, settle everything and write it down. The dossier is ra
    - every name is in the dossier's verified facts or on the "Author confirmation" list;
    - every extrapolated name is named as such in the plan.
 2. Go through the checklist in §5.
-3. Set `Status: READY`, then run `powershell -File .\build.ps1 -EditNames <TAG> -Batch <plan path> -DryRun`. It applies the batch in memory and writes nothing. It must end with `Dry run OK` and print no `[WARN] Plan:` line. Fix the batch and repeat until it does. Check that the group and name totals match the "Group suite" table.
+3. Set `Status: READY`, then run `powershell -File .\build.ps1 -EditNames <TAG> -Batch <plan path> -DryRun`. It applies the batch in memory and writes nothing. It must end with `Dry run OK` and print no `[WARN] Plan:` line. Fix the batch and repeat until it does. Check that the group and name totals match the "Group suite" table and that its `Flags:` line matches "Kept on judgment".
 
 ### Phase 4: Hand-off (stop here)
 Report to the user and end the turn:

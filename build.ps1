@@ -67,32 +67,43 @@
 .PARAMETER EditNames
     Edit one group of a mod namelist in place without opening the file (e.g. -EditNames LAT -Group INF_01 -Rename "Old=New").
     Supports -Add, -Remove, -RemoveAll, -Rename, -Set, -After, -Section, -RenameSection, -ClearOrdered, -RemoveGroup,
-    -Comment, -Selector, -Fallback, -AddType, -RemoveType, -CanUse, -AddGroup, -Link, -Batch.
+    -Comment, -Selector, -Fallback, -AddType, -RemoveType, -CanUse, -Link, -Countries, -AddGroup, -Batch.
     Prints one summary line per group; add -Verbose to also list the group's names.
 
 .PARAMETER Batch
     With -EditNames: a UTF-8 JSON file holding an array of operations, applied in order and written only if all succeed.
     Each operation is an object with the -EditNames parameter names as keys: "group" plus any of "add", "remove",
     "rename", "set", "after", "section", "renameSection", "selector", "fallback", "addType", "removeType", "canUse",
-    "removeAll", "clearOrdered", "removeGroup", "comment", "addGroup", "link". List values are a JSON array (items kept
-    whole) or one "A; B" string. Use it for more than two edits and for names with apostrophes or quotes.
+    "removeAll", "clearOrdered", "removeGroup", "comment", "addGroup", "link", "countries". List values are a JSON
+    array (items kept whole) or one "A; B" string. Use it for more than two edits and for names with apostrophes or quotes.
     A .md file is read as a plan: the operations are its ```json batch fenced blocks, in document order.
-    A first operation { "newFile": true, "header": "<text>" } creates the namelist file of a new nation.
-    Add -DryRun to run the batch in memory and print the summary lines and totals without writing the file; for a
-    plan (.md) it also warns when the plan's Status is PLANNING or a "<!-- TODO:" section is unfilled. Syntax
-    validation still happens in -Check after the batch is applied.
+    A first operation { "newFile": true, "header": "<text>" } creates the namelist file of a new nation; with
+    "replace": true it starts an existing file afresh (a full re-author: the batch then adds every group again, and
+    templates keep the tags it adds back). An operation { "header": "<text>" } alone replaces an existing file's header.
+    Add -DryRun to run the batch in memory and print the summary lines, totals, the AUDIT SUMMARY line and the flags
+    the result would carry, without writing the file; for a plan (.md) it also warns when the plan's Status is
+    PLANNING or a "<!-- TODO:" section is unfilled. Syntax validation still happens in -Check after the batch is applied.
 
 .PARAMETER AddGroup
     With -EditNames: create the group named by -Group from -Selector, -AddType and -Fallback (all required), with
     optional -CanUse (default always = yes), -Link, -Add, -Comment and -After <existing group> (default: end of file).
-    Refuses a tag that exists anywhere in the mod and invalid division type tokens.
+    Shorthand (-Group INF_01) gets the file's prefix; a tag of the nation's vanilla file is kept as written, so the
+    SPR file can override vanilla's SPA_INF_01. Refuses a tag that exists anywhere in the mod and invalid division type tokens.
 
 .PARAMETER Link
-    With -EditNames -AddGroup: existing group the new group shares numbering with (link_numbering_with).
+    With -EditNames: the group(s) the edited or new group shares numbering with (link_numbering_with), e.g.
+    "INF_01; GAR_01". On an existing group it replaces the group's link, or its dead commented link. Each target must
+    exist when the operation runs, so in a batch link a group after the operation that adds its partner.
+
+.PARAMETER Countries
+    With -EditNames: tags to add to the group's for_countries ("RAJ; AST"), for a group shared by several nations
+    (guide section 2). Refuses a tag the game does not define (checked when the game is installed).
 
 .PARAMETER Check
     One compact pass for a TAG (e.g. -Check FIN): -ValidateOnly, -Test, the -Audit summary with flag and docs warnings,
     a refresh of the audit plan in progress, and -DiffNames counts. About 10 lines; failures and warnings in full.
+    The refresh is skipped, with a warning naming it, while another plan for the nation is live (Status not DONE in
+    docs/plans): the table is the whole file's diff and would list that plan's groups too.
 
 .PARAMETER RemoveAll
     With -EditNames: empty the ordered block first, so -Add can rewrite the whole list in one call. Needs -Add.
@@ -104,11 +115,13 @@
 
 .PARAMETER RemoveGroup
     With -EditNames: delete the whole group (and the comment lines directly above it). Refused while another group's
-    link_numbering_with points at it. Removing a tag breaks saved division templates; use only when asked.
+    link_numbering_with points at it. Removing a tag breaks saved division templates; use only when asked. A batch that
+    removes a tag and adds it again (a re-author) does not warn: the warning names only the tags gone at its end.
 
 .PARAMETER Comment
-    With -EditNames: replace the comment lines directly above the group. Lines split on newlines or a literal "\n";
-    a banner plus a blank line adds a section banner (e.g. "# ===== Cavalry =====\n\nOverrides vanilla FRA_CAV_01.").
+    With -EditNames: replace the comment lines directly above the group, or the comment above one blank line before it
+    (banner, comment, blank line, group). Lines split on newlines or a literal "\n"; a banner plus a blank line adds a
+    section banner (e.g. "# ===== Cavalry =====\n\nOverrides vanilla FRA_CAV_01.").
 
 .PARAMETER SetHeader
     Replace the file header (comment lines before the first group) of zz_INEX_<TAG>_names_divisions.txt with -HeaderText.
@@ -322,6 +335,9 @@ param(
     [string]$Link,
 
     [Parameter(ParameterSetName = 'EditNames')]
+    [string]$Countries,
+
+    [Parameter(ParameterSetName = 'EditNames')]
     [string]$Add,
 
     [Parameter(ParameterSetName = 'EditNames')]
@@ -440,12 +456,23 @@ function Write-Err    { param([string]$msg) Write-Host "  [ERROR] $msg" -Foregro
 $stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
 
 # --- Valid division_types tokens (line combat subunits), shared by validation and -EditNames ---
+# The line battalions of vanilla common/units (1.19.3); a template takes a group by its line battalions [NAM-026].
+# artillery, anti_air, anti_tank and rocket_artillery are support-company ids, which no template matches; they stay
+# until the groups that use them are retagged (docs/plans/2026-10-27-division-types-retag.md).
 $ValidDivisionTypes = @(
     'infantry', 'cavalry', 'motorized', 'mechanized', 'marine', 'mountaineers', 'paratrooper',
     'light_armor', 'medium_armor', 'heavy_armor', 'super_heavy_armor', 'modern_armor',
-    'amphibious_armor', 'amphibious_mechanized', 'artillery', 'anti_air', 'anti_tank',
-    'rocket_artillery', 'motorized_rocket_artillery', 'irregular_infantry', 'militia',
-    'camelry', 'ranger_battalion', 'penal_battalion'
+    'amphibious_armor', 'amphibious_mechanized', 'irregular_infantry', 'militia',
+    'camelry', 'ranger_battalion', 'penal_battalion', 'armored_car', 'bicycle_battalion',
+    'artillery_brigade', 'mot_artillery_brigade', 'rocket_artillery_brigade', 'mot_rocket_artillery_brigade',
+    'motorized_rocket_brigade', 'anti_air_brigade', 'mot_anti_air_brigade', 'anti_tank_brigade', 'mot_anti_tank_brigade',
+    'light_tank_destroyer_brigade', 'medium_tank_destroyer_brigade', 'heavy_tank_destroyer_brigade',
+    'super_heavy_tank_destroyer_brigade', 'modern_tank_destroyer_brigade',
+    'light_sp_artillery_brigade', 'medium_sp_artillery_brigade', 'heavy_sp_artillery_brigade',
+    'super_heavy_sp_artillery_brigade', 'modern_sp_artillery_brigade',
+    'light_sp_anti_air_brigade', 'medium_sp_anti_air_brigade', 'heavy_sp_anti_air_brigade',
+    'super_heavy_sp_anti_air_brigade', 'modern_sp_anti_air_brigade',
+    'artillery', 'anti_air', 'anti_tank', 'rocket_artillery'
 )
 
 # --- Locate Directories ---
@@ -719,6 +746,16 @@ function Find-Hoi4Install {
     return $null
 }
 
+# --- Helper: The country tags the game defines (common/country_tags); empty without the game ---
+function Get-Hoi4CountryTags {
+    param([string]$Hoi4Dir)
+    $dir = if ($Hoi4Dir) { Join-Path $Hoi4Dir 'common\country_tags' } else { $null }
+    if (-not $dir -or -not (Test-Path $dir)) { return @() }
+    return @(Get-ChildItem -Path $dir -Filter '*.txt' | ForEach-Object {
+        [regex]::Matches([System.IO.File]::ReadAllText($_.FullName, [System.Text.Encoding]::UTF8), '(?m)^[ \t]*([A-Z][A-Z0-9]{2})[ \t]*=') | ForEach-Object { $_.Groups[1].Value }
+    } | Select-Object -Unique)
+}
+
 # --- Helper: Count ordered entries in a comment-stripped group block ---
 # Tolerates nested entry braces and reports malformed entries (e.g. a missing opening quote,
 # as in vanilla FIN_GAR_02) instead of silently skipping them.
@@ -915,6 +952,62 @@ function Test-FallbackStub {
     return ($Name -match $rx)
 }
 
+# --- Helper: Value of a Roman numeral; $null when the text is not a well-formed one ---
+function ConvertFrom-RomanNumeral {
+    param([string]$Text)
+    if (-not $Text -or $Text -cnotmatch '^M{0,3}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$') { return $null }
+    $vals = @{ [char]'I' = 1; [char]'V' = 5; [char]'X' = 10; [char]'L' = 50; [char]'C' = 100; [char]'D' = 500; [char]'M' = 1000 }
+    $total = 0; $prev = 0
+    $chars = $Text.ToCharArray()
+    for ($i = $chars.Count - 1; $i -ge 0; $i--) {
+        $v = $vals[$chars[$i]]
+        if ($v -lt $prev) { $total -= $v } else { $total += $v; $prev = $v }
+    }
+    return $total
+}
+
+# --- Helper: Roman numeral of a number, as the game writes %s ---
+function ConvertTo-RomanNumeral {
+    param([int]$Number)
+    $out = ''
+    foreach ($pair in @(@(1000, 'M'), @(900, 'CM'), @(500, 'D'), @(400, 'CD'), @(100, 'C'), @(90, 'XC'), @(50, 'L'), @(40, 'XL'), @(10, 'X'), @(9, 'IX'), @(5, 'V'), @(4, 'IV'), @(1, 'I'))) {
+        while ($Number -ge $pair[0]) { $out += $pair[1]; $Number -= $pair[0] }
+    }
+    return $out
+}
+
+# --- Helper: Quoted identities ('Tali' or \"Tali\") reused across groups under different division numbers ---
+# The same number carrying its nickname into another group (e.g. USA 1st Infantry and 1st Motorized 'Big Red One')
+# is intended lineage and not reported. Returns @{ Identity; Groups } per shared identity, sorted.
+# -IncludeUnnumbered also reports an identity that an unnumbered entry carries ("Festungs-Division 'Aachen'"), for the
+# check across a nation's files, where a reused honorific is rarely lineage.
+function Get-SharedIdentities {
+    param([object[]]$Groups = @(), [switch]$IncludeUnnumbered)
+    $identityUses = @{}
+    foreach ($g in $Groups) {
+        for ($ei = 0; $ei -lt @($g.Entries).Count; $ei++) {
+            $e = @($g.Entries)[$ei]
+            # "%d. Division 'X'" carries its key's number
+            $numM = [regex]::Match($e, '^\s*(\d+|%d)')
+            $num = if (-not $numM.Success) { '-' } elseif ($numM.Groups[1].Value -eq '%d' -and $g.EntryKeys) { "$(@($g.EntryKeys)[$ei])" } elseif ($numM.Groups[1].Value -eq '%d') { '-' } else { $numM.Groups[1].Value }
+            # Quotes must sit on word boundaries so apostrophes inside a nickname ('The King's Own') are kept
+            foreach ($m in [regex]::Matches($e, "(?<![\p{L}\p{N}])'(.+?)'(?![\p{L}\p{N}])|\\""([^""\\]+)\\""")) {
+                $id = if ($m.Groups[1].Success) { $m.Groups[1].Value } else { $m.Groups[2].Value }
+                if (-not $identityUses.ContainsKey($id)) { $identityUses[$id] = [System.Collections.Generic.List[psobject]]::new() }
+                $identityUses[$id].Add([PSCustomObject]@{ Tag = $g.Tag; Num = $num })
+            }
+        }
+    }
+    return , @($identityUses.Keys | Sort-Object | ForEach-Object {
+        $uses = $identityUses[$_]
+        $tags = @($uses | ForEach-Object { $_.Tag } | Select-Object -Unique)
+        # Unnumbered or %d-numbered entries cannot be compared, so they do not count as a different number
+        $nums = @($uses | Where-Object { $_.Num -ne '-' } | ForEach-Object { $_.Num } | Select-Object -Unique)
+        $unnumbered = $IncludeUnnumbered -and @($uses | Where-Object { $_.Num -eq '-' }).Count -gt 0
+        if ($tags.Count -gt 1 -and ($nums.Count -gt 1 -or $unnumbered)) { [PSCustomObject]@{ Identity = $_; Groups = $tags } }
+    })
+}
+
 # --- Helper: Heuristic quality audit of an INEX namelist file ---
 # Returns file-level flags plus per-group metrics and flags. Flags are hints for the
 # hoi4-inex-namelist-audit skill, not invariant errors (those live in Invoke-Validation).
@@ -931,7 +1024,8 @@ function Get-NamelistAuditData {
     }
 
     $singularNouns = @('Division', 'Regiment', 'Brigade', 'Battalion', 'Squadron', 'Detachment', 'Band', 'Group')
-    $todoRegex = '(?i)#.*\b(todo|fixme|placeholder|barely any info|very little info)\b'
+    # "placeholder" is left to STALE_COMMENT: outside a group it names a vanilla stub the file overrides, not a note to self
+    $todoRegex = '(?i)#.*\b(todo|fixme|barely any info|very little info)\b'
     # Quoted string that tolerates escaped nickname quotes, e.g. "Lashkar-e 9-e Zerehi \"Kaveh\""
     $str = '"((?:[^"\\]|\\.)*)"'
     $staleRx = '(?i)\b(fictional|start here|post[- ]?WW(2|II)|placeholder)\b'
@@ -991,17 +1085,27 @@ function Get-NamelistAuditData {
         $canUseM = [regex]::Match($cleanBlock, 'can_use\s*=\s*\{(?<c>(?:[^{}]|\{(?:[^{}]|\{[^{}]*\})*\})*)\}')
         $canUse = if ($canUseM.Success) { ($canUseM.Groups['c'].Value -replace '\s+', ' ').Trim() } else { $null }
 
-        # An entry is a placeholder when it adds nothing over fallback_name or repeats another entry's pattern
-        $fallbackNorm = if ($fallback) { Get-NamePatternKey $fallback } else { $null }
-        $normCounts = @{}
+        # An entry is a placeholder when it adds nothing over fallback_name or, in a 1..N run, only renumbers another
+        # entry (numbered stubs in another format). Keys that are not a run are historical numbers, so the key is the
+        # identity; a quoted honorific or a Roman-numbered suffix ("(II. Korps)") is an identity even when repeated.
+        # Keys past 100 hold unnumbered identities by convention and do not break a run
+        $sortedKeys = @($entryKeys | Where-Object { $_ -le 100 } | Sort-Object -Unique)
+        $isRun = $sortedKeys.Count -gt 0 -and $sortedKeys[0] -eq 1 -and $sortedKeys[-1] -eq $sortedKeys.Count
+        # Only the leading number is the numbering; a later number ("1/38", "z.b.V. 539") is part of the name
+        $repeatKey = { param($n) (($n -replace '%[ds]', '#' -creplace '^\s*(\d+\.?[^\W\d]{0,3}\.?|[IVXLCDM]+\.?)(?=\s)', '#') -replace '\s+', ' ').Trim().ToLowerInvariant() }
+        $repeatCounts = @{}
         foreach ($e in $entries) {
-            $k = Get-NamePatternKey $e
-            if ($normCounts.ContainsKey($k)) { $normCounts[$k]++ } else { $normCounts[$k] = 1 }
+            $k = & $repeatKey $e
+            if ($repeatCounts.ContainsKey($k)) { $repeatCounts[$k]++ } else { $repeatCounts[$k] = 1 }
         }
         $placeholderCount = 0
-        foreach ($e in $entries) {
-            $k = Get-NamePatternKey $e
-            if ($k -eq $fallbackNorm -or $normCounts[$k] -gt 1) { $placeholderCount++ }
+        for ($ei = 0; $ei -lt $entries.Count; $ei++) {
+            $e = $entries[$ei]
+            if (Test-FallbackStub $e $fallback) { $placeholderCount++; continue }
+            $hasIdentity = $e -match "(?<![\p{L}\p{N}])'.+?'(?![\p{L}\p{N}])|\\""[^""\\]+\\"""
+            # A number other than the key starts another series in a mixed list ("1ere Brigade de Spahis" at key 6)
+            $ownNumber = $e -notmatch '^\s*(\d+)' -or [int]$matches[1] -eq [int]$entryKeys[$ei]
+            if ($isRun -and -not $hasIdentity -and $ownNumber -and $repeatCounts[(& $repeatKey $e)] -gt 1) { $placeholderCount++ }
         }
         $authoredCount = $entries.Count - $placeholderCount
 
@@ -1009,7 +1113,8 @@ function Get-NamelistAuditData {
         # Flag -> the entries or comments that raised it, for flags a reader cannot locate from the tag alone
         $flagDetails = @{}
         if ($entries.Count -gt 0 -and ($placeholderCount / $entries.Count) -gt 0.5) { $flags.Add('PLACEHOLDER_ENTRIES') }
-        if ($authoredCount -lt 10) { $flags.Add('LOW_DEPTH') }
+        # A group on historical keys is as deep as history made it
+        if ($authoredCount -lt 10 -and ($isRun -or $entries.Count -eq 0)) { $flags.Add('LOW_DEPTH') }
         if ($selector) {
             $lastWord = ($selector.Trim() -split '\s+')[-1]
             if ($singularNouns -ccontains $lastWord) { $flags.Add('SELECTOR_SINGULAR') }
@@ -1049,6 +1154,22 @@ function Get-NamelistAuditData {
             }
         }
         if ($badOrdinal) { $flags.Add('ORDINAL_MISMATCH') }
+        # A literal name that starts with another number than its key repeats the name the game shows at that number
+        # (the entry written there, else the fallback), e.g. "21 Dywizja Piechoty AK" at key 11 and again from the
+        # fallback at 21. A lower number naming another formation in a mixed list is intended and not reported.
+        $shownAt = @{}
+        for ($ei = 0; $ei -lt $entries.Count; $ei++) { $shownAt[[int]$entryKeys[$ei]] = $entries[$ei] }
+        $keyMismatches = @(for ($ei = 0; $ei -lt $entries.Count; $ei++) {
+            $k = [int]$entryKeys[$ei]
+            if ($entries[$ei] -match '%[ds]') { continue }
+            $num = $null
+            if ($entries[$ei] -match '^\s*(\d+)(?!\d)') { $num = [int]$matches[1] }
+            elseif ($entries[$ei] -cmatch '^\s*([IVXLCDM]+)\.?\s') { $num = ConvertFrom-RomanNumeral $matches[1] }
+            if ($null -eq $num -or $num -eq $k -or $num -lt 1) { continue }
+            $shown = if ($shownAt.ContainsKey($num)) { $shownAt[$num] } else { $fallback }
+            if ($shown -and ($shown -replace '%d', $num -replace '%s', (ConvertTo-RomanNumeral $num)) -ceq $entries[$ei]) { "$k=$($entries[$ei])" }
+        })
+        if ($keyMismatches.Count -gt 0) { $flags.Add('KEY_NUMBER_MISMATCH'); $flagDetails['KEY_NUMBER_MISMATCH'] = $keyMismatches }
         # Outliers only: long honorific names are common and intentional (e.g. GER cavalry)
         if (@($entries | Where-Object { ($_ -replace '%[ds]', '10' -replace '\\"', '"').Length -gt 60 }).Count -gt 0) {
             $flags.Add('NAME_LONG')
@@ -1072,17 +1193,28 @@ function Get-NamelistAuditData {
         })
     }
 
-    # Plain variant: a group with no authored names (fallback-only, or writing its fallback over vanilla's keys)
-    # kept beside a nicknamed sibling of the same division type that shares its numbering (directly or through a common anchor)
+    # Plain variant: a group kept beside a nicknamed sibling of the same division type that shares its numbering
+    # (directly or through a common anchor). It has no authored names (fallback-only, or writing its fallback over
+    # vanilla's keys), unless its partner is a "(Named)" group that links to it or shares its fallback: then it may
+    # keep official titles or irregular ordinals without nicknames. A "(Named)" sibling, one that links to the
+    # group directly first, is preferred over another list on the same numbering.
+    $namedRx = '\(Named\)\s*$'
     foreach ($g in $groups) {
-        if ($g.AuthoredCount -gt 0) { continue }
-        $sibling = $groups | Where-Object {
+        $candidates = @($groups | Where-Object {
             $h = $_
             $h.Tag -ne $g.Tag -and $h.AuthoredCount -gt 0 -and
             @($h.DivisionTypes | Where-Object { $g.DivisionTypes -contains $_ }).Count -gt 0 -and
             ($h.LinkTargets -contains $g.Tag -or $g.LinkTargets -contains $h.Tag -or
              @($h.LinkTargets | Where-Object { $g.LinkTargets -contains $_ }).Count -gt 0)
-        } | Select-Object -First 1
+        })
+        $named = @($candidates | Where-Object { $_.Selector -match $namedRx })
+        if ($g.AuthoredCount -gt 0) {
+            if ($g.Selector -match $namedRx) { continue }
+            $named = @($named | Where-Object { $_.LinkTargets -contains $g.Tag -or $_.Fallback -ceq $g.Fallback })
+            if ($named.Count -eq 0) { continue }
+            $candidates = $named
+        }
+        $sibling = @($named | Where-Object { $_.LinkTargets -contains $g.Tag }) + $named + $candidates | Select-Object -First 1
         if ($sibling) {
             $g.PlainVariantOf = $sibling.Tag
             [void]$g.Flags.Remove('PLACEHOLDER_ENTRIES')
@@ -1097,37 +1229,17 @@ function Get-NamelistAuditData {
         if ($g.Selector -and @($selectorCounts | Where-Object { $_.Name -ceq $g.Selector -and $_.Count -gt 1 }).Count -gt 0) {
             $g.Flags.Add('SELECTOR_DUPLICATE')
         }
-        # A mobile group that other groups link to is a numbering anchor, not an orphan
+        # A mobile group that other groups link to is a numbering anchor, not an orphan. The role is read from a plain
+        # <TAG>_MOT_<NN> tag; a suffixed vanilla tag (GER_MEC_01_COMMUNIST) or a government-gated group is its own series.
         $isAnchor = @($groups | Where-Object { $_.LinkTargets -contains $g.Tag }).Count -gt 0
-        if ($hasInfAnchor -and $g.Tag -match '_(MOT|MEC)_' -and $g.LinkTargets.Count -eq 0 -and -not $isAnchor) {
+        if ($hasInfAnchor -and $g.Tag -match '^[A-Za-z]+_(MOT|MEC)_\d+$' -and $g.CanUse -notmatch 'has_government' -and
+            $g.LinkTargets.Count -eq 0 -and -not $isAnchor) {
             $g.Flags.Add('UNLINKED_MOBILE')
         }
     }
 
-    # Quoted identities ('Tali' or \"Tali\") reused across groups under different division
-    # numbers. The same number carrying its nickname into another group (e.g. USA 1st Infantry
-    # and 1st Motorized 'Big Red One') is intended lineage and not reported. Region reuse is
-    # often intended too, so this is one file-level flag with the list, not per-group flags.
-    $identityUses = @{}
-    foreach ($g in $groups) {
-        foreach ($e in $g.Entries) {
-            $numM = [regex]::Match($e, '^\s*(\d+)')
-            $num = if ($numM.Success) { $numM.Groups[1].Value } else { '-' }
-            # Quotes must sit on word boundaries so apostrophes inside a nickname ('The King's Own') are kept
-            foreach ($m in [regex]::Matches($e, "(?<![\p{L}\p{N}])'(.+?)'(?![\p{L}\p{N}])|\\""([^""\\]+)\\""")) {
-                $id = if ($m.Groups[1].Success) { $m.Groups[1].Value } else { $m.Groups[2].Value }
-                if (-not $identityUses.ContainsKey($id)) { $identityUses[$id] = [System.Collections.Generic.List[psobject]]::new() }
-                $identityUses[$id].Add([PSCustomObject]@{ Tag = $g.Tag; Num = $num })
-            }
-        }
-    }
-    $sharedIdentities = @($identityUses.Keys | Sort-Object | ForEach-Object {
-        $uses = $identityUses[$_]
-        $tags = @($uses | ForEach-Object { $_.Tag } | Select-Object -Unique)
-        # Unnumbered or %d-numbered entries cannot be compared, so they do not count as a different number
-        $nums = @($uses | Where-Object { $_.Num -ne '-' } | ForEach-Object { $_.Num } | Select-Object -Unique)
-        if ($tags.Count -gt 1 -and $nums.Count -gt 1) { [PSCustomObject]@{ Identity = $_; Groups = $tags } }
-    })
+    # Region reuse is often intended, so this is one file-level flag with the list, not per-group flags
+    $sharedIdentities = Get-SharedIdentities -Groups $groups
     if ($sharedIdentities.Count -gt 0) { $fileFlags.Add('IDENTITY_REPEAT') }
 
     # Comments outside any group block (file header, section banners)
@@ -1352,7 +1464,7 @@ function Get-OrphanHeaderLines {
     return , $orphans
 }
 
-# --- Helper: Replace the comment lines directly above a group (no blank line between) with new text ---
+# --- Helper: Replace the comment lines directly above a group (or above one blank line before it) with new text ---
 # Comment lines are split on newlines or a literal "\n"; an empty line stays blank, a line without '#' gets "# ".
 # Include a banner plus a blank line to add a section banner above the group's own comment.
 function Set-NamelistGroupComment {
@@ -1365,14 +1477,35 @@ function Set-NamelistGroupComment {
     $nl = if ($Text.Contains("`r`n")) { "`r`n" } else { "`n" }
     $head = [regex]::Match($Text, "(?m)^[ \t]*$([regex]::Escape($GroupTag))[ \t]*=\s*\{")
     if (-not $head.Success) { throw "Group $GroupTag not found" }
+    $lineBefore = {
+        param($at)
+        $prevEnd = $at - 1
+        $prevStart = $Text.LastIndexOf("`n", [Math]::Max(0, $prevEnd - 1)) + 1
+        return @{ Start = $prevStart; Text = $Text.Substring($prevStart, $prevEnd - $prevStart).Trim() }
+    }
     $from = $head.Index
     while ($from -gt 0) {
-        $prevEnd = $from - 1
-        $prevStart = $Text.LastIndexOf("`n", [Math]::Max(0, $prevEnd - 1)) + 1
-        if ($Text.Substring($prevStart, $prevEnd - $prevStart).Trim().StartsWith('#')) { $from = $prevStart } else { break }
+        $prev = & $lineBefore $from
+        if ($prev.Text.StartsWith('#')) { $from = $prev.Start } else { break }
     }
     $lines = @($Comment -split '\\n|\r?\n' | ForEach-Object { if (-not $_.Trim()) { '' } elseif ($_.TrimStart().StartsWith('#')) { $_.TrimStart() } else { "# $($_.Trim())" } })
     $block = ($lines -join $nl) + $nl
+
+    # Layout "banner, comment, blank line, group" (zz_INEX_USA): the comment above the single blank line is the
+    # group's own when it is not a section banner; replace it in place and keep the blank line and the banner
+    $bannerRx = '^#\s*(={3,}|-{3,})'
+    if ($from -eq $head.Index -and $from -gt 0) {
+        $blank = & $lineBefore $from
+        if (-not $blank.Text -and $blank.Start -gt 0) {
+            $runEnd = $blank.Start
+            $runStart = $runEnd
+            while ($runStart -gt 0) {
+                $prev = & $lineBefore $runStart
+                if ($prev.Text.StartsWith('#') -and $prev.Text -notmatch $bannerRx) { $runStart = $prev.Start } else { break }
+            }
+            if ($runStart -lt $runEnd) { return $Text.Substring(0, $runStart) + $block + $Text.Substring($runEnd) }
+        }
+    }
     $needsBlank = $from -gt 0 -and $lines[0] -ne '' -and $Text.Substring(0, $from).TrimEnd(" ", "`t") -notmatch '(\r?\n){2}\z'
     if ($needsBlank) { $block = $nl + $block }
     return $Text.Substring(0, $from) + $block + $Text.Substring($head.Index)
@@ -1419,6 +1552,8 @@ function Edit-NamelistGroupText {
         [string[]]$AddTypes = @(),
         [string[]]$RemoveTypes = @(),
         [string]$CanUse,
+        [string[]]$Link = @(),
+        [string[]]$Countries = @(),
         [switch]$RemoveAll,
         [switch]$ClearOrdered,
         [switch]$RemoveGroup,
@@ -1426,7 +1561,7 @@ function Edit-NamelistGroupText {
     )
 
     if ($After -and $Section) { throw "Use -After or -Section, not both" }
-    if ($RemoveGroup -and ($Add.Count -or $Remove.Count -or $Rename.Count -or $Set.Count -or $Selector -or $Fallback -or $CanUse -or $AddTypes.Count -or $RemoveTypes.Count -or $RemoveAll -or $ClearOrdered -or $Comment)) {
+    if ($RemoveGroup -and ($Add.Count -or $Remove.Count -or $Rename.Count -or $Set.Count -or $Selector -or $Fallback -or $CanUse -or $AddTypes.Count -or $RemoveTypes.Count -or $Link.Count -or $Countries.Count -or $RemoveAll -or $ClearOrdered -or $Comment)) {
         throw "-RemoveGroup cannot be combined with other edits"
     }
     if ($ClearOrdered -and ($Add.Count -or $Remove.Count -or $Rename.Count -or $Set.Count -or $RemoveAll)) {
@@ -1593,9 +1728,44 @@ function Edit-NamelistGroupText {
         }
     }
 
+    # 3b. Add tags to for_countries (a shared group, guide section 2)
+    if ($Countries.Count -gt 0) {
+        $mCountries = [regex]::Match($preBlock, '(?m)^([ \t]*for_countries\s*=\s*\{)([^}]*)(\})')
+        if ($mCountries.Success) {
+            $tags = [System.Collections.Generic.List[string]]::new()
+            foreach ($t in @($mCountries.Groups[2].Value -split '\s+' | Where-Object { $_ }) + $Countries) { if (-not $tags.Contains($t)) { $tags.Add($t) } }
+            $preBlock = $preBlock.Substring(0, $mCountries.Index) + "$($mCountries.Groups[1].Value) $($tags -join ' ') }" + $preBlock.Substring($mCountries.Index + $mCountries.Length)
+        } else {
+            $line = "`tfor_countries = { $(@($Countries | Select-Object -Unique) -join ' ') }"
+            if ($preBlock -match '(?m)^[ \t]*name\s*=\s*"[^"]*"[ \t]*\r?\n') {
+                $preBlock = [regex]::Replace($preBlock, '(?m)(^[ \t]*name\s*=\s*"[^"]*"[ \t]*\r?\n)', "`${1}$line$nl", 1)
+            } else {
+                $preBlock = [regex]::Replace($preBlock, "(?m)(^[ \t]*$([regex]::Escape($GroupTag))[ \t]*=\s*\{[ \t]*`r?`n)", "`${1}$line$nl", 1)
+            }
+        }
+    }
+
     # Clean dead commented self-links in group body
     $preBlock = [regex]::Replace($preBlock, '(?m)^[ \t]*#[ \t]*Number reservation system will tie to another group\.[ \t]*\r?\n?', '')
     $preBlock = [regex]::Replace($preBlock, '(?m)^[ \t]*#[ \t]*link_numbering_with\s*=\s*\{\s*' + [regex]::Escape($GroupTag) + '\s*\}[ \t]*\r?\n?', '')
+
+    # 3c. Set link_numbering_with: replaces an active or commented link, else goes after division_types
+    if ($Link.Count -gt 0) {
+        if ($Link -contains $GroupTag) { throw "$GroupTag cannot link to itself (link_numbering_with points at another group)" }
+        $linkLine = "`tlink_numbering_with = { $(@($Link | Select-Object -Unique) -join ' ') }"
+        $preBlock = [regex]::Replace($preBlock, '(?m)^[ \t]*#[ \t]*link_numbering_with\s*=\s*\{[^}]*\}[ \t]*\r?\n?', '')
+        if ($preBlock -match '(?m)^[ \t]*link_numbering_with\s*=\s*\{[^}]*\}') {
+            $preBlock = [regex]::Replace($preBlock, '(?m)^[ \t]*link_numbering_with\s*=\s*\{[^}]*\}', $linkLine, 1)
+        } elseif ($preBlock -match '(?m)^[ \t]*division_types\s*=\s*\{[^}]*\}[ \t]*\r?\n') {
+            $preBlock = [regex]::Replace($preBlock, '(?m)(^[ \t]*division_types\s*=\s*\{[^}]*\}[ \t]*\r?\n)', "`${1}$nl$linkLine$nl", 1)
+        } elseif ($preBlock -match '(?m)^[ \t]*fallback_name\s*=') {
+            $preBlock = [regex]::Replace($preBlock, '(?m)(^[ \t]*fallback_name\s*=)', "$linkLine$nl$nl`$1", 1)
+        } else {
+            $preBlock += "$linkLine$nl"
+        }
+    }
+    # Removed lines must not leave a run of blank lines behind
+    $preBlock = [regex]::Replace($preBlock, '(\r?\n[ \t]*){3,}(?=\S)', "$nl$nl")
 
     # Fallback-only group: drop the whole ordered block, plus the comment and blank lines that introduce it
     if ($ClearOrdered) {
@@ -1828,7 +1998,7 @@ function Add-NamelistGroupText {
         [string[]]$Types = @(),
         [string]$Fallback,
         [string]$CanUse,
-        [string]$Link,
+        [string[]]$Link = @(),
         [string[]]$Add = @(),
         [string]$Comment,
         [string]$AfterGroup,
@@ -1852,7 +2022,7 @@ function Add-NamelistGroupText {
     $known = @((Get-NamelistAuditData -Text $Text).Groups | ForEach-Object { $_.Tag })
     if ($known -contains $GroupTag) { throw "Group $GroupTag already exists in this file" }
     if ($TakenTags -contains $GroupTag) { throw "Group tag $GroupTag is already used in another namelist file of the mod" }
-    if ($Link -and $known -notcontains $Link) { throw "Link target $Link not found in this file" }
+    foreach ($l in $Link) { if ($known -notcontains $l) { throw "Link target $l not found in this file" } }
     if ($AfterGroup -and $known -notcontains $AfterGroup) { throw "-After group $AfterGroup not found in this file" }
 
     $nl = if ($Text.Contains("`r`n")) { "`r`n" } else { "`n" }
@@ -1863,7 +2033,7 @@ function Add-NamelistGroupText {
     $attributes.Add("`tcan_use = $gate")
     $formattedTypes = ($Types | ForEach-Object { "`"$_`"" }) -join ' '
     $attributes.Add("`tdivision_types = { $formattedTypes }")
-    if ($Link) { $attributes.Add("`tlink_numbering_with = { $Link }") }
+    if ($Link.Count) { $attributes.Add("`tlink_numbering_with = { $($Link -join ' ') }") }
     $attributes.Add("`tfallback_name = `"$Fallback`"")
     if ($Add.Count -gt 0) { $attributes.Add("`tordered =$nl`t{$nl`t}") }
     $block = "$GroupTag = $nl{$nl" + ($attributes -join "$nl$nl") + "$nl}"
@@ -1895,7 +2065,7 @@ function ConvertTo-NamelistEditOp {
 
     $known = 'group', 'add', 'remove', 'rename', 'set', 'after', 'section', 'renameSection', 'selector', 'fallback',
         'addType', 'removeType', 'canUse', 'removeAll', 'clearOrdered', 'removeGroup', 'comment', 'addGroup', 'link',
-        'newFile', 'header'
+        'countries', 'newFile', 'replace', 'header'
     $values = @{}
     if ($Source -is [System.Collections.IDictionary]) {
         foreach ($key in $Source.Keys) { $values["$key"] = $Source[$key] }
@@ -1931,12 +2101,14 @@ function ConvertTo-NamelistEditOp {
         Fallback      = & $text $values['fallback']
         CanUse        = & $text $values['canUse']
         Comment       = & $text $values['comment']
-        Link          = & $text $values['link']
+        Link          = & $list $values['link']
+        Countries     = & $list $values['countries']
         RemoveAll     = & $flag $values['removeAll']
         ClearOrdered  = & $flag $values['clearOrdered']
         RemoveGroup   = & $flag $values['removeGroup']
         AddGroup      = & $flag $values['addGroup']
         NewFile       = & $flag $values['newFile']
+        Replace       = & $flag $values['replace']
         Header        = & $text $values['header']
     }
 }
@@ -1944,12 +2116,17 @@ function ConvertTo-NamelistEditOp {
 # --- Helper: Apply edit operations to namelist text, in order ---
 # Returns the new text, one summary line per edited group, and the tags that remain to be listed.
 # Throws on the first operation that cannot be applied, so the caller writes nothing.
+# -VanillaTags are the group tags of the nation's vanilla file: -AddGroup keeps one of them as given even when its
+# prefix is not the file's (vanilla's SPR file holds SPA_INF_01). -CountryTags are the tags the game defines, checked
+# by "countries" when known.
 function Invoke-NamelistEditOps {
     param(
         [string]$Text,
         [string]$Tag,
         [object[]]$Ops = @(),
-        [string[]]$TakenTags = @()
+        [string[]]$TakenTags = @(),
+        [string[]]$VanillaTags = @(),
+        [string[]]$CountryTags = @()
     )
 
     $country = ($Tag -split '_')[0]
@@ -1961,16 +2138,27 @@ function Invoke-NamelistEditOps {
         $where = if ($Ops.Count -gt 1) { "op $($n + 1) " } else { '' }
         try {
             if ($op.NewFile) {
-                # Batch only: the first operation of a new nation's plan creates the file from its header
+                # Batch only: the first operation of a new nation's plan creates the file from its header;
+                # with "replace" it starts an existing file afresh (a full re-author), keeping its line endings
                 if ($n -gt 0) { throw '"newFile" must be the first operation' }
-                if ($Text.Trim()) { throw "`"newFile`": zz_INEX_${Tag}_names_divisions.txt already exists" }
+                if ($Text.Trim() -and -not $op.Replace) { throw "`"newFile`": zz_INEX_${Tag}_names_divisions.txt already exists; add `"replace`": true to start it afresh" }
                 if (-not $op.Header.Trim()) { throw '"newFile" needs "header"' }
-                if ($op.Groups.Count -gt 0) { throw '"newFile" takes only "header"' }
+                if ($op.Groups.Count -gt 0) { throw '"newFile" takes only "header" and "replace"' }
+                $existed = [bool]$Text.Trim()
+                $crlf = $Text.Contains("`r`n")
                 $Text = Set-NamelistHeader -Text '' -Header $op.Header
-                $summaries.Add("Created zz_INEX_${Tag}_names_divisions.txt")
+                if ($crlf) { $Text = $Text -replace "(?<!`r)`n", "`r`n" }
+                $summaries.Add($(if ($existed) { "Started zz_INEX_${Tag}_names_divisions.txt afresh" } else { "Created zz_INEX_${Tag}_names_divisions.txt" }))
                 continue
             }
-            if ($op.Header) { throw '"header" applies only to "newFile"; use -SetHeader for an existing file' }
+            if ($op.Replace) { throw '"replace" applies only to "newFile"' }
+            if ($op.Header) {
+                # The header of an existing file, so a re-author needs no -SetHeader step after the batch
+                if ($op.Groups.Count -gt 0) { throw '"header" takes no "group"; give it an operation of its own' }
+                $Text = Set-NamelistHeader -Text $Text -Header $op.Header
+                $summaries.Add("Set header of zz_INEX_${Tag}_names_divisions.txt")
+                continue
+            }
             if ($op.Groups.Count -eq 0) { throw 'No -Group specified' }
             $data = Get-NamelistAuditData -Text $Text
             $known = @($data.Groups | ForEach-Object { $_.Tag })
@@ -1987,22 +2175,28 @@ function Invoke-NamelistEditOps {
                     throw '-AddGroup takes only -Selector, -AddType, -Fallback, -CanUse, -Link, -Add, -Comment and -After'
                 }
                 $newTag = $op.Groups[0].ToUpper()
-                if ($newTag -notmatch "^$([regex]::Escape($country))_") { $newTag = "${country}_$newTag" }
-                $link = if ($op.Link) { & $resolve $op.Link } else { $null }
+                # Shorthand gets the file's prefix; a vanilla tag of the nation's file is kept as written
+                $vanillaTag = @($VanillaTags | Where-Object { $_ -eq $newTag }) | Select-Object -First 1
+                if ($vanillaTag) { $newTag = $vanillaTag } elseif ($newTag -notmatch "^$([regex]::Escape($country))_") { $newTag = "${country}_$newTag" }
+                $links = @($op.Link | ForEach-Object { & $resolve $_ })
                 $afterGroup = if ($op.After) { & $resolve $op.After } else { $null }
-                $Text = Add-NamelistGroupText -Text $Text -GroupTag $newTag -Country $country -Selector $op.Selector -Types $op.AddTypes -Fallback $op.Fallback -CanUse $op.CanUse -Link $link -Add $op.Add -Comment $op.Comment -AfterGroup $afterGroup -TakenTags $TakenTags
+                $Text = Add-NamelistGroupText -Text $Text -GroupTag $newTag -Country $country -Selector $op.Selector -Types $op.AddTypes -Fallback $op.Fallback -CanUse $op.CanUse -Link $links -Add $op.Add -Comment $op.Comment -AfterGroup $afterGroup -TakenTags $TakenTags
                 $nameCount = @($op.Add | Where-Object { $_ -notmatch '^#' }).Count
-                $linkStr = if ($link) { ", links $link" } else { '' }
+                $linkStr = if ($links.Count) { ", links $($links -join ' ')" } else { '' }
                 $summaries.Add("Added ${newTag}: `"$($op.Selector)`" [$($op.AddTypes -join ' ')], $nameCount name(s)$linkStr")
                 $edited.Add($newTag)
                 continue
             }
 
-            $hasAction = ($op.Add.Count + $op.Remove.Count + $op.Rename.Count + $op.Set.Count + $op.RenameSection.Count + $op.AddTypes.Count + $op.RemoveTypes.Count) -gt 0 -or $op.Selector -or $op.Fallback -or $op.CanUse -or $op.RemoveAll -or $op.ClearOrdered -or $op.RemoveGroup -or $op.Comment
+            $hasAction = ($op.Add.Count + $op.Remove.Count + $op.Rename.Count + $op.Set.Count + $op.RenameSection.Count + $op.AddTypes.Count + $op.RemoveTypes.Count + $op.Link.Count + $op.Countries.Count) -gt 0 -or $op.Selector -or $op.Fallback -or $op.CanUse -or $op.RemoveAll -or $op.ClearOrdered -or $op.RemoveGroup -or $op.Comment
             if (-not $hasAction) {
-                throw 'Nothing to do: pass -Add, -Remove, -RemoveAll, -Rename, -Set, -RenameSection, -ClearOrdered, -RemoveGroup, -Comment, -Selector, -Fallback, -AddType, -RemoveType, -CanUse and/or -AddGroup'
+                throw 'Nothing to do: pass -Add, -Remove, -RemoveAll, -Rename, -Set, -RenameSection, -ClearOrdered, -RemoveGroup, -Comment, -Selector, -Fallback, -AddType, -RemoveType, -CanUse, -Link, -Countries and/or -AddGroup'
             }
-            if ($op.Link) { throw '-Link applies only to -AddGroup' }
+            $links = @($op.Link | ForEach-Object { & $resolve $_ })
+            foreach ($c in $op.Countries) {
+                if ($c -cnotmatch '^[A-Z][A-Z0-9]{2}$') { throw "Country tag '$c' must be three capitals or digits (e.g. ENG)" }
+                if ($CountryTags.Count -gt 0 -and $CountryTags -cnotcontains $c) { throw "Country tag '$c' is not defined in the game's common/country_tags" }
+            }
 
             $resolved = [System.Collections.Generic.List[string]]::new()
             foreach ($name in $op.Groups) {
@@ -2020,7 +2214,7 @@ function Invoke-NamelistEditOps {
 
             foreach ($groupTag in $resolved) {
                 try {
-                    $Text = Edit-NamelistGroupText -Text $Text -GroupTag $groupTag -Add $op.Add -Remove $op.Remove -Rename $op.Rename -Set $op.Set -After $op.After -Section $op.Section -RenameSection $op.RenameSection -Selector $op.Selector -Fallback $op.Fallback -AddTypes $op.AddTypes -RemoveTypes $op.RemoveTypes -CanUse $op.CanUse -RemoveAll:$op.RemoveAll -ClearOrdered:$op.ClearOrdered -RemoveGroup:$op.RemoveGroup -Comment $op.Comment
+                    $Text = Edit-NamelistGroupText -Text $Text -GroupTag $groupTag -Add $op.Add -Remove $op.Remove -Rename $op.Rename -Set $op.Set -After $op.After -Section $op.Section -RenameSection $op.RenameSection -Selector $op.Selector -Fallback $op.Fallback -AddTypes $op.AddTypes -RemoveTypes $op.RemoveTypes -CanUse $op.CanUse -Link $links -Countries $op.Countries -RemoveAll:$op.RemoveAll -ClearOrdered:$op.ClearOrdered -RemoveGroup:$op.RemoveGroup -Comment $op.Comment
                 } catch {
                     throw "${groupTag}: $($_.Exception.Message)"
                 }
@@ -2035,6 +2229,8 @@ function Invoke-NamelistEditOps {
                 if ($op.AddTypes.Count) { $metaChanges += "+Types: $($op.AddTypes -join ', ')" }
                 if ($op.RemoveTypes.Count) { $metaChanges += "-Types: $($op.RemoveTypes -join ', ')" }
                 if ($op.CanUse) { $metaChanges += "CanUse='$($op.CanUse)'" }
+                if ($links.Count) { $metaChanges += "Link='$($links -join ' ')'" }
+                if ($op.Countries.Count) { $metaChanges += "+Countries: $($op.Countries -join ', ')" }
                 if ($op.RemoveAll) { $metaChanges += 'RemoveAll' }
                 if ($op.ClearOrdered) { $metaChanges += 'ClearOrdered (fallback-only)' }
                 if ($op.Comment) { $metaChanges += 'Comment' }
@@ -2116,10 +2312,19 @@ function Invoke-NamelistEdit {
         })
     }
 
+    # With the game installed: the nation's vanilla tags (kept as given by -AddGroup) and the game's country tags
+    $vanillaTags = @()
+    $countryTags = @()
+    $hoi4 = Find-Hoi4Install
+    if ($hoi4) {
+        $vanillaFile = Join-Path $hoi4 "common\units\names_divisions\$(($Tag -split '_')[0])_names_divisions.txt"
+        if (Test-Path $vanillaFile) { $vanillaTags = @((Get-NamelistAuditData -Path $vanillaFile).Groups | ForEach-Object { $_.Tag }) }
+        if (@($Ops | Where-Object { $_.Countries.Count }).Count -gt 0) { $countryTags = Get-Hoi4CountryTags -Hoi4Dir $hoi4 }
+    }
+
     $text = if (Test-Path $modFile) { [System.IO.File]::ReadAllText($modFile, [System.Text.Encoding]::UTF8) } else { '' }
     try {
-        if ($creates -and (Test-Path $modFile)) { throw "`"newFile`": zz_INEX_${Tag}_names_divisions.txt already exists" }
-        $result = Invoke-NamelistEditOps -Text $text -Tag $Tag -Ops $Ops -TakenTags $takenTags
+        $result = Invoke-NamelistEditOps -Text $text -Tag $Tag -Ops $Ops -TakenTags $takenTags -VanillaTags $vanillaTags -CountryTags $countryTags
     } catch {
         Write-Err $_.Exception.Message
         return 1
@@ -2129,13 +2334,21 @@ function Invoke-NamelistEdit {
     }
 
     foreach ($line in $result.Summaries) { Write-Host $line -ForegroundColor Green }
-    if (@($Ops | Where-Object { $_.RemoveGroup }).Count -gt 0) {
-        Write-Warn "Removed group tags: saved templates that used them fall back to default names"
+    # A tag removed and added again in the same batch (a re-author) keeps its saved templates
+    $after = Get-NamelistAuditData -Text $result.Text
+    $afterTags = @($after.Groups | ForEach-Object { $_.Tag })
+    $goneTags = @((Get-NamelistAuditData -Text $text).Groups | ForEach-Object { $_.Tag } | Where-Object { $afterTags -cnotcontains $_ })
+    if ($goneTags.Count -gt 0) {
+        Write-Warn "Removed group tags $($goneTags -join ', '): saved templates that used them fall back to default names"
     }
     if ($DryRun) {
-        $after = Get-NamelistAuditData -Text $result.Text
         $names = ($after.Groups | Measure-Object -Property OrderedCount -Sum).Sum
         Write-Host "Dry run OK: $($Ops.Count) operation(s); the file would hold $(@($after.Groups).Count) group(s), $([int]$names) name(s). Nothing written." -ForegroundColor Green
+        # The flags the batch leaves, as -Check will count them: the planner's "Kept on judgment" list
+        Add-VanillaSelectorFlags -Data $after -Tag $Tag
+        Write-Host (Format-AuditSummaryLine -Key $Tag -Data $after)
+        $flagsLine = Format-AuditFlagsLine -Data $after
+        if ($flagsLine) { Write-Host $flagsLine }
         return 0
     }
     if ($ShowNames -and $result.Edited.Count -gt 0) {
@@ -2312,23 +2525,27 @@ function Invoke-NamelistDiff {
     return 0
 }
 
-# --- Helper: Country name of a TAG from its README row ---
+# --- Helper: Country name of a namelist file key from its README row ---
+# A nation's further file (GER_SS, GER_ADDITIONAL) has no README row of its own: its wiki page is the link of the
+# wiki/Home.md row that names the file ("Germany-Waffen-SS").
 function Get-CountryName {
-    param([string]$Tag)
-    $readmePath = Join-Path $RepoDir 'README.md'
-    if (-not (Test-Path $readmePath)) { return $null }
-    $readme = [System.IO.File]::ReadAllText($readmePath, [System.Text.Encoding]::UTF8)
-    $cleanTag = $Tag.ToUpper().Trim() -replace '^(zz_)?INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
-    if ($cleanTag -eq 'GER_SS') { return 'Germany-Waffen-SS' }
-    if ($cleanTag -eq 'GER_ADDITIONAL') { return 'Germany-Additional' }
-    if ($cleanTag.StartsWith('GER')) { return 'Germany' }
-
-    $pattern = "\|\s*``?" + [regex]::Escape($cleanTag) + "``?\s*\|\s*([^|\r\n]+?)\s*\|"
-    $m = [regex]::Match($readme, $pattern)
-    if ($m.Success) {
-        $c = $m.Groups[1].Value.Trim()
-        if ($c -match '^([^/]+)') { return $matches[1].Trim() }
-        return $c
+    param([string]$Tag, [string]$Root = $RepoDir)
+    $cleanTag = $Tag.ToUpper().Trim() -replace '^(ZZ_)?INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
+    $readmePath = Join-Path $Root 'README.md'
+    if (Test-Path $readmePath) {
+        $readme = [System.IO.File]::ReadAllText($readmePath, [System.Text.Encoding]::UTF8)
+        $m = [regex]::Match($readme, "\|\s*``?" + [regex]::Escape($cleanTag) + "``?\s*\|\s*([^|\r\n]+?)\s*\|")
+        if ($m.Success) {
+            $c = $m.Groups[1].Value.Trim()
+            if ($c -match '^([^/]+)') { return $matches[1].Trim() }
+            return $c
+        }
+    }
+    $homePath = Join-Path $Root 'wiki\Home.md'
+    if (Test-Path $homePath) {
+        $homeText = [System.IO.File]::ReadAllText($homePath, [System.Text.Encoding]::UTF8)
+        $row = [regex]::Match($homeText, "(?mi)^\|[^|\r\n]*\]\(([^)]+)\)[^\r\n]*``zz_INEX_$([regex]::Escape($cleanTag))_names_divisions\.txt``")
+        if ($row.Success) { return $row.Groups[1].Value.Trim() }
     }
     return $null
 }
@@ -2404,6 +2621,32 @@ function Format-AuditSummaryLine {
     return "AUDIT SUMMARY ${Key}: GROUPS=$(@($Data.Groups).Count) AUTHORED=$totAuthored/$totOrdered FLAGS=$flagCount"
 }
 
+# --- Helper: "Flags: CODE xN, ..." for -Check and -DryRun; $null without flags ---
+function Format-AuditFlagsLine {
+    param($Data)
+    $allFlags = @(@($Data.FileFlags) + @($Data.Groups | ForEach-Object { $_.Flags }) | Where-Object { $_ })
+    if ($allFlags.Count -eq 0) { return $null }
+    return "Flags: $(($allFlags | Group-Object | Sort-Object Count -Descending | ForEach-Object { "$($_.Name) x$($_.Count)" }) -join ', ')"
+}
+
+# --- Helper: The flag lines of an audit plan's initial report: file flags first, so the list adds up to FLAGS ---
+function Get-AuditFindingLines {
+    param($Data)
+    $lines = [System.Collections.Generic.List[string]]::new()
+    foreach ($f in $Data.FileFlags) {
+        if ($f -eq 'IDENTITY_REPEAT') {
+            $ids = @($Data.SharedIdentities | ForEach-Object { "'$($_.Identity)' ($($_.Groups -join ', '))" })
+            $lines.Add("File: IDENTITY_REPEAT: $($ids -join '; ')")
+        } else {
+            $lines.Add("File: $f")
+        }
+    }
+    foreach ($g in $Data.Groups) {
+        if ($g.Flags.Count -gt 0) { $lines.Add("[$($g.Tag)] flags: $($g.Flags -join ', ')") }
+    }
+    return , $lines.ToArray()
+}
+
 # --- Helper: Audit plan skeleton ---
 function New-AuditPlanText {
     param(
@@ -2464,8 +2707,9 @@ function Get-ActiveAuditPlanPath {
     $ErrorActionPreference = 'Continue'
     $dirty = @()
     try {
+        # Plans in docs/plans itself; a shipped plan in archive/ is never refreshed
         $dirty = @(& git -C $RepoDir status --porcelain -uall -- 'docs/plans' 2>$null | ForEach-Object {
-            if ("$_" -match "(\d{4}-\d{2}-\d{2}-$([regex]::Escape($Slug))-audit\.md)") { $matches[1] }
+            if ("$_" -match "docs/plans/(\d{4}-\d{2}-\d{2}-$([regex]::Escape($Slug))-audit\.md)`"?$") { $matches[1] }
         })
     } catch {
         $dirty = @()
@@ -2474,6 +2718,16 @@ function Get-ActiveAuditPlanPath {
     }
     if ($dirty.Count -eq 1) { return (Join-Path $plansDir $dirty[0]) }
     return $null
+}
+
+# --- Helper: The nation's live plans: docs/plans/<date>-<slug>-(audit|namelist).md whose Status is not DONE ---
+function Get-LivePlanPaths {
+    param([string]$Slug, [string]$PlansDir)
+    if (-not (Test-Path $PlansDir)) { return @() }
+    return @(Get-ChildItem -Path $PlansDir -File -Filter '*.md' | Where-Object {
+        $_.Name -match "^\d{4}-\d{2}-\d{2}-$([regex]::Escape($Slug))-(audit|namelist)\.md$" -and
+        [System.IO.File]::ReadAllText($_.FullName, [System.Text.Encoding]::UTF8) -notmatch '(?m)^Status:\s*DONE\b'
+    } | ForEach-Object { $_.FullName })
 }
 
 # --- Action: Create an audit plan skeleton, or refresh its generated change table ---
@@ -2499,6 +2753,12 @@ function Invoke-AuditPlan {
         if ($RefreshOnly) { Write-Host "Plan: no audit plan in progress for $Tag"; return 0 }
         $path = Join-Path $plansDir "$date-$slug-audit.md"
     }
+    # The table is the whole file's diff, so another unshipped plan for the nation would show up in it
+    $others = @(Get-LivePlanPaths -Slug $slug -PlansDir $plansDir | Where-Object { $_ -ne $path } | ForEach-Object { Split-Path $_ -Leaf })
+    if ($others.Count -gt 0) {
+        Write-Warn "Plan: $($others -join ', ') is also live for $Tag; the change table would list its groups too. Ship it first (guide section 1), then rerun."
+        if ($RefreshOnly) { return 0 }
+    }
     if (-not (Test-Path $plansDir)) { New-Item -ItemType Directory -Force $plansDir | Out-Null }
     $rel = "docs/plans/$(Split-Path $path -Leaf)"
     $utf8 = New-Object System.Text.UTF8Encoding $false
@@ -2516,9 +2776,7 @@ function Invoke-AuditPlan {
     } else {
         $target = Join-Path $RepoDir "common\units\names_divisions\zz_INEX_${Tag}_names_divisions.txt"
         $data = Get-NamelistAuditData -Path $target
-        $findingLines = @(foreach ($g in $data.Groups) {
-            if ($g.Flags.Count -gt 0) { "[$($g.Tag)] flags: $($g.Flags -join ', ')" }
-        })
+        $findingLines = Get-AuditFindingLines -Data $data
         $summary = Format-AuditSummaryLine -Key $Tag -Data $data
         $text = New-AuditPlanText -Country $country -Tag $Tag -Date $date -FindingLines $findingLines -Summary $summary -TableLines $table
         [System.IO.File]::WriteAllText($path, $text, $utf8)
@@ -2611,8 +2869,30 @@ function Update-WikiGroupRows {
             $changes.Add("$tagName`: $($notes -join '; ')")
         }
     }
-    $missing = @($Groups | Where-Object { -not $seen.ContainsKey($_.Tag) } | ForEach-Object { $_.Tag })
-    return @{ Text = ($lines -join "`n"); Changes = $changes.ToArray(); Missing = $missing; Stale = $stale.ToArray() }
+
+    # A group without a row gets one in file order: after the row of the nearest earlier group, else before the row of
+    # the nearest later one, with as many cells as that row (extra columns such as examples stay empty)
+    $rowList = [System.Collections.Generic.List[string]]::new()
+    $rowList.AddRange([string[]]$lines)
+    $rowIndex = { param($t) for ($r = 0; $r -lt $rowList.Count; $r++) { if ($rowList[$r] -match "^\|\s*``$([regex]::Escape($t))``\s*\|") { return $r } }; return -1 }
+    $missing = [System.Collections.Generic.List[string]]::new()
+    for ($gi = 0; $gi -lt $Groups.Count; $gi++) {
+        $g = $Groups[$gi]
+        if ($seen.ContainsKey($g.Tag)) { continue }
+        $at = -1; $anchorAt = -1
+        for ($p = $gi - 1; $p -ge 0 -and $at -lt 0; $p--) { $r = & $rowIndex $Groups[$p].Tag; if ($r -ge 0) { $anchorAt = $r; $at = $r + 1 } }
+        for ($p = $gi + 1; $p -lt $Groups.Count -and $at -lt 0; $p++) { $r = & $rowIndex $Groups[$p].Tag; if ($r -ge 0) { $anchorAt = $r; $at = $r } }
+        if ($at -lt 0) { $missing.Add($g.Tag); continue }
+        $anchor = $rowList[$anchorAt]
+        $cr = if ($anchor.EndsWith("`r")) { "`r" } else { '' }
+        $extra = [Math]::Max(0, $anchor.TrimEnd("`r").Split('|').Count - 6)
+        $fb = if ($g.Fallback) { "``$($g.Fallback)``" } else { '' }
+        $row = "| ``$($g.Tag)`` | $($g.Selector) | $($g.DivisionTypes -join ', ') | $fb |" + (' |' * $extra) + $cr
+        $rowList.Insert($at, $row)
+        $seen[$g.Tag] = $true
+        $changes.Add("$($g.Tag): row added")
+    }
+    return @{ Text = ($rowList -join "`n"); Changes = $changes.ToArray(); Missing = $missing.ToArray(); Stale = $stale.ToArray() }
 }
 
 # --- Helper: Prose lines of a wiki page that mention changed names ---
@@ -2770,7 +3050,7 @@ function Invoke-SyncWiki {
     if ($r.Text -cne $wiki) { [System.IO.File]::WriteAllText($wikiPath, $r.Text, $utf8) }
     Write-Host "$([System.IO.Path]::GetFileName($wikiPath)): $($r.Changes.Count) row(s) updated"
     foreach ($c in $r.Changes) { Write-Host "  $c" }
-    if ($r.Missing.Count) { Write-Host "  no row in wiki table (add by hand): $($r.Missing -join ', ')" }
+    if ($r.Missing.Count) { Write-Host "  no group table to add a row to (add by hand): $($r.Missing -join ', ')" }
     if ($r.Stale.Count) { Write-Host "  stale row in wiki table (remove by hand): $($r.Stale -join ', ')" }
     $linkClaims = Find-WikiLinkMismatches -WikiText $r.Text -Groups $groups
     if ($linkClaims.Count) {
@@ -2819,14 +3099,18 @@ function Invoke-SyncWiki {
 # --- Helper: How each group relates to the vanilla group with the same tag ---
 # A group that reuses a vanilla tag is merged into the vanilla group (NAM-020, launch of 2026-10-15): a key it writes
 # replaces vanilla's text for that key, and every vanilla key it leaves out stays in the game.
-# Returns tag -> @{ Matches; Total; LeftOutNames; LeftOutNumbers; KeptElsewhere }. Empty when HOI4 is not installed
-# or the vanilla file has no such group.
+# Returns tag -> @{ Matches; Total; LeftOutNames; LeftOutNumbers; LeftOutStubs; KeptElsewhere; KeptElsewhereNames }.
+# Empty when HOI4 is not installed or the vanilla file has no such group.
 #   Matches / Total   entries identical to vanilla in key and name / entries in the INEX group
 #   LeftOutNames      "key=name" of vanilla entries with an identity (not a fallback stub) that the group leaves out
 #   KeptElsewhere     how many more left-out vanilla names carry a quoted identity that another entry of the file has
-#                     (moved to a Named variant or an ideology list, so not lost)
-#   LeftOutNumbers    keys of left-out vanilla fallback stubs that lie past the first gap in vanilla's key series:
-#                     those numbers were historical, and they stay in the game, so the numbering keeps the gap
+#                     (moved to a Named variant or an ideology list, so not lost); KeptElsewhereNames lists them
+#   LeftOutNumbers    keys of left-out vanilla entries that read exactly as the INEX fallback and lie past the first
+#                     gap in vanilla's key series: those numbers were historical, they stay in the game, so the
+#                     numbering keeps the gap
+#   LeftOutStubs      keys of left-out vanilla stubs whose text differs from the INEX fallback (another format or
+#                     ordinal): the game shows vanilla's text there unless the group writes its own;
+#                     LeftOutStubSample is the first as "key=text"
 function Get-VanillaOverlap {
     param(
         [object[]]$Groups,
@@ -2863,26 +3147,82 @@ function Get-VanillaOverlap {
         $run = 0
         while ($vanillaByKey.ContainsKey($run + 1)) { $run++ }
         $stubKeys = @(@($v.Fallback, $g.Fallback) | Where-Object { $_ } | ForEach-Object { & $stubKey $_ })
+        # The text the game shows at a key: %d is the key, %s its Roman numeral
+        $atKey = { param($s, $n) if ($s) { $s -replace '%d', $n -replace '%s', (ConvertTo-RomanNumeral $n) } }
         $names = [System.Collections.Generic.List[string]]::new()
         $numbers = [System.Collections.Generic.List[int]]::new()
-        $elsewhere = 0
+        $stubs = [System.Collections.Generic.List[int]]::new()
+        $elsewhereNames = [System.Collections.Generic.List[string]]::new()
         foreach ($k in $vKeys) {
             if ($own.ContainsKey($k)) { continue }
             $name = $vanillaByKey[$k]
-            if ($stubKeys -contains (& $stubKey $name)) {
+            if ((& $atKey $name $k) -ceq (& $atKey $g.Fallback $k)) {
                 if ($k -gt $run) { $numbers.Add($k) }
+                continue
+            }
+            # A stub in another format than the INEX fallback ("%d Hohei Shidan" beside "Dai-%d Shidan") shows vanilla's text
+            if ($stubKeys -contains (& $stubKey $name)) {
+                $stubs.Add($k)
                 continue
             }
             $ids = @([regex]::Matches($name, $identityRx) | ForEach-Object { $_.Groups[1].Value })
             if ($ids.Count -gt 0 -and @($ids | Where-Object { -not $ownIdentities.Contains($_) }).Count -eq 0) {
-                $elsewhere++
+                $elsewhereNames.Add("$k=$name")
             } else {
                 $names.Add("$k=$name")
             }
         }
-        $result[$g.Tag] = @{ Matches = $same; Total = $g.OrderedCount; LeftOutNames = $names.ToArray(); LeftOutNumbers = $numbers.ToArray(); KeptElsewhere = $elsewhere }
+        $result[$g.Tag] = @{ Matches = $same; Total = $g.OrderedCount; LeftOutNames = $names.ToArray(); LeftOutNumbers = $numbers.ToArray(); LeftOutStubs = $stubs.ToArray(); LeftOutStubSample = $(if ($stubs.Count) { "$($stubs[0])=$($vanillaByKey[$stubs[0]])" }); KeptElsewhere = $elsewhereNames.Count; KeptElsewhereNames = $elsewhereNames.ToArray() }
     }
     return $result
+}
+
+# --- Helper: Sorted keys as ranges ("1-168, 170, 172-175"), so a full vanilla series fits on one line ---
+function Format-KeyRanges {
+    param([int[]]$Keys = @())
+    $sorted = @($Keys | Sort-Object -Unique)
+    $parts = [System.Collections.Generic.List[string]]::new()
+    $i = 0
+    while ($i -lt $sorted.Count) {
+        $j = $i
+        while ($j + 1 -lt $sorted.Count -and $sorted[$j + 1] -eq $sorted[$j] + 1) { $j++ }
+        $parts.Add($(if ($j -gt $i) { "$($sorted[$i])-$($sorted[$j])" } else { "$($sorted[$i])" }))
+        $i = $j + 1
+    }
+    return ($parts -join ', ')
+}
+
+# --- Helper: The vanilla groups INEX leaves in place that show an INEX group's selector for the same division type ---
+# Both groups then stand in the designer's dropdown under one name. Adds SELECTOR_DUPLICATE with "vanilla <TAG>" as its
+# detail. A vanilla group whose tag any INEX file of the nation defines is merged into that group, so it does not count.
+function Add-VanillaSelectorFlags {
+    param(
+        $Data,
+        [string]$Tag,
+        [string]$Hoi4Dir,
+        [string]$NamelistDir = (Join-Path $RepoDir 'common\units\names_divisions')
+    )
+    $hoi4 = Find-Hoi4Install -CustomPath $Hoi4Dir
+    if (-not $hoi4) { return }
+    $country = ($Tag -split '_')[0]
+    $vanillaFile = Join-Path $hoi4 "common\units\names_divisions\${country}_names_divisions.txt"
+    if (-not (Test-Path $vanillaFile)) { return }
+    $inexTags = @(Get-ChildItem -Path $NamelistDir -Filter "zz_INEX_${country}*_names_divisions.txt" | Where-Object {
+        $_.Name -match "^zz_INEX_${country}(_[A-Za-z0-9_]+)?_names_divisions\.txt$"
+    } | ForEach-Object { (Get-NamelistAuditData -Path $_.FullName).Groups | ForEach-Object { $_.Tag } })
+    # The audited text may be an edit in progress (-DryRun) that defines tags the file on disk does not yet have
+    $inexTags += @($Data.Groups | ForEach-Object { $_.Tag })
+    $kept =@((Get-NamelistAuditData -Path $vanillaFile).Groups | Where-Object { $_.Selector -and $inexTags -notcontains $_.Tag })
+    foreach ($g in $Data.Groups) {
+        if (-not $g.Selector) { continue }
+        $clashes = @($kept | Where-Object {
+            $v = $_
+            $v.Selector -ceq $g.Selector -and @($v.DivisionTypes | Where-Object { $g.DivisionTypes -contains $_ }).Count -gt 0
+        } | ForEach-Object { "vanilla $($_.Tag)" })
+        if ($clashes.Count -eq 0) { continue }
+        if (-not $g.Flags.Contains('SELECTOR_DUPLICATE')) { $g.Flags.Add('SELECTOR_DUPLICATE') }
+        $g.FlagDetails['SELECTOR_DUPLICATE'] = @(@($g.FlagDetails['SELECTOR_DUPLICATE']) + $clashes | Where-Object { $_ })
+    }
 }
 
 # --- Helper: First items of a list, with the rest as a count ---
@@ -2899,7 +3239,7 @@ function Get-WorkshopDocStats {
         [string]$GuideText,
         [string]$Key
     )
-    $stats = [PSCustomObject]@{ Nation = $null; Bullets = 0; Examples = 0; Length = 0; Emojis = 0; Warnings = @() }
+    $stats = [PSCustomObject]@{ Nation = $null; Bullets = 0; Examples = 0; BlockLength = 0; Length = 0; Emojis = 0; Warnings = @() }
     $warnings = [System.Collections.Generic.List[string]]::new()
     $bbcode = [regex]::Match($GuideText, '(?s)```bbcode\r?\n(.*?)\r?\n```')
     if (-not $bbcode.Success) {
@@ -2913,7 +3253,9 @@ function Get-WorkshopDocStats {
     $symbols = '[' + [char]0x2600 + '-' + [char]0x27BF + [char]0x2B50 + [char]0x2B55 + [char]0xFE0F + ']'
     $stats.Emojis = ([regex]::Matches($description, '\p{Cs}\p{Cs}|' + $symbols)).Count
     if ($stats.Emojis -gt 0) { $warnings.Add("workshop description contains $($stats.Emojis) emoji(s)") }
+    # Steam's limit is 17000; the budget leaves room for the next nation (WORKSHOP_DESCRIPTION_GUIDELINES.md)
     if ($stats.Length -gt 17000) { $warnings.Add("workshop description is $($stats.Length) chars (limit 17000)") }
+    elseif ($stats.Length -gt 16000) { $warnings.Add("workshop description is $($stats.Length) chars (budget 16000 of Steam's 17000): shorten the longest nation blocks") }
 
     $row = [regex]::Match($GuideText, "(?m)^\|[ \t]*``?zz_INEX_$([regex]::Escape($Key))_names_divisions\.txt``?[ \t]*\|[ \t]*([^|\r\n]+?)[ \t]*\|")
     if (-not $row.Success) {
@@ -2928,8 +3270,10 @@ function Get-WorkshopDocStats {
         } else {
             $stats.Bullets = ([regex]::Matches($block.Groups[1].Value, '(?m)^-[ \t]')).Count
             $stats.Examples = ([regex]::Matches($block.Groups[1].Value, '\[i\]')).Count
-            if ($stats.Bullets -lt 2 -or $stats.Bullets -gt 3) { $warnings.Add("workshop block [b]${nation}[/b] has $($stats.Bullets) bullet(s) (2-3 expected)") }
-            if ($stats.Examples -lt 2) { $warnings.Add("workshop block [b]${nation}[/b] has $($stats.Examples) [i] example(s) (2 or more expected)") }
+            $stats.BlockLength = $block.Value.TrimEnd("`n").Length
+            if ($stats.Bullets -ne 2) { $warnings.Add("workshop block [b]${nation}[/b] has $($stats.Bullets) bullet(s) (2 expected)") }
+            if ($stats.Examples -lt 2 -or $stats.Examples -gt 3) { $warnings.Add("workshop block [b]${nation}[/b] has $($stats.Examples) [i] example(s) (2-3 expected)") }
+            if ($stats.BlockLength -gt 450) { $warnings.Add("workshop block [b]${nation}[/b] is $($stats.BlockLength) chars (budget 450)") }
         }
     }
     $stats.Warnings = $warnings.ToArray()
@@ -2962,6 +3306,7 @@ function Invoke-NamelistAudit {
         Write-Step "Namelist quality triage (most flags first)"
         $rows = foreach ($f in (Get-ChildItem -Path $namelistDir -Filter "zz_INEX_*_names_divisions.txt")) {
             $data = Get-NamelistAuditData -Path $f.FullName
+            Add-VanillaSelectorFlags -Data $data -Tag ($f.Name -replace '^zz_INEX_', '' -replace '_names_divisions\.txt$', '') -Hoi4Dir $Hoi4Dir
             $ordered = ($data.Groups | Measure-Object -Property OrderedCount -Sum).Sum
             $authored = ($data.Groups | Measure-Object -Property AuthoredCount -Sum).Sum
             $flagCount = $data.FileFlags.Count + ($data.Groups | ForEach-Object { $_.Flags.Count } | Measure-Object -Sum).Sum
@@ -2988,6 +3333,7 @@ function Invoke-NamelistAudit {
     }
 
     $data = Get-NamelistAuditData -Path $target
+    Add-VanillaSelectorFlags -Data $data -Tag $Key -Hoi4Dir $Hoi4Dir
 
     if ($TargetGroup -or $NamesOnly) {
         $selected = $data.Groups
@@ -3050,8 +3396,15 @@ function Invoke-NamelistAudit {
             $listed = if ($o.LeftOutNames.Count -gt 0) { ": $(Format-CappedList -Items $o.LeftOutNames)" } else { '' }
             Write-Host "  Vanilla:  leaves out $($o.LeftOutNames.Count) vanilla name(s), still in game$moved$listed" -ForegroundColor Gray
         }
+        # A plain variant shows those identities too, so name them
+        if ($o -and $g.PlainVariantOf -and $o.KeptElsewhereNames.Count -gt 0) {
+            Write-Host "  Vanilla:  kept in another list but still shown in this plain variant: $(Format-CappedList -Items $o.KeptElsewhereNames)" -ForegroundColor Gray
+        }
         if ($o -and $o.LeftOutNumbers.Count -gt 0) {
             Write-Host "  Vanilla:  leaves out $($o.LeftOutNumbers.Count) numbered key(s) past a gap in vanilla's series (still in game, so the numbering keeps the gap): $(Format-CappedList -Items $o.LeftOutNumbers -Max 15)" -ForegroundColor Gray
+        }
+        if ($o -and $o.LeftOutStubs.Count -gt 0) {
+            Write-Host "  Vanilla:  leaves out $($o.LeftOutStubs.Count) numbered key(s) whose vanilla text differs from the fallback (the game shows vanilla's, e.g. $($o.LeftOutStubSample)): $(Format-KeyRanges -Keys $o.LeftOutStubs)" -ForegroundColor Gray
         }
         if ($g.PlainVariantOf) {
             Write-Host "  Variant:  plain (un-nicknamed) counterpart of $($g.PlainVariantOf)" -ForegroundColor Gray
@@ -3068,6 +3421,24 @@ function Invoke-NamelistAudit {
         Write-Step "Identities shared across groups (check that reuse is intended)"
         foreach ($s in $data.SharedIdentities) { Write-Info "'$($s.Identity)': $($s.Groups -join ', ')" }
     }
+    # A nation split over several files (GER, GER_SS, GER_ADDITIONAL) reuses honorifics across them; informational,
+    # not a flag, so -Check counts the same flags as before
+    $country = ($Key -split '_')[0]
+    $siblingFiles = @(Get-ChildItem -Path $namelistDir -Filter "zz_INEX_${country}*_names_divisions.txt" | Where-Object {
+        $_.FullName -ne $target -and $_.Name -match "^zz_INEX_${country}(_[A-Za-z0-9_]+)?_names_divisions\.txt$"
+    })
+    if ($siblingFiles.Count -gt 0) {
+        $ownTags = @($data.Groups | ForEach-Object { $_.Tag })
+        $allGroups = @($data.Groups) + @($siblingFiles | ForEach-Object { (Get-NamelistAuditData -Path $_.FullName).Groups })
+        $shared = Get-SharedIdentities -Groups $allGroups -IncludeUnnumbered
+        $crossFile = @($shared | Where-Object {
+            @($_.Groups | Where-Object { $ownTags -contains $_ }).Count -gt 0 -and @($_.Groups | Where-Object { $ownTags -notcontains $_ }).Count -gt 0
+        })
+        if ($crossFile.Count -gt 0) {
+            Write-Step "Identities shared with other files of $country ($(($siblingFiles | ForEach-Object { $_.Name -replace '^zz_INEX_', '' -replace '_names_divisions\.txt$', '' }) -join ', '))"
+            foreach ($s in $crossFile) { Write-Info "'$($s.Identity)': $($s.Groups -join ', ')" }
+        }
+    }
 
     $allFlags = @($data.FileFlags) + @($data.Groups | ForEach-Object { $_.Flags })
     if ($allFlags.Count -eq 0) {
@@ -3080,7 +3451,7 @@ function Invoke-NamelistAudit {
     # Workshop description conventions for this nation's block
     $doc = Get-RepoWorkshopDocStats -Key $Key
     if ($doc) {
-        if ($doc.Nation) { Write-Info "Workshop: [b]$($doc.Nation)[/b] $($doc.Bullets) bullet(s), $($doc.Examples) [i] example(s); description $($doc.Length)/17000 chars" }
+        if ($doc.Nation) { Write-Info "Workshop: [b]$($doc.Nation)[/b] $($doc.Bullets) bullet(s), $($doc.Examples) [i] example(s), $($doc.BlockLength)/450 chars; description $($doc.Length)/17000 chars" }
         foreach ($w in $doc.Warnings) { Write-Warn "Docs: $w" }
     }
 
@@ -3171,6 +3542,44 @@ function Get-GameLogFindings {
 }
 
 # --- Action: Scan the game's error.log for lines that name this mod's files ---
+# --- Helper: Committed wiki pages the last wiki push did not send ---
+# wiki/push-wiki.ps1 keeps its clone of the GitHub wiki in %TEMP%\inex_wiki_push; after a push the clone holds what was
+# sent. A page committed here whose text differs from the clone's (line endings aside) goes out unannounced with the
+# next push. Returns $null when there is no clone to compare with.
+function Get-UnpushedWikiPages {
+    param(
+        [string]$RepoPath = $RepoDir,
+        [string]$CloneDir = (Join-Path ([System.IO.Path]::GetTempPath()) 'inex_wiki_push')
+    )
+    if (-not (Test-Path (Join-Path $CloneDir '*'))) { return $null }
+    $prevEap = $ErrorActionPreference
+    $ErrorActionPreference = 'Continue'
+    try { $committed = @(& git -C $RepoPath ls-tree --name-only HEAD 'wiki/' 2>$null | Where-Object { $_ -match '^wiki/[^/]+\.md$' }) } finally { $ErrorActionPreference = $prevEap }
+    $norm = { param($s) if ($null -eq $s) { $null } else { ($s -replace "`r`n", "`n").TrimEnd("`n") } }
+    return , @($committed | ForEach-Object {
+        $page = $_.Substring(5)
+        $clonePath = Join-Path $CloneDir $page
+        $pushed = if (Test-Path $clonePath) { [System.IO.File]::ReadAllText($clonePath, [System.Text.Encoding]::UTF8) } else { $null }
+        if ((& $norm (Get-GitFileText -RepoPath $RepoPath -Ref 'HEAD' -RelPath $_)) -cne (& $norm $pushed)) { $page }
+    })
+}
+
+# --- Helper: The lines of a text file another process holds open for writing (the running game's error.log) ---
+function Read-SharedTextLines {
+    param([string]$Path)
+    $stream = [System.IO.FileStream]::new($Path, [System.IO.FileMode]::Open, [System.IO.FileAccess]::Read, [System.IO.FileShare]::ReadWrite)
+    try {
+        $reader = [System.IO.StreamReader]::new($stream, [System.Text.Encoding]::UTF8)
+        $text = $reader.ReadToEnd()
+    } finally {
+        $stream.Dispose()
+    }
+    # As ReadAllLines: a final line break ends the last line instead of starting an empty one
+    $lines = @($text -split '\r?\n')
+    if ($lines.Count -gt 0 -and $lines[-1] -eq '') { $lines = @($lines | Select-Object -First ($lines.Count - 1)) }
+    return , $lines
+}
+
 function Invoke-GameLog {
     param([string]$Path)
     if (-not $Path) { $Path = Join-Path ([Environment]::GetFolderPath('MyDocuments')) 'Paradox Interactive\Hearts of Iron IV\logs\error.log' }
@@ -3178,7 +3587,7 @@ function Invoke-GameLog {
     $modFiles = @(Get-ChildItem -Path (Join-Path $RepoDir 'common') -Recurse -File)
     $log = Get-Item $Path
     $newest = $modFiles | Sort-Object LastWriteTime -Descending | Select-Object -First 1
-    $findings = Get-GameLogFindings -LogLines ([System.IO.File]::ReadAllLines($Path, [System.Text.Encoding]::UTF8)) -FileNames @($modFiles | ForEach-Object { $_.Name })
+    $findings = Get-GameLogFindings -LogLines (Read-SharedTextLines -Path $Path) -FileNames @($modFiles | ForEach-Object { $_.Name })
     Write-Host "error.log of $($log.LastWriteTime.ToString('yyyy-MM-dd HH:mm', [cultureinfo]::InvariantCulture)): $($findings.Count) line(s) name INEX files"
     foreach ($f in $findings) { Write-Host "  $f" }
     if ($newest -and $newest.LastWriteTime -gt $log.LastWriteTime) {
@@ -3193,7 +3602,8 @@ function Invoke-GameLog {
 function Invoke-Check {
     param(
         [string]$Tag,
-        [string]$BaseRev = 'HEAD'
+        [string]$BaseRev = 'HEAD',
+        [string]$Hoi4Dir
     )
     $Tag = $Tag.ToUpper().Trim() -replace '^(zz_)?INEX_', '' -replace '_NAMES_DIVISIONS(\.TXT)?$', ''
     $modFile = Join-Path $RepoDir "common\units\names_divisions\zz_INEX_${Tag}_names_divisions.txt"
@@ -3236,13 +3646,14 @@ function Invoke-Check {
     }
 
     $data = Get-NamelistAuditData -Path $modFile
+    Add-VanillaSelectorFlags -Data $data -Tag $Tag -Hoi4Dir $Hoi4Dir
     Write-Host "  $(Format-AuditSummaryLine -Key $Tag -Data $data)"
-    $allFlags = @(@($data.FileFlags) + @($data.Groups | ForEach-Object { $_.Flags }) | Where-Object { $_ })
-    if ($allFlags.Count -gt 0) {
-        Write-Host "  Flags: $(($allFlags | Group-Object | Sort-Object Count -Descending | ForEach-Object { "$($_.Name) x$($_.Count)" }) -join ', ')"
-    }
+    $flagsLine = Format-AuditFlagsLine -Data $data
+    if ($flagsLine) { Write-Host "  $flagsLine" }
     $doc = Get-RepoWorkshopDocStats -Key $Tag
     if ($doc) { foreach ($w in $doc.Warnings) { Write-Warn "Docs: $w" } }
+    $unpushed = Get-UnpushedWikiPages
+    if ($unpushed.Count -gt 0) { Write-Warn "Docs: wiki pages committed but not pushed: $($unpushed -join ', ') (run wiki\push-wiki.ps1; guide section 4, item 6)" }
 
     if ((Invoke-AuditPlan -Tag $Tag -BaseRev $BaseRev -RefreshOnly) -ne 0) { $failed.Add('plan') }
 
@@ -3267,7 +3678,7 @@ function Invoke-Check {
 
 # --- Action: Check ---
 if ($Check) {
-    exit (Invoke-Check -Tag $Check -BaseRev $Base)
+    exit (Invoke-Check -Tag $Check -BaseRev $Base -Hoi4Dir $Hoi4InstallDir)
 }
 
 # --- Action: Audit ---
@@ -3280,7 +3691,7 @@ if ($Audit) {
 
 # --- Action: EditNames ---
 if ($EditNames) {
-    $editKeys = 'Group', 'Add', 'Remove', 'Rename', 'Set', 'After', 'Section', 'RenameSection', 'Selector', 'Fallback', 'AddType', 'RemoveType', 'CanUse', 'RemoveAll', 'ClearOrdered', 'RemoveGroup', 'Comment', 'AddGroup', 'Link'
+    $editKeys = 'Group', 'Add', 'Remove', 'Rename', 'Set', 'After', 'Section', 'RenameSection', 'Selector', 'Fallback', 'AddType', 'RemoveType', 'CanUse', 'RemoveAll', 'ClearOrdered', 'RemoveGroup', 'Comment', 'AddGroup', 'Link', 'Countries'
     $given = @($editKeys | Where-Object { $PSBoundParameters.ContainsKey($_) })
     try {
         if ($Batch) {
