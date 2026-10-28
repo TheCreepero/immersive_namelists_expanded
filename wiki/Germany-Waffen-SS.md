@@ -32,6 +32,9 @@ From number 42 upward, every SS list carries the same honour name for the same n
 | `GER_SS_08` | SS Heavy Panzer Battalions | heavy_armor, medium_armor, modern_armor | `schwere SS-Panzer-Abteilung %d` |
 | `GER_SS_09` | SS Kampfgruppen | infantry, motorized, mechanized, light_armor, medium_armor, heavy_armor | `SS-Kampfgruppe %d` |
 | `GER_SS_STANDARTE_01` | SS Standarten | infantry | `%d. SS-Standarte` |
+| `GER_SS_10` | SS Jagdverbände | paratrooper, ranger_battalion | `SS-Jäger-Bataillon %d` |
+| `GER_SS_11` | SS Werfer Battalions | rocket_artillery_brigade, mot_rocket_artillery_brigade, motorized_rocket_brigade | `SS-Werfer-Abteilung %d` |
+| `GER_SS_12` | SS Artillery Battalions | artillery_brigade, mot_artillery_brigade | `schwere SS-Artillerie-Abteilung %d` |
 
 ---
 
@@ -65,3 +68,12 @@ Kampfgruppen named after Waffen-SS commanders, the attested ones first (*Kampfgr
 
 ### `GER_SS_STANDARTE_01` — SS Standarten
 The SS-Verfügungstruppe Standarten (*Deutschland*, *Germania*, *Der Führer*), the *SS-Totenkopfstandarten I–XVI*, and the Allgemeine-SS *1. SS-Standarte 'Julius Schreck'*.
+
+### `GER_SS_10` — SS Jagdverbände
+The only parachute battalion of the Waffen-SS (*SS-Fallschirmjäger-Bataillon 500*, renumbered *600* in October 1944) and Otto Skorzeny's special units: *SS-Sonderverband z.b.V. Friedenthal*, *SS-Jäger-Bataillon 502*, the five *SS-Jagdverbände* (*Mitte*, *Ost*, *Südost*, *Südwest*, *Nordwest*) and the *Jagdeinsätze* of Jagdverband Südost. Paratrooper and ranger templates take the Heer lists by default; choose this list in the division designer.
+
+### `GER_SS_11` — SS Werfer Battalions
+The corps rocket battalions of the Waffen-SS on their late-1944 numbers, *SS-Werfer-Abteilung 500–506*. *500* fired the A4 (V-2); *501*, *502* and *505* served the I. and II. SS-Panzerkorps and the V. SS-Gebirgskorps. Rocket artillery templates take the Heer list by default; choose this list in the division designer.
+
+### `GER_SS_12` — SS Artillery Battalions
+The heavy corps artillery battalions of the Waffen-SS, *schwere SS-Artillerie-Abteilung 500–505*; *501* served the I. SS-Panzerkorps. Artillery templates take the Heer list by default; choose this list in the division designer.

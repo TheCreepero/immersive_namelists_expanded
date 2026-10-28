@@ -832,3 +832,87 @@ GER_SS_STANDARTE_01 = {
 		1 = { "%d. SS-Standarte 'Julius Schreck'" }
 	}
 }
+
+# SS parachute battalion and Skorzeny's special units (1943-45); real battalion numbers as keys.
+GER_SS_10 = 
+{
+	name = "SS Jagdverbände"
+
+	for_countries = { GER }
+
+	can_use = { has_government = fascism }
+
+	division_types = { "paratrooper" "ranger_battalion" }
+
+	fallback_name = "SS-Jäger-Bataillon %d"
+
+	ordered =
+	{
+		# Historical: SS-Fallschirmjäger-Bataillon 500/600 and the Friedenthal units, in order of formation
+		500 = { "SS-Fallschirmjäger-Bataillon %d" }
+		1 = { "SS-Sonderverband z.b.V. Friedenthal" }
+		502 = { "SS-Jäger-Bataillon %d" }
+		600 = { "SS-Fallschirmjäger-Bataillon %d" }
+		# Historical: the five SS-Jagdverbände (November 1944)
+		2 = { "SS-Jagdverband Mitte" }
+		3 = { "SS-Jagdverband Ost" }
+		4 = { "SS-Jagdverband Südost" }
+		5 = { "SS-Jagdverband Südwest" }
+		6 = { "SS-Jagdverband Nordwest" }
+		# Historical: the Jagdeinsätze of SS-Jagdverband Südost
+		7 = { "SS-Jagdeinsatz Rumänien" }
+		8 = { "SS-Jagdeinsatz Serbien/Kroatien" }
+		9 = { "SS-Jagdeinsatz Bulgarien" }
+		10 = { "SS-Jagdeinsatz Ungarn" }
+		11 = { "SS-Jagdeinsatz Griechenland" }
+		12 = { "SS-Jagdeinsatz Slowakei" }
+		13 = { "SS-Jagdeinsatz Albanien" }
+		14 = { "SS-Jagdkommando Donau" }
+	}
+}
+
+# Corps rocket battalions of the Waffen-SS, renumbered 1xx to 5xx in September 1944; the fallback continues at 506.
+GER_SS_11 = 
+{
+	name = "SS Werfer Battalions"
+
+	for_countries = { GER }
+
+	can_use = { has_government = fascism }
+
+	division_types = { "rocket_artillery_brigade" "mot_rocket_artillery_brigade" "motorized_rocket_brigade" }
+
+	fallback_name = "SS-Werfer-Abteilung %d"
+
+	ordered =
+	{
+		# Historical: Sondertruppen der Reichsführung-SS (late 1944)
+		500 = { "SS-Werfer-Abteilung %d" }
+		501 = { "SS-Werfer-Abteilung %d (I. SS-Panzerkorps)" }
+		502 = { "SS-Werfer-Abteilung %d (II. SS-Panzerkorps)" }
+		503 = { "SS-Werfer-Abteilung %d" }
+		504 = { "SS-Werfer-Abteilung %d" }
+		505 = { "SS-Werfer-Abteilung %d (V. SS-Gebirgskorps)" }
+	}
+}
+
+# Heavy corps artillery battalions of the Waffen-SS (500-505); the fallback continues from 502.
+GER_SS_12 = 
+{
+	name = "SS Artillery Battalions"
+
+	for_countries = { GER }
+
+	can_use = { has_government = fascism }
+
+	division_types = { "artillery_brigade" "mot_artillery_brigade" }
+
+	fallback_name = "schwere SS-Artillerie-Abteilung %d"
+
+	ordered =
+	{
+		# Historical: Sondertruppen der Reichsführung-SS (late 1944)
+		500 = { "schwere SS-Artillerie-Abteilung %d" }
+		501 = { "schwere SS-Artillerie-Abteilung %d (I. SS-Panzerkorps)" }
+	}
+}

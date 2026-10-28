@@ -12,7 +12,7 @@
 | Nation | Tag | Groups | Source File(s) |
 |:---|:---|:---|:---|
 | [Germany (Wehrmacht)](Germany) | `GER` | 33 | `zz_INEX_GER_names_divisions.txt` |
-| [Germany (Waffen-SS)](Germany-Waffen-SS) | `GER` | 10 | `zz_INEX_GER_SS_names_divisions.txt` |
+| [Germany (Waffen-SS)](Germany-Waffen-SS) | `GER` | 13 | `zz_INEX_GER_SS_names_divisions.txt` |
 | [Germany (Additional)](Germany-Additional) | `GER` | 30 | `zz_INEX_GER_ADDITIONAL_names_divisions.txt` |
 | [Soviet Union](Soviet-Union) | `SOV` | 30 | `zz_INEX_SOV_names_divisions.txt` |
 | [United Kingdom](United-Kingdom) | `ENG` | 30 | `zz_INEX_ENG_names_divisions.txt` |
