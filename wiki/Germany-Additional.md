@@ -16,11 +16,14 @@ This file holds formations that sit outside the core division series:
 - **Penal units:** the Bewährungstruppe 500 and Division 999.
 - **Paramilitaries:** one militia list per ideology.
 - **Foreign legions.**
+- **Plausible specialist formations:** Skijäger divisions, Luftwaffe Panzer divisions, armoured trains and Radfahr brigades, each grown from one real seed unit.
 - **Imperial series:** the Sturm-Bataillone of 1916–18 and the Reserve, Ersatz and Landwehr divisions of 1914–18.
 
 Reserve, Volksgrenadier and Grenadier divisions share the Heer numbering (`GER_Inf_01`) and sit on their real numbers. All other groups run their own series.
 
 The support-arm groups list only the line battalions of their arm (anti-air, artillery, rocket artillery, anti-tank and tank destroyers, armoured cars, amphibious units, naval commandos), so a template built from those battalions takes the matching list on its own, while Panzer, motorized and infantry templates keep their main lists. Kampfgruppen list only infantry and are chosen by hand in the division designer.
+
+The plausible lists are sized so that the main lists keep their templates: the ski list stays at 30 names, below the Jäger and Gebirgs lists, and the Luftwaffe Panzer lists stay far below the Heer Panzer and Panzergrenadier lists. The armoured trains are the exception: typed as armoured cars and larger than the Reconnaissance Battalions, they take a template of armoured-car battalions alone on their own; choose Reconnaissance Battalions in the designer for such a template.
 
 Ideology gating:
 - **Fascist:** Volkssturm, SA and Foreign Legions.
@@ -63,6 +66,11 @@ Ideology gating:
 | `GER_MIL_04` | Reichsbanner | militia | `%d. Reichsbanner-Gau` |
 | `GER_MIL_03` | Red Front Fighters | militia | `%d. RFB-Gau` |
 | `GER_LEG_01` | Foreign Legions | infantry, cavalry, mountaineers | `%d. Freiwilligen-Division` |
+| `GER_SKI_01` | Ski Divisions | mountaineers, ranger_battalion | `%d. Skijäger-Division` |
+| `GER_FJPZ_01` | Luftwaffe Panzer Divisions | light_armor, medium_armor, heavy_armor, modern_armor, mechanized | `Fallschirm-Panzer-Division %d` |
+| `GER_FJPZ_02` | Luftwaffe Panzer (Named) | light_armor, medium_armor, heavy_armor, modern_armor, mechanized | `Fallschirm-Panzer-Division %d` |
+| `GER_PZZUG_01` | Armored Trains | armored_car | `Panzerzug %d` |
+| `GER_RAD_01` | Bicycle Brigades | bicycle_battalion | `Radfahr-Jäger-Brigade %d` |
 | `GER_STURM_01` | Imperial Storm Battalions | infantry, ranger_battalion | `Sturm-Bataillon Nr. %d` |
 | `GER_MONRES_01` | Imperial Reserve Divisions | infantry | `%d. Reserve-Division` |
 | `GER_LANDWEHR_01` | Imperial Landwehr Divisions | infantry, militia | `%d. Landwehr-Division` |
@@ -128,7 +136,7 @@ About 170 Kampfgruppen named after Heer commanders. They include historical ones
 Independent brigades for small infantry and motorized templates:
 - The *Grenadier-Brigaden* of summer 1944 (*193*, *388*, *1131–1136*) and the *Grenadier-Lehr-Brigade*.
 - *Lehr-Brigade (mot.) 900* and the *Schnelle Brigaden* (*20*, *30*, *West*).
-- Mountain, ski and bicycle brigades (*Gebirgsjäger-Brigade 139*, *MG-Ski-Brigade Finnland*, *Radfahr-Jäger-Brigade 10*).
+- Mountain and ski brigades (*Gebirgsjäger-Brigade 139*, *1. Skijäger-Brigade*, *MG-Ski-Brigade Finnland*); the bicycle brigades are in `GER_RAD_01`.
 - *Brigade Lötzen* of 1939 and the *Sicherungs-Brigaden*.
 - Luftwaffe and Kriegsmarine ground brigades (*Fallschirmjäger-Brigade Ramcke*, *Marine-Schützen-Brigade Nord*).
 
@@ -163,6 +171,18 @@ Overflow uses *Bewährungs-Bataillon*, the Wehrmacht's own term.
 The foreign divisions and legions in German service:
 - *250. 'Azul'*, the Croatian *369.*, *373.* and *392.*, and the *Kosaken-Kavallerie-Divisionen*.
 - The *Ostlegionen*, *Legion Wallonie*, the LVF and the Indian Legion.
+
+### `GER_SKI_01` — Ski Divisions
+Grown from the *1. Skijäger-Division*, the Heer's only ski division (brigade September 1943, division June 1944, Pripjet marshes and Carpathians). The extension names further divisions after winter-sport towns and highland regions (*'Oberhof'*, *'Kitzbühel'*, *'Stubai'*, where the Heeres-Hochgebirgsschule stood) and the Lapland front (*'Lappland'*, *'Salla'*, *'Petsamo'*, *'Kiestinki'*); the *Skijäger-Regimenter 1* and *2* and the *Skijäger-Bataillone* of 1942-43 close the list. For mountain and Jäger templates; kept at 30 names so that it never takes those templates on its own.
+
+### `GER_FJPZ_01` / `GER_FJPZ_02` — Luftwaffe Panzer Divisions (plain / Named)
+The Luftwaffe raised the *Fallschirm-Panzer-Division 1 'Hermann Göring'* and a second Panzergrenadier division; these lists extend that into a Luftwaffe armoured arm named by the Geschwader tradition names and the aces the Luftwaffe honoured (*Fallschirm-Panzer-Division 1 'Richthofen'*, *'Boelcke'*, *'Immelmann'*, *'General Wever'*, *'Mölders'*, *'Pik As'*, *'Holzhammer'*) and by aviation pioneers (*'Lilienthal'*, *'Zeppelin'*). The Nazi honour names stay in the fascist-only Elite Formations of the [Heer](Germany) file. The plain list gives bare numbers and shares them with the Named list.
+
+### `GER_PZZUG_01` — Armored Trains
+For armoured-car templates. The Wehrmacht's *Eisenbahn-Panzerzüge* on their real numbers and in their order of raising: the 1938-39 trains *1*, *3*, *5*, *6* and *2*, *4*, *7*, *9*-*11*, the captured and rebuilt trains *21*-*32*, *51* and *52*, and the BP 42 series *61*-*84*; then the *Panzertriebwagen 15*-*23* and *30*-*38* and the *Panzerjäger-Triebwagen 51*. The extension names trains after Prussian commanders (*Panzerzug 'Blücher'*, *'Gneisenau'*, *'Yorck'*), which no real train carried.
+
+### `GER_RAD_01` — Bicycle Brigades
+For bicycle templates. The *Radfahr-Jäger-Brigade 10* (East Prussia, January 1945) and the *Radfahr-Aufklärungs-Brigade Norwegen* are the real units; the extension raises further brigades named after the flat regions of the Reich and Austria (*Radfahr-Jäger-Brigade 1 'Altmark'*, *'Havelland'*, *'Münsterland'*, *'Marchfeld'*). Germany never formed a bicycle division, so the list stays at brigade level.
 
 ### `GER_STURM_01` — Imperial Storm Battalions (neutrality/democratic)
 The army-level assault battalions of 1916–18, *Sturm-Bataillon Nr. 1* to *Nr. 18*, with *Sturm-Bataillon Nr. 5 (Rohr)*, *Jäger-Sturm-Bataillon Nr. 3* and the Bavarian *Nr. 6* and *Nr. 15*. Number 13 never grew beyond a company and is left to the overflow.

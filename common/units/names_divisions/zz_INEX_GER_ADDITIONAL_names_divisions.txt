@@ -2,8 +2,9 @@
 # Immersive Namelists Expanded (INEX)
 #
 # Numbered series, specialised units, garrisons and fortresses, Kampfgruppen, militias, foreign
-# legions and the Imperial series. Period German spelling and 1939-45 exonyms (Reval, Wilna, Kiew,
-# Charkow); identities appended to a designation go in single quotes, historical proper names do not.
+# legions, plausible specialist formations and the Imperial series. Period German spelling and 1939-45
+# exonyms (Reval, Wilna, Kiew, Charkow); identities appended to a designation go in single quotes,
+# historical proper names do not.
 #
 # Numbering: Reserve, Volksgrenadier and Grenadier divisions link to GER_Inf_01 and sit on their
 # real numbers (one Heer number series). Luftwaffe field divisions, Flak divisions, battalions,
@@ -12,6 +13,11 @@
 # Division types: the support-arm lists (StuG, Panzerjäger, reconnaissance, amphibious, artillery,
 # Werfer, Flak, naval commandos) list only their arm's line battalions, and Kampfgruppen list only
 # infantry, so the automatic choice keeps Panzer, motorized and infantry templates on their main lists.
+#
+# Plausible specialist formations (section 6): Skijäger divisions, Luftwaffe Panzer divisions, armoured
+# trains and Radfahr brigades, each grown from one real seed unit; own number series. The ski list stays
+# below the Jäger and Gebirgs lists in size, so those templates keep their main lists; the train list
+# (armored_car) is larger than GER_AUFKL_01 and takes armoured-car-only templates on its own.
 #
 # Ideology gating: Volkssturm, SA and foreign legions are fascist-only; Freikorps (neutrality),
 # Reichsbanner (democratic) and Red Front Fighters (communism) cover the other paths. The Imperial
@@ -1059,12 +1065,10 @@ GER_BRIG_01 =
 		15 = { "Schnelle Brigade 20" }
 		16 = { "Schnelle Brigade 30" }
 		17 = { "Schnelle Brigade West" }
-		# Mountain, ski and bicycle brigades
+		# Mountain and ski brigades (the bicycle brigades are in GER_RAD_01)
 		18 = { "Gebirgsjäger-Brigade 139" }
 		19 = { "1. Skijäger-Brigade" }
 		20 = { "MG-Ski-Brigade Finnland" }
-		21 = { "Radfahr-Aufklärungs-Brigade Norwegen" }
-		22 = { "Radfahr-Jäger-Brigade 10" }
 		# Border and security brigades
 		23 = { "Brigade Lötzen" }
 		24 = { "Sicherungs-Brigade 74" }
@@ -1498,6 +1502,286 @@ GER_LEG_01 = {
 		909 = { "Wolgatatarische Legion" }
 		910 = { "Kalmücken-Kavallerie-Korps" }
 		911 = { "Russische Befreiungsarmee" }
+	}
+}
+
+# ==============================================================================
+# 6. PLAUSIBLE SPECIALIST FORMATIONS
+# ==============================================================================
+
+# Ski divisions grown from the 1. Skijäger-Division (brigade September 1943, division 2 June 1944; Pripjet marshes, Carpathians).
+# Plausible expansion: winter-sport towns and highland regions, then Lapland battle honours; the real regiments and battalions on 9xx keys.
+# Size ceiling: keep this list below 31 names. GER_LTINF_01 (ranger_battalion, 31) and GER_Mnt_01 (mountaineers, 33) must stay larger,
+# or Jäger and mountain templates take the ski list on their own [NAM-018].
+GER_SKI_01 = 
+{
+	name = "Ski Divisions"
+
+	for_countries = { GER }
+
+	can_use = { always = yes }
+
+	division_types = { "mountaineers" "ranger_battalion" }
+
+	fallback_name = "%d. Skijäger-Division"
+
+	ordered =
+	{
+		# Historical: the Heer's only ski division
+		1 = { "%d. Skijäger-Division" }
+		# Plausible expansion: winter-sport towns and highland regions of the Reich, Austria and the Sudetenland
+		2 = { "%d. Skijäger-Division 'Oberhof'" }
+		3 = { "%d. Skijäger-Division 'Oberwiesenthal'" }
+		4 = { "%d. Skijäger-Division 'Braunlage'" }
+		5 = { "%d. Skijäger-Division 'Winterberg'" }
+		6 = { "%d. Skijäger-Division 'Feldberg'" }
+		7 = { "%d. Skijäger-Division 'Oberammergau'" }
+		8 = { "%d. Skijäger-Division 'Reit im Winkl'" }
+		9 = { "%d. Skijäger-Division 'Ruhpolding'" }
+		10 = { "%d. Skijäger-Division 'Kitzbühel'" }
+		11 = { "%d. Skijäger-Division 'Arlberg'" }
+		12 = { "%d. Skijäger-Division 'Seefeld'" }
+		13 = { "%d. Skijäger-Division 'Semmering'" }
+		14 = { "%d. Skijäger-Division 'Bad Gastein'" }
+		15 = { "%d. Skijäger-Division 'Schladming'" }
+		16 = { "%d. Skijäger-Division 'Montafon'" }
+		17 = { "%d. Skijäger-Division 'Stubai'" }
+		18 = { "%d. Skijäger-Division 'Altvatergebirge'" }
+		# Plausible expansion: battle honours of the Lapland front (20. Gebirgs-Armee, 1941-44)
+		19 = { "%d. Skijäger-Division 'Lappland'" }
+		20 = { "%d. Skijäger-Division 'Salla'" }
+		21 = { "%d. Skijäger-Division 'Petsamo'" }
+		22 = { "%d. Skijäger-Division 'Kiestinki'" }
+		# Historical: the ski regiments and battalions of 1942-44 (the brigade and the MG-Ski-Brigade Finnland are in GER_BRIG_01)
+		901 = { "Skijäger-Regiment 1" }
+		902 = { "Skijäger-Regiment 2" }
+		903 = { "Skijäger-Bataillon 2" }
+		904 = { "Skijäger-Bataillon 4" }
+		905 = { "Skijäger-Bataillon 5" }
+		906 = { "Skijäger-Bataillon 7" }
+		907 = { "Skijäger-Bataillon 9" }
+		908 = { "Skijäger-Bataillon 11" }
+	}
+}
+
+# Luftwaffe armoured arm grown from the Fallschirm-Panzerkorps 'Hermann Göring' (number after the designation, as in the real units).
+# Plain variant (bare numbers); the Named list GER_FJPZ_02 shares its numbering. Far smaller than GER_Arm_01 and GER_MEC_01, so Panzer and
+# Panzergrenadier templates keep their main lists. The Nazi honour names ('Hermann Göring', 'Legion Condor') are in GER_ELI_01, fascist-only.
+GER_FJPZ_01 = 
+{
+	name = "Luftwaffe Panzer Divisions"
+
+	for_countries = { GER }
+
+	can_use = { always = yes }
+
+	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" "mechanized" }
+
+	fallback_name = "Fallschirm-Panzer-Division %d"
+}
+
+# Named variant of GER_FJPZ_01: the Luftwaffe's Geschwader tradition names and Beinamen, the aces it honoured, and aviation pioneers.
+# Apolitical names only: 'Horst Wessel', 'Schlageter', 'Legion Condor', 'Hermann Göring' (all real Traditionsnamen) and 'Nowotny' (NSDAP member) are left out.
+GER_FJPZ_02 = 
+{
+	name = "Luftwaffe Panzer (Named)"
+
+	for_countries = { GER }
+
+	can_use = { always = yes }
+
+	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" "mechanized" }
+
+	link_numbering_with = { GER_FJPZ_01 }
+
+	fallback_name = "Fallschirm-Panzer-Division %d"
+
+	ordered =
+	{
+		# Plausible expansion: the Traditionsgeschwader names of 1935-44
+		1 = { "Fallschirm-Panzer-Division %d 'Richthofen'" }
+		2 = { "Fallschirm-Panzer-Division %d 'Boelcke'" }
+		3 = { "Fallschirm-Panzer-Division %d 'Immelmann'" }
+		4 = { "Fallschirm-Panzer-Division %d 'General Wever'" }
+		5 = { "Fallschirm-Panzer-Division %d 'Hindenburg'" }
+		6 = { "Fallschirm-Panzer-Division %d 'Udet'" }
+		7 = { "Fallschirm-Panzer-Division %d 'Mölders'" }
+		8 = { "Fallschirm-Panzer-Division %d 'Oesau'" }
+		# Plausible expansion: aces who died in service 1940-43
+		9 = { "Fallschirm-Panzer-Division %d 'Wick'" }
+		10 = { "Fallschirm-Panzer-Division %d 'Marseille'" }
+		11 = { "Fallschirm-Panzer-Division %d 'Philipp'" }
+		# Plausible expansion: Geschwader emblems (JG 53, JG 77, KG 2)
+		12 = { "Fallschirm-Panzer-Division %d 'Pik As'" }
+		13 = { "Fallschirm-Panzer-Division %d 'Herz As'" }
+		14 = { "Fallschirm-Panzer-Division %d 'Holzhammer'" }
+		# Plausible expansion: aviation pioneers and aces of 1914-18
+		15 = { "Fallschirm-Panzer-Division %d 'Lilienthal'" }
+		16 = { "Fallschirm-Panzer-Division %d 'Zeppelin'" }
+		17 = { "Fallschirm-Panzer-Division %d 'Voss'" }
+		18 = { "Fallschirm-Panzer-Division %d 'Löwenhardt'" }
+		19 = { "Fallschirm-Panzer-Division %d 'Rumey'" }
+		20 = { "Fallschirm-Panzer-Division %d 'Kirschstein'" }
+	}
+}
+
+# The Wehrmacht's Eisenbahn-Panzerzüge on their real numbers, in raising order, and the Panzertriebwagen; short period form 'Panzerzug N'.
+# Plausible expansion: named trains after Prussian commanders who died before 1914 (no real Wehrmacht train carried a name).
+# Typed armored_car and larger than GER_AUFKL_01 (3): a template of armoured-car battalions alone takes this list on its own [NAM-018];
+# a mixed template with tanks keeps GER_Arm_01. Choose Reconnaissance Battalions in the designer for pure armoured-car templates.
+GER_PZZUG_01 = 
+{
+	name = "Armored Trains"
+
+	for_countries = { GER }
+
+	can_use = { always = yes }
+
+	division_types = { "armored_car" }
+
+	fallback_name = "Panzerzug %d"
+
+	ordered =
+	{
+		# Historical: the trains of 1938-39 (1, 3, 5 and 6 under III., VII., IX. and I. Armeekorps; then the rest of the first series)
+		1 = { "Panzerzug %d" }
+		3 = { "Panzerzug %d" }
+		5 = { "Panzerzug %d" }
+		6 = { "Panzerzug %d" }
+		2 = { "Panzerzug %d" }
+		4 = { "Panzerzug %d" }
+		7 = { "Panzerzug %d" }
+		9 = { "Panzerzug %d" }
+		10 = { "Panzerzug %d" }
+		11 = { "Panzerzug %d" }
+		# Historical: captured Polish and Soviet trains rebuilt 1940-41 (21-32) and the 1942 conversions (51, 52)
+		21 = { "Panzerzug %d" }
+		22 = { "Panzerzug %d" }
+		23 = { "Panzerzug %d" }
+		24 = { "Panzerzug %d" }
+		25 = { "Panzerzug %d" }
+		26 = { "Panzerzug %d" }
+		27 = { "Panzerzug %d" }
+		28 = { "Panzerzug %d" }
+		29 = { "Panzerzug %d" }
+		30 = { "Panzerzug %d" }
+		31 = { "Panzerzug %d" }
+		32 = { "Panzerzug %d" }
+		51 = { "Panzerzug %d" }
+		52 = { "Panzerzug %d" }
+		# Historical: the BP 42 series of 1942-44 (61-84)
+		61 = { "Panzerzug %d" }
+		62 = { "Panzerzug %d" }
+		63 = { "Panzerzug %d" }
+		64 = { "Panzerzug %d" }
+		65 = { "Panzerzug %d" }
+		66 = { "Panzerzug %d" }
+		67 = { "Panzerzug %d" }
+		68 = { "Panzerzug %d" }
+		69 = { "Panzerzug %d" }
+		70 = { "Panzerzug %d" }
+		71 = { "Panzerzug %d" }
+		72 = { "Panzerzug %d" }
+		73 = { "Panzerzug %d" }
+		74 = { "Panzerzug %d" }
+		75 = { "Panzerzug %d" }
+		76 = { "Panzerzug %d" }
+		77 = { "Panzerzug %d" }
+		78 = { "Panzerzug %d" }
+		79 = { "Panzerzug %d" }
+		80 = { "Panzerzug %d" }
+		81 = { "Panzerzug %d" }
+		82 = { "Panzerzug %d" }
+		83 = { "Panzerzug %d" }
+		84 = { "Panzerzug %d" }
+		# Historical: the Panzertriebwagen (own series; the number is in the text)
+		915 = { "Panzertriebwagen 15" }
+		916 = { "Panzertriebwagen 16" }
+		917 = { "Panzertriebwagen 17" }
+		918 = { "Panzertriebwagen 18" }
+		919 = { "Panzertriebwagen 19" }
+		920 = { "Panzertriebwagen 20" }
+		921 = { "Panzertriebwagen 21" }
+		922 = { "Panzertriebwagen 22" }
+		923 = { "Panzertriebwagen 23" }
+		930 = { "Panzertriebwagen 30" }
+		931 = { "Panzertriebwagen 31" }
+		932 = { "Panzertriebwagen 32" }
+		933 = { "Panzertriebwagen 33" }
+		934 = { "Panzertriebwagen 34" }
+		935 = { "Panzertriebwagen 35" }
+		936 = { "Panzertriebwagen 36" }
+		937 = { "Panzertriebwagen 37" }
+		938 = { "Panzertriebwagen 38" }
+		951 = { "Panzerjäger-Triebwagen 51" }
+		# Plausible expansion: named trains after Prussian commanders
+		901 = { "Panzerzug 'Blücher'" }
+		902 = { "Panzerzug 'Gneisenau'" }
+		903 = { "Panzerzug 'Yorck'" }
+		904 = { "Panzerzug 'Moltke'" }
+		905 = { "Panzerzug 'Roon'" }
+		906 = { "Panzerzug 'Zieten'" }
+		907 = { "Panzerzug 'Derfflinger'" }
+		908 = { "Panzerzug 'Wrangel'" }
+		909 = { "Panzerzug 'Steinmetz'" }
+		910 = { "Panzerzug 'Goeben'" }
+		911 = { "Panzerzug 'Bülow'" }
+		912 = { "Panzerzug 'Tauentzien'" }
+		913 = { "Panzerzug 'Schlieffen'" }
+		914 = { "Panzerzug 'Nettelbeck'" }
+	}
+}
+
+# Bicycle brigades grown from the Radfahr-Jäger-Brigade 10 (East Prussia, January 1945), the only German cyclist formation above battalion;
+# no Radfahr-Division is attested, so the list stays at brigade level. Plausible expansion: flat regions of the 1937 Reich and Austria.
+# The two real brigades moved here from GER_BRIG_01 on 2026-10-28.
+GER_RAD_01 = 
+{
+	name = "Bicycle Brigades"
+
+	for_countries = { GER }
+
+	can_use = { always = yes }
+
+	division_types = { "bicycle_battalion" }
+
+	fallback_name = "Radfahr-Jäger-Brigade %d"
+
+	ordered =
+	{
+		# Historical: the brigades of 1944-45
+		10 = { "Radfahr-Jäger-Brigade %d" }
+		901 = { "Radfahr-Aufklärungs-Brigade Norwegen" }
+		# Plausible expansion: the North German plain and the Prussian east
+		1 = { "Radfahr-Jäger-Brigade %d 'Altmark'" }
+		2 = { "Radfahr-Jäger-Brigade %d 'Uckermark'" }
+		3 = { "Radfahr-Jäger-Brigade %d 'Havelland'" }
+		4 = { "Radfahr-Jäger-Brigade %d 'Prignitz'" }
+		5 = { "Radfahr-Jäger-Brigade %d 'Fläming'" }
+		6 = { "Radfahr-Jäger-Brigade %d 'Magdeburger Börde'" }
+		7 = { "Radfahr-Jäger-Brigade %d 'Hildesheimer Börde'" }
+		8 = { "Radfahr-Jäger-Brigade %d 'Münsterland'" }
+		9 = { "Radfahr-Jäger-Brigade %d 'Wesermarsch'" }
+		11 = { "Radfahr-Jäger-Brigade %d 'Angeln'" }
+		12 = { "Radfahr-Jäger-Brigade %d 'Wendland'" }
+		13 = { "Radfahr-Jäger-Brigade %d 'Holsteinische Schweiz'" }
+		14 = { "Radfahr-Jäger-Brigade %d 'Mecklenburgische Seenplatte'" }
+		15 = { "Radfahr-Jäger-Brigade %d 'Niederlausitz'" }
+		16 = { "Radfahr-Jäger-Brigade %d 'Spreewald'" }
+		17 = { "Radfahr-Jäger-Brigade %d 'Oderbruch'" }
+		18 = { "Radfahr-Jäger-Brigade %d 'Warthebruch'" }
+		19 = { "Radfahr-Jäger-Brigade %d 'Natangen'" }
+		20 = { "Radfahr-Jäger-Brigade %d 'Ermland'" }
+		# Plausible expansion: the south-west and Austria
+		21 = { "Radfahr-Jäger-Brigade %d 'Kraichgau'" }
+		22 = { "Radfahr-Jäger-Brigade %d 'Rheinhessen'" }
+		23 = { "Radfahr-Jäger-Brigade %d 'Wetterau'" }
+		24 = { "Radfahr-Jäger-Brigade %d 'Marchfeld'" }
+		25 = { "Radfahr-Jäger-Brigade %d 'Weinviertel'" }
+		26 = { "Radfahr-Jäger-Brigade %d 'Waldviertel'" }
+		27 = { "Radfahr-Jäger-Brigade %d 'Mühlviertel'" }
+		28 = { "Radfahr-Jäger-Brigade %d 'Innviertel'" }
+		29 = { "Radfahr-Jäger-Brigade %d 'Hausruck'" }
 	}
 }
 
