@@ -7,13 +7,11 @@ BeforeAll {
     $script:RepoRoot = Resolve-Path (Join-Path $PSScriptRoot "..")
     $script:NamelistDir = Join-Path $script:RepoRoot "common\units\names_divisions"
 
-    $script:ValidSubunitTokens = @(
-        'infantry', 'cavalry', 'motorized', 'mechanized', 'marine', 'mountaineers', 'paratrooper',
-        'light_armor', 'medium_armor', 'heavy_armor', 'super_heavy_armor', 'modern_armor',
-        'amphibious_armor', 'amphibious_mechanized', 'artillery', 'anti_air', 'anti_tank',
-        'rocket_artillery', 'motorized_rocket_artillery', 'irregular_infantry', 'militia',
-        'camelry', 'ranger_battalion', 'penal_battalion'
-    )
+    $buildContent = [System.IO.File]::ReadAllText((Join-Path $script:RepoRoot 'build.ps1'), [System.Text.Encoding]::UTF8)
+    $typesMatch = [regex]::Match($buildContent, '(?s)\$ValidDivisionTypes = @\(.*?\)')
+    if (-not $typesMatch.Success) { throw 'build.ps1 defines no $ValidDivisionTypes list' }
+    . ([ScriptBlock]::Create($typesMatch.Value))
+    $script:ValidSubunitTokens = $ValidDivisionTypes
 
     $script:NamelistFiles = Get-ChildItem -Path $script:NamelistDir -Filter "zz_INEX_*.txt"
 }

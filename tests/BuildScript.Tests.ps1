@@ -20,7 +20,7 @@ BeforeAll {
         . ([ScriptBlock]::Create($typesMatch.Value))
     }
 
-    foreach ($fn in 'Get-NamePatternKey', 'Test-FallbackStub', 'ConvertFrom-RomanNumeral', 'ConvertTo-RomanNumeral', 'Get-SharedIdentities', 'Get-NamelistAuditData', 'Get-OrderedEntryStats', 'Compare-NamelistAuditData', 'Get-GitFileText', 'Get-NameVariantKey', 'Resolve-GroupTag', 'Get-GroupSections', 'Format-EntryList', 'Get-OrphanHeaderLines', 'Set-NamelistGroupComment', 'Set-NamelistHeader', 'Edit-NamelistGroupText', 'Get-NamelistGroupEnd', 'Add-NamelistGroupText', 'ConvertTo-NamelistEditOp', 'Invoke-NamelistEditOps', 'Get-PlanBatchBlocks', 'Get-PlanReadinessWarnings', 'Read-NamelistEditBatch', 'Get-WorkshopDocStats', 'Get-VanillaOverlap', 'Find-Hoi4Install', 'Add-VanillaSelectorFlags', 'Find-WikiLinkMismatches', 'Compare-NamelistGroupSets', 'Format-NamelistDiff', 'Get-CountryName', 'Format-PlanChangeTable', 'Set-PlanChangeTable', 'New-AuditPlanText', 'Format-AuditSummaryLine', 'Get-AuditFindingLines', 'Update-WikiGroupRows', 'Find-WikiProseMentions', 'Format-CappedList', 'Format-KeyRanges', 'Format-AuditFlagsLine', 'Get-LivePlanPaths', 'Add-MarkdownTableRow', 'Add-MarkdownListLine', 'Add-NationDocRows', 'Sync-AgentMirrors', 'Get-GameLogFindings', 'Read-SharedTextLines', 'Get-UnpushedWikiPages') {
+    foreach ($fn in 'Get-NamePatternKey', 'Test-FallbackStub', 'ConvertFrom-RomanNumeral', 'ConvertTo-RomanNumeral', 'Get-SharedIdentities', 'Split-NamelistGroupBlocks', 'Get-NamelistAuditData', 'Get-NameGroupFields', 'Get-GameSubUnits', 'Get-GameLineBattalionIds', 'Merge-NameGroupFiles', 'Test-CanUseForGovernment', 'Get-NamePick', 'Format-NamePick', 'Format-NamePickRow','Get-OrderedEntryStats', 'Compare-NamelistAuditData', 'Get-GitFileText', 'Get-NameVariantKey', 'Resolve-GroupTag', 'Get-GroupSections', 'Format-EntryList', 'Get-OrphanHeaderLines', 'Set-NamelistGroupComment', 'Set-NamelistHeader', 'Edit-NamelistGroupText', 'Get-NamelistGroupEnd', 'Add-NamelistGroupText', 'ConvertTo-NamelistEditOp', 'Invoke-NamelistEditOps', 'Get-PlanBatchBlocks', 'Get-PlanReadinessWarnings', 'Read-NamelistEditBatch', 'Get-WorkshopDocStats', 'Get-VanillaOverlap', 'Find-Hoi4Install', 'Add-VanillaSelectorFlags', 'Find-WikiLinkMismatches', 'Compare-NamelistGroupSets', 'Format-NamelistDiff', 'Get-CountryName', 'Format-PlanChangeTable', 'Set-PlanChangeTable', 'New-AuditPlanText', 'Format-AuditSummaryLine', 'Get-AuditFindingLines', 'Update-WikiGroupRows', 'Find-WikiProseMentions', 'Format-CappedList', 'Format-KeyRanges', 'Format-AuditFlagsLine', 'Get-LivePlanPaths', 'Add-MarkdownTableRow', 'Add-MarkdownListLine', 'Add-NationDocRows', 'Sync-AgentMirrors', 'Get-GameLogFindings', 'Read-SharedTextLines', 'Get-UnpushedWikiPages') {
         $fnMatch = [regex]::Match($script:BuildContent, "(?s)(function $fn\s*\{.*?\n\})")
         if ($fnMatch.Success) {
             . ([ScriptBlock]::Create($fnMatch.Groups[1].Value))
@@ -1714,23 +1714,170 @@ Describe "build.ps1 -Audit -Keys and -EditNames CLI safety" {
 
 Describe "build.ps1: valid division_types list" {
     It "Is defined once and shared by validation and -EditNames" {
-        ([regex]::Matches($script:BuildContent, "'super_heavy_armor'")).Count | Should -Be 1
+        ([regex]::Matches($script:BuildContent, "'bicycle_battalion'")).Count | Should -Be 1
         $ValidDivisionTypes | Should -Contain 'infantry'
         $ValidDivisionTypes | Should -Contain 'penal_battalion'
         $ValidDivisionTypes | Should -Not -Contain 'armor'
     }
 
     It "Accepts the line battalions vanilla defines and uses in its own name lists" {
-        foreach ($t in 'armored_car', 'bicycle_battalion', 'artillery_brigade', 'mot_artillery_brigade', 'anti_tank_brigade', 'medium_tank_destroyer_brigade', 'modern_tank_destroyer_brigade', 'medium_sp_artillery_brigade', 'super_heavy_sp_anti_air_brigade') {
+        foreach ($t in 'armored_car', 'bicycle_battalion', 'artillery_brigade', 'mot_artillery_brigade', 'anti_tank_brigade', 'medium_tank_destroyer_brigade', 'modern_tank_destroyer_brigade', 'medium_sp_artillery_brigade', 'modern_sp_anti_air_brigade', 'marine_commando', 'amphibious_light_armor', 'amphibious_medium_armor', 'amphibious_heavy_armor') {
             $ValidDivisionTypes | Should -Contain $t
         }
         # Not a unit id in vanilla common/units (its ids are mot_rocket_artillery_brigade and motorized_rocket_brigade)
         $ValidDivisionTypes | Should -Not -Contain 'motorized_rocket_artillery'
+        foreach ($t in 'super_heavy_armor', 'super_heavy_tank_destroyer_brigade', 'super_heavy_sp_artillery_brigade', 'super_heavy_sp_anti_air_brigade') {
+            $ValidDivisionTypes | Should -Not -Contain $t -Because "'$t' is a support company in game 1.19.4 (group = support) [NAM-026]"
+        }
+    }
+
+    It "Matches the line battalions of the installed game" {
+        $hoi4 = Find-Hoi4Install
+        if (-not $hoi4) { Set-ItResult -Skipped -Because 'Hearts of Iron IV is not installed'; return }
+        $notForNameLists = @('hq_infantry', 'hq_paratrooper', 'hq_motorized', 'hq_armored_car', 'hq_light_armor', 'hq_medium_armor', 'hq_heavy_armor', 'bus', 'fake_intel_unit')
+        $supportIdsAwaitingRetag = @('artillery', 'anti_air', 'anti_tank', 'rocket_artillery')
+        $lineIds = @(Get-GameLineBattalionIds -Hoi4Dir $hoi4)
+        $lineIds.Count | Should -BeGreaterThan 30
+        @($lineIds | Where-Object { $notForNameLists -notcontains $_ -and $ValidDivisionTypes -notcontains $_ }) | Should -BeNullOrEmpty -Because 'every line battalion of the game is a valid division_types token'
+        @($ValidDivisionTypes | Where-Object { $lineIds -notcontains $_ -and $supportIdsAwaitingRetag -notcontains $_ }) | Should -BeNullOrEmpty -Because 'every accepted token is a line battalion of the game'
     }
 
     It "Names the valid tokens when -EditNames rejects one" {
         $text = "TST_INF_01 = {`n`tname = `"Infantry`"`n`tdivision_types = { `"infantry`" }`n`tfallback_name = `"%d. Div`"`n}`n"
         { Edit-NamelistGroupText -Text $text -GroupTag 'TST_INF_01' -AddTypes @('armor') } | Should -Throw '*medium_armor*'
+    }
+}
+
+Describe "build.ps1 Helper: merged name groups and the automatic pick" {
+    BeforeAll {
+        $vanillaText = @(
+            'TST_INF_01 = {',
+            '    name = "Vanilla Infantry"',
+            '    for_countries = { TST }',
+            '    division_types = { "infantry" "ranger_battalion" }',
+            '    fallback_name = "%d. Division"',
+            '    ordered = {',
+            '        1 = { "1. Division" }',
+            '        2 = { "2. Division" }',
+            '        3 = { "3. Division" }',
+            '    }',
+            '    unique = { "Lehr" }',
+            '}',
+            'TST_OTHER_01 = {',
+            '    name = "Other Country"',
+            '    for_countries = { OTH }',
+            '    division_types = { "infantry" }',
+            '    ordered = { 1 = { "A" } 2 = { "B" } 3 = { "C" } 4 = { "D" } 5 = { "E" } 6 = { "F" } }',
+            '}',
+            'TST_SHIP_01 = {',
+            '    name = "Ships"',
+            '    type = ship',
+            '    for_countries = { TST }',
+            '    ordered = { 1 = { "A" } 2 = { "B" } 3 = { "C" } 4 = { "D" } 5 = { "E" } 6 = { "F" } }',
+            '}'
+        ) -join "`n"
+        $inexText = @(
+            'TST_Inf_01 = {',
+            '    name = "INEX Infantry"',
+            '    for_countries = { TST }',
+            '    division_types = { "infantry" }',
+            '    can_use = { always = yes }',
+            '    ordered = {',
+            '        3 = { "3. Division ''Rewritten''" }',
+            '        4 = { "4. Division" }',
+            '    }',
+            '}',
+            'TST_FAS_01 = {',
+            '    name = "Fascist Infantry"',
+            '    for_countries = { TST }',
+            '    division_types = { "infantry" }',
+            '    can_use = { has_government = fascism }',
+            '    ordered = { 1 = { "A" } 2 = { "B" } 3 = { "C" } 4 = { "D" } 5 = { "E" } 6 = { "F" } }',
+            '}',
+            'TST_BOGUS_01 = {',
+            '    name = "Bogus Token"',
+            '    for_countries = { TST }',
+            '    division_types = { "no_such_unit" }',
+            '    ordered = { 1 = { "A" } }',
+            '}',
+            'TST_TD_01 = {',
+            '    name = "Tank Destroyers"',
+            '    for_countries = { TST }',
+            '    division_types = { "medium_tank_destroyer_brigade" }',
+            '    can_use = { is_ai = no }',
+            '    ordered = { 1 = { "A" } 2 = { "B" } 3 = { "C" } 4 = { "D" } 5 = { "E" } }',
+            '}'
+        ) -join "`n"
+        $files = @(
+            [PSCustomObject]@{ Name = 'zz_INEX_TST_names_divisions.txt'; Path = $null; Text = $inexText },
+            [PSCustomObject]@{ Name = 'TST_names_divisions.txt'; Path = $null; Text = $vanillaText }
+        )
+        $subUnitIds = @('infantry', 'ranger_battalion', 'medium_tank_destroyer_brigade', 'motorized')
+        $script:MergedGroups = @(Merge-NameGroupFiles -Files $files -SubUnitIds $subUnitIds)
+        $script:TstGroups = @($script:MergedGroups | Where-Object { (-not $_.NameType -or $_.NameType -eq 'army') -and ($_.ForCountries.Count -eq 0 -or $_.ForCountries -contains 'TST') })
+    }
+
+    It "Reads a tag defined again in a later file into the first group, without regard to case [NAM-020]" {
+        $inf = @($script:MergedGroups | Where-Object { $_.Tag -eq 'TST_INF_01' })
+        $inf.Count | Should -Be 1
+        $inf[0].Selector | Should -Be 'INEX Infantry'
+        @($inf[0].Types) | Should -Be @('infantry', 'ranger_battalion')
+        $inf[0].OrderedKeys.Count | Should -Be 4
+        $inf[0].UniqueCount | Should -Be 1
+        $inf[0].Count | Should -Be 5
+        @($inf[0].Files) | Should -Be @('TST_names_divisions.txt', 'zz_INEX_TST_names_divisions.txt')
+        $inf[0].CanUse | Should -Be 'always = yes'
+    }
+
+    It "Keeps only the army groups the country may use" {
+        @($script:TstGroups | ForEach-Object { $_.Tag }) | Should -Not -Contain 'TST_OTHER_01'
+        @($script:TstGroups | ForEach-Object { $_.Tag }) | Should -Not -Contain 'TST_SHIP_01'
+    }
+
+    It "Drops the tokens that are no sub-unit id, so such a group is typeless [NAM-027]" {
+        $bogus = $script:MergedGroups | Where-Object { $_.Tag -eq 'TST_BOGUS_01' }
+        @($bogus.ValidTypes).Count | Should -Be 0
+        $pick = Get-NamePick -Groups $script:TstGroups -Types @('motorized') -Government 'democratic' -Country 'TST'
+        $pick.Winner.Group.Tag | Should -Be 'TST_BOGUS_01'
+    }
+
+    It "Evaluates has_government, OR, NOT and always, and leaves other triggers undecided" {
+        Test-CanUseForGovernment -CanUse 'has_government = fascism' -Government 'fascism' | Should -BeTrue
+        Test-CanUseForGovernment -CanUse 'has_government = fascism' -Government 'communism' | Should -BeFalse
+        Test-CanUseForGovernment -CanUse 'OR = { has_government = fascism has_government = neutrality }' -Government 'neutrality' | Should -BeTrue
+        Test-CanUseForGovernment -CanUse 'NOT = { has_government = communism }' -Government 'communism' | Should -BeFalse
+        Test-CanUseForGovernment -CanUse 'NOT = { has_government = communism }' -Government 'democratic' | Should -BeTrue
+        Test-CanUseForGovernment -CanUse 'has_dlc = "Arms Against Tyranny" has_government = democratic' -Government 'democratic' | Should -BeTrue
+        Test-CanUseForGovernment -CanUse 'always = no' -Government 'democratic' | Should -BeFalse
+        Test-CanUseForGovernment -CanUse '' -Government 'democratic' | Should -BeTrue
+        Test-CanUseForGovernment -CanUse 'tag = TST' -Government 'democratic' -Country 'TST' | Should -BeTrue
+        Test-CanUseForGovernment -CanUse 'is_ai = no' -Government 'democratic' | Should -BeNullOrEmpty
+        Test-CanUseForGovernment -CanUse 'OR = { is_ai = no has_government = democratic }' -Government 'democratic' | Should -BeTrue
+        Test-CanUseForGovernment -CanUse 'has_government = fascism is_ai = no' -Government 'democratic' | Should -BeFalse
+    }
+
+    It "Gives the template the matching group with the most names, and names the runner-up [NAM-018]" {
+        $democratic = Get-NamePick -Groups $script:TstGroups -Types @('infantry') -Government 'democratic' -Country 'TST'
+        $democratic.Winner.Group.Tag | Should -Be 'TST_INF_01'
+        $democratic.RunnerUp.Group.Tag | Should -Be 'TST_BOGUS_01'
+        $fascist = Get-NamePick -Groups $script:TstGroups -Types @('infantry') -Government 'fascism' -Country 'TST'
+        $fascist.Winner.Group.Tag | Should -Be 'TST_FAS_01'
+        $fascist.RunnerUp.Group.Tag | Should -Be 'TST_INF_01'
+        Format-NamePick -Pick $fascist | Should -Be 'TST_FAS_01 6 > TST_INF_01 5'
+    }
+
+    It "Marks a group whose can_use it cannot decide, and a tie" {
+        $td = Get-NamePick -Groups $script:TstGroups -Types @('medium_tank_destroyer_brigade') -Government 'democratic' -Country 'TST'
+        Format-NamePick -Pick $td | Should -Be 'TST_TD_01 5? > TST_BOGUS_01 1'
+        $mix = Get-NamePick -Groups $script:TstGroups -Types @('ranger_battalion', 'medium_tank_destroyer_brigade') -Government 'democratic' -Country 'TST'
+        $mix.Tie | Should -BeTrue
+        Format-NamePick -Pick $mix | Should -Match '\(tie'
+    }
+
+    It "Combines the governments that get the same pick on one line" {
+        $row = Format-NamePickRow -Label 'infantry' -Groups $script:TstGroups -Types @('infantry') -Country 'TST'
+        $row | Should -Be 'infantry: democratic/communism/neutrality TST_INF_01 5 > TST_BOGUS_01 1 | fascism TST_FAS_01 6 > TST_INF_01 5'
+        Format-NamePickRow -Label 'motorized' -Groups @() -Types @('motorized') -Country 'TST' | Should -Be 'motorized: none'
     }
 }
 

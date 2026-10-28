@@ -113,8 +113,9 @@ Phase 5  Hand-off                  report and STOP
 3. `powershell -File .\build.ps1 -AuditPlan <KEY>`: creates the plan skeleton (`docs/plans/YYYY-MM-DD-<country>-audit.md`) with `Status: PLANNING`, the initial report, TODO sections, the standard implementation steps and an empty change table.
 4. Only for a fallback finding or a `Vanilla: leaves out` line: `powershell -File .\build.ps1 -InspectVanilla <TAG> -Group <GROUP>` (the vanilla group's entries and scripted `division_names_group` references; skip if HOI4 is not installed and note it in the report).
 5. Read flagged groups with `powershell -File .\build.ps1 -Audit <KEY> -Group <GROUP> -NamesOnly -Sections`. Never dump the full file.
-6. Check for linguistic problems the lint cannot see: wrong case, missing diacritics, machine-translated words, copy-paste selectors.
-7. Ask policy questions (e.g. naming conventions, plain vs named variants) before research.
+6. `powershell -File .\build.ps1 -PickTable <TAG>`: which group each kind of template takes on its own, per government (guide §5). Before you propose a `division_types` change, check its effect with `-PickTypes` on the templates concerned, mixed ones included, and put the rows you rely on in `Rationale`.
+7. Check for linguistic problems the lint cannot see: wrong case, missing diacritics, machine-translated words, copy-paste selectors.
+8. Ask policy questions (e.g. naming conventions, plain vs named variants) before research.
 
 ### Phase 1: Targeted "Historical Research" Subagent
 Dispatch a budgeted fact-checker subagent using `.claude/agents/inex-audit-researcher.md` (role `"Audit Researcher"`; the brief sets its model and budget):

@@ -214,6 +214,15 @@
     With -Audit <KEY>: compare the working copy against a git ref (e.g. -Compare HEAD). Lists removed/added tags,
     selector/type/fallback/link changes, and only the added or changed name strings, for review without a raw diff.
 
+.PARAMETER PickTable
+    Which name group the game gives a new or script-made division template of a country automatically (e.g.
+    -PickTable GER; a file key such as GER_SS means its country): one line per valid division_types token with the
+    winning group and the runner-up and their name counts after vanilla's merge, per government where they differ.
+    Reads vanilla's files and every INEX file, so it needs the game. Informational, never fails on content.
+
+.PARAMETER PickTypes
+    With -PickTable: the line battalions of one template mix ("motorized; medium_tank_destroyer_brigade"); prints
+    only that line instead of the whole table.
 
 .PARAMETER Hoi4InstallDir
     Custom path to the Hearts of Iron IV installation folder if installed in a non-standard directory.
@@ -316,6 +325,12 @@ param(
 
     [Parameter(ParameterSetName = 'Audit')]
     [switch]$Keys,
+
+    [Parameter(ParameterSetName = 'PickTable', Mandatory = $true)]
+    [string]$PickTable,
+
+    [Parameter(ParameterSetName = 'PickTable')]
+    [string]$PickTypes,
 
     [Parameter(ParameterSetName = 'InspectVanilla')]
     [Parameter(ParameterSetName = 'Audit')]
@@ -426,6 +441,7 @@ param(
     [Parameter(ParameterSetName = 'InspectVanilla')]
     [Parameter(ParameterSetName = 'Audit')]
     [Parameter(ParameterSetName = 'Check')]
+    [Parameter(ParameterSetName = 'PickTable')]
     [string]$Hoi4InstallDir,
 
     [switch]$Validate,
@@ -456,22 +472,25 @@ function Write-Err    { param([string]$msg) Write-Host "  [ERROR] $msg" -Foregro
 $stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
 
 # --- Valid division_types tokens (line combat subunits), shared by validation and -EditNames ---
-# The line battalions of vanilla common/units (1.19.3); a template takes a group by its line battalions [NAM-026].
-# artillery, anti_air, anti_tank and rocket_artillery are support-company ids, which no template matches; they stay
-# until the groups that use them are retagged (docs/plans/2026-10-27-division-types-retag.md).
+# The line battalions of vanilla common/units (1.19.4): sub-units whose group is not support, without the Army HQ
+# units, bus and fake_intel_unit; a template takes a group by its line battalions [NAM-026]. The super-heavy tanks,
+# tank destroyers and SP guns are support companies in 1.19.4. artillery, anti_air, anti_tank and rocket_artillery
+# are support-company ids, which no template matches; they stay until the groups that use them are retagged
+# (docs/plans/2026-10-27-division-types-retag.md).
 $ValidDivisionTypes = @(
-    'infantry', 'cavalry', 'motorized', 'mechanized', 'marine', 'mountaineers', 'paratrooper',
-    'light_armor', 'medium_armor', 'heavy_armor', 'super_heavy_armor', 'modern_armor',
-    'amphibious_armor', 'amphibious_mechanized', 'irregular_infantry', 'militia',
+    'infantry', 'cavalry', 'motorized', 'mechanized', 'marine', 'marine_commando', 'mountaineers', 'paratrooper',
+    'light_armor', 'medium_armor', 'heavy_armor', 'modern_armor',
+    'amphibious_armor', 'amphibious_light_armor', 'amphibious_medium_armor', 'amphibious_heavy_armor',
+    'amphibious_mechanized', 'irregular_infantry', 'militia',
     'camelry', 'ranger_battalion', 'penal_battalion', 'armored_car', 'bicycle_battalion',
     'artillery_brigade', 'mot_artillery_brigade', 'rocket_artillery_brigade', 'mot_rocket_artillery_brigade',
     'motorized_rocket_brigade', 'anti_air_brigade', 'mot_anti_air_brigade', 'anti_tank_brigade', 'mot_anti_tank_brigade',
     'light_tank_destroyer_brigade', 'medium_tank_destroyer_brigade', 'heavy_tank_destroyer_brigade',
-    'super_heavy_tank_destroyer_brigade', 'modern_tank_destroyer_brigade',
+    'modern_tank_destroyer_brigade',
     'light_sp_artillery_brigade', 'medium_sp_artillery_brigade', 'heavy_sp_artillery_brigade',
-    'super_heavy_sp_artillery_brigade', 'modern_sp_artillery_brigade',
+    'modern_sp_artillery_brigade',
     'light_sp_anti_air_brigade', 'medium_sp_anti_air_brigade', 'heavy_sp_anti_air_brigade',
-    'super_heavy_sp_anti_air_brigade', 'modern_sp_anti_air_brigade',
+    'modern_sp_anti_air_brigade',
     'artillery', 'anti_air', 'anti_tank', 'rocket_artillery'
 )
 
@@ -756,6 +775,39 @@ function Get-Hoi4CountryTags {
     } | Select-Object -Unique)
 }
 
+function Get-GameSubUnits {
+    param([string]$Hoi4Dir)
+    $units = [ordered]@{}
+    $unitsDir = if ($Hoi4Dir) { Join-Path $Hoi4Dir 'common\units' } else { $null }
+    if (-not $unitsDir -or -not (Test-Path $unitsDir)) { return $units }
+    foreach ($file in (Get-ChildItem -Path $unitsDir -Filter '*.txt')) {
+        $depth = 0
+        $inSubUnits = $false
+        $current = $null
+        foreach ($line in [System.IO.File]::ReadAllLines($file.FullName, [System.Text.Encoding]::UTF8)) {
+            $clean = $line -replace '#.*$', ''
+            if ($depth -eq 0 -and $clean -match '^\s*sub_units\s*=\s*\{') {
+                $inSubUnits = $true
+            } elseif ($inSubUnits -and $depth -eq 1 -and $clean -match '^\s*([A-Za-z0-9_]+)\s*=\s*\{') {
+                $current = $Matches[1]
+                $units[$current] = ''
+            } elseif ($current -and $depth -eq 2 -and $clean -match '^\s*group\s*=\s*([A-Za-z_]+)') {
+                $units[$current] = $Matches[1]
+            }
+            $depth += ([regex]::Matches($clean, '\{')).Count - ([regex]::Matches($clean, '\}')).Count
+            if ($depth -le 1) { $current = $null }
+            if ($depth -le 0) { $inSubUnits = $false }
+        }
+    }
+    return $units
+}
+
+function Get-GameLineBattalionIds {
+    param([string]$Hoi4Dir)
+    $units = Get-GameSubUnits -Hoi4Dir $Hoi4Dir
+    return @($units.Keys | Where-Object { $units[$_] -and $units[$_] -ne 'support' })
+}
+
 # --- Helper: Count ordered entries in a comment-stripped group block ---
 # Tolerates nested entry braces and reports malformed entries (e.g. a missing opening quote,
 # as in vanilla FIN_GAR_02) instead of silently skipping them.
@@ -1011,6 +1063,66 @@ function Get-SharedIdentities {
 # --- Helper: Heuristic quality audit of an INEX namelist file ---
 # Returns file-level flags plus per-group metrics and flags. Flags are hints for the
 # hoi4-inex-namelist-audit skill, not invariant errors (those live in Invoke-Validation).
+function Split-NamelistGroupBlocks {
+    param([string[]]$Lines = @())
+    $blocks = [System.Collections.Generic.List[psobject]]::new()
+    $inBlock = New-Object bool[] $Lines.Length
+    $depth = 0
+    $current = $null
+    for ($i = 0; $i -lt $Lines.Length; $i++) {
+        $clean = ($Lines[$i] -replace '#.*$', '').Trim()
+        if ($depth -eq 0 -and -not $current) {
+            $gm = [regex]::Match($clean, '^([A-Za-z][A-Za-z0-9_]*)\s*=\s*\{?')
+            if ($gm.Success -and $clean -notmatch '^(ordered|division_types|for_countries|can_use|link_numbering_with)\b') {
+                $current = [PSCustomObject]@{ Tag = $gm.Groups[1].Value; Lines = [System.Collections.Generic.List[string]]::new(); Opened = $false }
+            }
+        }
+        if ($current) {
+            $current.Lines.Add($Lines[$i])
+            $inBlock[$i] = $true
+        }
+        $opens = ([regex]::Matches($clean, '\{')).Count
+        $depth += ($opens - ([regex]::Matches($clean, '\}')).Count)
+        if ($current -and $opens -gt 0) { $current.Opened = $true }
+        if ($current -and $current.Opened -and $depth -le 0) {
+            $blocks.Add($current)
+            $current = $null
+            $depth = 0
+        }
+    }
+    return [PSCustomObject]@{ Blocks = $blocks; InBlock = $inBlock }
+}
+
+function Get-NameGroupFields {
+    param([string]$Path, [string]$Text)
+    $lines = if ($Path) { [System.IO.File]::ReadAllLines($Path, [System.Text.Encoding]::UTF8) } else { @($Text -split '\r?\n') }
+    $quoted = '"((?:[^"\\]|\\.)*)"'
+    return @(foreach ($b in (Split-NamelistGroupBlocks -Lines $lines).Blocks) {
+        $cleanBlock = ($b.Lines -join "`n") -replace '(?m)#.*$', ''
+        $nameM = [regex]::Match($cleanBlock, ('(?m)^\s*name\s*=\s*' + $quoted))
+        $typesM = [regex]::Match($cleanBlock, 'division_types\s*=\s*\{([^}]*)\}')
+        $countriesM = [regex]::Match($cleanBlock, 'for_countries\s*=\s*\{([^}]*)\}')
+        $canUseM = [regex]::Match($cleanBlock, 'can_use\s*=\s*\{(?<c>(?:[^{}]|\{(?:[^{}]|\{[^{}]*\})*\})*)\}')
+        $nameTypeM = [regex]::Match($cleanBlock, '(?m)^\s*type\s*=\s*([A-Za-z_]+)')
+        $orderedM = [regex]::Match($cleanBlock, '(?<![A-Za-z_])ordered\s*=\s*\{(?<content>(?:[^{}]*|\{[^{}]*\})*)\}')
+        $uniqueM = [regex]::Match($cleanBlock, '\bunique\s*=\s*\{([^}]*)\}')
+        $unorderedM = [regex]::Match($cleanBlock, '\bunordered\s*=\s*\{(?<content>(?:[^{}]*|\{[^{}]*\})*)\}')
+        $uniqueCount = 0
+        if ($uniqueM.Success) { $uniqueCount += ([regex]::Matches($uniqueM.Groups[1].Value, $quoted)).Count }
+        if ($unorderedM.Success) { $uniqueCount += ([regex]::Matches($unorderedM.Groups['content'].Value, '=\s*\{')).Count }
+        [PSCustomObject]@{
+            Tag           = $b.Tag
+            Selector      = $(if ($nameM.Success) { $nameM.Groups[1].Value } else { $null })
+            DivisionTypes = $(if ($typesM.Success) { @([regex]::Matches($typesM.Groups[1].Value, '"([^"]+)"') | ForEach-Object { $_.Groups[1].Value }) } else { @() })
+            ForCountries  = $(if ($countriesM.Success) { @([regex]::Matches($countriesM.Groups[1].Value, '([A-Za-z0-9]+)') | ForEach-Object { $_.Groups[1].Value }) } else { @() })
+            CanUse        = $(if ($canUseM.Success) { ($canUseM.Groups['c'].Value -replace '\s+', ' ').Trim() } else { $null })
+            NameType      = $(if ($nameTypeM.Success) { $nameTypeM.Groups[1].Value } else { $null })
+            EntryKeys     = $(if ($orderedM.Success) { @([regex]::Matches($orderedM.Groups['content'].Value, ('(\d+)\s*=\s*\{?\s*' + $quoted)) | ForEach-Object { [int]$_.Groups[1].Value }) } else { @() })
+            UniqueCount   = $uniqueCount
+        }
+    })
+}
+
 function Get-NamelistAuditData {
     # -Text audits namelist text that is not on disk (an edit in progress) instead of the file at -Path
     param([string]$Path, [string]$Text)
@@ -1031,31 +1143,9 @@ function Get-NamelistAuditData {
     $staleRx = '(?i)\b(fictional|start here|post[- ]?WW(2|II)|placeholder)\b'
 
     # Split the file into root-level group blocks (raw lines kept for comment checks)
-    $blocks = [System.Collections.Generic.List[psobject]]::new()
-    $inBlock = New-Object bool[] $lines.Length
-    $depth = 0
-    $current = $null
-    for ($i = 0; $i -lt $lines.Length; $i++) {
-        $clean = ($lines[$i] -replace '#.*$', '').Trim()
-        if ($depth -eq 0 -and -not $current) {
-            $gm = [regex]::Match($clean, '^([A-Za-z][A-Za-z0-9_]*)\s*=\s*\{?')
-            if ($gm.Success -and $clean -notmatch '^(ordered|division_types|for_countries|can_use|link_numbering_with)\b') {
-                $current = [PSCustomObject]@{ Tag = $gm.Groups[1].Value; Lines = [System.Collections.Generic.List[string]]::new(); Opened = $false }
-            }
-        }
-        if ($current) {
-            $current.Lines.Add($lines[$i])
-            $inBlock[$i] = $true
-        }
-        $opens = ([regex]::Matches($clean, '\{')).Count
-        $depth += ($opens - ([regex]::Matches($clean, '\}')).Count)
-        if ($current -and $opens -gt 0) { $current.Opened = $true }
-        if ($current -and $current.Opened -and $depth -le 0) {
-            $blocks.Add($current)
-            $current = $null
-            $depth = 0
-        }
-    }
+    $split = Split-NamelistGroupBlocks -Lines $lines
+    $blocks = $split.Blocks
+    $inBlock = $split.InBlock
 
     $groups = [System.Collections.Generic.List[psobject]]::new()
     foreach ($b in $blocks) {
@@ -3288,6 +3378,192 @@ function Get-RepoWorkshopDocStats {
     return Get-WorkshopDocStats -GuideText ([System.IO.File]::ReadAllText($guidePath, [System.Text.Encoding]::UTF8)) -Key $Key
 }
 
+function Merge-NameGroupFiles {
+    param([object[]]$Files = @(), [string[]]$SubUnitIds)
+    $sortedFiles = [System.Collections.Generic.List[object]]::new()
+    foreach ($f in $Files) { $sortedFiles.Add($f) }
+    $sortedFiles.Sort([Comparison[object]] { param($left, $right) [string]::CompareOrdinal($left.Name, $right.Name) })
+    $merged = [ordered]@{}
+    foreach ($file in $sortedFiles) {
+        $fileGroups = if ($null -ne $file.Text) { Get-NameGroupFields -Text $file.Text } else { Get-NameGroupFields -Path $file.Path }
+        foreach ($g in $fileGroups) {
+            $mergeKey = $g.Tag.ToUpperInvariant()
+            if (-not $merged.Contains($mergeKey)) {
+                $merged[$mergeKey] = [PSCustomObject]@{
+                    Tag          = $g.Tag
+                    Selector     = $null
+                    CanUse       = $null
+                    NameType     = $null
+                    Types        = [System.Collections.Generic.List[string]]::new()
+                    ValidTypes   = @()
+                    ForCountries = [System.Collections.Generic.List[string]]::new()
+                    OrderedKeys  = [System.Collections.Generic.HashSet[int]]::new()
+                    UniqueCount  = 0
+                    Count        = 0
+                    Files        = [System.Collections.Generic.List[string]]::new()
+                    Position     = $merged.Count
+                }
+            }
+            $m = $merged[$mergeKey]
+            if ($g.Selector) { $m.Selector = $g.Selector }
+            if ($null -ne $g.CanUse) { $m.CanUse = $g.CanUse }
+            if ($g.NameType) { $m.NameType = $g.NameType }
+            foreach ($t in $g.DivisionTypes) { if (-not $m.Types.Contains($t)) { $m.Types.Add($t) } }
+            foreach ($c in $g.ForCountries) { if ($m.ForCountries -notcontains $c) { $m.ForCountries.Add($c) } }
+            foreach ($k in $g.EntryKeys) { [void]$m.OrderedKeys.Add([int]$k) }
+            $m.UniqueCount += $g.UniqueCount
+            if (-not $m.Files.Contains($file.Name)) { $m.Files.Add($file.Name) }
+        }
+    }
+    foreach ($m in $merged.Values) {
+        $m.ValidTypes = @($m.Types | Where-Object { -not $SubUnitIds -or $SubUnitIds -contains $_ })
+        $m.Count = $m.OrderedKeys.Count + $m.UniqueCount
+    }
+    return @($merged.Values)
+}
+
+function Get-MergedNameGroups {
+    param(
+        [string]$Hoi4Dir,
+        [string]$Country,
+        [string]$NamelistDir = (Join-Path $RepoDir 'common\units\names_divisions')
+    )
+    $vanillaFiles = @(Get-ChildItem -Path (Join-Path $Hoi4Dir 'common\units\names_divisions') -Filter '*.txt')
+    $inexFiles = @(Get-ChildItem -Path $NamelistDir -Filter 'zz_INEX_*.txt')
+    $sources = @(@($vanillaFiles) + @($inexFiles) | ForEach-Object { [PSCustomObject]@{ Name = $_.Name; Path = $_.FullName; Text = $null } })
+    $subUnitIds = @((Get-GameSubUnits -Hoi4Dir $Hoi4Dir).Keys)
+    $armyGroups = @(Merge-NameGroupFiles -Files $sources -SubUnitIds $subUnitIds | Where-Object { -not $_.NameType -or $_.NameType -eq 'army' })
+    if (-not $Country) { return $armyGroups }
+    return @($armyGroups | Where-Object { $_.ForCountries.Count -eq 0 -or $_.ForCountries -contains $Country })
+}
+
+function Test-CanUseForGovernment {
+    param([string]$CanUse, [string]$Government, [string]$Country)
+    if (-not $CanUse -or -not $CanUse.Trim()) { return $true }
+    $tokens = @([regex]::Matches($CanUse, '"[^"]*"|[{}=]|[^\s{}="]+') | ForEach-Object { $_.Value })
+    $state = @{ Index = 0 }
+    $combine = {
+        param([string]$Mode, [object[]]$Values)
+        $known = @($Values | Where-Object { $null -ne $_ })
+        $hasUnknown = $known.Count -lt @($Values).Count
+        if ($Mode -eq 'OR') {
+            if ($known -contains $true) { return $true }
+            if ($hasUnknown) { return $null }
+            return $false
+        }
+        if ($Mode -eq 'NOT') {
+            if ($known -contains $true) { return $false }
+            if ($hasUnknown) { return $null }
+            return $true
+        }
+        if ($known -contains $false) { return $false }
+        if ($hasUnknown) { return $null }
+        return $true
+    }
+    $evaluateList = {
+        param([string]$Mode)
+        $values = [System.Collections.Generic.List[object]]::new()
+        while ($state.Index -lt $tokens.Count -and $tokens[$state.Index] -ne '}') {
+            $key = $tokens[$state.Index]
+            if ($state.Index + 2 -ge $tokens.Count -or $tokens[$state.Index + 1] -ne '=') {
+                $state.Index++
+                $values.Add($null)
+                continue
+            }
+            $value = $tokens[$state.Index + 2]
+            $state.Index += 3
+            if ($value -eq '{') {
+                $operator = $key.ToUpperInvariant()
+                $isOperator = @('OR', 'AND', 'NOT') -contains $operator
+                $inner = & $evaluateList $(if ($isOperator) { $operator } else { 'AND' })
+                $state.Index++
+                $values.Add($(if ($isOperator) { $inner } else { $null }))
+                continue
+            }
+            $value = $value.Trim('"')
+            $result = $null
+            if ($key -eq 'has_government') { $result = $value -eq $Government }
+            elseif ($key -eq 'always') { $result = $value -eq 'yes' }
+            elseif ($key -eq 'has_dlc') { $result = $true }
+            elseif ($Country -and ($key -eq 'tag' -or $key -eq 'original_tag')) { $result = $value -eq $Country }
+            $values.Add($result)
+        }
+        return (& $combine $Mode $values.ToArray())
+    }
+    return (& $evaluateList 'AND')
+}
+
+function Get-NamePick {
+    param([object[]]$Groups = @(), [string[]]$Types, [string]$Government, [string]$Country)
+    $candidates = @(foreach ($g in $Groups) {
+        if ($g.ValidTypes.Count -gt 0 -and @($g.ValidTypes | Where-Object { $Types -contains $_ }).Count -eq 0) { continue }
+        $available = Test-CanUseForGovernment -CanUse $g.CanUse -Government $Government -Country $Country
+        if ($available -is [bool] -and -not $available) { continue }
+        [PSCustomObject]@{ Group = $g; Conditional = ($null -eq $available) }
+    })
+    $sorted = @($candidates | Sort-Object -Property @{ Expression = { $_.Group.Count }; Descending = $true }, @{ Expression = { $_.Group.Position }; Descending = $false })
+    return [PSCustomObject]@{
+        Winner     = $(if ($sorted.Count -gt 0) { $sorted[0] } else { $null })
+        RunnerUp   = $(if ($sorted.Count -gt 1) { $sorted[1] } else { $null })
+        Tie        = ($sorted.Count -gt 1 -and $sorted[0].Group.Count -eq $sorted[1].Group.Count)
+        Candidates = $sorted
+    }
+}
+
+function Format-NamePick {
+    param($Pick)
+    if (-not $Pick.Winner) { return 'none' }
+    $describe = { param($c) "$($c.Group.Tag) $($c.Group.Count)$(if ($c.Conditional) { '?' })" }
+    $text = & $describe $Pick.Winner
+    if ($Pick.RunnerUp) { $text += " > $(& $describe $Pick.RunnerUp)" }
+    if ($Pick.Tie) { $text += ' (tie: the game takes the one it lists first)' }
+    return $text
+}
+
+function Format-NamePickRow {
+    param([string]$Label, [object[]]$Groups, [string[]]$Types, [string]$Country)
+    $governments = @('democratic', 'communism', 'fascism', 'neutrality')
+    $byResult = [ordered]@{}
+    foreach ($gov in $governments) {
+        $text = Format-NamePick -Pick (Get-NamePick -Groups $Groups -Types $Types -Government $gov -Country $Country)
+        if (-not $byResult.Contains($text)) { $byResult[$text] = [System.Collections.Generic.List[string]]::new() }
+        $byResult[$text].Add($gov)
+    }
+    if ($byResult.Count -eq 1) { return "${Label}: $(@($byResult.Keys)[0])" }
+    return "${Label}: " + (@($byResult.Keys | ForEach-Object { "$($byResult[$_] -join '/') $_" }) -join ' | ')
+}
+
+function Invoke-NamePickTable {
+    param([string]$Tag, [string]$PickTypes, [string]$Hoi4Dir)
+    $country = (($Tag.ToUpper().Trim() -replace '^(ZZ_)?INEX_', '') -split '_')[0]
+    $hoi4 = Find-Hoi4Install -CustomPath $Hoi4Dir
+    if (-not $hoi4) {
+        Write-Err '-PickTable needs the game files: Hearts of Iron IV was not found (pass -Hoi4InstallDir).'
+        return 1
+    }
+    $groups = Get-MergedNameGroups -Hoi4Dir $hoi4 -Country $country
+    if ($groups.Count -eq 0) {
+        Write-Err "No division name group is available to '$country'."
+        return 1
+    }
+    Write-Step "Automatic name group pick for $country, $($groups.Count) groups after the merge [NAM-018] [NAM-020] [NAM-026]"
+    Write-Info "Per line battalion: winner and runner-up with their merged name counts, per government; '?' marks a can_use the report cannot decide (counted as available)."
+    if ($PickTypes) {
+        $mix = @($PickTypes -split '[;,]' | ForEach-Object { $_.Trim() } | Where-Object { $_ })
+        $unknown = @($mix | Where-Object { $ValidDivisionTypes -notcontains $_ })
+        if ($unknown.Count -gt 0) {
+            Write-Err "Not a valid division type token: $($unknown -join ', '). Valid: $($ValidDivisionTypes -join ', ')"
+            return 1
+        }
+        Write-Host (Format-NamePickRow -Label ($mix -join ' + ') -Groups $groups -Types $mix -Country $country)
+        return 0
+    }
+    foreach ($t in $ValidDivisionTypes) {
+        Write-Host (Format-NamePickRow -Label $t -Groups $groups -Types @($t) -Country $country)
+    }
+    return 0
+}
+
 function Invoke-NamelistAudit {
     param(
         [string]$Key,
@@ -3375,6 +3651,11 @@ function Invoke-NamelistAudit {
     }
 
     $overlap = Get-VanillaOverlap -Groups $data.Groups -Key $Key -Hoi4Dir (Find-Hoi4Install -CustomPath $Hoi4Dir)
+    $mergedByTag = @{}
+    $hoi4ForMerge = Find-Hoi4Install -CustomPath $Hoi4Dir
+    if ($hoi4ForMerge) {
+        foreach ($m in (Get-MergedNameGroups -Hoi4Dir $hoi4ForMerge)) { $mergedByTag[$m.Tag.ToUpperInvariant()] = $m }
+    }
 
     Write-Step "Quality audit: zz_INEX_${Key}_names_divisions.txt ($($data.Groups.Count) groups)"
     foreach ($ff in $data.FileFlags) { Write-Warn "File: $ff" }
@@ -3387,6 +3668,12 @@ function Invoke-NamelistAudit {
         if ($g.CanUse -and $g.CanUse -notmatch '^always\s*=\s*yes$') { Write-Host "  can_use:  $($g.CanUse)" -ForegroundColor Gray }
         Write-Host "  Fallback: $($g.Fallback)" -ForegroundColor Gray
         Write-Host "  Ordered:  $($g.OrderedCount) entries, $($g.AuthoredCount) authored" -ForegroundColor Gray
+        $merged = $mergedByTag[$g.Tag.ToUpperInvariant()]
+        if ($merged -and $merged.Files.Count -gt 1) {
+            $addedTypes = @($merged.Types | Where-Object { $g.DivisionTypes -notcontains $_ })
+            $typesText = if ($addedTypes.Count -gt 0) { "+$($addedTypes -join ' +'); " } else { '' }
+            Write-Host "  Merged:   $typesText$($merged.Count) names after the merge ($($merged.Files -join ', '))" -ForegroundColor Gray
+        }
         $o = $overlap[$g.Tag]
         if ($o -and $o.Matches -gt 0) {
             Write-Host "  Vanilla:  $($o.Matches)/$($o.Total) entries identical to vanilla $($g.Tag) (same key and name); vanilla has them as well" -ForegroundColor Gray
@@ -3687,6 +3974,13 @@ if ($Audit) {
     $stopwatch.Stop()
     Write-Info "Completed in $($stopwatch.Elapsed.TotalSeconds.ToString('0.00'))s"
     exit 0
+}
+
+if ($PickTable) {
+    $pickExit = Invoke-NamePickTable -Tag $PickTable -PickTypes $PickTypes -Hoi4Dir $Hoi4InstallDir
+    $stopwatch.Stop()
+    Write-Info "Completed in $($stopwatch.Elapsed.TotalSeconds.ToString('0.00'))s"
+    exit $pickExit
 }
 
 # --- Action: EditNames ---
