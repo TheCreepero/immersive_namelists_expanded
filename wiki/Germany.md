@@ -11,7 +11,7 @@
 The Wehrmacht numbered its divisions in one series across branch types and raised them in waves (*Aufstellungswellen*), so numbers were not issued in order: after 1.–36. came 44., 45., 46., 61., 50. and so on. INEX keeps that raising order. Every infantry-type list shares the `GER_Inf_01` numbering, so *29. Infanterie-Division (mot.) 'Falke'* and *29. Panzergrenadier-Division 'Falke'* are the same division.
 
 Infantry, motorized, Panzergrenadier and Panzer divisions each come as a pair:
-- **Plain list** (vanilla tag): numbers only, in historical raising order.
+- **Plain list** (vanilla tag): numbers only, in historical raising order. The plain motorized, Panzergrenadier and Panzer lists then run on in plain numbers to 110 entries, so a new template of those types takes the plain list unless you choose another.
 - **Named list**: the same numbers, each with one identity used across every list. The identity is a verified nickname or emblem (*12. Infanterie-Division 'Wilder Stier'*, *7. Panzer-Division 'Gespenster'*), otherwise the division's formation city or training ground (*1. Infanterie-Division 'Königsberg'*). Divisions without a verified, unique identity are left out of the Named list.
 
 The basic lists, coastal defense and border guard included, are open to every government. Ideology-gated lists:
