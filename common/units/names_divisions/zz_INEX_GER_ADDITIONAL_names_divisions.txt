@@ -9,6 +9,10 @@
 # real numbers (one Heer number series). Luftwaffe field divisions, Flak divisions, battalions,
 # brigades, garrisons, militias and the Imperial lists run their own series.
 #
+# Division types: the support-arm lists (StuG, Panzerjäger, reconnaissance, amphibious, artillery,
+# Werfer, Flak, naval commandos) list only their arm's line battalions, and Kampfgruppen list only
+# infantry, so the automatic choice keeps Panzer, motorized and infantry templates on their main lists.
+#
 # Ideology gating: Volkssturm, SA and foreign legions are fascist-only; Freikorps (neutrality),
 # Reichsbanner (democratic) and Red Front Fighters (communism) cover the other paths. The Imperial
 # Sturm-Bataillone, Reserve and Landwehr divisions serve neutrality and democratic governments.
@@ -44,13 +48,10 @@ GER_SCHWERE_PANZERABTEILUNG_01 = {
 		508 = { "schwere Panzer-Abteilung %d" }
 		509 = { "schwere Panzer-Abteilung %d" }
 		510 = { "schwere Panzer-Abteilung %d" }
-		# Historical: redesignations of 1945, the radio-control battalion and heavy tank destroyers
+		# Historical: redesignations of 1945 and the radio-control battalion
 		511 = { "schwere Panzer-Abteilung %d" }
 		424 = { "schwere Panzer-Abteilung %d" }
 		301 = { "schwere Panzer-Abteilung (Fkl) %d" }
-		653 = { "schwere Panzerjäger-Abteilung %d" }
-		654 = { "schwere Panzerjäger-Abteilung %d" }
-		512 = { "schwere Panzerjäger-Abteilung %d" }
 	}
 }
 
@@ -79,13 +80,10 @@ GER_SCHWERE_PANZERABTEILUNG_02 = {
 		508 = { "s.Pz.Abt. %d" }
 		509 = { "s.Pz.Abt. %d" }
 		510 = { "s.Pz.Abt. %d" }
-		# Historical: redesignations of 1945, the radio-control battalion and heavy tank destroyers
+		# Historical: redesignations of 1945 and the radio-control battalion
 		511 = { "s.Pz.Abt. %d" }
 		424 = { "s.Pz.Abt. %d" }
 		301 = { "s.Pz.Abt. (Fkl) %d" }
-		653 = { "s.Pz.Jg.Abt. %d" }
-		654 = { "s.Pz.Jg.Abt. %d" }
-		512 = { "s.Pz.Jg.Abt. %d" }
 	}
 }
 
@@ -134,6 +132,7 @@ GER_ARM_03 = {
 }
 
 # Sturmartillerie: the Heer's independent Sturmgeschütz-Abteilungen, renamed Brigaden on 14 February 1944 (battalion strength). Real numbers, own number series.
+# Typed as medium tank destroyers (StuG III and IV); other tank destroyers and anti-tank units are in GER_PZJG_01.
 GER_STUG_01 = 
 {
 	name = "Assault Gun Brigades"
@@ -142,7 +141,7 @@ GER_STUG_01 =
 
 	can_use = { always = yes }
 
-	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
+	division_types = { "medium_tank_destroyer_brigade" }
 
 	fallback_name = "Sturmgeschütz-Brigade %d"
 
@@ -221,18 +220,100 @@ GER_STUG_01 =
 	}
 }
 
-# Players only (is_ai = no): artillery-heavy and self-propelled artillery templates; own number series.
-# Typed as armour, so the gate keeps the automatic choice from giving AI Panzer templates artillery names.
+# Heer anti-tank and tank destroyer units: the heavy army battalions on their real numbers, then the Panzerjagd-Brigaden of 1944-45; own number series.
+# Medium tank destroyers (StuG) are in GER_STUG_01.
+GER_PZJG_01 = 
+{
+	name = "Panzerjäger Battalions"
+
+	for_countries = { GER }
+
+	can_use = { always = yes }
+
+	division_types = { "anti_tank_brigade" "mot_anti_tank_brigade" "light_tank_destroyer_brigade" "heavy_tank_destroyer_brigade" "modern_tank_destroyer_brigade" }
+
+	fallback_name = "Panzerjäger-Abteilung %d"
+
+	ordered =
+	{
+		# Historical: heavy army Panzerjäger battalions (Elefant, Jagdtiger, Nashorn, Jagdpanther)
+		653 = { "schwere Panzerjäger-Abteilung %d" }
+		654 = { "schwere Panzerjäger-Abteilung %d" }
+		512 = { "schwere Panzerjäger-Abteilung %d" }
+		88 = { "schwere Panzerjäger-Abteilung %d" }
+		93 = { "schwere Panzerjäger-Abteilung %d" }
+		519 = { "schwere Panzerjäger-Abteilung %d" }
+		525 = { "schwere Panzerjäger-Abteilung %d" }
+		559 = { "schwere Panzerjäger-Abteilung %d" }
+		560 = { "schwere Panzerjäger-Abteilung %d" }
+		655 = { "schwere Panzerjäger-Abteilung %d" }
+		# Historical: Panzerjagd-Brigaden of 1944-45
+		656 = { "Heeres-Panzerjagd-Brigade 1" }
+		657 = { "Heeres-Panzerjagd-Brigade 2" }
+		658 = { "Panzerjagd-Brigade 104" }
+		659 = { "Panzerjagd-Brigade West" }
+		660 = { "Panzerjäger-Brigade Oberschlesien" }
+	}
+}
+
+# Armoured-car reconnaissance battalions; divisional numbering, own number series.
+GER_AUFKL_01 = 
+{
+	name = "Reconnaissance Battalions"
+
+	for_countries = { GER }
+
+	can_use = { always = yes }
+
+	division_types = { "armored_car" }
+
+	fallback_name = "Panzer-Aufklärungs-Abteilung %d"
+
+	ordered =
+	{
+		# Historical: the Afrikakorps reconnaissance battalions and the Panzer-Lehr battalion
+		3 = { "Aufklärungs-Abteilung %d (mot.)" }
+		33 = { "Aufklärungs-Abteilung %d (mot.)" }
+		130 = { "Panzer-Aufklärungs-Lehr-Abteilung %d" }
+	}
+}
+
+# The submersible Tauchpanzer battalions raised for Operation Seelöwe (July 1940) and the regiments formed from them;
+# own number series. The numbered fallback is extrapolated: the battalions were lettered A-D.
+GER_AMPH_01 = 
+{
+	name = "Amphibious Panzer Units"
+
+	for_countries = { GER }
+
+	can_use = { always = yes }
+
+	division_types = { "amphibious_armor" "amphibious_mechanized" "amphibious_light_armor" "amphibious_medium_armor" "amphibious_heavy_armor" }
+
+	fallback_name = "Tauchpanzer-Abteilung %d"
+
+	ordered =
+	{
+		# Historical: Tauchpanzer battalions of 1940 and their regiments
+		1 = { "Panzer-Abteilung A" }
+		2 = { "Panzer-Abteilung B" }
+		3 = { "Panzer-Abteilung C" }
+		4 = { "Panzer-Abteilung D" }
+		5 = { "Panzer-Regiment 18" }
+		6 = { "Panzer-Regiment 28" }
+	}
+}
+
+# Artillery and self-propelled artillery templates: Heer artillery divisions, Volks-Artillerie-Korps and
+# Heeres-Artillerie-Brigaden; own number series.
 GER_PANZERARTILLERIE_DIVISION_01 = {
 	name = "Artillery Divisions"
 
 	for_countries = { GER }
 
-	can_use = {
-		is_ai = no
-	}
+	can_use = { always = yes }
 
-	division_types = { "heavy_armor" "medium_armor" "light_armor" "modern_armor" }
+	division_types = { "artillery_brigade" "mot_artillery_brigade" "light_sp_artillery_brigade" "medium_sp_artillery_brigade" "heavy_sp_artillery_brigade" "modern_sp_artillery_brigade" }
 
 	fallback_name = "%d. Artillerie-Division"
 
@@ -254,6 +335,60 @@ GER_PANZERARTILLERIE_DIVISION_01 = {
 		408 = { "Volks-Artillerie-Korps %d" }
 		409 = { "Volks-Artillerie-Korps %d" }
 		410 = { "Volks-Artillerie-Korps %d" }
+		# Historical: Heeres-Artillerie-Brigaden of 1942-45
+		70 = { "Heeres-Artillerie-Brigade %d" }
+		88 = { "Heeres-Artillerie-Brigade %d" }
+		140 = { "Heeres-Artillerie-Brigade %d" }
+		288 = { "Heeres-Artillerie-Brigade %d" }
+		704 = { "leichte Heeres-Artillerie-Brigade %d" }
+		732 = { "Heeres-Artillerie-Brigade %d" }
+		766 = { "Heeres-Artillerie-Brigade %d" }
+		777 = { "Heeres-Artillerie-Brigade %d" }
+		959 = { "Heeres-Artillerie-Brigade %d" }
+	}
+}
+
+# Nebel- and Werfertruppe: Werfer-Brigaden on their real numbers, then the Werfer regiments; own number series.
+GER_WERFER_01 = 
+{
+	name = "Rocket Artillery Brigades"
+
+	for_countries = { GER }
+
+	can_use = { always = yes }
+
+	division_types = { "rocket_artillery_brigade" "mot_rocket_artillery_brigade" "motorized_rocket_brigade" }
+
+	fallback_name = "Werfer-Brigade %d"
+
+	ordered =
+	{
+		# Historical: Werfer-Brigaden 1-9 (1-4 and 7-9 renamed Volks-Werfer-Brigaden in late 1944)
+		1 = { "Werfer-Brigade %d" }
+		2 = { "Werfer-Brigade %d" }
+		3 = { "Werfer-Brigade %d" }
+		4 = { "Werfer-Brigade %d" }
+		5 = { "Werfer-Brigade %d" }
+		6 = { "Werfer-Brigade %d" }
+		7 = { "Werfer-Brigade %d" }
+		8 = { "Werfer-Brigade %d" }
+		9 = { "Werfer-Brigade %d" }
+		# Historical: Volks-Werfer-Brigaden raised in late 1944
+		15 = { "Volks-Werfer-Brigade %d" }
+		16 = { "Volks-Werfer-Brigade %d" }
+		17 = { "Volks-Werfer-Brigade %d" }
+		18 = { "Volks-Werfer-Brigade %d" }
+		19 = { "Volks-Werfer-Brigade %d" }
+		20 = { "Volks-Werfer-Brigade %d" }
+		# Historical: Werfer regiments and the Stellungs-Werfer units
+		21 = { "Werfer-Regiment 53" }
+		22 = { "Werfer-Regiment 54" }
+		23 = { "Werfer-Regiment 71" }
+		24 = { "Werfer-Regiment 83" }
+		25 = { "Werfer-Regiment 84" }
+		26 = { "Stellungs-Werfer-Regiment 101" }
+		27 = { "Stellungs-Werfer-Brigade 300" }
+		28 = { "Nebel-Lehr-Regiment" }
 	}
 }
 
@@ -316,7 +451,7 @@ GER_VOLKSGRENADIER_01 = {
 
 	ordered = {
 		# Historical Volksgrenadier-Divisionen (autumn 1944 onwards), in raising order
-		78 = { "%d. Volks-Sturm-Division" }
+		78 = { "%d. Volksgrenadier-Division" }
 		560 = { "%d. Volksgrenadier-Division" }
 		12 = { "%d. Volksgrenadier-Division" }
 		361 = { "%d. Volksgrenadier-Division" }
@@ -452,6 +587,7 @@ GER_LUFTWAFFEN_FELD_DIVISION_01 = {
 	}
 }
 
+# Luftwaffe Flak divisions for towed, motorized and self-propelled anti-air templates; own number series.
 GER_FLAK_DIVISION_01 = {
 	name = "Flak Divisions"
 
@@ -459,7 +595,7 @@ GER_FLAK_DIVISION_01 = {
 
 	can_use = { always = yes }
 
-	division_types = { "infantry" }
+	division_types = { "anti_air_brigade" "mot_anti_air_brigade" "light_sp_anti_air_brigade" "medium_sp_anti_air_brigade" "heavy_sp_anti_air_brigade" "modern_sp_anti_air_brigade" }
 
 	fallback_name = "%d. Flak-Division"
 
@@ -704,6 +840,7 @@ GER_FORT_01 = {
 }
 
 # Heer commanders only; Waffen-SS Kampfgruppen are in the SS file.
+# Typed as infantry only: GER_Inf_01 is always larger, so the automatic choice never picks this list; choose it in the division designer.
 GER_KAMPFGRUPPE_01 = {
 	name = "Kampfgruppen"
 
@@ -711,7 +848,7 @@ GER_KAMPFGRUPPE_01 = {
 
 	can_use = { always = yes }
 
-	division_types = { "infantry" "motorized" "mechanized" "light_armor" "medium_armor" "heavy_armor" }
+	division_types = { "infantry" }
 
 	fallback_name = "Kampfgruppe %d"
 
@@ -941,6 +1078,47 @@ GER_BRIG_01 =
 		# Emergency brigades of 1945
 		31 = { "Brigade 1005" }
 		32 = { "Brigade z.b.V. 100" }
+	}
+}
+
+# Kriegsmarine Kleinkampfverbände (K-Verband, 1944-45) and the Brandenburg coastal raiders; MEKs on their real numbers, own number series.
+GER_MEK_01 = 
+{
+	name = "Naval Commandos"
+
+	for_countries = { GER }
+
+	can_use = { always = yes }
+
+	division_types = { "marine_commando" }
+
+	fallback_name = "Marine-Einsatzkommando %d"
+
+	ordered =
+	{
+		# Historical: the Brandenburg coastal raiders
+		91 = { "Küstenjäger-Abteilung 'Brandenburg'" }
+		# Historical: Marine-Einsatzkommandos of the K-Verband
+		20 = { "Marine-Einsatzkommando %d" }
+		30 = { "Marine-Einsatzkommando %d" }
+		35 = { "Marine-Einsatzkommando %d" }
+		40 = { "Marine-Einsatzkommando %d" }
+		60 = { "Marine-Einsatzkommando %d" }
+		65 = { "Marine-Einsatzkommando %d" }
+		70 = { "Marine-Einsatzkommando %d" }
+		71 = { "Marine-Einsatzkommando %d" }
+		75 = { "Marine-Einsatzkommando %d" }
+		80 = { "Marine-Einsatzkommando %d" }
+		85 = { "Marine-Einsatzkommando %d" }
+		90 = { "Marine-Einsatzkommando %d" }
+		# Historical: K-Verband training detachments and commands
+		92 = { "Lehrkommando 600" }
+		93 = { "Lehrkommando 700" }
+		94 = { "1. K-Division" }
+		95 = { "3. K-Division" }
+		96 = { "4. K-Division" }
+		97 = { "5. K-Division" }
+		98 = { "K-Regiment (mot.)" }
 	}
 }
 

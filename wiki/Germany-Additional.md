@@ -10,6 +10,7 @@
 
 This file holds formations that sit outside the core division series:
 - **Numbered series:** heavy tank battalions, Panzer and Sturmgeschütz brigades, Reserve, Volksgrenadier and Grenadier divisions, Luftwaffe field and Flak divisions.
+- **Support arms:** Panzerjäger battalions, armoured reconnaissance battalions, artillery divisions and Werfer brigades, the amphibious Tauchpanzer battalions of 1940 and the Kriegsmarine's naval commandos.
 - **Garrisons and fortresses:** city commands and the 1944–45 Festungen.
 - **Kampfgruppen and independent brigades.**
 - **Penal units:** the Bewährungstruppe 500 and Division 999.
@@ -18,6 +19,8 @@ This file holds formations that sit outside the core division series:
 - **Imperial series:** the Sturm-Bataillone of 1916–18 and the Reserve, Ersatz and Landwehr divisions of 1914–18.
 
 Reserve, Volksgrenadier and Grenadier divisions share the Heer numbering (`GER_Inf_01`) and sit on their real numbers. All other groups run their own series.
+
+The support-arm groups list only the line battalions of their arm (anti-air, artillery, rocket artillery, anti-tank and tank destroyers, armoured cars, amphibious units, naval commandos), so a template built from those battalions takes the matching list on its own, while Panzer, motorized and infantry templates keep their main lists. Kampfgruppen list only infantry and are chosen by hand in the division designer.
 
 Ideology gating:
 - **Fascist:** Volkssturm, SA and Foreign Legions.
@@ -36,17 +39,22 @@ Ideology gating:
 | `GER_SCHWERE_PANZERABTEILUNG_01` | Heavy Panzer Battalions | heavy_armor, medium_armor, modern_armor | `schwere Panzer-Abteilung %d` |
 | `GER_SCHWERE_PANZERABTEILUNG_02` | Heavy Panzer Bns (Abbr.) | heavy_armor, medium_armor, modern_armor | `s.Pz.Abt. %d` |
 | `GER_ARM_03` | Panzer Brigades | light_armor, medium_armor, heavy_armor, modern_armor | `Panzer-Brigade %d` |
-| `GER_STUG_01` | Assault Gun Brigades | light_armor, medium_armor, heavy_armor, modern_armor | `Sturmgeschütz-Brigade %d` |
-| `GER_PANZERARTILLERIE_DIVISION_01` | Artillery Divisions | heavy_armor, medium_armor, light_armor, modern_armor | `%d. Artillerie-Division` |
+| `GER_STUG_01` | Assault Gun Brigades | medium_tank_destroyer_brigade | `Sturmgeschütz-Brigade %d` |
+| `GER_PZJG_01` | Panzerjäger Battalions | anti_tank_brigade, mot_anti_tank_brigade, light_tank_destroyer_brigade, heavy_tank_destroyer_brigade, modern_tank_destroyer_brigade | `Panzerjäger-Abteilung %d` |
+| `GER_AUFKL_01` | Reconnaissance Battalions | armored_car | `Panzer-Aufklärungs-Abteilung %d` |
+| `GER_AMPH_01` | Amphibious Panzer Units | amphibious_armor, amphibious_mechanized, amphibious_light_armor, amphibious_medium_armor, amphibious_heavy_armor | `Tauchpanzer-Abteilung %d` |
+| `GER_PANZERARTILLERIE_DIVISION_01` | Artillery Divisions | artillery_brigade, mot_artillery_brigade, light_sp_artillery_brigade, medium_sp_artillery_brigade, heavy_sp_artillery_brigade, modern_sp_artillery_brigade | `%d. Artillerie-Division` |
+| `GER_WERFER_01` | Rocket Artillery Brigades | rocket_artillery_brigade, mot_rocket_artillery_brigade, motorized_rocket_brigade | `Werfer-Brigade %d` |
 | `GER_RESERVE_DIVISION_01` | Reserve Divisions | infantry | `%d. Reserve-Division` |
 | `GER_VOLKSGRENADIER_01` | Volksgrenadier Divisions | infantry | `%d. Volksgrenadier-Division` |
 | `GER_GRENADIER_DIVISION_01` | Grenadier Divisions | infantry | `%d. Grenadier-Division` |
 | `GER_LUFTWAFFEN_FELD_DIVISION_01` | Luftwaffe Field Divisions | infantry | `Luftwaffen-Feld-Division %d` |
-| `GER_FLAK_DIVISION_01` | Flak Divisions | infantry | `%d. Flak-Division` |
+| `GER_FLAK_DIVISION_01` | Flak Divisions | anti_air_brigade, mot_anti_air_brigade, light_sp_anti_air_brigade, medium_sp_anti_air_brigade, heavy_sp_anti_air_brigade, modern_sp_anti_air_brigade | `%d. Flak-Division` |
 | `GER_GAR_02` | City Garrisons | infantry | `Feldkommandantur %d` |
 | `GER_FORT_01` | Fortress Divisions | infantry | `%d. Festungs-Division` |
-| `GER_KAMPFGRUPPE_01` | Kampfgruppen | infantry, motorized, mechanized, light_armor, medium_armor, heavy_armor | `Kampfgruppe %d` |
+| `GER_KAMPFGRUPPE_01` | Kampfgruppen | infantry | `Kampfgruppe %d` |
 | `GER_BRIG_01` | Infantry Brigades | infantry, motorized | `Grenadier-Brigade %d` |
+| `GER_MEK_01` | Naval Commandos | marine_commando | `Marine-Einsatzkommando %d` |
 | `GER_PEN_01` | Penal Units | penal_battalion, infantry | `Bewährungs-Bataillon %d` |
 | `GER_VOLKSSTURM_BATAILLONS_01` | Volkssturm Battalions | militia | `%d. Volkssturm-Bataillon` |
 | `GER_SA_01` | SA Formations | militia | `SA-Standarte %d` |
@@ -61,7 +69,7 @@ Ideology gating:
 
 > **Note:** `GER_SCHWERE_PANZERABTEILUNG_01` and `_02` are linked (`link_numbering_with`), so the long and abbreviated forms share one number series.
 
-> **Note:** `GER_PANZERARTILLERIE_DIVISION_01` uses `can_use = { is_ai = no }`, so only human players can use it. The group is typed as armour, and the gate keeps the game from giving AI Panzer divisions artillery names.
+> **Note:** `GER_KAMPFGRUPPE_01` is typed as infantry only. The Heer infantry list (`GER_Inf_01`) always has more names, so the game never gives a new template Kampfgruppe names on its own; choose the list in the division designer.
 
 > **Note:** `GER_PEN_01` overrides the vanilla tag. Vanilla ships it without names and locks it behind the focus `GER_strafbataillon`. INEX drops the focus lock, and the focus still names its penal divisions from this group.
 
@@ -70,7 +78,7 @@ Ideology gating:
 ## Group Details
 
 ### `GER_SCHWERE_PANZERABTEILUNG_01` / `_02` — Heavy Panzer Battalions
-The Tiger battalions *schwere Panzer-Abteilung 501–510* and their 1945 renumberings (511, 424). Also the radio-control battalion *(Fkl) 301* and the heavy tank destroyer battalions *653*, *654* and *512*. The second group gives the abbreviated forms (*s.Pz.Abt. 501*, *s.Pz.Jg.Abt. 653*).
+The Tiger battalions *schwere Panzer-Abteilung 501–510* and their 1945 renumberings (511, 424), and the radio-control battalion *(Fkl) 301*. The second group gives the abbreviated forms (*s.Pz.Abt. 501*). The heavy tank destroyer battalions are in `GER_PZJG_01`.
 
 ### `GER_ARM_03` — Panzer Brigades
 The brigade staffs of the Panzer divisions of 1935–42 (*1.*–*6.* and *8. Panzer-Brigade*), the *18.* and *21.*, and the *100. Panzer-Brigade* of 1941 with captured French tanks. Then *Panzer-Brigade 10* (Kursk), the 1944 *Panzer-Brigaden 101–113* and *150*, and *Panzer-Brigade 'Norwegen'*. For small armoured templates.
@@ -78,20 +86,34 @@ The brigade staffs of the Panzer divisions of 1935–42 (*1.*–*6.* and *8. Pan
 ### `GER_STUG_01` — Assault Gun Brigades
 The Sturmartillerie of the Heer on its real numbers, *Sturmgeschütz-Brigade 177* to *914*. The independent Sturmgeschütz-Abteilungen were renamed brigades on 14 February 1944 and stayed at battalion strength (31 guns, later 45). The brigades given an escort grenadier battery later in 1944 appear as *Heeres-Sturmartillerie-Brigaden* (*236*, *239*, *667*), and *184* and *185* as *Heeres-Sturmgeschütz-Brigaden*. The list closes with *Sturmgeschütz-Lehr-Brigade 920*, *Sturmartillerie-Lehr-Brigade 111* and *Sturmgeschütz-Brigade 'Schill'*, the Luftwaffe's *Fallschirm-Sturmgeschütz-Brigaden 11*, *12* and *21*, and the *Sturmpanzer-Abteilungen 216–219*.
 
+Typed as medium tank destroyers (StuG III and IV); the other tank destroyer and anti-tank battalions are in `GER_PZJG_01`.
+
+### `GER_PZJG_01` — Panzerjäger Battalions
+The heavy army Panzerjäger battalions on their real numbers: *schwere Panzerjäger-Abteilung 653* and *654* (Elefant), *512* (Jagdtiger), and the Nashorn and Jagdpanther battalions *88*, *93*, *519*, *525*, *559*, *560* and *655*. Then the Panzerjagd-Brigaden of 1944–45 (*Heeres-Panzerjagd-Brigade 1* and *2*, *Panzerjagd-Brigade 104*, *West*, *Panzerjäger-Brigade Oberschlesien*). Overflow uses the divisional *Panzerjäger-Abteilung*. For anti-tank and light, heavy and modern tank destroyer templates.
+
+### `GER_AUFKL_01` — Reconnaissance Battalions
+For armoured-car templates: *Aufklärungs-Abteilung 3 (mot.)* and *33 (mot.)* of the Afrikakorps and the *Panzer-Aufklärungs-Lehr-Abteilung 130* of the Panzer-Lehr-Division. Overflow uses the divisional *Panzer-Aufklärungs-Abteilung*.
+
+### `GER_AMPH_01` — Amphibious Panzer Units
+The four submersible battalions raised in July 1940 for Operation Seelöwe (*Panzer-Abteilung A*–*D*) and the two regiments formed from them, *Panzer-Regiment 18*, which crossed the Bug submerged in June 1941, and *Panzer-Regiment 28*. Overflow uses *Tauchpanzer-Abteilung*, an extrapolated designation.
+
 ### `GER_PANZERARTILLERIE_DIVISION_01` — Artillery Divisions
-Players only. Covers the *18. Artillerie-Division*, the *Artillerie-Divisionen 309–312* and the *Volks-Artillerie-Korps* of 1944–45.
+For artillery and self-propelled artillery templates. Covers the *18. Artillerie-Division*, the *Artillerie-Divisionen 309–312*, the *Volks-Artillerie-Korps* of 1944–45 and further *Heeres-Artillerie-Brigaden* (*70*, *88*, *140*, *288*, *704*, *732*, *766*, *777*, *959*).
+
+### `GER_WERFER_01` — Rocket Artillery Brigades
+The *Werfer-Brigaden 1–9* (most renamed Volks-Werfer-Brigaden in late 1944) and the *Volks-Werfer-Brigaden 15–20*, then the *Werfer-Regimenter 53*, *54*, *71*, *83* and *84*, *Stellungs-Werfer-Regiment 101*, *Stellungs-Werfer-Brigade 300* and the *Nebel-Lehr-Regiment*. For rocket artillery templates.
 
 ### `GER_RESERVE_DIVISION_01` — Reserve Divisions
 The real Reserve divisions of 1942–44 (*141.–191.*), including the *188. Reserve-Gebirgs-Division*.
 
 ### `GER_VOLKSGRENADIER_01` / `GER_GRENADIER_DIVISION_01` — Volksgrenadier and Grenadier Divisions
-The Volksgrenadier divisions in raising order, led by the *78. Volks-Sturm-Division*. The Grenadier list holds the 29th- and 30th-wave *Grenadier-Divisionen 541–562*, which became Volksgrenadier divisions after July 1944.
+The Volksgrenadier divisions in raising order, led by the *78. Volksgrenadier-Division*. The Grenadier list holds the 29th- and 30th-wave *Grenadier-Divisionen 541–562*, which became Volksgrenadier divisions after July 1944.
 
 ### `GER_LUFTWAFFEN_FELD_DIVISION_01` — Luftwaffe Field Divisions
 *Luftwaffen-Division Meindl* and *Luftwaffen-Feld-Division 1–21*, in the Luftwaffe's own usage before the Heer took them over. The group runs its own number series.
 
 ### `GER_FLAK_DIVISION_01` — Flak Divisions
-*1.–31. Flak-Division* and the two Flakscheinwerfer divisions. A home is noted where verified (*1. 'Berlin'*, *3. 'Hamburg'*, *7. 'Köln'*, *26. 'München'*, *29. 'Oslo'*), and *9. 'Stalingrad'* marks the division destroyed there.
+*1.–31. Flak-Division* and the two Flakscheinwerfer divisions. A home is noted where verified (*1. 'Berlin'*, *3. 'Hamburg'*, *7. 'Köln'*, *26. 'München'*, *29. 'Oslo'*), and *9. 'Stalingrad'* marks the division destroyed there. For towed, motorized and self-propelled anti-air templates.
 
 ### `GER_GAR_02` — City Garrisons
 *Wehrmachtkommandantur Berlin*, *Kommandant von Groß-Paris* and the *Stadtkommandanturen* of occupied and allied capitals and major cities, using German names of the period (*Reval*, *Wilna*, *Agram*, *Laibach*). Overflow uses the numbered *Feldkommandantur*.
@@ -100,7 +122,7 @@ The Volksgrenadier divisions in raising order, led by the *78. Volks-Sturm-Divis
 The 1945 Festungs-Divisionen (*Danzig*, *Gotenhafen*, *Stettin*), the *41.* and *133. Festungs-Division*, and the fortress cities of 1944–45 (*Breslau*, *Kolberg*, *Tarnopol*). The Atlantikwall fortresses follow (*Lorient*, *St. Nazaire*, *Kanalinseln*). The expansion then runs along the Ostwall and the A–A line (*Archangelsk*–*Astrachan*).
 
 ### `GER_KAMPFGRUPPE_01` — Kampfgruppen
-About 170 Kampfgruppen named after Heer commanders. They include historical ones such as *Kampfgruppe Chill* and *Kampfgruppe Scherer*. Waffen-SS Kampfgruppen are in the SS file.
+About 170 Kampfgruppen named after Heer commanders. They include historical ones such as *Kampfgruppe Chill* and *Kampfgruppe Scherer*. Waffen-SS Kampfgruppen are in the SS file. Typed as infantry only, so the list is chosen by hand.
 
 ### `GER_BRIG_01` — Infantry Brigades
 Independent brigades for small infantry and motorized templates:
@@ -111,6 +133,9 @@ Independent brigades for small infantry and motorized templates:
 - Luftwaffe and Kriegsmarine ground brigades (*Fallschirmjäger-Brigade Ramcke*, *Marine-Schützen-Brigade Nord*).
 
 Armoured brigades are in `GER_ARM_03`, fortress brigades in `GER_FORT_01`.
+
+### `GER_MEK_01` — Naval Commandos
+For naval commando templates: the *Küstenjäger-Abteilung 'Brandenburg'*, the *Marine-Einsatzkommandos* of the Kriegsmarine's Kleinkampfverbände (*20*–*90*), the K-Verband's *Lehrkommandos 600* and *700*, the *1.*, *3.*, *4.* and *5. K-Division* and the *K-Regiment (mot.)*.
 
 ### `GER_PEN_01` — Penal Units
 Overrides the vanilla group, which has no names. The vanilla focus `GER_strafbataillon` names its penal divisions from this list:
