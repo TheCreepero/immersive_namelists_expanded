@@ -18,7 +18,7 @@ Shared rules for every mod in this tree (file encodings, build commands, engine 
 
 ## Commands beyond build.ps1
 - `build.ps1` carries the mod's own switches (`-Check`, `-Audit`, `-InspectVanilla`, `-EditNames`, `-DiffNames`, `-AuditPlan`, `-SyncWiki`, `-SyncMirrors`, `-GameLog`); guide section 5 lists them and `Get-Help .\build.ps1 -Parameter <Name>` prints one. Learn a switch from `Get-Help`, not from the source: `build.ps1`, `tools/HoiModBuild.ps1` and `tests/BuildScript.Tests.ps1` are opened only in a tooling-backlog session, and a Read of them asks first.
-- One test suite: `powershell -File .\tests\Run-Tests.ps1 -Suite <Name>`, where `<Name>` is a `tests/<Name>.Tests.ps1` file (`Namelists`, `Documentation`, `Hooks`, `BuildScript`); `-Check` runs them all.
+- While working: `powershell -File .\tests\Run-Tests.ps1 -Changed` runs the suites the changed files map to. One test suite: `powershell -File .\tests\Run-Tests.ps1 -Suite <Name>`, where `<Name>` is a `tests/<Name>.Tests.ps1` file (`Namelists`, `Documentation`, `Hooks`, `BuildScript`); `-Check` runs them all.
 
 ## Read when
 | Task | Read |
