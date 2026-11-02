@@ -4,38 +4,7 @@
 #>
 
 BeforeAll {
-    $script:RepoRoot = Resolve-Path (Join-Path $PSScriptRoot "..")
-    $script:BuildScriptPath = Join-Path $script:RepoRoot "build.ps1"
-
-    # Read build.ps1 script content to extract functions without executing the full script
-    $script:BuildContent = [System.IO.File]::ReadAllText($script:BuildScriptPath, [System.Text.Encoding]::UTF8)
-
-    # Get-ModMetadata, New-LauncherModContent and the lifecycle actions live in the shared engine
-    . (Join-Path $script:RepoRoot 'tools\HoiModBuild.ps1')
-    $script:BuildConfig = Get-ModBuildConfig -RepoDir $script:RepoRoot
-
-    # Script-level list of valid division_types tokens, read by Invoke-Validation and Edit-NamelistGroupText
-    $typesMatch = [regex]::Match($script:BuildContent, '(?s)\$ValidDivisionTypes = @\(.*?\)')
-    if ($typesMatch.Success) {
-        . ([ScriptBlock]::Create($typesMatch.Value))
-    }
-
-    foreach ($fn in 'Get-NamePatternKey', 'Test-FallbackStub', 'ConvertFrom-RomanNumeral', 'ConvertTo-RomanNumeral', 'Get-SharedIdentities', 'Split-NamelistGroupBlocks', 'Get-NamelistAuditData', 'Get-NameGroupFields', 'Get-GameSubUnits', 'Get-GameLineBattalionIds', 'Merge-NameGroupFiles', 'Test-CanUseForGovernment', 'Get-NamePick', 'Format-NamePick', 'Format-NamePickRow','Get-OrderedEntryStats', 'Compare-NamelistAuditData', 'Get-GitFileText', 'Get-NameVariantKey', 'Resolve-GroupTag', 'Get-GroupSections', 'Format-EntryList', 'Get-OrphanHeaderLines', 'Set-NamelistGroupComment', 'Set-NamelistHeader', 'Edit-NamelistGroupText', 'Get-NamelistGroupEnd', 'Add-NamelistGroupText', 'ConvertTo-NamelistEditOp', 'Invoke-NamelistEditOps', 'Get-PlanBatchBlocks', 'Get-PlanReadinessWarnings', 'Read-NamelistEditBatch', 'Get-WorkshopDocStats', 'Get-VanillaOverlap', 'Find-Hoi4Install', 'Add-VanillaSelectorFlags', 'Find-WikiLinkMismatches', 'Compare-NamelistGroupSets', 'Format-NamelistDiff', 'Get-CountryName', 'Format-PlanChangeTable', 'Set-PlanChangeTable', 'New-AuditPlanText', 'Format-AuditSummaryLine', 'Get-AuditFindingLines', 'Update-WikiGroupRows', 'Find-WikiProseMentions', 'Format-CappedList', 'Format-KeyRanges', 'Format-AuditFlagsLine', 'Get-LivePlanPaths', 'Add-MarkdownTableRow', 'Add-MarkdownListLine', 'Add-NationDocRows', 'Sync-AgentMirrors', 'Get-GameLogFindings', 'Read-SharedTextLines', 'Get-UnpushedWikiPages') {
-        $fnMatch = [regex]::Match($script:BuildContent, "(?s)(function $fn\s*\{.*?\n\})")
-        if ($fnMatch.Success) {
-            . ([ScriptBlock]::Create($fnMatch.Groups[1].Value))
-        }
-    }
-
-    # Dot-source Write-* terminal helpers and Invoke-Validation (used together, so extract as a block)
-    $writeHelpersMatch = [regex]::Match($script:BuildContent, '(?s)(function Write-Step.*?function Write-Err\s*\{.*?\n\})')
-    if ($writeHelpersMatch.Success) {
-        . ([ScriptBlock]::Create($writeHelpersMatch.Groups[1].Value))
-    }
-    $validationFuncMatch = [regex]::Match($script:BuildContent, '(?s)(function Invoke-Validation\s*\{.*?\n\})\r?\n\r?\n# --- Helper: Find Hearts of Iron IV Game Installation')
-    if ($validationFuncMatch.Success) {
-        . ([ScriptBlock]::Create($validationFuncMatch.Groups[1].Value))
-    }
+    . (Join-Path $PSScriptRoot 'BuildScriptSetup.ps1')
 }
 
 Describe "build.ps1 Helper: Get-ModMetadata" {
@@ -1179,39 +1148,6 @@ Description of cavalry.
     }
 }
 
-Describe "build.ps1 -EditNames action and -Audit CLI flags" {
-    It "Audits an implemented nation with -NamesOnly" {
-        $output = & powershell -NoProfile -File $script:BuildScriptPath -Audit LAT -NamesOnly 2>&1 | Out-String
-        $LASTEXITCODE | Should -Be 0
-        $output | Should -Match 'LAT_INF_01 \(\d+/\d+\)'
-        $output | Should -Not -Match 'ordered = \{'
-    }
-
-    It "Audits a single group with -Group and -NamesOnly" {
-        $output = & powershell -NoProfile -File $script:BuildScriptPath -Audit LAT -Group INF_01 -NamesOnly 2>&1 | Out-String
-        $LASTEXITCODE | Should -Be 0
-        $output | Should -Match 'LAT_INF_01 \(\d+/\d+\)'
-        $output | Should -Not -Match 'LAT_CAV_01'
-    }
-
-    It "Audits multiple groups with comma-separated -Group" {
-        $output = & powershell -NoProfile -File $script:BuildScriptPath -Audit LAT -Group INF_01,CAV_01 -NamesOnly 2>&1 | Out-String
-        $LASTEXITCODE | Should -Be 0
-        $output | Should -Match 'LAT_INF_01'
-        $output | Should -Match 'LAT_CAV_01'
-        $output | Should -Not -Match 'LAT_REG_01'
-    }
-
-    It "Fails with exit 1 and leaves file untouched when -EditNames misses" {
-        $path = Join-Path $script:RepoRoot 'common\units\names_divisions\zz_INEX_LAT_names_divisions.txt'
-        $before = [System.IO.File]::ReadAllText($path)
-        $output = & powershell -NoProfile -File $script:BuildScriptPath -EditNames LAT -Group INF_01 -Remove 'NonExistentDivisionName' 2>&1 | Out-String
-        $LASTEXITCODE | Should -Be 1
-        $output | Should -Match 'NonExistentDivisionName'
-        [System.IO.File]::ReadAllText($path) | Should -Be $before
-    }
-}
-
 Describe "build.ps1 Helper: Format-EntryList" {
     It "Joins distinct names and collapses consecutive duplicates with a count" {
         Format-EntryList -Names @('A', 'B', 'B', 'B', 'C') | Should -Be 'A; B (x3); C'
@@ -1693,61 +1629,6 @@ Describe "build.ps1 Helper: wiki heading and link-claim checks" {
     }
 }
 
-Describe "build.ps1 -Audit -Keys and -EditNames CLI safety" {
-    It "Prints keys and collapses duplicate runs with -NamesOnly -Keys" {
-        $output = & powershell -NoProfile -File $script:BuildScriptPath -Audit LAT -Group INF_01 -NamesOnly -Keys 2>&1 | Out-String
-        $LASTEXITCODE | Should -Be 0
-        $output | Should -Match 'LAT_INF_01 \(\d+/\d+\)'
-        $output | Should -Match '(?m)\b\d+(-\d+)?='
-    }
-
-    It "Refuses -RemoveGroup while another group links to it, leaving the file untouched" {
-        # FRA_INF_01 is the numbering anchor of FRA_INF_02, FRA_MOT_01, FRA_MNT_01 and FRA_GAR_01
-        $path = Join-Path $script:RepoRoot 'common\units\names_divisions\zz_INEX_FRA_names_divisions.txt'
-        $before = [System.IO.File]::ReadAllText($path)
-        $output = & powershell -NoProfile -File $script:BuildScriptPath -EditNames FRA -Group INF_01 -RemoveGroup 2>&1 | Out-String
-        $LASTEXITCODE | Should -Be 1
-        $output | Should -Match 'link_numbering_with'
-        [System.IO.File]::ReadAllText($path) | Should -Be $before
-    }
-}
-
-Describe "build.ps1: valid division_types list" {
-    It "Is defined once and shared by validation and -EditNames" {
-        ([regex]::Matches($script:BuildContent, "'bicycle_battalion'")).Count | Should -Be 1
-        $ValidDivisionTypes | Should -Contain 'infantry'
-        $ValidDivisionTypes | Should -Contain 'penal_battalion'
-        $ValidDivisionTypes | Should -Not -Contain 'armor'
-    }
-
-    It "Accepts the line battalions vanilla defines and uses in its own name lists" {
-        foreach ($t in 'armored_car', 'bicycle_battalion', 'artillery_brigade', 'mot_artillery_brigade', 'anti_tank_brigade', 'medium_tank_destroyer_brigade', 'modern_tank_destroyer_brigade', 'medium_sp_artillery_brigade', 'modern_sp_anti_air_brigade', 'marine_commando', 'amphibious_light_armor', 'amphibious_medium_armor', 'amphibious_heavy_armor') {
-            $ValidDivisionTypes | Should -Contain $t
-        }
-        # Not a unit id in vanilla common/units (its ids are mot_rocket_artillery_brigade and motorized_rocket_brigade)
-        $ValidDivisionTypes | Should -Not -Contain 'motorized_rocket_artillery'
-        foreach ($t in 'super_heavy_armor', 'super_heavy_tank_destroyer_brigade', 'super_heavy_sp_artillery_brigade', 'super_heavy_sp_anti_air_brigade') {
-            $ValidDivisionTypes | Should -Not -Contain $t -Because "'$t' is a support company in game 1.19.4 (group = support) [NAM-026]"
-        }
-    }
-
-    It "Matches the line battalions of the installed game" {
-        $hoi4 = Find-Hoi4Install
-        if (-not $hoi4) { Set-ItResult -Skipped -Because 'Hearts of Iron IV is not installed'; return }
-        $notForNameLists = @('hq_infantry', 'hq_paratrooper', 'hq_motorized', 'hq_armored_car', 'hq_light_armor', 'hq_medium_armor', 'hq_heavy_armor', 'bus', 'fake_intel_unit')
-        $supportIdsAwaitingRetag = @('artillery', 'anti_air', 'anti_tank', 'rocket_artillery')
-        $lineIds = @(Get-GameLineBattalionIds -Hoi4Dir $hoi4)
-        $lineIds.Count | Should -BeGreaterThan 30
-        @($lineIds | Where-Object { $notForNameLists -notcontains $_ -and $ValidDivisionTypes -notcontains $_ }) | Should -BeNullOrEmpty -Because 'every line battalion of the game is a valid division_types token'
-        @($ValidDivisionTypes | Where-Object { $lineIds -notcontains $_ -and $supportIdsAwaitingRetag -notcontains $_ }) | Should -BeNullOrEmpty -Because 'every accepted token is a line battalion of the game'
-    }
-
-    It "Names the valid tokens when -EditNames rejects one" {
-        $text = "TST_INF_01 = {`n`tname = `"Infantry`"`n`tdivision_types = { `"infantry`" }`n`tfallback_name = `"%d. Div`"`n}`n"
-        { Edit-NamelistGroupText -Text $text -GroupTag 'TST_INF_01' -AddTypes @('armor') } | Should -Throw '*medium_armor*'
-    }
-}
-
 Describe "build.ps1 Helper: merged name groups and the automatic pick" {
     BeforeAll {
         $vanillaText = @(
@@ -1813,6 +1694,8 @@ Describe "build.ps1 Helper: merged name groups and the automatic pick" {
             [PSCustomObject]@{ Name = 'TST_names_divisions.txt'; Path = $null; Text = $vanillaText }
         )
         $subUnitIds = @('infantry', 'ranger_battalion', 'medium_tank_destroyer_brigade', 'motorized')
+        $script:VanillaFixtureText = $vanillaText
+        $script:InexFixtureText = $inexText
         $script:MergedGroups = @(Merge-NameGroupFiles -Files $files -SubUnitIds $subUnitIds)
         $script:TstGroups = @($script:MergedGroups | Where-Object { (-not $_.NameType -or $_.NameType -eq 'army') -and ($_.ForCountries.Count -eq 0 -or $_.ForCountries -contains 'TST') })
     }
@@ -1827,6 +1710,31 @@ Describe "build.ps1 Helper: merged name groups and the automatic pick" {
         $inf[0].Count | Should -Be 5
         @($inf[0].Files) | Should -Be @('TST_names_divisions.txt', 'zz_INEX_TST_names_divisions.txt')
         $inf[0].CanUse | Should -Be 'always = yes'
+    }
+
+    It "Merges the same groups for the audited tags when -Tags skips the files that name none of them" {
+        $gameDir = Join-Path $TestDrive 'merge-tags\game'
+        $namelistDir = Join-Path $TestDrive 'merge-tags\namelists'
+        New-Item -ItemType Directory -Path (Join-Path $gameDir 'common\units\names_divisions'), $namelistDir -Force | Out-Null
+        $utf8 = [System.Text.UTF8Encoding]::new($false)
+        [System.IO.File]::WriteAllText((Join-Path $gameDir 'common\units\infantry.txt'), "sub_units = {`n    infantry = {`n        group = infantry`n    }`n    ranger_battalion = {`n        group = infantry`n    }`n}`n", $utf8)
+        [System.IO.File]::WriteAllText((Join-Path $gameDir 'common\units\names_divisions\TST_names_divisions.txt'), $script:VanillaFixtureText, $utf8)
+        [System.IO.File]::WriteAllText((Join-Path $gameDir 'common\units\names_divisions\XYZ_names_divisions.txt'), "XYZ_INF_01 = {`n    name = `"Elsewhere`"`n    for_countries = { XYZ }`n    division_types = { `"infantry`" }`n    ordered = { 1 = { `"A`" } }`n}`n", $utf8)
+        [System.IO.File]::WriteAllText((Join-Path $namelistDir 'zz_INEX_TST_names_divisions.txt'), $script:InexFixtureText, $utf8)
+        $auditedTags = @('TST_INF_01', 'TST_FAS_01')
+        $allGroups = @(Get-MergedNameGroups -Hoi4Dir $gameDir -NamelistDir $namelistDir)
+        $taggedGroups = @(Get-MergedNameGroups -Hoi4Dir $gameDir -NamelistDir $namelistDir -Tags $auditedTags)
+        @($allGroups | Where-Object { $_.Tag -eq 'XYZ_INF_01' }).Count | Should -Be 1 -Because 'without -Tags every file is read'
+        @($taggedGroups | Where-Object { $_.Tag -eq 'XYZ_INF_01' }).Count | Should -Be 0 -Because 'the file that names no audited tag is skipped'
+        foreach ($tag in $auditedTags) {
+            $expected = @($allGroups | Where-Object { $_.Tag -eq $tag } | Select-Object -Property * -ExcludeProperty Position)
+            $actual = @($taggedGroups | Where-Object { $_.Tag -eq $tag } | Select-Object -Property * -ExcludeProperty Position)
+            $actual.Count | Should -Be 1 -Because $tag
+            (ConvertTo-Json -InputObject $actual -Depth 6 -Compress) | Should -Be (ConvertTo-Json -InputObject $expected -Depth 6 -Compress) -Because $tag
+        }
+        $orderInAll = @($allGroups | Where-Object { $auditedTags -contains $_.Tag } | Sort-Object Position | ForEach-Object { $_.Tag })
+        $orderTagged = @($taggedGroups | Where-Object { $auditedTags -contains $_.Tag } | Sort-Object Position | ForEach-Object { $_.Tag })
+        $orderTagged | Should -Be $orderInAll -Because 'Get-NamePick breaks ties by Position, so the kept groups keep their order'
     }
 
     It "Keeps only the army groups the country may use" {
@@ -2336,409 +2244,6 @@ $Block
     It "Warns when the description passes its 16,000-character budget" {
         $near = Get-WorkshopDocStats -GuideText (& $script:GuideFor ("[b]Testland[/b]`n- A ([i]x[/i], [i]y[/i])`n- B`n`n" + ('C' * 16200))) -Key 'TST'
         ($near.Warnings -join '|') | Should -Match '16000'
-    }
-}
-
-Describe "build.ps1 CLI on a fixture repo: -Batch, -AddGroup, quiet -EditNames, -Audit details, -Check" {
-    BeforeAll {
-        $script:CliDir = Join-Path ([System.IO.Path]::GetTempPath()) ("inex_cli_" + [System.Guid]::NewGuid().ToString("N"))
-        $script:CliNamelistDir = Join-Path $script:CliDir "common\units\names_divisions"
-        New-Item -ItemType Directory -Path $script:CliNamelistDir -Force | Out-Null
-        $script:CliBuild = Join-Path $script:CliDir 'build.ps1'
-        $script:CliFile = Join-Path $script:CliNamelistDir 'zz_INEX_TST_names_divisions.txt'
-        $script:Utf8NoBom = New-Object System.Text.UTF8Encoding($false)
-        Copy-Item $script:BuildScriptPath $script:CliBuild
-        New-Item -ItemType Directory -Path (Join-Path $script:CliDir 'tools') -Force | Out-Null
-        Copy-Item (Join-Path $script:RepoRoot 'tools\HoiModBuild.ps1') (Join-Path $script:CliDir 'tools\HoiModBuild.ps1')
-        [System.IO.File]::WriteAllText((Join-Path $script:CliDir 'descriptor.mod'), "version=`"1.0.0`"`nname=`"Test Mod`"`nsupported_version=`"1.19.*`"`n", $script:Utf8NoBom)
-        [System.IO.File]::WriteAllBytes((Join-Path $script:CliDir 'thumbnail.png'), [byte[]]@(0x89, 0x50, 0x4E, 0x47))
-        [System.IO.File]::WriteAllText((Join-Path $script:CliDir 'README.md'), "| Tag | Nation | Source File |`n| :--- | :--- | :--- |`n| ``TST`` | Testland | ``zz_INEX_TST_names_divisions.txt`` |`n", $script:Utf8NoBom)
-        [System.IO.File]::WriteAllText((Join-Path $script:CliDir 'WORKSHOP_DESCRIPTION_GUIDELINES.md'), "| ``zz_INEX_TST_names_divisions.txt`` | Testland | ``TST`` | Included |`n`n``````bbcode`n[h1]Included nations:[/h1]`n`n[b]Testland[/b]`n- Infantry ([i]1. Divisioona 'Karhu'[/i])`n```````n", $script:Utf8NoBom)
-        [System.IO.File]::WriteAllText((Join-Path $script:CliNamelistDir 'zz_INEX_TST_EXTRA_names_divisions.txt'), "TST_MIL_01 = {`r`n`tname = `"Militia`"`r`n`tfor_countries = { TST }`r`n`tcan_use = { has_government = fascism }`r`n`tdivision_types = { `"militia`" }`r`n`tfallback_name = `"%d. Miliisi`"`r`n}`r`n", $script:Utf8NoBom)
-
-        $script:CliNamelist = @"
-# Test header
-
-TST_INF_01 =
-{
-	name = "Infantry Divisions"
-
-	for_countries = { TST }
-
-	can_use = { always = yes }
-
-	division_types = { "infantry" }
-
-	fallback_name = "%d. Divisioona"
-
-	ordered =
-	{
-		1 = { "1. Divisioona 'Karhu'" }
-		2 = { "2. Divisioona 'Susi'" }
-		3 = { "Alpha Division" }
-		4 = { "Alpha Division" }
-	}
-}
-
-TST_CAV_01 =
-{
-	name = "Cavalry Brigades"
-
-	for_countries = { TST }
-
-	division_types = { "cavalry" }
-
-	fallback_name = "%d. Ratsuprikaati"
-
-	ordered =
-	{
-		1 = { "Uudenmaan Ratsuprikaati" }
-	}
-}
-"@ -replace "`r`n", "`n" -replace "`n", "`r`n"
-        function Reset-CliNamelist { [System.IO.File]::WriteAllText($script:CliFile, $script:CliNamelist + "`r`n", $script:Utf8NoBom) }
-        function Invoke-CliBuild {
-            $script:CliOutput = (& powershell -NoProfile -File $script:CliBuild @args 2>&1 | Out-String)
-            $script:CliExit = $LASTEXITCODE
-        }
-        Reset-CliNamelist
-
-        # -DiffNames, -AuditPlan and -Check compare against a git revision, so the fixture is its own repository
-        $prevEap = $ErrorActionPreference
-        $ErrorActionPreference = 'Continue'
-        & git -C $script:CliDir init -q 2>$null | Out-Null
-        & git -C $script:CliDir add -A 2>$null | Out-Null
-        & git -C $script:CliDir -c user.name=inex -c user.email=inex@example.invalid -c core.autocrlf=false commit -q -m fixture 2>$null | Out-Null
-        $ErrorActionPreference = $prevEap
-
-        $e = [char]0x00E8
-        $script:CliEliteName = "1${e}re Division d'Elite"
-        $script:CliBatchPath = Join-Path $script:CliDir 'ops.json'
-        $batch = @"
-[
-  { "group": "INF_01", "rename": ["1. Divisioona 'Karhu'=1. Divisioona 'Ilves'"], "remove": "4", "add": ["5. Divisioona 'Hirvi'", "$($script:CliEliteName)"] },
-  { "addGroup": true, "group": "MOT_01", "selector": "Motorized Divisions", "addType": "motorized; mechanized", "fallback": "%d. Moottoroitu Divisioona",
-    "link": "INF_01", "after": "INF_01", "comment": "Shares numbering with TST_INF_01.", "add": ["1. Moottoroitu Divisioona 'Salama'"] },
-  { "group": "MOT_01", "add": "2. Moottoroitu Divisioona 'Ukkonen'" },
-  { "group": "CAV_01", "canUse": "has_government = neutrality" }
-]
-"@
-        [System.IO.File]::WriteAllText($script:CliBatchPath, $batch, $script:Utf8NoBom)
-    }
-
-    AfterAll {
-        if (Test-Path $script:CliDir) { Remove-Item -Recurse -Force $script:CliDir }
-    }
-
-    It "Round-trips a batch with a new group: one line per group, CRLF, no BOM, and the result validates" {
-        Reset-CliNamelist
-        Invoke-CliBuild -EditNames TST -Batch $script:CliBatchPath
-        $script:CliExit | Should -Be 0 -Because $script:CliOutput
-        $lines = @($script:CliOutput -split '\r?\n' | Where-Object { $_.Trim() })
-        $lines.Count | Should -Be 4
-        $lines[0] | Should -Match '^Edited TST_INF_01: \+2 -1 ~1'
-        $lines[1] | Should -Match '^Added TST_MOT_01'
-        $lines[2] | Should -Match '^Edited TST_MOT_01: \+1'
-        $lines[3] | Should -Match '^Edited TST_CAV_01:.*CanUse'
-
-        $bytes = [System.IO.File]::ReadAllBytes($script:CliFile)
-        $bytes[0] | Should -Not -Be 0xEF
-        $text = [System.Text.Encoding]::UTF8.GetString($bytes)
-        ([regex]::Matches($text, "(?<!`r)`n")).Count | Should -Be 0
-        $text | Should -Not -Match "`r`r"
-        $text.Contains("{ `"$($script:CliEliteName)`" }") | Should -BeTrue
-        $text | Should -Match '(?s)TST_INF_01 =.*# Shares numbering with TST_INF_01\.\r\nTST_MOT_01 = .*link_numbering_with = \{ TST_INF_01 \}.*Ukkonen.*TST_CAV_01 =.*for_countries = \{ TST \}\r\n\r\n\tcan_use = \{ has_government = neutrality \}\r\n\r\n\tdivision_types'
-
-        Invoke-CliBuild -ValidateOnly
-        $script:CliExit | Should -Be 0 -Because $script:CliOutput
-    }
-
-    It "Leaves the file untouched when one operation of a batch fails" {
-        Reset-CliNamelist
-        $before = [System.IO.File]::ReadAllBytes($script:CliFile)
-        $bad = Join-Path $script:CliDir 'bad.json'
-        [System.IO.File]::WriteAllText($bad, '[ { "group": "INF_01", "add": "New Name" }, { "group": "CAV_01", "remove": "Missing Name" } ]', $script:Utf8NoBom)
-        Invoke-CliBuild -EditNames TST -Batch $bad
-        $script:CliExit | Should -Be 1
-        $script:CliOutput | Should -Match 'op 2'
-        $script:CliOutput | Should -Match 'Missing Name'
-        [System.IO.File]::ReadAllBytes($script:CliFile) | Should -Be $before
-    }
-
-    It "Fails -ClearOrdered on a group that is already fallback-only, leaving the file untouched" {
-        # On the fixture: a real plain variant may gain an ordered block (written over vanilla's merged keys),
-        # and -ClearOrdered would then succeed on the repository file
-        $extra = Join-Path $script:CliNamelistDir 'zz_INEX_TST_EXTRA_names_divisions.txt'
-        $before = [System.IO.File]::ReadAllBytes($extra)
-        Invoke-CliBuild -EditNames TST_EXTRA -Group TST_MIL_01 -ClearOrdered
-        $script:CliExit | Should -Be 1
-        $script:CliOutput | Should -Match 'TST_MIL_01'
-        [System.IO.File]::ReadAllBytes($extra) | Should -Be $before
-    }
-
-    It "Rejects a batch file that is missing or is not JSON" {
-        { Read-NamelistEditBatch -Path (Join-Path $script:CliDir 'nope.json') } | Should -Throw '*not found*'
-        $notJson = Join-Path $script:CliDir 'notjson.json'
-        [System.IO.File]::WriteAllText($notJson, '[ { "group": ', $script:Utf8NoBom)
-        { Read-NamelistEditBatch -Path $notJson } | Should -Throw '*not valid JSON*'
-        $ops = Read-NamelistEditBatch -Path $script:CliBatchPath
-        $ops.Count | Should -Be 4
-        $ops[1].AddGroup | Should -BeTrue
-    }
-
-    It "Rejects -Batch combined with other edit switches" {
-        Invoke-CliBuild -EditNames TST -Batch $script:CliBatchPath -Add 'X'
-        $script:CliExit | Should -Be 1
-        $script:CliOutput | Should -Match '-Batch cannot be combined with -Add'
-    }
-
-    It "Creates a group with -AddGroup and refuses a tag used in another file of the mod" {
-        Reset-CliNamelist
-        Invoke-CliBuild -EditNames TST -AddGroup -Group MNT_01 -Selector 'Mountain Brigades' -AddType 'mountaineers' -Fallback '%d. Vuoristoprikaati' -After CAV_01 -Add "1. Vuoristoprikaati 'Halti'"
-        $script:CliExit | Should -Be 0 -Because $script:CliOutput
-        $script:CliOutput | Should -Match 'Added TST_MNT_01'
-        $text = [System.IO.File]::ReadAllText($script:CliFile, [System.Text.Encoding]::UTF8)
-        $text | Should -Match '(?s)TST_CAV_01 =.*TST_MNT_01 = \r\n\{\r\n\tname = "Mountain Brigades".*Halti'
-        $before = [System.IO.File]::ReadAllBytes($script:CliFile)
-        Invoke-CliBuild -EditNames TST -AddGroup -Group MIL_01 -Selector 'Militia' -AddType 'militia' -Fallback '%d. Miliisi'
-        $script:CliExit | Should -Be 1
-        $script:CliOutput | Should -Match 'TST_MIL_01'
-        [System.IO.File]::ReadAllBytes($script:CliFile) | Should -Be $before
-    }
-
-    It "Prints only the summary line from -EditNames unless -Verbose is given" {
-        Reset-CliNamelist
-        Invoke-CliBuild -EditNames TST -Group CAV_01 -Add 'Karjalan Ratsuprikaati'
-        $script:CliExit | Should -Be 0 -Because $script:CliOutput
-        @($script:CliOutput -split '\r?\n' | Where-Object { $_.Trim() }).Count | Should -Be 1
-        $script:CliOutput | Should -Not -Match 'Uudenmaan'
-        # -Quiet stays accepted for older command lines
-        Invoke-CliBuild -EditNames TST -Group CAV_01 -Add 'Savon Ratsuprikaati' -Verbose -Quiet
-        $script:CliExit | Should -Be 0 -Because $script:CliOutput
-        $script:CliOutput | Should -Match 'TST_CAV_01 \(3/\d+\) "Cavalry Brigades": Uudenmaan Ratsuprikaati; Karjalan Ratsuprikaati; Savon Ratsuprikaati'
-    }
-
-    It "Lists the entries behind a flag, the workshop block stats and a wrong French ordinal in -Audit" {
-        # Regression test for the ordinal: build.ps1 has no BOM, so Windows PowerShell 5.1 reads a non-ASCII literal
-        # in it as ANSI. The accented pattern never matched outside the tests, which load the function text as UTF-8.
-        $withOrdinal = $script:CliNamelist -replace '(1 = \{ "Uudenmaan Ratsuprikaati" \})', "`$1`r`n`t`t5 = { `"%d$([char]0x00E8)re Brigade`" }"
-        [System.IO.File]::WriteAllText($script:CliFile, $withOrdinal + "`r`n", $script:Utf8NoBom)
-        Invoke-CliBuild -Audit TST
-        $script:CliOutput | Should -Match 'DUPLICATE_NAME: Alpha Division'
-        $script:CliOutput | Should -Match 'Workshop: \[b\]Testland\[/b\] 1 bullet\(s\), 1 \[i\] example\(s\), \d+/450 chars; description \d+/17000 chars'
-        $script:CliOutput | Should -Match '\[WARN\] Docs: .*1 bullet'
-        $script:CliOutput | Should -Match 'ORDINAL_MISMATCH'
-    }
-
-    It "Lists honorifics that another file of the nation already uses in -Audit" {
-        Reset-CliNamelist
-        $extra = Join-Path $script:CliNamelistDir 'zz_INEX_TST_EXTRA_names_divisions.txt'
-        $before = [System.IO.File]::ReadAllText($extra, [System.Text.Encoding]::UTF8)
-        try {
-            [System.IO.File]::WriteAllText($extra, ($before -replace '(fallback_name = "%d\. Miliisi")', "`$1`r`n`tordered = {`r`n`t`t3 = { `"3. Miliisi 'Karhu'`" }`r`n`t}"), $script:Utf8NoBom)
-            Invoke-CliBuild -Audit TST
-            $script:CliOutput | Should -Match 'Identities shared with other files of TST \(TST_EXTRA\)'
-            $script:CliOutput | Should -Match "'Karhu': TST_INF_01, TST_MIL_01"
-        } finally {
-            [System.IO.File]::WriteAllText($extra, $before, $script:Utf8NoBom)
-        }
-    }
-
-    It "Summarizes validation, tests, audit, plan and diff in at most 15 lines with -Check" {
-        $withAdded = $script:CliNamelist -replace '(1 = \{ "Uudenmaan Ratsuprikaati" \})', "`$1`r`n`t`t2 = { `"Karjalan Ratsuprikaati`" }"
-        [System.IO.File]::WriteAllText($script:CliFile, $withAdded + "`r`n", $script:Utf8NoBom)
-        Invoke-CliBuild -Check TST
-        $script:CliExit | Should -Be 0 -Because $script:CliOutput
-        $lines = @($script:CliOutput -split '\r?\n' | Where-Object { $_.Trim() })
-        $lines.Count | Should -BeLessOrEqual 15
-        $script:CliOutput | Should -Match 'Validate: OK'
-        $script:CliOutput | Should -Match 'Tests: skipped'
-        $script:CliOutput | Should -Match 'AUDIT SUMMARY TST: GROUPS=2 AUTHORED=\d+/6 FLAGS=\d+'
-        $script:CliOutput | Should -Match 'Flags: .*DUPLICATE_NAME'
-        $script:CliOutput | Should -Match '\[WARN\] Docs: '
-        $script:CliOutput | Should -Match 'Plan: no audit plan in progress'
-        $script:CliOutput | Should -Match 'Diff vs HEAD: 1 group\(s\) changed, \+1 -0 name\(s\)'
-        $script:CliOutput | Should -Not -Match 'Uudenmaan'
-    }
-
-    It "Refreshes an audit plan that is in progress and reports its open TODO sections with -Check" {
-        Reset-CliNamelist
-        Invoke-CliBuild -AuditPlan TST
-        $script:CliExit | Should -Be 0 -Because $script:CliOutput
-        $withAdded = $script:CliNamelist -replace '(1 = \{ "Uudenmaan Ratsuprikaati" \})', "`$1`r`n`t`t2 = { `"Karjalan Ratsuprikaati`" }"
-        [System.IO.File]::WriteAllText($script:CliFile, $withAdded + "`r`n", $script:Utf8NoBom)
-        Invoke-CliBuild -Check TST
-        $script:CliOutput | Should -Match 'Refreshed change table in docs/plans/\d{4}-\d{2}-\d{2}-testland-audit\.md: 1 changed group\(s\) vs HEAD; \d+ TODO section\(s\) left'
-        $plan = Get-ChildItem (Join-Path $script:CliDir 'docs\plans') -Filter '*-testland-audit.md' | Select-Object -First 1
-        [System.IO.File]::ReadAllText($plan.FullName, [System.Text.Encoding]::UTF8) | Should -Match '\| CAV_01 \| 1 -> 2 \| Karjalan Ratsuprikaati \|'
-
-        # Once the audit is committed the diff is empty; a refresh must not wipe the recorded table
-        Reset-CliNamelist
-        Invoke-CliBuild -AuditPlan TST
-        $script:CliExit | Should -Be 0 -Because $script:CliOutput
-        $script:CliOutput | Should -Match 'Kept the change table'
-        [System.IO.File]::ReadAllText($plan.FullName, [System.Text.Encoding]::UTF8) | Should -Match '\| CAV_01 \| 1 -> 2 \| Karjalan Ratsuprikaati \|'
-        Remove-Item -Recurse -Force (Join-Path $script:CliDir 'docs')
-    }
-
-    It "Leaves the change table alone while another plan for the nation is live, and names it" {
-        Reset-CliNamelist
-        Invoke-CliBuild -AuditPlan TST
-        $plan = Get-ChildItem (Join-Path $script:CliDir 'docs\plans') -Filter '*-testland-audit.md' | Select-Object -First 1
-        $before = [System.IO.File]::ReadAllText($plan.FullName, [System.Text.Encoding]::UTF8)
-        $plansDir = Join-Path $script:CliDir 'docs\plans'
-        [System.IO.File]::WriteAllText((Join-Path $plansDir '2026-10-20-testland-namelist.md'), "# Testland`n`nStatus: READY`n", $script:Utf8NoBom)
-        # A finished plan and the archive do not count
-        [System.IO.File]::WriteAllText((Join-Path $plansDir '2026-10-01-testland-namelist.md'), "# Testland`n`nStatus: DONE`n", $script:Utf8NoBom)
-        New-Item -ItemType Directory -Path (Join-Path $plansDir 'archive') -Force | Out-Null
-        [System.IO.File]::WriteAllText((Join-Path $plansDir 'archive\2026-09-01-testland-audit.md'), "# Testland`n`nStatus: DONE`n", $script:Utf8NoBom)
-        $withAdded = $script:CliNamelist -replace '(1 = \{ "Uudenmaan Ratsuprikaati" \})', "`$1`r`n`t`t2 = { `"Karjalan Ratsuprikaati`" }"
-        [System.IO.File]::WriteAllText($script:CliFile, $withAdded + "`r`n", $script:Utf8NoBom)
-        Invoke-CliBuild -Check TST
-        $script:CliExit | Should -Be 0 -Because $script:CliOutput
-        $script:CliOutput | Should -Match '\[WARN\] Plan: 2026-10-20-testland-namelist\.md is also live for TST; the change table would list its groups too\. Ship it first'
-        [System.IO.File]::ReadAllText($plan.FullName, [System.Text.Encoding]::UTF8) | Should -Be $before
-        Remove-Item -Recurse -Force (Join-Path $script:CliDir 'docs')
-        Reset-CliNamelist
-    }
-
-    It "Exits 1 from -Check and prints the validation error in full" {
-        [System.IO.File]::WriteAllText($script:CliFile, ($script:CliNamelist -replace '2 = \{ "2\. Divisioona ''Susi''" \}', '1 = { "2. Divisioona ''Susi''" }') + "`r`n", $script:Utf8NoBom)
-        Invoke-CliBuild -Check TST
-        $script:CliExit | Should -Be 1
-        $script:CliOutput | Should -Match 'Validate: FAILED'
-        $script:CliOutput | Should -Match '\[ERROR\] zz_INEX_TST_names_divisions\.txt: Duplicate index 1'
-        Reset-CliNamelist
-    }
-
-    It "Applies the json batch blocks of a plan file in document order and ignores other fences" {
-        Reset-CliNamelist
-        $fence = '```'
-        $plan = @"
-# Testland (TST) Namelist Audit
-
-Status: READY
-
-## Decisions
-Example of the format, not an operation:
-${fence}json
-{ "group": "CAV_01", "add": "Never applied" }
-${fence}
-
-## Edit batch
-${fence}json batch
-{ "group": "INF_01", "add": ["5. Divisioona 'Hirvi'"] }
-${fence}
-
-${fence}json batch
-[
-  { "addGroup": true, "group": "MOT_01", "selector": "Motorized Divisions", "addType": "motorized", "fallback": "%d. Moottoroitu Divisioona", "link": "INF_01",
-    "add": ["1. Moottoroitu Divisioona 'Salama'"] },
-  { "group": "MOT_01", "canUse": "has_government = neutrality" }
-]
-${fence}
-"@ -replace "`r`n", "`n" -replace "`n", "`r`n"
-        $planPath = Join-Path $script:CliDir 'plan.md'
-        [System.IO.File]::WriteAllText($planPath, $plan, $script:Utf8NoBom)
-
-        $ops = Read-NamelistEditBatch -Path $planPath
-        $ops.Count | Should -Be 3
-        $ops[0].Groups | Should -Be @('INF_01')
-        $ops[1].AddGroup | Should -BeTrue
-
-        Invoke-CliBuild -EditNames TST -Batch $planPath
-        $script:CliExit | Should -Be 0 -Because $script:CliOutput
-        $text = [System.IO.File]::ReadAllText($script:CliFile, [System.Text.Encoding]::UTF8)
-        $text | Should -Match 'Hirvi'
-        $text | Should -Match 'Salama'
-        $text | Should -Not -Match 'Never applied'
-    }
-
-    It "Rejects a plan without batch blocks and names the block that is not JSON" {
-        $fence = '```'
-        $empty = Join-Path $script:CliDir 'empty.md'
-        [System.IO.File]::WriteAllText($empty, "# Plan`n`n${fence}json`n{ `"group`": `"INF_01`", `"add`": `"A`" }`n${fence}`n", $script:Utf8NoBom)
-        { Read-NamelistEditBatch -Path $empty } | Should -Throw '*no*json batch*'
-        $broken = Join-Path $script:CliDir 'broken.md'
-        [System.IO.File]::WriteAllText($broken, "${fence}json batch`n{ `"group`": `"INF_01`", `"add`": `"A`" }`n${fence}`n`n${fence}json batch`n{ `"group`": `n${fence}`n", $script:Utf8NoBom)
-        { Read-NamelistEditBatch -Path $broken } | Should -Throw '*block 2*not valid JSON*'
-    }
-
-    It "Leaves the file untouched with -DryRun and warns about a plan that is not ready" {
-        Reset-CliNamelist
-        $before = [System.IO.File]::ReadAllBytes($script:CliFile)
-        $fence = '```'
-        $planPath = Join-Path $script:CliDir 'draft.md'
-        $plan = "# Plan`n`nStatus: PLANNING`n`n## Decisions`n<!-- TODO: fill -->`n`n## Review`n<!-- TODO(implementer): self-check -->`n`n## Edit batch`n${fence}json batch`n{ `"group`": `"CAV_01`", `"add`": [`"Karjalan Ratsuprikaati`"] }`n${fence}`n"
-        [System.IO.File]::WriteAllText($planPath, $plan, $script:Utf8NoBom)
-        Invoke-CliBuild -EditNames TST -Batch $planPath -DryRun
-        $script:CliExit | Should -Be 0 -Because $script:CliOutput
-        $script:CliOutput | Should -Match 'Edited TST_CAV_01: \+1'
-        $script:CliOutput | Should -Match 'Dry run OK: 1 operation\(s\); the file would hold 2 group\(s\), 6 name\(s\)\. Nothing written\.'
-        # The flags the batch leaves, so the planner can fill "Kept on judgment" without a rehearsal
-        $script:CliOutput | Should -Match 'AUDIT SUMMARY TST: GROUPS=2 AUTHORED=\d+/6 FLAGS=\d+'
-        $script:CliOutput | Should -Match 'Flags: .*DUPLICATE_NAME x1'
-        $script:CliOutput | Should -Match '\[WARN\] Plan: Status is still PLANNING'
-        $script:CliOutput | Should -Match '\[WARN\] Plan: 1 planner TODO section\(s\) left unfilled'
-        [System.IO.File]::ReadAllBytes($script:CliFile) | Should -Be $before
-
-        [System.IO.File]::WriteAllText($planPath, ($plan -replace 'Status: PLANNING', 'Status: READY' -replace '<!-- TODO: fill -->', 'Decided.'), $script:Utf8NoBom)
-        Invoke-CliBuild -EditNames TST -Batch $planPath -DryRun
-        $script:CliOutput | Should -Not -Match '\[WARN\]'
-    }
-
-    It "Creates a new nation's file from a newFile operation, and refuses it when the file exists or is not first" {
-        $newFile = Join-Path $script:CliNamelistDir 'zz_INEX_NEW_names_divisions.txt'
-        $json = Join-Path $script:CliDir 'new.json'
-        [System.IO.File]::WriteAllText($json, '[ { "newFile": true, "header": "Division names for Newland (NEW).\nImmersive Namelists Expanded (INEX)" }, { "addGroup": true, "group": "INF_01", "selector": "Infantry Divisions", "addType": "infantry", "fallback": "%d. Division", "add": ["1. Division ''Alpha''"] } ]', $script:Utf8NoBom)
-
-        Invoke-CliBuild -EditNames NEW -Batch $json -DryRun
-        $script:CliExit | Should -Be 0 -Because $script:CliOutput
-        $script:CliOutput | Should -Match 'Dry run OK: 2 operation\(s\); the file would hold 1 group\(s\), 1 name\(s\)'
-        (Test-Path $newFile) | Should -BeFalse
-
-        Invoke-CliBuild -EditNames NEW -Batch $json
-        $script:CliExit | Should -Be 0 -Because $script:CliOutput
-        $script:CliOutput | Should -Match 'Created zz_INEX_NEW_names_divisions\.txt'
-        $bytes = [System.IO.File]::ReadAllBytes($newFile)
-        $bytes[0] | Should -Not -Be 0xEF
-        $text = [System.Text.Encoding]::UTF8.GetString($bytes)
-        $text | Should -Match '(?s)^# Division names for Newland \(NEW\)\.\r?\n# Immersive Namelists Expanded \(INEX\)\r?\n\r?\nNEW_INF_01 = .*for_countries = \{ NEW \}.*Alpha'
-
-        $before = [System.IO.File]::ReadAllBytes($newFile)
-        Invoke-CliBuild -EditNames NEW -Batch $json
-        $script:CliExit | Should -Be 1
-        $script:CliOutput | Should -Match 'already exists'
-        [System.IO.File]::ReadAllBytes($newFile) | Should -Be $before
-        Remove-Item $newFile
-
-        $ops = @(
-            (ConvertTo-NamelistEditOp @{ group = 'INF_01'; add = 'A' }),
-            (ConvertTo-NamelistEditOp @{ newFile = $true; header = 'H' })
-        )
-        { Invoke-NamelistEditOps -Text $script:CliNamelist -Tag 'TST' -Ops $ops } | Should -Throw '*must be the first operation*'
-        { Invoke-NamelistEditOps -Text '' -Tag 'TST' -Ops @(ConvertTo-NamelistEditOp @{ newFile = $true }) } | Should -Throw '*needs "header"*'
-    }
-
-    It "Re-authors an existing file in one batch and warns only about tags that are gone at its end" {
-        Reset-CliNamelist
-        $json = Join-Path $script:CliDir 'reauthor.json'
-        [System.IO.File]::WriteAllText($json, '[ { "newFile": true, "replace": true, "header": "Testland (TST)" }, { "addGroup": true, "group": "INF_01", "selector": "Infantry Divisions", "addType": "infantry", "fallback": "%d. Divisioona", "add": ["1. Divisioona ''Karhu''"] } ]', $script:Utf8NoBom)
-        Invoke-CliBuild -EditNames TST -Batch $json
-        $script:CliExit | Should -Be 0 -Because $script:CliOutput
-        $script:CliOutput | Should -Match 'Started zz_INEX_TST_names_divisions\.txt afresh'
-        $script:CliOutput | Should -Match '\[WARN\] Removed group tags TST_CAV_01:'
-        $script:CliOutput | Should -Not -Match 'Removed group tags[^\r\n]*TST_INF_01'
-        $text = [System.IO.File]::ReadAllText($script:CliFile, [System.Text.Encoding]::UTF8)
-        $text | Should -Match '^# Testland \(TST\)\r\n\r\nTST_INF_01 = '
-        $text | Should -Not -Match 'Ratsuprikaati'
-
-        Reset-CliNamelist
-        [System.IO.File]::WriteAllText($json, '[ { "group": "CAV_01", "removeGroup": true }, { "addGroup": true, "group": "CAV_01", "selector": "Cavalry Brigades", "addType": "cavalry", "fallback": "%d. Ratsuprikaati" } ]', $script:Utf8NoBom)
-        Invoke-CliBuild -EditNames TST -Batch $json
-        $script:CliExit | Should -Be 0 -Because $script:CliOutput
-        $script:CliOutput | Should -Not -Match 'Removed group tags'
-        Reset-CliNamelist
     }
 }
 

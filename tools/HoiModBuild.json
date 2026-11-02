@@ -5,9 +5,11 @@
     "defaultChangeNote": "Updated division namelists",
     "testSuites": {
         "Knowledge": ["*.md", "docs/**", "wiki/**"],
-        "BuildScript": ["build.ps1", "tools/HoiModBuild.ps1", "tools/HoiModBuild.json", "common/**", "descriptor.mod", "thumbnail.png", "wiki/push-wiki.ps1"],
+        "BuildScript": ["build.ps1", "tools/HoiModBuild.ps1", "tools/HoiModBuild.json", "common/**", "descriptor.mod", "thumbnail.png", "wiki/push-wiki.ps1", "tests/BuildScriptSetup.ps1"],
+        "BuildScriptCli": ["build.ps1", "tools/HoiModBuild.ps1", "tools/HoiModBuild.json", "tests/BuildScriptSetup.ps1"],
+        "BuildScriptRepo": ["build.ps1", "tools/HoiModBuild.ps1", "tools/HoiModBuild.json", "common/**", "tests/BuildScriptSetup.ps1"],
         "Documentation": ["build.ps1", "descriptor.mod", "thumbnail.png", "README.md", "WORKSHOP_DESCRIPTION_GUIDELINES.md", "AGENTS.md", "CLAUDE.md", "GEMINI.md", "common/units/names_divisions/**", "docs/**", ".claude/skills/**", ".agents/skills/**", ".claude/agents/**", "wiki/Contributing.md", "wiki/Engine-Mechanics.md"],
-        "Hooks": [".claude/hooks/**", ".claude/settings.json"],
+        "Hooks": [".claude/hooks/**", ".claude/settings.json", "tests/fixtures/ProtectHookCases.psd1"],
         "Namelists": ["build.ps1", "common/units/names_divisions/**"],
         "none": ["scratch/**", "artifacts/**"]
     }

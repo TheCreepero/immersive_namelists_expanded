@@ -1,35 +1,7 @@
 BeforeDiscovery {
-    $script:DenyCases = @(
-        @{ Name = 'Edit of a namelist file'; Tool = 'Edit'; ToolInput = @{ file_path = 'common\units\names_divisions\zz_INEX_TST_names_divisions.txt' }; Reason = 'EditNames' }
-        @{ Name = 'Write of a namelist file by relative path'; Tool = 'Write'; ToolInput = @{ file_path = 'common/units/names_divisions/zz_INEX_NEW_names_divisions.txt' }; Reason = 'EditNames' }
-        @{ Name = 'Write of the synced build engine'; Tool = 'Write'; ToolInput = @{ file_path = 'tools\HoiModBuild.ps1' }; Reason = 'synced from the Modding Manager' }
-        @{ Name = 'Edit of the synced knowledge tests'; Tool = 'Edit'; ToolInput = @{ file_path = 'tests\Knowledge.Tests.ps1' }; Reason = 'synced from the Modding Manager' }
-        @{ Name = 'Edit of the synced engine tests'; Tool = 'MultiEdit'; ToolInput = @{ file_path = 'tests\BuildEngine.Tests.ps1' }; Reason = 'synced from the Modding Manager' }
-        @{ Name = 'Edit of the synced test runner'; Tool = 'Edit'; ToolInput = @{ file_path = 'tests\Run-Tests.ps1' }; Reason = 'synced from the Modding Manager' }
-        @{ Name = 'Edit of the synced CI workflow'; Tool = 'Edit'; ToolInput = @{ file_path = '.github\workflows\ci.yml' }; Reason = 'synced from the Modding Manager' }
-        @{ Name = 'Edit of an Antigravity skill mirror'; Tool = 'Edit'; ToolInput = @{ file_path = '.agents\skills\hoi4-inex-release\SKILL.md' }; Reason = 'SyncMirrors' }
-        @{ Name = 'Set-Content on a namelist file'; Tool = 'PowerShell'; ToolInput = @{ command = 'Set-Content -Path common\units\names_divisions\zz_INEX_TST_names_divisions.txt -Value $text' }; Reason = 'shell write' }
-        @{ Name = 'sed -i on a namelist file'; Tool = 'Bash'; ToolInput = @{ command = "sed -i 's/Old/New/' common/units/names_divisions/zz_INEX_TST_names_divisions.txt" }; Reason = 'shell write' }
-        @{ Name = 'a redirect into the namelist folder'; Tool = 'Bash'; ToolInput = @{ command = 'cat scratch/new.txt > common/units/names_divisions/zz_INEX_TST_names_divisions.txt' }; Reason = 'shell write' }
-        @{ Name = 'WriteAllText on a namelist file'; Tool = 'PowerShell'; ToolInput = @{ command = '[System.IO.File]::WriteAllText("$root\common\units\names_divisions\zz_INEX_TST_names_divisions.txt", $text)' }; Reason = 'shell write' }
-        @{ Name = 'a Copy-Item into the namelist folder after a harmless command'; Tool = 'PowerShell'; ToolInput = @{ command = 'git status; Copy-Item scratch\x.txt common\units\names_divisions\zz_INEX_TST_names_divisions.txt' }; Reason = 'shell write' }
-        @{ Name = 'a Remove-Item of a namelist file by its absolute path'; Tool = 'PowerShell'; ToolInput = @{ command = 'Remove-Item "<repo>\common\units\names_divisions\zz_INEX_TST_names_divisions.txt"' }; Reason = 'shell write' }
-    )
-    $script:AllowCases = @(
-        @{ Name = 'Edit of a plan'; Tool = 'Edit'; ToolInput = @{ file_path = 'docs\plans\2026-10-25-testland-audit.md' } }
-        @{ Name = 'Edit of a Claude Code skill'; Tool = 'Edit'; ToolInput = @{ file_path = '.claude\skills\hoi4-inex-release\SKILL.md' } }
-        @{ Name = 'Edit of the mod''s own tests'; Tool = 'Edit'; ToolInput = @{ file_path = 'tests\Documentation.Tests.ps1' } }
-        @{ Name = 'Write into scratch'; Tool = 'Write'; ToolInput = @{ file_path = 'scratch\tst_dossier.md' } }
-        @{ Name = 'a namelist path outside the repository'; Tool = 'Edit'; ToolInput = @{ file_path = 'C:\elsewhere\common\units\names_divisions\zz_INEX_TST_names_divisions.txt' } }
-        @{ Name = 'the -EditNames batch command'; Tool = 'PowerShell'; ToolInput = @{ command = 'powershell -File .\build.ps1 -EditNames TST -Batch docs\plans\2026-10-25-testland-audit.md -DryRun' } }
-        @{ Name = 'a read of the namelist folder'; Tool = 'Bash'; ToolInput = @{ command = 'git status --short -- common/units/names_divisions 2>$null' } }
-        @{ Name = 'the -Audit command'; Tool = 'PowerShell'; ToolInput = @{ command = 'powershell -File .\build.ps1 -Audit TST -NamesOnly' } }
-        @{ Name = 'a Read of a namelist file'; Tool = 'Read'; ToolInput = @{ file_path = 'common\units\names_divisions\zz_INEX_TST_names_divisions.txt' } }
-        @{ Name = 'git mv of a plan beside git add of a namelist file'; Tool = 'PowerShell'; ToolInput = @{ command = 'git mv docs/plans/a.md docs/plans/archive/; git add common/units/names_divisions/zz_INEX_TST_names_divisions.txt' } }
-        @{ Name = 'git add of a namelist file'; Tool = 'Bash'; ToolInput = @{ command = 'git add -- common/units/names_divisions/zz_INEX_TST_names_divisions.txt' } }
-        @{ Name = 'a Remove-Item in a rehearsal export outside the repository'; Tool = 'PowerShell'; ToolInput = @{ command = 'Remove-Item C:\Users\x\scratchpad\rehearsal\common\units\names_divisions\zz_INEX_HUN_names_divisions.txt' } }
-        @{ Name = 'an rm in a rehearsal export outside the repository, Git Bash path'; Tool = 'Bash'; ToolInput = @{ command = 'rm -f "/c/Users/x/scratchpad/rehearsal/common/units/names_divisions/zz_INEX_HUN_names_divisions.txt"' } }
-    )
+    $script:ProtectCases = Import-PowerShellDataFile -Path (Join-Path $PSScriptRoot 'fixtures\ProtectHookCases.psd1')
+    $script:DenyCases = $script:ProtectCases.Deny
+    $script:AllowCases = $script:ProtectCases.Allow
 }
 
 Describe 'Protect-ProjectFiles hook' {
@@ -39,53 +11,69 @@ Describe 'Protect-ProjectFiles hook' {
         $script:FakeRepo = Join-Path $TestDrive 'inex'
         [void](New-Item -ItemType Directory -Path $script:FakeRepo -Force)
 
-        function Invoke-ProtectHook {
+        function Start-ProtectHook {
             param(
                 [string]$ToolName,
-                [hashtable]$ToolInput
+                [hashtable]$ToolInput,
+                [string]$RawInput
             )
 
-            if ($ToolInput.ContainsKey('file_path') -and -not [System.IO.Path]::IsPathRooted($ToolInput.file_path)) {
-                $ToolInput = @{ file_path = (Join-Path $script:FakeRepo $ToolInput.file_path) }
+            if (-not $RawInput) {
+                if ($ToolInput.ContainsKey('file_path') -and -not [System.IO.Path]::IsPathRooted($ToolInput.file_path)) {
+                    $ToolInput = @{ file_path = (Join-Path $script:FakeRepo $ToolInput.file_path) }
+                }
+                # <repo> in a command stands for the repository's absolute path
+                if ($ToolInput.ContainsKey('command')) {
+                    $ToolInput = @{ command = $ToolInput.command.Replace('<repo>', $script:FakeRepo) }
+                }
+                $RawInput = ConvertTo-Json -Compress -Depth 5 -InputObject @{
+                    hook_event_name = 'PreToolUse'
+                    tool_name       = $ToolName
+                    cwd             = $script:FakeRepo
+                    tool_input      = $ToolInput
+                }
             }
-            # <repo> in a command stands for the repository's absolute path
-            if ($ToolInput.ContainsKey('command')) {
-                $ToolInput = @{ command = $ToolInput.command.Replace('<repo>', $script:FakeRepo) }
-            }
-            $eventJson = ConvertTo-Json -Compress -Depth 5 -InputObject @{
-                hook_event_name = 'PreToolUse'
-                tool_name       = $ToolName
-                cwd             = $script:FakeRepo
-                tool_input      = $ToolInput
-            }
-            $previousPreference = $ErrorActionPreference
-            $ErrorActionPreference = 'Continue'
-            $output = @($eventJson | & powershell -NoProfile -ExecutionPolicy Bypass -File $script:HookPath -RepoRoot $script:FakeRepo 2>&1 | ForEach-Object { "$_" })
-            $exitCode = $LASTEXITCODE
-            $ErrorActionPreference = $previousPreference
-            return [PSCustomObject]@{ ExitCode = $exitCode; Text = ($output -join "`n") }
+            $powerShellExecutable = if (Get-Command -Name 'pwsh' -ErrorAction SilentlyContinue) { 'pwsh' } else { 'powershell' }
+            $startInfo = [System.Diagnostics.ProcessStartInfo]::new($powerShellExecutable,"-NoProfile -ExecutionPolicy Bypass -File `"$($script:HookPath)`" -RepoRoot `"$($script:FakeRepo)`"")
+            $startInfo.UseShellExecute = $false
+            $startInfo.RedirectStandardInput = $true
+            $startInfo.RedirectStandardOutput = $true
+            $startInfo.RedirectStandardError = $true
+            $process = [System.Diagnostics.Process]::Start($startInfo)
+            $process.StandardInput.Write($RawInput)
+            $process.StandardInput.Close()
+            return [PSCustomObject]@{ Process = $process; Out = $process.StandardOutput.ReadToEndAsync(); Err = $process.StandardError.ReadToEndAsync() }
         }
+
+        function Complete-ProtectHook {
+            param($Started)
+            $Started.Process.WaitForExit()
+            $lines = @(($Started.Out.Result + $Started.Err.Result) -split '\r?\n' | Where-Object { $_ })
+            return [PSCustomObject]@{ ExitCode = $Started.Process.ExitCode; Text = ($lines -join "`n") }
+        }
+
+        $cases = Import-PowerShellDataFile -Path (Join-Path $PSScriptRoot 'fixtures\ProtectHookCases.psd1')
+        $started = [ordered]@{}
+        foreach ($case in @($cases.Deny) + @($cases.Allow)) { $started[$case.Name] = Start-ProtectHook -ToolName $case.Tool -ToolInput $case.ToolInput }
+        $started['malformed input'] = Start-ProtectHook -RawInput 'not json'
+        $script:ProtectResults = @{}
+        foreach ($name in $started.Keys) { $script:ProtectResults[$name] = Complete-ProtectHook $started[$name] }
     }
 
     It 'refuses <Name>' -ForEach $script:DenyCases {
-        $result = Invoke-ProtectHook -ToolName $Tool -ToolInput $ToolInput
+        $result = $script:ProtectResults[$Name]
         $result.ExitCode | Should -Be 2
         $result.Text | Should -Match 'EditNames|synced from the Modding Manager|SyncMirrors'
     }
 
     It 'lets <Name> through' -ForEach $script:AllowCases {
-        $result = Invoke-ProtectHook -ToolName $Tool -ToolInput $ToolInput
+        $result = $script:ProtectResults[$Name]
         $result.ExitCode | Should -Be 0
         $result.Text | Should -BeNullOrEmpty
     }
 
     It 'exits 0 on malformed input' {
-        $previousPreference = $ErrorActionPreference
-        $ErrorActionPreference = 'Continue'
-        $output = @('not json' | & powershell -NoProfile -ExecutionPolicy Bypass -File $script:HookPath -RepoRoot $script:FakeRepo 2>&1)
-        $exitCode = $LASTEXITCODE
-        $ErrorActionPreference = $previousPreference
-        $exitCode | Should -Be 0
+        $script:ProtectResults['malformed input'].ExitCode | Should -Be 0
     }
 }
 
@@ -220,7 +208,7 @@ Describe 'Hook registration in .claude/settings.json' {
 
     It 'asks before a Read of the large tool sources' {
         $ask = @($script:Settings.permissions.ask)
-        foreach ($source in 'build.ps1', 'tools/HoiModBuild.ps1', 'tests/BuildScript.Tests.ps1') {
+        foreach ($source in 'build.ps1', 'tools/HoiModBuild.ps1', 'tests/BuildScript.Tests.ps1', 'tests/BuildScriptCli.Tests.ps1', 'tests/BuildScriptRepo.Tests.ps1', 'tests/BuildScriptSetup.ps1') {
             @($ask | Where-Object { $_ -eq "Read(./$source)" }).Count | Should -Be 1 -Because "$source is learned through Get-Help or opened only in a tooling-backlog session"
         }
     }

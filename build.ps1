@@ -3426,11 +3426,18 @@ function Get-MergedNameGroups {
     param(
         [string]$Hoi4Dir,
         [string]$Country,
-        [string]$NamelistDir = (Join-Path $RepoDir 'common\units\names_divisions')
+        [string]$NamelistDir = (Join-Path $RepoDir 'common\units\names_divisions'),
+        [string[]]$Tags
     )
     $vanillaFiles = @(Get-ChildItem -Path (Join-Path $Hoi4Dir 'common\units\names_divisions') -Filter '*.txt')
     $inexFiles = @(Get-ChildItem -Path $NamelistDir -Filter 'zz_INEX_*.txt')
     $sources = @(@($vanillaFiles) + @($inexFiles) | ForEach-Object { [PSCustomObject]@{ Name = $_.Name; Path = $_.FullName; Text = $null } })
+    if ($Tags) {
+        $sources = @($sources | Where-Object {
+            $fileText = [System.IO.File]::ReadAllText($_.Path, [System.Text.Encoding]::UTF8)
+            @($Tags | Where-Object { $fileText.IndexOf($_, [System.StringComparison]::OrdinalIgnoreCase) -ge 0 }).Count -gt 0
+        })
+    }
     $subUnitIds = @((Get-GameSubUnits -Hoi4Dir $Hoi4Dir).Keys)
     $armyGroups = @(Merge-NameGroupFiles -Files $sources -SubUnitIds $subUnitIds | Where-Object { -not $_.NameType -or $_.NameType -eq 'army' })
     if (-not $Country) { return $armyGroups }
@@ -3654,7 +3661,7 @@ function Invoke-NamelistAudit {
     $mergedByTag = @{}
     $hoi4ForMerge = Find-Hoi4Install -CustomPath $Hoi4Dir
     if ($hoi4ForMerge) {
-        foreach ($m in (Get-MergedNameGroups -Hoi4Dir $hoi4ForMerge)) { $mergedByTag[$m.Tag.ToUpperInvariant()] = $m }
+        foreach ($m in (Get-MergedNameGroups -Hoi4Dir $hoi4ForMerge -Tags @($data.Groups | ForEach-Object { $_.Tag }))) { $mergedByTag[$m.Tag.ToUpperInvariant()] = $m }
     }
 
     Write-Step "Quality audit: zz_INEX_${Key}_names_divisions.txt ($($data.Groups.Count) groups)"
