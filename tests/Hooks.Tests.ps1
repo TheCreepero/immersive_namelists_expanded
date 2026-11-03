@@ -10,6 +10,9 @@ Describe 'Protect-ProjectFiles hook' {
         $script:HookPath = Join-Path $script:RepoRoot '.claude\hooks\Protect-ProjectFiles.ps1'
         $script:FakeRepo = Join-Path $TestDrive 'inex'
         [void](New-Item -ItemType Directory -Path $script:FakeRepo -Force)
+        $settings = [System.IO.File]::ReadAllText((Join-Path $script:RepoRoot '.claude\settings.json'), [System.Text.Encoding]::UTF8) | ConvertFrom-Json
+        $registeredCommand = @($settings.hooks.PreToolUse | ForEach-Object { $_.hooks } | ForEach-Object { $_.command } | Where-Object { $_ -match 'Protect-ProjectFiles\.ps1' })[0]
+        $script:RegisteredHookExecutable = ($registeredCommand -split '\s+')[0]
 
         function Start-ProtectHook {
             param(
@@ -33,8 +36,7 @@ Describe 'Protect-ProjectFiles hook' {
                     tool_input      = $ToolInput
                 }
             }
-            $powerShellExecutable = if (Get-Command -Name 'pwsh' -ErrorAction SilentlyContinue) { 'pwsh' } else { 'powershell' }
-            $startInfo = [System.Diagnostics.ProcessStartInfo]::new($powerShellExecutable,"-NoProfile -ExecutionPolicy Bypass -File `"$($script:HookPath)`" -RepoRoot `"$($script:FakeRepo)`"")
+            $startInfo = [System.Diagnostics.ProcessStartInfo]::new($script:RegisteredHookExecutable, "-NoProfile -ExecutionPolicy Bypass -File `"$($script:HookPath)`" -RepoRoot `"$($script:FakeRepo)`"")
             $startInfo.UseShellExecute = $false
             $startInfo.RedirectStandardInput = $true
             $startInfo.RedirectStandardOutput = $true
