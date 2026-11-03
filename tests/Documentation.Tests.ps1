@@ -79,10 +79,11 @@ Describe "Documentation Synchronization: WORKSHOP_DESCRIPTION_GUIDELINES.md" {
         $script:GuideContent | Should -Not -Match '\[h1\]Planned:\[/h1\]' -Because "Planned section was removed to conserve character limit"
     }
 
-    It "Active workshop description must stay within Steam's 17,000 character limit" {
+    It "Active workshop description must stay within Steam's 8,000-byte limit" {
         $bbcode = [regex]::Match($script:GuideContent, '(?s)```bbcode\r?\n(.*?)\r?\n```')
         $bbcode.Success | Should -BeTrue -Because "the guide holds the active description in a bbcode block"
-        ($bbcode.Groups[1].Value -replace "`r`n", "`n").Length | Should -BeLessOrEqual 17000
+        . (Join-Path $script:RepoRoot 'tools\HoiModBuild.ps1')
+        (Get-ModWorkshopDescriptionSize -Description $bbcode.Groups[1].Value).Bytes | Should -BeLessOrEqual 8000 -Because "Steam refuses a longer description with 'Invalid Parameter'"
     }
 
     It "Active workshop description must not contain emojis" {

@@ -8,7 +8,7 @@ This document serves as an instruction and reference guide for maintaining and u
 
 1. **No Emojis**: Strictly avoid adding any emojis or emoticons to the description.
 2. **Character & Length Limits**:
-   - Steam Workshop descriptions have a strict character limit (~17,000 characters raw BBCode).
+   - Steam caps descriptions at 8,000 characters of raw BBCode (a longer one fails the upload with "Invalid Parameter"); stay under ~7,500.
    - Keep bullet points concise and avoid lengthy narrative blocks.
    - Do NOT include the old author quote block (`[quote=author]...[/quote]`), as it consumed too many characters and was stripped to keep the description under the limit.
    - Monitor the overall character count of the BBCode text when adding new nations: each nation block has a budget of 450 characters (Structure, item 3).
@@ -47,7 +47,7 @@ This document serves as an instruction and reference guide for maintaining and u
 3. **[h1]Included nations:[/h1]**:
    - Disclaimer noting that this is not an exhaustive list, just highlights/examples.
    - Grouped by nation in bold (`[b]Nation[/b]`).
-   - Per-nation form (set 2026-10-27, when the description had reached 14,099 characters with 19 nations): `[b]Nation[/b]` and two bullets, at most 450 characters for the whole block, with 2-3 in-game examples in italics. The first bullet holds the regular and specialist forces, the second the government-gated suites. Name the lists, not every group; the wiki page carries the detail. `build.ps1 -Audit` and `-Check` warn about a block over 450 characters and a description over 16,000.
+   - Per-nation form (set 2026-10-27, when the description had reached 14,099 characters with 19 nations): `[b]Nation[/b]` and two bullets, at most 450 characters for the whole block, with 2-3 in-game examples in italics. The first bullet holds the regular and specialist forces, the second the government-gated suites. Name the lists, not every group; the wiki page carries the detail. `build.ps1 -Audit` and `-Check` warn about a block over 450 characters and a description over 7,500 bytes.
 
 ---
 

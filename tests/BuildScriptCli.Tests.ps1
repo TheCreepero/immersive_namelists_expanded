@@ -194,7 +194,7 @@ TST_CAV_01 =
         [System.IO.File]::WriteAllText($script:CliFile, $withOrdinal + "`r`n", $script:Utf8NoBom)
         Invoke-CliBuild -Audit TST
         $script:CliOutput | Should -Match 'DUPLICATE_NAME: Alpha Division'
-        $script:CliOutput | Should -Match 'Workshop: \[b\]Testland\[/b\] 1 bullet\(s\), 1 \[i\] example\(s\), \d+/450 chars; description \d+/17000 chars'
+        $script:CliOutput | Should -Match 'Workshop: \[b\]Testland\[/b\] 1 bullet\(s\), 1 \[i\] example\(s\), \d+/450 chars; description \d+/8000 bytes'
         $script:CliOutput | Should -Match '\[WARN\] Docs: .*1 bullet'
         $script:CliOutput | Should -Match 'ORDINAL_MISMATCH'
     }

@@ -3337,15 +3337,16 @@ function Get-WorkshopDocStats {
         return $stats
     }
     $description = $bbcode.Groups[1].Value -replace "`r`n", "`n"
-    $stats.Length = $description.Length
+    $descriptionSize = Get-ModWorkshopDescriptionSize -Description $description
+    $stats.Length = $descriptionSize.Bytes
     # Surrogate pairs (U+10000 and up) plus the symbol, dingbat and variation-selector ranges.
     # Built from code points: this file has no BOM, so Windows PowerShell 5.1 would misread non-ASCII literals.
     $symbols = '[' + [char]0x2600 + '-' + [char]0x27BF + [char]0x2B50 + [char]0x2B55 + [char]0xFE0F + ']'
     $stats.Emojis = ([regex]::Matches($description, '\p{Cs}\p{Cs}|' + $symbols)).Count
     if ($stats.Emojis -gt 0) { $warnings.Add("workshop description contains $($stats.Emojis) emoji(s)") }
-    # Steam's limit is 17000; the budget leaves room for the next nation (WORKSHOP_DESCRIPTION_GUIDELINES.md)
-    if ($stats.Length -gt 17000) { $warnings.Add("workshop description is $($stats.Length) chars (limit 17000)") }
-    elseif ($stats.Length -gt 16000) { $warnings.Add("workshop description is $($stats.Length) chars (budget 16000 of Steam's 17000): shorten the longest nation blocks") }
+    # Steam refuses a description over 8000 bytes as uploaded; the budget leaves room for the next nation (WORKSHOP_DESCRIPTION_GUIDELINES.md)
+    if ($stats.Length -gt $descriptionSize.Limit) { $warnings.Add("workshop description is $($stats.Length) bytes (Steam's limit $($descriptionSize.Limit)): the upload fails with 'Invalid Parameter'") }
+    elseif ($stats.Length -gt $descriptionSize.Budget) { $warnings.Add("workshop description is $($stats.Length) bytes (budget $($descriptionSize.Budget) of Steam's $($descriptionSize.Limit)): shorten the longest nation blocks") }
 
     $row = [regex]::Match($GuideText, "(?m)^\|[ \t]*``?zz_INEX_$([regex]::Escape($Key))_names_divisions\.txt``?[ \t]*\|[ \t]*([^|\r\n]+?)[ \t]*\|")
     if (-not $row.Success) {
@@ -3745,7 +3746,7 @@ function Invoke-NamelistAudit {
     # Workshop description conventions for this nation's block
     $doc = Get-RepoWorkshopDocStats -Key $Key
     if ($doc) {
-        if ($doc.Nation) { Write-Info "Workshop: [b]$($doc.Nation)[/b] $($doc.Bullets) bullet(s), $($doc.Examples) [i] example(s), $($doc.BlockLength)/450 chars; description $($doc.Length)/17000 chars" }
+        if ($doc.Nation) { Write-Info "Workshop: [b]$($doc.Nation)[/b] $($doc.Bullets) bullet(s), $($doc.Examples) [i] example(s), $($doc.BlockLength)/450 chars; description $($doc.Length)/8000 bytes" }
         foreach ($w in $doc.Warnings) { Write-Warn "Docs: $w" }
     }
 

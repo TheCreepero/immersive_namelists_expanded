@@ -181,7 +181,7 @@ In the BBCode block of `WORKSHOP_DESCRIPTION_GUIDELINES.md`, insert this after t
 - Royal Guard, Hungarist divisions, Red Army and Workers' Battalions, 1848 Honvéd and 1956 National Guard
 ```
 
-The description grows to about 7,690 characters (about 8,130 if China shipped first), within its 16,000-character budget.
+The block adds about 390 bytes: from 7,398 bytes on 2026-11-03 the description grows to about 7,790 (more if China shipped first). Steam caps a description at 8,000 bytes and the budget is 7,500, so the description must be shortened before this block goes in.
 
 ### wiki/Hungary.md (whole page)
 ````markdown

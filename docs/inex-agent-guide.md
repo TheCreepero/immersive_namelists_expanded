@@ -27,7 +27,7 @@ When adding, expanding, or modifying namelists:
 1. `WORKSHOP_DESCRIPTION_GUIDELINES.md`: Update Cross-Reference table and `[h1]Included nations:[/h1]` (`[b]Nation[/b]`, two bullets, 2-3 italicized unit examples `[i]...[/i]`, at most 450 characters; its Structure item 3).
 2. `wiki/<Nation>.md`: Add or update the page (tables & context).
 3. `powershell -File .\build.ps1 -SyncWiki <TAG>` writes what a script can derive: the wiki page's group rows (a new group's row goes in file order) and headings and the `wiki/Home.md` group count. For a new nation add `-Country "<Name>"`: it also adds the `README.md` row, the `wiki/Home.md` row and the `wiki/_Sidebar.md` line.
-4. **Steam Standards**: No emojis. Max ~17k chars (omit `[quote=author]` blocks). Concise tone. Correct diacritics/grammar (`1ère`, `Ryhmä`, `Ziemi Łomżyńskiej`). BBCode: `[h1]`, `[b]`, `[i]`, `[url]`, standard `- ` bullets.
+4. **Steam Standards**: No emojis. Steam caps descriptions at 8,000 characters of raw BBCode (a longer one fails the upload with "Invalid Parameter"); stay under ~7,500 (omit `[quote=author]` blocks). Concise tone. Correct diacritics/grammar (`1ère`, `Ryhmä`, `Ziemi Łomżyńskiej`). BBCode: `[h1]`, `[b]`, `[i]`, `[url]`, standard `- ` bullets.
 5. **In-Chat Description**: On request, output full ready-to-copy Steam BBCode description + summary of changes.
 6. The wiki push (`powershell -File .\wiki\push-wiki.ps1`) runs in a plan's ship step, right after the commit; the commit waits for the user's word, the push does not. A commit that changes `wiki/` for any other reason (tooling, rules, a docs fix) also ends with the push; otherwise the next nation's push publishes those pages unannounced. `-Check` warns about committed pages the last push did not send.
 

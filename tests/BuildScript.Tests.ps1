@@ -2226,9 +2226,9 @@ $Block
         ($emoji.Warnings -join '|') | Should -Match 'emoji'
     }
 
-    It "Warns when the description passes 17,000 characters" {
-        $long = Get-WorkshopDocStats -GuideText (& $script:GuideFor ("[b]Testland[/b]`n- A ([i]x[/i], [i]y[/i])`n- " + ('B' * 17000))) -Key 'TST'
-        ($long.Warnings -join '|') | Should -Match '17000'
+    It "Warns when the description passes Steam's 8,000 bytes" {
+        $long = Get-WorkshopDocStats -GuideText (& $script:GuideFor ("[b]Testland[/b]`n- A ([i]x[/i], [i]y[/i])`n- " + ('B' * 8000))) -Key 'TST'
+        ($long.Warnings -join '|') | Should -Match "Steam's limit 8000"
     }
 
     It "Measures the nation's block and warns past its 450-character budget, three bullets or four examples" {
@@ -2241,9 +2241,9 @@ $Block
         $w | Should -Match '4 \[i\] example\(s\) \(2-3 expected\)'
     }
 
-    It "Warns when the description passes its 16,000-character budget" {
-        $near = Get-WorkshopDocStats -GuideText (& $script:GuideFor ("[b]Testland[/b]`n- A ([i]x[/i], [i]y[/i])`n- B`n`n" + ('C' * 16200))) -Key 'TST'
-        ($near.Warnings -join '|') | Should -Match '16000'
+    It "Warns when the description passes its 7,500-byte budget, counting a non-ASCII letter as two bytes" {
+        $near = Get-WorkshopDocStats -GuideText (& $script:GuideFor ("[b]Testland[/b]`n- A ([i]x[/i], [i]y[/i])`n- B`n`n" + ([string][char]0x00E1 * 3800))) -Key 'TST'
+        ($near.Warnings -join '|') | Should -Match 'budget 7500'
     }
 }
 
