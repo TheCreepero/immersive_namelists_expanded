@@ -63,7 +63,7 @@ A modernized file meets all of these (reference implementation: `zz_INEX_PER_nam
 |---|---|---|
 | R1 | Short INEX header: country + tag, language/orthography notes, note on which vanilla groups are overridden. No vanilla boilerplate. | `HEADER_BOILERPLATE` |
 | R2 | Section banners grouping related groups; a one-line comment above a group when it overrides vanilla or links numbering. | - |
-| R3 | Selector `name` is plural, concise (<= 28 chars), unique within the file, no demonym. | `SELECTOR_SINGULAR`, `SELECTOR_LONG`, `SELECTOR_DUPLICATE` |
+| R3 | Selector `name` is plural, concise (<= 28 chars [NAM-028]), unique within the file, no demonym. | `SELECTOR_SINGULAR`, `SELECTOR_LONG`, `SELECTOR_DUPLICATE` |
 | R4 | `ordered` entries are authored (nicknames, garrison cities, honorifics, historical titles), not the fallback repeated. A single trailing fallback-pattern entry is fine. | `PLACEHOLDER_ENTRIES` |
 | R5 | Main line groups (infantry, armor, cavalry) carry 20-30+ authored entries; small specialist groups may be shorter when history justifies it. | `LOW_DEPTH` |
 | R6 | Fallbacks are correct target-language nominative with `%d`/`%s`, no machine-translated compounds. | (manual) |
@@ -84,13 +84,13 @@ More informational lints:
 - `UNGATED_POLITICAL`: a militia, party, guard or resistance style group still on `can_use = { always = yes }`; gate it by government (R11).
 - `ORDINAL_MISMATCH`: a fixed ordinal after `%d` at a key where it reads wrong (French `%dère` at key 5 renders "5ère"; English `%dth` at key 1 or `%dst` at key 2). Fix the entry with `"set"`.
 
-`Vanilla:` lines (single-file `-Audit` with HOI4 installed) are facts, not flags:
+`Vanilla:` lines (single-file `-Audit` with HOI4 installed) are facts, not flags [NAM-020]:
 - `N/M entries identical to vanilla`: entries copied from vanilla. The game has them from vanilla as well, and each copy adds an `Adding a duplicate ORDERED division name` line to `error.log`; they change no name.
 - `leaves out N vanilla name(s), still in game`: vanilla entries with an identity that the group does not rewrite, listed as `key=name`; the game shows them under their numbers. Entries whose quoted identity lives on in another group of the file are only counted. Decide each one: keep it, or replace it in the batch with another name under its number.
 - `leaves out N numbered key(s) past a gap`: vanilla numbered its divisions historically. Those entries stay in the game, so the numbering keeps vanilla's gaps whether or not the group repeats them.
 - `leaves out N numbered key(s) whose vanilla text differs from the fallback`: vanilla stubs in another format or ordinal (`%d Hohei Shidan` beside `Dai-%d Shidan`, `28th` beside `%d Infantry Division`), with one example; the game shows vanilla's text at those keys. Keep it, or write the group's own text over them (R10).
 - `kept in another list but still shown in this plain variant`: vanilla identities that moved to the Named group but still show in the plain group under their numbers.
-- `SELECTOR_DUPLICATE` with the detail `vanilla <TAG>`: a vanilla group that INEX leaves in place shows the same selector for a shared division type, so both stand in the dropdown under one name.
+- `SELECTOR_DUPLICATE` with the detail `vanilla <TAG>`: a vanilla group that INEX leaves in place [NAM-001] shows the same selector for a shared division type, so both stand in the dropdown under one name.
 
 Lint flags are **heuristics**. Treat them as leads, confirm by reading the group, and override with a stated reason where history justifies it.
 

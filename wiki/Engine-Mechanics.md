@@ -257,6 +257,16 @@ A group left with no valid token behaves like a group without `division_types`: 
 
 Evidence: launch of 2026-10-27 with the test mod `inex-division-types-test` (Germany): the group "TT Bogus Token" (`division_types = { "motorized_rocket_artillery" }`, one name) gave `[22:27:08][no_game_date]: Error: "Error reading division names group - TT Bogus Token, division_types has unknown token: motorized_rocket_artillery: }, near line: 72" in file: "common/units/names_divisions/zz_TT_names_divisions.txt" near line: 72`, and the templates "TT 5 Camels with support artillery" and "TT 6 Camels only" (two `camelry` each; no German group lists `camelry`) both showed "TT Bogus Token".
 
+## The name list selector of the division designer cuts or wraps a group `name` longer than about 28 characters
+
+`NAM-028` | status: recalled | game: 1.19.4
+
+The name list dropdown of the division designer is believed to cut or wrap a division name group's `name` longer than about 28 characters. Immersive Namelists Expanded keeps its selectors at 28 characters at most for that reason, and leaves the country's name out of them, since the list already holds only the player's country's groups. The ship designer's selector behaves the same way at about 30 characters [NAM-013].
+
+Keep a division group's `name` at 28 characters or fewer. Before a design depends on the exact width, open the division designer with a longer name and record what it shows.
+
+Evidence: the limit is a working rule of Immersive Namelists Expanded (`docs/inex-agent-guide.md` §2, rubric R3 of its audit skill). No capture of the dropdown with a longer name is recorded.
+
 ## Road to 56 ships its own copies of vanilla division name list files
 
 `RT56-004` | status: mod | game: 1.19.3
