@@ -85,7 +85,7 @@ This document serves as an instruction and reference guide for maintaining and u
 <!-- region:image:hero -->
 [img]https://i.imgur.com/DMARg5N.png[/img]
 <!-- /region -->
-More namelists! Used AI to speed up the creation process and help with translations.
+More division namelists! Used AI to speed up the creation process and help with translations.
 
 Coming soon: [b]Immersive Air Wing Names Expanded[/b]
 
@@ -102,7 +102,7 @@ If you have any ideas for namelists, please leave them in the discussion thread!
 - Built for game version 1.19.
 - Feel free to use this mod however you wish.
 <!-- /region -->
-- [b]Unless Paradox changes how namelists work, this mod will be compatible with any future game version![/b]
+- Replaces no vanilla file, so vanilla namelists and the focus trees that use them keep working.
 - In addition to polishing and expanding currently included nations, new nations are periodically added where they fit.
 
 <!-- region:image:strip-included-nations -->
@@ -124,7 +124,7 @@ This is not a complete list of included namelists! Just some examples.
 - Home Guard, Landstorm and Royal Guards; Carolean Guards and Stormtroopers; communist Red Guards
 
 [b]Japan[/b]
-- Plain and Named Shidan with wartime tsūshōgō ([i]Dai-7 Shidan 'Kuma'[/i]), Sensha armored divisions, cavalry, Teishin airborne, SNLF marines ([i]Yokosuka Dai-1 Tokubetsu Rikusentai[/i]), Konoe Guard and Kenpeitai
+- Plain and Named Shidan with wartime tsūshōgō ([i]Dai-7 Shidan 'Kuma'[/i]), Sensha armored divisions, cavalry, Teishin airborne, SNLF marines ([i]Yokosuka Dai-1 Tokubetsu Rikusentai[/i]) and Konoe Guard
 - Kokutai and Yokusan (fascist), Jieitai-style Defense Force (democratic), Red Guards and People's Army (communist)
 
 [b]Brazil[/b]
@@ -132,7 +132,7 @@ This is not a complete list of included namelists! Just some examples.
 - Integralist, Red Guards, 1932 Constitutionalist, and Imperial Guard and Voluntários da Pátria suites
 
 [b]Greece[/b]
-- Plain and Named Merarchíes with regional titles ([i]8i Merarchía Ipeírou[/i]), Evzones ([i]2/39 Evzonikó Sýntagma[/i]), Raiders, Metaxas Line forts, island commands, Gendarmerie and the Asia Minor Army
+- Plain and Named Merarchíes with regional titles ([i]8i Merarchía Ipeírou[/i]), Evzones ([i]2/39 Evzonikó Sýntagma[/i]), Raiders, Metaxas Line forts, island commands and Gendarmerie
 - Royal Guard and Fourth of August, EON, ELAS and Democratic Army, and Republican volunteers
 
 [b]Romania[/b]
@@ -144,11 +144,11 @@ This is not a complete list of included namelists! Just some examples.
 - Royal Guard, Iron Wolf, Red Rifle divisions and Freedom Fighters
 
 [b]Estonia[/b]
-- Plain and Named divisions with ancient-county identities ([i]1. jalaväediviis 'Virumaa'[/i]), War of Independence regiments and partisans ([i]Kuperjanovi partisanide pataljon[/i]), Kaitseliit malevad and coastal commands
+- Plain and Named divisions with ancient-county identities ([i]1. jalaväediviis 'Virumaa'[/i]), War of Independence regiments and partisans ([i]Kuperjanovi partisanide pataljon[/i]) and Kaitseliit malevad
 - Ancient Freedom, Veterans' League, Red Rifle divisions and Freedom Fighters
 
 [b]Latvia[/b]
-- Plain and Named divisions with regional identities ([i]1. Kurzemes kājnieku divīzija[/i]), the interwar regiments and Latvian Riflemen ([i]1. Daugavgrīvas latviešu strēlnieku pulks[/i]), Aizsargi and cavalry squadrons
+- Plain and Named divisions with regional identities ([i]1. Kurzemes kājnieku divīzija[/i]), the interwar regiments and Latvian Riflemen ([i]1. Daugavgrīvas latviešu strēlnieku pulks[/i]) and Aizsargi
 - Heritage, Thunder Cross, Red Rifle divisions and National Partisans
 
 [b]France[/b]
@@ -160,7 +160,7 @@ This is not a complete list of included namelists! Just some examples.
 - County Home Guard, King's African Rifles and RWAFF, Blackshirt Brigades and Workers' Defense Brigades
 
 [b]Finland[/b]
-- Numbered divisions, brigades and wartime regiments ([i]12. Divisioona 'Kollaa'[/i], [i]JR 7 'Tyrjän rykmentti'[/i]), separate battalions, Suojeluskunta, frontier and coastal brigades, Sissi rangers and the SFK
+- Numbered divisions, brigades and wartime regiments ([i]12. Divisioona 'Kollaa'[/i], [i]JR 7 'Tyrjän rykmentti'[/i]), separate battalions, Suojeluskunta, frontier and coastal brigades and Sissi rangers
 - Blackshirt legions, Heimojoukot, 1918 Red Guards, People's Army and Royal Guards ([i]Suomen Kaarti[/i])
 
 [b]Poland[/b]
@@ -168,11 +168,11 @@ This is not a complete list of included namelists! Just some examples.
 - Armia Krajowa ([i]27 Wołyńska Dywizja Piechoty AK[/i]), PSZ in the West, LWP, NSZ, Royal Guard and volunteer corps
 
 [b]Italy[/b]
-- Regio Esercito divisions on their real numbers ([i]132a Divisione Corazzata 'Ariete'[/i]), Bersaglieri, Arditi, Carabinieri, Guardia di Finanza, Frontier Guard and colonial battalions
+- Regio Esercito divisions on their real numbers ([i]132a Divisione Corazzata 'Ariete'[/i]), Bersaglieri, Arditi, Carabinieri, Guardia di Finanza and Frontier Guard
 - Blackshirts and the RSI ([i]8a Brigata Nera 'Aldo Resega'[/i]), Royal Army, Republican volunteers, Red Guards and partisan brigades
 
 [b]USSR[/b]
-- Rifle and Guards divisions on historical numbers with their honours ([i]25-ya 'Chapayevskaya'[/i]), national divisions, Opolcheniye, fortified regions, tank and mechanized corps ([i]4-y 'Kantemirovskiy'[/i]), naval brigades and Cossacks
+- Rifle and Guards divisions on historical numbers with their honours ([i]25-ya 'Chapayevskaya'[/i]), national divisions, Opolcheniye, fortified regions, tank and mechanized corps ([i]4-y 'Kantemirovskiy'[/i]) and naval brigades
 - NKVD and partisans, Imperial Guard, White volunteers and republican shock divisions
 
 [b]Mexico[/b]
@@ -192,6 +192,7 @@ This is not a complete list of included namelists! Just some examples.
 <!-- /region -->
 
 <!-- cross-links:begin -->
+[url=https://steamcommunity.com/sharedfiles/filedetails/?id=3833590274][img]https://i.imgur.com/qJpjDyO.png[/img][/url]
 [b]More from the author[/b], all in the collection [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3833590274]The Immersive Series[/url]
 <!-- cross-links:end -->
 ```
