@@ -82,36 +82,45 @@ This document serves as an instruction and reference guide for maintaining and u
 ## Active Steam Workshop Description (BBCode Format)
 
 ```bbcode
+<!-- region:image:hero -->
+[img]https://i.imgur.com/DMARg5N.png[/img]
+<!-- /region -->
 More namelists! Used AI to speed up the creation process and help with translations.
 
-<!-- cross-links:begin -->
-[b]More from the author[/b], all in the collection [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3833590274]The Immersive Series[/url]
-<!-- cross-links:end -->
 Coming soon: [b]Immersive Air Wing Names Expanded[/b]
 
 If you have any ideas for namelists, please leave them in the discussion thread!
 
+<!-- region:image:strip-info -->
+[img]https://i.imgur.com/xQiM4do.png[/img]
+<!-- /region -->
 [h1]Info:[/h1]
-- [b]Not Ironman/Achievement compatible[/b]
-- [b]Unless Paradox changes how namelists work, this mod will be compatible with any future game version![/b]
-- [b]Compatible with Road to 56 (RT56) and vanilla.[/b]
+<!-- region:info:rt56,ironman-namelist-no,overrides-namelist,game-version,use-freely -->
+- Compatible with Road to 56 (RT56) and vanilla.
+- Not Ironman/Achievement compatible.
 - No hard incompatibilities. Namelists from other mods might override namelists from this mod in some cases.
-- In addition to polishing and expanding currently included nations, new nations are periodically added where they fit.
+- Built for game version 1.19.
 - Feel free to use this mod however you wish.
+<!-- /region -->
+- [b]Unless Paradox changes how namelists work, this mod will be compatible with any future game version![/b]
+- In addition to polishing and expanding currently included nations, new nations are periodically added where they fit.
 
+<!-- region:image:strip-included-nations -->
+[img]https://i.imgur.com/zln3pgW.png[/img]
+<!-- /region -->
 [h1]Included nations:[/h1]
 This is not a complete list of included namelists! Just some examples.
 
 [b]United States[/b]
-- Infantry, Armored and Airborne divisions with their nicknames ([i]2nd 'Hell on Wheels'[/i], [i]101st 'Screaming Eagles'[/i]), RCTs, Armored Cavalry, tank and tank destroyer battalions, Marines and Raiders, Rangers, Mountain, National Guard, harbor defenses and the Constabulary
+- Infantry, Armored and Airborne divisions with their nicknames ([i]2nd 'Hell on Wheels'[/i], [i]101st 'Screaming Eagles'[/i]), RCTs, Armored Cavalry, tank and tank destroyer battalions, Marines and Raiders, Rangers, Mountain, National Guard and harbor defenses
 - 38 State Defense Forces; ideology suites from Union and Continental Army to Lincoln Brigades and Silver Legions ([i]'Iron Brigade'[/i])
 
 [b]Germany[/b]
-- Plain and Named Heer lists with nicknames ([i]7. Panzer-Division 'Gespenster'[/i]), Waffen-SS, coastal, border and Festung divisions, Kampfgruppen, Volksgrenadier, Luftwaffe field, Flak and Panzer, heavy, StuG and Werfer units, Skijäger, Panzerzüge and Radfahr brigades
+- Plain and Named Heer lists with nicknames ([i]7. Panzer-Division 'Gespenster'[/i]), Waffen-SS, coastal, border and Festung divisions, Kampfgruppen, Volksgrenadier, Luftwaffe field, Flak and Panzer, heavy, StuG and Werfer units and Skijäger
 - Imperial Guard and Kampfwagen divisions ([i]5. Kampfwagen-Division 'Mephisto'[/i]), Freikorps, Reichswehr and Reichsbanner, SA and Volkssturm, and Red Army lists
 
 [b]Sweden[/b]
-- Plain and Named Arméfördelningar and mobile divisions ([i]II. Arméfördelningen 'Jämtlands'[/i]), provincial brigades ([i]Gula brigaden[/i]), Fältjägare, Kustjägare and Fallskärmsjägare
+- Plain and Named Arméfördelningar and mobile divisions ([i]II. Arméfördelningen 'Jämtlands'[/i]), provincial brigades ([i]Gula brigaden[/i]), Fältjägare and Kustjägare
 - Home Guard, Landstorm and Royal Guards; Carolean Guards and Stormtroopers; communist Red Guards
 
 [b]Japan[/b]
@@ -119,7 +128,7 @@ This is not a complete list of included namelists! Just some examples.
 - Kokutai and Yokusan (fascist), Jieitai-style Defense Force (democratic), Red Guards and People's Army (communist)
 
 [b]Brazil[/b]
-- Plain and Named divisions with Army patrons ([i]1ª Divisão de Infantaria "Duque de Caxias"[/i]), Caçadores ([i]1º BC "Petrópolis"[/i]), riverine battalions, Paraquedistas, Fuzileiros Navais, Forças Públicas and the FEB
+- Plain and Named divisions with Army patrons ([i]1ª Divisão de Infantaria "Duque de Caxias"[/i]), Caçadores ([i]1º BC "Petrópolis"[/i]), riverine battalions, Fuzileiros Navais, Forças Públicas and the FEB
 - Integralist, Red Guards, 1932 Constitutionalist, and Imperial Guard and Voluntários da Pátria suites
 
 [b]Greece[/b]
@@ -127,11 +136,11 @@ This is not a complete list of included namelists! Just some examples.
 - Royal Guard and Fourth of August, EON, ELAS and Democratic Army, and Republican volunteers
 
 [b]Romania[/b]
-- Plain and Named divisions with regional and royal honours ([i]Divizia 6 Infanterie 'Mărășești'[/i]), cavalry, mountain, marine and paratrooper lists, Gendarmerie, Border Guard and fortified sectors ([i]Sectorul Fortificat 3 'Galați'[/i])
+- Plain and Named divisions with regional and royal honours ([i]Divizia 6 Infanterie 'Mărășești'[/i]), cavalry, mountain, marine and paratrooper lists, Gendarmerie, Border Guard and fortified sectors
 - Royal Guard and Straja Țării, Iron Guard, Tudor Vladimirescu and Patriotic Guards, and National Guard
 
 [b]Lithuania[/b]
-- Plain and Named divisions with regional and ruler identities ([i]1-oji tankų divizija 'Gediminas'[/i]), interwar regiments with their Grand Duke patrons, hussars and uhlans, Riflemen's Union ([i]XX Klaipėdos rinktinė[/i])
+- Plain and Named divisions with regional and ruler identities ([i]1-oji tankų divizija 'Gediminas'[/i]), interwar regiments with their Grand Duke patrons, Riflemen's Union ([i]XX Klaipėdos rinktinė[/i])
 - Royal Guard, Iron Wolf, Red Rifle divisions and Freedom Fighters
 
 [b]Estonia[/b]
@@ -144,10 +153,10 @@ This is not a complete list of included namelists! Just some examples.
 
 [b]France[/b]
 - The 1940 order of battle ([i]11ème Division d'Infanterie 'de Fer'[/i]), DLM, DCR, Maginot, Alpine and coastal divisions, colonial troops and the Army of Africa
-- Free French, National Guard and the Republic's demi-brigades; Imperial Guard and Grande Armée ([i]Division de la Vieille Garde[/i]); the Commune, FTP, Milice and Armistice Army
+- Free French, National Guard and the Republic's demi-brigades; Imperial Guard and Grande Armée; the Commune, FTP, Milice and Armistice Army
 
 [b]United Kingdom[/b]
-- Regular and Territorial divisions on authentic titles, plain and nicknamed ([i]7th Armoured Division 'Desert Rats'[/i], [i]51st (Highland) Infantry Division[/i]), Airborne, Commandos and Anti-Aircraft Command
+- Regular and Territorial divisions on authentic titles, plain and nicknamed ([i]7th Armoured Division 'Desert Rats'[/i], [i]51st (Highland) Infantry Division[/i]), Airborne and Commandos
 - County Home Guard, King's African Rifles and RWAFF, Blackshirt Brigades and Workers' Defense Brigades
 
 [b]Finland[/b]
@@ -155,7 +164,7 @@ This is not a complete list of included namelists! Just some examples.
 - Blackshirt legions, Heimojoukot, 1918 Red Guards, People's Army and Royal Guards ([i]Suomen Kaarti[/i])
 
 [b]Poland[/b]
-- 1939 divisions with regional and honorary titles ([i]1 Dywizja Piechoty Legionów Józefa Piłsudskiego[/i]), Maczek's armour, KOP Border Guard, Obrona Narodowa, fortresses and uprising regiments
+- 1939 divisions with regional and honorary titles ([i]1 Dywizja Piechoty Legionów Józefa Piłsudskiego[/i]), Maczek's armour, KOP Border Guard and Obrona Narodowa
 - Armia Krajowa ([i]27 Wołyńska Dywizja Piechoty AK[/i]), PSZ in the West, LWP, NSZ, Royal Guard and volunteer corps
 
 [b]Italy[/b]
@@ -176,7 +185,13 @@ This is not a complete list of included namelists! Just some examples.
 
 [b]Spain[/b]
 - People's Army divisions and Mixed Brigades ([i]XI Brigada Internacional 'Thälmann'[/i]), Nationalist divisions, the 1936 regiments, Army of Africa and Legion, Guardia Civil and Assault Guards
-- Requeté tercios, Falange and División Azul, communist, POUM and anarchist militias ([i]Columna Durruti[/i]), Basque and Catalan forces
+- Requeté tercios, Falange and División Azul, communist, POUM and anarchist militias ([i]Columna Durruti[/i])
 
-If you enjoy the mod, please give it a thumbs up and favorite!
+<!-- region:buttons:wiki,github -->
+[url=https://github.com/TheCreepero/immersive_namelists_expanded/wiki][img]https://i.imgur.com/PjdoeCx.png[/img][/url] [url=https://github.com/TheCreepero/immersive_namelists_expanded][img]https://i.imgur.com/bdkHWVb.png[/img][/url]
+<!-- /region -->
+
+<!-- cross-links:begin -->
+[b]More from the author[/b], all in the collection [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3833590274]The Immersive Series[/url]
+<!-- cross-links:end -->
 ```
