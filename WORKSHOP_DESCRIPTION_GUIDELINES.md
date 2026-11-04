@@ -84,9 +84,10 @@ This document serves as an instruction and reference guide for maintaining and u
 ```bbcode
 More namelists! Used AI to speed up the creation process and help with translations.
 
-Check out my other mods:
-- [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3807415216]Immersive Ship Names Expanded[/url]
-- [b]Immersive Air Wing Names Expanded[/b] (Coming soon!)
+<!-- cross-links:begin -->
+[b]More from the author[/b], all in the collection [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3833590274]The Immersive Series[/url]
+<!-- cross-links:end -->
+Coming soon: [b]Immersive Air Wing Names Expanded[/b]
 
 If you have any ideas for namelists, please leave them in the discussion thread!
 
