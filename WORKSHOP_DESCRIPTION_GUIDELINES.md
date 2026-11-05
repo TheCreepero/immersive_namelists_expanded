@@ -110,10 +110,13 @@ If you have any ideas for namelists, please leave them in the discussion thread!
 <!-- /region -->
 [h1]Included nations:[/h1]
 This is not a complete list of included namelists! Just some examples.
+<!-- region:image:overview -->
+[img]https://i.imgur.com/5UTWBtB.png[/img]
+<!-- /region -->
 
 [b]United States[/b]
 - Infantry, Armored and Airborne divisions with their nicknames ([i]2nd 'Hell on Wheels'[/i], [i]101st 'Screaming Eagles'[/i]), RCTs, Armored Cavalry, tank and tank destroyer battalions, Marines and Raiders, Rangers, Mountain, National Guard and harbor defenses
-- 38 State Defense Forces; ideology suites from Union and Continental Army to Lincoln Brigades and Silver Legions ([i]'Iron Brigade'[/i])
+- 38 State Defense Forces; ideology suites from Union and Continental Army to Lincoln Brigades and Silver Legions
 
 [b]Germany[/b]
 - Plain and Named Heer lists with nicknames ([i]7. Panzer-Division 'Gespenster'[/i]), Waffen-SS, coastal, border and Festung divisions, Kampfgruppen, Volksgrenadier, Luftwaffe field, Flak and Panzer, heavy, StuG and Werfer units and Skijäger
