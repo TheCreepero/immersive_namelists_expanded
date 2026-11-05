@@ -190,12 +190,11 @@ This is not a complete list of included namelists! Just some examples.
 - People's Army divisions and Mixed Brigades ([i]XI Brigada Internacional 'Thälmann'[/i]), Nationalist divisions, the 1936 regiments, Army of Africa and Legion, Guardia Civil and Assault Guards
 - Requeté tercios, Falange and División Azul, communist, POUM and anarchist militias ([i]Columna Durruti[/i])
 
-<!-- region:buttons:wiki,github -->
-[url=https://github.com/TheCreepero/immersive_namelists_expanded/wiki][img]https://i.imgur.com/PjdoeCx.png[/img][/url] [url=https://github.com/TheCreepero/immersive_namelists_expanded][img]https://i.imgur.com/bdkHWVb.png[/img][/url]
-<!-- /region -->
-
 <!-- cross-links:begin -->
 [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3833590274][img]https://i.imgur.com/qJpjDyO.png[/img][/url]
 [b]More from the author[/b], all in the collection [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3833590274]The Immersive Series[/url]
+[list]
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3807415216]Immersive Ship Names Expanded[/url]
+[/list]
 <!-- cross-links:end -->
 ```
