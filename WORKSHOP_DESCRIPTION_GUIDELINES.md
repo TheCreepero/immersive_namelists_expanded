@@ -37,7 +37,7 @@ This document serves as an instruction and reference guide for maintaining and u
 ## Structure of the Description
 
 1. **Header / Introduction**:
-   - Short introductory pitch mentioning that AI helped with research and translations.
+   - Short introductory pitch.
    - Call to action pointing to the discussion thread for ideas/feedback.
    - *(Note: Author quote block omitted to conserve character limit).*
 2. **[h1]Info:[/h1]**:
@@ -85,7 +85,7 @@ This document serves as an instruction and reference guide for maintaining and u
 <!-- region:image:hero -->
 [img]https://i.imgur.com/DMARg5N.png[/img]
 <!-- /region -->
-More division namelists! Used AI to speed up the creation process and help with translations.
+More division namelists!
 
 Coming soon: [b]Immersive Air Wing Names Expanded[/b]
 
