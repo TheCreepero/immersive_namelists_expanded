@@ -51,3 +51,13 @@ Key features:
 - **Gameplay scalability** — 20–50+ ordered entries per group with well-formatted fallback names
 - **Coverage breadth** — from frontline divisions to coastal fortresses, territorial defence leagues, elite guards, partisans, and late-war emergency formations
 
+## Picture credits
+
+The thumbnail and the gallery images use period photographs, colourised, then cropped and resized. Each picture links to its source record.
+
+| Picture | Shows | Used for | Credit and licence |
+|---|---|---|---|
+| [Jalkaväki marssii rajalle.](https://www.finna.fi/Record/sa-kuva.sa-kuva%2F61251) | Finnish infantry marching on a sandy road in summer | thumbnail, Finland page | SA-kuva-arkisto (R. Meinander), CC BY 4.0 |
+| [Ratsuväki matkalla päin itää.](https://www.finna.fi/Record/sa-kuva.sa-kuva%2F74141) | Finnish cavalry riding in a column on a road | gallery overview and the pages without a picture of their own | SA-kuva-arkisto (Eino S. Rahikainen), CC BY 4.0 |
+| [SC 192037 - Tanks move up to support the infantry, as advance after...](https://commons.wikimedia.org/wiki/File:SC_192037_-_Tanks_move_up_to_support_the_infantry,_as_advance_after_advance_is_made_on_the_fighting_front_west_of_St._Lo,_France._24_July,_1944.jpg) | US infantry and a tank on a muddy road, a ruined wall at the side | gallery, USA page | Signal Corps Archive, public domain |
+| [Troops of 51st Highland Division march over a drawbridge into Fort...](https://commons.wikimedia.org/wiki/File:Troops_of_51st_Highland_Division_march_over_a_drawbridge_into_Fort_de_Sainghain_on_the_Maginot_Line,_3_November_1939._O227.jpg) | British infantry crossing a drawbridge into a grass-covered fort | gallery, Britain page | War Office official photographer (Lt G. Keating), public domain |

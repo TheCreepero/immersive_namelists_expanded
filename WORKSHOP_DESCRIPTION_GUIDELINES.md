@@ -83,7 +83,7 @@ This document serves as an instruction and reference guide for maintaining and u
 
 ```bbcode
 <!-- region:image:hero -->
-[img]https://i.imgur.com/DMARg5N.png[/img]
+[img]https://i.imgur.com/eEEtBnb.png[/img]
 <!-- /region -->
 More division namelists!
 
