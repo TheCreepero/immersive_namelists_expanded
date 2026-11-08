@@ -10,7 +10,7 @@ disable-model-invocation: true
 
 # INEX Release
 
-INEX releases through the shared `hoi4-mod-release` skill and its command, `Publish-Mod.ps1 "Immersive Namelists Expanded"`. Follow that skill step by step; the sections below replace or extend its steps for INEX. As there, the upload is previewed first with `Publish-Mod.ps1 "Immersive Namelists Expanded" -DryRun -ChangeNote "<note>"`, and the user runs the upload in their own terminal.
+INEX releases through the shared `hoi4-mod-release` skill and its command, `Publish-Mod.ps1 "Immersive Namelists Expanded"`. The agent cannot load the shared `hoi4-mod-release` skill: first ask the owner to run `/hoi4-mod-release` in this session, and do not read its file instead. Once the owner has run it, work from both skills: follow it step by step; the sections below replace or extend its steps for INEX. As there, the upload is previewed first with `Publish-Mod.ps1 "Immersive Namelists Expanded" -DryRun -ChangeNote "<note>"`, and the user runs the upload in their own terminal.
 
 ## 1. Preflight (extends shared step 1)
 The knowledge audit row must also show an empty sweep queue: a WARN for doc files to sweep is a stop for INEX. Sweep what is queued with the `hoi4-modding-knowledge` skill, then run the preflight again.
