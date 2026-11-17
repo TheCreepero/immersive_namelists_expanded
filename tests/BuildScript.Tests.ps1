@@ -2282,29 +2282,6 @@ Describe "build.ps1 Helper: nation registration in README, wiki Home and sidebar
     }
 }
 
-Describe "build.ps1 Helper: Sync-AgentMirrors" {
-    BeforeAll {
-        $script:MirrorRoot = Join-Path ([System.IO.Path]::GetTempPath()) ("inex_mirror_" + [guid]::NewGuid().ToString('N'))
-        New-Item -ItemType Directory -Force -Path (Join-Path $script:MirrorRoot '.claude\skills\one') | Out-Null
-        $utf8 = New-Object System.Text.UTF8Encoding($false)
-        [System.IO.File]::WriteAllText((Join-Path $script:MirrorRoot 'CLAUDE.md'), "rules`n", $utf8)
-        [System.IO.File]::WriteAllText((Join-Path $script:MirrorRoot 'GEMINI.md'), "old rules`n", $utf8)
-        [System.IO.File]::WriteAllText((Join-Path $script:MirrorRoot '.claude\skills\one\SKILL.md'), "skill`r`n", $utf8)
-    }
-
-    AfterAll {
-        if (Test-Path $script:MirrorRoot) { Remove-Item -Recurse -Force $script:MirrorRoot }
-    }
-
-    It "Copies the Claude side over stale or missing mirrors, byte for byte, and then reports nothing" {
-        $updated = Sync-AgentMirrors -Root $script:MirrorRoot
-        $updated | Should -Be @('.agents/skills/one/SKILL.md')
-        [System.IO.File]::ReadAllText((Join-Path $script:MirrorRoot 'GEMINI.md')) | Should -Be "old rules`n" -Because 'the rule file is not a mirror any more; CLAUDE.md and GEMINI.md import AGENTS.md'
-        (Get-FileHash (Join-Path $script:MirrorRoot '.agents\skills\one\SKILL.md')).Hash | Should -Be (Get-FileHash (Join-Path $script:MirrorRoot '.claude\skills\one\SKILL.md')).Hash
-        (Sync-AgentMirrors -Root $script:MirrorRoot).Count | Should -Be 0
-    }
-}
-
 Describe "build.ps1 Helper: Get-UnpushedWikiPages" {
     BeforeAll {
         $script:WikiRepo = Join-Path $TestDrive 'repo'

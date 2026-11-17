@@ -196,8 +196,9 @@
     row and the wiki/_Sidebar.md line when they are missing, then sync as usual. wiki/<Country>.md must exist.
 
 .PARAMETER SyncMirrors
-    Copy the Claude Code skills over their Antigravity mirrors: every SKILL.md under the .claude/skills folder to the
-    same path under .agents/skills. Edit the Claude side, then run this (the PostToolUse hook runs it after an edit under .claude/skills). CLAUDE.md and GEMINI.md are @AGENTS.md and are not mirrored.
+    Copy the Claude Code skills over their Antigravity mirrors: every file under the .claude/skills folder to the
+    same path under .agents/skills, keeping the text inside each hoi-platform region of the mirror (the shared engine's
+    Sync-ModSkillMirrors). Edit the Claude side, then run this (the PostToolUse hook runs it after an edit under .claude/skills). CLAUDE.md and GEMINI.md are @AGENTS.md and are not mirrored.
 
 .PARAMETER GameLog
     Scan the game's error.log for lines that name this mod's files (e.g. lexer errors in a namelist). Run it after
@@ -3792,35 +3793,6 @@ function Invoke-NamelistAudit {
     }
 }
 
-# --- Helper: Copy the Claude Code skills over their Antigravity mirrors (the Claude side is the source) ---
-# .claude/skills/<skill>/SKILL.md -> .agents/skills/<skill>/SKILL.md, byte for byte. CLAUDE.md and GEMINI.md are @AGENTS.md and need no mirror.
-# Returns the mirrors that changed, as repo-relative paths.
-function Sync-AgentMirrors {
-    param([string]$Root)
-    $pairs = [System.Collections.Generic.List[object]]::new()
-    $skillsDir = Join-Path $Root '.claude\skills'
-    if (Test-Path $skillsDir) {
-        foreach ($d in (Get-ChildItem -Path $skillsDir -Directory | Sort-Object Name)) {
-            if (Test-Path (Join-Path $d.FullName 'SKILL.md')) {
-                $pairs.Add(@{ From = ".claude\skills\$($d.Name)\SKILL.md"; To = ".agents\skills\$($d.Name)\SKILL.md" })
-            }
-        }
-    }
-    $updated = [System.Collections.Generic.List[string]]::new()
-    foreach ($p in $pairs) {
-        $from = Join-Path $Root $p.From
-        $to = Join-Path $Root $p.To
-        if (-not (Test-Path $from)) { continue }
-        $bytes = [System.IO.File]::ReadAllBytes($from)
-        if ((Test-Path $to) -and [System.Linq.Enumerable]::SequenceEqual([byte[]]$bytes, [System.IO.File]::ReadAllBytes($to))) { continue }
-        $toDir = Split-Path $to
-        if (-not (Test-Path $toDir)) { New-Item -ItemType Directory -Force $toDir | Out-Null }
-        [System.IO.File]::WriteAllBytes($to, $bytes)
-        $updated.Add(($p.To -replace '\\', '/'))
-    }
-    return , $updated.ToArray()
-}
-
 # --- Helper: Lines of the game's error.log that name one of the given files, without their timestamps ---
 # A repeated line is returned once, as "line (xN)".
 function Get-GameLogFindings {
@@ -4039,9 +4011,7 @@ if ($SyncWiki) {
 
 # --- Action: SyncMirrors ---
 if ($SyncMirrors) {
-    $updated = Sync-AgentMirrors -Root $RepoDir
-    if ($updated.Count) { foreach ($u in $updated) { Write-Host "Updated $u" -ForegroundColor Green } } else { Write-Host 'Mirrors already in sync' -ForegroundColor Green }
-    exit 0
+    exit (Sync-ModSkillMirrors -RepoPath $RepoDir)
 }
 
 # --- Action: GameLog ---
