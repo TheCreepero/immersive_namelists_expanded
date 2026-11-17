@@ -3838,13 +3838,13 @@ function Get-GameLogFindings {
 
 # --- Action: Scan the game's error.log for lines that name this mod's files ---
 # --- Helper: Committed wiki pages the last wiki push did not send ---
-# wiki/push-wiki.ps1 keeps its clone of the GitHub wiki in %TEMP%\inex_wiki_push; after a push the clone holds what was
+# wiki/push-wiki.ps1 keeps its clone of the GitHub wiki in %TEMP%\<repository folder>_wiki_push; after a push the clone holds what was
 # sent. A page committed here whose text differs from the clone's (line endings aside) goes out unannounced with the
 # next push. Returns $null when there is no clone to compare with.
 function Get-UnpushedWikiPages {
     param(
         [string]$RepoPath = $RepoDir,
-        [string]$CloneDir = (Join-Path ([System.IO.Path]::GetTempPath()) 'inex_wiki_push')
+        [string]$CloneDir = (Join-Path ([System.IO.Path]::GetTempPath()) ((Split-Path -Leaf $RepoPath) + '_wiki_push'))
     )
     if (-not (Test-Path (Join-Path $CloneDir '*'))) { return $null }
     $prevEap = $ErrorActionPreference

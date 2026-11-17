@@ -2340,8 +2340,11 @@ Describe "build.ps1 Helper: Get-UnpushedWikiPages" {
 
     It "Uses the clone folder of wiki/push-wiki.ps1" {
         $push = [System.IO.File]::ReadAllText((Join-Path $script:RepoRoot 'wiki\push-wiki.ps1'), [System.Text.Encoding]::UTF8)
-        $push | Should -Match '"inex_wiki_push"'
-        $script:BuildContent | Should -Match "'inex_wiki_push'"
+        # The shared script names its clone after the repository folder
+        $push | Should -Match '\$repoName = Split-Path -Leaf \$repoRoot'
+        $push | Should -Match "\(\`$repoName \+ '_wiki_push'\)"
+        $script:BuildContent | Should -Match "\(\(Split-Path -Leaf \`$RepoPath\) \+ '_wiki_push'\)"
+        $script:BuildContent | Should -Not -Match 'inex_wiki_push'
     }
 }
 
