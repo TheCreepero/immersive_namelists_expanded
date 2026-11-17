@@ -24,6 +24,7 @@
 - [Romania](Romania)
 - [Iran](Iran)
 - [Spain](Spain)
+- [Hungary](Hungary)
 
 ---
 

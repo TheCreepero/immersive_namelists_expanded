@@ -1,6 +1,6 @@
 # Hungary (HUN) Namelist Plan - 2026-10-25
 
-Status: READY
+Status: DONE
 
 File: `common/units/names_divisions/zz_INEX_HUN_names_divisions.txt`
 
@@ -26,6 +26,7 @@ Uncommitted at hand-off and part of the ship commit: the ROADMAP.md note on Aust
 - **Named identities.** Infantry: the seat of each brigade of April 1941 in the regional form of *27. (székely)*, then regions and counties. Motorized: rivers. Mechanized: battles and sieges up to 1917, none from 1848-1849 (they belong to the democratic suite). Armour: the army's vehicle names, then the captains of the border fortresses against the Ottomans. Cavalry: hussar generals and regiment patrons. Mountain: the Verecke Pass, Carpathian peaks, the Hungarian highlands and the Székely seats. River forces: the patrol boats *Sopron* and *Siófok*, then river towns.
 - **One figure per suite.** No person or symbol stands in two lists. Royal: the kings and the Holy Crown (Mátyás as *'Mátyás király'*; "Hunyadi" is not used, since it is in the German SS list). Hungarist: the Conquest chieftains (except Tas, Botond and Csaba, which are vehicle names in `HUN_ARM_02`), the legends, and the lands of the Hungarist plan. Red: the 1919 divisions and communist patrons, with Dózsa, Martinovics and Táncsics. Democratic: Kossuth, Petőfi, Batthyány, the 1849 corps commanders and the 13 Martyrs of Arad, and 1956. Szent László stays with the regular army (`HUN_PAR_01`, the 1944 division). Csepel goes to the communist workers; the 1956 list uses other insurgent groups.
 - **Exclusions.** Not named: the gendarmerie (the 1944 deportations), the Arrow Cross party service (*Pártszolgálat*) and the *Nemzeti Számonkérő Különítmény*, labour service, the units of the Újvidék raid of January 1942 (no Délvidék or Bácska title in the Named lists), the Lenin Boys (vanilla's `HUN_MIL_02` names are the 14 men executed in 1919 for the Red Terror killings, and are written over), the Prónay, Héjjas and Ostenburg detachments, the Hungarian Waffen-SS divisions (they stay in `GER_SS`), and party leaders as patrons (Szálasi, Gömbös, Kun, Rákosi, Szamuely; Nagy Imre). The occupation light divisions of 1941-1943 appear only by number in `HUN_GAR_01`, as other nations' security divisions do.
+- 2026-11-17, plan correction after the implementer stopped at step 4: the Spain anchor line ends `([i]Columna Durruti[/i])` (the "Basque and Catalan forces" ending was never in the description), and the cross-links block, not `If you enjoy the mod, ...`, follows it. The description was already 7,672 bytes, so step 4 first makes 15 cuts in the longest nation blocks (list items only; every italic example stays), and the Hungary block drops the identity list, the Ragged Guard and the Workers' Battalions (all still on the wiki page and in the cross-reference row). The China plan's Workshop block will need its own room.
 - **Left to vanilla.** `HUN_MIL_03` (Volksbund, empty list, a focus template) and the nine `AUSHUN_*` groups.
 
 ## Vanilla findings (`-InspectVanilla HUN`)
@@ -117,7 +118,7 @@ Expected `-Check HUN` flags after the batch (`-DryRun` and a rehearsal with the 
 Any other flag is a stop condition.
 
 ## Implementation steps
-- [ ] 1. Set `Status: IN PROGRESS`, then apply the batch: `powershell -File .\build.ps1 -EditNames HUN -Batch docs\plans\2026-10-25-hungary-namelist.md`. Expect `Created zz_INEX_HUN_names_divisions.txt`, then these 25 lines and no `[ERROR]`:
+- [x] 1. Set `Status: IN PROGRESS`, then apply the batch: `powershell -File .\build.ps1 -EditNames HUN -Batch docs\plans\2026-10-25-hungary-namelist.md`. Expect `Created zz_INEX_HUN_names_divisions.txt`, then these 25 lines and no `[ERROR]`:
   - `Added HUN_INF_01: "Infantry Divisions" [infantry], 1 name(s)`
   - `Added HUN_INF_02: "Infantry Brigades" [infantry], 31 name(s), links HUN_INF_01`
   - `Added HUN_INF_03: "Infantry Divisions (Named)" [infantry], 40 name(s), links HUN_INF_01`
@@ -143,18 +144,18 @@ Any other flag is a stop condition.
   - `Added HUN_MIL_02: "Workers' Battalions" [militia], 16 name(s)`
   - `Added HUN_DEM_01: "1848 Honvéd Divisions" [infantry cavalry], 25 name(s)`
   - `Added HUN_DEM_02: "National Guard Divisions" [infantry militia], 14 name(s)`
-- [ ] 2. Write `wiki/Hungary.md` with the whole page under "Docs payload" (Write tool; the fence lines are not part of the page).
-- [ ] 3. `powershell -File .\build.ps1 -SyncWiki HUN -Country "Hungary"`. Expect `Registered HUN (Hungary) in: README.md, wiki/Home.md, wiki/_Sidebar.md`, `Hungary.md: 0 row(s) updated` and `wiki/Home.md: HUN group count 25 (unchanged)`, with no `row added`, `no group table` or `stale row` line.
-- [ ] 4. `WORKSHOP_DESCRIPTION_GUIDELINES.md`: make the two insertions under "Docs payload" with the Edit tool.
-- [ ] 5. `powershell -File .\build.ps1 -Check HUN`. Expect:
+- [x] 2. Write `wiki/Hungary.md` with the whole page under "Docs payload" (Write tool; the fence lines are not part of the page).
+- [x] 3. `powershell -File .\build.ps1 -SyncWiki HUN -Country "Hungary"`. Expect `Registered HUN (Hungary) in: README.md, wiki/Home.md, wiki/_Sidebar.md`, `Hungary.md: 0 row(s) updated` and `wiki/Home.md: HUN group count 25 (unchanged)`, with no `row added`, `no group table` or `stale row` line.
+- [x] 4. `WORKSHOP_DESCRIPTION_GUIDELINES.md`, with the Edit tool: first the 15 replacements under "Workshop shortening", then the two insertions under "Docs payload" (the cross-reference row and the Hungary block).
+- [x] 5. `powershell -File .\build.ps1 -Check HUN`. Expect:
   - `Validate: OK` and the tests passing (0 failed);
   - `AUDIT SUMMARY HUN: GROUPS=25 AUTHORED=296/572 FLAGS=4` and `Flags: LOW_DEPTH x2, UNGATED_POLITICAL x1, PLACEHOLDER_ENTRIES x1` (see "Kept on judgment");
-  - no `[WARN] Docs:` line (the Hungary block is 383 of its 450 characters);
+  - no `[WARN] Docs:` line (the Hungary block is 293 of its 450 characters, the description under 7,500 bytes);
   - `Plan: no audit plan in progress for HUN` (expected);
   - `Diff vs HEAD, file absent: 25 group(s) changed, +572 -0 name(s)`;
   - `Check passed`.
-- [ ] 6. Fill "Outcome", set `Status: DONE`, report the `-Check` result.
-- [ ] 7. Ship, on the user's word:
+- [x] 6. Fill "Outcome", set `Status: DONE`, report the `-Check` result.
+- [x] 7. Ship, on the user's word (2026-11-17; ROADMAP.md had been restructured since planning, so items 1-3 were made in its new layout on the user's word: HUN row removed from "A. Open plans", Tier 1 row and note marked shipped, coverage row added after BRA, Workshop-budget note updated):
   1. `ROADMAP.md`, Tier 1 table: replace ``| Hungary | HUN | `hungary.txt`, `hungary_wuw.txt` | 74 / 569 | M |`` with ``| ~~Hungary~~ | HUN | Shipped (docs/plans/archive/2026-10-25-hungary-namelist.md) | 74 / 569 | M |``.
   2. `ROADMAP.md`, the Tier 1 notes: replace `- **HUN.** The Axis minor players pick most,` with `- ~~**HUN.**~~ Shipped as a new file of 25 groups (plan in docs/plans/archive/2026-10-25-hungary-namelist.md). Before it, the Axis minor players picked most,`.
   3. `ROADMAP.md`, Coverage snapshot: replace `19 tags in 21 files.` with `20 tags in 22 files.`, and insert the row `| HUN | 25 | 296/572 (52 %) | 4 | <date of the ship commit, YYYY-MM-DD> |` directly above the row that starts `| BRA |`.
@@ -172,16 +173,35 @@ In `WORKSHOP_DESCRIPTION_GUIDELINES.md`, insert this line directly after the lin
 | `zz_INEX_HUN_names_divisions.txt` | Hungary | `HUN` | Included (Plain & Named infantry, motorized, mechanized, armored and cavalry divisions, 1941 infantry brigades with their seats, mountain brigades, river forces, paratroopers, garrisons & border guards, Ragged Guard, Royal Guard, Hungarist divisions, Red Army & Workers' Battalions, 1848 Honvéd & 1956 National Guard) |
 ```
 
+### Workshop shortening (before the Hungary block)
+The description is 7,672 bytes as `-Check` counts it (2026-11-17), over the 7,500 budget before Hungary is added; with the Hungary block it would be 8,062, over Steam's 8,000 cap. In the BBCode block of `WORKSHOP_DESCRIPTION_GUIDELINES.md`, make these 15 replacements with the Edit tool. Each old text occurs exactly once in the file; replace it with the new text and change nothing else. Rehearsed on 2026-11-17 in a copy of the repository: with these and the two Hungary insertions below, `-Audit HUN` prints no `[WARN] Docs:` line.
+
+| # | Block | Old text | New text |
+|---|---|---|---|
+| 1 | Germany | `, Waffen-SS, coastal, border and Festung divisions, Kampfgruppen, Volksgrenadier, Luftwaffe field, Flak and Panzer, heavy, StuG and Werfer units and Skijäger` | `, Waffen-SS, Festung divisions, Kampfgruppen, Volksgrenadier, Luftwaffe field and Flak, StuG and Werfer units` |
+| 2 | Germany | `Freikorps, Reichswehr and Reichsbanner, SA and Volkssturm, and Red Army lists` | `Freikorps, Reichsbanner, Volkssturm and Red Army lists` |
+| 3 | United States | `RCTs, Armored Cavalry, tank and tank destroyer battalions, Marines and Raiders, Rangers, Mountain, National Guard and harbor defenses` | `RCTs, tank battalions, Marines and Raiders, Rangers, National Guard and harbor defenses` |
+| 4 | Japan | `Sensha armored divisions, cavalry, Teishin airborne, SNLF marines` | `Sensha armor, Teishin airborne, SNLF marines` |
+| 5 | Japan | `- Kokutai and Yokusan (fascist), Jieitai-style Defense Force (democratic), Red Guards and People's Army (communist)` | `- Kokutai and Yokusan, a Jieitai-style Defense Force, Red Guards and People's Army` |
+| 6 | Brazil | `[/i]), riverine battalions, Fuzileiros Navais, Forças Públicas and the FEB` | `[/i]), Fuzileiros Navais and the FEB` |
+| 7 | USSR | `national divisions, Opolcheniye, fortified regions, tank and mechanized corps` | `Opolcheniye, tank and mechanized corps` |
+| 8 | Romania | `cavalry, mountain, marine and paratrooper lists, Gendarmerie, Border Guard and fortified sectors` | `cavalry, mountain, marine and paratrooper lists and Gendarmerie` |
+| 9 | Finland | `separate battalions, Suojeluskunta, frontier and coastal brigades and Sissi rangers` | `Suojeluskunta and Sissi rangers` |
+| 10 | France | `DLM, DCR, Maginot, Alpine and coastal divisions, colonial troops and the Army of Africa` | `DLM, DCR, Maginot and Alpine divisions and the Army of Africa` |
+| 11 | Spain | `Nationalist divisions, the 1936 regiments, Army of Africa and Legion, Guardia Civil and Assault Guards` | `Nationalist divisions, the Legion, Guardia Civil and Assault Guards` |
+| 12 | United Kingdom | `- County Home Guard, King's African Rifles and RWAFF, Blackshirt Brigades and Workers' Defense Brigades` | `- Home Guard, King's African Rifles, Blackshirt and Workers' Defense Brigades` |
+| 13 | Italy | `Bersaglieri, Arditi, Carabinieri, Guardia di Finanza and Frontier Guard` | `Bersaglieri, Arditi and Carabinieri` |
+| 14 | Poland | `Maczek's armour, KOP Border Guard and Obrona Narodowa` | `Maczek's armour and KOP Border Guard` |
+| 15 | Lithuania | `interwar regiments with their Grand Duke patrons, Riflemen's Union` | `interwar regiments and the Riflemen's Union` |
+
 ### Workshop `[b]Hungary[/b]` block
-In the BBCode block of `WORKSHOP_DESCRIPTION_GUIDELINES.md`, insert this after the last `[b]Spain[/b]` bullet (the line ending `militias ([i]Columna Durruti[/i]), Basque and Catalan forces`), with one empty line before `[b]Hungary[/b]`; the empty line and `If you enjoy the mod, ...` follow it as before:
+In the BBCode block of `WORKSHOP_DESCRIPTION_GUIDELINES.md`, insert this after the last `[b]Spain[/b]` bullet, the line `- Requeté tercios, Falange and División Azul, communist, POUM and anarchist militias ([i]Columna Durruti[/i])`, with one empty line before `[b]Hungary[/b]`; the empty line and the `<!-- cross-links:begin -->` line follow it as before:
 
 ```
 [b]Hungary[/b]
-- Plain and Named divisions with seat, river, battle and vehicle identities ([i]1. páncéloshadosztály 'Toldi'[/i]), the 1941 infantry brigades with their seats ([i]14. gyalogdandár (Szeged)[/i]), mountain brigades, river forces, paratroopers and the Ragged Guard
-- Royal Guard, Hungarist divisions, Red Army and Workers' Battalions, 1848 Honvéd and 1956 National Guard
+- Plain and Named divisions ([i]1. páncéloshadosztály 'Toldi'[/i]), the 1941 infantry brigades with their seats ([i]14. gyalogdandár (Szeged)[/i]), mountain brigades, river forces and paratroopers
+- Royal Guard, Hungarist divisions, Red Army, 1848 Honvéd and 1956 National Guard
 ```
-
-The block adds about 390 bytes: from 7,398 bytes on 2026-11-03 the description grows to about 7,790 (more if China shipped first). Steam caps a description at 8,000 bytes and the budget is 7,500, so the description must be shortened before this block goes in.
 
 ### wiki/Hungary.md (whole page)
 ````markdown
@@ -342,7 +362,11 @@ Stop and report to the user, without researching or improvising, when: the batch
 No change to the batch.
 
 ## Outcome
-<!-- TODO(implementer): date, group and name counts from -Check, deviations from this plan with the reason -->
+Date: 2026-11-17.
+
+`-Check HUN` (step 5): `Validate: OK`; `Tests: 508 Passed, 0 Failed, 1 Skipped (all suites)`; `AUDIT SUMMARY HUN: GROUPS=25 AUTHORED=296/572 FLAGS=4`; `Flags: LOW_DEPTH x2, UNGATED_POLITICAL x1, PLACEHOLDER_ENTRIES x1`, all four listed under "Kept on judgment"; no `[WARN] Docs:` line; `Plan: no audit plan in progress for HUN`; `Diff vs HEAD, file absent: 25 group(s) changed, +572 -0 name(s)`; `Check passed`.
+
+Deviations from this plan: none.
 
 ## Edit batch
 Applied by `build.ps1 -EditNames HUN -Batch <this file>`: every fenced block whose opening line is `` ```json batch ``, in order. Never typed out again or read back.

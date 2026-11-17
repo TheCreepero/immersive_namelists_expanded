@@ -32,6 +32,7 @@
 | [Romania](Romania) | `ROM` | 29 | `zz_INEX_ROM_names_divisions.txt` |
 | [Iran](Iran) | `PER` | 13 | `zz_INEX_PER_names_divisions.txt` |
 | [Spain](Spain) | `SPR` | 38 | `zz_INEX_SPR_names_divisions.txt` |
+| [Hungary](Hungary) | `HUN` | 25 | `zz_INEX_HUN_names_divisions.txt` |
 
 ---
 
