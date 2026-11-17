@@ -20,7 +20,7 @@ Vanilla Hearts of Iron IV division namelists often leave gaps during extended ca
 ## Technical Architecture & Engine Mechanics
 
 - All division namelists reside in `common/units/names_divisions/zz_INEX_<TAG>_names_divisions.txt`.
-- The `zz_` prefix makes every INEX file load after the vanilla file of its nation and after another mod's copy of that file. A vanilla group INEX does not define stays as it is, so focus trees that name a vanilla group keep working.
+- The `zz_` prefix makes every INEX file load after the vanilla file of its nation and after another mod's copy of that file. A vanilla group INEX does not define stays as it is, so focus trees that name a vanilla group keep working [NAM-001].
 - How the game loads name list files, what a group that reuses a vanilla tag does, and which tokens are valid: [Engine Mechanics](https://github.com/TheCreepero/immersive_namelists_expanded/wiki/Engine-Mechanics) in the wiki.
 
 ---
