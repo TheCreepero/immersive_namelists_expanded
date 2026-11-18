@@ -55,7 +55,7 @@ Vanilla's only scripted reference, `BRA_FL_01`, is commented out in `common/nati
 | `BRA_CAC_01` | Chasseur Battalions | infantry | `%dº Batalhão de Caçadores` | All governments |
 | `BRA_RCM_01` | Mechanized Cavalry Regiments | mechanized, cavalry, light_armor | `%dº Regimento de Cavalaria Mecanizada` | All governments |
 | `BRA_RIV_01` | Riverine Battalions | marine, infantry | `%dº Batalhão de Operações Ribeirinhas` | All governments |
-| `BRA_ART_01` | Field Artillery Regiments | artillery | `%dº Regimento de Artilharia de Campanha` | All governments |
+| `BRA_ART_01` | Field Artillery Regiments | artillery_brigade, mot_artillery_brigade | `%dº Regimento de Artilharia de Campanha` | All governments |
 
 ---
 

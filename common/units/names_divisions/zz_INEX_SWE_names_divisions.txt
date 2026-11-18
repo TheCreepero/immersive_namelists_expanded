@@ -280,7 +280,7 @@ SWE_ART_01 = {
 
 	can_use = { always = yes }
 
-	division_types = { "artillery" "infantry" }
+	division_types = { "artillery_brigade" "mot_artillery_brigade" }
 
 	fallback_name = "%d. Artilleribrigaden"
 
@@ -309,7 +309,7 @@ SWE_AA_01 = {
 
 	can_use = { always = yes }
 
-	division_types = { "anti_air" "infantry" }
+	division_types = { "anti_air_brigade" "mot_anti_air_brigade" }
 
 	fallback_name = "%d. Luftvärnsbrigaden"
 

@@ -21,10 +21,9 @@ POL_GA_01 =
 
 	can_use = { always = yes }
 
-	division_types = { "artillery" }
+	division_types = { "artillery_brigade" "mot_artillery_brigade" }
 
-
-	fallback_name = "%d Grupa Artylerii"
+fallback_name = "%d Grupa Artylerii"
 
 	# Names with numbers (only one number per entry). 
 	# It's okay to have gaps in numbering.
@@ -58,10 +57,9 @@ POL_AA_01 =
 
 	can_use = { always = yes }
 
-	division_types = { "anti_air" }
+	division_types = { "anti_air_brigade" "mot_anti_air_brigade" }
 
-
-	fallback_name = "%d Pułk Artylerii Przeciwlotniczej"
+fallback_name = "%d Pułk Artylerii Przeciwlotniczej"
 
 	# Names with numbers (only one number per entry). 
 	# It's okay to have gaps in numbering.
@@ -91,10 +89,9 @@ POL_AA_02 =
 
 	can_use = { always = yes }
 
-	division_types = { "anti_air" }
+	division_types = { "anti_air_brigade" "mot_anti_air_brigade" }
 
-
-	fallback_name = "%d Dywizjon Artylerii Przeciwlotniczej"
+fallback_name = "%d Dywizjon Artylerii Przeciwlotniczej"
 
 	# Names with numbers (only one number per entry). 
 	# It's okay to have gaps in numbering.
@@ -503,10 +500,9 @@ POL_LWP_03 =
 
 	can_use = { has_government = communism }
 
-	division_types = { "anti_air" }
+	division_types = { "anti_air_brigade" "mot_anti_air_brigade" }
 
-
-	fallback_name = "%d Dywizja Artylerii Przeciwlotniczej"
+fallback_name = "%d Dywizja Artylerii Przeciwlotniczej"
 
 	# Names with numbers (only one number per entry). 
 	# It's okay to have gaps in numbering.
@@ -527,10 +523,9 @@ POL_AWL_03 =
 
 	can_use = { has_government = communism }
 
-	division_types = { "artillery" }
+	division_types = { "artillery_brigade" "mot_artillery_brigade" }
 
-
-	fallback_name = "%d Dywizja Artylerii"
+fallback_name = "%d Dywizja Artylerii"
 
 	# Names with numbers (only one number per entry). 
 	# It's okay to have gaps in numbering.

@@ -475,9 +475,7 @@ $stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
 # --- Valid division_types tokens (line combat subunits), shared by validation and -EditNames ---
 # The line battalions of vanilla common/units (1.19.4): sub-units whose group is not support, without the Army HQ
 # units, bus and fake_intel_unit; a template takes a group by its line battalions [NAM-026]. The super-heavy tanks,
-# tank destroyers and SP guns are support companies in 1.19.4. artillery, anti_air, anti_tank and rocket_artillery
-# are support-company ids, which no template matches; they stay until the groups that use them are retagged
-# (docs/plans/2026-10-27-division-types-retag.md).
+# tank destroyers and SP guns are support companies in 1.19.4. Support-company ids (artillery, anti_air, ...) are not accepted: no template matches them.
 $ValidDivisionTypes = @(
     'infantry', 'cavalry', 'motorized', 'mechanized', 'marine', 'marine_commando', 'mountaineers', 'paratrooper',
     'light_armor', 'medium_armor', 'heavy_armor', 'modern_armor',
@@ -491,8 +489,7 @@ $ValidDivisionTypes = @(
     'light_sp_artillery_brigade', 'medium_sp_artillery_brigade', 'heavy_sp_artillery_brigade',
     'modern_sp_artillery_brigade',
     'light_sp_anti_air_brigade', 'medium_sp_anti_air_brigade', 'heavy_sp_anti_air_brigade',
-    'modern_sp_anti_air_brigade',
-    'artillery', 'anti_air', 'anti_tank', 'rocket_artillery'
+    'modern_sp_anti_air_brigade'
 )
 
 # --- Locate Directories ---

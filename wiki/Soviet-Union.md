@@ -39,7 +39,7 @@ The Red Army underwent the most radical organizational transformation of any bel
 | `SOV_PEN_01` | Penal Units | infantry | `%d-ya Shtrafnaya Chast` |
 | `SOV_NKVD_01` | NKVD Security Divisions | infantry | `%d-ya Diviziya Voisk NKVD` |
 | `SOV_AIR_01` | Guards Airborne Divisions | paratrooper | `%d-ya Gvardeyskaya Vozdushno-Desantnaya Diviziya` |
-| `SOV_ART_01` | Artillery Divisions | artillery | `%d-ya Artilleriyskaya Diviziya` |
+| `SOV_ART_01` | Artillery Divisions | artillery_brigade, mot_artillery_brigade, rocket_artillery_brigade, mot_rocket_artillery_brigade | `%d-ya Artilleriyskaya Diviziya` |
 | `SOV_PRT_01` | Partisan Formations | militia, infantry | `%d-ya Partizanskaya Brigada` |
 | `SOV_IMP_01` | Imperial Guard Divisions | infantry | `%d-ya Gvardeyskaya Pekhotnaya Diviziya` |
 | `SOV_WHT_01` | White Volunteer Divisions | infantry | `%d-ya Dobrovolcheskaya Diviziya` |

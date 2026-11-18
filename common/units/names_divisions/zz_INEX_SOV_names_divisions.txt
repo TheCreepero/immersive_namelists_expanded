@@ -2216,7 +2216,7 @@ SOV_ART_01 =
 
 	can_use = { always = yes }
 
-	division_types = { "artillery" }
+	division_types = { "artillery_brigade" "mot_artillery_brigade" "rocket_artillery_brigade" "mot_rocket_artillery_brigade" }
 
 	link_numbering_with = { SOV_INF_01 }
 

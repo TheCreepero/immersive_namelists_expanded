@@ -117,87 +117,87 @@ This is not a complete list of included namelists! Just some examples.
 <!-- /region -->
 
 [b]United States[/b]
-- Infantry, Armored and Airborne divisions with nicknames ([i]2nd 'Hell on Wheels'[/i], [i]101st 'Screaming Eagles'[/i]), RCTs, Marines and Raiders, Rangers and National Guard
-- State Defense Forces; Union, Continental Army, Lincoln Brigades and Silver Legions
+- Infantry, Armored and Airborne divisions with nicknames ([i]2nd 'Hell on Wheels'[/i], [i]101st 'Screaming Eagles'[/i]), Marines, Raiders and Rangers
+- State Defense Forces; Union, Lincoln Brigades and Silver Legions
 
 [b]Germany[/b]
-- Plain and Named Heer lists with nicknames ([i]7. Panzer-Division 'Gespenster'[/i]), Waffen-SS, Festung divisions, Kampfgruppen, Volksgrenadier, Luftwaffe field and Flak
-- Imperial Guard and Kampfwagen divisions ([i]5. Kampfwagen-Division 'Mephisto'[/i]), Freikorps, Reichsbanner, Volkssturm and Red Army
+- Plain and Named Heer lists with nicknames ([i]7. Panzer-Division 'Gespenster'[/i]), Waffen-SS, Festungen, Kampfgruppen and Volksgrenadier
+- Imperial Guard and Kampfwagen divisions ([i]5. Kampfwagen-Division 'Mephisto'[/i]), Freikorps, Volkssturm and Red Army
 
 [b]Sweden[/b]
-- Plain and Named Arméfördelningar and mobile divisions ([i]II. Arméfördelningen 'Jämtlands'[/i]), provincial brigades ([i]Gula brigaden[/i]), Fältjägare and Kustjägare
-- Home Guard, Landstorm and Royal Guards; Carolean Guards and Stormtroopers; communist Red Guards
+- Plain and Named Arméfördelningar and mobile divisions ([i]II. Arméfördelningen 'Jämtlands'[/i]), provincial brigades ([i]Gula brigaden[/i]) and Fältjägare
+- Home Guard and Royal Guards; Carolean Guards and Stormtroopers; Red Guards
 
 [b]Japan[/b]
-- Plain and Named Shidan with wartime tsūshōgō ([i]Dai-7 Shidan 'Kuma'[/i]), Sensha armor, Teishin airborne, SNLF marines ([i]Yokosuka Dai-1 Tokubetsu Rikusentai[/i]) and Konoe Guard
+- Plain and Named Shidan with tsūshōgō ([i]Dai-7 Shidan 'Kuma'[/i]), Sensha armor, SNLF marines ([i]Yokosuka Dai-1 Tokubetsu Rikusentai[/i]) and Konoe Guard
 - Kokutai and Yokusan, a Jieitai-style Defense Force, Red Guards and People's Army
 
 [b]Brazil[/b]
 - Plain and Named divisions with Army patrons ([i]1ª Divisão de Infantaria "Duque de Caxias"[/i]), Caçadores ([i]1º BC "Petrópolis"[/i]), Fuzileiros Navais and the FEB
-- Integralist, Red Guards, 1932 Constitutionalist, and Imperial Guard and Voluntários da Pátria suites
+- Integralist, Red Guards, 1932 Constitutionalist and Imperial Guard suites
 
 [b]Greece[/b]
-- Plain and Named Merarchíes with regional titles ([i]8i Merarchía Ipeírou[/i]), Evzones ([i]2/39 Evzonikó Sýntagma[/i]), Raiders, Metaxas Line forts and Gendarmerie
-- Royal Guard and Fourth of August, EON, ELAS and Democratic Army, and Republican volunteers
+- Plain and Named Merarchíes with regional titles ([i]8i Merarchía Ipeírou[/i]), Evzones ([i]2/39 Evzonikó Sýntagma[/i]), Metaxas Line forts and Gendarmerie
+- Royal Guard and Fourth of August, EON, ELAS and Republican volunteers
 
 [b]Romania[/b]
-- Plain and Named divisions with regional and royal honours ([i]Divizia 6 Infanterie 'Mărășești'[/i]), cavalry, mountain, marine and paratrooper lists and Gendarmerie
+- Plain and Named divisions with regional and royal honours ([i]Divizia 6 Infanterie 'Mărășești'[/i]), cavalry, mountain and marine lists and Gendarmerie
 - Royal Guard and Straja Țării, Iron Guard, Tudor Vladimirescu and Patriotic Guards, and National Guard
 
 [b]Lithuania[/b]
-- Plain and Named divisions with regional and ruler identities ([i]1-oji tankų divizija 'Gediminas'[/i]), interwar regiments and the Riflemen's Union ([i]XX Klaipėdos rinktinė[/i])
+- Plain and Named divisions with regional and ruler identities ([i]1-oji tankų divizija 'Gediminas'[/i]) and the Riflemen's Union ([i]XX Klaipėdos rinktinė[/i])
 - Royal Guard, Iron Wolf, Red Rifle divisions and Freedom Fighters
 
 [b]Estonia[/b]
-- Plain and Named divisions with ancient-county identities ([i]1. jalaväediviis 'Virumaa'[/i]), War of Independence regiments and partisans ([i]Kuperjanovi partisanide pataljon[/i]) and Kaitseliit malevad
+- Plain and Named divisions with ancient-county identities ([i]1. jalaväediviis 'Virumaa'[/i]), War of Independence partisans ([i]Kuperjanovi partisanide pataljon[/i]) and Kaitseliit malevad
 - Ancient Freedom, Veterans' League, Red Rifle divisions and Freedom Fighters
 
 [b]Latvia[/b]
-- Plain and Named divisions with regional identities ([i]1. Kurzemes kājnieku divīzija[/i]), the interwar regiments and Latvian Riflemen ([i]1. Daugavgrīvas latviešu strēlnieku pulks[/i]) and Aizsargi
+- Plain and Named divisions with regional identities ([i]1. Kurzemes kājnieku divīzija[/i]), Latvian Riflemen ([i]1. Daugavgrīvas latviešu strēlnieku pulks[/i]) and Aizsargi
 - Heritage, Thunder Cross, Red Rifle divisions and National Partisans
 
 [b]France[/b]
 - The 1940 order of battle ([i]11ème Division d'Infanterie 'de Fer'[/i]), DLM, DCR, Maginot and Alpine divisions and the Army of Africa
-- Free French, National Guard and the Republic's demi-brigades; Imperial Guard and Grande Armée; the Commune, FTP, Milice and Armistice Army
+- Free French, National Guard and demi-brigades; Imperial Guard; the Commune, FTP, Milice and Armistice Army
 
 [b]United Kingdom[/b]
-- Regular and Territorial divisions on authentic titles, plain and nicknamed ([i]7th Armoured Division 'Desert Rats'[/i], [i]51st (Highland) Infantry Division[/i]), Airborne and Commandos
+- Regular and Territorial divisions, plain and nicknamed ([i]7th Armoured Division 'Desert Rats'[/i], [i]51st (Highland) Infantry Division[/i]), Airborne and Commandos
 - Home Guard, King's African Rifles, Blackshirt and Workers' Defense Brigades
 
 [b]Finland[/b]
 - Numbered divisions, brigades and wartime regiments ([i]12. Divisioona 'Kollaa'[/i], [i]JR 7 'Tyrjän rykmentti'[/i]), Suojeluskunta and Sissi rangers
-- Blackshirt legions, Heimojoukot, 1918 Red Guards, People's Army and Royal Guards ([i]Suomen Kaarti[/i])
+- Blackshirt legions, Heimojoukot, Red Guards, People's Army and Royal Guards ([i]Suomen Kaarti[/i])
 
 [b]Poland[/b]
 - 1939 divisions with regional and honorary titles ([i]1 Dywizja Piechoty Legionów Józefa Piłsudskiego[/i]), Maczek's armour and KOP Border Guard
-- Armia Krajowa ([i]27 Wołyńska Dywizja Piechoty AK[/i]), PSZ in the West, LWP, NSZ, Royal Guard and volunteer corps
+- Armia Krajowa ([i]27 Wołyńska Dywizja Piechoty AK[/i]), PSZ, LWP, NSZ and Royal Guard
 
 [b]Italy[/b]
-- Regio Esercito divisions on their real numbers ([i]132a Divisione Corazzata 'Ariete'[/i]), Bersaglieri, Arditi and Carabinieri
-- Blackshirts and the RSI ([i]8a Brigata Nera 'Aldo Resega'[/i]), Royal Army, Republican volunteers, Red Guards and partisan brigades
+- Regio Esercito divisions on their real numbers ([i]132a Divisione Corazzata 'Ariete'[/i]), Bersaglieri and Carabinieri
+- Blackshirts and the RSI ([i]8a Brigata Nera 'Aldo Resega'[/i]), Royal Army, Red Guards and partisan brigades
 
 [b]USSR[/b]
-- Rifle and Guards divisions on historical numbers with their honours ([i]25-ya 'Chapayevskaya'[/i]), Opolcheniye, tank and mechanized corps ([i]4-y 'Kantemirovskiy'[/i]) and naval brigades
+- Rifle and Guards divisions on historical numbers with their honours ([i]25-ya 'Chapayevskaya'[/i]), Opolcheniye, tank corps ([i]4-y 'Kantemirovskiy'[/i]) and naval brigades
 - NKVD and partisans, Imperial Guard, White volunteers and republican shock divisions
 
 [b]Mexico[/b]
 - Regular army with its heroes ([i]Zaragoza[/i]), mountain rangers and naval infantry, and Cristero National Guard ([i]Los Altos[/i])
-- Sinarquistas, Gold Shirts, Imperial Guard, CTM and Agrarian worker militias
+- Sinarquistas, Gold Shirts, Imperial Guard and worker militias
 
 [b]Iran[/b]
 - Garrison-city divisions ([i]Lashkar-e 15-e Piyadeh-ye Shiraz[/i]), Shahnameh-named armor ([i]Rostam[/i]), Imperial and Immortal Guard, Persian Cossack atriads
-- Tribal levies, camel corps, gendarmerie and Gulf marines
+- Tribal levies, camel corps and gendarmerie
 
 [b]Spain[/b]
-- People's Army divisions and Mixed Brigades ([i]XI Brigada Internacional 'Thälmann'[/i]), Nationalist divisions, the Legion, Guardia Civil and Assault Guards
+- People's Army divisions and Mixed Brigades ([i]XI Brigada Internacional 'Thälmann'[/i]), Nationalist divisions, the Legion and Guardia Civil
 - Requeté tercios, Falange and División Azul, communist, POUM and anarchist militias ([i]Columna Durruti[/i])
 
 [b]Hungary[/b]
-- Plain and Named divisions ([i]1. páncéloshadosztály 'Toldi'[/i]), 1941 infantry brigades ([i]14. gyalogdandár (Szeged)[/i]), mountain brigades, river forces and paratroopers
+- Plain and Named divisions ([i]1. páncéloshadosztály 'Toldi'[/i]), 1941 infantry brigades ([i]14. gyalogdandár (Szeged)[/i]), mountain brigades and paratroopers
 - Royal Guard, Hungarist divisions, Red Army, 1848 Honvéd and 1956 National Guard
 
 [b]China[/b]
-- NRA divisions with their battles ([i]Di-88 Shi (Sihang)[/i]), corps-level armies ([i]Di-74 Jun 'Kangri Tiejun'[/i]), German-trained mobile lists, X and Y Force and Yangtze fortresses
+- NRA divisions with their battles ([i]Di-88 Shi (Sihang)[/i]), corps-level armies ([i]Di-74 Jun 'Kangri Tiejun'[/i]), German-trained mobile lists and X and Y Force
 - Whampoa and Youth Armies, Blue Shirts, 1911 armies and the Fujian People's Revolutionary Army
 
 <!-- cross-links:begin -->

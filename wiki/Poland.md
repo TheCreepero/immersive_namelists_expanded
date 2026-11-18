@@ -14,9 +14,9 @@ Poland's military history in WWII is uniquely complex: the 1939 defensive campai
 
 | Group Tag | UI Name | Division Types | Fallback Name |
 |:---|:---|:---|:---|
-| `POL_GA_01` | Artillery Groups | artillery | `%d Grupa Artylerii` |
-| `POL_AA_01` | Anti-Air Regiments | anti_air | `%d Pułk Artylerii Przeciwlotniczej` |
-| `POL_AA_02` | Anti-Air Battalions | anti_air | `%d Dywizjon Artylerii Przeciwlotniczej` |
+| `POL_GA_01` | Artillery Groups | artillery_brigade, mot_artillery_brigade | `%d Grupa Artylerii` |
+| `POL_AA_01` | Anti-Air Regiments | anti_air_brigade, mot_anti_air_brigade | `%d Pułk Artylerii Przeciwlotniczej` |
+| `POL_AA_02` | Anti-Air Battalions | anti_air_brigade, mot_anti_air_brigade | `%d Dywizjon Artylerii Przeciwlotniczej` |
 | `POL_POLIC_01` | Military Police Battalions | cavalry, infantry | `%d Dywizjon Żandarmerii` |
 | `POL_MOT_02` | Armored-Motorized Divisions | motorized | `%d Dywizja Pancerno-Motorowa` |
 | `POL_ON_01` | National Defence Brigades | militia | `%d Batalion Obrony Narodowej` |
@@ -28,8 +28,8 @@ Poland's military history in WWII is uniquely complex: the 1939 defensive campai
 | `POL_PSZ_03` | 2nd Polish Corps Divisions | infantry | `%d Dywizja Piechoty (2 Korpus Polski)` |
 | `POL_LWP_01` | LWP Infantry Divisions | infantry | `%d Dywizja Piechoty (LWP)` |
 | `POL_LWP_02` | LWP Cavalry Divisions | cavalry | `%d Dywizja Kawalerii (LWP)` |
-| `POL_LWP_03` | LWP Anti-Air Divisions | anti_air | `%d Dywizja Artylerii Przeciwlotniczej` |
-| `POL_AWL_03` | LWP Artillery Divisions | artillery | `%d Dywizja Artylerii` |
+| `POL_LWP_03` | LWP Anti-Air Divisions | anti_air_brigade, mot_anti_air_brigade | `%d Dywizja Artylerii Przeciwlotniczej` |
+| `POL_AWL_03` | LWP Artillery Divisions | artillery_brigade, mot_artillery_brigade | `%d Dywizja Artylerii` |
 | `POL_LWP_00` | People's Infantry Divisions | infantry | `%d Ludowa Dywizja Piechoty` |
 | `POL_LWZ_00` | LWP Mechanized Divisions | mechanized | `%d Ludowa Dywizja Zmechanizowana` |
 | `POL_LDP_00` | People's Armored Divisions | light_armor, medium_armor, heavy_armor, modern_armor | `%d Ludowa Dywizja Pancerna` |

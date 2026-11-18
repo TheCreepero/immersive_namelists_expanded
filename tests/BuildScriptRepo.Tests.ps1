@@ -71,17 +71,17 @@ Describe "build.ps1: valid division_types list" {
         foreach ($t in 'super_heavy_armor', 'super_heavy_tank_destroyer_brigade', 'super_heavy_sp_artillery_brigade', 'super_heavy_sp_anti_air_brigade') {
             $ValidDivisionTypes | Should -Not -Contain $t -Because "'$t' is a support company in game 1.19.4 (group = support) [NAM-026]"
         }
+        foreach ($t in 'artillery', 'anti_air', 'anti_tank', 'rocket_artillery') { $ValidDivisionTypes | Should -Not -Contain $t }
     }
 
     It "Matches the line battalions of the installed game" {
         $hoi4 = Find-Hoi4Install
         if (-not $hoi4) { Set-ItResult -Skipped -Because 'Hearts of Iron IV is not installed'; return }
         $notForNameLists = @('hq_infantry', 'hq_paratrooper', 'hq_motorized', 'hq_armored_car', 'hq_light_armor', 'hq_medium_armor', 'hq_heavy_armor', 'bus', 'fake_intel_unit')
-        $supportIdsAwaitingRetag = @('artillery', 'anti_air', 'anti_tank', 'rocket_artillery')
         $lineIds = @(Get-GameLineBattalionIds -Hoi4Dir $hoi4)
         $lineIds.Count | Should -BeGreaterThan 30
         @($lineIds | Where-Object { $notForNameLists -notcontains $_ -and $ValidDivisionTypes -notcontains $_ }) | Should -BeNullOrEmpty -Because 'every line battalion of the game is a valid division_types token'
-        @($ValidDivisionTypes | Where-Object { $lineIds -notcontains $_ -and $supportIdsAwaitingRetag -notcontains $_ }) | Should -BeNullOrEmpty -Because 'every accepted token is a line battalion of the game'
+        @($ValidDivisionTypes | Where-Object { $lineIds -notcontains $_ }) | Should -BeNullOrEmpty -Because 'every accepted token is a line battalion of the game'
     }
 
     It "Names the valid tokens when -EditNames rejects one" {

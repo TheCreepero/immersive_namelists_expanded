@@ -1301,7 +1301,7 @@ BRA_ART_01 =
 
 	can_use = { always = yes }
 
-	division_types = { "artillery" }
+	division_types = { "artillery_brigade" "mot_artillery_brigade" }
 
 	fallback_name = "%dº Regimento de Artilharia de Campanha"
 

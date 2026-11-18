@@ -23,8 +23,8 @@ INEX covers two layers. The **division layer** overrides the vanilla Swedish div
 | `SWE_MNT_02` | Ski & Mountain Brigades | mountaineers, ranger_battalion | `%d. Skidjägarbrigaden` |
 | `SWE_KA_01` | Coastal Defense Brigades | marine, infantry | `%d. Kustartilleribrigaden` |
 | `SWE_HV_01` | Home Guard Districts | militia, infantry | `Hemvärnsområde %d` |
-| `SWE_ART_01` | Artillery Brigades | artillery, infantry | `%d. Artilleribrigaden` |
-| `SWE_AA_01` | Anti-Air Brigades | anti_air, infantry | `%d. Luftvärnsbrigaden` |
+| `SWE_ART_01` | Artillery Brigades | artillery_brigade, mot_artillery_brigade | `%d. Artilleribrigaden` |
+| `SWE_AA_01` | Anti-Air Brigades | anti_air_brigade, mot_anti_air_brigade | `%d. Luftvärnsbrigaden` |
 | `SWE_PAR_02` | Paratrooper Brigades | paratrooper | `%d. Fallskärmsjägarbrigaden` |
 | `SWE_ROYAL_01` | Royal Guards | infantry, cavalry, motorized, mechanized, light_armor, medium_armor | `%d. Kungliga Gardet` |
 | `SWE_VOL_01` | Volunteer Formations | infantry, motorized | `%d. Svenska Frivilligbrigaden` |

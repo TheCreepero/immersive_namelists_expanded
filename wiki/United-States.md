@@ -25,8 +25,8 @@ All names strictly adhere to authentic American military conventions, using nomi
 | `USA_ARM_01` | Armored Divisions | light_armor, medium_armor, heavy_armor, modern_armor | `%d Armored Division` |
 | `USA_ACR_01` | Armored Cavalry Regiments | light_armor, motorized, mechanized | `%d Armored Cavalry Regiment` |
 | `USA_ARMORED_DETACHMENTS_01` | Separate Tank Battalions | light_armor, medium_armor, heavy_armor, modern_armor | `%d Tank Battalion` |
-| `USA_TD_01` | Tank Destroyer Battalions | light_armor, medium_armor, heavy_armor, modern_armor | `%d Tank Destroyer Battalion` |
-| `USA_ART_01` | Field Artillery Brigades | light_armor, medium_armor, heavy_armor, modern_armor | `%d Field Artillery Brigade` |
+| `USA_TD_01` | Tank Destroyer Battalions | light_tank_destroyer_brigade, medium_tank_destroyer_brigade, heavy_tank_destroyer_brigade, modern_tank_destroyer_brigade | `%d Tank Destroyer Battalion` |
+| `USA_ART_01` | Field Artillery Brigades | artillery_brigade, mot_artillery_brigade | `%d Field Artillery Brigade` |
 | `USA_PAR_01` | Airborne Divisions | paratrooper | `%d Airborne Division` |
 | `USA_MAR_01` | Marine Divisions | marine | `%d Marine Division` |
 | `USA_MAR_BGD_01` | Marine Raider Battalions | marine | `%d Marine Battalion` |
@@ -37,7 +37,7 @@ All names strictly adhere to authentic American military conventions, using nomi
 | `USA_DEF_01` | State Defense Forces | militia, infantry | `%d State Defense Force` |
 | `USA_COAST_01` | Harbor Defense Commands | infantry | `%d Coast Artillery Command` |
 | `USA_OVS_01` | Overseas Garrisons | infantry | `%d Base Command` |
-| `USA_CONST_01` | Constabulary Regiments | cavalry, motorized, light_armor | `%d Constabulary Regiment` |
+| `USA_CONST_01` | Constabulary Regiments | cavalry, motorized, light_armor, armored_car | `%d Constabulary Regiment` |
 | `USA_MIL_01` | State Militias | militia | `%d State Militia` |
 | `USA_SHOCK_01` | Assault Divisions | mechanized, motorized, light_armor, medium_armor, heavy_armor, modern_armor, infantry | `%d Assault Division` |
 | `USA_COM_GUARD_01` | Workers' Red Guards | infantry, militia | `%d Red Guard Division` |
@@ -67,8 +67,8 @@ All names strictly adhere to authentic American military conventions, using nomi
 - **`USA_ARM_01` — Armored Divisions**: All 16 historical armored divisions (1st–16th) with official monikers (*Old Ironsides*, *Hell on Wheels*, *Spearhead*, *Breakthrough*, *Victory*, *Super Sixth*, *Lucky Seventh*, *Thundering Herd*, *Phantom*, *Tiger*, *Thunderbolt*, *Hellcat*, *Black Cat*, *Liberator*), plus postwar National Guard armored divisions (27th, 30th, 40th, 48th, 49th, 50th) and alternate-history numbered armor through the 70s.
 - **`USA_ACR_01` — Armored Cavalry Regiments**: Specialized mechanized cavalry reconnaissance groups and regiments, featuring the 2nd ACR (*Second Dragoons*), 3rd ACR (*Brave Rifles*), 6th Cavalry Group (*Fighting Sixth*), 11th ACR (*Blackhorse*), 14th ACR (*First Dragoon*), and historical reconnaissance groups (4th, 15th, 106th, 107th, 113th, 115th, 116th).
 - **`USA_ARMORED_DETACHMENTS_01` — Separate Tank Battalions**: Independent tank battalions attached to infantry and airborne divisions in the European theater, including the 70th, 741st (*Omaha Beach*), 743rd (*Roll On*), 756th (*Cassino*), 761st (*Black Panthers*), 771st, 777th (*Steel Wolves*), 781st, and 784th (*Black Tigers*).
-- **`USA_TD_01` — Tank Destroyer Battalions**: The Tank Destroyer Force under real battalion numbers, each with one battle or attachment: 601st (El Guettar), 701st (Sidi Bou Zid), 705th (Bastogne), 614th (Climbach), 823rd (Mortain), 893rd (Hürtgen Forest), 827th (Colmar Pocket), the Pacific battalions on New Guinea and Luzon, and the self-propelled mount groups of Bataan. Typed as armor and open to human players only (`is_ai = no`), so AI tank divisions never draw these names.
-- **`USA_ART_01` — Field Artillery Brigades**: Field artillery brigades and groups of the European Theater, corps artillery (II, V, VII, VIII, XX, XXIV), the National Guard heritage regiments 141st (*Washington Artillery*), 111th (*Richmond Howitzers*) and 131st (*Lost Battalion*), the Philippine Scout 23rd and 24th Field Artillery, and the 333rd and 969th battalions of the Ardennes and Bastogne. Typed as armor and open to human players only (`is_ai = no`).
+- **`USA_TD_01` — Tank Destroyer Battalions**: The Tank Destroyer Force under real battalion numbers, each with one battle or attachment: 601st (El Guettar), 701st (Sidi Bou Zid), 705th (Bastogne), 614th (Climbach), 823rd (Mortain), 893rd (Hürtgen Forest), 827th (Colmar Pocket), the Pacific battalions on New Guinea and Luzon, and the self-propelled mount groups of Bataan. Typed by its tank destroyer battalions, so the game can choose it for tank destroyer templates.
+- **`USA_ART_01` — Field Artillery Brigades**: Field artillery brigades and groups of the European Theater, corps artillery (II, V, VII, VIII, XX, XXIV), the National Guard heritage regiments 141st (*Washington Artillery*), 111th (*Richmond Howitzers*) and 131st (*Lost Battalion*), the Philippine Scout 23rd and 24th Field Artillery, and the 333rd and 969th battalions of the Ardennes and Bastogne. Typed by its artillery battalions, so the game can choose it for artillery templates.
 - **`USA_CAV_01` — Cavalry Divisions**: Historical Regular Army 1st Cavalry Division (*The First Team*), 2nd Cavalry Division (Buffalo Soldiers), 3rd Cavalry, National Guard 21st–24th divisions, separate state cavalry brigades (51st–59th), and interwar numbered reserve divisions (61st–66th).
 - **`USA_SHOCK_01` — Assault Divisions**: Heavy breakthrough formations organized around Combat Commands (*Iron Vanguard*, *Spearhead*, *Thunderbolt*, *Hell on Wheels*, *Old Ironsides*).
 - **`USA_COMPOSITE_UNITS_01` — Provisional Task Forces**: Historical combined-arms provisional strike groups formed for breakthrough and pursuit operations (Task Forces Butler, Baum, Lovelady, Raff, Hogan, Richardson, Rose, O'Hara, Welborn, Dooley).

@@ -12,7 +12,7 @@
 # Ideology and alternate history: Red Guards, Lincoln Brigades, Red Armored (communism); Silver Legions, Nationalist Militias,
 # Confederate Divisions (fascism); Federal Emergency Forces, Continental Army (neutrality); Union Divisions,
 # Conservation Corps (democratic); Volunteer Legions, Expeditionary Forces (democratic or neutrality).
-# Tank Destroyer and Field Artillery groups are typed as armor and gated is_ai = no (players only).
+# Tank Destroyer and Field Artillery groups list their line battalions (tank destroyer and artillery brigades).
 #
 # Overrides vanilla USA_INF_01, USA_CAV_01, USA_MOT_01, USA_MEC_01, USA_ARM_01, USA_PAR_01, USA_MAR_01,
 # USA_MNT_01 and USA_GAR_01; vanilla USA_RGR_01 (Ranger Divisions) stays as it is.
@@ -1008,7 +1008,7 @@ USA_ARMORED_DETACHMENTS_01 =
 # =============================================================================
 # Tank Destroyer Battalions
 # =============================================================================
-# Players only (is_ai = no). Typed as armor, so the gate keeps the automatic choice from giving AI armored templates TD names.
+# Tank destroyer battalions, typed by their line battalions (tank destroyer brigades).
 # Real battalion numbers with one battle or attachment each; own number series.
 
 USA_TD_01 = 
@@ -1017,9 +1017,9 @@ USA_TD_01 =
 
 	for_countries = { USA }
 
-	can_use = { is_ai = no }
+	can_use = { always = yes }
 
-	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
+	division_types = { "light_tank_destroyer_brigade" "medium_tank_destroyer_brigade" "heavy_tank_destroyer_brigade" "modern_tank_destroyer_brigade" }
 
 	fallback_name = "%d Tank Destroyer Battalion"
 
@@ -1055,7 +1055,7 @@ USA_TD_01 =
 # =============================================================================
 # Field Artillery Brigades
 # =============================================================================
-# Players only (is_ai = no). Typed as armor like GER_PANZERARTILLERIE_DIVISION_01: the line artillery battalions are not valid tokens here.
+# Field artillery, typed by its line battalions (artillery brigades).
 # Brigades, groups, corps artillery and heritage regiments under their real numbers; own number series.
 
 USA_ART_01 = 
@@ -1064,9 +1064,9 @@ USA_ART_01 =
 
 	for_countries = { USA }
 
-	can_use = { is_ai = no }
+	can_use = { always = yes }
 
-	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
+	division_types = { "artillery_brigade" "mot_artillery_brigade" }
 
 	fallback_name = "%d Field Artillery Brigade"
 
@@ -1598,7 +1598,7 @@ USA_CONST_01 =
 
 	can_use = { always = yes }
 
-	division_types = { "cavalry" "motorized" "light_armor" }
+	division_types = { "cavalry" "motorized" "light_armor" "armored_car" }
 
 	fallback_name = "%d Constabulary Regiment"
 
