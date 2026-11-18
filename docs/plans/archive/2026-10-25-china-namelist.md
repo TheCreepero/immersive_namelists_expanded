@@ -1,6 +1,6 @@
 # China (CHI) Namelist Plan - 2026-10-25
 
-Status: READY
+Status: DONE
 
 File: `common/units/names_divisions/zz_INEX_CHI_names_divisions.txt`
 
@@ -113,7 +113,7 @@ Expected `-Check CHI` flags after the batch (`-DryRun` and a rehearsal with the 
 Any other flag is a stop condition.
 
 ## Implementation steps
-- [ ] 1. Set `Status: IN PROGRESS`, then apply the batch: `powershell -File .\build.ps1 -EditNames CHI -Batch docs\plans\2026-10-25-china-namelist.md`. Expect `Created zz_INEX_CHI_names_divisions.txt`, then these 21 lines, and no `[ERROR]`:
+- [x] 1. Set `Status: IN PROGRESS`, then apply the batch: `powershell -File .\build.ps1 -EditNames CHI -Batch docs\plans\2026-10-25-china-namelist.md`. Expect `Created zz_INEX_CHI_names_divisions.txt`, then these 21 lines, and no `[ERROR]`:
   - `Added CHI_INF_01: "Infantry Divisions" [infantry], 151 name(s)`
   - `Added CHI_INF_02: "Infantry Divisions (Named)" [infantry], 52 name(s), links CHI_INF_01`
   - `Added CHI_INF_03: "Expeditionary Divisions" [infantry], 20 name(s)`
@@ -135,24 +135,24 @@ Any other flag is a stop condition.
   - `Added CHI_LXS_01: "Blue Shirts Divisions" [infantry militia], 22 name(s)`
   - `Added CHI_HUG_01: "Republican Armies" [infantry], 18 name(s)`
   - `Added CHI_RGJ_01: "People's Revolutionary Army" [infantry], 12 name(s)`
-- [ ] 2. Write `wiki/China.md` from the whole page under "Docs payload" with the Write tool (the fence lines are not part of the page).
-- [ ] 3. `powershell -File .\build.ps1 -SyncWiki CHI -Country "China"`. Expect `Registered CHI (China) in: README.md, wiki/Home.md, wiki/_Sidebar.md`, `China.md: 0 row(s) updated` and `wiki/Home.md: CHI group count 21 (unchanged)`, with no `row added`, `no group table` or `stale row` line.
-- [ ] 4. `WORKSHOP_DESCRIPTION_GUIDELINES.md`: with the Edit tool, insert the cross-reference row from "Docs payload" as a new line directly after the row that starts with ``| `zz_INEX_SPR_names_divisions.txt` ``, and the `[b]China[/b]` block (three lines and the blank line after them) directly before the line `If you enjoy the mod, please give it a thumbs up and favorite!`. The description then has about 7,750 characters (about 8,130 if Hungary shipped first).
-- [ ] 5. `powershell -File .\build.ps1 -Check CHI`. Expect:
+- [x] 2. Write `wiki/China.md` from the whole page under "Docs payload" with the Write tool (the fence lines are not part of the page).
+- [x] 3. `powershell -File .\build.ps1 -SyncWiki CHI -Country "China"`. Expect `Registered CHI (China) in: README.md, wiki/Home.md, wiki/_Sidebar.md`, `China.md: 0 row(s) updated` and `wiki/Home.md: CHI group count 21 (unchanged)`, with no `row added`, `no group table` or `stale row` line.
+- [x] 4. `WORKSHOP_DESCRIPTION_GUIDELINES.md`: with the Edit tool, insert the cross-reference row from "Docs payload" as a new line directly after the row that starts with ``| `zz_INEX_SPR_names_divisions.txt` ``, and the `[b]China[/b]` block (three lines and the blank line after them) directly after the `[b]Hungary[/b]` block and its blank line, that is directly before the line `<!-- cross-links:begin -->`. The `-Check` in step 5 reports the description's length. (2026-11-18, on the user's word: the description was 8,239 bytes after this step, over Steam's 8,000, so the coordinator shortened the China block to the text now under "Docs payload" and trimmed the United States, Germany, Greece and Hungary blocks; the description is 7,957 bytes.)
+- [x] 5. `powershell -File .\build.ps1 -Check CHI`. Expect:
   - `Validate: OK` and the tests passing (0 failed);
   - `AUDIT SUMMARY CHI: GROUPS=21 AUTHORED=428/732 FLAGS=5` and `Flags: LOW_DEPTH x2, PLACEHOLDER_ENTRIES x2, UNGATED_POLITICAL x1` (see "Kept on judgment");
-  - no `[WARN] Docs:` line (the China block is 439 of its 450 characters);
+  - one `[WARN] Docs: workshop description is 7957 bytes (budget 7500 of Steam's 8000)` line, accepted by the user on 2026-11-18 (under Steam's limit; the 7,500 budget is left for a later pass). Any other `[WARN] Docs:` line is a stop condition;
   - `Plan: no audit plan in progress for CHI` (expected);
   - `Diff vs HEAD, file absent: 21 group(s) changed, +732 -0 name(s)`;
   - `Check passed`.
-- [ ] 6. Fill "Outcome", set `Status: DONE`, report the `-Check` result.
-- [ ] 7. Ship, on the user's word:
+- [x] 6. Fill "Outcome", set `Status: DONE`, report the `-Check` result.
+- [x] 7. Ship, on the user's word (2026-11-18; ROADMAP.md had changed since planning, so the three replacements were made on its current lines, the open-plans row was removed and the budget note updated):
   1. `ROADMAP.md`, three replacements with the Edit tool (`<date>` is the day of this step, YYYY-MM-DD):
      - `| China (Nationalist) | CHI |` becomes `| ~~China (Nationalist)~~ | CHI |`;
      - `- **CHI.** The largest army on the map.` becomes `- ~~**CHI.**~~ Shipped <date> as a new file of 21 groups (plan in docs/plans/archive/2026-10-25-china-namelist.md). The largest army on the map.`;
      - `New Fourth Army. Plan with CHI. |` becomes `New Fourth Army. CHI shipped first: this file owns the Red Army, the Eighth Route Army, the New Fourth Army and the PLA; CHI's communist list is the Fujian People's Revolutionary Army and NRA armies that went over in 1949. |`.
   2. Move this plan to `docs/plans/archive/` (`Move-Item docs\plans\2026-10-25-china-namelist.md docs\plans\archive\`; the plan is not tracked yet, so not `git mv`).
-  3. Run `git diff -- ROADMAP.md docs/tooling-backlog.md README.md WORKSHOP_DESCRIPTION_GUIDELINES.md wiki/Home.md wiki/_Sidebar.md`. This plan's changes there are: the three ROADMAP replacements of 7.1 and the CHI rows and block of steps 3 and 4; `docs/tooling-backlog.md` shows no change (its entry from this plan was committed with the tooling work of 2026-10-27). If the diff holds any other change (another plan was in progress in parallel, e.g. Hungary on 2026-10-25), stop and ask the user whether to commit both plans' changes together. Otherwise stage exactly these paths with `git add`: `common/units/names_divisions/zz_INEX_CHI_names_divisions.txt`, `wiki/China.md`, `wiki/Home.md`, `wiki/_Sidebar.md`, `README.md`, `WORKSHOP_DESCRIPTION_GUIDELINES.md`, `ROADMAP.md`, `docs/plans/archive/2026-10-25-china-namelist.md`, and commit with the message `Add China division namelists`. Leave any other untracked file (another plan) alone.
+  3. Run `git diff -- ROADMAP.md docs/tooling-backlog.md README.md WORKSHOP_DESCRIPTION_GUIDELINES.md wiki/Home.md wiki/_Sidebar.md`. This plan's changes there are: the three ROADMAP replacements of 7.1 and the CHI rows and block of steps 3 and 4, and the trimmed United States, Germany, Greece and Hungary blocks in `WORKSHOP_DESCRIPTION_GUIDELINES.md` (step 4's note); `docs/tooling-backlog.md` shows no change (its entry from this plan was committed with the tooling work of 2026-10-27). If the diff holds any other change (another plan was in progress in parallel, e.g. Hungary on 2026-10-25), stop and ask the user whether to commit both plans' changes together. Otherwise stage exactly these paths with `git add`: `common/units/names_divisions/zz_INEX_CHI_names_divisions.txt`, `wiki/China.md`, `wiki/Home.md`, `wiki/_Sidebar.md`, `README.md`, `WORKSHOP_DESCRIPTION_GUIDELINES.md`, `ROADMAP.md`, `docs/plans/archive/2026-10-25-china-namelist.md`, and commit with the message `Add China division namelists`. Leave any other untracked file (another plan) alone.
   4. `powershell -File .\wiki\push-wiki.ps1 -CommitMessage "Document CHI division namelists"`.
 
 ## Docs payload
@@ -164,12 +164,12 @@ Goes into `WORKSHOP_DESCRIPTION_GUIDELINES.md` directly after the `zz_INEX_SPR_n
 ```
 
 ### Workshop `[b]China[/b]` block
-Goes directly before `If you enjoy the mod, please give it a thumbs up and favorite!`, followed by one blank line:
+Goes directly before `<!-- cross-links:begin -->` (after the `[b]Hungary[/b]` block), followed by one blank line:
 
 ```text
 [b]China[/b]
-- National Revolutionary Army divisions on their own numbers with their battles ([i]Di-88 Shi (Sihang)[/i]), German-trained mobile lists, X and Y Force, corps-level armies ([i]Di-74 Jun 'Kangri Tiejun'[/i]), cavalry, parachute and marine units, Yangtze fortresses and Peace Preservation regiments
-- Whampoa Party Army and Youth Army, Blue Shirts, National Protection and 1911 armies, and the Fujian People's Revolutionary Army
+- NRA divisions with their battles ([i]Di-88 Shi (Sihang)[/i]), corps-level armies ([i]Di-74 Jun 'Kangri Tiejun'[/i]), German-trained mobile lists, X and Y Force and Yangtze fortresses
+- Whampoa and Youth Armies, Blue Shirts, 1911 armies and the Fujian People's Revolutionary Army
 ```
 
 ### wiki/China.md (whole page)
@@ -312,7 +312,11 @@ Stop and report to the user, without researching or improvising, when: the batch
 - `'Taishanjun'` for the 10th Army: confirmed by the proofreader (thepaper.cn, Third Battle of Changsha). No other spelling, segmentation, nickname or honour problems found.
 
 ## Outcome
-<!-- TODO(implementer): date, group and name counts from -Check, deviations from this plan with the reason -->
+Date: 2026-11-18.
+
+`-Check CHI`: Validate OK; tests 518 passed, 0 failed, 1 skipped. `AUDIT SUMMARY CHI: GROUPS=21 AUTHORED=428/732 FLAGS=5` (`LOW_DEPTH x2, PLACEHOLDER_ENTRIES x2, UNGATED_POLITICAL x1`, all listed under "Kept on judgment"). One `[WARN] Docs` line: the workshop description is 7957 bytes (budget 7500 of Steam's 8000), accepted by the user. `Diff vs HEAD, file absent: 21 group(s) changed, +732 -0 name(s)`. `Check passed`.
+
+Deviations: after step 4 the workshop description was 8239 bytes, over Steam's 8000, and the first `-Check` failed on that test. The coordinator shortened the China block and trimmed four other nation blocks on the user's word, and the description was then 7957 bytes. The plan's step 4 text records this.
 
 ## Edit batch
 Applied by `build.ps1 -EditNames CHI -Batch <this file>`: every fenced block whose opening line is `` ```json batch ``, in order. Never typed out again or read back. The first block creates the file with its header.

@@ -19,7 +19,6 @@ powershell -File .\build.ps1 -InspectVanilla <TAG> # a vanilla nation's groups (
 | Plan | Status | Note |
 |---|---|---|
 | [docs/plans/2026-10-27-division-types-retag.md](docs/plans/2026-10-27-division-types-retag.md) | READY, not applied | Retags twelve groups (BRA, POL, SOV, SWE, USA) from support-company ids to line ids [NAM-026], so the game gives them templates. Small and mechanical; do it first. Commit 890ae46 is titled "Implement…" but only added the plan files: the namelists still carry the old types. Its ship step clears the matching `docs/tooling-backlog.md` entry. |
-| [docs/plans/2026-10-25-china-namelist.md](docs/plans/2026-10-25-china-namelist.md) | READY | New CHI file (Tier 1). Needs room in the Workshop description first (see Cross-cutting notes). |
 
 Carry out a READY plan with `hoi4-inex-namelist-implement`.
 
@@ -78,13 +77,13 @@ Vanilla state is `named / ordered` from the vanilla file (game version 1.19.3). 
 | Nation | TAG | Focus tree | Vanilla | Size | State |
 |---|---|---|---|---|---|
 | ~~Hungary~~ | HUN | `hungary.txt`, `hungary_wuw.txt` | 74 / 569 | M | Shipped (docs/plans/archive/2026-10-25-hungary-namelist.md) |
-| China (Nationalist) | CHI | `china_nationalist.txt` (+ shared) | 168 / 469 | L | Plan READY |
+| ~~China (Nationalist)~~ | CHI | `china_nationalist.txt` (+ shared) | 168 / 469 | L | Shipped (docs/plans/archive/2026-10-25-china-namelist.md) |
 | Commonwealth program | CAN, AST, NZL, SAF, RAJ | `canada.txt`, `australia.txt`, `new_zealand.txt`, `south_africa.txt`, `india.txt` | 0 / 492, 10 / 405, 286 / 434 (mostly the "NZ" prefix), 6 / 459, 86 / 636 | L (5 x S-M) | |
 | Yugoslavia | YUG | `yugoslavia.txt` | 61 / 144 | M | |
 | Czechoslovakia | CZE | `czechoslovakia.txt`, `czechoslovakia_mu.txt` | 69 / 175 | M | |
 | Turkey | TUR | `turkey.txt` | 7 / 205 | M | |
 
-- **HUN, CHI.** Planned on 2026-10-25; the plans hold the research. HUN shipped on 2026-11-17 as a new file of 25 groups (plan in docs/plans/archive/2026-10-25-hungary-namelist.md). CHI's plan should be checked against PRC (Tier 2) and the warlords (section D) before it ships, so the lists do not overlap.
+- **HUN, CHI.** Planned on 2026-10-25; the plans hold the research. HUN shipped on 2026-11-17 as a new file of 25 groups (plan in docs/plans/archive/2026-10-25-hungary-namelist.md). CHI shipped on 2026-11-18 as a new file of 21 groups (plan in docs/plans/archive/2026-10-25-china-namelist.md); its scope leaves the Red Army lineage to PRC and the cliques to the warlord tags, and names warlord-origin formations only by their NRA designations.
 - **Commonwealth program.** Five focus trees, English-language names (cheap to proofread), deep and easily sourced histories, and vanilla lists that are ordinal 1..N runs ("%dst Canadian Infantry Division") apart from a few RAJ nicknames ('Red Eagle', 'Ball of Fire'). One file per nation, ENG's conventions as the model. Anchors: 1st, 2nd and 3rd Canadian Divisions; the 6th to 9th Australian Divisions ("Rats of Tobruk"); 2nd New Zealand Division; 1st and 6th South African (Armoured) Divisions; the 4th, 5th, 7th and 10th Indian Divisions. RAJ already has INEX's Gurkha group (`ENG_MNT_02`); its file must not duplicate it. Shared groups (guide §2): one short ANZAC group of the joint formations (ANZAC Corps of 1915 and 1941, I and II ANZAC Corps, ANZAC Mounted Division) in the AST file for `{ AST NZL }`, and perhaps a small Commonwealth group (1st Commonwealth Division, British Commonwealth Occupation Force) in the ENG file for ENG and the Dominions. National divisions stay in each nation's own file.
 - **YUG.** The Royal Yugoslav Army named its divisions after rivers and regions (Dunavska, Drinska, Moravska, Vardarska, Šumadijska). Vanilla has some names in 9 groups; a full suite is a high payoff for the research. Ideology suites: royal guard, Partisan divisions (communist), Chetnik formations.
 - **CZE.** The 1938 army: four armies, the fast divisions (rychlé divize), border regions, Legion heritage (Zborov). Alt-history paths in both trees need ideology suites. Vanilla's `HUN_*` and `AUSHUN_*` groups list CZE too (see Cross-cutting notes).
@@ -106,7 +105,7 @@ Vanilla state is `named / ordered` from the vanilla file (game version 1.19.3). 
 | Manchukuo | MAN | `manchukuo.txt` | 60 / 205 | S | Manchukuo Imperial Army; coordinate with JAP. |
 | Siam | SIA | `siam.txt` | 6 / 294 | S | Phayap Army. |
 | Philippines | PHI | `philippines.txt` | 30 / 128 | S | Reserve divisions 11th to 101st, Philippine Scouts. |
-| China (Communist) | PRC | `china_communist.txt` | 172 / 218 | M | 115th, 120th and 129th Divisions of the Eighth Route Army, the New Fourth Army. Check against the CHI plan. |
+| China (Communist) | PRC | `china_communist.txt` | 172 / 218 | M | 115th, 120th and 129th Divisions of the Eighth Route Army, the New Fourth Army. CHI shipped first: this file owns the Red Army, the Eighth Route Army, the New Fourth Army and the PLA; CHI's communist list is the Fujian People's Revolutionary Army and NRA armies that went over in 1949. |
 
 ### Tier 3
 
@@ -136,7 +135,7 @@ Tags worth a list only once the tiers above are done. `named / ordered` from van
 
 ## Cross-cutting notes
 
-- **Workshop description budget.** Steam caps the description at 8,000 [WS-008]; the budget is 7,500 (guide section 4), and each nation block is at most 450 characters (`WORKSHOP_DESCRIPTION_GUIDELINES.md`). The HUN ship (2026-11-17) cut the longest older blocks to make room for its 293-character block, and the description is back under 7,500 bytes with 20 nation blocks. CHI will not fit as it is: before it ships, make room again (shorter blocks, or fewer nations listed by name with a pointer to the wiki).
+- **Workshop description budget.** Steam caps the description at 8,000 [WS-008]; the budget is 7,500 (guide section 4), and each nation block is at most 450 characters (`WORKSHOP_DESCRIPTION_GUIDELINES.md`). The HUN ship (2026-11-17) cut the longest older blocks to make room for its 293-character block, and the description is back under 7,500 bytes with 20 nation blocks. The CHI ship (2026-11-18) cut its own block to 293 characters and trimmed the USA, GER, GRE and HUN blocks, which brought the description to 7,957 bytes with 21 nation blocks: under Steam's cap, over the budget. Before the next nation ships, make room again (shorter blocks, or fewer nations listed by name with a pointer to the wiki).
 - **Generic lists stay in the game.** Vanilla's generic `SPAN_*` and `ENGL_*` groups list ARG, CHL, CAN, AST, NZL, SAF, RAJ and others in `for_countries`. They stay available to those nations next to any INEX file [NAM-001], and a group that redefines them cannot drop a tag from `for_countries` [NAM-020]. The planning session for those nations decides how to live with that. Vanilla's `HUN_*` groups list AUS and CZE as well and keep them out only through `can_use` (`tag = HUN` or the `HUN_EMPIRE` cosmetic tag); since a redefinition replaces `can_use` [NAM-020], an INEX group on such a tag keeps that gate, or AUS and CZE get the Hungarian lists.
 - **Shared research.** Programs (Commonwealth, Nordic, Latin America, China) should share one research pass per region where possible, so their suites follow the same conventions, as the Baltic program did.
 - **Shared groups.** A group several nations use (`for_countries` with more than one tag) only for truly joint formations in a shared language; otherwise mirrored groups, one per nation (guide §2, Shared Groups). Candidates: ANZAC (Commonwealth program), perhaps a Commonwealth group, perhaps a Spanish-language group for the Latin American minors.

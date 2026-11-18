@@ -33,6 +33,7 @@
 | [Iran](Iran) | `PER` | 13 | `zz_INEX_PER_names_divisions.txt` |
 | [Spain](Spain) | `SPR` | 38 | `zz_INEX_SPR_names_divisions.txt` |
 | [Hungary](Hungary) | `HUN` | 25 | `zz_INEX_HUN_names_divisions.txt` |
+| [China](China) | `CHI` | 21 | `zz_INEX_CHI_names_divisions.txt` |
 
 ---
 

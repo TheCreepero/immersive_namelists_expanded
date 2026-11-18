@@ -94,6 +94,7 @@ Releases run through the Hearts of Iron IV Modding Manager, which carries this r
 | `PER` | Iran / Persia | `zz_INEX_PER_names_divisions.txt` |
 | `SPR` | Spain | `zz_INEX_SPR_names_divisions.txt` |
 | `HUN` | Hungary | `zz_INEX_HUN_names_divisions.txt` |
+| `CHI` | China | `zz_INEX_CHI_names_divisions.txt` |
 
 *(Refer to [WORKSHOP_DESCRIPTION_GUIDELINES.md](WORKSHOP_DESCRIPTION_GUIDELINES.md) for full descriptions, examples, and Steam BBCode formatting rules).*
 

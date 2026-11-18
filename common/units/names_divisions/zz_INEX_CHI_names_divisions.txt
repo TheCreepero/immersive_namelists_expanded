@@ -1,0 +1,1165 @@
+# ===== Field army =====
+
+# Overrides vanilla CHI_INF_01 as the plain (un-nicknamed) variant; focuses in china_nationalist_sea.txt and TSR_lingguang_incident_joint_branch.txt give their templates this group. Every vanilla key is written again, so vanilla's corps-level '%d Juntuán' texts do not show. The game hands out entries in vanilla's file order, which puts keys 402-499 right after the first 18 divisions: they read as New divisions (Xinbian, 402 = New 2nd), as vanilla's X Force keys 422, 430 and 438 did, and keys 301-315 as Provisional divisions (Zanbian), vanilla's 'Juntuán Linshi'.
+
+CHI_INF_01 = 
+{
+	name = "Infantry Divisions"
+
+	for_countries = { CHI }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Di-%d Shi"
+
+	ordered =
+	{
+		# Vanilla keys written again (vanilla CHI_INF_01 merges into this group)
+		1 = { "Di-%d Shi" }
+		2 = { "Di-%d Shi" }
+		3 = { "Di-%d Shi" }
+		4 = { "Di-%d Shi" }
+		5 = { "Di-%d Shi" }
+		6 = { "Di-%d Shi" }
+		7 = { "Di-%d Shi" }
+		8 = { "Di-%d Shi" }
+		9 = { "Di-%d Shi" }
+		10 = { "Di-%d Shi" }
+		11 = { "Di-%d Shi" }
+		12 = { "Di-%d Shi" }
+		13 = { "Di-%d Shi" }
+		14 = { "Di-%d Shi" }
+		15 = { "Di-%d Shi" }
+		16 = { "Di-%d Shi" }
+		17 = { "Di-%d Shi" }
+		18 = { "Di-%d Shi" }
+		19 = { "Di-%d Shi" }
+		20 = { "Di-%d Shi" }
+		21 = { "Di-%d Shi" }
+		22 = { "Di-%d Shi" }
+		23 = { "Di-%d Shi" }
+		25 = { "Di-%d Shi" }
+		26 = { "Di-%d Shi" }
+		27 = { "Di-%d Shi" }
+		28 = { "Di-%d Shi" }
+		29 = { "Di-%d Shi" }
+		30 = { "Di-%d Shi" }
+		31 = { "Di-%d Shi" }
+		32 = { "Di-%d Shi" }
+		33 = { "Di-%d Shi" }
+		34 = { "Di-%d Shi" }
+		35 = { "Di-%d Shi" }
+		36 = { "Di-%d Shi" }
+		37 = { "Di-%d Shi" }
+		38 = { "Di-%d Shi" }
+		39 = { "Di-%d Shi" }
+		40 = { "Di-%d Shi" }
+		41 = { "Di-%d Shi" }
+		42 = { "Di-%d Shi" }
+		43 = { "Di-%d Shi" }
+		44 = { "Di-%d Shi" }
+		45 = { "Di-%d Shi" }
+		46 = { "Di-%d Shi" }
+		47 = { "Di-%d Shi" }
+		48 = { "Di-%d Shi" }
+		49 = { "Di-%d Shi" }
+		50 = { "Di-%d Shi" }
+		51 = { "Di-%d Shi" }
+		52 = { "Di-%d Shi" }
+		53 = { "Di-%d Shi" }
+		54 = { "Di-%d Shi" }
+		55 = { "Di-%d Shi" }
+		56 = { "Di-%d Shi" }
+		57 = { "Di-%d Shi" }
+		58 = { "Di-%d Shi" }
+		59 = { "Di-%d Shi" }
+		60 = { "Di-%d Shi" }
+		61 = { "Di-%d Shi" }
+		62 = { "Di-%d Shi" }
+		63 = { "Di-%d Shi" }
+		64 = { "Di-%d Shi" }
+		65 = { "Di-%d Shi" }
+		66 = { "Di-%d Shi" }
+		67 = { "Di-%d Shi" }
+		68 = { "Di-%d Shi" }
+		69 = { "Di-%d Shi" }
+		70 = { "Di-%d Shi" }
+		71 = { "Di-%d Shi" }
+		72 = { "Di-%d Shi" }
+		73 = { "Di-%d Shi" }
+		74 = { "Di-%d Shi" }
+		75 = { "Di-%d Shi" }
+		76 = { "Di-%d Shi" }
+		77 = { "Di-%d Shi" }
+		78 = { "Di-%d Shi" }
+		79 = { "Di-%d Shi" }
+		80 = { "Di-%d Shi" }
+		81 = { "Di-%d Shi" }
+		82 = { "Di-%d Shi" }
+		83 = { "Di-%d Shi" }
+		84 = { "Di-%d Shi" }
+		85 = { "Di-%d Shi" }
+		86 = { "Di-%d Shi" }
+		87 = { "Di-%d Shi" }
+		88 = { "Di-%d Shi" }
+		89 = { "Di-%d Shi" }
+		90 = { "Di-%d Shi" }
+		91 = { "Di-%d Shi" }
+		92 = { "Di-%d Shi" }
+		93 = { "Di-%d Shi" }
+		94 = { "Di-%d Shi" }
+		95 = { "Di-%d Shi" }
+		96 = { "Di-%d Shi" }
+		98 = { "Di-%d Shi" }
+		99 = { "Di-%d Shi" }
+		100 = { "Di-%d Shi" }
+		201 = { "Di-%d Shi" }
+		202 = { "Di-%d Shi" }
+		203 = { "Di-%d Shi" }
+		205 = { "Di-%d Shi" }
+		206 = { "Di-%d Shi" }
+		207 = { "Di-%d Shi" }
+		208 = { "Di-%d Shi" }
+		209 = { "Di-%d Shi" }
+		210 = { "Di-%d Shi" }
+		211 = { "Di-%d Shi" }
+		212 = { "Di-%d Shi" }
+		213 = { "Di-%d Shi" }
+		214 = { "Di-%d Shi" }
+		215 = { "Di-%d Shi" }
+		301 = { "Zanbian Di-1 Shi" }
+		302 = { "Zanbian Di-2 Shi" }
+		303 = { "Zanbian Di-3 Shi" }
+		304 = { "Zanbian Di-4 Shi" }
+		305 = { "Zanbian Di-5 Shi" }
+		306 = { "Zanbian Di-6 Shi" }
+		307 = { "Zanbian Di-7 Shi" }
+		308 = { "Zanbian Di-8 Shi" }
+		309 = { "Zanbian Di-9 Shi" }
+		310 = { "Zanbian Di-10 Shi" }
+		311 = { "Zanbian Di-11 Shi" }
+		312 = { "Zanbian Di-12 Shi" }
+		313 = { "Zanbian Di-13 Shi" }
+		314 = { "Zanbian Di-14 Shi" }
+		315 = { "Zanbian Di-15 Shi" }
+		402 = { "Xinbian Di-2 Shi" }
+		403 = { "Xinbian Di-3 Shi" }
+		404 = { "Xinbian Di-4 Shi" }
+		406 = { "Xinbian Di-6 Shi" }
+		409 = { "Xinbian Di-9 Shi" }
+		410 = { "Xinbian Di-10 Shi" }
+		411 = { "Xinbian Di-11 Shi" }
+		414 = { "Xinbian Di-14 Shi" }
+		422 = { "Xinbian Di-22 Shi" }
+		425 = { "Xinbian Di-25 Shi" }
+		427 = { "Xinbian Di-27 Shi" }
+		430 = { "Xinbian Di-30 Shi" }
+		436 = { "Xinbian Di-36 Shi" }
+		438 = { "Xinbian Di-38 Shi" }
+		450 = { "Xinbian Di-50 Shi" }
+		457 = { "Xinbian Di-57 Shi" }
+		467 = { "Xinbian Di-67 Shi" }
+		480 = { "Xinbian Di-80 Shi" }
+		483 = { "Xinbian Di-83 Shi" }
+		487 = { "Xinbian Di-87 Shi" }
+		488 = { "Xinbian Di-88 Shi" }
+		489 = { "Xinbian Di-89 Shi" }
+		498 = { "Xinbian Di-98 Shi" }
+		499 = { "Xinbian Di-99 Shi" }
+	}
+}
+
+# Named variant of CHI_INF_01: each division on its own number with the battle it is best known for, in parentheses (Di-88 Shi (Sihang)); the 57th keeps its nickname 'Huben' (Tiger Vanguard, Changde 1943). Keys 216-218 hold Reserve and Provisional divisions; they come last in use order.
+CHI_INF_02 = 
+{
+	name = "Infantry Divisions (Named)"
+
+	for_countries = { CHI }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	link_numbering_with = { CHI_INF_01 }
+
+	fallback_name = "Di-%d Shi"
+
+	ordered =
+	{
+		# Numbered divisions with a battle honour, on their own numbers
+		1 = { "Di-1 Shi (Songhu)" }
+		2 = { "Di-2 Shi (Nantianmen)" }
+		3 = { "Di-3 Shi (Hengyang)" }
+		4 = { "Di-4 Shi (Nankou)" }
+		5 = { "Di-5 Shi (Wuyang)" }
+		6 = { "Di-6 Shi (Songhu)" }
+		9 = { "Di-9 Shi (Songhu)" }
+		10 = { "Di-10 Shi (Xinkou)" }
+		11 = { "Di-11 Shi (Shipai)" }
+		13 = { "Di-13 Shi (Songhu)" }
+		14 = { "Di-14 Shi (Songhu)" }
+		15 = { "Di-15 Shi (Songhu)" }
+		16 = { "Di-16 Shi (Songhu)" }
+		18 = { "Di-18 Shi (Qianniuling)" }
+		19 = { "Di-19 Shi (Shanggao)" }
+		21 = { "Di-21 Shi (Nankou)" }
+		25 = { "Di-25 Shi (Gubeikou)" }
+		26 = { "Di-26 Shi (Shanggao)" }
+		27 = { "Di-27 Shi (Tai'erzhuang)" }
+		31 = { "Di-31 Shi (Tai'erzhuang)" }
+		36 = { "Di-36 Shi (Songhu)" }
+		37 = { "Di-37 Shi (Lengkou)" }
+		38 = { "Di-38 Shi (Xifengkou)" }
+		51 = { "Di-51 Shi (Wanjialing)" }
+		54 = { "Di-54 Shi (Xinkou)" }
+		57 = { "Di-57 Shi 'Huben'" }
+		58 = { "Di-58 Shi (Shanggao)" }
+		63 = { "Di-63 Shi (Xiangxi)" }
+		67 = { "Di-67 Shi (Songhu)" }
+		77 = { "Di-77 Shi (Xiangxi)" }
+		83 = { "Di-83 Shi (Nantianmen)" }
+		85 = { "Di-85 Shi (Xinkou)" }
+		87 = { "Di-87 Shi (Songhu)" }
+		88 = { "Di-88 Shi (Sihang)" }
+		89 = { "Di-89 Shi (Nankou)" }
+		98 = { "Di-98 Shi (Songhu)" }
+		103 = { "Di-103 Shi (Songhu)" }
+		110 = { "Di-110 Shi (Tai'erzhuang)" }
+		118 = { "Di-118 Shi (Xiangxi)" }
+		121 = { "Di-121 Shi (Qing Jiang)" }
+		122 = { "Di-122 Shi (Tengxian)" }
+		150 = { "Di-150 Shi (Changde)" }
+		154 = { "Di-154 Shi (Nanjing)" }
+		156 = { "Di-156 Shi (Guanghuamen)" }
+		159 = { "Di-159 Shi (Nanjing)" }
+		190 = { "Di-190 Shi (Changsha)" }
+		191 = { "Di-191 Shi (Xiangxi)" }
+		196 = { "Di-196 Shi (Xiangxi)" }
+		200 = { "Di-200 Shi (Kunlunguan)" }
+		# Reserve and Provisional divisions (after the numbered ones in use order)
+		216 = { "Yubei Di-10 Shi (Changsha)" }
+		217 = { "Yubei Di-9 Shi (Shanggao)" }
+		218 = { "Zanbian Di-2 Shi (Luowenyu)" }
+	}
+}
+
+# The divisions of the Chinese Army in India (X Force) and the Chinese Expeditionary Force (Y Force) with their Burma and Salween battles, Burmese places in their Chinese names (Ren'anqiang = Yenangyaung, Mizhina = Myitkyina, Bamo = Bhamo, Tonggu = Toungoo). Own numbering; the fallback continues as Expeditionary Army divisions.
+CHI_INF_03 = 
+{
+	name = "Expeditionary Divisions"
+
+	for_countries = { CHI }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Yuanzhengjun Di-%d Shi"
+
+	ordered =
+	{
+		# X Force (Zhuyinjun) and Y Force (Yuanzhengjun), Burma and the Salween 1942-45
+		1 = { "Xinbian Di-38 Shi (Ren'anqiang)" }
+		2 = { "Xinbian Di-22 Shi (Mengguan)" }
+		3 = { "Xinbian Di-30 Shi (Mizhina)" }
+		4 = { "Di-50 Shi (Mizhina)" }
+		5 = { "Di-14 Shi (Bamo)" }
+		6 = { "Di-200 Shi (Tonggu)" }
+		7 = { "Di-36 Shi (Tengchong)" }
+		8 = { "Di-87 Shi (Longling)" }
+		9 = { "Di-88 Shi (Longling)" }
+		10 = { "Rongyu Di-1 Shi (Longling)" }
+		11 = { "Xinbian Di-28 Shi (Songshan)" }
+		12 = { "Xinbian Di-39 Shi (Longling)" }
+		13 = { "Di-82 Shi (Songshan)" }
+		14 = { "Di-103 Shi (Songshan)" }
+		15 = { "Di-116 Shi (Tengchong)" }
+		16 = { "Di-130 Shi (Tengchong)" }
+		17 = { "Di-198 Shi (Tengchong)" }
+		18 = { "Yubei Di-2 Shi (Tengchong)" }
+		19 = { "Zanbian Di-55 Shi" }
+		20 = { "Xinbian Di-33 Shi" }
+	}
+}
+
+# Plain variant of the corps-level armies (jun, 2-3 divisions; 'army' in English sources, e.g. New 1st Army). Fallback only.
+CHI_JUN_01 = 
+{
+	name = "Corps-Level Armies"
+
+	for_countries = { CHI }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Di-%d Jun"
+}
+
+# Named variant of CHI_JUN_01: the Iron Army (4th), Mount Tai Army (10th), Thousand-li Steed (52nd), Anti-Japanese Iron Army (74th) and First Army Under Heaven (New 1st), the rest with a battle. Keys 101-102 hold the New armies.
+CHI_JUN_02 = 
+{
+	name = "Corps-Level Armies (Named)"
+
+	for_countries = { CHI }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	link_numbering_with = { CHI_JUN_01 }
+
+	fallback_name = "Di-%d Jun"
+
+	ordered =
+	{
+		# Armies with a nickname in quotes or a battle honour in parentheses
+		4 = { "Di-4 Jun 'Tiejun'" }
+		5 = { "Di-5 Jun (Kunlunguan)" }
+		8 = { "Di-8 Jun (Songshan)" }
+		9 = { "Di-9 Jun (Xinkou)" }
+		10 = { "Di-10 Jun 'Taishanjun'" }
+		13 = { "Di-13 Jun (Nankou)" }
+		17 = { "Di-17 Jun (Gubeikou)" }
+		18 = { "Di-18 Jun (Shipai)" }
+		29 = { "Di-29 Jun (Xifengkou)" }
+		32 = { "Di-32 Jun (Wanjialing)" }
+		49 = { "Di-49 Jun (Shanggao)" }
+		52 = { "Di-52 Jun 'Qianliju'" }
+		53 = { "Di-53 Jun (Tengchong)" }
+		54 = { "Di-54 Jun (Tengchong)" }
+		66 = { "Di-66 Jun (Wanjialing)" }
+		70 = { "Di-70 Jun (Shanggao)" }
+		71 = { "Di-71 Jun (Longling)" }
+		73 = { "Di-73 Jun (Xiangxi)" }
+		74 = { "Di-74 Jun 'Kangri Tiejun'" }
+		94 = { "Di-94 Jun (Wuyang)" }
+		100 = { "Di-100 Jun (Xiangxi)" }
+		# New armies (after the numbered ones in use order)
+		101 = { "Xinbian Di-1 Jun 'Tianxia Diyi Jun'" }
+		102 = { "Xinbian Di-6 Jun (Bamo)" }
+	}
+}
+
+# ===== Motorized, mechanized and armour =====
+
+# Overrides vanilla CHI_MOT_01 as the plain variant. Vanilla links it to CHI_INF_01, and the link stays [NAM-020]; every mobile group anchors there. Vanilla's 'Jidonghua' is not a period term; motuohua is the standard word. Key 500 (first in use order) is the 200th Division, 4xx are New divisions as in CHI_INF_01.
+CHI_MOT_01 = 
+{
+	name = "Motorized Divisions"
+
+	for_countries = { CHI }
+
+	can_use = { always = yes }
+
+	division_types = { "motorized" }
+
+	link_numbering_with = { CHI_INF_01 }
+
+	fallback_name = "Motuohua Di-%d Shi"
+
+	ordered =
+	{
+		# Vanilla keys written again (vanilla group merges in); 500 and 4xx come first in use order
+		1 = { "Motuohua Di-%d Shi" }
+		2 = { "Motuohua Di-%d Shi" }
+		3 = { "Motuohua Di-%d Shi" }
+		4 = { "Motuohua Di-%d Shi" }
+		5 = { "Motuohua Di-%d Shi" }
+		6 = { "Motuohua Di-%d Shi" }
+		7 = { "Motuohua Di-%d Shi" }
+		8 = { "Motuohua Di-%d Shi" }
+		9 = { "Motuohua Di-%d Shi" }
+		10 = { "Motuohua Di-%d Shi" }
+		11 = { "Motuohua Di-%d Shi" }
+		12 = { "Motuohua Di-%d Shi" }
+		13 = { "Motuohua Di-%d Shi" }
+		14 = { "Motuohua Di-%d Shi" }
+		15 = { "Motuohua Di-%d Shi" }
+		16 = { "Motuohua Di-%d Shi" }
+		17 = { "Motuohua Di-%d Shi" }
+		18 = { "Motuohua Di-%d Shi" }
+		19 = { "Motuohua Di-%d Shi" }
+		20 = { "Motuohua Di-%d Shi" }
+		402 = { "Xinbian Motuohua Di-2 Shi" }
+		403 = { "Xinbian Motuohua Di-3 Shi" }
+		404 = { "Xinbian Motuohua Di-4 Shi" }
+		406 = { "Xinbian Motuohua Di-6 Shi" }
+		409 = { "Xinbian Motuohua Di-9 Shi" }
+		410 = { "Xinbian Motuohua Di-10 Shi" }
+		411 = { "Xinbian Motuohua Di-11 Shi" }
+		414 = { "Xinbian Motuohua Di-14 Shi" }
+		422 = { "Xinbian Motuohua Di-22 Shi" }
+		425 = { "Xinbian Motuohua Di-25 Shi" }
+		427 = { "Xinbian Motuohua Di-27 Shi" }
+		430 = { "Xinbian Motuohua Di-30 Shi" }
+		436 = { "Xinbian Motuohua Di-36 Shi" }
+		438 = { "Xinbian Motuohua Di-38 Shi" }
+		450 = { "Xinbian Motuohua Di-50 Shi" }
+		457 = { "Xinbian Motuohua Di-57 Shi" }
+		467 = { "Xinbian Motuohua Di-67 Shi" }
+		480 = { "Xinbian Motuohua Di-80 Shi" }
+		483 = { "Xinbian Motuohua Di-83 Shi" }
+		487 = { "Xinbian Motuohua Di-87 Shi" }
+		488 = { "Xinbian Motuohua Di-88 Shi" }
+		489 = { "Xinbian Motuohua Di-89 Shi" }
+		500 = { "Motuohua Di-200 Shi" }
+	}
+}
+
+# Overrides vanilla CHI_MEC_01 as the plain variant (focuses in china_shared.txt and china_shared_TSR.txt give their templates this group). Jixiehua as in the 1938 Mechanized 200th Division (Lujun Jixiehua Di-200 Shi), which key 500 holds.
+CHI_MEC_01 = 
+{
+	name = "Mechanized Divisions"
+
+	for_countries = { CHI }
+
+	can_use = { always = yes }
+
+	division_types = { "mechanized" }
+
+	link_numbering_with = { CHI_INF_01 }
+
+	fallback_name = "Jixiehua Di-%d Shi"
+
+	ordered =
+	{
+		# Vanilla keys written again (vanilla group merges in); 500 and 4xx come first in use order
+		1 = { "Jixiehua Di-%d Shi" }
+		2 = { "Jixiehua Di-%d Shi" }
+		3 = { "Jixiehua Di-%d Shi" }
+		4 = { "Jixiehua Di-%d Shi" }
+		5 = { "Jixiehua Di-%d Shi" }
+		6 = { "Jixiehua Di-%d Shi" }
+		7 = { "Jixiehua Di-%d Shi" }
+		8 = { "Jixiehua Di-%d Shi" }
+		9 = { "Jixiehua Di-%d Shi" }
+		10 = { "Jixiehua Di-%d Shi" }
+		11 = { "Jixiehua Di-%d Shi" }
+		12 = { "Jixiehua Di-%d Shi" }
+		13 = { "Jixiehua Di-%d Shi" }
+		14 = { "Jixiehua Di-%d Shi" }
+		15 = { "Jixiehua Di-%d Shi" }
+		16 = { "Jixiehua Di-%d Shi" }
+		17 = { "Jixiehua Di-%d Shi" }
+		18 = { "Jixiehua Di-%d Shi" }
+		19 = { "Jixiehua Di-%d Shi" }
+		20 = { "Jixiehua Di-%d Shi" }
+		402 = { "Xinbian Jixiehua Di-2 Shi" }
+		403 = { "Xinbian Jixiehua Di-3 Shi" }
+		404 = { "Xinbian Jixiehua Di-4 Shi" }
+		406 = { "Xinbian Jixiehua Di-6 Shi" }
+		409 = { "Xinbian Jixiehua Di-9 Shi" }
+		410 = { "Xinbian Jixiehua Di-10 Shi" }
+		411 = { "Xinbian Jixiehua Di-11 Shi" }
+		414 = { "Xinbian Jixiehua Di-14 Shi" }
+		422 = { "Xinbian Jixiehua Di-22 Shi" }
+		425 = { "Xinbian Jixiehua Di-25 Shi" }
+		427 = { "Xinbian Jixiehua Di-27 Shi" }
+		430 = { "Xinbian Jixiehua Di-30 Shi" }
+		436 = { "Xinbian Jixiehua Di-36 Shi" }
+		438 = { "Xinbian Jixiehua Di-38 Shi" }
+		450 = { "Xinbian Jixiehua Di-50 Shi" }
+		457 = { "Xinbian Jixiehua Di-57 Shi" }
+		467 = { "Xinbian Jixiehua Di-67 Shi" }
+		480 = { "Xinbian Jixiehua Di-80 Shi" }
+		483 = { "Xinbian Jixiehua Di-83 Shi" }
+		487 = { "Xinbian Jixiehua Di-87 Shi" }
+		488 = { "Xinbian Jixiehua Di-88 Shi" }
+		489 = { "Xinbian Jixiehua Di-89 Shi" }
+		500 = { "Jixiehua Di-200 Shi" }
+	}
+}
+
+# Named variant: the German-trained divisions (dexie shi), the 200th and four divisions of the 74th, 94th and 18th Armies, with the honours of CHI_INF_02.
+CHI_MOT_02 = 
+{
+	name = "Motorized Divisions (Named)"
+
+	for_countries = { CHI }
+
+	can_use = { always = yes }
+
+	division_types = { "motorized" }
+
+	link_numbering_with = { CHI_INF_01 }
+
+	fallback_name = "Motuohua Di-%d Shi"
+
+	ordered =
+	{
+		# The German-trained divisions of 1935-37 and the 200th, most famous first, then four divisions of the 74th, 94th and 18th Armies
+		200 = { "Motuohua Di-200 Shi (Kunlunguan)" }
+		36 = { "Motuohua Di-36 Shi (Songhu)" }
+		87 = { "Motuohua Di-87 Shi (Songhu)" }
+		88 = { "Motuohua Di-88 Shi (Sihang)" }
+		57 = { "Motuohua Di-57 Shi 'Huben'" }
+		3 = { "Motuohua Di-3 Shi (Hengyang)" }
+		9 = { "Motuohua Di-9 Shi (Songhu)" }
+		6 = { "Motuohua Di-6 Shi (Songhu)" }
+		14 = { "Motuohua Di-14 Shi (Songhu)" }
+		11 = { "Motuohua Di-11 Shi (Shipai)" }
+		2 = { "Motuohua Di-2 Shi (Nantianmen)" }
+		25 = { "Motuohua Di-25 Shi (Gubeikou)" }
+		83 = { "Motuohua Di-83 Shi (Nantianmen)" }
+		27 = { "Motuohua Di-27 Shi (Tai'erzhuang)" }
+		67 = { "Motuohua Di-67 Shi (Songhu)" }
+		4 = { "Motuohua Di-4 Shi (Nankou)" }
+		10 = { "Motuohua Di-10 Shi (Xinkou)" }
+		89 = { "Motuohua Di-89 Shi (Nankou)" }
+		51 = { "Motuohua Di-51 Shi (Wanjialing)" }
+		58 = { "Motuohua Di-58 Shi (Shanggao)" }
+		5 = { "Motuohua Di-5 Shi (Wuyang)" }
+		18 = { "Motuohua Di-18 Shi (Qianniuling)" }
+	}
+}
+
+# Named variant: the German-trained divisions (dexie shi), the 200th and four divisions of the 74th, 94th and 18th Armies, with the honours of CHI_INF_02.
+CHI_MEC_02 = 
+{
+	name = "Mechanized Divisions (Named)"
+
+	for_countries = { CHI }
+
+	can_use = { always = yes }
+
+	division_types = { "mechanized" }
+
+	link_numbering_with = { CHI_INF_01 }
+
+	fallback_name = "Jixiehua Di-%d Shi"
+
+	ordered =
+	{
+		# The German-trained divisions of 1935-37 and the 200th, most famous first, then four divisions of the 74th, 94th and 18th Armies
+		200 = { "Jixiehua Di-200 Shi (Kunlunguan)" }
+		36 = { "Jixiehua Di-36 Shi (Songhu)" }
+		87 = { "Jixiehua Di-87 Shi (Songhu)" }
+		88 = { "Jixiehua Di-88 Shi (Sihang)" }
+		57 = { "Jixiehua Di-57 Shi 'Huben'" }
+		3 = { "Jixiehua Di-3 Shi (Hengyang)" }
+		9 = { "Jixiehua Di-9 Shi (Songhu)" }
+		6 = { "Jixiehua Di-6 Shi (Songhu)" }
+		14 = { "Jixiehua Di-14 Shi (Songhu)" }
+		11 = { "Jixiehua Di-11 Shi (Shipai)" }
+		2 = { "Jixiehua Di-2 Shi (Nantianmen)" }
+		25 = { "Jixiehua Di-25 Shi (Gubeikou)" }
+		83 = { "Jixiehua Di-83 Shi (Nantianmen)" }
+		27 = { "Jixiehua Di-27 Shi (Tai'erzhuang)" }
+		67 = { "Jixiehua Di-67 Shi (Songhu)" }
+		4 = { "Jixiehua Di-4 Shi (Nankou)" }
+		10 = { "Jixiehua Di-10 Shi (Xinkou)" }
+		89 = { "Jixiehua Di-89 Shi (Nankou)" }
+		51 = { "Jixiehua Di-51 Shi (Wanjialing)" }
+		58 = { "Jixiehua Di-58 Shi (Shanggao)" }
+		5 = { "Jixiehua Di-5 Shi (Wuyang)" }
+		18 = { "Jixiehua Di-18 Shi (Qianniuling)" }
+	}
+}
+
+# Overrides vanilla CHI_ARM_01 as the plain variant; vanilla's 'Zhuangjia Shi' (armoured division) is a 1950s Taiwan form, so the list uses the period arm word zhuangjiabing (Armoured Corps).
+CHI_ARM_01 = 
+{
+	name = "Armored Divisions"
+
+	for_countries = { CHI }
+
+	can_use = { always = yes }
+
+	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
+
+	fallback_name = "Zhuangjiabing Di-%d Shi"
+
+	ordered =
+	{
+		# Vanilla keys 1-15 written again
+		1 = { "Zhuangjiabing Di-%d Shi" }
+		2 = { "Zhuangjiabing Di-%d Shi" }
+		3 = { "Zhuangjiabing Di-%d Shi" }
+		4 = { "Zhuangjiabing Di-%d Shi" }
+		5 = { "Zhuangjiabing Di-%d Shi" }
+		6 = { "Zhuangjiabing Di-%d Shi" }
+		7 = { "Zhuangjiabing Di-%d Shi" }
+		8 = { "Zhuangjiabing Di-%d Shi" }
+		9 = { "Zhuangjiabing Di-%d Shi" }
+		10 = { "Zhuangjiabing Di-%d Shi" }
+		11 = { "Zhuangjiabing Di-%d Shi" }
+		12 = { "Zhuangjiabing Di-%d Shi" }
+		13 = { "Zhuangjiabing Di-%d Shi" }
+		14 = { "Zhuangjiabing Di-%d Shi" }
+		15 = { "Zhuangjiabing Di-%d Shi" }
+	}
+}
+
+# Named variant of CHI_ARM_01: three divisions after the battles of the 1st Tank Battalion (Zhanche Di-1 Ying: Kunlunguan 1939, Walawbum 1944, Guningtou 1949), then the Armoured Corps of 1937, the armoured and tank regiments and the Armoured Training Group.
+CHI_ARM_02 = 
+{
+	name = "Armored Divisions (Named)"
+
+	for_countries = { CHI }
+
+	can_use = { always = yes }
+
+	division_types = { "light_armor" "medium_armor" "heavy_armor" "modern_armor" }
+
+	link_numbering_with = { CHI_ARM_01 }
+
+	fallback_name = "Zhuangjiabing Di-%d Shi"
+
+	ordered =
+	{
+		# Battles of the 1st Tank Battalion as divisional honours
+		1 = { "Zhuangjiabing Di-1 Shi (Kunlunguan)" }
+		2 = { "Zhuangjiabing Di-2 Shi (Waluban)" }
+		3 = { "Zhuangjiabing Di-3 Shi (Guningtou)" }
+		# The NRA's armoured units, 1937-49
+		4 = { "Zhuangjiabing Tuan" }
+		5 = { "Zhanche Di-1 Ying" }
+		6 = { "Zhuangjiabing Di-1 Tuan" }
+		7 = { "Zhuangjiabing Di-2 Tuan" }
+		8 = { "Zhanche Di-1 Tuan" }
+		9 = { "Zhanche Di-2 Tuan" }
+		10 = { "Zhanche Di-3 Tuan" }
+		11 = { "Zhanche Di-4 Tuan" }
+		12 = { "Zhuangjiabing Jiaodao Zongdui" }
+	}
+}
+
+# ===== Cavalry =====
+
+# Overrides vanilla CHI_CAV_01 ('%d Qibing Jun'). The NRA wrote the arm before the ordinal (Qibing Di-3 Shi, cavalry 3rd division). Cavalry divisions 1-12, the New (Xinbian) 1-7 and Provisional (Zanbian) divisions, then the six cavalry armies and Ma Zhanshan's Northeast Advance Army. Designations only: no clique leader is named.
+CHI_CAV_01 = 
+{
+	name = "Cavalry Divisions"
+
+	for_countries = { CHI }
+
+	can_use = { always = yes }
+
+	division_types = { "cavalry" }
+
+	fallback_name = "Qibing Di-%d Shi"
+
+	ordered =
+	{
+		# Cavalry divisions 1-12 (vanilla keys 1-10 written again)
+		1 = { "Qibing Di-%d Shi" }
+		2 = { "Qibing Di-%d Shi" }
+		3 = { "Qibing Di-%d Shi" }
+		4 = { "Qibing Di-%d Shi" }
+		5 = { "Qibing Di-%d Shi" }
+		6 = { "Qibing Di-%d Shi" }
+		7 = { "Qibing Di-%d Shi" }
+		8 = { "Qibing Di-%d Shi" }
+		9 = { "Qibing Di-%d Shi" }
+		10 = { "Qibing Di-%d Shi" }
+		11 = { "Qibing Di-%d Shi" }
+		12 = { "Qibing Di-%d Shi" }
+		# New and Provisional cavalry divisions (vanilla's 'Xin N Qibing Jun' on 101-104 rewritten)
+		101 = { "Xinbian Qibing Di-1 Shi" }
+		102 = { "Xinbian Qibing Di-2 Shi" }
+		103 = { "Xinbian Qibing Di-3 Shi" }
+		104 = { "Xinbian Qibing Di-4 Shi" }
+		105 = { "Xinbian Qibing Di-5 Shi" }
+		106 = { "Xinbian Qibing Di-6 Shi" }
+		107 = { "Xinbian Qibing Di-7 Shi" }
+		108 = { "Zanbian Qibing Di-1 Shi" }
+		109 = { "Zanbian Qibing Di-2 Shi" }
+		110 = { "Zanbian Qibing Di-10 Shi" }
+		# Cavalry armies
+		111 = { "Qibing Di-1 Jun" }
+		112 = { "Qibing Di-2 Jun" }
+		113 = { "Qibing Di-3 Jun" }
+		114 = { "Qibing Di-4 Jun" }
+		115 = { "Qibing Di-5 Jun" }
+		116 = { "Qibing Di-6 Jun" }
+		117 = { "Dongbei Tingjin Jun" }
+	}
+}
+
+# ===== Specialist troops =====
+
+# Overrides vanilla CHI_PAR_01 ('%d Sanbing Shi'): the NRA never had a parachute division. The 1st Parachute Regiment (cover name Hongxiang, 'Soaring Swan', Kunming 1944), the 2nd and 3rd, the Parachute Group of 1946 and the Army Assault Group of 1945.
+CHI_PAR_01 = 
+{
+	name = "Parachute Regiments"
+
+	for_countries = { CHI }
+
+	can_use = { always = yes }
+
+	division_types = { "paratrooper" }
+
+	fallback_name = "Sanbing Di-%d Tuan"
+
+	ordered =
+	{
+		# The parachute regiments of 1944-49 (vanilla keys 1-10 written again)
+		1 = { "Sanbing Di-1 Tuan 'Hongxiang'" }
+		2 = { "Sanbing Di-2 Tuan" }
+		3 = { "Sanbing Di-3 Tuan" }
+		4 = { "Sanbing Zongdui" }
+		5 = { "Lujun Tuji Zongdui" }
+		6 = { "Sanbing Di-%d Tuan" }
+		7 = { "Sanbing Di-%d Tuan" }
+		8 = { "Sanbing Di-%d Tuan" }
+		9 = { "Sanbing Di-%d Tuan" }
+		10 = { "Sanbing Di-%d Tuan" }
+	}
+}
+
+# Overrides vanilla CHI_MAR_01 ('%d Luzhan Dui Shi', wrongly split): the Navy Marine Corps (Haijun Luzhandui) of Fujian, its two independent brigades of 1929-45, the mixed brigade of 1923, the supply regiment and the two marine divisions of 1949.
+CHI_MAR_01 = 
+{
+	name = "Marine Brigades"
+
+	for_countries = { CHI }
+
+	can_use = { always = yes }
+
+	division_types = { "marine" }
+
+	fallback_name = "Haijun Luzhandui Di-%d Lü"
+
+	ordered =
+	{
+		# The Navy Marine Corps, 1923-49 (vanilla keys 1-10 written again)
+		1 = { "Haijun Luzhandui Di-1 Duli Lü" }
+		2 = { "Haijun Luzhandui Di-2 Duli Lü" }
+		3 = { "Haijun Luzhandui Di-1 Huncheng Lü" }
+		4 = { "Haijun Luzhandui Buchong Tuan" }
+		5 = { "Luzhan Di-1 Shi" }
+		6 = { "Luzhan Di-2 Shi" }
+		7 = { "Haijun Luzhandui Di-%d Lü" }
+		8 = { "Haijun Luzhandui Di-%d Lü" }
+		9 = { "Haijun Luzhandui Di-%d Lü" }
+		10 = { "Haijun Luzhandui Di-%d Lü" }
+	}
+}
+
+# Overrides vanilla CHI_MNT_01 (an infantry copy, focuses in china_shared.txt give their templates this group). The NRA had no mountain units, so the list is an extrapolation: the 24 keys vanilla lists first carry the ranges and passes the NRA fought in or trained at (Zhongtiao Shan, Xuefeng Shan, Gaoligong Shan), without a number; the rest are numbered. Vanilla links it to CHI_INF_01, and the link stays [NAM-020].
+CHI_MNT_01 = 
+{
+	name = "Mountain Divisions"
+
+	for_countries = { CHI }
+
+	can_use = { always = yes }
+
+	division_types = { "mountaineers" }
+
+	link_numbering_with = { CHI_INF_01 }
+
+	fallback_name = "Shandi Di-%d Shi"
+
+	ordered =
+	{
+		# Mountain identities on vanilla's keys 402-499, which this group hands out first
+		430 = { "Shandi Shi 'Zhongtiao Shan'" }
+		438 = { "Shandi Shi 'Xuefeng Shan'" }
+		422 = { "Shandi Shi 'Gaoligong Shan'" }
+		414 = { "Shandi Shi 'Dabie Shan'" }
+		450 = { "Shandi Shi 'Mufu Shan'" }
+		403 = { "Shandi Shi 'Lu Shan'" }
+		406 = { "Shandi Shi 'Zijin Shan'" }
+		409 = { "Shandi Shi 'Yuelu Shan'" }
+		436 = { "Shandi Shi 'Jiugong Shan'" }
+		487 = { "Shandi Shi 'Funiu Shan'" }
+		488 = { "Shandi Shi 'Tongbai Shan'" }
+		498 = { "Shandi Shi 'Wuling Shan'" }
+		402 = { "Shandi Shi 'Qin Ling'" }
+		404 = { "Shandi Shi 'Daba Shan'" }
+		410 = { "Shandi Shi 'Emei Shan'" }
+		411 = { "Shandi Shi 'Nanyue'" }
+		425 = { "Shandi Shi 'Tianmu Shan'" }
+		427 = { "Shandi Shi 'Wuyi Shan'" }
+		457 = { "Shandi Shi 'Huang Shan'" }
+		467 = { "Shandi Shi 'Jiuhua Shan'" }
+		480 = { "Shandi Shi 'Wudang Shan'" }
+		483 = { "Shandi Shi 'Hua Shan'" }
+		489 = { "Shandi Shi 'Jigong Shan'" }
+		499 = { "Shandi Shi 'Niangziguan'" }
+		# Other vanilla keys written again
+		1 = { "Shandi Di-%d Shi" }
+		2 = { "Shandi Di-%d Shi" }
+		3 = { "Shandi Di-%d Shi" }
+		4 = { "Shandi Di-%d Shi" }
+		5 = { "Shandi Di-%d Shi" }
+		6 = { "Shandi Di-%d Shi" }
+		7 = { "Shandi Di-%d Shi" }
+		8 = { "Shandi Di-%d Shi" }
+		9 = { "Shandi Di-%d Shi" }
+		10 = { "Shandi Di-%d Shi" }
+		11 = { "Shandi Di-%d Shi" }
+		12 = { "Shandi Di-%d Shi" }
+		13 = { "Shandi Di-%d Shi" }
+		14 = { "Shandi Di-%d Shi" }
+		15 = { "Shandi Di-%d Shi" }
+		16 = { "Shandi Di-%d Shi" }
+		17 = { "Shandi Di-%d Shi" }
+		18 = { "Shandi Di-%d Shi" }
+		19 = { "Shandi Di-%d Shi" }
+		20 = { "Shandi Di-%d Shi" }
+		21 = { "Shandi Di-%d Shi" }
+		22 = { "Shandi Di-%d Shi" }
+		23 = { "Shandi Di-%d Shi" }
+		25 = { "Shandi Di-%d Shi" }
+		26 = { "Shandi Di-%d Shi" }
+		27 = { "Shandi Di-%d Shi" }
+		28 = { "Shandi Di-%d Shi" }
+		29 = { "Shandi Di-%d Shi" }
+		30 = { "Shandi Di-%d Shi" }
+		31 = { "Shandi Di-%d Shi" }
+		32 = { "Shandi Di-%d Shi" }
+		33 = { "Shandi Di-%d Shi" }
+		34 = { "Shandi Di-%d Shi" }
+		35 = { "Shandi Di-%d Shi" }
+		36 = { "Shandi Di-%d Shi" }
+		37 = { "Shandi Di-%d Shi" }
+		38 = { "Shandi Di-%d Shi" }
+		39 = { "Shandi Di-%d Shi" }
+		40 = { "Shandi Di-%d Shi" }
+		41 = { "Shandi Di-%d Shi" }
+		42 = { "Shandi Di-%d Shi" }
+		43 = { "Shandi Di-%d Shi" }
+		44 = { "Shandi Di-%d Shi" }
+		45 = { "Shandi Di-%d Shi" }
+		46 = { "Shandi Di-%d Shi" }
+		47 = { "Shandi Di-%d Shi" }
+		48 = { "Shandi Di-%d Shi" }
+		49 = { "Shandi Di-%d Shi" }
+		50 = { "Shandi Di-%d Shi" }
+		51 = { "Shandi Di-%d Shi" }
+		52 = { "Shandi Di-%d Shi" }
+		53 = { "Shandi Di-%d Shi" }
+		54 = { "Shandi Di-%d Shi" }
+		55 = { "Shandi Di-%d Shi" }
+		56 = { "Shandi Di-%d Shi" }
+		57 = { "Shandi Di-%d Shi" }
+		58 = { "Shandi Di-%d Shi" }
+		59 = { "Shandi Di-%d Shi" }
+		60 = { "Shandi Di-%d Shi" }
+		61 = { "Shandi Di-%d Shi" }
+		62 = { "Shandi Di-%d Shi" }
+		63 = { "Shandi Di-%d Shi" }
+		64 = { "Shandi Di-%d Shi" }
+		65 = { "Shandi Di-%d Shi" }
+		66 = { "Shandi Di-%d Shi" }
+		67 = { "Shandi Di-%d Shi" }
+		68 = { "Shandi Di-%d Shi" }
+		69 = { "Shandi Di-%d Shi" }
+		70 = { "Shandi Di-%d Shi" }
+		71 = { "Shandi Di-%d Shi" }
+		72 = { "Shandi Di-%d Shi" }
+		73 = { "Shandi Di-%d Shi" }
+		74 = { "Shandi Di-%d Shi" }
+		75 = { "Shandi Di-%d Shi" }
+		76 = { "Shandi Di-%d Shi" }
+		77 = { "Shandi Di-%d Shi" }
+		78 = { "Shandi Di-%d Shi" }
+		79 = { "Shandi Di-%d Shi" }
+		80 = { "Shandi Di-%d Shi" }
+		81 = { "Shandi Di-%d Shi" }
+		82 = { "Shandi Di-%d Shi" }
+		83 = { "Shandi Di-%d Shi" }
+		84 = { "Shandi Di-%d Shi" }
+		85 = { "Shandi Di-%d Shi" }
+		86 = { "Shandi Di-%d Shi" }
+		87 = { "Shandi Di-%d Shi" }
+		88 = { "Shandi Di-%d Shi" }
+		89 = { "Shandi Di-%d Shi" }
+		90 = { "Shandi Di-%d Shi" }
+		91 = { "Shandi Di-%d Shi" }
+		92 = { "Shandi Di-%d Shi" }
+		93 = { "Shandi Di-%d Shi" }
+		94 = { "Shandi Di-%d Shi" }
+		95 = { "Shandi Di-%d Shi" }
+		96 = { "Shandi Di-%d Shi" }
+		98 = { "Shandi Di-%d Shi" }
+		99 = { "Shandi Di-%d Shi" }
+		100 = { "Shandi Di-%d Shi" }
+		201 = { "Shandi Di-%d Shi" }
+		202 = { "Shandi Di-%d Shi" }
+		203 = { "Shandi Di-%d Shi" }
+		205 = { "Shandi Di-%d Shi" }
+		206 = { "Shandi Di-%d Shi" }
+		207 = { "Shandi Di-%d Shi" }
+		208 = { "Shandi Di-%d Shi" }
+		209 = { "Shandi Di-%d Shi" }
+		210 = { "Shandi Di-%d Shi" }
+		211 = { "Shandi Di-%d Shi" }
+		212 = { "Shandi Di-%d Shi" }
+		213 = { "Shandi Di-%d Shi" }
+		214 = { "Shandi Di-%d Shi" }
+		215 = { "Shandi Di-%d Shi" }
+	}
+}
+
+# ===== Garrisons and territorial defence =====
+
+# Overrides vanilla CHI_GAR_01, whose names the vanilla file itself calls fictional (manchukuo_TSR.txt gives a template this group). The capital and Songhu (Shanghai) garrison commands, the Yangtze fortresses of 1937-43, the Salt Tax Police (Shuijing Zongtuan) and the military police regiments (Xianbing). The fallback is a garrison group (shoubei zongdui).
+CHI_GAR_01 = 
+{
+	name = "Garrisons & Fortresses"
+
+	for_countries = { CHI }
+
+	can_use = { always = yes }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Shoubei Di-%d Zongdui"
+
+	ordered =
+	{
+		# Garrison commands, Yangtze and coastal fortresses, the Tax Police (vanilla keys 101-127, used first)
+		101 = { "Shoudu Jingbei" }
+		102 = { "Songhu Jingbei" }
+		103 = { "Jinghu Jingbei" }
+		104 = { "Minxia Jingbei" }
+		105 = { "Jiujiang Jingbei" }
+		106 = { "Fengjie Jingbei" }
+		107 = { "Jiangyin Yaosai" }
+		108 = { "Zhenjiang Yaosai" }
+		109 = { "Jiangning Yaosai" }
+		110 = { "Wusong Yaosai" }
+		111 = { "Madang Yaosai" }
+		112 = { "Hukou Yaosai" }
+		113 = { "Tianjiazhen Yaosai" }
+		114 = { "Shipai Yaosai" }
+		115 = { "Yiwan Yaosai" }
+		116 = { "Yuwan Yaosai" }
+		117 = { "Bayi Yaosai" }
+		118 = { "Bawan Yaosai" }
+		119 = { "Humen Yaosai" }
+		126 = { "Minjiang Yaosai" }
+		127 = { "Xiamen Yaosai" }
+		120 = { "Qingdao Yaosai" }
+		121 = { "Jiangfangjun" }
+		122 = { "Shuijing Zongtuan" }
+		123 = { "Lianghuai Shuijing Zongtuan" }
+		124 = { "Jisi Zongdui" }
+		125 = { "Wuhan Jingbei" }
+		# Military police regiments (vanilla keys 1-20)
+		1 = { "Xianbing Di-1 Tuan" }
+		2 = { "Xianbing Di-2 Tuan" }
+		3 = { "Xianbing Di-3 Tuan" }
+		4 = { "Xianbing Di-4 Tuan" }
+		5 = { "Xianbing Di-5 Tuan" }
+		6 = { "Xianbing Di-6 Tuan" }
+		7 = { "Xianbing Di-7 Tuan" }
+		8 = { "Xianbing Di-8 Tuan" }
+		9 = { "Xianbing Di-9 Tuan" }
+		10 = { "Xianbing Di-10 Tuan" }
+		11 = { "Xianbing Di-11 Tuan" }
+		12 = { "Xianbing Di-12 Tuan" }
+		13 = { "Xianbing Di-13 Tuan" }
+		14 = { "Xianbing Di-14 Tuan" }
+		15 = { "Xianbing Di-15 Tuan" }
+		16 = { "Xianbing Di-16 Tuan" }
+		17 = { "Xianbing Di-17 Tuan" }
+		18 = { "Xianbing Di-18 Tuan" }
+		19 = { "Xianbing Di-19 Tuan" }
+		20 = { "Xianbing Di-20 Tuan" }
+	}
+}
+
+# The provincial Peace Preservation regiments (baoan tuan) that the Nanjing government raised from the local militia after 1932, written as the provinces numbered them (Jiangxi Baoan Di-3 Tuan). Ungated: they served every government.
+CHI_BAO_01 = 
+{
+	name = "Peace Preservation Corps"
+
+	for_countries = { CHI }
+
+	can_use = { always = yes }
+
+	division_types = { "militia" }
+
+	fallback_name = "Baoan Di-%d Tuan"
+
+	ordered =
+	{
+		# Provincial Peace Preservation regiments
+		1 = { "Jiangsu Baoan Di-1 Tuan" }
+		2 = { "Jiangsu Baoan Di-2 Tuan" }
+		3 = { "Jiangsu Baoan Di-3 Tuan" }
+		4 = { "Zhejiang Baoan Di-1 Tuan" }
+		5 = { "Zhejiang Baoan Di-2 Tuan" }
+		6 = { "Zhejiang Baoan Di-3 Tuan" }
+		7 = { "Anhui Baoan Di-1 Tuan" }
+		8 = { "Anhui Baoan Di-2 Tuan" }
+		9 = { "Jiangxi Baoan Di-1 Tuan" }
+		10 = { "Jiangxi Baoan Di-3 Tuan" }
+		11 = { "Jiangxi Baoan Di-11 Tuan" }
+		12 = { "Hubei Baoan Di-1 Tuan" }
+		13 = { "Hubei Baoan Di-2 Tuan" }
+		14 = { "Hunan Baoan Di-1 Tuan" }
+		15 = { "Hunan Baoan Di-2 Tuan" }
+		16 = { "Henan Baoan Di-1 Tuan" }
+		17 = { "Henan Baoan Di-2 Tuan" }
+		18 = { "Fujian Baoan Di-1 Tuan" }
+		19 = { "Fujian Baoan Di-2 Tuan" }
+		20 = { "Shaanxi Baoan Di-1 Tuan" }
+		21 = { "Gansu Baoan Di-1 Tuan" }
+		22 = { "Guizhou Baoan Di-1 Tuan" }
+		23 = { "Guangdong Baoan Di-1 Tuan" }
+	}
+}
+
+# ===== Ideology suites =====
+
+# Kuomintang party army (neutrality, the government CHI starts with): the Whampoa Academy training regiments of 1924-25, the Party Army (Dangjun) with the battles of the Eastern and Northern Expeditions, the Guard Army whose two divisions became the 87th and 88th in 1932, the Training Brigade (Jiaodao Zongdui) and the Youth Army.
+CHI_KMT_01 = 
+{
+	name = "Party Army Divisions"
+
+	for_countries = { CHI }
+
+	can_use = { has_government = neutrality }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Dangjun Di-%d Shi"
+
+	ordered =
+	{
+		# Whampoa, the Party Army and the Guard Army
+		1 = { "Huangpu Jiaodao Di-1 Tuan" }
+		2 = { "Huangpu Jiaodao Di-2 Tuan" }
+		3 = { "Huangpu Jiaodao Di-3 Tuan" }
+		4 = { "Dangjun Di-1 Lü" }
+		5 = { "Dangjun Di-1 Shi (Mianhu)" }
+		6 = { "Dangjun Di-2 Shi (Huizhou)" }
+		7 = { "Dangjun Di-3 Shi (Longtan)" }
+		8 = { "Dangjun Di-4 Shi (Beifa)" }
+		9 = { "Jingwei Di-1 Lü" }
+		10 = { "Jingwei Di-1 Shi" }
+		11 = { "Jingwei Di-2 Shi" }
+		12 = { "Jiaodao Di-1 Shi" }
+		13 = { "Jiaodao Zongdui" }
+		# The Youth Army (Qingnianjun) of 1944-45, with the town each division was raised at
+		14 = { "Qingnianjun Di-201 Shi (Bishan)" }
+		15 = { "Qingnianjun Di-202 Shi (Qijiang)" }
+		16 = { "Qingnianjun Di-203 Shi (Luxian)" }
+		17 = { "Qingnianjun Di-204 Shi (Wanxian)" }
+		18 = { "Qingnianjun Di-205 Shi (Zhazuo)" }
+		19 = { "Qingnianjun Di-206 Shi (Hanzhong)" }
+		20 = { "Qingnianjun Di-207 Shi (Qujing)" }
+		21 = { "Qingnianjun Di-208 Shi (Lichuan)" }
+		22 = { "Qingnianjun Di-209 Shi (Yanshan)" }
+	}
+}
+
+# Fascism (the Blue Shirts focuses): divisions after the Lixingshe, its outer Fuxingshe, the 'Blue Shirts' (Lanyishe), its servicemen's and youth associations and the New Life Movement, then the armed units of Dai Li (a Lixingshe director): the Loyal and Patriotic Army (Zhongyi Jiuguojun), the Special Action Army and its detachments, and the action groups behind Japanese lines.
+CHI_LXS_01 = 
+{
+	name = "Blue Shirts Divisions"
+
+	for_countries = { CHI }
+
+	can_use = { has_government = fascism }
+
+	division_types = { "infantry" "militia" }
+
+	fallback_name = "Lixingshe Di-%d Shi"
+
+	ordered =
+	{
+		# Divisions after the Blue Shirts and their circles
+		1 = { "Lanyishe Di-1 Shi" }
+		2 = { "Fuxingshe Di-1 Shi" }
+		3 = { "Geming Junren Di-1 Shi" }
+		4 = { "Geming Qingnian Di-1 Shi" }
+		5 = { "Xin Shenghuo Di-1 Shi" }
+		# Dai Li's Loyal and Patriotic Army and Special Action units, 1937-45
+		6 = { "Zhongyi Jiuguojun Di-1 Zongdui" }
+		7 = { "Zhongyi Jiuguojun Di-2 Zongdui" }
+		8 = { "Zhongyi Jiuguojun Di-3 Zongdui" }
+		9 = { "Biedongjun Di-3 Zongdui" }
+		10 = { "Biedongjun Di-4 Zongdui" }
+		11 = { "Biedongjun Di-7 Zongdui" }
+		12 = { "Suzhe Biedongdui Di-1 Zhidui" }
+		13 = { "Suzhe Biedongdui Di-2 Zhidui" }
+		14 = { "Suzhe Biedongdui Di-3 Zhidui" }
+		15 = { "Suzhe Biedongdui Di-4 Zhidui" }
+		16 = { "Suzhe Biedongdui Di-5 Zhidui" }
+		17 = { "Songhu Xingdong Zongdui" }
+		18 = { "Nanjing Xingdong Zongdui" }
+		19 = { "Taihu Xingdong Zongdui" }
+		20 = { "Pudong Xingdong Zongdui" }
+		21 = { "Zhedong Xingdong Zongdui" }
+		22 = { "Zhexi Xingdong Zongdui" }
+	}
+}
+
+# Democratic: the armies that fought for the Republic and its constitution: the National Protection Army (Huguojun) against Yuan Shikai's monarchy in 1915-16, Sun Yat-sen's Constitutional Protection Army (Hufajun) and the Shaanxi Jingguojun of 1917-18, and the revolutionaries of 1911 at Wuchang, Hanyang and Nanjing (the Hubei army Ejun, the Jiangsu-Zhejiang Allied Army). The fallback continues the National Protection Army.
+CHI_HUG_01 = 
+{
+	name = "Republican Armies"
+
+	for_countries = { CHI }
+
+	can_use = { has_government = democratic }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Huguojun Di-%d Shi"
+
+	ordered =
+	{
+		# Defenders of the Republic: National Protection and Constitutional Protection, 1915-18
+		1 = { "Huguojun Di-1 Jun (Naxi)" }
+		2 = { "Huguojun Di-2 Jun" }
+		3 = { "Huguojun Di-3 Jun" }
+		4 = { "Hufajun" }
+		5 = { "Xiangnan Hufajun" }
+		6 = { "Shaanxi Jingguojun" }
+		7 = { "Jingguojun Di-1 Lu" }
+		8 = { "Jingguojun Di-3 Lu" }
+		9 = { "Jingguojun Di-4 Lu" }
+		# The revolution of 1911: Wuchang, Hanyang and Nanjing
+		10 = { "Ejun" }
+		11 = { "Gongcheng Di-8 Ying (Wuchang)" }
+		12 = { "Di-42 Biao (Hanyang)" }
+		13 = { "Jiangzhe Lianjun" }
+		14 = { "Zhenjun" }
+		15 = { "Sujun" }
+		16 = { "Zhejun" }
+		17 = { "Zhejun Gansidui" }
+		18 = { "Hujun Xianfengdui" }
+	}
+}
+
+# Communism, from the CHI side: the People's Revolutionary Army (Renmin Gemingjun) of the 1933 Fujian government, formed from the 19th Route Army of the 1932 Shanghai defence, and NRA armies that went over in 1949 (the Beiping handover, the Suiyuan uprising, Qiyi). The Red Army, Eighth Route Army, New Fourth Army and PLA are left to the PRC file.
+CHI_RGJ_01 = 
+{
+	name = "People's Revolutionary Army"
+
+	for_countries = { CHI }
+
+	can_use = { has_government = communism }
+
+	division_types = { "infantry" }
+
+	fallback_name = "Renmin Gemingjun Di-%d Shi"
+
+	ordered =
+	{
+		# The Fujian People's Revolutionary Army of 1933-34 and the 19th Route Army
+		1 = { "Renmin Gemingjun Di-1 Jun" }
+		2 = { "Renmin Gemingjun Di-2 Jun" }
+		3 = { "Renmin Gemingjun Di-3 Jun" }
+		4 = { "Renmin Gemingjun Di-4 Jun" }
+		5 = { "Renmin Gemingjun Di-5 Jun" }
+		6 = { "Di-19 Lujun" }
+		7 = { "Di-19 Lujun Di-60 Shi" }
+		8 = { "Di-19 Lujun Di-61 Shi" }
+		9 = { "Di-19 Lujun Di-78 Shi" }
+		# NRA armies that went over in 1949, and the Revolutionary Committee of the KMT
+		10 = { "Di-104 Jun (Beiping)" }
+		11 = { "Di-111 Jun (Suiyuan Qiyi)" }
+		12 = { "Minge Di-1 Shi" }
+	}
+}

@@ -76,6 +76,7 @@ This document serves as an instruction and reference guide for maintaining and u
 | `zz_INEX_MEX_names_divisions.txt` | Mexico | `MEX` | Included (Cristero, Imperial Guard, Sinarquistas, Gold Shirts, CTM & Agrarian Militias, Anáhuac, Regular Army) |
 | `zz_INEX_PER_names_divisions.txt` | Iran / Persia | `PER` | Included (Garrison-city Lashkars, Imperial & Immortal Guard, Shahnameh armor, Cossack atriads, Tribal levies, Camel corps, Gendarmerie) |
 | `zz_INEX_SPR_names_divisions.txt` | Spain | `SPR` | Included (Plain & Named Republican and Nationalist infantry, Named armored divisions, 1936 infantry & cavalry regiments, Mountain, Marine tercios, Paratrooper banderas, garrison commands, Army of Africa & Legion, Guardia Civil, Assault Guards, Carabineros, Requeté tercios, Falange & División Azul, royal regiments, Mixed & International Brigades, socialist, communist, POUM & anarchist militias, Basque & Catalan forces, guerrillas) |
+| `zz_INEX_CHI_names_divisions.txt` | China | `CHI` | Included (Plain & Named NRA divisions with battle honours, X & Y Force expeditionary divisions, Plain & Named corps-level armies, German-trained motorized & mechanized lists, Armoured Corps, Cavalry, Parachute, Navy Marine, Mountain, Garrisons & Yangtze fortresses, Peace Preservation, Whampoa Party Army & Youth Army, Blue Shirts, Republican armies, People's Revolutionary Army) |
 | `zz_INEX_HUN_names_divisions.txt` | Hungary | `HUN` | Included (Plain & Named infantry, motorized, mechanized, armored and cavalry divisions, 1941 infantry brigades with their seats, mountain brigades, river forces, paratroopers, garrisons & border guards, Ragged Guard, Royal Guard, Hungarist divisions, Red Army & Workers' Battalions, 1848 Honvéd & 1956 National Guard) |
 
 ---
@@ -116,12 +117,12 @@ This is not a complete list of included namelists! Just some examples.
 <!-- /region -->
 
 [b]United States[/b]
-- Infantry, Armored and Airborne divisions with their nicknames ([i]2nd 'Hell on Wheels'[/i], [i]101st 'Screaming Eagles'[/i]), RCTs, tank battalions, Marines and Raiders, Rangers, National Guard and harbor defenses
-- 38 State Defense Forces; ideology suites from Union and Continental Army to Lincoln Brigades and Silver Legions
+- Infantry, Armored and Airborne divisions with nicknames ([i]2nd 'Hell on Wheels'[/i], [i]101st 'Screaming Eagles'[/i]), RCTs, Marines and Raiders, Rangers and National Guard
+- State Defense Forces; Union, Continental Army, Lincoln Brigades and Silver Legions
 
 [b]Germany[/b]
-- Plain and Named Heer lists with nicknames ([i]7. Panzer-Division 'Gespenster'[/i]), Waffen-SS, Festung divisions, Kampfgruppen, Volksgrenadier, Luftwaffe field and Flak, StuG and Werfer units
-- Imperial Guard and Kampfwagen divisions ([i]5. Kampfwagen-Division 'Mephisto'[/i]), Freikorps, Reichsbanner, Volkssturm and Red Army lists
+- Plain and Named Heer lists with nicknames ([i]7. Panzer-Division 'Gespenster'[/i]), Waffen-SS, Festung divisions, Kampfgruppen, Volksgrenadier, Luftwaffe field and Flak
+- Imperial Guard and Kampfwagen divisions ([i]5. Kampfwagen-Division 'Mephisto'[/i]), Freikorps, Reichsbanner, Volkssturm and Red Army
 
 [b]Sweden[/b]
 - Plain and Named Arméfördelningar and mobile divisions ([i]II. Arméfördelningen 'Jämtlands'[/i]), provincial brigades ([i]Gula brigaden[/i]), Fältjägare and Kustjägare
@@ -136,7 +137,7 @@ This is not a complete list of included namelists! Just some examples.
 - Integralist, Red Guards, 1932 Constitutionalist, and Imperial Guard and Voluntários da Pátria suites
 
 [b]Greece[/b]
-- Plain and Named Merarchíes with regional titles ([i]8i Merarchía Ipeírou[/i]), Evzones ([i]2/39 Evzonikó Sýntagma[/i]), Raiders, Metaxas Line forts, island commands and Gendarmerie
+- Plain and Named Merarchíes with regional titles ([i]8i Merarchía Ipeírou[/i]), Evzones ([i]2/39 Evzonikó Sýntagma[/i]), Raiders, Metaxas Line forts and Gendarmerie
 - Royal Guard and Fourth of August, EON, ELAS and Democratic Army, and Republican volunteers
 
 [b]Romania[/b]
@@ -192,8 +193,12 @@ This is not a complete list of included namelists! Just some examples.
 - Requeté tercios, Falange and División Azul, communist, POUM and anarchist militias ([i]Columna Durruti[/i])
 
 [b]Hungary[/b]
-- Plain and Named divisions ([i]1. páncéloshadosztály 'Toldi'[/i]), the 1941 infantry brigades with their seats ([i]14. gyalogdandár (Szeged)[/i]), mountain brigades, river forces and paratroopers
+- Plain and Named divisions ([i]1. páncéloshadosztály 'Toldi'[/i]), 1941 infantry brigades ([i]14. gyalogdandár (Szeged)[/i]), mountain brigades, river forces and paratroopers
 - Royal Guard, Hungarist divisions, Red Army, 1848 Honvéd and 1956 National Guard
+
+[b]China[/b]
+- NRA divisions with their battles ([i]Di-88 Shi (Sihang)[/i]), corps-level armies ([i]Di-74 Jun 'Kangri Tiejun'[/i]), German-trained mobile lists, X and Y Force and Yangtze fortresses
+- Whampoa and Youth Armies, Blue Shirts, 1911 armies and the Fujian People's Revolutionary Army
 
 <!-- cross-links:begin -->
 [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3833590274][img]https://i.imgur.com/qJpjDyO.png[/img][/url]
