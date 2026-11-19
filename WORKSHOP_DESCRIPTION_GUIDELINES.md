@@ -101,7 +101,7 @@ If you have any ideas for namelists, please leave them in the discussion thread!
 - Compatible with Road to 56 (RT56) and vanilla.
 - Not Ironman/Achievement compatible.
 - No hard incompatibilities. Namelists from other mods might override namelists from this mod in some cases.
-- Built for game version 1.19.
+- Built for game version 1.20.
 - Feel free to use this mod however you wish.
 <!-- /region -->
 - Replaces no vanilla file, so vanilla namelists and the focus trees that use them keep working.
